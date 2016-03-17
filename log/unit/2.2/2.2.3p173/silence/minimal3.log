@@ -1,5 +1,5 @@
 passed
-2016-03-14 04:31:41.255
+2016-03-17 06:34:26.318
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 

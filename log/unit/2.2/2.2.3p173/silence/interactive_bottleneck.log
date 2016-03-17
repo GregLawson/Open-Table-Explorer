@@ -1,5 +1,5 @@
 passed
-2016-03-14 04:42:20.217
+2016-03-17 06:27:20.342
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -21,15 +21,15 @@ ruby script/workflow.rb --test README
 confirm_commit(:echo @repository.something_to_commit?=true
 .$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 19490 exit 1>
+@process_status=#<Process::Status: pid 5185 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 19510 exit 128>
+@process_status=#<Process::Status: pid 5205 exit 128>
 $ git checkout master
 @errors="Already on 'master'\n"
 ....
 
-Finished in 2.312840s, 12.9711 runs/s, 51.4519 assertions/s.
+Finished in 51.520805s, 0.5823 runs/s, 7.9580 assertions/s.
 
-30 runs, 119 assertions, 0 failures, 0 errors, 0 skips
+30 runs, 410 assertions, 0 failures, 0 errors, 0 skips
 

@@ -46,7 +46,7 @@ def test_calc_test_maturity
 			assert_instance_of(Fixnum, calc_test_maturity[:error_score])
 			nil
 		end # if
-	end.compact.sort
+	end.select {|m| m && m.get_error_score!}.sort
 end # calc_test_maturity!
 def test_initialize
 	refute_empty(TestInteractiveBottleneck.test_executable.unit.edit_files, "TestInteractiveBottleneck.test_executable.unit.edit_files=#{TestInteractiveBottleneck.test_executable.unit.edit_files}")
@@ -126,8 +126,13 @@ def test_dirty_test_maturities
 		end # if
 	end.compact.sort
 	dirty_test_maturities = TestInteractiveBottleneck.dirty_test_maturities(:danger)
-	start_message = 'dirty_test_maturities[0] = ' + dirty_test_maturities[0].inspect + "\n"
-	start_message += 'dirty_test_maturities[0].test_executable.testable? = ' + dirty_test_maturities[0].test_executable.testable?.inspect + "\n"
+	assert_instance_of(Array, dirty_test_maturities)
+	if dirty_test_maturities.size > 0 then
+		refute_empty(dirty_test_maturities)
+#	.	refute_nil(dirty_test_maturities[0])
+		a_dirty_test_maturity = dirty_test_maturities[0]
+		start_message = 'a_dirty_test_maturity = ' + a_dirty_test_maturity.inspect + "\n"
+		start_message += 'a_dirty_test_maturity.test_executable.testable? = ' + a_dirty_test_maturity.test_executable.testable?.inspect + "\n"
 #	refute_nil(dirty_test_maturities[0].get_error_score!, message)
 	dirty_test_maturities.each do |test_maturity|
 		refute_nil(test_maturity, test_maturity.inspect)
@@ -135,12 +140,14 @@ def test_dirty_test_maturities
 		message = start_message + 'test_maturity = ' + test_maturity.inspect
 		message += 'test_maturity.test_executable.testable? = ' + test_maturity.test_executable.testable?.inspect + "\n"
 		message += "\n"
-		assert_includes([1,0,-1], test_maturity.test_executable <=> dirty_test_maturities[0].test_executable, message)
+			assert_includes([1,0,-1, nil], test_maturity.test_executable <=> a_dirty_test_maturity.test_executable, message)
 #		refute_nil(test_maturity.get_error_score!, message)
 		assert_includes([1,0,-1, nil], test_maturity.get_error_score! <=> dirty_test_maturities[0].get_error_score!, message)
-		assert_includes([1,0,-1], test_maturity <=> dirty_test_maturities[0], message)
+			assert_includes([1,0,-1, nil], test_maturity <=> a_dirty_test_maturity, message)
 	end # each
-	dirty_test_maturities = dirty_test_maturities.sort
+	end # if
+	
+
 	dirty_test_maturities.each do |test_maturity|
 		refute_nil(test_maturity, test_maturity.inspect)
 		assert_instance_of(TestMaturity, test_maturity)

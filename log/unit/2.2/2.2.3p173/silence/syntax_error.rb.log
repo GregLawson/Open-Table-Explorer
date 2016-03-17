@@ -1,5 +1,5 @@
 passed
-2016-03-14 04:31:45.454
+2016-03-17 06:34:30.576
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/syntax_error.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 
