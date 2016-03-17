@@ -12,6 +12,59 @@ require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/ruby_interpreter.rb'
 #require_relative '../../app/models/shell_command.rb'
 #require_relative '../../app/models/branch.rb'
+def Fixnum.nil_greater_than_all?
+	true
+end # Fixnum.nil_greater_than_all?
+class NilClass # reluctant monkee patch?
+include Comparable
+def <=>(rhs)
+	rhs_nil_greater_defined = rhs.class.methods.include?(:nil_greater_than_all)
+	comparison = super(rhs)
+	if rhs_nil_greater_defined then
+		rhs_nil_greater = rhs.class.nil_greater_than_all?
+		if comparison.nil? then
+			case [rhs.nil?, rhs.class.nil_greater_than_all?]
+			when [false, false] then +1
+			when [false, true] then -1
+			when [false] then 0
+			when [true, true] then 0
+			end # case
+		else
+			comparison
+		end # if
+	else
+		comparison
+	end # if
+end # comparison
+def >(rhs)
+	if (self <=> rhs) == +1 then
+		true
+	else
+		false
+	end #if
+end # greater_than
+def <(rhs)
+	if (self <=> rhs) == -1 then
+		true
+	else
+		false
+	end #if
+end # less_than
+def >=(rhs)
+	if (self <=> rhs).between?(0, +1) then
+		true
+	else
+		false
+	end #if
+end # greater_than_or_equal
+def <=(rhs)
+	if (self <=> rhs).between?(-1, 0) then
+		true
+	else
+		false
+	end #if
+end # less_than_or_equal
+end # NilClass
 class RepositoryPathname < Pathname
 include Virtus.value_object
   values do
@@ -102,55 +155,8 @@ def recursion_danger?
 end # recursion_danger?
 end # FileArgument
 
-class NilClass # reluctant monkee patch?
-def <=>(rhs)
-	rhs_nil_greater_defined = rhs.class.methods.include?(:nil_greater_than_all)
-	comparison = super(rhs)
-	if rhs_nil_greater_defined then
-		rhs_nil_greater = rhs.class.nil_greater_than_all?
-		if comparison.nil? then
-			case [self.nil?, rhs.nil?, self.class.nil_greater_than_all?, rhs.class.nil_greater_than_all?]
-			when [false, false, false] then comparison
-			when [false, false, true] then comparison
-			when [false, true, false] then -1
-			when [false, true, true] then +1
-			when [true, false, false] then +1
-			when [true, false, true] then -1
-			when [true, true, false] then 0
-			when [true, true, true] then 0
-			end # case
-		else
-			comparison
-		end # if
-	else
-		comparison
-	end # if
-end # comparison
-end # NilClass
-
-module NilComparable # allow nil; for comparisons
-include Comparable
-def <=>(rhs)
-	comparison = self <=> rhs
-	if comparison.nil? then
-		case [self.nil?, rhs.nil?, self.class.nil_greater_than_all?]
-		when [false, false, false] then comparison
-		when [false, false, true] then comparison
-		when [false, true, false] then -1
-		when [false, true, true] then +1
-		when [true, false, false] then +1
-		when [true, false, true] then -1
-		when [true, true, false] then 0
-		when [true, true, true] then 0
-		end # case
-	else
-		comparison
-	end # if
-end # comparison
-end # NilComparable
 
 class TestExecutable < FileArgument # executable / testable ruby unit with executable
-include NilComparable
 include Virtus.value_object
 values do
 	attribute :test_type, Symbol, :default => 'unit' # is this a virtus bug? automatic String to Symbol conversion
