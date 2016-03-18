@@ -49,7 +49,7 @@ def error_score?
 		nil
 	else
 		executable_file = @test_executable.regression_unit_test_file
-		fail Exception.new('Executable file '+ executable_file + ' does not exist.') if !File.exists?(executable_file)
+#		fail Exception.new('Executable file '+ executable_file + ' does not exist.') if !executable_file.exist?
 		@ruby_test_string = @test_executable.ruby_test_string
 		@recent_test = ShellCommands.new({'SEED' => '0'}, @ruby_test_string, :chdir=> @test_executable.repository.path)
 		log_path = @test_executable.log_path?

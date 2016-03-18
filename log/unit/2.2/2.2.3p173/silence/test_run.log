@@ -1,6 +1,6 @@
 passed
-2016-03-18 04:27:57.376
-ruby -v -W0 test/unit/test_run_test.rb
+2016-03-18 05:23:57.832
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ........
 
-Finished in 1.901189s, 4.2079 runs/s, 7.3638 assertions/s.
+Finished in 1.923597s, 4.1589 runs/s, 7.2780 assertions/s.
 
 8 runs, 14 assertions, 0 failures, 0 errors, 0 skips
 
