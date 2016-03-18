@@ -36,11 +36,11 @@ def <=>(rhs)
 end # compare
 def inspect
 	if @repository == Repository::This_code_repository then
-		@relative_pathname
+		@relative_pathname.to_s
 	elsif @relative_pathname.nil? then
 		'nil pathname'
 	else
-		@relative_pathname + ' in ' + @repository.path
+		@relative_pathname.to_s + ' in ' + @repository.path.to_s
 	end # if
 end # inspect
 def expand_path
@@ -50,8 +50,8 @@ def to_s
 	Pathname.new(@repository.path.to_s + @relative_pathname.to_s).cleanpath.to_s
 end # to_s
 module Examples
-TestSelf = RepositoryPathname.new(relative_pathname: $PROGRAM_NAME)
-Not_unit = RepositoryPathname.new(relative_pathname: '/dev/null')
+TestSelf = RepositoryPathname.new_from_path($PROGRAM_NAME)
+Not_unit = RepositoryPathname.new_from_path('/dev/null')
 Not_unit_executable = RepositoryPathname.new(relative_pathname: 'test/data_sources/unit_maturity/success.rb')
 TestMinimal  = RepositoryPathname.new(relative_pathname: 'test/unit/minimal2_test.rb')
 Unit_non_executable = RepositoryPathname.new(relative_pathname: 'log/unit/2.2/2.2.3p173/silence/test_executable.log')

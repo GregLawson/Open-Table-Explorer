@@ -17,6 +17,7 @@ def test_new_from_path
 	pathname = Pathname.new(pathname).expand_path
 	relative_pathname = pathname.relative_path_from(Pathname.new(repository.path))
 	RepositoryPathname.new(relative_pathname: relative_pathname, repository: repository)
+	assert_equal(TestSelf.to_s, RepositoryPathname.new(relative_pathname: relative_pathname, repository: repository).to_s)
 end # new_from_path
 def test_RepositoryPathname
 	refute_empty(TestSelf.relative_pathname.to_s)
@@ -59,7 +60,7 @@ end # compare
 def test_inspect
 	assert_instance_of(String, TestSelf.inspect)
 	assert_equal(TestSelf.repository, Repository::This_code_repository)
-	assert_equal(TestSelf.relative_pathname, TestSelf.inspect)
+	assert_equal(TestSelf.relative_pathname.to_s, TestSelf.inspect)
 end # inspect
 def test_expand_path
 	assert_instance_of(Pathname, TestSelf.expand_path)
