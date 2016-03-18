@@ -63,9 +63,9 @@ def error_score?
 		elsif @recent_test.process_status.nil? then
 			100000 # really bad
 		elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
-			syntax_test = @test_executable.repository.shell_command("ruby -c "+executable_file)
+			syntax_test = @test_executable.repository.shell_command("ruby -c "+executable_file.to_s)
 			if syntax_test.output=="Syntax OK\n" then
-				initialize_test = @test_executable.repository.shell_command("ruby "+executable_file+' --name test_initialize')
+				initialize_test = @test_executable.repository.shell_command("ruby "+executable_file.to_s + ' --name test_initialize')
 				if initialize_test.success? then
 					1
 				else # initialization  failure or test_initialize failure
