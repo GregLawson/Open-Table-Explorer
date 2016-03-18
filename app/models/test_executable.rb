@@ -12,60 +12,15 @@ require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/ruby_interpreter.rb'
 #require_relative '../../app/models/shell_command.rb'
 #require_relative '../../app/models/branch.rb'
-def Fixnum.nil_greater_than_all?
-	true
-end # Fixnum.nil_greater_than_all?
-class NilClass # reluctant monkee patch?
-include Comparable
-def <=>(rhs)
-	rhs_nil_greater_defined = rhs.class.methods.include?(:nil_greater_than_all)
-	comparison = super(rhs)
-	if rhs_nil_greater_defined then
-		rhs_nil_greater = rhs.class.nil_greater_than_all?
-		if comparison.nil? then
-			case [rhs.nil?, rhs.class.nil_greater_than_all?]
-			when [false, false] then +1
-			when [false, true] then -1
-			when [false] then 0
-			when [true, true] then 0
-			end # case
-		else
-			comparison
-		end # if
-	else
-		comparison
-	end # if
-end # comparison
-def >(rhs)
-	if (self <=> rhs) == +1 then
-		true
-	else
-		false
-	end #if
-end # greater_than
-def <(rhs)
-	if (self <=> rhs) == -1 then
-		true
-	else
-		false
-	end #if
-end # less_than
-def >=(rhs)
-	if (self <=> rhs).between?(0, +1) then
-		true
-	else
-		false
-	end #if
-end # greater_than_or_equal
-def <=(rhs)
-	if (self <=> rhs).between?(-1, 0) then
-		true
-	else
-		false
-	end #if
-end # less_than_or_equal
-end # NilClass
 class RepositoryPathname < Pathname
+module ClassMethods
+def new_from_path(pathname, repository = Repository::This_code_repository)
+	pathname = Pathname.new(pathname).expand_path
+	relative_pathname = pathname.relative_path_from(Pathname.new(repository.path))
+	RepositoryPathname.new(relative_pathname: relative_pathname, repository: repository)
+end # new_from_path
+end # ClassMethods
+extend ClassMethods
 include Virtus.value_object
   values do
 	attribute :relative_pathname, Pathname # simplify inspect, comparisons, and sorts?
@@ -89,10 +44,10 @@ def inspect
 	end # if
 end # inspect
 def expand_path
-	Pathname.new(@repository.path + @relative_pathname)
+	Pathname.new(@repository.path + @relative_pathname.to_s)
 end # expand_path
 def to_s
-	@repository.path.to_s + @relative_pathname.to_s
+	Pathname.new(@repository.path.to_s + @relative_pathname.to_s).cleanpath.to_s
 end # to_s
 module Examples
 TestSelf = RepositoryPathname.new(relative_pathname: $PROGRAM_NAME)
@@ -151,7 +106,7 @@ def generatable_unit_file?
 		end # if
 end # generatable_unit_file?
 def recursion_danger?
-	File.expand_path(regression_unit_test_file) == File.expand_path($PROGRAM_NAME)
+	regression_unit_test_file.to_s == File.expand_path($PROGRAM_NAME)
 end # recursion_danger?
 end # FileArgument
 
@@ -194,9 +149,9 @@ def testable?(recursion_danger = nil)
 end # testable?
 def regression_unit_test_file
 	if generatable_unit_file? then
-			@unit.pathname_pattern?(@test_type) # unit_test_path
+		RepositoryPathname.new_from_path(@unit.pathname_pattern?(@test_type)) # unit_test_path
 	else
-		File.expand_path(@argument_path) # nonunit file
+		RepositoryPathname.new_from_path(@argument_path) # nonunit file
 	end # if
 end # regression_unit_test_file
 def regression_test
@@ -225,7 +180,7 @@ def ruby_test_string
 	when :verbose then @ruby_test_string = 'ruby -v -W2 '
 	else fail Exception.new(logging.to_s + ' is not a valid logging type.')
 	end # case
-	@ruby_test_string += regression_unit_test_file
+	@ruby_test_string += regression_unit_test_file.to_s
 end # ruby_test_string
 def error_file(recent_test)
 	ret = @repository.current_branch_name?.to_s

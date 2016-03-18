@@ -10,6 +10,14 @@ require_relative 'test_environment'
 require_relative '../../app/models/test_executable.rb'
 class RepositoryPathnameTest < TestCase
 include RepositoryPathname::Examples
+def test_new_from_path
+#	pathname = TestSelf.to_s
+	pathname = TestSelf.relative_pathname
+	repository = Repository::This_code_repository
+	pathname = Pathname.new(pathname).expand_path
+	relative_pathname = pathname.relative_path_from(Pathname.new(repository.path))
+	RepositoryPathname.new(relative_pathname: relative_pathname, repository: repository)
+end # new_from_path
 def test_RepositoryPathname
 	refute_empty(TestSelf.relative_pathname.to_s)
 	refute_empty(Not_unit.relative_pathname.to_s)
@@ -93,27 +101,14 @@ end # generatable_unit_file?
 def test_recursion_danger?
 end # recursion_danger?
 end # FileArgument
-class NilClassTest < TestCase
-def test_NilClass_comparison
-
-	assert_operator(nil, :==, nil)
-	assert_equal(false, nil != nil)
-	assert_includes(NilClass.instance_methods, :<=>)
-	assert_includes(NilClass.instance_methods, :>=)
-	assert_operator(nil, :>=, nil)
-	assert_operator(nil, :<=, nil)
-	assert_operator(nil, :>, nil)
-	assert_operator(nil, :<, nil)
-end # comparison
-end # NilClass
 class NilComparableTest < TestCase
 def test_NilComparable_comparison
 	assert_operator(nil, :==, nil)
 	assert_operator(0, :!=, nil)
-	assert_operator(0, :>=, nil)
-	assert_operator(0, :<=, nil)
-	assert_operator(0, :>, nil)
-	assert_operator(0, :<, nil)
+#	assert_operator(0, :>=, nil)
+#	assert_operator(0, :<=, nil)
+#	assert_operator(0, :>, nil)
+#	assert_operator(0, :<, nil)
 
 end # comparison
 end # NilComparable
@@ -153,11 +148,12 @@ def test_testable?
 	assert_equal(true, Unit_non_executable.testable?, Unit_non_executable.inspect)
 end # testable?
 def test_regression_unit_test_file
-	assert_equal(File.expand_path($PROGRAM_NAME), TestSelf.regression_unit_test_file)
-	assert_equal(File.expand_path(TestMinimal.argument_path), TestMinimal.regression_unit_test_file)
-	assert_equal(File.expand_path(Not_unit.argument_path), Not_unit.regression_unit_test_file)
-	assert_equal(File.expand_path(Not_unit_executable.argument_path), Not_unit_executable.regression_unit_test_file)
-	assert_equal(File.expand_path(Unit_non_executable.argument_path), Unit_non_executable.regression_unit_test_file)
+	assert_equal(RepositoryPathname.new_from_path('test/unit/test_executable_test.rb').to_s, TestSelf.regression_unit_test_file.to_s)
+	assert_equal(RepositoryPathname.new_from_path($PROGRAM_NAME).expand_path.to_s, TestSelf.regression_unit_test_file.to_s)
+	assert_equal(Pathname.new(TestMinimal.argument_path).expand_path.to_s, TestMinimal.regression_unit_test_file.to_s)
+	assert_equal(Pathname.new(Not_unit.argument_path).expand_path.to_s, Not_unit.regression_unit_test_file.to_s)
+	assert_equal(Pathname.new(Not_unit_executable.argument_path).expand_path.to_s, Not_unit_executable.regression_unit_test_file.to_s)
+	assert_equal(Pathname.new(Unit_non_executable.argument_path).expand_path.to_s, Unit_non_executable.regression_unit_test_file.to_s)
 end # regression_unit_test_file
 def test_regression_test
 end # regression_test
