@@ -71,7 +71,7 @@ def test_files(edit_files = @test_executable.unit.edit_files)
 	pairs = @test_executable.unit.functional_parallelism(edit_files).map do |p|
 
 		' -t ' + p.map do |f|
-			Pathname.new(f).relative_path_from(Pathname.new(Dir.pwd)).to_s
+			Pathname.new(f).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s
 
 		end.join(' ') # map
 	end # map
