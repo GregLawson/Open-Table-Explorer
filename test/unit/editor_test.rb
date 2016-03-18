@@ -20,7 +20,8 @@ def test_initializes
 	wf=Editor.new(TestEditor.test_executable)
 	refute_nil(wf)
 	refute_empty(TestEditor.test_executable.unit.edit_files, "TestEditor.test_executable.unit.edit_files=#{TestEditor.test_executable.unit.edit_files}")
-	assert_includes(TestEditor.test_executable.unit.edit_files, TestEditor.test_executable.argument_path, "TestEditor.test_executable.unit=#{TestEditor.test_executable.unit.inspect}")
+	assert(File.exists?(TestEditor.test_executable.argument_path.to_s), "TestEditor.test_executable = #{TestEditor.test_executable.inspect}")
+	assert_includes(TestEditor.test_executable.unit.edit_files, TestEditor.test_executable.argument_path.to_s, "TestEditor.test_executable.unit=#{TestEditor.test_executable.unit.inspect}")
 end #initialize
 def test_version_comparison
 	assert_equal('', TestEditor.version_comparison([]))
@@ -44,7 +45,20 @@ end #goldilocks
 include Editor::Examples
 def test_test_files
 	assert_equal('', TestEditor.test_files([]))
-# 	assert_equal(' -t /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb', TestEditor.test_files([TestEditor.edit_files]))
+ 	refute_empty(TestEditor.test_executable.unit.edit_files)
+	pairs = TestEditor.test_executable.unit.functional_parallelism(TestEditor.test_executable.unit.edit_files).map do |p|
+
+		' -t ' + p.map do |f|
+			Pathname.new(f).relative_path_from(Pathname.new(Dir.pwd)).to_s
+
+		end.join(' ') # map
+	end # map
+ 	refute_empty(pairs)
+	pairs.join(' ')
+ 	refute_empty(TestEditor.test_files, pairs.inspect)
+ 	assert_equal(TestEditor.test_files, pairs.join(' '))
+ 	refute_empty(TestEditor.test_files(TestEditor.test_executable.unit.edit_files), pairs.inspect)
+ 	assert_equal(' -t app/models/editor.rb test/unit/editor_test.rb', TestEditor.test_files(TestEditor.test_executable.unit.edit_files))
 end #test_files
 def test_minimal_comparison
 	assert_equal(' -t app/models/editor.rb app/models/minimal2.rb -t test/unit/editor_test.rb test/unit/minimal2_test.rb -t script/editor.rb script/minimal2.rb', TestEditor.minimal_comparison?)
