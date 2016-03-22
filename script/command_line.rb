@@ -48,14 +48,6 @@ def command_line_parser
 	  stop_on SUB_COMMANDS
 	  end
 end # command_line_parser
-def command_line_opts
-  p = command_line_parser
-	Trollop::with_standard_exception_handling p do
-  o = p.parse @argv
-  raise Trollop::HelpNeeded if @argv.empty? # show help screen
-  o
-end
-end # command_line_opts
 end # CommandLine
 
 CommandLine::Script_command_line.run do
