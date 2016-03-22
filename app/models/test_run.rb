@@ -44,18 +44,20 @@ def <=>(other)
 	error_score? <=> other.error_score?
 end # <=>
 # returns nil if recursion danger
-def error_score?
+def error_score?(test = nil)
 	if test_executable.recursion_danger? then
 		nil
 	else
 		executable_file = @test_executable.regression_unit_test_file
 #		fail Exception.new('Executable file '+ executable_file + ' does not exist.') if !executable_file.exist?
-		@ruby_test_string = @test_executable.ruby_test_string
+		@ruby_test_string = @test_executable.ruby_test_string(test)
+		@start_time = Time.now
 		@recent_test = ShellCommands.new({'SEED' => '0'}, @ruby_test_string, :chdir=> @test_executable.repository.path)
-		log_path = @test_executable.log_path?
+		@elapsed_time = Time.now - @start_time
+		log_path = @test_executable.log_path?(test)
 		if !log_path.empty? then
 		end # if
-		@test_executable.write_error_file(@recent_test)
+		@test_executable.write_error_file(@recent_test, test)
 		@test_executable.write_commit_message(@recent_test, [executable_file])
 	#	@recent_test.puts if $VERBOSE
 		@error_score = if @recent_test.success? then
@@ -77,6 +79,15 @@ def error_score?
 		else
 			@recent_test.process_status.exitstatus # num_errors>1
 		end #if
+		if @elapsed_time > 0 then
+			puts "@start_time = " + @start_time.to_s if $VERBOSE
+			puts "\n@elapsed_time = " + @elapsed_time.to_s
+			puts "\nTime.now = " + Time.now.to_s if $VERBOSE
+			puts @test_executable.all_test_names.inspect
+			@test_executable.all_test_names.each do |test_name|
+				puts  test_name.to_s
+			end # each
+		end # if
 		@error_score
 	end # if
 end # error_score

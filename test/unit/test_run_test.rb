@@ -31,7 +31,7 @@ end #shell
 def test_error_score?
 	argument_path = '/etc/mtab' #force syntax error with non-ruby text
 	test_executable = TestExecutable.new(argument_path: argument_path)
-	ruby_test_string = test_executable.ruby_test_string
+	ruby_test_string = test_executable.ruby_test_string(nil)
 	recent_test = This_code_repository.shell_command(ruby_test_string)
 	error_message = recent_test.process_status.inspect+"\n"+recent_test.inspect
 	assert_equal(1, recent_test.process_status.exitstatus, error_message)
@@ -44,11 +44,11 @@ def test_error_score?
 #	assert_equal(nil, Unit.new_from_path(argument_path))
 #	assert_equal(nil, test_run.executable.unit, test_run.inspect)
 	assert_equal(10000, test_run.error_score?, recent_test.inspect)
-#	This_code_repository.assert_deserving_branch(:edited, argument_path)
+#	Default_testRun.assert_deserving_branch(:edited, executable_file)
 
 	argument_path ='test/unit/minimal2_test.rb'
 	test_executable = TestExecutable.new(argument_path: argument_path)
-	log_path = test_executable.log_path?
+	log_path = test_executable.log_path?(nil)
 	ShellCommands.new('grep "seed 0" ' + log_path) #.assert_post_conditions
 
 		recent_test=This_code_repository.shell_command("ruby "+argument_path)
@@ -56,6 +56,6 @@ def test_error_score?
 		syntax_test=This_code_repository.shell_command("ruby -c "+argument_path)
 		assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
 	assert_equal(0, TestRun.new(test_executable: test_executable).error_score?)
-#	This_code_repository.assert_deserving_branch(:passed, argument_path)
+#	Default_testRun.assert_deserving_branch(:passed, executable_file)
 end # error_score
 end # TestRun
