@@ -102,17 +102,6 @@ end # generatable_unit_file?
 def test_recursion_danger?
 end # recursion_danger?
 end # FileArgument
-class NilComparableTest < TestCase
-def test_NilComparable_comparison
-	assert_operator(nil, :==, nil)
-	assert_operator(0, :!=, nil)
-#	assert_operator(0, :>=, nil)
-#	assert_operator(0, :<=, nil)
-#	assert_operator(0, :>, nil)
-#	assert_operator(0, :<, nil)
-
-end # comparison
-end # NilComparable
 
 class TestExecutableTest < TestCase
 include TestExecutable::Examples
@@ -161,22 +150,35 @@ end # regression_test
 def test_log_path?
 	unit = Unit.new_from_path($0)
 	refute_nil(unit)
-	assert_equal('log/unit/2.2/2.2.3p173/silence/test_executable.log', TestTestExecutable.log_path?)
+	assert_equal('log/unit/2.2/2.2.3p173/silence/test_executable.log', TestTestExecutable.log_path?(nil))
 end # log_path?
 def test_ruby_test_string
-	argument_path = $PROGRAM_NAME
-	ruby_test_string = TestTestExecutable.ruby_test_string
-	assert_match(argument_path, ruby_test_string)
+	assert_match($PROGRAM_NAME, TestTestExecutable.ruby_test_string(nil))
+	assert_match(' --name test_Constants', TestMinimal.ruby_test_string(:test_Constants))
 end # ruby_test_string
 def test_write_error_file
 	recent_test = ShellCommands.new('pwd')
-	TestTestExecutable.write_error_file(recent_test)
+	TestTestExecutable.write_error_file(recent_test, nil)
 
 end # write_error_file
 def test_write_commit_message
 	recent_test = ShellCommands.new('pwd')
 	TestTestExecutable.write_commit_message(recent_test, [$0])
 end # write_commit_message
+def test_all_test_names
+	grep_run = ShellCommands.new('grep "def test_" ' + TestTestExecutable.regression_unit_test_file.to_s)
+	test_names = grep_run.output.split("\n").map do |line|
+		line[4, -1]
+	end # map
+	assert_equal(test_names, TestTestExecutable.all_test_names)
+end # all_test_names
+def test_all_library_method_names
+	grep_run = ShellCommands.new('grep "def " ' + RepositoryPathname.new_from_path(TestTestExecutable.unit.pathname_pattern?(:model)).to_s)
+	library_method_names = grep_run.output.split("\n").map do |line|
+		line[4, -1]
+	end # map
+	assert_equal(library_method_names, TestTestExecutable.all_library_method_names)
+end # all_library_method_names
 def test_Examples
 	assert_equal(:unit, TestTestExecutable.test_type)
 	assert_equal(:unit, TestSelf.test_type)

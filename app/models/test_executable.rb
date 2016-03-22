@@ -130,6 +130,9 @@ def new_from_path(argument_path,
 end # new_from_path
 end # ClassMethods
 extend ClassMethods
+def recursion_danger?
+	regression_unit_test_file.expand_path.to_s == File.expand_path($PROGRAM_NAME)
+end # recursion_danger?
 # test dirty working directory for needed regression test
 # return nil if not in unit since regression testing is then impossible
 def testable?(recursion_danger = nil)
@@ -159,7 +162,7 @@ def regression_test
 		test_run = TestRun.new(TestExecutable.new(argument_path: unit_test_path)).error_score?
 	end # if
 end # regression_test
-def log_path?
+def log_path?(test)
 	if @unit.nil? then
 		@log_path = '' # empty file string
 	else
@@ -168,12 +171,18 @@ def log_path?
 		@log_path += '/' + @ruby_interpreter.minor_version
 		@log_path += '/' + @ruby_interpreter.patch_version
 		@log_path += '/' + @ruby_interpreter.logging.to_s
-		Pathname.new(@log_path).mkpath
-		@log_path += '/' + @unit.model_basename.to_s + '.log'
+		if test.nil? then
+			Pathname.new(@log_path).mkpath
+			@log_path += '/' + @unit.model_basename.to_s + '.log'
+		else
+			@log_path += '/' + @unit.model_basename.to_s
+			Pathname.new(@log_path).mkpath
+			@log_path += '/' + test.to_s + '.log'
+		end # if
 	end # if
 	@log_path
 end # log_path?
-def ruby_test_string
+def ruby_test_string(test)
 	case @ruby_interpreter.logging 
 	when :silence then @ruby_test_string = 'ruby -v -W0 '
 	when :medium then @ruby_test_string = 'ruby -v -W1 '
@@ -181,6 +190,11 @@ def ruby_test_string
 	else fail Exception.new(logging.to_s + ' is not a valid logging type.')
 	end # case
 	@ruby_test_string += regression_unit_test_file.to_s
+	if test.nil? then
+		@ruby_test_string
+	else
+		@ruby_test_string += ' --name ' + test.to_s
+	end # if
 end # ruby_test_string
 def error_file(recent_test)
 	ret = @repository.current_branch_name?.to_s
@@ -189,8 +203,8 @@ def error_file(recent_test)
 	ret += "\n" + recent_test.output.to_s
 	ret += "\n" + recent_test.errors
 end # error_file
-def write_error_file(recent_test)
-	IO.write(log_path?, error_file(recent_test))
+def write_error_file(recent_test, test)
+	IO.write(log_path?(test), error_file(recent_test))
 end # write_error_file
 def commit_message(recent_test, files)
 	commit_message= 'fixup! ' + Unit.unit_names?(files).uniq.join(', ')
@@ -204,6 +218,19 @@ end # commit_message
 def write_commit_message(recent_test, files)
 	IO.binwrite('.git/GIT_COLA_MSG', commit_message(recent_test, files))	
 end # write_commit_message
+def all_test_names
+	grep_run = ShellCommands.new('grep "def test_" ' + regression_unit_test_file.to_s)
+	test_names = grep_run.output.split("\n").map do |line|
+		line[4, -1]
+	end # map
+end # all_test_names
+def all_library_method_names
+	grep_run = ShellCommands.new('grep "def " ' + RepositoryPathname.new_from_path(@unit.pathname_pattern?(:model)).to_s)
+	test_names = grep_run.output.split("\n").map do |line|
+		line[4, -1]
+	end # map
+	
+end # all_library_method_names
 # log_file => String
 # Filename of log file from test run
 module Examples
