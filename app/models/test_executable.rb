@@ -15,7 +15,7 @@ require_relative '../../app/models/ruby_interpreter.rb'
 class RepositoryPathname < Pathname
 module ClassMethods
 def new_from_path(pathname, repository = Repository::This_code_repository)
-	pathname = Pathname.new(pathname).expand_path
+	pathname = Pathname.new(pathname.to_s).expand_path
 	relative_pathname = pathname.relative_path_from(Pathname.new(repository.path))
 	RepositoryPathname.new(relative_pathname: relative_pathname, repository: repository)
 end # new_from_path
@@ -23,8 +23,10 @@ end # ClassMethods
 extend ClassMethods
 include Virtus.value_object
   values do
-	attribute :relative_pathname, Pathname # simplify inspect, comparisons, and sorts?
+	attribute :relative_pathname, String # simplify inspect, comparisons, and sorts?
 	attribute :repository, Repository, :default => Repository::This_code_repository
+	attribute :path, String, :default => 	lambda { |pathname, attribute| pathname.to_s }
+
 end # values
 def <=>(rhs)
 	repository_compare = @repository <=> rhs.repository
@@ -44,7 +46,7 @@ def inspect
 	end # if
 end # inspect
 def expand_path
-	Pathname.new(@repository.path + @relative_pathname.to_s)
+	Pathname.new(@repository.path.to_s + @relative_pathname.to_s)
 end # expand_path
 def to_s
 	Pathname.new(@repository.path.to_s + @relative_pathname.to_s).cleanpath.to_s
@@ -60,13 +62,13 @@ end # RepositoryPathname
 
 class RepositoryAssociation < Virtus::Attribute
   def coerce(path)
-    path.is_a?(::RepositoryPathname) ? path : RepositoryPathname.new(relative_pathname: path)
+    path.is_a?(::RepositoryPathname) ? path : RepositoryPathname.new_from_path(path)
   end # coerce
 end # RepositoryAssociation
 
 class FileArgument
 include Virtus.model
-	attribute :argument_path, Pathname
+	attribute :argument_path, RepositoryAssociation
 	attribute :unit, Unit, :default => 	lambda { |argument, attribute| Unit.new_from_path(argument.argument_path) }
 	attribute :pattern, Symbol, :default => 	lambda { |argument, attribute| FilePattern.find_from_path(argument.argument_path) }
 	attribute :repository, Repository, :default => Repository::This_code_repository
@@ -105,9 +107,6 @@ def generatable_unit_file?
 			false
 		end # if
 end # generatable_unit_file?
-def recursion_danger?
-	regression_unit_test_file.to_s == File.expand_path($PROGRAM_NAME)
-end # recursion_danger?
 end # FileArgument
 
 
@@ -130,14 +129,21 @@ def new_from_path(argument_path,
 end # new_from_path
 end # ClassMethods
 extend ClassMethods
+def regression_unit_test_file
+	if generatable_unit_file? then
+		RepositoryPathname.new_from_path(@unit.pathname_pattern?(@test_type)) # unit_test_path
+	else
+		RepositoryPathname.new_from_path(@argument_path) # nonunit file
+	end # if
+end # regression_unit_test_file
 def recursion_danger?
 	regression_unit_test_file.expand_path.to_s == File.expand_path($PROGRAM_NAME)
 end # recursion_danger?
 # test dirty working directory for needed regression test
 # return nil if not in unit since regression testing is then impossible
-def testable?(recursion_danger = nil)
+def testable?
 	if unit_file? then # probably can't test if not in a unit
-		if !recursion_danger.nil? &&(@argument_path == $PROGRAM_NAME) then
+		if recursion_danger? then
 			false # terminate recursion
 		elsif @test_type == :unit then
 			true
@@ -150,13 +156,6 @@ def testable?(recursion_danger = nil)
 		nil # return nil if not in unit since regression testing is then impossible
 	end # if
 end # testable?
-def regression_unit_test_file
-	if generatable_unit_file? then
-		RepositoryPathname.new_from_path(@unit.pathname_pattern?(@test_type)) # unit_test_path
-	else
-		RepositoryPathname.new_from_path(@argument_path) # nonunit file
-	end # if
-end # regression_unit_test_file
 def regression_test
 	if testable? then
 		test_run = TestRun.new(TestExecutable.new(argument_path: unit_test_path)).error_score?
@@ -219,15 +218,15 @@ def write_commit_message(recent_test, files)
 	IO.binwrite('.git/GIT_COLA_MSG', commit_message(recent_test, files))	
 end # write_commit_message
 def all_test_names
-	grep_run = ShellCommands.new('grep "def test_" ' + regression_unit_test_file.to_s)
+	grep_run = ShellCommands.new('grep "^def test_" ' + regression_unit_test_file.to_s)
 	test_names = grep_run.output.split("\n").map do |line|
-		line[4, -1]
+		line[4..-1]
 	end # map
 end # all_test_names
 def all_library_method_names
 	grep_run = ShellCommands.new('grep "def " ' + RepositoryPathname.new_from_path(@unit.pathname_pattern?(:model)).to_s)
 	test_names = grep_run.output.split("\n").map do |line|
-		line[4, -1]
+		line[4..-1]
 	end # map
 	
 end # all_library_method_names

@@ -23,6 +23,8 @@ def test_RepositoryPathname
 	refute_empty(TestSelf.relative_pathname.to_s)
 	refute_empty(Not_unit.relative_pathname.to_s)
 	assert_equal(TestSelf.repository, Repository::This_code_repository)
+	assert_equal([:@path], Pathname.new($0).instance_variables)
+	assert_instance_of(String, RepositoryPathname.new_from_path($0).path)
 end # values
 def test_compare
 	assert_equal(0, TestSelf <=> TestSelf)
@@ -99,8 +101,6 @@ def generatable_unit_file?
 	assert_equal(false, Not_unit.generatable_unit_file?)
 	assert_equal(false, Not_unit_executable.generatable_unit_file?)
 end # generatable_unit_file?
-def test_recursion_danger?
-end # recursion_danger?
 end # FileArgument
 
 class TestExecutableTest < TestCase
@@ -128,23 +128,28 @@ def test_new_from_path
 	new_from_path_executable = TestExecutable.new_from_path($0)
 	assert_instance_of(TestExecutable, new_executable)
 end # new_from_path
+def test_regression_unit_test_file
+	assert_equal(RepositoryPathname.new_from_path('test/unit/test_executable_test.rb').to_s, TestSelf.regression_unit_test_file.to_s)
+	assert_equal(RepositoryPathname.new_from_path($PROGRAM_NAME).expand_path.to_s, TestSelf.regression_unit_test_file.to_s)
+#	assert_equal(Pathname.new(TestMinimal.argument_path).expand_path.to_s, TestMinimal.regression_unit_test_file.to_s)
+#	assert_equal(Pathname.new(Not_unit.argument_path).expand_path.to_s, Not_unit.regression_unit_test_file.to_s)
+#	assert_equal(Pathname.new(Not_unit_executable.argument_path).expand_path.to_s, Not_unit_executable.regression_unit_test_file.to_s)
+#	assert_equal(Pathname.new(Unit_non_executable.argument_path).expand_path.to_s, Unit_non_executable.regression_unit_test_file.to_s)
+end # regression_unit_test_file
+def test_recursion_danger?
+	assert_equal(true, TestSelf.recursion_danger?)
+	assert_equal(false, TestMinimal.recursion_danger?)
+	assert_equal(false, Unit_non_executable.recursion_danger?)
+	assert_equal(false, Not_unit.recursion_danger?)
+	assert_equal(false, Not_unit_executable.recursion_danger?)
+end # recursion_danger?
 def test_testable?
-	assert_equal(true, TestSelf.testable?)
-	assert_equal(false, TestSelf.testable?(:recursion_danger))
+	assert_equal(false, TestSelf.testable?)
 	assert_equal(true, TestMinimal.testable?)
-	assert_equal(true, TestMinimal.testable?(:recursion_danger))
 	assert_equal(nil, Not_unit.testable?)
 	assert_equal(true, Not_unit_executable.testable?, Unit_non_executable.inspect)
 	assert_equal(true, Unit_non_executable.testable?, Unit_non_executable.inspect)
 end # testable?
-def test_regression_unit_test_file
-	assert_equal(RepositoryPathname.new_from_path('test/unit/test_executable_test.rb').to_s, TestSelf.regression_unit_test_file.to_s)
-	assert_equal(RepositoryPathname.new_from_path($PROGRAM_NAME).expand_path.to_s, TestSelf.regression_unit_test_file.to_s)
-	assert_equal(Pathname.new(TestMinimal.argument_path).expand_path.to_s, TestMinimal.regression_unit_test_file.to_s)
-	assert_equal(Pathname.new(Not_unit.argument_path).expand_path.to_s, Not_unit.regression_unit_test_file.to_s)
-	assert_equal(Pathname.new(Not_unit_executable.argument_path).expand_path.to_s, Not_unit_executable.regression_unit_test_file.to_s)
-	assert_equal(Pathname.new(Unit_non_executable.argument_path).expand_path.to_s, Unit_non_executable.regression_unit_test_file.to_s)
-end # regression_unit_test_file
 def test_regression_test
 end # regression_test
 def test_log_path?
@@ -166,16 +171,16 @@ def test_write_commit_message
 	TestTestExecutable.write_commit_message(recent_test, [$0])
 end # write_commit_message
 def test_all_test_names
-	grep_run = ShellCommands.new('grep "def test_" ' + TestTestExecutable.regression_unit_test_file.to_s)
+	grep_run = ShellCommands.new('grep "^def test_" ' + TestTestExecutable.regression_unit_test_file.to_s)
 	test_names = grep_run.output.split("\n").map do |line|
-		line[4, -1]
+		line[4..-1]
 	end # map
 	assert_equal(test_names, TestTestExecutable.all_test_names)
 end # all_test_names
 def test_all_library_method_names
 	grep_run = ShellCommands.new('grep "def " ' + RepositoryPathname.new_from_path(TestTestExecutable.unit.pathname_pattern?(:model)).to_s)
 	library_method_names = grep_run.output.split("\n").map do |line|
-		line[4, -1]
+		line[4..-1]
 	end # map
 	assert_equal(library_method_names, TestTestExecutable.all_library_method_names)
 end # all_library_method_names
