@@ -20,7 +20,8 @@ def test_initializes
 	wf=Editor.new(TestEditor.test_executable)
 	refute_nil(wf)
 	refute_empty(TestEditor.test_executable.unit.edit_files, "TestEditor.test_executable.unit.edit_files=#{TestEditor.test_executable.unit.edit_files}")
-	assert(File.exists?(TestEditor.test_executable.argument_path.to_s), "TestEditor.test_executable = #{TestEditor.test_executable.inspect}")
+	assert_instance_of(RepositoryPathname, TestEditor.test_executable.argument_path, "TestEditor.test_executable.argument_path = #{TestEditor.test_executable.argument_path.inspect}")
+	assert(TestEditor.test_executable.argument_path.exist?, "TestEditor.test_executable.argument_path = #{TestEditor.test_executable.argument_path.inspect}")
 	assert_includes(TestEditor.test_executable.unit.edit_files, TestEditor.test_executable.argument_path.to_s, "TestEditor.test_executable.unit=#{TestEditor.test_executable.unit.inspect}")
 end #initialize
 def test_version_comparison

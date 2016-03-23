@@ -38,7 +38,7 @@ def initialize(test_executable)
 end # initialize
 def version_comparison(files = nil)
 	if files.nil? then
-		files = [@test_executable.log_path?].concat(@test_executable.unit.edit_files)
+		files = [@test_executable.log_path?(nil)].concat(@test_executable.unit.edit_files)
 	end # if
 	ret = files.map do |f|
 		goldilocks(f)
