@@ -83,9 +83,9 @@ def error_score?(test = nil)
 			puts "@start_time = " + @start_time.to_s if $VERBOSE
 			puts "\n@elapsed_time = " + @elapsed_time.to_s
 			puts "\nTime.now = " + Time.now.to_s if $VERBOSE
-			puts @test_executable.all_test_names.inspect
+			puts @test_executable.all_test_names.inspect if $VERBOSE
 			@test_executable.all_test_names.each do |test_name|
-				puts  test_name.to_s
+				puts  test_name.to_s if $VERBOSE
 			end # each
 		end # if
 		@error_score
