@@ -1,5 +1,5 @@
 passed
-2016-03-22 06:22:05.646
+2016-03-26 23:09:38.565
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -9,7 +9,7 @@ Run options: --seed 0
 ..No arguments
 ..............................
 
-Finished in 16.348687s, 1.9573 runs/s, 5.5662 assertions/s.
+Finished in 20.299597s, 1.5764 runs/s, 4.3351 assertions/s.
 
-32 runs, 91 assertions, 0 failures, 0 errors, 0 skips
+32 runs, 88 assertions, 0 failures, 0 errors, 0 skips
 

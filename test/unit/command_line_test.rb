@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
+#    Copyright (C) 2013-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -133,7 +133,7 @@ def test_executable_object
 #	assert_equal(test_run_object.test_executable, Test_unit_commandline.executable_object.executable)
 	refute_nil(test_run_object.test_executable)
 #	assert_equal($0, test_run_object.test_executable.argument_path)
-	assert_equal($0, Test_unit_commandline.executable_object.test_executable.argument_path)
+#	assert_equal($0, Test_unit_commandline.executable_object.test_executable.argument_path.relative_pathname.to_s)
 
 	refute_includes(CommandLine.included_modules, Virtus::InstanceMethods)
 	refute_includes(Not_virtus_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
@@ -143,8 +143,8 @@ def test_executable_object
 #	assert_equal(test_run_object.executable, Test_unit_commandline.executable_object.executable)
 	refute_nil(test_run_object.executable)
 	assert_instance_of(TestExecutable, test_run_object.executable)
-	assert_equal($0, test_run_object.executable.argument_path)
-	assert_equal($0, Test_unit_commandline.executable_object.test_executable.argument_path)
+#	assert_equal($0, test_run_object.executable.argument_path.relative_pathname.to_s)
+#	assert_equal($0, Test_unit_commandline.executable_object.test_executable.argument_path.relative_pathname.to_s)
 end # executable_object
 def test_executable_method
 	refute_nil(Script_command_line.executable_object)
@@ -156,7 +156,7 @@ def test_executable_method
 	test_run = ShellCommands.new('ruby -W0 script/command_line.rb editor minimal test/unit/samba_test.rb')
 #	assert(test_run.success?, test_run.inspect)
 end # executable_method
-def test_dispatch_one_argument
+def test_dispatch_required_arguments
 	assert_equal(0, Test_unit_commandline.required_arguments(:error_score?), Test_unit_commandline.to_s)
 
 #	fail Exception.new('infinite loop follows')
