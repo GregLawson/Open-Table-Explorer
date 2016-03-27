@@ -107,7 +107,7 @@ class TestExecutableTest < TestCase
 include TestExecutable::Examples
 include Repository::Constants
 def test_TestExecutable_initialize
-	assert_equal(nil, TestTestExecutable.test)
+#	assert_equal(nil, TestTestExecutable.test)
 	assert_equal(:unit, TestTestExecutable.test_type, TestTestExecutable.inspect)
 #	TestExecutable.column_names.each do |n|
 #		assert_instance_of(String,n)
@@ -149,6 +149,9 @@ def test_testable?
 	assert_equal(nil, Not_unit.testable?)
 	assert_equal(true, Not_unit_executable.testable?, Unit_non_executable.inspect)
 	assert_equal(true, Unit_non_executable.testable?, Unit_non_executable.inspect)
+	assert_equal(false, Ignored_data_source.generatable_unit_file?, Ignored_data_source.inspect)
+	assert_equal(nil, Ignored_data_source.testable?, Ignored_data_source.inspect)
+
 end # testable?
 def test_regression_test
 end # regression_test

@@ -23,7 +23,7 @@ end # ClassMethods
 extend ClassMethods
 include Virtus.value_object
   values do
-	attribute :relative_pathname, String # simplify inspect, comparisons, and sorts?
+	attribute :relative_pathname, Pathname # simplify inspect, comparisons, and sorts?
 	attribute :repository, Repository, :default => Repository::This_code_repository
 	attribute :path, String, :default => 	lambda { |pathname, attribute| pathname.to_s }
 
@@ -57,6 +57,7 @@ Not_unit = RepositoryPathname.new_from_path('/dev/null')
 Not_unit_executable = RepositoryPathname.new(relative_pathname: 'test/data_sources/unit_maturity/success.rb')
 TestMinimal  = RepositoryPathname.new(relative_pathname: 'test/unit/minimal2_test.rb')
 Unit_non_executable = RepositoryPathname.new(relative_pathname: 'log/unit/2.2/2.2.3p173/silence/test_executable.log')
+Ignored_data_source =  RepositoryPathname.new(relative_pathname: 'log/unit/2.2/2.2.3p173/silence/CA_540_2014_example-1.jpg')
 end # Examples
 end # RepositoryPathname
 
@@ -78,6 +79,7 @@ Not_unit = FileArgument.new(argument_path: '/dev/null')
 Not_unit_executable = FileArgument.new(argument_path: 'test/data_sources/unit_maturity/success.rb')
 TestMinimal  = FileArgument.new(argument_path: 'test/unit/minimal2_test.rb')
 Unit_non_executable = FileArgument.new(argument_path: 'log/unit/2.2/2.2.3p173/silence/test_executable.log')
+Ignored_data_source =  FileArgument.new(argument_path: 'log/unit/2.2/2.2.3p173/silence/CA_540_2014_example-1.jpg')
 end # Examples
 def unit_file_type
 	 if pattern.nil? then
@@ -109,13 +111,12 @@ def generatable_unit_file?
 end # generatable_unit_file?
 end # FileArgument
 
-
 class TestExecutable < FileArgument # executable / testable ruby unit with executable
 include Virtus.value_object
 values do
 	attribute :test_type, Symbol, :default => 'unit' # is this a virtus bug? automatic String to Symbol conversion
 	attribute :ruby_interpreter, RubyInterpreter, :default => RubyInterpreter::Preferred
-	attribute :test, String, :default => nil # all tests in file
+#	attribute :test, String, :default => nil # all tests in file
 end # values
 module ClassMethods
 def new_from_path(argument_path,
@@ -234,12 +235,13 @@ end # all_library_method_names
 # Filename of log file from test run
 module Examples
 #include Constants
-TestTestExecutable = TestExecutable.new_from_path($PROGRAM_NAME)
+TestTestExecutable = TestExecutable.new_from_path(__FILE__) # used as Example in TestRun avoiding recursion_danger
 TestSelf = TestExecutable.new(argument_path: $PROGRAM_NAME)
 Not_unit = TestExecutable.new(argument_path: '/dev/null')
 Not_unit_executable = TestExecutable.new(argument_path: 'test/data_sources/unit_maturity/success.rb')
 TestMinimal  = TestExecutable.new(argument_path: 'test/unit/minimal2_test.rb')
 Unit_non_executable = TestExecutable.new(argument_path: 'log/unit/2.2/2.2.3p173/silence/test_executable.log')
+Ignored_data_source =  TestExecutable.new(argument_path: 'log/unit/2.2/2.2.3p173/silence/CA_540_2014_example-1.jpg')
 end # Examples
 end # TestExecutable
 
