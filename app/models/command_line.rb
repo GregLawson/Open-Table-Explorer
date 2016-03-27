@@ -1,6 +1,6 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013-2016 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -32,30 +32,35 @@ end # required_arguments
 end # Method
 
 class CommandLine  < Command
-module Constants # constant parameters of the type
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 SUB_COMMANDS = %w(inspect test)
 Nonscriptable_methods = [:run, :executable, :executable=]
 
-end # Constants
-include Constants
+end # DefinitionalConstants
+include DefinitionalConstants
+module DefinitionalClassMethods # compute sub-objects such as default attribute values
+include DefinitionalConstants
+def argument_type(argument)
+	if SUB_COMMANDS.include?(argument)
+		CommandLine
+	elsif Branch.branch_names?.include?(argument) then 
+		Branch
+	elsif File.exists?(argument) then
+		File
+	elsif !Dir[argument].empty? then
+		Dir
+	else 
+		Unit
+	end # if
+end # argument_type
+end # DefinitionalClassMethods
+extend DefinitionalClassMethods
 attr_reader :executable, :unit_class, :argv
 def initialize(executable, unit_class = CommandLine, argv = ARGV)
 	@executable = executable
 	@unit_class = unit_class
 	@argv = argv
 end # initialize
-def ==(other)
-	@executable == other.executable && @unit_class == other.unit_class && @argv == other.argv
-end # ==
-def to_s
-	ret = '@argv = ' + @argv.inspect
-	ret += "\n sub_command = " + sub_command.inspect
-	if number_of_arguments != 0 then
-		ret += "\n arguments = " + arguments.inspect
-		ret += "\n argument_types = " + argument_types.inspect
-	end # if
-	ret
-end # to_s
 # Deliberately raises exception if number_of_arguments == 0
 def arguments
 	@argv[1..-1]
@@ -67,21 +72,6 @@ def number_of_arguments
 		arguments.size # don't include sub_command
 	end # if
 end # number_of_arguments
-def sub_command
-	if @argv.nil? || @argv.empty? then
-		:help # default subcommand
-	else
-		@argv[0].to_sym # get the subcommand
-	end # if
-end # sub_command
-def argument_types
-	arguments.map do |argument|
-		CommandLine.argument_type(argument)
-	end # map
-end # argument_types
-def find_examples
-	Example.find_by_class(@unit_class, @unit_class)
-end # find_examples
 def find_example?
 	examples = Example.find_by_class(@unit_class, @unit_class)
 	if examples.empty? then
@@ -114,70 +104,6 @@ def executable_object(file_argument = nil)
 	end # if
 	
 end # executable_object
-def executable_method?(method_name, argument = nil)
-	executable_object = executable_object(argument)
-	ret = if executable_object.respond_to?(method_name) then
-		method = executable_object.method(method_name)
-	else
-		nil
-	end # if
-end # executable_method?
-def method_exception_string(method_name)
-		message = "#{method_name.to_s} is not an instance method of #{executable_object.class.inspect}"
-		message += "\n candidate_commands = "
-		message += candidate_commands_strings.join("\n")
-#		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
-end # method_exception_string
-def arity(method_name)
-	executable_method = executable_method?(method_name)
-	ret = if executable_method.nil? then
-		message = "#{method_name} is not an instance method of #{executable_object.class.inspect}"
-		message = candidate_commands_strings.join("\n")
-#		message += "\n candidate_commands = " + candidate_commands.inspect
-#		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
-		fail Exception.new(message)
-	else
-		executable_method.arity
-	end # if
-end # arity
-def default_arguments?(method_name)
-	if arity(method_name) < 0 then
-		true
-	else
-		false
-	end # if
-
-
-end # default_arguments
-def required_arguments(method_name)
-
-	method_arity = arity(method_name)
-	if default_arguments?(method_name) then
-		-(method_arity+1)
-	else
-		method_arity
-	end # if
-end # required_arguments
-def dispatch_required_arguments(argument)
-	method = executable_method?(sub_command, argument)
-	if method.nil? then
-		message = method_exception_string(sub_command)
-		fail Exception.new(message)
-	else
-		case required_arguments(sub_command)
-		when 0 then
-			method.call
-		when 1 then
-			method.call(argument)
-		else
-			message = "\nIn CommandLine#dispatch_required_arguments, "
-			message += "\nargument =  " + argument
-			message += "\nsub_command =  " + sub_command.to_s
-			message += "\narity =  " + required_arguments(sub_command).to_s
-			fail Exception.new(message)
-		end # case
-	end # if nil?
-end # dispatch_required_arguments
 def candidate_commands(number_arguments = nil)
 	executable_object.methods(true).map do |candidate_command_name|
 		if Nonscriptable_methods.include?(candidate_command_name) then
@@ -249,6 +175,108 @@ def command_line_opts
   o
 end
 end # command_line_opts
+module Constants # constant objects of the type
+include DefinitionalConstants
+Command = RailsishRubyUnit::Executable.model_basename
+Script_class = RailsishRubyUnit::Executable.model_class?
+Script_command_line = CommandLine.new(executable: $0, unit_class: Script_class, argv: ARGV)
+# = Script_class.new(TestExecutable.new_from_path($0))
+
+
+
+end # Constants
+include Constants
+def ==(other)
+	@executable == other.executable && @unit_class == other.unit_class && @argv == other.argv
+end # ==
+def to_s
+	ret = '@argv = ' + @argv.inspect
+	ret += "\n sub_command = " + sub_command.inspect
+	if number_of_arguments != 0 then
+		ret += "\n arguments = " + arguments.inspect
+		ret += "\n argument_types = " + argument_types.inspect
+	end # if
+	ret
+end # to_s
+def sub_command
+	if @argv.nil? || @argv.empty? then
+		:help # default subcommand
+	else
+		@argv[0].to_sym # get the subcommand
+	end # if
+end # sub_command
+def argument_types
+	arguments.map do |argument|
+		CommandLine.argument_type(argument)
+	end # map
+end # argument_types
+def find_examples
+	Example.find_by_class(@unit_class, @unit_class)
+end # find_examples
+def executable_method?(method_name, argument = nil)
+	executable_object = executable_object(argument)
+	ret = if executable_object.respond_to?(method_name) then
+		method = executable_object.method(method_name)
+	else
+		nil
+	end # if
+end # executable_method?
+def method_exception_string(method_name)
+		message = "#{method_name.to_s} is not an instance method of #{executable_object.class.inspect}"
+		message += "\n candidate_commands = "
+		message += candidate_commands_strings.join("\n")
+#		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
+end # method_exception_string
+def arity(method_name)
+	executable_method = executable_method?(method_name)
+	ret = if executable_method.nil? then
+		message = "#{method_name} is not an instance method of #{executable_object.class.inspect}"
+		message = candidate_commands_strings.join("\n")
+#		message += "\n candidate_commands = " + candidate_commands.inspect
+#		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
+		fail Exception.new(message)
+	else
+		executable_method.arity
+	end # if
+end # arity
+def default_arguments?(method_name)
+	if arity(method_name) < 0 then
+		true
+	else
+		false
+	end # if
+
+
+end # default_arguments
+def required_arguments(method_name)
+
+	method_arity = arity(method_name)
+	if default_arguments?(method_name) then
+		-(method_arity+1)
+	else
+		method_arity
+	end # if
+end # required_arguments
+def dispatch_required_arguments(argument)
+	method = executable_method?(sub_command, argument)
+	if method.nil? then
+		message = method_exception_string(sub_command)
+		fail Exception.new(message)
+	else
+		case required_arguments(sub_command)
+		when 0 then
+			method.call
+		when 1 then
+			method.call(argument)
+		else
+			message = "\nIn CommandLine#dispatch_required_arguments, "
+			message += "\nargument =  " + argument
+			message += "\nsub_command =  " + sub_command.to_s
+			message += "\narity =  " + required_arguments(sub_command).to_s
+			fail Exception.new(message)
+		end # case
+	end # if nil?
+end # dispatch_required_arguments
 def run(&non_default_actions)
 	done = if block_given? then
 		non_default_actions.call
@@ -289,31 +317,4 @@ end # cleanup_ARGV
 def test
 	puts 'Method :test called in class ' + self.class.name + ' but not over-ridden.'
 end # test
-module ClassMethods
-include Constants
-def argument_type(argument)
-	if SUB_COMMANDS.include?(argument)
-		CommandLine
-	elsif Branch.branch_names?.include?(argument) then 
-		Branch
-	elsif File.exists?(argument) then
-		File
-	elsif !Dir[argument].empty? then
-		Dir
-	else 
-		Unit
-	end # if
-end # argument_type
-end # ClassMethods
-extend ClassMethods
-module Constants # constant objects of the type
-Command = RailsishRubyUnit::Executable.model_basename
-Script_class = RailsishRubyUnit::Executable.model_class?
-Script_command_line = CommandLine.new($0, Script_class, ARGV)
-# = Script_class.new(TestExecutable.new_from_path($0))
-
-
-
-end # Constants
-include Constants
 end # CommandLine

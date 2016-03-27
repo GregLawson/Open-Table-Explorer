@@ -1,5 +1,5 @@
 passed
-2016-03-26 23:09:38.565
+2016-03-27 17:49:07.742
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -7,9 +7,18 @@ Run options: --seed 0
 # Running:
 
 ..No arguments
-..............................
+..........................F...
 
-Finished in 20.299597s, 1.5764 runs/s, 4.3351 assertions/s.
+Finished in 65.917478s, 0.4855 runs/s, 1.3198 assertions/s.
 
-32 runs, 88 assertions, 0 failures, 0 errors, 0 skips
+  1) Failure:
+NewTestClass#test_find_example? [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:122]:
+--- expected
++++ actual
+@@ -1 +1 @@
+-#<CommandLine:0xXXXXXX @executable={:executable=>"/home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb", :unit_class=>CommandLine, :argv=>[]}, @unit_class=CommandLine, @argv=[]>
++#<CommandLine:0xXXXXXX @executable="/home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb", @unit_class=CommandLine, @argv=[]>
+
+
+32 runs, 87 assertions, 1 failures, 0 errors, 0 skips
 

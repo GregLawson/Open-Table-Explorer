@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
+#    Copyright (C) 2013-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -10,6 +10,7 @@ require_relative '../app/models/unit.rb' # before command_line
 require_relative "../app/models/#{RailsishRubyUnit::Executable.model_basename}"
 require_relative '../app/models/command_line.rb'
 class CommandLine  < Command
+# help for command_line script, overrides default
 def help_banner_string
 		ret = 'Usage: ' + ' unit_basename subcommand  options args'
 		ret += 'Possible unit names:'
@@ -48,12 +49,29 @@ def command_line_parser
 	  stop_on SUB_COMMANDS
 	  end
 end # command_line_parser
+def command_line_opts
+  p = command_line_parser
+	Trollop::with_standard_exception_handling p do
+  o = p.parse @argv
+  raise Trollop::HelpNeeded if @argv.empty? # show help screen
+  o
+end
+end # command_line_opts
 end # CommandLine
-
+puts 'command_line_opts = ' + CommandLine::Script_command_line.command_line_opts.inspect
+puts 'command_line_opts = ' + CommandLine::Script_command_line.command_line_opts.inspect
+puts 'command_line_opts.class = ' + CommandLine::Script_command_line.command_line_opts.class.inspect
+puts 'command_line_opts[:test] = ' + CommandLine::Script_command_line.command_line_opts[:test].inspect
+puts 'command_line_opts[:inspect] = ' + CommandLine::Script_command_line.command_line_opts[:inspect].inspect
+puts 'command_line_opts[:inspect_given] = ' + CommandLine::Script_command_line.command_line_opts[:inspect_given].inspect
+puts 'CommandLine::Script_command_line = ' + CommandLine::Script_command_line.inspect
 CommandLine::Script_command_line.run do
 	if CommandLine::Script_command_line.command_line_opts[:help] then
-			puts 'command_line_opts[:help]'
+			puts 'command_line_opts[:help] = ' + CommandLine::Script_command_line.command_line_opts[:help].inspect
 			true # done
+	elsif CommandLine::Script_command_line.command_line_opts[:test] then
+		test_run = TestRun.new(test_executable: TestExecutable.new(argument_path: ARGV[1])).error_score?(nil)
+		puts test_run.inspect
 	else
 		sub_command = CommandLine::Script_command_line.sub_command
 			unit = RailsishRubyUnit.new(model_basename: sub_command.to_sym)
