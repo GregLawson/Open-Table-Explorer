@@ -1,5 +1,5 @@
 passed
-2016-03-23 01:35:59.215
+2016-03-27 18:10:53.022
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -7,12 +7,12 @@ Run options: --seed 0
 # Running:
 
 ..F.
-@elapsed_time = 0.089078975
+@elapsed_time = 0.082774719
 
-@elapsed_time = 0.780380226
+@elapsed_time = 0.713736313
 ....
 
-Finished in 2.102817s, 3.8044 runs/s, 6.1822 assertions/s.
+Finished in 1.950841s, 4.1008 runs/s, 6.6638 assertions/s.
 
   1) Failure:
 NewTestClass#test_TestRun_initialize [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb:20]:

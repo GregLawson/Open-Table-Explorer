@@ -1,6 +1,6 @@
 ###########################################################################
-#    Copyright (C) 2011-2016 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2011-2016 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -15,10 +15,25 @@ require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_executable.rb'
 class TestRun # < ActiveRecord::Base
-include Virtus.model
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+Recent_test_default = lambda do |test_run, attribute|
+	test = test_run.test
+	start_time = Time.now
+	if test_run.test_executable.recursion_danger? then
+		nil
+	else
+		recent_test = ShellCommands.new({'SEED' => '0'}, test_run.test_executable.ruby_test_string(test_run.test), :chdir=> test_run.test_executable.repository.path.to_s)
+		{test: test_run.test, recent_test: recent_test, elapsed_time: Time.now - start_time}
+	end # if
+end # Recent_test_default
+end # DefinitionalConstants
+include DefinitionalConstants
+include Virtus.value_object
+  values do
   attribute :test_executable, TestExecutable
+end # values
 module Constants
-#include Version::Constants
+include DefinitionalConstants
 end # Constants
 include Constants
 #include Generic_Table
@@ -45,7 +60,7 @@ def <=>(other)
 end # <=>
 # returns nil if recursion danger
 def error_score?(test = nil)
-	if test_executable.recursion_danger? then
+	if @test_executable.recursion_danger? then
 		nil
 	else
 		executable_file = @test_executable.regression_unit_test_file
@@ -111,6 +126,7 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
+TestSelf = TestRun.new(test_executable: TestExecutable.new_from_path($0))
 Default_testRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable)
 end # Examples
 end # TestRun

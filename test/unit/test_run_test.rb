@@ -17,7 +17,7 @@ include Repository::Constants
 def test_TestRun_initialize
 	assert_equal(TestExecutable::Examples::TestTestExecutable, Default_testRun.test_executable)
 	assert_equal(TestExecutable::Examples::TestTestExecutable.argument_path, Default_testRun.test_executable.argument_path)
-	assert_equal($PROGRAM_NAME, Default_testRun.test_executable.argument_path.relative_pathname.to_s)
+	assert_equal($PROGRAM_NAME, TestSelf.test_executable.argument_path.relative_pathname.to_s)
 	assert_equal(TestExecutable::Examples::TestTestExecutable.unit, Default_testRun.test_executable.unit)
 end # test_TestRun_initialize
 def test_new_from_pathname
