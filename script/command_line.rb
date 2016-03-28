@@ -8,7 +8,6 @@
 ###########################################################################
 require_relative '../app/models/unit.rb' # before command_line
 require_relative "../app/models/#{RailsishRubyUnit::Executable.model_basename}"
-require_relative '../app/models/command_line.rb'
 class CommandLine  < Command
 # help for command_line script, overrides default
 def help_banner_string
@@ -49,7 +48,7 @@ def command_line_parser
 	  stop_on SUB_COMMANDS
 	  end
 end # command_line_parser
-def command_line_opts
+def command_line_opts_initialize
   p = command_line_parser
 	Trollop::with_standard_exception_handling p do
   o = p.parse @argv
@@ -58,6 +57,7 @@ def command_line_opts
 end
 end # command_line_opts
 end # CommandLine
+require_relative '../app/models/command_line.rb'
 puts 'command_line_opts = ' + CommandLine::Script_command_line.command_line_opts.inspect
 puts 'command_line_opts = ' + CommandLine::Script_command_line.command_line_opts.inspect
 puts 'command_line_opts.class = ' + CommandLine::Script_command_line.command_line_opts.class.inspect
@@ -84,7 +84,7 @@ CommandLine::Script_command_line.run do
 				fail "required_library_file #{required_library_file} does not exist."
 			end # if 
 			puts 'sub_command = ' + sub_command.inspect + unit.inspect if $VERBOSE
-			unit_commandline = CommandLine.new($0, unit.model_class?, ARGV[1..-1])
+			unit_commandline = CommandLine.new(executable: $0, unit_class: unit.model_class?, argv: ARGV[1..-1])
 			unit_commandline.run do
 				puts 'run in command_line script.' + CommandLine::Script_command_line.command_line_parser.inspect if $VERBOSE
 				false # not done

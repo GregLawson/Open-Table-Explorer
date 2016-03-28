@@ -55,12 +55,18 @@ def argument_type(argument)
 end # argument_type
 end # DefinitionalClassMethods
 extend DefinitionalClassMethods
-attr_reader :executable, :unit_class, :argv
-def initialize(executable, unit_class = CommandLine, argv = ARGV)
-	@executable = executable
-	@unit_class = unit_class
-	@argv = argv
-end # initialize
+include Virtus.value_object
+  values do
+ 	attribute :executable, Symbol # Symbol not RepositoryPathname or TestExecutable?
+	attribute :unit_class, Fixnum, :default => CommandLine
+	attribute :argv, Array, :default => ARGV
+#	attribute :command_line_opts, Hash, :default => lambda {|commandline, attribute| commandline.command_line_opts_initialize}
+end # values
+
+module ClassMethods # such as alternative new methods
+include DefinitionalConstants
+end # ClassMethods
+extend ClassMethods
 # Deliberately raises exception if number_of_arguments == 0
 def arguments
 	@argv[1..-1]
@@ -72,6 +78,14 @@ def number_of_arguments
 		arguments.size # don't include sub_command
 	end # if
 end # number_of_arguments
+def argument_types
+	arguments.map do |argument|
+		CommandLine.argument_type(argument)
+	end # map
+end # argument_types
+def find_examples
+	Example.find_by_class(@unit_class, @unit_class)
+end # find_examples
 def find_example?
 	examples = Example.find_by_class(@unit_class, @unit_class)
 	if examples.empty? then
@@ -187,7 +201,11 @@ Script_command_line = CommandLine.new(executable: $0, unit_class: Script_class, 
 end # Constants
 include Constants
 def ==(other)
-	@executable == other.executable && @unit_class == other.unit_class && @argv == other.argv
+	if self.class == other.class then
+		@executable == other.executable && @unit_class == other.unit_class && @argv == other.argv
+	else
+		false
+	end # if
 end # ==
 def to_s
 	ret = '@argv = ' + @argv.inspect
@@ -205,14 +223,6 @@ def sub_command
 		@argv[0].to_sym # get the subcommand
 	end # if
 end # sub_command
-def argument_types
-	arguments.map do |argument|
-		CommandLine.argument_type(argument)
-	end # map
-end # argument_types
-def find_examples
-	Example.find_by_class(@unit_class, @unit_class)
-end # find_examples
 def executable_method?(method_name, argument = nil)
 	executable_object = executable_object(argument)
 	ret = if executable_object.respond_to?(method_name) then
