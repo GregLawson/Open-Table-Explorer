@@ -22,18 +22,43 @@ Recent_test_default = lambda do |test_run, attribute|
 	if test_run.test_executable.recursion_danger? then
 		nil
 	else
-		recent_test = ShellCommands.new({'SEED' => '0'}, test_run.test_executable.ruby_test_string(test_run.test), :chdir=> test_run.test_executable.repository.path.to_s)
-		{test: test_run.test, recent_test: recent_test, elapsed_time: Time.now - start_time}
+		begin	
+			recent_test =
+			Timeout::timeout(@test_run_timeout) do
+				ShellCommands.new({'SEED' => '0'}, test_run.test_executable.ruby_test_string(test_run.test), :chdir=> test_run.test_executable.repository.path.to_s)
+			end # Timeout
+			{test: test_run.test, recent_test: recent_test, elapsed_time: Time.now - start_time}
+		rescue Timeout::Error  => exception_object_raised
+			elapsed_time = Time.now - @start_time
+			puts "timeout"
+			puts exception_object_raised.inspect
+			puts "start_time = " + start_time.to_s if $VERBOSE
+			puts "\n@elapsed_time = " + @elapsed_time.to_s
+			puts "\nTime.now = " + Time.now.to_s if $VERBOSE
+			{test: test_run.test, exception_object_raised: exception_object_raised, elapsed_time: elapsed_time}
+		end # begin/rescue block
 	end # if
 end # Recent_test_default
+Too_long_for_regression_test = 30.0 # zero means infinite timeout
+
 end # DefinitionalConstants
 include DefinitionalConstants
 include Virtus.value_object
   values do
   attribute :test_executable, TestExecutable
+  attribute :test, Symbol, :default => nil
+  attribute :cached_recent_test, Hash, :default => TestRun::Recent_test_default
+  attribute :test_run_timeout, Float, :default => Too_long_for_regression_test
 end # values
+def all_test_names
+	@test_executable.all_test_names
+end # elapsed_time
+def elapsed_time
+	@cached_recent_test[:elapsed_time]
+end # elapsed_time
 module Constants
 include DefinitionalConstants
+TestSelf = TestRun.new(test_executable: TestExecutable.new_from_path(__FILE__)) # avoid recursion
 end # Constants
 include Constants
 #include Generic_Table
@@ -59,53 +84,78 @@ def <=>(other)
 	error_score? <=> other.error_score?
 end # <=>
 # returns nil if recursion danger
+def error_file
+	ret = @test_executable.repository.current_branch_name?.to_s
+	ret += "\n" + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
+	ret += "\n" + @cached_recent_test[:recent_test].command_string
+	ret += "\n" + @cached_recent_test[:recent_test].output.to_s
+	ret += "\n" + @cached_recent_test[:recent_test].errors
+end # error_file
+def write_error_file(test)
+	IO.write(@test_executable.log_path?(test), error_file)
+end # write_error_file
+def commit_message(files)
+	commit_message= 'fixup! ' + Unit.unit_names?(files).uniq.join(', ')
+	if !@cached_recent_test[:recent_test].nil? then
+		commit_message += "\n" + @test_executable.repository.current_branch_name?.to_s + "\n"
+		commit_message += "\n" + @cached_recent_test[:recent_test].command_string
+		commit_message += "\n" + @cached_recent_test[:recent_test].output.to_s
+		commit_message += @cached_recent_test[:recent_test].errors
+	end #if
+end # commit_message
+def write_commit_message(files)
+	IO.binwrite('.git/GIT_COLA_MSG', commit_message(files))	
+end # write_commit_message
 def error_score?(test = nil)
-	if @test_executable.recursion_danger? then
+	if @cached_recent_test.nil? || @cached_recent_test[:recent_test].nil? then
 		nil
 	else
-		executable_file = @test_executable.regression_unit_test_file
-#		fail Exception.new('Executable file '+ executable_file + ' does not exist.') if !executable_file.exist?
-		@ruby_test_string = @test_executable.ruby_test_string(test)
-		@start_time = Time.now
-		@recent_test = ShellCommands.new({'SEED' => '0'}, @ruby_test_string, :chdir=> @test_executable.repository.path)
-		@elapsed_time = Time.now - @start_time
-		log_path = @test_executable.log_path?(test)
-		if !log_path.empty? then
-		end # if
-		@test_executable.write_error_file(@recent_test, test)
-		@test_executable.write_commit_message(@recent_test, [executable_file])
-	#	@recent_test.puts if $VERBOSE
-		@error_score = if @recent_test.success? then
-			0
-		elsif @recent_test.process_status.nil? then
-			100000 # really bad
-		elsif @recent_test.process_status.exitstatus==1 then # 1 error or syntax error
-			syntax_test = @test_executable.repository.shell_command("ruby -c "+executable_file.to_s)
-			if syntax_test.output=="Syntax OK\n" then
-				initialize_test = @test_executable.repository.shell_command("ruby "+executable_file.to_s + ' --name test_initialize')
-				if initialize_test.success? then
-					1
-				else # initialization  failure or test_initialize failure
-					100 # may prevent other tests from running
+		write_error_file(test)
+		write_commit_message([@test_executable.regression_unit_test_file])
+		#	@cached_recent_test[:recent_test].puts if $VERBOSE
+			@error_score = if @cached_recent_test[:recent_test].success? then
+				0
+			elsif @cached_recent_test[:recent_test].process_status.nil? then
+				100000 # really bad
+			elsif @cached_recent_test[:recent_test].process_status.exitstatus==1 then # 1 error or syntax error
+				syntax_test = @test_executable.repository.shell_command("ruby -c "+@test_executable.regression_unit_test_file.to_s)
+				if syntax_test.output=="Syntax OK\n" then
+					initialize_test = @test_executable.repository.shell_command("ruby "+@test_executable.regression_unit_test_file.to_s + ' --name test_initialize')
+					if initialize_test.success? then
+						1
+					else # initialization  failure or test_initialize failure
+						100 # may prevent other tests from running
+					end #if
+				else
+					10000 # syntax error can hide many sins
 				end #if
 			else
-				10000 # syntax error can hide many sins
+				@cached_recent_test[:recent_test].process_status.exitstatus # num_errors>1
 			end #if
-		else
-			@recent_test.process_status.exitstatus # num_errors>1
-		end #if
-		if @elapsed_time > 0 then
-			puts "@start_time = " + @start_time.to_s if $VERBOSE
-			puts "\n@elapsed_time = " + @elapsed_time.to_s
-			puts "\nTime.now = " + Time.now.to_s if $VERBOSE
-			puts @test_executable.all_test_names.inspect if $VERBOSE
-			@test_executable.all_test_names.each do |test_name|
-				puts  test_name.to_s if $VERBOSE
-			end # each
-		end # if
 		@error_score
 	end # if
 end # error_score
+def subtest_timeout
+	if test.nil? then
+		@test_run_timeout / @cached_all_test_names.size
+	else
+		nil
+	end # if
+end # subtest_timeout
+def run_individual_tests
+	puts @test_executable.all_test_names.inspect if $VERBOSE
+	if test.nil? && @test_executable.regression_unit_test_file != TestSelf.test_executable.regression_unit_test_file then
+		puts '@test_executable = ' + @test_executable.inspect  if $VERBOSE
+		puts '   TestSelf.test_executable = ' + TestSelf.test_executable.inspect if $VERBOSE
+		@test_executable.all_test_names.each do |test_name|
+			error_score_run = TestRun.new(test_executable: @test_executable, test_name: test_name, test_run_timeout: subtest_timeout)
+			puts  test_name.to_s + ' ' + @elapsed_time.to_s
+			puts error_score_run.inspect if $VERBOSE
+		end # each
+	else
+		raise "Only one level of subtests."
+	end # if
+end # run_individual_tests
 #require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
@@ -126,7 +176,6 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-TestSelf = TestRun.new(test_executable: TestExecutable.new_from_path($0))
 Default_testRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable)
 end # Examples
 end # TestRun

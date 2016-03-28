@@ -14,12 +14,24 @@ class TestRunTest < TestCase
 include TestExecutable::Examples
 include TestRun::Examples
 include Repository::Constants
+def test_Recent_test_default
+	assert_equal(nil, Recent_test_default.call(TestSelf, nil))
+	assert_equal(Default_testRun, lambda {|test_run, attribute| test_run}.call(Default_testRun, nil))
+	assert_equal(true, lambda {|test_run, attribute| test_run.test_executable.recursion_danger?}.call(TestSelf, nil))
+	assert_equal(false, Default_testRun.test_executable.recursion_danger?, Default_testRun.inspect)
+	assert_equal(false, lambda {|test_run, attribute| test_run.test_executable.recursion_danger?}.call(Default_testRun, nil))
+	recent_test_default = Recent_test_default.call(Default_testRun, nil)
+	assert_instance_of(Float, recent_test_default[:elapsed_time])
+	assert_equal(nil, recent_test_default[:test])
+	assert_instance_of(ShellCommands, recent_test_default[:recent_test])
+	assert_instance_of(String, recent_test_default[:recent_test].output)
+end # Recent_test_default
 def test_TestRun_initialize
 	assert_equal(TestExecutable::Examples::TestTestExecutable, Default_testRun.test_executable)
 	assert_equal(TestExecutable::Examples::TestTestExecutable.argument_path, Default_testRun.test_executable.argument_path)
-	assert_equal($PROGRAM_NAME, TestSelf.test_executable.argument_path.relative_pathname.to_s)
+	assert_equal($PROGRAM_NAME, TestSelf.test_executable.regression_unit_test_file.relative_pathname.to_s)
 	assert_equal(TestExecutable::Examples::TestTestExecutable.unit, Default_testRun.test_executable.unit)
-end # test_TestRun_initialize
+end # values
 def test_new_from_pathname
 	argument_path = $PROGRAM_NAME
 	unit = Unit.new_from_path(argument_path)
