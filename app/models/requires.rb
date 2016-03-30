@@ -14,27 +14,32 @@ module DefinitionalConstants # constant parameters of the type (suggest all CAPS
 Require_regexp = /require/ * /_relative/.capture(:relative)
 end # DefinitionalConstants
 include DefinitionalConstants
-  include Virtus.value_object
+module DefinitionalClassMethods # compute sub-objects such as default attribute values
+include DefinitionalConstants
+def scan(unit)
+	ret = {}
+	unit.edit_files.each do |file|
+		code = IO.read(file)
+		parse = code.capture?(Require_regexp)
+		ret = ret.merge({FilePattern.find_from_path(file)[:name] => parse})
+	end # each
+	ret
+end # scan
+end # DefinitionalClassMethods
+extend DefinitionalClassMethods
+include Virtus.value_object
   values do
  	attribute :unit, Unit
+	attribute :requires, Hash, :default => lambda {|require, attribute| Require.scan(require.unit) }
 #	attribute :age, Fixnum, :default => 789
 #	attribute :timestamp, Time, :default => Time.now
-	end # values
+end # values
 module ClassMethods
 include DefinitionalConstants
 def all
 end # all
 end # ClassMethods
 extend ClassMethods
-def scan
-	ret = {}
-	@unit.edit_files.each do |file|
-		code = IO.read(file)
-		parse = code.capture?(Require_regexp)
-		ret = ret.merge({file => parse})
-	end # each
-	ret
-end # scan
 module Constants # constant objects of the type (e.g. default_objects)
 end # Constants
 include Constants

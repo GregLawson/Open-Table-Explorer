@@ -15,11 +15,13 @@ def test_scan
 	Unit::Executable.edit_files.each do |file|
 		code = IO.read(file)
 		parse = code.capture?(Require_regexp)
-		ret = ret.merge({file => parse})
+		ret = ret.merge({FilePattern.find_from_path(file)[:name] => parse})
 	end # each
 	assert_instance_of(Hash, ret)
-	assert_instance_of(Hash, Executing_requires.scan)
-	assert_equal(ret, Executing_requires.scan)
-	assert_includes(Executing_requires.scan.keys, Pathname.new('../../app/models/unit.rb').expand_path)
+	assert_equal(ret, Executing_requires.requires)
 end # scan
-end # Requires
+def test_Require_attributes
+	assert_instance_of(Hash, Executing_requires.requires)
+	assert_includes(Executing_requires.requires.keys, :unit)
+end # values
+end # Require

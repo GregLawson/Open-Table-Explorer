@@ -1,18 +1,14 @@
 passed
-2016-03-14 04:37:22.126
+2016-03-30 12:44:41.396
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-..F..
+......
 
-Finished in 0.006355s, 786.8367 runs/s, 786.8367 assertions/s.
+Finished in 0.004947s, 1212.7913 runs/s, 1010.6594 assertions/s.
 
-  1) Failure:
-NewTestClass#test_scan [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb:23]:
-Expected ["/home/greg/Desktop/src/Open-Table-Explorer/app/models/requires.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb"] to include #<Pathname:/home/greg/Desktop/app/models/unit.rb>.
-
-5 runs, 5 assertions, 1 failures, 0 errors, 0 skips
+6 runs, 5 assertions, 0 failures, 0 errors, 0 skips
 
