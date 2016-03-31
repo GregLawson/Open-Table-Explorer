@@ -40,6 +40,13 @@ end # new_from_pathname
 def test_shell
 	refute_empty(TestRun.shell('pwd'){|run| run.inspect})
 end #shell
+def test_write_error_file
+	Default_testRun.write_error_file(nil)
+
+end # write_error_file
+def test_write_commit_message
+	Default_testRun.write_commit_message([$0])
+end # write_commit_message
 def test_error_score?
 	argument_path = '/etc/mtab' #force syntax error with non-ruby text
 	test_executable = TestExecutable.new(argument_path: argument_path)
