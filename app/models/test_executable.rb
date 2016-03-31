@@ -196,28 +196,6 @@ def ruby_test_string(test)
 		@ruby_test_string += ' --name ' + test.to_s
 	end # if
 end # ruby_test_string
-def error_file(recent_test)
-	ret = @repository.current_branch_name?.to_s
-	ret += "\n" + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")
-	ret += "\n" + recent_test.command_string
-	ret += "\n" + recent_test.output.to_s
-	ret += "\n" + recent_test.errors
-end # error_file
-def write_error_file(recent_test, test)
-	IO.write(log_path?(test), error_file(recent_test))
-end # write_error_file
-def commit_message(recent_test, files)
-	commit_message= 'fixup! ' + Unit.unit_names?(files).uniq.join(', ')
-	if !recent_test.nil? then
-		commit_message += "\n" + @repository.current_branch_name?.to_s + "\n"
-		commit_message += "\n" + recent_test.command_string
-		commit_message += "\n" + recent_test.output.to_s
-		commit_message += recent_test.errors
-	end #if
-end # commit_message
-def write_commit_message(recent_test, files)
-	IO.binwrite('.git/GIT_COLA_MSG', commit_message(recent_test, files))	
-end # write_commit_message
 def all_test_names
 	grep_run = ShellCommands.new('grep "^def test_" ' + regression_unit_test_file.to_s)
 	test_names = grep_run.output.split("\n").map do |line|

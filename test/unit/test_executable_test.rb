@@ -164,15 +164,6 @@ def test_ruby_test_string
 	assert_match($PROGRAM_NAME, TestTestExecutable.ruby_test_string(nil))
 	assert_match(' --name test_Constants', TestMinimal.ruby_test_string(:test_Constants))
 end # ruby_test_string
-def test_write_error_file
-	recent_test = ShellCommands.new('pwd')
-	TestTestExecutable.write_error_file(recent_test, nil)
-
-end # write_error_file
-def test_write_commit_message
-	recent_test = ShellCommands.new('pwd')
-	TestTestExecutable.write_commit_message(recent_test, [$0])
-end # write_commit_message
 def test_all_test_names
 	grep_run = ShellCommands.new('grep "^def test_" ' + TestTestExecutable.regression_unit_test_file.to_s)
 	test_names = grep_run.output.split("\n").map do |line|
