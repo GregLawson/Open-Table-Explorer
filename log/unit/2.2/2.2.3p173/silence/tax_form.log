@@ -1,5 +1,5 @@
 passed
-2016-04-01 03:29:03.761
+2016-04-01 20:14:16.107
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ........................................
 
-Finished in 10.041298s, 3.9835 runs/s, 28.8807 assertions/s.
+Finished in 9.975121s, 4.0100 runs/s, 29.0723 assertions/s.
 
 40 runs, 290 assertions, 0 failures, 0 errors, 0 skips
 
