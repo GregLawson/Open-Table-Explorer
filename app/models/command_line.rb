@@ -58,7 +58,7 @@ extend DefinitionalClassMethods
 include Virtus.value_object
   values do
  	attribute :executable, Symbol # Symbol not RepositoryPathname or TestExecutable?
-	attribute :unit_class, Fixnum, :default => CommandLine
+	attribute :unit_class, Class, :default => CommandLine
 	attribute :argv, Array, :default => ARGV
 #	attribute :command_line_opts, Hash, :default => lambda {|commandline, attribute| commandline.command_line_opts_initialize}
 end # values

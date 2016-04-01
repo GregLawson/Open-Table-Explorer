@@ -1,5 +1,5 @@
 passed
-2016-03-28 15:34:11.930
+2016-04-01 04:34:02.079
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -7,18 +7,9 @@ Run options: --seed 0
 # Running:
 
 ..No arguments
-..........................F...
+................................
 
-Finished in 127.009519s, 0.2519 runs/s, 0.6771 assertions/s.
+Finished in 125.232309s, 0.2715 runs/s, 0.6787 assertions/s.
 
-  1) Failure:
-NewTestClass#test_find_example? [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:131]:
---- expected
-+++ actual
-@@ -1 +1 @@
--#<CommandLine executable=:"/home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb" unit_class=CommandLine argv=[]>
-+#<UnitMaturity:0xXXXXXX @repository=#<Repository:0xXXXXXX @url="/home/greg/Desktop/src/Open-Table-Explorer/", @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>, @unit=#<Unit model_basename=:repository project_root_dir="/home/greg/Desktop/src/Open-Table-Explorer/" patterns=[{:suffix=>".rb", :name=>:model, :prefix=>"app/models/", :example_file=>"/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb", :generate=>true}, {:suffix=>"_test.rb", :name=>:unit, :prefix=>"test/unit/", :example_file=>"/home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb", :generate=>true}, {:suffix=>".rb", :name=>:script, :prefix=>"script/", :example_file=>"script/work_flow.rb", :generate=>true}, {:suffix=>"_test.rb", :name=>:integration_test, :prefix=>"test/integration/", :example_file=>"test/integration/release_test.rb", :generate=>true}, {:suffix=>"_test.rb", :name=>:long_test, :prefix=>"test/long_test/", :example_file=>"test/long_test/interactive_bottleneck_test.rb", :generate=>true}, {:suffix=>"_assertions.rb", :name=>:assertions, :prefix=>"test/assertions/", :example_file=>"test/assertions/repository_assertions.rb", :generate=>true}, {:suffix=>"_assertions_test.rb", :name=>:assertions_test, :prefix=>"test/unit/", :example_file=>"test/unit/repository_assertions_test.rb", :generate=>true}, {:suffix=>".log", :name=>:unit_log, :prefix=>"log/unit/", :example_file=>"log/unit/2.2/2.2.3p173/silence/repository.log", :generate=>false}, {:suffix=>".log", :name=>:assertions_test_log, :prefix=>"log/assertions_test/", :example_file=>"log/assertions_test/2.2/2.2.3p173/silence/minimal4.log", :generate=>false}, {:suffix=>".log", :name=>:long_log, :prefix=>"log/long_test/", :example_file=>"log/long_test/2.2/2.2.3p173/silence/interactive_bottleneck.log", :generate=>false}, {:suffix=>"", :name=>:data_sources_dir, :prefix=>"test/data_sources/", :example_file=>"test/data_sources/tax_form/2014/examples_and_templates/CA_540/CA_540_2014_example.txt", :generate=>false}, {:suffix=>".log", :name=>:integration_log, :prefix=>"log/integration/", :example_file=>"log/integration/2.2/2.2.3p173/silence/repository.log", :generate=>false}]>>
-
-
-32 runs, 86 assertions, 1 failures, 0 errors, 0 skips
+34 runs, 85 assertions, 0 failures, 0 errors, 0 skips
 
