@@ -1,10 +1,11 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013-2016 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require 'virtus'
 # need  sudo apt-get install poppler-utils
 # need nodejs
 # need sudo apt-get install pdftk
@@ -16,7 +17,7 @@ module OpenTableExplorer
 
 extend AssertionsModule
 module Finance
-module Constants
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 Downloaded_src_dir = FilePattern.repository_dir?($0) + '/../'
 IRS_pdf_directory = Pathname.new('../IRS').expand_path.to_s + '/'
 OTS_example_directories = Pathname.new('test/data_sources/tax_form/').expand_path.to_s
@@ -32,8 +33,8 @@ OpenTaxSolver_directories = Dir[OpenTaxSolver_directories_glob]
 #Open_tax_solver_sysout="#{Open_tax_solver_data_directory}/US_1040_example_sysout.txt"
 
 #OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
-end #Constants
-include Constants
+end # DefinitionalConstants
+include DefinitionalConstants
 # a ots run can produce multiple schedule outputs
 # mapping is in: 
 #
@@ -127,7 +128,7 @@ def output_pdf
 	base_path + '.pdf'
 end # output_pdf
 def fillout_form
-	Finance::IRS_pdf_directory + '/f' + @ots.form  + @ots.form_suffix + '--' + @ots.tax_year.to_s + '.pdf'
+	Finance::IRS_pdf_directory + '/f' + @ots.form  + @form_suffix + '--' + @ots.tax_year.to_s + '.pdf'
 end # fillout_form
 def run_fdf_to_pdf
 		ShellCommands.new("pdftk fillout_form fill_form #{xfdf_file} output #{xfdf_file}.pdf")
@@ -154,10 +155,10 @@ end # Schedule
 
 # single run of ots can produce multiple Schedules
 class OtsRun
-include Constants
+include DefinitionalConstants
 include OpenTableExplorer
 module ClassMethods
-include Constants
+include DefinitionalConstants
 def open_tax_solver_distribution_directories(tax_year)
 	OpenTaxSolver_directories.select do |f|
 		File.directory?(f)
@@ -343,7 +344,7 @@ include Assertions
 extend Assertions::ClassMethods
 OpenTableExplorer::Finance::OtsRun #.assert_pre_conditions # verify Constants can be created
 module Examples
-include Constants
+include DefinitionalConstants
 Example_Taxpayer=ENV['USER'].to_sym
 #refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
 #refute_empty(OtsRun.open_tax_solver_distribution_directory)

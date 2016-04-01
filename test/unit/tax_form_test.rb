@@ -15,12 +15,12 @@ def model_class?
 end #model_class?
 #include DefaultTests
 include OpenTableExplorer::Finance
-include OpenTableExplorer::Finance::Constants
-extend OpenTableExplorer::Finance::Constants
+include OpenTableExplorer::Finance::DefinitionalConstants
+extend OpenTableExplorer::Finance::DefinitionalConstants
 include OpenTableExplorer::Finance::OtsRun::Examples
 include OpenTableExplorer::Finance::Schedule::Examples
 #US1040_example_schedule = 	OpenTableExplorer::Finance::Schedule.new(OpenTableExplorer::Finance::OtsRun::Examples::US1040_example.build, '', '')
-US1040_example_schedule = 	Schedule.new(OtsRun::Examples::US1040_example.build, '', '')
+US1040_example_schedule = 	Schedule.new(OtsRun::Examples::US1040_example.build, 'f', '')
 def test_Constants
 	refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
 	assert_pathname_exists(Open_Tax_Filler_Directory)
@@ -94,7 +94,9 @@ def test_run_json_to_fdf
 end #run_json_to_fdf
 def test_new_from_path
 end # new_from_path
-def test_initialize
+def test_Schedule_initialize
+	assert_equal('', US1040_example_schedule.form_suffix)
+	assert_equal('1040', US1040_example_schedule.ots.form)
 	assert_equal('f', US1040_example_schedule.form_prefix)
 end # initialize
 def test_schedule_name
@@ -103,7 +105,7 @@ end # schedule_name
 def test_base_path
 end # base_path
 def test_xfdf_file
-	assert_equal('.xpdf', US1040_example_schedule.xfdf_file)
+	assert_equal('.xfdf', US1040_example_schedule.xfdf_file[-5..-1])
 end # xfdf_file
 def test_output_pdf
 	assert(File.exist?(US1040_example_schedule.ots.open_tax_solver_form_directory), US1040_example_schedule.ots.open_tax_solver_form_directory)
@@ -114,14 +116,13 @@ def test_fillout_form
 end # fillout_form
 def test_run_fdf_to_pdf
 	Schedule.generated_xfdf_files(US1040_user).map do |xdf_schedule|
-		matching_pdf_filename = 'f' + xdf_schedule.output?[:form].to_s  + xdf_schedule.output?[:form_suffix].to_s + '--' + Default_tax_year.to_s+ '.pdf'
+		matching_pdf_filename = 'f' + xdf_schedule.ots.form.to_s  + xdf_schedule.form_suffix.to_s + '--' + Default_tax_year.to_s+ '.pdf'
 		matching_pdf_file = IRS_pdf_directory + matching_pdf_filename
 		assert(File.exist?(matching_pdf_file), matching_pdf_file + "\n" + xdf_schedule.inspect)
 		matching_pdf_filled_in_file = IRS_pdf_directory + matching_pdf_filename
 		assert(File.exist?(matching_pdf_file), matching_pdf_file + "\n" + xdf_schedule.inspect)
+		xdf_schedule.run_fdf_to_pdf #.assert_fdf_to_pdf
 	end # each
-	US1040_user.run_fdf_to_pdf.assert_fdf_to_pdf
-	CA540_user.run_fdf_to_pdf.assert_fdf_to_pdf
 end # run_fdf_to_pdf
 def test_filled_in_pdf_files
 #	assert(!US1040_example.filled_in_pdf_files.empty?, Dir[US1040_example.output_xfdf_glob].inspect)
@@ -138,19 +139,22 @@ def test_filled_in_pdf_files
 #	end # each
 end # filled_in_pdf_files
 def 	test_run_pdf_to_jpeg
-	refute_nil(US1040_example.output_pdf, US1040_example.inspect)
-	output_pdf_pathname=Pathname.new(File.expand_path(US1040_example.output_pdf))
-	assert_instance_of(Pathname, output_pdf_pathname)
-	cleanpath_name=output_pdf_pathname.cleanpath
-	clean_directory=Pathname.new(File.expand_path(US1040_example.open_tax_solver_form_directory)).cleanpath
-	output_pdf=cleanpath_name.relative_path_from(clean_directory)
-	US1040_example.build.assert_pdf_to_jpeg
-#	US1040_template.run_pdf_to_jpeg.assert_pdf_to_jpeg
-#	US1040_example.run_pdf_to_jpeg.assert_pdf_to_jpeg
-#	CA540_template.run_pdf_to_jpeg.assert_pdf_to_jpeg
-#	CA540_example.run_pdf_to_jpeg.assert_pdf_to_jpeg
-#	US1040_user.run_pdf_to_jpeg.assert_pdf_to_jpeg
-#	CA540_user.run_pdf_to_jpeg.assert_pdf_to_jpeg
+	Schedule.generated_xfdf_files(US1040_user).map do |xdf_schedule|
+	#	refute_nil(xdf_schedule.output_pdf, xdf_schedule.inspect)
+		refute_nil(xdf_schedule.output_pdf)
+		output_pdf_pathname = Pathname.new(File.expand_path(xdf_schedule.output_pdf))
+		assert_instance_of(Pathname, output_pdf_pathname)
+		cleanpath_name=output_pdf_pathname.cleanpath
+		clean_directory=Pathname.new(File.expand_path(xdf_schedule.ots.open_tax_solver_form_directory)).cleanpath
+		output_pdf=cleanpath_name.relative_path_from(clean_directory)
+#		US1040_example.build.assert_pdf_to_jpeg
+	#	US1040_template.run_pdf_to_jpeg.assert_pdf_to_jpeg
+	#	US1040_example.run_pdf_to_jpeg.assert_pdf_to_jpeg
+	#	CA540_template.run_pdf_to_jpeg.assert_pdf_to_jpeg
+	#	CA540_example.run_pdf_to_jpeg.assert_pdf_to_jpeg
+	#	US1040_user.run_pdf_to_jpeg.assert_pdf_to_jpeg
+	#	CA540_user.run_pdf_to_jpeg.assert_pdf_to_jpeg
+	end # each
 end #run_pdf_to_jpeg
 def test_build
 end # build
@@ -188,7 +192,7 @@ end # logical_primary_key
 def test_open_tax_solver_distribution_directory
 	assert_pathname_exists(US1040_template.open_tax_solver_distribution_directory)
 end # open_tax_solver_distribution_directory
-def test_initialize
+def test_OtsRun_initialize
 	form='1040'
 	jurisdiction=:US
 #	sysout=`#{Command}`
