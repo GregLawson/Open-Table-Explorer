@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2016 by Greg Lawson                                      
+#    Copyright (C) 2011-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -11,7 +11,7 @@ class Minimal2
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 end # DefinitionalConstants
 include DefinitionalConstants
-  include Virtus.value_object
+include Virtus.value_object
   values do
 # 	attribute :branch, Symbol
 #	attribute :age, Fixnum, :default => 789
