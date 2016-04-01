@@ -1,14 +1,14 @@
 passed
-2016-03-30 12:44:41.396
+2016-04-01 04:29:01.910
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-......
+.......
 
-Finished in 0.004947s, 1212.7913 runs/s, 1010.6594 assertions/s.
+Finished in 0.005321s, 1315.6643 runs/s, 3383.1369 assertions/s.
 
-6 runs, 5 assertions, 0 failures, 0 errors, 0 skips
+7 runs, 18 assertions, 0 failures, 0 errors, 0 skips
 

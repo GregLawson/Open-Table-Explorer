@@ -11,7 +11,7 @@ require_relative '../../app/models/unit.rb'
 require_relative '../../app/models/parse.rb'
 class Require
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-Require_regexp = /require/ * /_relative/.capture(:relative)
+Require_regexp = /require/ * /_relative/.capture(:relative) * /\s+/ * /['"]/ * FilePattern::Relative_pathname_included_regexp.capture(:required_path) *  /['"]/
 end # DefinitionalConstants
 include DefinitionalConstants
 module DefinitionalClassMethods # compute sub-objects such as default attribute values
@@ -20,7 +20,7 @@ def scan(unit)
 	ret = {}
 	unit.edit_files.each do |file|
 		code = IO.read(file)
-		parse = code.capture?(Require_regexp)
+		parse = code.capture?(Require_regexp)[:required_path]
 		ret = ret.merge({FilePattern.find_from_path(file)[:name] => parse})
 	end # each
 	ret
@@ -74,6 +74,7 @@ extend Assertions::ClassMethods
 module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
 include DefinitionalConstants
 include Constants
+Require_line = "require_relative '../../app/models/unit.rb'"
 Executing_requires = Require.new(unit: Unit::Executable)
 end # Examples
 end # Require
