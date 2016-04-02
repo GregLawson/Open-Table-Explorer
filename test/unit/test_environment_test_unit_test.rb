@@ -6,10 +6,11 @@
 #
 ###########################################################################
 require_relative '../../app/models/test_environment_test_unit.rb'
-#require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../assertions/ruby_assertions_test_unit.rb'
 class TestEnvironmentTestUnitTest < TestCase
 include AssertionsModule
 extend AssertionsModule
+include RubyAssertions
 def test_requires
 #	assert_included_modules(:Fish, Test::Unit::Assertions)
 	assert(Test::Unit::Assertions.included_modules.empty?, Test::Unit::Assertions.included_modules.inspect)

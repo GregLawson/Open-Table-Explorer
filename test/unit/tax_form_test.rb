@@ -5,12 +5,12 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative '../../app/models/test_environment_test_unit.rb'
-require_relative 'test_environment'
+require_relative '../../app/models/test_environment_test_unit.rb'
+#require_relative 'test_environment'
 require_relative '../../app/models/tax_form.rb'
-require_relative '../../app/models/shell_command.rb'
-#require_relative '../assertions/regexp_parse_assertions.rb'
+require_relative '../assertions/ruby_assertions_test_unit.rb'
 class OtsRunTest < TestCase
+include RubyAssertions
 def model_class?
 	OpenTableExplorer::Finance::OtsRun
 end #model_class?

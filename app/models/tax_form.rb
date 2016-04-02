@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require 'virtus'
+#require 'pathname'
 # need  sudo apt-get install poppler-utils
 # need nodejs
 # need sudo apt-get install pdftk
@@ -373,8 +374,6 @@ def build
 #	run_ots_to_json
 #	run_json_to_fdf
 end # build
-end # Schedule
-class Schedule
 module Examples
 end # Examples
 end # Schedule
