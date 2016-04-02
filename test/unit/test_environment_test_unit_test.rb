@@ -5,20 +5,17 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../../app/models/test_environment_test_unit.rb'
-#require_relative '../../../test/assertions/ruby_assertions.rb'
-class InitializationFailTest < TestCase
+require_relative '../../app/models/test_environment_test_unit.rb'
+#require_relative '../../test/assertions/ruby_assertions.rb'
+class TestEnvironmentTestUnitTest < TestCase
 include AssertionsModule
 extend AssertionsModule
-def test_initialize
-	fail
-end #initialize
 def test_requires
 #	assert_included_modules(:Fish, Test::Unit::Assertions)
-	assert(Test::Unit::Assertions.included_modules.empty?, Test::Unit::Assertions.included_modules)
+	assert(Test::Unit::Assertions.included_modules.empty?, Test::Unit::Assertions.included_modules.inspect)
 	assert(Test::Unit::Assertions.instance_methods.include?(:assert), Test::Unit::Assertions.instance_methods.inspect)
 	assert(AssertionsModule.instance_methods.include?(:assert), AssertionsModule.instance_methods.inspect)
-	assert(RubyAssertions.instance_methods.include?(:assert), RubyAssertions.instance_methods.inspect)
+#	assert(RubyAssertions.instance_methods.include?(:assert), RubyAssertions.instance_methods.inspect)
 #	assert_included_modules(:RubyAssertions, Test::Unit::Assertions)
 #	assert(Test::Unit::Unit.included_modules.include?(:RubyAssertions), Test::Unit::Unit.included_modules.inspect)
 #	assert_included_modules(Test::Unit::Assertions, :RubyAssertions)
