@@ -308,21 +308,9 @@ def assert_overlap(enum1,enum2)
 	refute_empty(enum2, "Assume second set to not be empty.")
 	assert_block("enum1=#{enum1.inspect} does not overlap enum2=#{enum2.inspect}"){!(enum1&enum2).empty?}
 end #assert_overlap
-#def assert_includes(list, element,  message = '')
-#	message = "First argument of assert_include must be an Array or Set"
-#	message += ', not ' + list.inspect
-#	fail message if !(list.instance_of?(Array) || list.instance_of?(Set))
-#	message = message + element.inspect
-#	message += " is not in list " + list.inspect
-#	assert(list.include?(element),message)
-#end #assert_include
 def assert_dir_includes(filename,glob)
 	assert_includes(Dir[glob], filename, "Dir['#{glob}']=#{Dir[glob]} does not include #{filename}.")
 end #assert_dir_include
-#def refute_includes(list, element,  message = '')
-#	message=build_message(message, "? is in list ?", element,list)   
-#	assert_block(message){!list.include?(element)}
-#end #refute_include
 def assert_public_instance_method(obj,methodName,message='')
 	#noninherited=obj.class.public_instance_methods-obj.class.superclass.public_instance_methods
 	if obj.respond_to?(methodName) then

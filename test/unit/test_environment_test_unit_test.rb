@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../assertions/ruby_assertions_test_unit.rb'
+require_relative '../assertions/ruby_assertions_common.rb'
 class TestEnvironmentTestUnitTest < TestCase
 include AssertionsModule
 extend AssertionsModule
