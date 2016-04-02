@@ -1,6 +1,6 @@
 passed
-2016-02-01 19:02:23.298
-ruby -v -W0 test/unit/shell_command_test.rb
+2016-04-02 01:18:19.040
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
@@ -9,8 +9,8 @@ Run options: --seed 0
 .....EE..rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - cd>
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
-test/unit/shell_command_test.rb:126:in `new'
-test/unit/shell_command_test.rb:126:in `test_03'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:126:in `new'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:126:in `test_03'
 /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
 /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
 /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -32,784 +32,387 @@ test/unit/shell_command_test.rb:126:in `test_03'
 /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
 /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
 /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-...F
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:92: [BUG] Bus Error at 0x0003e8000054ba
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-
--- Control frame information -----------------------------------------------
-c:0031 p:---- s:0149 e:000148 CFUNC  :read
-c:0030 p:0015 s:0146 e:000145 BLOCK  /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:92
-c:0029 p:0077 s:0140 e:000139 METHOD /usr/lib/ruby/2.2.0/open3.rb:199
-c:0028 p:0125 s:0130 e:000129 METHOD /usr/lib/ruby/2.2.0/open3.rb:93
-c:0027 p:0052 s:0118 E:002680 METHOD /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:90
-c:0026 p:0026 s:0113 e:000112 METHOD /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117 [FINISH]
-c:0025 p:---- s:0109 e:000108 CFUNC  :new
-c:0024 p:0034 s:0105 e:000104 METHOD /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:28
-c:0023 p:0014 s:0100 e:000099 METHOD test/unit/shell_command_test.rb:44
-c:0022 p:0024 s:0096 e:000095 BLOCK  /usr/lib/ruby/vendor_ruby/minitest/test.rb:108
-c:0021 p:0006 s:0094 e:000093 METHOD /usr/lib/ruby/vendor_ruby/minitest/test.rb:205
-c:0020 p:0007 s:0090 e:000089 BLOCK  /usr/lib/ruby/vendor_ruby/minitest/test.rb:105
-c:0019 p:0019 s:0088 e:000087 METHOD /usr/lib/ruby/vendor_ruby/minitest/test.rb:256
-c:0018 p:0007 s:0084 e:000083 BLOCK  /usr/lib/ruby/vendor_ruby/minitest/test.rb:104
-c:0017 p:0034 s:0082 e:000081 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:331
-c:0016 p:0035 s:0075 E:002418 METHOD /usr/lib/ruby/vendor_ruby/minitest/test.rb:276
-c:0015 p:0007 s:0069 E:0000e0 METHOD /usr/lib/ruby/vendor_ruby/minitest/test.rb:103
-c:0014 p:0012 s:0066 e:000065 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:778
-c:0013 p:0019 s:0060 e:000058 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:305
-c:0012 p:0013 s:0053 e:000052 BLOCK  /usr/lib/ruby/vendor_ruby/minitest.rb:293 [FINISH]
-c:0011 p:---- s:0050 e:000049 CFUNC  :each
-c:0010 p:0008 s:0047 e:000046 BLOCK  /usr/lib/ruby/vendor_ruby/minitest.rb:292
-c:0009 p:0034 s:0045 e:000044 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:331
-c:0008 p:0020 s:0038 E:0011d8 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:318
-c:0007 p:0076 s:0032 E:000b90 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:291
-c:0006 p:0012 s:0025 e:000024 BLOCK  /usr/lib/ruby/vendor_ruby/minitest.rb:152 [FINISH]
-c:0005 p:---- s:0022 e:000021 CFUNC  :map
-c:0004 p:0036 s:0019 e:000018 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:152
-c:0003 p:0140 s:0011 e:000010 METHOD /usr/lib/ruby/vendor_ruby/minitest.rb:129
-c:0002 p:0065 s:0005 E:0009a8 BLOCK  /usr/lib/ruby/vendor_ruby/minitest.rb:56 [FINISH]
-c:0001 p:0000 s:0002 E:000740 TOP    [FINISH]
-
--- Ruby level backtrace information ----------------------------------------
-/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-/usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-/usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-/usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-test/unit/shell_command_test.rb:44:in `test_command_on_remote'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:28:in `[]'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:28:in `new'
+...FE...$ echo "1 2;3 4"
+1 2;3 4
+.FE.EEE.rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - cd>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:90:in `execute'
-/usr/lib/ruby/2.2.0/open3.rb:93:in `popen3'
-/usr/lib/ruby/2.2.0/open3.rb:199:in `popen_run'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:92:in `block in execute'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:92:in `read'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:122:in `new'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:122:in `test_02'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+..rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - cd>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:130:in `new'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:130:in `test_04'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+.rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - cd>
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:134:in `new'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:134:in `test_05'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+/usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+/usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+/usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+..EE.......
 
--- Machine register context ------------------------------------------------
- RIP: 0x00007f2eeacec81d RBP: 0x0000000000002000 RSP: 0x00007ffda656f7c0
- RAX: 0xfffffffffffffffc RBX: 0x0000000000c1b5f0 RCX: 0xffffffffffffffff
- RDX: 0x0000000000002000 RDI: 0x000000000000000f RSI: 0x000000000202c960
-  R8: 0x0000000000c1af30  R9: 0x0000000000000000 R10: 0x000000000202c950
- R11: 0x0000000000000293 R12: 0x000000000202c960 R13: 0x00007ffda656f970
- R14: 0x000000000202c960 R15: 0x0000000000002000 EFL: 0x0000000000000293
+Finished in 6.860572s, 5.6847 runs/s, 6.1219 assertions/s.
 
--- C level backtrace information -------------------------------------------
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb08bde5]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb08c01c]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeaf67fcb]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb01d53e]
-/lib/x86_64-linux-gnu/libpthread.so.0 [0x7f2eeaced660]
-/lib/x86_64-linux-gnu/libpthread.so.0(read+0x2d) [0x7f2eeacec81d]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_thread_io_blocking_region+0xcc) [0x7f2eeb095adc]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeaf94b76]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeaf94c44]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_ensure+0xb0) [0x7f2eeaf6d6f0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeaf90c9c]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeaf94405]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeaf96bdf]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb075a21]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb0795c2]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb07ed8d]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb080484]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb0818e6]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_class_new_instance+0x21) [0x7f2eeafbd171]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb075a21]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb085ebe]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb0795c2]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb07ed8d]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb0841c0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_yield+0x5b) [0x7f2eeb08536b]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_ary_each+0x52) [0x7f2eeaf277f2]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb075a21]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb079517]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb07ed8d]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb0841c0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_yield+0x5b) [0x7f2eeb08536b]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeaf2c7bd]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb075a21]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb085ebe]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb079517]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb07ed8d]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb0841c0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb0846f0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeb0847e8]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_proc_call+0x42) [0x7f2eeaf73e62]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeaf6b054]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(rb_exec_end_proc+0x93) [0x7f2eeaf6e2f3]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2 [0x7f2eeaf6e423]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(ruby_cleanup+0x200) [0x7f2eeaf6e7d0]
-/usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2(ruby_run_node+0x25) [0x7f2eeaf6ec35]
-ruby [0x40089b]
-/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf0) [0x7f2ee9f96870]
-ruby(_start+0x29) [0x4008c9]
-
--- Other runtime information -----------------------------------------------
-
-* Loaded script: test/unit/shell_command_test.rb
-
-* Loaded features:
-
-    0 enumerator.so
-    1 rational.so
-    2 complex.so
-    3 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
-    4 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
-    5 /usr/lib/ruby/2.2.0/unicode_normalize.rb
-    6 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/rbconfig.rb
-    7 thread.rb
-    8 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
-    9 /usr/lib/ruby/2.2.0/rubygems/compatibility.rb
-   10 /usr/lib/ruby/2.2.0/rubygems/defaults.rb
-   11 /usr/lib/ruby/2.2.0/rubygems/deprecate.rb
-   12 /usr/lib/ruby/2.2.0/rubygems/errors.rb
-   13 /usr/lib/ruby/2.2.0/rubygems/version.rb
-   14 /usr/lib/ruby/2.2.0/rubygems/requirement.rb
-   15 /usr/lib/ruby/2.2.0/rubygems/platform.rb
-   16 /usr/lib/ruby/2.2.0/rubygems/basic_specification.rb
-   17 /usr/lib/ruby/2.2.0/rubygems/stub_specification.rb
-   18 /usr/lib/ruby/2.2.0/rubygems/util/stringio.rb
-   19 /usr/lib/ruby/2.2.0/rubygems/specification.rb
-   20 /usr/lib/ruby/2.2.0/rubygems/exceptions.rb
-   21 /usr/lib/ruby/vendor_ruby/rubygems/defaults/operating_system.rb
-   22 /usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_gem.rb
-   23 /usr/lib/ruby/2.2.0/monitor.rb
-   24 /usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb
-   25 /usr/lib/ruby/2.2.0/rubygems.rb
-   26 /usr/lib/ruby/2.2.0/optparse.rb
-   27 /usr/lib/ruby/2.2.0/mutex_m.rb
-   28 /usr/lib/ruby/vendor_ruby/minitest/parallel.rb
-   29 /usr/lib/ruby/2.2.0/delegate.rb
-   30 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
-   31 /usr/lib/ruby/2.2.0/fileutils.rb
-   32 /usr/lib/ruby/2.2.0/tmpdir.rb
-   33 /usr/lib/ruby/2.2.0/tempfile.rb
-   34 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
-   35 /usr/lib/ruby/vendor_ruby/minitest/assertions.rb
-   36 /usr/lib/ruby/vendor_ruby/minitest/unit.rb
-   37 /usr/lib/ruby/vendor_ruby/minitest/test.rb
-   38 /usr/lib/ruby/vendor_ruby/minitest.rb
-   39 /usr/lib/ruby/vendor_ruby/minitest/expectations.rb
-   40 /usr/lib/ruby/vendor_ruby/minitest/spec.rb
-   41 /usr/lib/ruby/vendor_ruby/minitest/mock.rb
-   42 /usr/lib/ruby/vendor_ruby/minitest/autorun.rb
-   43 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
-   44 /usr/lib/ruby/2.2.0/digest.rb
-   45 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
-   46 /usr/lib/ruby/2.2.0/openssl/bn.rb
-   47 /usr/lib/ruby/2.2.0/openssl/cipher.rb
-   48 /usr/lib/ruby/2.2.0/openssl/config.rb
-   49 /usr/lib/ruby/2.2.0/openssl/digest.rb
-   50 /usr/lib/ruby/2.2.0/openssl/x509.rb
-   51 /usr/lib/ruby/2.2.0/openssl/buffering.rb
-   52 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
-   53 /usr/lib/ruby/2.2.0/openssl/ssl.rb
-   54 /usr/lib/ruby/2.2.0/openssl.rb
-   55 /usr/lib/ruby/2.2.0/securerandom.rb
-   56 /usr/lib/ruby/vendor_ruby/thread_safe/version.rb
-   57 /usr/lib/ruby/vendor_ruby/thread_safe/synchronized_delegator.rb
-   58 /usr/lib/ruby/vendor_ruby/thread_safe.rb
-   59 /usr/lib/ruby/vendor_ruby/active_support/core_ext/array/prepend_and_append.rb
-   60 /usr/lib/ruby/vendor_ruby/active_support/core_ext/hash/deep_merge.rb
-   61 /usr/lib/ruby/vendor_ruby/active_support/core_ext/hash/except.rb
-   62 /usr/lib/ruby/vendor_ruby/active_support/core_ext/hash/slice.rb
-   63 /usr/lib/ruby/vendor_ruby/i18n/version.rb
-   64 /usr/lib/ruby/2.2.0/cgi/core.rb
-   65 /usr/lib/ruby/2.2.0/cgi/util.rb
-   66 /usr/lib/ruby/2.2.0/cgi/cookie.rb
-   67 /usr/lib/ruby/2.2.0/cgi.rb
-   68 /usr/lib/ruby/vendor_ruby/i18n/exceptions.rb
-   69 /usr/lib/ruby/vendor_ruby/i18n/interpolate/ruby.rb
-   70 /usr/lib/ruby/vendor_ruby/i18n.rb
-   71 /usr/lib/ruby/vendor_ruby/active_support/lazy_load_hooks.rb
-   72 /usr/lib/ruby/2.2.0/set.rb
-   73 /usr/lib/ruby/vendor_ruby/i18n/config.rb
-   74 /usr/lib/ruby/vendor_ruby/active_support/i18n.rb
-   75 /usr/lib/ruby/vendor_ruby/thread_safe/non_concurrent_cache_backend.rb
-   76 /usr/lib/ruby/vendor_ruby/thread_safe/mri_cache_backend.rb
-   77 /usr/lib/ruby/vendor_ruby/thread_safe/cache.rb
-   78 /usr/lib/ruby/vendor_ruby/active_support/inflector/inflections.rb
-   79 /usr/lib/ruby/vendor_ruby/active_support/inflections.rb
-   80 /usr/lib/ruby/vendor_ruby/active_support/inflector/methods.rb
-   81 /usr/lib/ruby/vendor_ruby/active_support/dependencies/autoload.rb
-   82 /usr/lib/ruby/vendor_ruby/active_support/gem_version.rb
-   83 /usr/lib/ruby/vendor_ruby/active_support/version.rb
-   84 /usr/lib/ruby/vendor_ruby/active_support/core_ext/array/extract_options.rb
-   85 /usr/lib/ruby/vendor_ruby/active_support/core_ext/module/attribute_accessors.rb
-   86 /usr/lib/ruby/vendor_ruby/active_support/concern.rb
-   87 /usr/lib/ruby/vendor_ruby/active_support/logger_silence.rb
-   88 /usr/lib/ruby/2.2.0/logger.rb
-   89 /usr/lib/ruby/vendor_ruby/active_support/logger.rb
-   90 /usr/lib/ruby/vendor_ruby/active_support.rb
-   91 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
-   92 /usr/lib/ruby/2.2.0/date.rb
-   93 /usr/lib/ruby/2.2.0/time.rb
-   94 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/acts_like.rb
-   95 /usr/lib/ruby/vendor_ruby/active_support/core_ext/time/acts_like.rb
-   96 /usr/lib/ruby/2.2.0/base64.rb
-   97 /usr/lib/ruby/2.2.0/rubygems/dependency.rb
-   98 /usr/lib/ruby/2.2.0/rubygems/path_support.rb
-   99 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
-  100 /usr/lib/ruby/vendor_ruby/active_support/core_ext/module/delegation.rb
-  101 /usr/lib/ruby/vendor_ruby/active_support/multibyte.rb
-  102 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/multibyte.rb
-  103 /usr/lib/ruby/vendor_ruby/active_support/inflector/transliterate.rb
-  104 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/inflections.rb
-  105 /usr/lib/ruby/vendor_ruby/active_support/core_ext/date_time/calculations.rb
-  106 /usr/lib/ruby/2.2.0/singleton.rb
-  107 /usr/lib/ruby/vendor_ruby/active_support/core_ext/kernel/singleton_class.rb
-  108 /usr/lib/ruby/vendor_ruby/active_support/deprecation/instance_delegator.rb
-  109 /usr/lib/ruby/vendor_ruby/active_support/notifications/instrumenter.rb
-  110 /usr/lib/ruby/vendor_ruby/active_support/notifications/fanout.rb
-  111 /usr/lib/ruby/vendor_ruby/active_support/per_thread_registry.rb
-  112 /usr/lib/ruby/vendor_ruby/active_support/notifications.rb
-  113 /usr/lib/ruby/vendor_ruby/active_support/deprecation/behaviors.rb
-  114 /usr/lib/ruby/vendor_ruby/active_support/deprecation/reporting.rb
-  115 /usr/lib/ruby/vendor_ruby/active_support/core_ext/module/aliasing.rb
-  116 /usr/lib/ruby/vendor_ruby/active_support/deprecation/method_wrappers.rb
-  117 /usr/lib/ruby/vendor_ruby/active_support/deprecation/proxy_wrappers.rb
-  118 /usr/lib/ruby/vendor_ruby/active_support/core_ext/module/deprecation.rb
-  119 /usr/lib/ruby/vendor_ruby/active_support/deprecation.rb
-  120 /usr/lib/ruby/vendor_ruby/active_support/core_ext/kernel/reporting.rb
-  121 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/blank.rb
-  122 /usr/lib/ruby/vendor_ruby/active_support/xml_mini/rexml.rb
-  123 /usr/lib/ruby/vendor_ruby/active_support/xml_mini.rb
-  124 /usr/lib/ruby/vendor_ruby/active_support/core_ext/hash/keys.rb
-  125 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/to_query.rb
-  126 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/to_param.rb
-  127 /usr/lib/ruby/vendor_ruby/active_support/core_ext/array/conversions.rb
-  128 /usr/lib/ruby/vendor_ruby/active_support/duration.rb
-  129 /usr/lib/ruby/vendor_ruby/tzinfo/ruby_core_support.rb
-  130 /usr/lib/ruby/vendor_ruby/tzinfo/offset_rationals.rb
-  131 /usr/lib/ruby/vendor_ruby/tzinfo/time_or_datetime.rb
-  132 /usr/lib/ruby/vendor_ruby/tzinfo/timezone_definition.rb
-  133 /usr/lib/ruby/vendor_ruby/tzinfo/timezone_offset.rb
-  134 /usr/lib/ruby/vendor_ruby/tzinfo/timezone_transition.rb
-  135 /usr/lib/ruby/vendor_ruby/tzinfo/timezone_transition_definition.rb
-  136 /usr/lib/ruby/vendor_ruby/tzinfo/timezone_index_definition.rb
-  137 /usr/lib/ruby/vendor_ruby/tzinfo/timezone_info.rb
-  138 /usr/lib/ruby/vendor_ruby/tzinfo/data_timezone_info.rb
-  139 /usr/lib/ruby/vendor_ruby/tzinfo/linked_timezone_info.rb
-  140 /usr/lib/ruby/vendor_ruby/tzinfo/transition_data_timezone_info.rb
-  141 /usr/lib/ruby/vendor_ruby/tzinfo/zoneinfo_timezone_info.rb
-  142 /usr/lib/ruby/vendor_ruby/tzinfo/data_source.rb
-  143 /usr/lib/ruby/vendor_ruby/tzinfo/ruby_data_source.rb
-  144 /usr/lib/ruby/vendor_ruby/tzinfo/zoneinfo_data_source.rb
-  145 /usr/lib/ruby/vendor_ruby/tzinfo/timezone_period.rb
-  146 /usr/lib/ruby/vendor_ruby/tzinfo/timezone.rb
-  147 /usr/lib/ruby/vendor_ruby/tzinfo/info_timezone.rb
-  148 /usr/lib/ruby/vendor_ruby/tzinfo/data_timezone.rb
-  149 /usr/lib/ruby/vendor_ruby/tzinfo/linked_timezone.rb
-  150 /usr/lib/ruby/vendor_ruby/tzinfo/timezone_proxy.rb
-  151 /usr/lib/ruby/vendor_ruby/tzinfo/country_index_definition.rb
-  152 /usr/lib/ruby/vendor_ruby/tzinfo/country_info.rb
-  153 /usr/lib/ruby/vendor_ruby/tzinfo/ruby_country_info.rb
-  154 /usr/lib/ruby/vendor_ruby/tzinfo/zoneinfo_country_info.rb
-  155 /usr/lib/ruby/vendor_ruby/tzinfo/country.rb
-  156 /usr/lib/ruby/vendor_ruby/tzinfo/country_timezone.rb
-  157 /usr/lib/ruby/vendor_ruby/tzinfo.rb
-  158 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/try.rb
-  159 /usr/lib/ruby/vendor_ruby/active_support/values/time_zone.rb
-  160 /usr/lib/ruby/vendor_ruby/active_support/core_ext/time/conversions.rb
-  161 /usr/lib/ruby/vendor_ruby/active_support/time_with_zone.rb
-  162 /usr/lib/ruby/vendor_ruby/active_support/core_ext/date_and_time/zones.rb
-  163 /usr/lib/ruby/vendor_ruby/active_support/core_ext/time/zones.rb
-  164 /usr/lib/ruby/vendor_ruby/active_support/core_ext/date_and_time/calculations.rb
-  165 /usr/lib/ruby/vendor_ruby/active_support/core_ext/date/zones.rb
-  166 /usr/lib/ruby/vendor_ruby/active_support/core_ext/date/calculations.rb
-  167 /usr/lib/ruby/vendor_ruby/active_support/core_ext/time/calculations.rb
-  168 /usr/lib/ruby/vendor_ruby/active_support/core_ext/time/marshal.rb
-  169 /usr/lib/ruby/vendor_ruby/active_support/core_ext/time.rb
-  170 /usr/lib/ruby/vendor_ruby/active_support/core_ext/date/acts_like.rb
-  171 /usr/lib/ruby/vendor_ruby/active_support/core_ext/module/remove_method.rb
-  172 /usr/lib/ruby/vendor_ruby/active_support/core_ext/date/conversions.rb
-  173 /usr/lib/ruby/vendor_ruby/active_support/core_ext/date.rb
-  174 /usr/lib/ruby/vendor_ruby/active_support/core_ext/date_time/acts_like.rb
-  175 /usr/lib/ruby/vendor_ruby/active_support/core_ext/date_time/conversions.rb
-  176 /usr/lib/ruby/vendor_ruby/active_support/core_ext/date_time/zones.rb
-  177 /usr/lib/ruby/vendor_ruby/active_support/core_ext/date_time.rb
-  178 /usr/lib/ruby/vendor_ruby/active_support/core_ext/numeric/time.rb
-  179 /usr/lib/ruby/vendor_ruby/active_support/core_ext/integer/time.rb
-  180 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/conversions.rb
-  181 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/zones.rb
-  182 /usr/lib/ruby/vendor_ruby/active_support/time.rb
-  183 /usr/lib/ruby/vendor_ruby/active_support/inflector.rb
-  184 /usr/lib/ruby/vendor_ruby/active_support/core_ext/module/introspection.rb
-  185 /usr/lib/ruby/vendor_ruby/active_support/core_ext/module/anonymous.rb
-  186 /usr/lib/ruby/vendor_ruby/active_support/core_ext/module/reachable.rb
-  187 /usr/lib/ruby/vendor_ruby/active_support/core_ext/module/attr_internal.rb
-  188 /usr/lib/ruby/vendor_ruby/active_support/core_ext/module/concerning.rb
-  189 /usr/lib/ruby/vendor_ruby/active_support/core_ext/module/qualified_const.rb
-  190 /usr/lib/ruby/vendor_ruby/active_support/core_ext/module.rb
-  191 /usr/lib/ruby/vendor_ruby/active_support/core_ext/marshal.rb
-  192 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/duplicable.rb
-  193 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/deep_dup.rb
-  194 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/itself.rb
-  195 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/inclusion.rb
-  196 /usr/lib/ruby/vendor_ruby/active_support/core_ext/array/wrap.rb
-  197 /usr/lib/ruby/vendor_ruby/active_support/core_ext/hash/reverse_merge.rb
-  198 /usr/lib/ruby/vendor_ruby/active_support/core_ext/hash/conversions.rb
-  199 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/conversions.rb
-  200 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/instance_variables.rb
-  201 /usr/lib/ruby/vendor_ruby/json/version.rb
-  202 /usr/lib/ruby/2.2.0/ostruct.rb
-  203 /usr/lib/ruby/vendor_ruby/json/generic_object.rb
-  204 /usr/lib/ruby/vendor_ruby/json/common.rb
-  205 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
-  206 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
-  207 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
-  208 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
-  209 /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
-  210 /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
-  211 /usr/lib/ruby/vendor_ruby/json/ext.rb
-  212 /usr/lib/ruby/vendor_ruby/json.rb
-  213 /usr/lib/ruby/2.2.0/bigdecimal/util.rb
-  214 /usr/lib/ruby/vendor_ruby/active_support/core_ext/big_decimal/conversions.rb
-  215 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/json.rb
-  216 /usr/lib/ruby/vendor_ruby/active_support/option_merger.rb
-  217 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object/with_options.rb
-  218 /usr/lib/ruby/vendor_ruby/active_support/core_ext/object.rb
-  219 /usr/lib/ruby/vendor_ruby/active_support/core_ext/class/attribute.rb
-  220 /usr/lib/ruby/vendor_ruby/active_support/core_ext/class/delegating_attributes.rb
-  221 /usr/lib/ruby/vendor_ruby/active_support/core_ext/class/subclasses.rb
-  222 /usr/lib/ruby/vendor_ruby/active_support/core_ext/class.rb
-  223 /usr/lib/ruby/vendor_ruby/active_support/core_ext/range/conversions.rb
-  224 /usr/lib/ruby/vendor_ruby/active_support/core_ext/range/include_range.rb
-  225 /usr/lib/ruby/vendor_ruby/active_support/core_ext/range/overlaps.rb
-  226 /usr/lib/ruby/vendor_ruby/active_support/core_ext/range/each.rb
-  227 /usr/lib/ruby/vendor_ruby/active_support/core_ext/range.rb
-  228 /usr/lib/ruby/vendor_ruby/active_support/core_ext/hash/compact.rb
-  229 /usr/lib/ruby/vendor_ruby/active_support/hash_with_indifferent_access.rb
-  230 /usr/lib/ruby/vendor_ruby/active_support/core_ext/hash/indifferent_access.rb
-  231 /usr/lib/ruby/vendor_ruby/active_support/core_ext/hash/transform_values.rb
-  232 /usr/lib/ruby/vendor_ruby/active_support/core_ext/hash.rb
-  233 /usr/lib/ruby/vendor_ruby/active_support/core_ext/kernel/agnostics.rb
-  234 /usr/lib/ruby/vendor_ruby/active_support/core_ext/kernel/concern.rb
-  235 /usr/lib/ruby/vendor_ruby/active_support/core_ext/kernel.rb
-  236 /usr/lib/ruby/2.2.0/benchmark.rb
-  237 /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb
-  238 /usr/lib/ruby/vendor_ruby/active_support/core_ext/thread.rb
-  239 /usr/lib/ruby/vendor_ruby/active_support/core_ext/file/atomic.rb
-  240 /usr/lib/ruby/vendor_ruby/active_support/core_ext/file.rb
-  241 /usr/lib/ruby/vendor_ruby/active_support/core_ext/big_decimal.rb
-  242 /usr/lib/ruby/2.2.0/uri/rfc2396_parser.rb
-  243 /usr/lib/ruby/2.2.0/uri/rfc3986_parser.rb
-  244 /usr/lib/ruby/2.2.0/uri/common.rb
-  245 /usr/lib/ruby/2.2.0/uri/generic.rb
-  246 /usr/lib/ruby/2.2.0/uri/ftp.rb
-  247 /usr/lib/ruby/2.2.0/uri/http.rb
-  248 /usr/lib/ruby/2.2.0/uri/https.rb
-  249 /usr/lib/ruby/2.2.0/uri/ldap.rb
-  250 /usr/lib/ruby/2.2.0/uri/ldaps.rb
-  251 /usr/lib/ruby/2.2.0/uri/mailto.rb
-  252 /usr/lib/ruby/2.2.0/uri.rb
-  253 /usr/lib/ruby/vendor_ruby/active_support/core_ext/uri.rb
-  254 /usr/lib/ruby/vendor_ruby/active_support/core_ext/enumerable.rb
-  255 /usr/lib/ruby/vendor_ruby/active_support/core_ext/numeric/bytes.rb
-  256 /usr/lib/ruby/vendor_ruby/active_support/number_helper.rb
-  257 /usr/lib/ruby/vendor_ruby/active_support/core_ext/numeric/conversions.rb
-  258 /usr/lib/ruby/vendor_ruby/active_support/core_ext/numeric.rb
-  259 /usr/lib/ruby/vendor_ruby/active_support/core_ext/array/access.rb
-  260 /usr/lib/ruby/vendor_ruby/active_support/core_ext/array/grouping.rb
-  261 /usr/lib/ruby/vendor_ruby/active_support/core_ext/array.rb
-  262 /usr/lib/ruby/vendor_ruby/active_support/core_ext/load_error.rb
-  263 /usr/lib/ruby/vendor_ruby/active_support/core_ext/name_error.rb
-  264 /usr/lib/ruby/vendor_ruby/active_support/core_ext/integer/multiple.rb
-  265 /usr/lib/ruby/vendor_ruby/active_support/core_ext/integer/inflections.rb
-  266 /usr/lib/ruby/vendor_ruby/active_support/core_ext/integer.rb
-  267 /usr/lib/ruby/vendor_ruby/active_support/core_ext/regexp.rb
-  268 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/filters.rb
-  269 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/starts_ends_with.rb
-  270 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/access.rb
-  271 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/behavior.rb
-  272 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
-  273 /usr/lib/ruby/2.2.0/erb.rb
-  274 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/output_safety.rb
-  275 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/exclude.rb
-  276 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/strip.rb
-  277 /usr/lib/ruby/vendor_ruby/active_support/string_inquirer.rb
-  278 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/inquiry.rb
-  279 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string/indent.rb
-  280 /usr/lib/ruby/vendor_ruby/active_support/core_ext/string.rb
-  281 /usr/lib/ruby/vendor_ruby/active_support/core_ext/struct.rb
-  282 /usr/lib/ruby/vendor_ruby/active_support/core_ext.rb
-  283 /usr/lib/ruby/vendor_ruby/active_support/all.rb
-  284 /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb
-  285 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
-  286 /usr/lib/ruby/2.2.0/pathname.rb
-  287 /home/greg/Desktop/src/Open-Table-Explorer/app/models/global.rb
-  288 /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb
-  289 /usr/lib/ruby/vendor_ruby/active_model/naming.rb
-  290 /usr/lib/ruby/vendor_ruby/active_model/errors.rb
-  291 /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp.rb
-  292 /home/greg/Desktop/src/Open-Table-Explorer/test/assertions.rb
-  293 /home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb
-  294 /var/lib/gems/2.2.0/gems/descendants_tracker-0.0.4/lib/descendants_tracker.rb
-  295 /var/lib/gems/2.2.0/gems/equalizer-0.0.9/lib/equalizer.rb
-  296 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/support/recursion_guard.rb
-  297 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer.rb
-  298 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/object.rb
-  299 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/no_freeze.rb
-  300 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/array.rb
-  301 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/false_class.rb
-  302 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/hash.rb
-  303 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/hash/state.rb
-  304 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/nil_class.rb
-  305 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/module.rb
-  306 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/numeric.rb
-  307 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/range.rb
-  308 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/rubinius.rb
-  309 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/struct.rb
-  310 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/symbol.rb
-  311 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/freezer/true_class.rb
-  312 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine/version.rb
-  313 /var/lib/gems/2.2.0/gems/ice_nine-0.11.0/lib/ice_nine.rb
-  314 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/support/options.rb
-  315 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/support/infinity.rb
-  316 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/value_comparable.rb
-  317 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/length_comparable.rb
-  318 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/encodable.rb
-  319 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/type.rb
-  320 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/object.rb
-  321 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/collection.rb
-  322 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/numeric.rb
-  323 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/array.rb
-  324 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/boolean.rb
-  325 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/class.rb
-  326 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/date.rb
-  327 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/date_time.rb
-  328 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/decimal.rb
-  329 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/float.rb
-  330 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/hash.rb
-  331 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/integer.rb
-  332 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/set.rb
-  333 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/string.rb
-  334 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/symbol.rb
-  335 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/time.rb
-  336 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types/version.rb
-  337 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom/types.rb
-  338 /var/lib/gems/2.2.0/gems/axiom-types-0.1.1/lib/axiom-types.rb
-  339 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/support/options.rb
-  340 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/support/type_lookup.rb
-  341 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/version.rb
-  342 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/configuration.rb
-  343 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer.rb
-  344 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/configurable.rb
-  345 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/object.rb
-  346 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/numeric.rb
-  347 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/float.rb
-  348 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/integer.rb
-  349 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/decimal.rb
-  350 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/string.rb
-  351 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/symbol.rb
-  352 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/time_coercions.rb
-  353 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/date.rb
-  354 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/date_time.rb
-  355 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/time.rb
-  356 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/false_class.rb
-  357 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/true_class.rb
-  358 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/array.rb
-  359 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible/coercer/hash.rb
-  360 /var/lib/gems/2.2.0/gems/coercible-1.0.0/lib/coercible.rb
-  361 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/support/equalizer.rb
-  362 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/support/options.rb
-  363 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/support/type_lookup.rb
-  364 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/model.rb
-  365 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/extensions.rb
-  366 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/const_missing_extensions.rb
-  367 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/class_inclusions.rb
-  368 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/module_extensions.rb
-  369 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/configuration.rb
-  370 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/builder.rb
-  371 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/builder/hook_context.rb
-  372 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/class_methods.rb
-  373 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/instance_methods.rb
-  374 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/value_object.rb
-  375 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/coercer.rb
-  376 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute_set.rb
-  377 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/default_value.rb
-  378 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/default_value/from_clonable.rb
-  379 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/default_value/from_callable.rb
-  380 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/default_value/from_symbol.rb
-  381 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute.rb
-  382 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/builder.rb
-  383 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/coercer.rb
-  384 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/accessor.rb
-  385 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/coercible.rb
-  386 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/strict.rb
-  387 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/lazy_default.rb
-  388 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/boolean.rb
-  389 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/collection.rb
-  390 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/hash.rb
-  391 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute/embedded_value.rb
-  392 /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus.rb
-  393 /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb
-  394 /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_ruby.rb
-  395 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_environment.rb
-  396 /usr/lib/ruby/2.2.0/open3.rb
-  397 /usr/lib/ruby/2.2.0/shellwords.rb
-  398 /home/greg/Desktop/src/Open-Table-Explorer/app/models/log.rb
-  399 /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb
-  400 /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb
-  401 /usr/lib/ruby/2.2.0/psych/exception.rb
-  402 /usr/lib/ruby/2.2.0/psych/syntax_error.rb
-  403 /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
-  404 /usr/lib/ruby/2.2.0/psych/omap.rb
-  405 /usr/lib/ruby/2.2.0/psych/set.rb
-  406 /usr/lib/ruby/2.2.0/psych/class_loader.rb
-  407 /usr/lib/ruby/2.2.0/psych/scalar_scanner.rb
-  408 /usr/lib/ruby/2.2.0/psych/nodes/node.rb
-  409 /usr/lib/ruby/2.2.0/psych/nodes/stream.rb
-  410 /usr/lib/ruby/2.2.0/psych/nodes/document.rb
-  411 /usr/lib/ruby/2.2.0/psych/nodes/sequence.rb
-  412 /usr/lib/ruby/2.2.0/psych/nodes/scalar.rb
-  413 /usr/lib/ruby/2.2.0/psych/nodes/mapping.rb
-  414 /usr/lib/ruby/2.2.0/psych/nodes/alias.rb
-  415 /usr/lib/ruby/2.2.0/psych/nodes.rb
-  416 /usr/lib/ruby/2.2.0/psych/streaming.rb
-  417 /usr/lib/ruby/2.2.0/psych/visitors/visitor.rb
-  418 /usr/lib/ruby/2.2.0/psych/visitors/to_ruby.rb
-  419 /usr/lib/ruby/2.2.0/psych/visitors/emitter.rb
-  420 /usr/lib/ruby/2.2.0/psych/handler.rb
-  421 /usr/lib/ruby/2.2.0/psych/tree_builder.rb
-  422 /usr/lib/ruby/2.2.0/psych/visitors/yaml_tree.rb
-  423 /usr/lib/ruby/2.2.0/psych/json/ruby_events.rb
-  424 /usr/lib/ruby/2.2.0/psych/visitors/json_tree.rb
-  425 /usr/lib/ruby/2.2.0/psych/visitors/depth_first.rb
-  426 /usr/lib/ruby/2.2.0/psych/visitors.rb
-  427 /usr/lib/ruby/2.2.0/psych/parser.rb
-  428 /usr/lib/ruby/2.2.0/psych/coder.rb
-  429 /usr/lib/ruby/2.2.0/psych/core_ext.rb
-  430 /usr/lib/ruby/2.2.0/psych/deprecated.rb
-  431 /usr/lib/ruby/2.2.0/psych/stream.rb
-  432 /usr/lib/ruby/2.2.0/psych/json/yaml_events.rb
-  433 /usr/lib/ruby/2.2.0/psych/json/tree_builder.rb
-  434 /usr/lib/ruby/2.2.0/psych/json/stream.rb
-  435 /usr/lib/ruby/2.2.0/psych/handlers/document_stream.rb
-  436 /usr/lib/ruby/2.2.0/psych.rb
-  437 /usr/lib/ruby/2.2.0/yaml.rb
-  438 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/token.rb
-  439 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/ctype.rb
-  440 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/scanner.rb
-  441 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/tokens/quantifier.rb
-  442 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/tokens/character_type.rb
-  443 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/tokens/unicode_property.rb
-  444 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/tokens/backref.rb
-  445 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/tokens/anchor.rb
-  446 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/tokens/assertion.rb
-  447 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/tokens/meta.rb
-  448 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/tokens/escape.rb
-  449 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/tokens/character_set.rb
-  450 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/tokens/group.rb
-  451 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/tokens.rb
-  452 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax.rb
-  453 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/lexer.rb
-  454 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression/quantifier.rb
-  455 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression/subexpression.rb
-  456 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression/classes/type.rb
-  457 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression/classes/backref.rb
-  458 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression/classes/literal.rb
-  459 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression/classes/anchor.rb
-  460 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression/classes/property.rb
-  461 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression/classes/root.rb
-  462 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression/classes/alternation.rb
-  463 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression/classes/escape.rb
-  464 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression/classes/group.rb
-  465 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression/classes/set.rb
-  466 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/expression.rb
-  467 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/parser.rb
-  468 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser.rb
-  469 /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb
-  470 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/ruby/1.8.6.rb
-  471 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/ruby/1.8.7.rb
-  472 /var/lib/gems/2.2.0/gems/regexp_parser-0.1.6/lib/regexp_parser/syntax/ruby/1.8.rb
-  473 /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb
-  474 /home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_column.rb
-  475 /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb
-  476 /home/greg/Desktop/src/Open-Table-Explorer/app/models/default_test_case.rb
-  477 /usr/lib/ruby/vendor_ruby/minitest/pride_plugin.rb
-
-* Process memory map:
-
-00400000-00401000 r-xp 00000000 103:00 2649509                           /usr/bin/ruby2.2
-00600000-00601000 r--p 00000000 103:00 2649509                           /usr/bin/ruby2.2
-00601000-00602000 rw-p 00001000 103:00 2649509                           /usr/bin/ruby2.2
-00c1a000-0204d000 rw-p 00000000 00:00 0                                  [heap]
-7f2ed8000000-7f2ed8021000 rw-p 00000000 00:00 0 
-7f2ed8021000-7f2edc000000 ---p 00000000 00:00 0 
-7f2edc000000-7f2edc021000 rw-p 00000000 00:00 0 
-7f2edc021000-7f2ee0000000 ---p 00000000 00:00 0 
-7f2ee0000000-7f2ee0021000 rw-p 00000000 00:00 0 
-7f2ee0021000-7f2ee4000000 ---p 00000000 00:00 0 
-7f2ee6275000-7f2ee6276000 rw-p 00000000 00:00 0 
-7f2ee6276000-7f2ee6418000 r--s 00000000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
-7f2ee6418000-7f2ee6683000 r--s 00000000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
-7f2ee6683000-7f2ee6699000 r-xp 00000000 103:00 5505027                   /lib/x86_64-linux-gnu/libgcc_s.so.1
-7f2ee6699000-7f2ee6898000 ---p 00016000 103:00 5505027                   /lib/x86_64-linux-gnu/libgcc_s.so.1
-7f2ee6898000-7f2ee6899000 rw-p 00015000 103:00 5505027                   /lib/x86_64-linux-gnu/libgcc_s.so.1
-7f2ee6899000-7f2ee689a000 ---p 00000000 00:00 0 
-7f2ee689a000-7f2ee6a9b000 rw-p 00000000 00:00 0 
-7f2ee6a9b000-7f2ee6a9c000 ---p 00000000 00:00 0 
-7f2ee6a9c000-7f2ee6c9d000 rw-p 00000000 00:00 0 
-7f2ee6c9d000-7f2ee6cbb000 r-xp 00000000 103:00 2627834                   /usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.4
-7f2ee6cbb000-7f2ee6eba000 ---p 0001e000 103:00 2627834                   /usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.4
-7f2ee6eba000-7f2ee6ebb000 r--p 0001d000 103:00 2627834                   /usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.4
-7f2ee6ebb000-7f2ee6ebc000 rw-p 0001e000 103:00 2627834                   /usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.4
-7f2ee6ebc000-7f2ee6ec2000 r-xp 00000000 103:00 2761473                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
-7f2ee6ec2000-7f2ee70c1000 ---p 00006000 103:00 2761473                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
-7f2ee70c1000-7f2ee70c2000 r--p 00005000 103:00 2761473                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
-7f2ee70c2000-7f2ee70c3000 rw-p 00006000 103:00 2761473                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/psych.so
-7f2ee70c3000-7f2ee70c4000 ---p 00000000 00:00 0 
-7f2ee70c4000-7f2ee72c5000 rw-p 00000000 00:00 0 
-7f2ee72c5000-7f2ee72cb000 r-xp 00000000 103:00 2768093                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
-7f2ee72cb000-7f2ee74ca000 ---p 00006000 103:00 2768093                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
-7f2ee74ca000-7f2ee74cb000 r--p 00005000 103:00 2768093                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
-7f2ee74cb000-7f2ee74cc000 rw-p 00006000 103:00 2768093                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/pathname.so
-7f2ee74cc000-7f2ee74d1000 r-xp 00000000 103:00 2761461                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
-7f2ee74d1000-7f2ee76d0000 ---p 00005000 103:00 2761461                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
-7f2ee76d0000-7f2ee76d1000 r--p 00004000 103:00 2761461                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
-7f2ee76d1000-7f2ee76d2000 rw-p 00005000 103:00 2761461                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/strscan.so
-7f2ee76d2000-7f2ee76da000 r-xp 00000000 103:00 3422222                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
-7f2ee76da000-7f2ee78d9000 ---p 00008000 103:00 3422222                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
-7f2ee78d9000-7f2ee78da000 r--p 00007000 103:00 3422222                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
-7f2ee78da000-7f2ee78db000 rw-p 00008000 103:00 3422222                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/generator.so
-7f2ee78db000-7f2ee78dc000 r-xp 00000000 103:00 2768165                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
-7f2ee78dc000-7f2ee7adc000 ---p 00001000 103:00 2768165                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
-7f2ee7adc000-7f2ee7add000 r--p 00001000 103:00 2768165                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
-7f2ee7add000-7f2ee7ade000 rw-p 00002000 103:00 2768165                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32le.so
-7f2ee7ade000-7f2ee7adf000 r-xp 00000000 103:00 2768167                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
-7f2ee7adf000-7f2ee7cdf000 ---p 00001000 103:00 2768167                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
-7f2ee7cdf000-7f2ee7ce0000 r--p 00001000 103:00 2768167                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
-7f2ee7ce0000-7f2ee7ce1000 rw-p 00002000 103:00 2768167                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_32be.so
-7f2ee7ce1000-7f2ee7ce2000 r-xp 00000000 103:00 2768169                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
-7f2ee7ce2000-7f2ee7ee2000 ---p 00001000 103:00 2768169                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
-7f2ee7ee2000-7f2ee7ee3000 r--p 00001000 103:00 2768169                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
-7f2ee7ee3000-7f2ee7ee4000 rw-p 00002000 103:00 2768169                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16le.so
-7f2ee7ee4000-7f2ee7ee5000 r-xp 00000000 103:00 2768171                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
-7f2ee7ee5000-7f2ee80e5000 ---p 00001000 103:00 2768171                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
-7f2ee80e5000-7f2ee80e6000 r--p 00001000 103:00 2768171                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
-7f2ee80e6000-7f2ee80e7000 rw-p 00002000 103:00 2768171                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/utf_16be.so
-7f2ee80e7000-7f2ee80ed000 r-xp 00000000 103:00 3422223                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
-7f2ee80ed000-7f2ee82ec000 ---p 00006000 103:00 3422223                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
-7f2ee82ec000-7f2ee82ed000 r--p 00005000 103:00 3422223                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
-7f2ee82ed000-7f2ee82ee000 rw-p 00006000 103:00 3422223                   /usr/lib/x86_64-linux-gnu/ruby/vendor_ruby/2.2.0/json/ext/parser.so
-7f2ee82ee000-7f2ee82ff000 r-xp 00000000 103:00 2768155                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
-7f2ee82ff000-7f2ee84fe000 ---p 00011000 103:00 2768155                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
-7f2ee84fe000-7f2ee84ff000 r--p 00010000 103:00 2768155                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
-7f2ee84ff000-7f2ee8500000 rw-p 00011000 103:00 2768155                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/bigdecimal.so
-7f2ee8500000-7f2ee852f000 r-xp 00000000 103:00 2768143                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
-7f2ee852f000-7f2ee872f000 ---p 0002f000 103:00 2768143                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
-7f2ee872f000-7f2ee8730000 r--p 0002f000 103:00 2768143                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
-7f2ee8730000-7f2ee8731000 rw-p 00030000 103:00 2768143                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/date_core.so
-7f2ee8731000-7f2ee8732000 rw-p 00000000 00:00 0 
-7f2ee8732000-7f2ee8733000 r-xp 00000000 103:00 2768151                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
-7f2ee8733000-7f2ee8932000 ---p 00001000 103:00 2768151                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
-7f2ee8932000-7f2ee8933000 r--p 00000000 103:00 2768151                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
-7f2ee8933000-7f2ee8934000 rw-p 00001000 103:00 2768151                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/fcntl.so
-7f2ee8934000-7f2ee8937000 r-xp 00000000 103:00 2768157                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
-7f2ee8937000-7f2ee8b36000 ---p 00003000 103:00 2768157                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
-7f2ee8b36000-7f2ee8b37000 r--p 00002000 103:00 2768157                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
-7f2ee8b37000-7f2ee8b38000 rw-p 00003000 103:00 2768157                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/digest.so
-7f2ee8b38000-7f2ee8d6b000 r-xp 00000000 103:00 2628303                   /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2
-7f2ee8d6b000-7f2ee8f6b000 ---p 00233000 103:00 2628303                   /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2
-7f2ee8f6b000-7f2ee8f87000 r--p 00233000 103:00 2628303                   /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2
-7f2ee8f87000-7f2ee8f96000 rw-p 0024f000 103:00 2628303                   /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2
-7f2ee8f96000-7f2ee8f9a000 rw-p 00000000 00:00 0 
-7f2ee8f9a000-7f2ee8ff9000 r-xp 00000000 103:00 2628307                   /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2
-7f2ee8ff9000-7f2ee91f8000 ---p 0005f000 103:00 2628307                   /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2
-7f2ee91f8000-7f2ee91fc000 r--p 0005e000 103:00 2628307                   /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2
-7f2ee91fc000-7f2ee9203000 rw-p 00062000 103:00 2628307                   /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2
-7f2ee9203000-7f2ee9252000 r-xp 00000000 103:00 2761454                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
-7f2ee9252000-7f2ee9451000 ---p 0004f000 103:00 2761454                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
-7f2ee9451000-7f2ee9453000 r--p 0004e000 103:00 2761454                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
-7f2ee9453000-7f2ee9455000 rw-p 00050000 103:00 2761454                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/openssl.so
-7f2ee9455000-7f2ee9456000 rw-p 00000000 00:00 0 
-7f2ee9456000-7f2ee945d000 r-xp 00000000 103:00 2761463                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
-7f2ee945d000-7f2ee965c000 ---p 00007000 103:00 2761463                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
-7f2ee965c000-7f2ee965d000 r--p 00006000 103:00 2761463                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
-7f2ee965d000-7f2ee965e000 rw-p 00007000 103:00 2761463                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/stringio.so
-7f2ee965e000-7f2ee9664000 r-xp 00000000 103:00 2768149                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
-7f2ee9664000-7f2ee9863000 ---p 00006000 103:00 2768149                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
-7f2ee9863000-7f2ee9864000 r--p 00005000 103:00 2768149                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
-7f2ee9864000-7f2ee9865000 rw-p 00006000 103:00 2768149                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/etc.so
-7f2ee9865000-7f2ee9868000 r-xp 00000000 103:00 2761456                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
-7f2ee9868000-7f2ee9a67000 ---p 00003000 103:00 2761456                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
-7f2ee9a67000-7f2ee9a68000 r--p 00002000 103:00 2761456                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
-7f2ee9a68000-7f2ee9a69000 rw-p 00003000 103:00 2761456                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/thread.so
-7f2ee9a69000-7f2ee9a6b000 r-xp 00000000 103:00 2768267                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
-7f2ee9a6b000-7f2ee9c6b000 ---p 00002000 103:00 2768267                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
-7f2ee9c6b000-7f2ee9c6c000 r--p 00002000 103:00 2768267                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
-7f2ee9c6c000-7f2ee9c6d000 rw-p 00003000 103:00 2768267                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/trans/transdb.so
-7f2ee9c6d000-7f2ee9c6f000 r-xp 00000000 103:00 2768229                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
-7f2ee9c6f000-7f2ee9e6e000 ---p 00002000 103:00 2768229                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
-7f2ee9e6e000-7f2ee9e6f000 r--p 00001000 103:00 2768229                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
-7f2ee9e6f000-7f2ee9e70000 rw-p 00002000 103:00 2768229                   /usr/lib/x86_64-linux-gnu/ruby/2.2.0/enc/encdb.so
-7f2ee9e70000-7f2ee9e71000 rw-p 00000000 00:00 0 
-7f2ee9e71000-7f2ee9e72000 ---p 00000000 00:00 0 
-7f2ee9e72000-7f2ee9f76000 rw-p 00000000 00:00 0 
-7f2ee9f76000-7f2eea110000 r-xp 00000000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
-7f2eea110000-7f2eea310000 ---p 0019a000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
-7f2eea310000-7f2eea314000 r--p 0019a000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
-7f2eea314000-7f2eea316000 rw-p 0019e000 103:00 5505837                   /lib/x86_64-linux-gnu/libc-2.21.so
-7f2eea316000-7f2eea31a000 rw-p 00000000 00:00 0 
-7f2eea31a000-7f2eea41d000 r-xp 00000000 103:00 5505845                   /lib/x86_64-linux-gnu/libm-2.21.so
-7f2eea41d000-7f2eea61d000 ---p 00103000 103:00 5505845                   /lib/x86_64-linux-gnu/libm-2.21.so
-7f2eea61d000-7f2eea61e000 r--p 00103000 103:00 5505845                   /lib/x86_64-linux-gnu/libm-2.21.so
-7f2eea61e000-7f2eea61f000 rw-p 00104000 103:00 5505845                   /lib/x86_64-linux-gnu/libm-2.21.so
-7f2eea61f000-7f2eea627000 r-xp 00000000 103:00 5505843                   /lib/x86_64-linux-gnu/libcrypt-2.21.so
-7f2eea627000-7f2eea826000 ---p 00008000 103:00 5505843                   /lib/x86_64-linux-gnu/libcrypt-2.21.so
-7f2eea826000-7f2eea827000 r--p 00007000 103:00 5505843                   /lib/x86_64-linux-gnu/libcrypt-2.21.so
-7f2eea827000-7f2eea828000 rw-p 00008000 103:00 5505843                   /lib/x86_64-linux-gnu/libcrypt-2.21.so
-7f2eea828000-7f2eea856000 rw-p 00000000 00:00 0 
-7f2eea856000-7f2eea858000 r-xp 00000000 103:00 5505844                   /lib/x86_64-linux-gnu/libdl-2.21.so
-7f2eea858000-7f2eeaa58000 ---p 00002000 103:00 5505844                   /lib/x86_64-linux-gnu/libdl-2.21.so
-7f2eeaa58000-7f2eeaa59000 r--p 00002000 103:00 5505844                   /lib/x86_64-linux-gnu/libdl-2.21.so
-7f2eeaa59000-7f2eeaa5a000 rw-p 00003000 103:00 5505844                   /lib/x86_64-linux-gnu/libdl-2.21.so
-7f2eeaa5a000-7f2eeaadc000 r-xp 00000000 103:00 2632913                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.3.0
-7f2eeaadc000-7f2eeacdb000 ---p 00082000 103:00 2632913                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.3.0
-7f2eeacdb000-7f2eeacdc000 r--p 00081000 103:00 2632913                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.3.0
-7f2eeacdc000-7f2eeacdd000 rw-p 00082000 103:00 2632913                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.3.0
-7f2eeacdd000-7f2eeacf5000 r-xp 00000000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
-7f2eeacf5000-7f2eeaef4000 ---p 00018000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
-7f2eeaef4000-7f2eeaef5000 r--p 00017000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
-7f2eeaef5000-7f2eeaef6000 rw-p 00018000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
-7f2eeaef6000-7f2eeaefa000 rw-p 00000000 00:00 0 
-7f2eeaefa000-7f2eeb15c000 r-xp 00000000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
-7f2eeb15c000-7f2eeb35c000 ---p 00262000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
-7f2eeb35c000-7f2eeb361000 r--p 00262000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
-7f2eeb361000-7f2eeb364000 rw-p 00267000 103:00 2641569                   /usr/lib/x86_64-linux-gnu/libruby-2.2.so.2.2.0
-7f2eeb364000-7f2eeb375000 rw-p 00000000 00:00 0 
-7f2eeb375000-7f2eeb397000 r-xp 00000000 103:00 5505728                   /lib/x86_64-linux-gnu/ld-2.21.so
-7f2eeb3bf000-7f2eeb3e0000 r--s 00000000 103:00 5505361                   /lib/x86_64-linux-gnu/libpthread-2.21.so
-7f2eeb3e0000-7f2eeb569000 r--p 00000000 103:00 2625802                   /usr/lib/locale/locale-archive
-7f2eeb569000-7f2eeb56e000 rw-p 00000000 00:00 0 
-7f2eeb56f000-7f2eeb571000 r--s 00000000 103:00 2649509                   /usr/bin/ruby2.2
-7f2eeb571000-7f2eeb596000 rw-p 00000000 00:00 0 
-7f2eeb596000-7f2eeb597000 r--p 00021000 103:00 5505728                   /lib/x86_64-linux-gnu/ld-2.21.so
-7f2eeb597000-7f2eeb598000 rw-p 00022000 103:00 5505728                   /lib/x86_64-linux-gnu/ld-2.21.so
-7f2eeb598000-7f2eeb599000 rw-p 00000000 00:00 0 
-7ffda5d74000-7ffda6573000 rw-p 00000000 00:00 0                          [stack]
-7ffda657c000-7ffda657d000 r-xp 00000000 00:00 0                          [vdso]
-ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+  1) Error:
+ShellCommandsTest#test_tolerate_status:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:179:in `test_tolerate_status'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 
 
-[NOTE]
-You may have encountered a bug in the Ruby interpreter or extension libraries.
-Bug reports are welcome.
-For details: http://www.ruby-lang.org/bugreport.html
+  2) Error:
+ShellCommandsTest#test_01:
+NoMethodError: undefined method `assertions' for #<ShellCommands:0x00000001f7ccf8>
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:113:in `test_01'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  3) Failure:
+ShellCommandsTest#test_clear_error_message [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:164]:
+Expected: 0
+  Actual: true
+
+
+  4) Error:
+ShellCommandsTest#test_command_on_remote:
+NoMethodError: undefined method `assertions' for cat
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:44:in `test_command_on_remote'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  5) Failure:
+ShellCommandsTest#test_success? [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:160]:
+Expected: 127
+  Actual: false
+
+
+  6) Error:
+ShellCommandsTest#test_initialize:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:79:in `test_initialize'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  7) Error:
+ShellCommandsTest#test_tolerate_error_pattern:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:183:in `test_tolerate_error_pattern'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  8) Error:
+ShellCommandsTest#test_force_success:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:172:in `test_force_success'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  9) Error:
+ShellCommandsTest#test_inspect:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:199:in `test_inspect'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+ 10) Error:
+ShellCommandsTest#test_tolerate_status_and_error_message:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:187:in `test_tolerate_status_and_error_message'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+ 11) Error:
+ShellCommandsTest#test_assert_post_conditions:
+NoMethodError: undefined method `assertions' for Hello World
+:ShellCommands
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:213:in `test_assert_post_conditions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+39 runs, 42 assertions, 2 failures, 9 errors, 0 skips
 
