@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson
+#    Copyright (C) 2013-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -225,7 +225,8 @@ def status(options = '--untracked-files=no')
 	if !changes.empty? then
 		changes.split("\u0000").map do |line|
 			file=line[3..-1]
-			ret << {index: Repository.file_change(line[0..0]), work_tree: Repository.file_change(line[1..1]), description: Repository.normal_status_descriptions(line[0..1]), file: file}
+			log_file = file[-4..-1] == '.log'
+			ret << {index: Repository.file_change(line[0..0]), work_tree: Repository.file_change(line[1..1]), description: Repository.normal_status_descriptions(line[0..1]), file: file, log_file: log_file}
 		end #map
 	end #if
 	ret
