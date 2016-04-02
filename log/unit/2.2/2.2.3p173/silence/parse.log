@@ -1,5 +1,5 @@
 passed
-2016-04-02 01:20:50.064
+2016-04-02 03:22:39.290
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test
@@ -41,10 +41,10 @@ CaptureTest#test_success? was redefined [test_success?(CaptureTest)]
 ===============================================================================
 ...
 
-Finished in 0.050587355 seconds.
+Finished in 0.050107375 seconds.
 ------
 40 tests, 83 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 7 notifications
 100% passed
 ------
-790.71 tests/s, 1640.73 assertions/s
+798.29 tests/s, 1656.44 assertions/s
 
