@@ -6,11 +6,11 @@
 #
 ###########################################################################
 #require_relative 'test_environment' # avoid recursive requires
-require 'test/unit'
-require_relative '../../app/models/default_test_case.rb'
-require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../app/models/test_environment_test_unit.rb'
+#require_relative '../../app/models/default_test_case.rb'
+#require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/file_pattern.rb'
-class FilePatternTest # <  DefaultTestCase2
+class FilePatternTest  <  TestCase
 #include DefaultTests2 
 #include DefaultTests0    #less error messages
 include FilePattern::Constants
