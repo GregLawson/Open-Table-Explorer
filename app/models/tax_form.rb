@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2011-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -364,7 +364,7 @@ def run_pdf_to_jpeg
 
 	@pdf_to_jpeg_run = ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{@ots.taxpayer_basename_with_year}", :chdir=>@ots.open_tax_solver_form_directory)
 	@display_jpeg_run = ShellCommands.new("display  Federal_f1040-1.jpg") if $VERBOSE
-	@display_jpeg_run.assert_post_conditions if $VERBOSE
+	@display_jpeg_run #.assert_post_conditions if $VERBOSE
 	self
 end #run_pdf_to_jpeg
 def build

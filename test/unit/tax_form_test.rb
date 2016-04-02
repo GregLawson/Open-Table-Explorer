@@ -5,9 +5,10 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+#require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative 'test_environment'
 require_relative '../../app/models/tax_form.rb'
-require_relative '../assertions/shell_command_assertions.rb'
+require_relative '../../app/models/shell_command.rb'
 #require_relative '../assertions/regexp_parse_assertions.rb'
 class OtsRunTest < TestCase
 def model_class?
