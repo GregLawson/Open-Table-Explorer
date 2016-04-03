@@ -273,7 +273,7 @@ def column_output
 			named_hash(0)
 		end # if
 	end # if
-end # output?
+end # column_output
 def delimiters?
 		[]
 end # delimiters?
