@@ -1,0 +1,39 @@
+tax_form
+2016-04-03 03:31:33.231
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail
+Started
+......E
+===============================================================================
+Error: test_initialize(InitializationFailTest): RuntimeError: 
+/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:14:in `test_initialize'
+     11: include AssertionsModule
+     12: extend AssertionsModule
+     13: def test_initialize
+  => 14: 	fail
+     15: end #initialize
+     16: def test_requires
+     17: #	assert_included_modules(:Fish, Test::Unit::Assertions)
+===============================================================================
+E
+===============================================================================
+Error: test_requires(InitializationFailTest): ArgumentError: assertion message must be String, Proc or Test::Unit::Assertions::AssertionMessage: <[]>(<Array>)
+/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:18:in `test_requires'
+     15: end #initialize
+     16: def test_requires
+     17: #	assert_included_modules(:Fish, Test::Unit::Assertions)
+  => 18: 	assert(Test::Unit::Assertions.included_modules.empty?, Test::Unit::Assertions.included_modules)
+     19: 	assert(Test::Unit::Assertions.instance_methods.include?(:assert), Test::Unit::Assertions.instance_methods.inspect)
+     20: 	assert(AssertionsModule.instance_methods.include?(:assert), AssertionsModule.instance_methods.inspect)
+     21: 	assert(RubyAssertions.instance_methods.include?(:assert), RubyAssertions.instance_methods.inspect)
+===============================================================================
+
+
+Finished in 0.006684186 seconds.
+------
+8 tests, 10 assertions, 0 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
+75% passed
+------
+1196.85 tests/s, 1496.07 assertions/s
+

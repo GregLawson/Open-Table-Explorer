@@ -1,0 +1,12 @@
+tax_form
+2016-04-03 03:31:57.062
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:39:in `initialize': undefined method `executable_file' for #<TestExecutable:0x00000002ee6bf8> (NoMethodError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:146:in `new'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:146:in `<module:Examples>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:144:in `<class:WorkFlow>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:12:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb:9:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb:9:in `<main>'

@@ -1,0 +1,23 @@
+tax_form
+2016-04-03 03:31:14.391
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+....F......
+
+Finished in 3.456988s, 3.1820 runs/s, 6.3639 assertions/s.
+
+  1) Failure:
+NewTestClass#test_TestRun_initialize [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb:32]:
+--- expected
++++ actual
+@@ -1 +1 @@
+-"/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb"
++"test/unit/test_run_test.rb"
+
+
+11 runs, 22 assertions, 1 failures, 0 errors, 0 skips
+

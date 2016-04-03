@@ -1,0 +1,7 @@
+tax_form
+2016-04-03 03:29:17.863
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal_no_test_environment_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal_no_test_environment_test.rb:15:in `<class:MinimalTest>': uninitialized constant MinimalTest::RailsishRubyUnit (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal_no_test_environment_test.rb:14:in `<main>'

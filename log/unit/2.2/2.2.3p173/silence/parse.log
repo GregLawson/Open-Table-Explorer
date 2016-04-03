@@ -1,0 +1,50 @@
+tax_form
+2016-04-03 03:29:22.402
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test
+Started
+.......N
+===============================================================================
+CaptureTest#test_MatchCapture_output? was redefined [test_MatchCapture_output?(CaptureTest)]
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:301:in `<class:CaptureTest>'
+===============================================================================
+.............N
+===============================================================================
+CaptureTest#test_delimiters? was redefined [test_delimiters?(CaptureTest)]
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:361:in `<class:CaptureTest>'
+===============================================================================
+.....N
+===============================================================================
+CaptureTest#test_matched_characters? was redefined [test_matched_characters?(CaptureTest)]
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:357:in `<class:CaptureTest>'
+===============================================================================
+....N
+===============================================================================
+CaptureTest#test_output? was redefined [test_output?(CaptureTest)]
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:359:in `<class:CaptureTest>'
+===============================================================================
+...N
+===============================================================================
+CaptureTest#test_post_match? was redefined [test_post_match?(CaptureTest)]
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:353:in `<class:CaptureTest>'
+===============================================================================
+.N
+===============================================================================
+CaptureTest#test_pre_match? was redefined [test_pre_match?(CaptureTest)]
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:355:in `<class:CaptureTest>'
+===============================================================================
+....N
+===============================================================================
+CaptureTest#test_success? was redefined [test_success?(CaptureTest)]
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:351:in `<class:CaptureTest>'
+===============================================================================
+...
+
+Finished in 0.051153453 seconds.
+------
+40 tests, 83 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 7 notifications
+100% passed
+------
+781.96 tests/s, 1622.57 assertions/s
+

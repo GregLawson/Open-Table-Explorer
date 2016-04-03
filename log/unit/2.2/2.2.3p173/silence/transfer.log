@@ -1,0 +1,20 @@
+tax_form
+2016-04-03 03:31:17.731
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/transfer_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/transfer_test.rb:103: dynamic constant assignment
+T=Arel::Table.new(:transfers, :as => 'T')
+  ^
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/transfer_test.rb:104: dynamic constant assignment
+A =Arel::Table.new(:accounts, :as => 'A')
+   ^
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/transfer_test.rb:107: dynamic constant assignment
+G =T.join(A)  #(implicit) will reference final joined relationship
+   ^
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/transfer_test.rb:110: dynamic constant assignment
+G =T.join(A).on( T[:account_id].eq(A[:id] )) 
+   ^
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/transfer_test.rb:116: dynamic constant assignment
+G=G.group(T[:account_id])
+  ^

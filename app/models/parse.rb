@@ -102,7 +102,7 @@ end # +
 #     named_captures for captures.size > names.size
 
 # Capture::Assertions
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
@@ -273,7 +273,7 @@ def column_output
 			named_hash(0)
 		end # if
 	end # if
-end # output?
+end # column_output
 def delimiters?
 		[]
 end # delimiters?
@@ -483,7 +483,7 @@ end # parse
 module Constants
 end #Constants
 include Constants
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_parse_sequence(answer, string, pattern1, pattern2, message='')

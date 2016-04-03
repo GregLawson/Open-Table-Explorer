@@ -1,0 +1,8 @@
+tax_form
+2016-04-03 03:26:17.500
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_default_test_case.rb:11:in `<top (required)>': undefined method `default_tests_module_name?' for #<Unit:0x00000002312638> (NoMethodError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case_test.rb:8:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case_test.rb:8:in `<main>'

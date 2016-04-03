@@ -115,7 +115,7 @@ def unit_test(executable = @related_files.model_test_pathname?)
 		editor.edit('unit_test')
 	end until !@repository.something_to_commit?
 end # unit_test
-require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 
 module ClassMethods

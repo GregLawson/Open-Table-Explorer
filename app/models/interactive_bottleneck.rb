@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson
+#    Copyright (C) 2013-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -15,37 +15,39 @@ end # Constants
 include Constants
 module ClassMethods
 include Constants
+def calc_test_maturity!(test_executable, recursion_danger = nil)
+		if test_executable.testable?(recursion_danger) then
+			TestMaturity.new(test_executable: test_executable)
+	else
+			nil
+		end # if
+end # calc_test_maturity!
 end # ClassMethods
 extend ClassMethods
 # Define related (unit) versions
 # Use as current, lower/upper bound, branch history
 # parametized by related files, repository, branch_number, executable
 # record error_score, recent_test, time
-attr_reader :related_files, :edit_files, :repository, :unit_maturity, :editor
-def initialize(test_executable, editor = Editor.new(test_executable))
-	@test_executable = test_executable
-	@editor = editor
-	@unit_maturity = UnitMaturity.new(@test_executable.repository, related_files)
-	@related_files = related_files
-	@repository = @test_executable.repository
-	index = UnitMaturity::Branch_enhancement.index(@repository.current_branch_name?)
-	if index.nil? then
-		@branch_index = UnitMaturity::First_slot_index
-	else
-		@branch_index = index
-	end # if
-end # initialize
+include Virtus.value_object
+  values do
+	attribute :test_executable, TestExecutable
+	attribute :editor, Editor, :default => lambda { |interactive_bottleneck, attribute| Editor.new(interactive_bottleneck.test_executable) }
+	attribute :repository, Repository, :default => lambda { |interactive_bottleneck, attribute| interactive_bottleneck.test_executable.repository }
+	attribute :unit_maturity, UnitMaturity, :default => lambda { |interactive_bottleneck, attribute| UnitMaturity.new(interactive_bottleneck.test_executable.repository, interactive_bottleneck.test_executable.unit) }
+#	attribute :branch_index, Fixnum, :default => lambda { |interactive_bottleneck, attribute| InteractiveBottleneck.index(interactive_bottleneck.test_executable.repository) }
+	attribute :interactive, Symbol, :default => :interactive # non-defaults are primarily for non-interactive testing testing
+end # values
 def standardize_position!
 	 abort_rebase_and_merge!
-	git_command("checkout master")
+	@repository.git_command("checkout master")
 end #standardize_position!
 def abort_rebase_and_merge!
 	if File.exists?('.git/rebase-merge/git-rebase-todo') then
-		git_command("rebase --abort")
+		@repository.git_command("rebase --abort")
 	end
-#	git_command("stash save").assert_post_conditions
+#	@repository.git_command("stash save").assert_post_conditions
 	if File.exists?('.git/MERGE_HEAD') then
-		git_command("merge --abort")
+		@repository.git_command("merge --abort")
 	end # if
 end # abort_rebase_and_merge!
 def state?
@@ -56,15 +58,60 @@ def state?
 	if File.exists?('.git/MERGE_HEAD') then
 		state << :merge
 	end # if
-	if something_to_commit? then
+	if @repository.something_to_commit? then
 		state << :dirty
 	else
 		state << :clean
 	end # if
 	return state
 end # state?
+def dirty_test_executables
+	@repository.status.map do |file_status|
+		test_executable = TestExecutable.new_from_path(file_status[:file])
+		testable = test_executable.testable?
+		if testable then
+			test_executable # find unique
+		else
+			nil
+		end # if
+	end.compact.uniq # map
+end # dirty_test_executables
+def dirty_units
+	dirty_test_executables.map do |test_executable|
+		if test_executable.unit.model_basename.nil? then
+			{test_executable: test_executable, unit: nil}
+		else
+			{test_executable: test_executable, unit: test_executable.unit}
+		end # if
+	end # map
+end # dirty_units
+def dirty_test_maturities(recursion_danger = nil)
+	dirty_test_executables.map do |test_executable|
+		if test_executable.testable? then
+			test_maturity  = TestMaturity.new(test_executable: test_executable)
+		else
+			nil # drop non-regression testable files
+		end # if
+	end.compact #.sort
+end # dirty_test_maturities
+def clean_directory
+	dirty_test_executables.sort.map do |test_executable|
+		test(test_executable)
+		stage_test_executable
+	end # map
+end # clean_directory
+def discard_log_file_merge
+	unmerged_files = @repository.merge_conflict_files?
+		unmerged_files.each do |conflict|
+			if conflict[:file][-4..-1] == '.log' then
+				@repository.git_command('checkout HEAD ' + conflict[:file])
+				puts 'checkout HEAD ' + conflict[:file]
+			end # if
+		end # each
+end # discard_log_file_merge
 def merge_conflict_recovery(from_branch)
 # see man git status
+	discard_log_file_merge # each branch's log file status is independant
 	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
 	unmerged_files = @repository.merge_conflict_files?
 	if !unmerged_files.empty? then
@@ -75,10 +122,6 @@ def merge_conflict_recovery(from_branch)
 			remerge = @repository.git_command('merge --X ours ' + from_branch.to_s)
 		end # if
 		unmerged_files.each do |conflict|
-			if conflict[:file][-4..-1] == '.log' then
-				@repository.git_command('checkout HEAD ' + conflict[:file])
-				puts 'checkout HEAD ' + conflict[:file]
-			else
 				puts 'not checkout HEAD ' + conflict[:file]
 				case conflict[:conflict]
 				# DD unmerged, both deleted
@@ -94,18 +137,18 @@ def merge_conflict_recovery(from_branch)
 				# AA unmerged, both added
 				# UU unmerged, both modified
 				when 'UU', ' M', 'M ', 'MM', 'A ', 'AA' then
-					WorkFlow.new(conflict[:file]).editor.edit('merge_conflict_recovery')
+					test_executable = TestExecutable.new_from_path(conflict[:file])
+					Editor.new(test_executable).edit
 	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
 				else
 					fail Exception.new(conflict.inspect)
 				end # case
-			end # if
 		end # each
-		@repository.confirm_commit
+		confirm_commit
 	end # if
 end # merge_conflict_recovery
 def confirm_branch_switch(branch)
-	checkout_branch=git_command("checkout #{branch}")
+	checkout_branch=@repository.git_command("checkout #{branch}")
 	if checkout_branch.errors!="Already on '#{branch}'\n" && checkout_branch.errors!="Switched to branch '#{branch}'\n" then
 		checkout_branch #.assert_post_conditions
 	end #if
@@ -115,20 +158,17 @@ end #confirm_branch_switch
 # and a stash apply restores all tracked files
 # safe is meant to mean no files or changes are lost or buried.
 def safely_visit_branch(target_branch, &block)
-	stash_branch = current_branch_name?
+	stash_branch = @repository.current_branch_name?
 	changes_branch = stash_branch # 
-	push=something_to_commit? # remember
+	push = @repository.something_to_commit? # remember
 	if push then
 #		status=@grit_repo.status
 #		puts "status.added=#{status.added.inspect}"
 #		puts "status.changed=#{status.changed.inspect}"
 #		puts "status.deleted=#{status.deleted.inspect}"
-#		puts "something_to_commit?=#{something_to_commit?.inspect}"
-		git_command('stash save --include-untracked')
-		merge_conflict_files?.each do |conflict|
-			shell_command('diffuse -m '+conflict[:file])
-			confirm_commit
-		end #each
+#		puts "@repository.something_to_commit?=#{@repository.something_to_commit?.inspect}"
+		@repository.git_command('stash save --include-untracked')
+		merge_cleanup
 		changes_branch=:stash
 	end #if
 
@@ -140,21 +180,18 @@ def safely_visit_branch(target_branch, &block)
 		ret=block.call(changes_branch)
 	end #if
 	if push then
-		apply_run=git_command('stash apply --quiet')
+		apply_run=@repository.git_command('stash apply --quiet')
 		if apply_run.errors.match(/Could not restore untracked files from stash/) then
 			puts apply_run.errors
-			puts git_command('status').output
-			puts git_command('stash show').output
+			puts @repository.git_command('status').output
+			puts @repository.git_command('stash show').output
 		else
 			apply_run #.assert_post_conditions('unexpected stash apply fail')
 		end #if
-		merge_conflict_files?.each do |conflict|
-			shell_command('diffuse -m '+conflict[:file])
-			confirm_commit
-		end #each
+		merge_cleanup
 	end #if
 	ret
-end #safely_visit_branch
+end # safely_visit_branch
 # does not return to original branch unlike #safely_visit_branch
 # does not need a block, since it doesn't switch back
 # moves all working directory files to new branch
@@ -162,23 +199,20 @@ def switch_branch(target_branch)
 	push = stash_and_checkout(target_branch)
 end # switch_branch
 def merge_interactive(source_branch)
-		merge_status = git_command('merge --no-commit ' + source_branch.to_s)
+		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
 end # merge_interactive
 def stash_and_checkout(target_branch)
-	stash_branch = current_branch_name?
+	stash_branch = @repository.current_branch_name?
 	changes_branch = stash_branch # 
-	push=something_to_commit? # remember
+	push= @repository.something_to_commit? # remember
 	if push then
 #		status=@grit_repo.status
 #		puts "status.added=#{status.added.inspect}"
 #		puts "status.changed=#{status.changed.inspect}"
 #		puts "status.deleted=#{status.deleted.inspect}"
-#		puts "something_to_commit?=#{something_to_commit?.inspect}"
-		git_command('stash save --include-untracked')
-		merge_conflict_files?.each do |conflict|
-			shell_command('diffuse -m '+conflict[:file])
-			confirm_commit
-		end #each
+#		puts "@repository.something_to_commit?=#{@repository.something_to_commit?.inspect}"
+		@repository.git_command('stash save --include-untracked')
+		merge_cleanup
 		changes_branch=:stash
 	end #if
 
@@ -187,15 +221,18 @@ def stash_and_checkout(target_branch)
 	end #if
 	push # if switched?
 end # stash_and_checkout
-def merge_cleanup(editor)
-	merge_conflict_files?.each do |conflict|
-		shell_command('diffuse -m '+conflict[:file])
+def merge_cleanup
+	@repository.merge_conflict_files?.each do |conflict|
+		case @interactive
+		when :interactive then
+			@repository.shell_command('diffuse -m '+conflict[:file])
+		end # case
 		confirm_commit
 	end #each
 end # merge_cleanup
-def merge(target_branch, source_branch, interact=:interactive)
-	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+interact.inspect+')'
-	@repository.safely_visit_branch(target_branch) do |changes_branch|
+def merge(target_branch, source_branch)
+	puts 'merge('+target_branch.inspect+', '+source_branch.inspect+', '+ @interactive.inspect+')'
+	safely_visit_branch(target_branch) do |changes_branch|
 		merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
 		puts 'merge_status= ' + merge_status.inspect
 		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n" then
@@ -208,55 +245,56 @@ def merge(target_branch, source_branch, interact=:interactive)
 				merge_conflict_recovery(source_branch)
 			end # if
 		end # if
-		@repository.confirm_commit(interact)
+		confirm_commit
 	end # safely_visit_branch
 end # merge
 def merge_down(deserving_branch = @repository.current_branch_name?)
-	UnitMaturity.merge_range(deserving_branch).each do |i|
-		@repository.safely_visit_branch(UnitMaturity::Branch_enhancement[i]) do |changes_branch|
-			puts 'merge(' + UnitMaturity::Branch_enhancement[i].to_s + '), ' + UnitMaturity::Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
-			merge(UnitMaturity::Branch_enhancement[i], UnitMaturity::Branch_enhancement[i - 1])
-			merge_conflict_recovery(UnitMaturity::Branch_enhancement[i - 1])
-			@repository.confirm_commit(:interactive)
+	Branch.merge_range(deserving_branch).each do |i|
+		safely_visit_branch(Branch::Branch_enhancement[i]) do |changes_branch|
+			puts 'merge(' + Branch::Branch_enhancement[i].to_s + '), ' + Branch::Branch_enhancement[i - 1].to_s + ')' if !$VERBOSE.nil?
+			merge(Branch::Branch_enhancement[i], Branch::Branch_enhancement[i - 1])
+			merge_conflict_recovery(Branch::Branch_enhancement[i - 1])
+			confirm_commit
 		end # safely_visit_branch
 	end # each
 end # merge_down
 def stage_files(branch, files)
 	safely_visit_branch(branch) do |changes_branch|
 		validate_commit(changes_branch, files)
-	end #safely_visit_branch
+	end # safely_visit_branch
 end #stage_files
-def confirm_commit(interact=:interactive)
-	if something_to_commit? then
-		case interact
+def confirm_commit
+	if @repository.something_to_commit? then
+		case @interactive
 		when :interactive then
-			cola_run = git_command('cola')
+			cola_run = @repository.git_command('cola')
 			cola_run = cola_run.tolerate_status_and_error_pattern(0, /Warning/)
+			@repository.git_command('rerere')
 			cola_run #.assert_post_conditions
-			if !something_to_commit? then
-#				git_command('cola rebase '+current_branch_name?.to_s)
+			if !@repository.something_to_commit? then
+#				@repository.git_command('cola rebase '+@repository.current_branch_name?.to_s)
 			end # if
 		when :echo then
 		when :staged then
-			git_command('commit ').assert_post_conditions			
+			@repository.git_command('commit ').assert_post_conditions			
 		when :all then
-			git_command('add . ').assert_post_conditions
-			git_command('commit ').assert_post_conditions
+			@repository.git_command('add . ').assert_post_conditions
+			@repository.git_command('commit ').assert_post_conditions
 		else
-			raise 'Unimplemented option=' + interact.to_s
+			raise 'Unimplemented option @interactive = ' + @interactive.inspect
 		end #case
 	end #if
-	puts 'confirm_commit('+interact.inspect+" something_to_commit?="+something_to_commit?.inspect
+	puts 'confirm_commit('+ @interactive.inspect+" @repository.something_to_commit?="+@repository.something_to_commit?.inspect
 end # confirm_commit
-def validate_commit(changes_branch, files, interact=:interactive)
+def validate_commit(changes_branch, files)
 	puts files.inspect if $VERBOSE
 	files.each do |p|
 		puts p.inspect  if $VERBOSE
-		git_command(['checkout', changes_branch.to_s, p])
+		@repository.git_command(['checkout', changes_branch.to_s, p])
 	end #each
-	if something_to_commit? then
-		confirm_commit(interact)
-#		git_command('rebase --autosquash --interactive')
+	if @repository.something_to_commit? then
+		confirm_commit
+#		@repository.git_command('rebase --autosquash --interactive')
 	end #if
 end #validate_commit
 def script_deserves_commit!(deserving_branch)
@@ -265,7 +303,7 @@ def script_deserves_commit!(deserving_branch)
 		merge_down(deserving_branch)
 	end # if
 end # script_deserves_commit!
-require_relative '../../test/assertions.rb'
+require_relative '../../app/models/assertions.rb'
 module Assertions
 
 module ClassMethods
@@ -277,15 +315,15 @@ def assert_post_conditions
 end # assert_post_conditions
 end # ClassMethods
 def assert_pre_conditions
-	refute_nil(@related_files)
-	refute_empty(@related_files.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @related_files.edit_files=#{@related_files.edit_files.inspect}")
-	assert_kind_of(Grit::Repo, @repository.grit_repo)
-	assert_respond_to(@repository.grit_repo, :status)
-	assert_respond_to(@repository.grit_repo.status, :changed)
+#	refute_nil(@test_executable.unit)
+#	refute_empty(@test_executable.unit.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @test_executable.unit.edit_files=#{@test_executable.unit.edit_files.inspect}")
+#	assert_kind_of(Grit::Repo, @repository.grit_repo)
+#	assert_respond_to(@repository.grit_repo, :status)
+#	assert_respond_to(@repository.grit_repo.status, :changed)
 end # assert_pre_conditions
 def assert_post_conditions
 	odd_files = Dir['/home/greg/Desktop/src/Open-Table-Explorer/test/unit/*_test.rb~HEAD*']
-	assert_empty(odd_files, 'WorkFlow#assert_post_conditions')
+#	assert_empty(odd_files, 'InteractiveBottleneck#assert_post_conditions')
 end # assert_post_conditions
 end # Assertions
 include Assertions
@@ -293,8 +331,8 @@ extend Assertions::ClassMethods
 # TestWorkFlow.assert_pre_conditions
 include Constants
 module Examples
-TestExecutable = TestExecutable.new(executable_file: File.expand_path($PROGRAM_NAME))
-TestInteractiveBottleneck = InteractiveBottleneck.new(TestExecutable, Editor::Examples::TestEditor)
+TestTestExecutable = TestExecutable.new(argument_path: File.expand_path($PROGRAM_NAME))
+TestInteractiveBottleneck = InteractiveBottleneck.new(test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor)
 include Constants
 end # Examples
 include Examples

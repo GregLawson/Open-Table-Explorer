@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
+#    Copyright (C) 2013 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -117,9 +117,11 @@ def execute
 	}
 	self #allows command chaining
 rescue StandardError => exception
-	$stdout.puts "rescue exception "+exception.inspect
-#	info "@command="+@command.inspect
-#	info "@command_string="+@command_string.inspect
+	message = "rescue exception in Shell#execute" + exception.inspect
+	message += "\n" + caller.join("\n")
+	$stdout.puts message
+	info "@command="+@command.inspect
+	info "@command_string="+@command_string.inspect
 	if @errors.nil? then
 		@errors=exception.inspect
 	else

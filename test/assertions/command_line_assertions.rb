@@ -67,10 +67,10 @@ include Assertions
 extend Assertions::ClassMethods
 #TestWorkFlow.assert_pre_conditions
 extend RubyAssertions
-RubyAssertions.assert_nested_scope_submodule(:Assertions, CommandLine)
 module Examples
 include Constants
-No_args = CommandLine.new($0, CommandLine, [])
+No_args = CommandLine.new(executable: $0, unit_class: CommandLine, argv: [])
+
 Readme_opts = Trollop::options do
     opt :monkey, "Use monkey mode"                    # flag --monkey, default false
     opt :name, "Monkey name", :type => :string        # string --name <s>, default nil

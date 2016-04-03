@@ -6,8 +6,7 @@
 #
 ###########################################################################
 #require_relative '../../app/models/no_db.rb'
-require_relative '../../app/models/assertions.rb'
-#require_relative '../../test/assertions/repository_assertions.rb'
+require_relative '../../test/assertions/repository_assertions.rb'
 require_relative '../../app/models/branch.rb'
 class Branch
 module ClassMethods
@@ -17,7 +16,7 @@ module Constants
 Hex_number=/[0-9a-f]+/
 end #Constants
 include Constants
-require_relative '../../test/assertions.rb'
+require_relative '../../app/models/assertions.rb'
 module Assertions
 
 module ClassMethods
@@ -39,8 +38,8 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
-Empty_repo_master_branch=Branch.new( Repository::Examples::Empty_Repo, :master)
+#Empty_repo_master_branch=Branch.new( Repository::Examples::Empty_Repo, :master)
 Executing_branch=Branch.new(Repository::Examples::This_code_repository)
-Executing_master_branch=Branch.new(Repository::Examples::This_code_repository, :master)
+#Executing_master_branch=Branch.new(Repository::Examples::This_code_repository, :master)
 end #Examples
 end # Branch

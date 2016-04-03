@@ -1,0 +1,17 @@
+tax_form
+2016-04-03 03:29:25.036
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:396:in `raw_captures?': undefined method `raw_capture?' for #<Regexp::Expression::Root:0x000000019ec860> (NoMethodError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:199:in `initialize'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:209:in `initialize'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:392:in `initialize'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:420:in `new'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:420:in `<module:Examples>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:417:in `<class:ParsedCapture>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:387:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:11:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:11:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:9:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:9:in `<main>'

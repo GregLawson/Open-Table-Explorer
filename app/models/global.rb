@@ -38,9 +38,6 @@ def matching_class_methods(regexp,all=false)
 	end #if
 	self.public_methods(all).select {|m| m[Regexp.new(regexp),0] }
 end #matching_class_methods
-def data_source_directory?
-	'test/data_source/'+self.name+'/'
-end #data_source_directory?
 end #module
 class Object
 def info(message)

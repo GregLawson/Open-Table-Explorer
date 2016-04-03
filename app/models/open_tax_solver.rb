@@ -113,7 +113,7 @@ Short_acquisition='L  {e}'
 end #Examples
 #require_relative '../../test/assertions/default_assertions.rb'
 
-#require_relative '../../test/assertions.rb'
+require_relative '../../app/models/assertions.rb'
 module Assertions
 
 extend AssertionsModule

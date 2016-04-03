@@ -17,9 +17,6 @@ end #Assertions
 include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
-module Constants
-end #Constants
-include Constants
 
 module ClassMethods
 extend ClassMethods
@@ -35,12 +32,10 @@ def assert_pre_conditions
 end #class_assert_pre_conditions
 # assertions true after class (and nested module Examples) is defined
 def assert_post_conditions
-	assert_equal(TE, FilePattern::Examples::SELF)
+	assert_equal(Unit::Executable, FilePattern::Examples::SELF)
 end #class_assert_post_conditions
 end #ClassMethods
 
-module KernelMethods
-end #KernelMethods
 # conditions that are always true (at least atomically)
 def assert_invariant
 	fail "end of assert_invariant "
@@ -70,8 +65,7 @@ end #default_test_class_id
 
 module Examples
 include Constants
-UnboundedFixnumUnit=Unit.new(:UnboundedFixnum)
-SELF=Unit.new #defaults to this unit
+UnitWithAssertions = RailsishRubyUnit.new_from_path('test/unit/minimal4_assertions_test.rb')
 end #Examples
 include Examples
 module Assertions
