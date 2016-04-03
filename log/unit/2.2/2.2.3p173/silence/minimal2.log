@@ -1,0 +1,14 @@
+master
+2016-04-03 02:00:16.969
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+....
+
+Finished in 0.003402s, 1175.8059 runs/s, 0.0000 assertions/s.
+
+4 runs, 0 assertions, 0 failures, 0 errors, 0 skips
+

@@ -1,0 +1,7 @@
+master
+2016-04-03 01:49:20.774
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_tree_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_tree_test.rb:12:in `<class:ParseTest>': uninitialized constant ParseTest::Parse (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_tree_test.rb:10:in `<main>'

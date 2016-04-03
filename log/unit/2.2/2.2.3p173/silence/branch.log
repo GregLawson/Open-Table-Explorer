@@ -1,0 +1,28 @@
+master
+2016-04-03 01:44:03.659
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+......#<LimitCapture:0x000000033c7a78 @string="* master\n  passed\n", @regexp=/[* ](?<branch>[a-z0-9A-Z_-]+)\n/, @length_hash_captures=1, @raw_captures=["*", "master", " ", "passed"]>
+#<LimitCapture:0x000000033c7320 @string="* master\n  passed\n", @regexp=/(?:[* ] (?<branch>[-a-z0-9A-Z_]+)\n)+/, @length_hash_captures=1, @raw_captures=["", "passed"]>
+#<LimitCapture:0x000000033c6ce0 @string="* master\n  passed\n", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
+#<LimitCapture:0x000000033c6588 @string="* master\n  passed\n", @regexp=/^[* ] (?<branch>[a-z0-9A-Z_-]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
+....F......F.......
+
+Finished in 2.406677s, 10.3878 runs/s, 29.5013 assertions/s.
+
+  1) Failure:
+NewTestClass#test_reflog_command_output [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:91]:
+[",,2f695e7,Sun, 20 Dec 2015 11:08:36 -0800", ",,8c07f17,Tue, 1 Dec 2015 11:45:42 -0800", ",,500d20c,Sun, 22 Nov 2015 19:44:08 -0800", ",,50e606f,Thu, 12 Nov 2015 04:08:15 -0800"].
+Expected 4 to be < 4.
+
+
+  2) Failure:
+NewTestClass#test_merged? [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:209]:
+Expected {} to not be empty.
+
+25 runs, 71 assertions, 2 failures, 0 errors, 0 skips
+

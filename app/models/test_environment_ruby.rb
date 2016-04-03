@@ -7,7 +7,9 @@
 ###########################################################################
 require "minitest/autorun"
 require_relative '../../app/models/test_environment_minitest.rb'
-TestClassName = Unit::Executable.test_class_name
+require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../app/models/unit.rb'
+TestClassName = RailsishRubyUnit::Executable.test_class_name
 NewTestClass = Class.new(TestCase) do
 	extend(AssertionsModule)
 	include(AssertionsModule)

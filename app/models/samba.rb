@@ -25,7 +25,7 @@ Mount_table_regexp = Comment_regexp |
 	Whitespace_delimiter * Fs_type_regexp.capture(:file_system_type) *
 	Whitespace_delimiter * Options_regexp.capture(:options)
 Smb_tree_workgroup_regexp = /^[-A-Z0-9]+/.capture(:name)
-Smb_tree_regexp = Whitespace_padding.capture(:indent) * /-[A-Z0-9]+/.capture(:name) * Whitespace_delimiter * /[a-zA-z0-9 ]+/.capture(:dewcription)
+Smb_tree_regexp = Whitespace_padding.capture(:indent) * /-[A-Z0-9]+/.capture(:name) * Whitespace_delimiter * /[a-zA-z0-9 ]+/.capture(:description)
 
 Smb_domains = ShellCommands.new('smbtree --no-pass -D')
 Smb_servers = ShellCommands.new('smbtree --no-pass -S')
@@ -38,10 +38,10 @@ def workgroups
 	Smb_domains.output.parse(Smb_tree_workgroup_regexp)[:name]
 end # workgroups
 def servers(workgroup)
-	Smb_servers.output?.parse(Smb_tree_regexp)
+	Smb_servers.output.parse(Smb_tree_regexp)
 end # servers
 def tree(workgroup, server)
-	Smb_tree.output?.parse(Smb_tree_regexp)
+	Smb_tree.output.parse(Smb_tree_regexp)
 end # tree
 def parse_options(options_string)
 	option_strings = options_string.split(',')
@@ -135,7 +135,7 @@ def mounted?
 	mtab_grep = ShellCommands.new('grep ' + @mount_point + ' /etc/mtab')
 	mtab_grep.output == ''
 end # mounted?
-#require_relative '../../test/assertions.rb'
+require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def nested_scope_modules?

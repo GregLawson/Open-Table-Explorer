@@ -1,0 +1,6 @@
+master
+2016-04-03 01:51:54.212
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_alternative_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_alternative_test.rb:13:in `<main>': uninitialized constant RegexpTree (NameError)

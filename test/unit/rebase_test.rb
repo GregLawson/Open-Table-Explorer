@@ -9,5 +9,5 @@ require_relative 'test_environment'
 require_relative '../../app/models/minimal2.rb'
 class RebaseTest < TestCase
 include DefaultTests
-include TE.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 end #Rebase

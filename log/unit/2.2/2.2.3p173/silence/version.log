@@ -1,0 +1,14 @@
+master
+2016-04-03 01:59:55.603
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/version_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+.........
+
+Finished in 0.033009s, 272.6528 runs/s, 1393.5587 assertions/s.
+
+9 runs, 46 assertions, 0 failures, 0 errors, 0 skips
+

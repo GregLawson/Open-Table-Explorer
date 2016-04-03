@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require 'active_support/all'
+require_relative 'test_environment_ruby.rb'
 module ExampleCall
 def examples_submodule?
   model_class?::Examples
@@ -73,7 +74,7 @@ def assert_optional_method(object, symbol)
 end #
 end #ExampleCall
 module DefaultTests0
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 
 #extend AssertionsModule
 def related_files?
@@ -240,9 +241,6 @@ end #names_of_tests
 def global_class_names
 	Module.constants.select {|n| eval(n.to_s).instance_of?(Class)}
 end #global_class_names
-def data_source_directory?(model_name=model_name?)
-	'test/data_sources/'+model_name.to_s+'/'
-end #data_source_directory?
 def default_message(&local_variables_block)
 #TMI	message = "\n self=#{self.inspect}\n"
 	caller_binding = local_variables_block.binding
@@ -263,7 +261,7 @@ class DefaultTestCase3 < DefaultTestCase2 # test, model, and assertion files
 end #DefaultTestCase3
 
 class DefaultTestCase4 < DefaultTestCase3# test, model, assertion, and assertion test files
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 
 extend AssertionsModule
 #assert_includes(methods, :model_class?)

@@ -1,0 +1,7 @@
+master
+2016-04-03 01:44:06.344
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/code_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/code_test.rb:10:in `require_relative': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/code_base.rb (LoadError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/code_test.rb:10:in `<main>'

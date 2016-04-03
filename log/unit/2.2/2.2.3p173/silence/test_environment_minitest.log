@@ -1,0 +1,18 @@
+master
+2016-04-03 01:58:58.637
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_environment_minitest_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+....F
+
+Finished in 0.003036s, 1647.0579 runs/s, 2635.2926 assertions/s.
+
+  1) Failure:
+TestEnvironmentMinitestTest#test_requires [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_environment_minitest_test.rb:15]:
+In assert_included_modules, RubyAssertions is not included in Minitest::Assertions which does not include any modules.
+
+5 runs, 8 assertions, 1 failures, 0 errors, 0 skips
+

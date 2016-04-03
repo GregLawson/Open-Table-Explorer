@@ -9,7 +9,7 @@ require_relative 'test_environment'
 require_relative '../../app/models/x.rb'
 class XTest < TestCase
 include DefaultTests
-include TE.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 def test_logs
   logs = Dir['/var/log/X*']
   refute_empty(logs)

@@ -1,0 +1,6 @@
+master
+2016-04-03 01:48:56.360
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/kernel_module_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/kernel_module_test.rb:10:in `<main>': uninitialized constant Test::RailsishRubyUnit (NameError)

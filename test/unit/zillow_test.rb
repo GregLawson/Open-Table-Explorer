@@ -6,12 +6,12 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/shell_command.rb'
+require_relative '../assertions/shell_command_assertions.rb'
 require_relative '../../app/models/zillow.rb'
 require_relative '../../app/models/parse.rb'
 class ZillowTest < TestCase
 include DefaultTests
-include TE.model_class?::Examples
+include RailsishRubyUnit::Executable.model_class?::Examples
 def test_Examples
 #	command_string = 'wget --no-verbose -O- ' + All_units_url
 	variant_options = ''

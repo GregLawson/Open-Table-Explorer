@@ -1,0 +1,14 @@
+master
+2016-04-03 01:59:59.010
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/weather_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+.....
+
+Finished in 0.003704s, 1350.0061 runs/s, 270.0012 assertions/s.
+
+5 runs, 1 assertions, 0 failures, 0 errors, 0 skips
+

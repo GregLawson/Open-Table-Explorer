@@ -8,6 +8,13 @@
 require_relative '../../app/models/test_environment_ruby.rb'
 require_relative '../../app/models/default_test_case.rb'
 class TestEnvironmentRubyTest < TestCase
+include AssertionsModule
+extend AssertionsModule
+include RubyAssertions
+extend RubyAssertions
+assert_included_modules(:RubyAssertions, TestEnvironmentRubyTest)
+assert_included_modules(:RubyAssertions, self)
+def test_AssertionsModule
 	message = 'AssertionsModule defined'
 	assert_equal(MiniTest::Assertions, AssertionsModule, message)
 	#puts "\nin test_environment_minitest.rb, Module.constants = " + Module.constants.inspect
@@ -16,6 +23,16 @@ class TestEnvironmentRubyTest < TestCase
 	exception = Exception.new(message)
 	raise exception if !AssertionsModule.instance_methods(false).include?(:assert_equal)
 end # AssertionsModule
+def test_requires
+	assert_included_modules(:Fish, MiniTest::Assertions)
+	assert_included_modules(:RubyAssertions, MiniTest::Assertions)
+	assert(MiniTest::Assertions.included_modules.empty?, MiniTest::Assertions.included_modules)
+	assert(MiniTest::Unit.included_modules.include?(:RubyAssertions), MiniTest::Unit.included_modules.inspect)
+	assert_included_modules(MiniTest::Assertions, :RubyAssertions)
+	assert(MiniTest::Assertions.instance_methods.include?(:assert_block), MiniTest::Assertions.instance_methods.inspect)
+	assert(AssertionsModule.instance_methods.include?(:assert_block), AssertionsModule.instance_methods.inspect)
+	assert(RubyAssertions.instance_methods.include?(:assert_block), RubyAssertions.instance_methods.inspect)
+end # requires
 def test_RubyAssertions
 	message = "\n RubyAssertions.methods = " + RubyAssertions.methods(false).inspect
 	exception = Exception.new(message)
@@ -48,4 +65,4 @@ rescue Exception => exception
 	assert_includes(exception.class.ancestors, Exception)
 	assert_instance_of(AssertionFailedError, exception)
 end # AssertionFailedError
-end # MinitestTest
+end # TestEnvironmentRuby

@@ -1,0 +1,17 @@
+master
+2016-04-03 01:48:56.090
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/iwup_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+.....authentication=Not connected.
+authenicated_MAC=
+connection=
+...
+
+Finished in 0.005714s, 1400.0614 runs/s, 1050.0461 assertions/s.
+
+8 runs, 6 assertions, 0 failures, 0 errors, 0 skips
+

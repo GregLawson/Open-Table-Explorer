@@ -1,0 +1,10 @@
+master
+2016-04-03 01:52:07.597
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert': undefined method `assertions' for main:Object (NoMethodError)
+	from /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
+	from /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:195:in `assert_includes'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:393:in `assert_global_name'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_test.rb:9:in `<main>'

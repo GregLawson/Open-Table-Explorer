@@ -1,0 +1,8 @@
+master
+2016-04-03 01:48:06.566
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/example_type_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- test/assertions/example_type_assertions.rb (LoadError)
+	from /usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/example_type_test.rb:9:in `<main>'

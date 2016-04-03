@@ -1,0 +1,11 @@
+master
+2016-04-03 01:48:29.049
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/grub_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+/var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/const_missing_extensions.rb:14:in `const_missing': uninitialized constant Version::Version_regexp (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/grub.rb:25:in `<module:Constants>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/grub.rb:20:in `<class:Grub>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/grub.rb:13:in `<top (required)>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/grub_test.rb:9:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/grub_test.rb:9:in `<main>'

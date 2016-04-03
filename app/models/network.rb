@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson                                      
+#    Copyright (C) 2011-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -13,7 +13,7 @@ class Network # < ActiveRecord::Base
 include NoDB
 extend NoDB::ClassMethods
 #include Generic_Table
-module Constants
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 #Hosts = Host.new
 Quad_Pattern = /[0-2]?[0-9]?[0-9]/
 Private_A = /10\./.capture(:network) * (Quad_Pattern * Quad_Pattern * Quad_Pattern).capture(:host)
@@ -23,20 +23,30 @@ Private_C = /192\.168\./.capture(:network) * (Quad_Pattern * /\./ * Quad_Pattern
 Zero_Config_Pattern = /169\.254./.capture(:network)
 Private_Network_Pattern = Private_A | Private_B | Private_C | Zero_Config_Pattern
 
-
+Device_separator_regexp = /\n\n/
+Device_name_regexp = /lo|[a-z]+[0-9]+/.capture(:device_name)
 IP_Pattern = (Quad_Pattern * /\./).group * 3 * Quad_Pattern
 Netmask_Pattern = /.*\sMask:/,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/
 MyContext = /\s*inet addr:/,/[0-9]*\.[0-9]*\./.capture(:myContext)
 MyNetwork = /[0-9]+/.capture(:myNode)
 MyNetmask = /.*\sMask:/,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/
 IFCONFIG=ShellCommands.new('/sbin/ifconfig')
-Ifconfig_pattern = []
-IFCONFIG_cappture = IFCONFIG.output.capture?(Ifconfig_pattern)
-end #Constants
-include Constants
+IFCONFIG_output = IFCONFIG.output.split(Device_separator_regexp)
+Leading_whitespace = /^\s+/
+Inet_addr_regexp = Leading_whitespace * /inet / * IP_Pattern.capture(:ipv4) * /  netmask / * IP_Pattern.capture(:netmask) * /  broadcast / * IP_Pattern.capture(:broadcast) * // */\n/
+Ifconfig_pattern = Inet_addr_regexp
+IFCONFIG_capture = IFCONFIG_output[0].capture?(Ifconfig_pattern)
+end # DefinitionalConstants
+include DefinitionalConstants
 module ClassMethods
+include DefinitionalConstants
 def ifconfig
-	lines = IFCONFIG.output.parse(Capture::Examples::LINE)
+	ret = {}
+	IFCONFIG_output.each do |device_description|
+		device_name = device_description.parse(Device_name_regexp)[:device_name]
+		ret = ret.merge({device_name.to_sym => device_description.parse(Ifconfig_pattern)})
+	end # each
+	ret
 end # ifconfig
 def all
 	@@all = ['192.168.0.1-254'].map do |nmapScan| #map
@@ -64,12 +74,12 @@ def whereAmI
 	#puts "ip=#{ip}"
 	#puts "masklen(\"cidr #{@myNetmask}\")"
 	#@hosts=Host.new
-	Host.recordDetection(@myIP)
+#	Host.recordDetection(@myIP)
 	@nmapScan="#{@myContext}#{@myNetwork}1-254"
 	network=find_or_initialize_by_nmap_addresses(@nmapScan)
-	network.update_attribute('nmap_addresses',@nmapScan)
+#	network.update_attribute('nmap_addresses',@nmapScan)
 	network.dumpAcquisitions if $DEBUG
-	network.save
+#	network.save
 end # whereAmI
 def acquire
 	whereAmI
@@ -112,6 +122,11 @@ def ping(nmapScan)
 end
 end #ClassMethods
 extend ClassMethods
+module Constants # constant objects of the type (e.g. default_objects)
+My_IP = Network.ifconfig[:eth0][:ipv4]
+Arp_IP_file = IO.read('/proc/net/arp')
+Arp_IP_lines = IO.read('/proc/net/arp').split("\n")
+end # Constants
 include Constants
 attr_reader :ip_range
 def initialize(ip_range) # can this be a Range?
@@ -121,12 +136,12 @@ def ==(other)
 	self.ip_range == other.ip_range
 end # equals
 def nmap(options = '-sP')
-	@nmap=ShellCommands.new('nmap ' + options + ' ' + @ip_range)
+#	@nmap=ShellCommands.new('nmap ' + options + ' ' + @ip_range)
 end # nmap
 def update_attribute(name, value)
 	instance_variable_set(name, value)
 end # update_attribute
-#require_relative '../../test/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')

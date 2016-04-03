@@ -1,0 +1,18 @@
+master
+2016-04-03 01:49:08.408
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+.F.........
+
+Finished in 0.101325s, 108.5616 runs/s, 740.1926 assertions/s.
+
+  1) Failure:
+NewTestClass#test_ifconfig [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb:112]:
+Expected /^\s+inet6 (?:[0-9a-f]{1,4}:){,7}[0-9a-f][0-9a-f]\/1?[0-9]?[0-9] Scope:(?<scope>Link|Global|Host)\n/ to match "eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 192.168.1.126  netmask 255.255.255.0  broadcast 192.168.1.255\n        inet6 fe80::fa0f:41ff:fed2:26c7  prefixlen 64  scopeid 0x20<link>\n        ether f8:0f:41:d2:26:c7  txqueuelen 1000  (Ethernet)\n        RX packets 301238  bytes 158324200 (150.9 MiB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 277203  bytes 46715422 (44.5 MiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n        device interrupt 103  base 0xa000  \n\nlo: flags=73<UP,LOOPBACK,RUNNING>  mtu 16436\n        inet 127.0.0.1  netmask 255.0.0.0\n        inet6 ::1  prefixlen 128  scopeid 0x10<host>\n        loop  txqueuelen 0  (Local Loopback)\n        RX packets 191975  bytes 64744759 (61.7 MiB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 191975  bytes 64744759 (61.7 MiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\nwlan0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n        ether 30:10:b3:40:00:e5  txqueuelen 1000  (Ethernet)\n        RX packets 0  bytes 0 (0.0 B)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 0  bytes 0 (0.0 B)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\n".
+
+11 runs, 75 assertions, 1 failures, 0 errors, 0 skips
+

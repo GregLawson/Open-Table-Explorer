@@ -11,5 +11,5 @@ def test_initialize
 end #initialize
 def test_fail
 	fail
-end #initialize
+end # fail
 end #Test

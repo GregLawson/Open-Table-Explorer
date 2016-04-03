@@ -1,0 +1,6 @@
+master
+2016-04-03 01:44:29.047
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+
+ruby: No such file or directory -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test.rb (LoadError)

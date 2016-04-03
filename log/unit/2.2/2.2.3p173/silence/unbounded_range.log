@@ -1,0 +1,45 @@
+master
+2016-04-03 01:59:26.156
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_range_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+...E..F...
+
+Finished in 0.006714s, 1489.5289 runs/s, 5958.1156 assertions/s.
+
+  1) Error:
+NewTestClass#test_UnboundedRange_initialize:
+NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000003785980>
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_range_test.rb:17:in `test_UnboundedRange_initialize'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  2) Failure:
+NewTestClass#test_intersect [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_range_test.rb:77]:
+Expected #<NewTestClass:0x0000000377c678 @NAME="test_intersect", @failures=[], @assertions=1> (NewTestClass) to respond to #assert_include.
+
+10 runs, 40 assertions, 1 failures, 1 errors, 0 skips
+

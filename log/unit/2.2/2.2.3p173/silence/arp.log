@@ -1,0 +1,49 @@
+master
+2016-04-03 01:43:51.346
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/arp_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+.E.IP address       HW type     Flags       HW address            Mask     Device
+192.168.1.1      0x1         0x2         00:13:10:17:b5:99     *        eth0
+
+F..
+
+Finished in 0.005918s, 1013.8704 runs/s, 337.9568 assertions/s.
+
+  1) Error:
+NewTestClass#test_MAC:
+ArgumentError: wrong number of arguments (0 for 1)
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/arp_test.rb:22:in `test_MAC'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+
+
+  2) Failure:
+NewTestClass#test_inialize [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/arp_test.rb:9]:
+arp.errors=.
+Expected /DHCPACK/ to match "".
+
+6 runs, 2 assertions, 1 failures, 1 errors, 0 skips
+
