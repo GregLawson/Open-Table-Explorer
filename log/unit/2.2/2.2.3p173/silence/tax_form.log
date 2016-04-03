@@ -1,5 +1,30 @@
 tax_form
-2016-04-03 03:31:00.664
+2016-04-04 04:14:57.764
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test
+Started
+.........................F
+===============================================================================
+Failure:
+  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_f1040.pdf.
+  <false> is not true.
+test_output_pdf(OtsRunTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:292:in `test_output_pdf'
+     289: end # xfdf_file
+     290: def test_output_pdf
+     291: 	assert(File.exist?(US1040_example_schedule.ots.open_tax_solver_form_directory), US1040_example_schedule.ots.open_tax_solver_form_directory)
+  => 292: 	assert(File.exist?(US1040_example_schedule.output_pdf), US1040_example_schedule.output_pdf)
+     293: end # output_pdf
+     294: def test_fillout_form
+     295: 	assert(File.exist?(US1040_example_schedule.fillout_form), US1040_example_schedule.fillout_form)
+===============================================================================
+.........
+
+Finished in 1.803234213 seconds.
+------
+35 tests, 236 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+97.1429% passed
+------
+19.41 tests/s, 130.88 assertions/s
 
