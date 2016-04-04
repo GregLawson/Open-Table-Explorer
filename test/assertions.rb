@@ -5,7 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require 'test/unit/assertions'
+require 'test/unit/assertions'
+require_relative '../app/models/test_environment_test_unit.rb'
 require_relative 'assertions/ruby_assertions.rb'
 module Assertions
 include AssertionsModule

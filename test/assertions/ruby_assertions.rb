@@ -72,7 +72,6 @@ def default_message
 end # default_message
 end # Kernel
 
-require_relative '../../app/models/test_environment_minitest.rb'
 module RubyAssertions
 include AssertionsModule
 extend AssertionsModule
