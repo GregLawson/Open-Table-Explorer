@@ -1,30 +1,467 @@
 tax_form
-2016-04-04 04:14:57.764
+2016-04-04 06:14:47.221
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test
 Started
-.........................F
+F
 ===============================================================================
 Failure:
-  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_example_f1040.pdf.
+  File.file?(/home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040/)=false, is it a directory?.
   <false> is not true.
-test_output_pdf(OtsRunTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:292:in `test_output_pdf'
-     289: end # xfdf_file
-     290: def test_output_pdf
-     291: 	assert(File.exist?(US1040_example_schedule.ots.open_tax_solver_form_directory), US1040_example_schedule.ots.open_tax_solver_form_directory)
-  => 292: 	assert(File.exist?(US1040_example_schedule.output_pdf), US1040_example_schedule.output_pdf)
-     293: end # output_pdf
-     294: def test_fillout_form
-     295: 	assert(File.exist?(US1040_example_schedule.fillout_form), US1040_example_schedule.fillout_form)
+test_Examples(OtsRunTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:503:in `assert_data_file'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:169:in `assert_pre_conditions'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:219:in `block in test_Examples'
+     216: 			assert_pathname_exists(value.open_tax_solver_all_form_directory, 'constant name='+e.to_s+"\n"+"")
+     217: 			assert_pathname_exists(value.open_tax_solver_form_directory, 'constant name='+e.to_s+"\n")
+     218: 			assert_pathname_exists(value.open_tax_solver_input, 'constant name='+e.to_s+"\n")
+  => 219: 			value.assert_pre_conditions('constant name='+e.to_s+"\n")
+     220: 			value.assert_post_conditions('constant name='+e.to_s+"\n")
+     221: 		end #if
+     222: 	end #each
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:207:in `each'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:207:in `test_Examples'
 ===============================================================================
-.........
+.....F
+===============================================================================
+Failure:
+  $ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template.txt
+  @process_status=#<Process::Status: pid 18908 exit 1>
+  US 1040 2014 - v12.01
+  Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_out.txt
+  Error: unrecognized status '??'. Exiting.
+  
+  <false> is not true.
+test_Ots_run_default(OtsRunTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:32:in `test_Ots_run_default'
+     29: end # DefinitionalConstants
+     30: def test_Ots_run_default
+     31: 	ots_run_default = Ots_run_default.call(US1040_template, nil)
+  => 32: 	assert(ots_run_default.success?, ots_run_default.inspect)
+     33: #	assert_equal('1040', US1040_example.form)
+     34: #	assert_equal('1040', US1040_user.form)
+     35: end # Ots_run_default
+===============================================================================
+...$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_CA_540_2014 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2014_example.txt
+@process_status=#<Process::Status: pid 18876 exit 1>
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2014_example_out.txt
+CA-540 2014 - v12.00
+Error: Could not open Federal return 'examples_and_templates/US_1040/US_1040_example_out.txt'
+peculiar_status=true
+message='Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2014_example_out.txt
+CA-540 2014 - v12.00
+Error: Could not open Federal return 'examples_and_templates/US_1040/US_1040_example_out.txt'
+'
+...$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_CA_540_2014 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2014_example.txt
+@process_status=#<Process::Status: pid 18876 exit 1>
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2014_example_out.txt
+CA-540 2014 - v12.00
+Error: Could not open Federal return 'examples_and_templates/US_1040/US_1040_example_out.txt'
+peculiar_status=true
+message='Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2014_example_out.txt
+CA-540 2014 - v12.00
+Error: Could not open Federal return 'examples_and_templates/US_1040/US_1040_example_out.txt'
+'
+......E
+===============================================================================
+Error: test_example(OtsRunTest): NoMethodError: undefined method `assert_post_conditions' for nil:NilClass
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:220:in `assert_pdf_to_jpeg'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:110:in `test_example'
+     107: 	refute_empty(Dir[CA540_example.output_xfdf_glob])
+     108: end # output_xfdf_glob 
+     109: def test_example
+  => 110: 	US1040_example.build.assert_build.assert_pdf_to_jpeg
+     111: 	CA540_example.build
+     112: 	CA540_example.assert_open_tax_solver
+     113: #	CA540_example.assert_ots_to_json
+===============================================================================
+................$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example.txt
+US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example_out.txt
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
 
-Finished in 1.803234213 seconds.
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Mon Apr  4 06:14:44 2016
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 = 48456.23
+L8a =  67.21
+L9 = 253.91
+L9b = 146.51
+ Schedule-B:
+  B2 =  67.21
+  B4 =  67.21
+  B6 = 253.91
+L10 = 625.83
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 1. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  40 Shares WMT                 6-20-11   10-12-11         950.99        -800.99         150.00
+  500 Shares NAB                3-26-11   12-27-11        6009.01       -4949.98        1059.03
+ ---------------------------------------------------------------------------------------
+ 2. Totals:                                               6960.00       -5750.97        1209.03
+
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  100 Shares XOM               12-15-99    1-25-10        4209.95       -3658.22         551.73
+ ---------------------------------------------------------------------------------------
+ 4. Totals:                                               4209.95       -3658.22         551.73
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =    1209.03
+	Net Forms-8949 Long-term Gains  =     551.73
+ D1b: d =    6960.00   e =   -5750.97    h =    1209.03
+ D2:  d =       0.00   e =       0.00    h =       0.00
+ D3:  d =       0.00   e =       0.00    h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 = 1209.03		{ Net short-term capital gain or loss }
+ D8b: d =    4209.95   e =   -3658.22   h =     551.73
+ D9:  d =       0.00   e =       0.00   h =       0.00
+ D10: d =       0.00   e =       0.00   h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 551.73		{ Net long-term capital gain or loss }
+ D16 = 1760.76
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = Yes
+L13 = 1760.76
+L22 = 51163.94		total income
+L36 =   0.00
+L37 = 51163.94		Adjusted Gross Income
+L38 = 51163.94
+L39a = 0
+ A2 = 51163.94
+ A3 = 5116.39
+ A5 = 5218.49
+ A9 = 5218.49
+ A16 = 124.00
+ A19 = 124.00
+ A25 = 51163.94
+ A26 = 1023.28
+ Your deduction is not limited.
+ A29 = 5342.49
+Use standard deduction.
+L40 = 12400.00
+L41 = 38763.94
+L42 = 7900.00
+L43 = 30863.94		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+		3: Check Yes.
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+L44 = 3619.00		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=3619)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 =   0.00
+L47 = 3619.00
+L55 =   0.00
+L56 = 3619.00
+L63 = 3619.00		total tax
+L64 = 4153.59
+L74 = 4153.59		total payments
+L75 = 534.59  REBATE!!!
+L76a = 534.59 
+peculiar_status=false
+message='US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example_out.txt
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+Review AMT form6251 routine for your situation.
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+
+Listing results from file: /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_templates/US_1040//US_1040_example_out.txt
+
+
+Title:  US Federal 1040 Tax Form - 2014 - EXAMPLE 	Mon Apr  4 06:14:45 2016
+
+Status = Married/Joint (2)
+ (Under65 = 2)
+L6 = 2
+L7 = 48456.23
+L8a =  67.21
+L9 = 253.91
+L9b = 146.51
+ Schedule-B:
+  B2 =  67.21
+  B4 =  67.21
+  B6 = 253.91
+L10 = 625.83
+L11 =   0.00
+L12 =   0.00
+
+Form(s) 8949:
+
+Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 1. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  40 Shares WMT                 6-20-11   10-12-11         950.99        -800.99         150.00
+  500 Shares NAB                3-26-11   12-27-11        6009.01       -4949.98        1059.03
+ ---------------------------------------------------------------------------------------
+ 2. Totals:                                               6960.00       -5750.97        1209.03
+
+
+Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:
+ 3. (a Description)         (b Buy Date) (c Date Sold) (d Sold Price) (e Cost) (h Gain)
+ ---------------------------------------------------------------------------------------
+  100 Shares XOM               12-15-99    1-25-10        4209.95       -3658.22         551.73
+ ---------------------------------------------------------------------------------------
+ 4. Totals:                                               4209.95       -3658.22         551.73
+
+ Cap Gains/Losses Schedule-D
+	Net Forms-8949 Short-term Gains =    1209.03
+	Net Forms-8949 Long-term Gains  =     551.73
+ D1b: d =    6960.00   e =   -5750.97    h =    1209.03
+ D2:  d =       0.00   e =       0.00    h =       0.00
+ D3:  d =       0.00   e =       0.00    h =       0.00
+ D4 =   0.00
+ D5 =   0.00
+ D6 =   0.00		(Carry-over Loss)
+ D7 = 1209.03		{ Net short-term capital gain or loss }
+ D8b: d =    4209.95   e =   -3658.22   h =     551.73
+ D9:  d =       0.00   e =       0.00   h =       0.00
+ D10: d =       0.00   e =       0.00   h =       0.00
+ D11 =   0.00
+ D12 =   0.00
+ D13 =   0.00
+ D14 =   0.00	(Carry-over Loss)
+ D15 = 551.73		{ Net long-term capital gain or loss }
+ D16 = 1760.76
+ D17 = yes
+ D18 =   0.00
+ D19 =   0.00
+ D20 = Yes
+L13 = 1760.76
+L22 = 51163.94		total income
+L36 =   0.00
+L37 = 51163.94		Adjusted Gross Income
+L38 = 51163.94
+L39a = 0
+ A2 = 51163.94
+ A3 = 5116.39
+ A5 = 5218.49
+ A9 = 5218.49
+ A16 = 124.00
+ A19 = 124.00
+ A25 = 51163.94
+ A26 = 1023.28
+ Your deduction is not limited.
+ A29 = 5342.49
+Use standard deduction.
+L40 = 12400.00
+L41 = 38763.94
+L42 = 7900.00
+L43 = 30863.94		Taxable income
+Doing 'Qualified Dividends and Captial Gain tax Worksheet', page 34.
+	Qual. Div & Gains WorkSheet 1:  30863.94
+	Qual. Div & Gains WorkSheet 2:    146.51
+		3: Check Yes.
+	Qual. Div & Gains WorkSheet 3:    551.73
+	Qual. Div & Gains WorkSheet 4:    698.24
+	Qual. Div & Gains WorkSheet 5:      0.00
+	Qual. Div & Gains WorkSheet 6:    698.24
+	Qual. Div & Gains WorkSheet 7:  30165.70
+	Qual. Div & Gains WorkSheet 8:  30863.94
+	Qual. Div & Gains WorkSheet 9:  30863.94
+	Qual. Div & Gains WorkSheet 10:  30165.70
+	Qual. Div & Gains WorkSheet 11:    698.24
+	Qual. Div & Gains WorkSheet 12:    698.24
+	Qual. Div & Gains WorkSheet 13:    698.24
+	Qual. Div & Gains WorkSheet 14:     -0.00
+	Qual. Div & Gains WorkSheet 15:  457600.00
+	Qual. Div & Gains WorkSheet 16:  30863.94
+	Qual. Div & Gains WorkSheet 17:  30863.94
+	Qual. Div & Gains WorkSheet 18:      0.00
+	Qual. Div & Gains WorkSheet 19:     -0.00
+	Qual. Div & Gains WorkSheet 20:     -0.00
+	Qual. Div & Gains WorkSheet 21:    698.24
+	Qual. Div & Gains WorkSheet 22:      0.00
+	Qual. Div & Gains WorkSheet 23:      0.00
+	Qual. Div & Gains WorkSheet 24:   3619.00
+	Qual. Div & Gains WorkSheet 25:   3619.00
+	Qual. Div & Gains WorkSheet 26:   3724.00
+	Qual. Div & Gains WorkSheet 27:   3619.00
+L44 = 3619.00		Tax
+Review AMT form6251 routine for your situation.
+ Sum of Form 6251 Lines 8 through 27 =     0.00
+You may need to file AMT form 6251.  (AMTws[31]=0 which is NOT more than AMTws[34]=3619)
+ (See "Who Must File" on page-1 of Instructions for Form-6251.)
+ 		AMT Form 6251, L1 = 51163.94
+ 		AMT Form 6251, L7 =  -625.83
+ 		AMT Form 6251, L28 = 50538.11
+ 		AMT Form 6251, L29 = 82100.00
+ 		AMT Form 6251, L34 =  3619.00
+ 		AMT Form 6251, L35 =     0.00
+Your Alternative Minimum Tax =     0.00
+ (Not subject to Alternative Minimum Tax.)
+L46 =   0.00
+L47 = 3619.00
+L55 =   0.00
+L56 = 3619.00
+L63 = 3619.00		total tax
+L64 = 4153.59
+L74 = 4153.59		total payments
+L75 = 534.59  REBATE!!!
+L76a = 534.59 
+'
+E
+===============================================================================
+Error: test_run_tax_solver(OtsRunTest): NoMethodError: undefined method `run_open_tax_solver' for #<OpenTableExplorer::Finance::OtsRun:0x00000001aed318>
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:151:in `test_run_tax_solver'
+     148: #	tax_form.run_open_tax_solver
+     149: 	tax_form.assert_open_tax_solver
+     150: #	assert_equal(tax_form, US1040_example.run_open_tax_solver)
+  => 151: 	US1040_example.run_open_tax_solver.assert_open_tax_solver
+     152: 	US1040_user.run_open_tax_solver.assert_open_tax_solver
+     153: 	CA540_user.run_open_tax_solver.assert_open_tax_solver
+     154: 	US1040_template.run_open_tax_solver.assert_open_tax_solver
+===============================================================================
+..$ /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//bin/taxsolve_US_1040_2014 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template.txt
+@process_status=#<Process::Status: pid 18831 exit 1>
+US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_out.txt
+Error: unrecognized status '??'. Exiting.
+peculiar_status=true
+message='US 1040 2014 - v12.01
+Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/US_1040//US_1040_template_out.txt
+Error: unrecognized status '??'. Exiting.
+'
+.E
+===============================================================================
+Error: test_user(OtsRunTest): NoMethodError: undefined method `assert_post_conditions' for nil:NilClass
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:220:in `assert_pdf_to_jpeg'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:120:in `test_user'
+     117: 	CA540_example.assert_build
+     118: end #example
+     119: def test_user
+  => 120: 	US1040_user.build.assert_build.assert_pdf_to_jpeg
+     121: #	CA540_user.build.assert_ots_to_json
+     122: end #user
+     123: def test_template
+===============================================================================
+.
+
+Finished in 9.858473 seconds.
 ------
-35 tests, 236 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-97.1429% passed
+42 tests, 144 assertions, 2 failures, 3 errors, 0 pendings, 0 omissions, 0 notifications
+88.0952% passed
 ------
-19.41 tests/s, 130.88 assertions/s
+4.26 tests/s, 14.61 assertions/s
 

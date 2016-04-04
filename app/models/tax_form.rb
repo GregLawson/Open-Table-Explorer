@@ -43,11 +43,20 @@ include Finance::DefinitionalConstants
 include OpenTableExplorer
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 Ots_run_default = lambda do |ots, attribute|
-	command="#{ots.open_tax_solver_binary} #{ots.open_tax_solver_form_directory}"
+	command="#{ots.open_tax_solver_binary} #{ots.open_tax_solver_input}"
 	open_tax_solver_run = ShellCommands.new(command, :chdir => ots.open_tax_solver_all_form_directory)
 	IO.binwrite(ots.open_tax_solver_sysout, open_tax_solver_run.output)
 	open_tax_solver_run
 end # Ots_run_default
+Run_ots_to_fdf_default = lambda do |ots, attribute|
+
+# misses ./bin/fill_form_CA_540_2014 examples_and_templates/CA_540/CA_540_2014_greg_out.txt
+# probably year in filename for state but not federal.
+	xfdf_script_filename = ots.jurisdiction.to_s + '_' + ots.form + '_' + ots.tax_year.to_s
+	xfdf_script = '~/Desktop/src/OpenTaxSolver2014_12.01-forms/bin/fill_form_' + ots.jurisdiction.to_s + '_' + ots.form + '_' + ots.tax_year.to_s
+	ShellCommands.new(xfdf_script + ' ' + ots.open_tax_solver_output)
+end # run_ots_to_fdf
+
 end # DefinitionalConstants
 include DefinitionalConstants
 module DefinitionalClassMethods
@@ -79,6 +88,7 @@ include Virtus.value_object
 	attribute :tax_year, Fixnum, :default => Finance::Default_tax_year
 	attribute :open_tax_solver_all_form_directory, Pathname
 	attribute :cached_open_tax_solver_run, ShellCommands, :default => OtsRun::Ots_run_default
+	attribute :cached_run_ots_to_fdf, ShellCommands, :default => OtsRun::Run_ots_to_fdf_default
 end # values
 def open_tax_solver_distribution_directory
 	OtsRun.open_tax_solver_distribution_directory(@tax_year)
@@ -115,7 +125,6 @@ end # open_tax_solver_sysout
 def output_xfdf_glob 
 	 "#{open_tax_solver_form_directory}/#{taxpayer_basename}*.xfdf"
 end # output_xfdf_glob 
-
 def build
 #	run_open_tax_solver
 	Schedule.build(self)
@@ -131,7 +140,7 @@ def commit_minor_change!(files, commit_message)
 	end #each
 end #commit_minor_change!
 module Assertions
-
+include RubyAssertions
 module ClassMethods
 
 def assert_pre_conditions(message='')
@@ -169,7 +178,7 @@ end #assert_post_conditions
 # Assertions custom instance methods
 def assert_open_tax_solver
 #	@cached_open_tax_solver_run.assert_post_conditions
-	refute_nil(@cached_open_tax_solver_run.process_status, open_tax_solver_run.inspect)
+	refute_nil(@cached_open_tax_solver_run.process_status, @cached_open_tax_solver_run.inspect)
 	peculiar_status = @cached_open_tax_solver_run.process_status.exitstatus == 1
 	if File.exists?(open_tax_solver_sysout) then
 		message=IO.binread(open_tax_solver_sysout)
@@ -268,13 +277,6 @@ include Virtus.value_object
 	attribute :form_suffix, Time, :default => ''
 end # values
 module ClassMethods
-def run_ots_to_fdf
-# misses ./bin/fill_form_CA_540_2014 examples_and_templates/CA_540/CA_540_2014_greg_out.txt
-# probably year in filename for state but not federal.
-	xfdf_script_filename = @jurisdiction.to_s + '_' + @form + '_' + @tax_year.to_s
-	@xfdf_script = '~/Desktop/src/OpenTaxSolver2014_12.01-forms/bin/fill_form_' + @jurisdiction.to_s + '_' + @form + '_' + @tax_year.to_s
-	@script_run = ShellCommands.new(@xfdf_script + ' ' +open_tax_solver_output)
-end # run_ots_to_fdf
 def generated_xfdf_files_regexp(ots)
 	jurisdiction_pattern = /#{ots.jurisdiction}/.capture(:jurisdiction)
 	form_pattern = /#{ots.form}/.capture(:form)
@@ -365,7 +367,7 @@ def run_pdf_to_jpeg
 
 	@pdf_to_jpeg_run = ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{@ots.taxpayer_basename_with_year}", :chdir=>@ots.open_tax_solver_form_directory)
 	@display_jpeg_run = ShellCommands.new("display  Federal_f1040-1.jpg") if $VERBOSE
-	@display_jpeg_run #.assert_post_conditions if $VERBOSE
+	@display_jpeg_run.assert_post_conditions if $VERBOSE
 	self
 end #run_pdf_to_jpeg
 def build
