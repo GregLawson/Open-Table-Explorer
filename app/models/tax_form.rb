@@ -17,6 +17,56 @@ require_relative '../../app/models/parse.rb'
 module OpenTableExplorer
 
 extend AssertionsModule
+class FileIPO # IPO = Input, Processing, and Output
+include Virtus.value_object
+  values do
+ 	attribute :input_paths, Array, :default => []
+	attribute :chdir, Pathname, :default => nil # current working directory
+	attribute :command_string, String
+	attribute :cached_run, ShellCommands, :default => nil
+ 	attribute :output_paths, Array, :default => []
+	attribute :errors, Array, :default => {state: :not_run_yet}
+end # values
+def run
+	@errors = {} # each run resets errors
+	@input_paths.each do |path|
+		if !File.exist?(path) then
+			@errors[path] = :input_does_not_exist
+		end # if
+	end # each
+	(@output_paths - @input_paths).each do |path| # don't delete files that are both input and output
+		if File.exist?(path) then
+			Pathname.new(path).delete
+		end # if
+	end # each
+	@cached_run = if @chdir.nil? then
+		ShellCommands.new(@command_string)
+	else
+		ShellCommands.new(@command_string, :chdir => @chdir)
+	end # if
+	errors[:process_status] = @cached_run.process_status
+	errors[:exitstatus] = @cached_run.process_status.exitstatus
+	errors[:success?] = @cached_run.success?
+#	if !@cached_run.errors.empty? then
+		errors[:syserr] = @cached_run.errors
+#	end #if
+	@output_paths.each do |path|
+		if !File.exist?(path) then
+			@errors[path] = :output_does_not_exist
+		end # if
+	end # each
+	self # allows command chaining
+end # run
+module Examples
+Pwd = FileIPO.new(command_string: 'pwd')
+Chdir = FileIPO.new(command_string: 'pwd', chdir: '/tmp')
+Touch = FileIPO.new(command_string: 'touch /tmp/junk', output_paths: ['/tmp/junk'])
+Cat = FileIPO.new(input_paths: ['/dev/null'], command_string: 'cat /dev/null')
+Touch_fail = FileIPO.new(command_string: 'touch /tmp/junk', output_paths: ['/tmp/junk2'])
+Cat_fail = FileIPO.new(input_paths: ['/dev/null2'], command_string: 'cat /dev/null')
+end # Examples
+end # FileIPO
+
 module Finance
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 Downloaded_src_dir = FilePattern.repository_dir?($0) + '/../'
@@ -37,15 +87,28 @@ OpenTaxSolver_directories = Dir[OpenTaxSolver_directories_glob]
 end # DefinitionalConstants
 include DefinitionalConstants
 
+class OtsRun # forward reference definition completed below
+end #  OtsRun
+
+class Schedule # forward reference definition completed below
+include Virtus.value_object
+  values do
+ 	attribute :ots, OtsRun
+	attribute :form_prefix, String, :default => ''
+	attribute :form_suffix, Time, :default => ''
+end # values
+end # Schedule
 # single run of ots can produce multiple Schedules
+
 class OtsRun
 include Finance::DefinitionalConstants
 include OpenTableExplorer
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 Ots_run_default = lambda do |ots, attribute|
 	command="#{ots.open_tax_solver_binary} #{ots.open_tax_solver_input}"
-	open_tax_solver_run = ShellCommands.new(command, :chdir => ots.open_tax_solver_all_form_directory)
-	IO.binwrite(ots.open_tax_solver_sysout, open_tax_solver_run.output)
+#	open_tax_solver_run = ShellCommands.new(command, :chdir => ots.open_tax_solver_chdir)
+	open_tax_solver_run = FileIPO.new(input_paths: [ots.open_tax_solver_binary, ots.open_tax_solver_input], chdir: ots.open_tax_solver_chdir, command_string: command, output_paths: [ots.open_tax_solver_output]).run
+	IO.binwrite(ots.open_tax_solver_sysout, open_tax_solver_run.cached_run.output)
 	open_tax_solver_run
 end # Ots_run_default
 Run_ots_to_fdf_default = lambda do |ots, attribute|
@@ -53,9 +116,27 @@ Run_ots_to_fdf_default = lambda do |ots, attribute|
 # misses ./bin/fill_form_CA_540_2014 examples_and_templates/CA_540/CA_540_2014_greg_out.txt
 # probably year in filename for state but not federal.
 	xfdf_script_filename = ots.jurisdiction.to_s + '_' + ots.form + '_' + ots.tax_year.to_s
-	xfdf_script = '~/Desktop/src/OpenTaxSolver2014_12.01-forms/bin/fill_form_' + ots.jurisdiction.to_s + '_' + ots.form + '_' + ots.tax_year.to_s
-	ShellCommands.new(xfdf_script + ' ' + ots.open_tax_solver_output)
+	xfdf_script = '/home/greg/Desktop/src/OpenTaxSolver2014_12.01-forms/bin/fill_form_' + ots.jurisdiction.to_s + '_' + ots.form + '_' + ots.tax_year.to_s
+	FileIPO.new(input_paths: [xfdf_script, ots.open_tax_solver_output], command_string: xfdf_script + ' ' + ots.open_tax_solver_output.to_s).run
+#	ShellCommands.new(xfdf_script + ' ' + ots.open_tax_solver_output.to_s)
 end # run_ots_to_fdf
+Generated_xfdf_files_default = lambda do |ots, attribute|
+	xfdf_file_pattern = ots.generated_xfdf_files_regexp
+	Dir[ots.output_xfdf_glob].map do |xfdf_file|
+		xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
+		Schedule.new(ots: ots, form_prefix: xdf_capture.output?[:form_prefix], form_suffix: xdf_capture.output?[:form_suffix])
+	end # map
+end # generated_xfdf_files
+Errors_default = lambda do |ots, attribute|
+	errors = ots.open_tax_solver_errors(ots.cached_open_tax_solver_run)
+#	errors[:cached_run_ots_to_fdf] = @cached_run_ots_to_fdf.errors
+#	errors[:schedules] = schedules.map {|schedule| {pdf_to_jpeg_run: schedule.pdf_to_jpeg_run.errors} }
+
+#	errors = open_tax_solver_errors
+#	errors = errors.merge(@cached_run.errors)
+
+
+end # Errors_default
 
 end # DefinitionalConstants
 include DefinitionalConstants
@@ -89,6 +170,8 @@ include Virtus.value_object
 	attribute :open_tax_solver_all_form_directory, Pathname
 	attribute :cached_open_tax_solver_run, ShellCommands, :default => OtsRun::Ots_run_default
 	attribute :cached_run_ots_to_fdf, ShellCommands, :default => OtsRun::Run_ots_to_fdf_default
+	attribute :cached_schedules, Array, :default => OtsRun::Generated_xfdf_files_default
+	attribute :errors, Hash, :default => OtsRun::Errors_default
 end # values
 def open_tax_solver_distribution_directory
 	OtsRun.open_tax_solver_distribution_directory(@tax_year)
@@ -99,7 +182,10 @@ def form_filename
 end # form_filename
 def open_tax_solver_form_directory 
 	 @open_tax_solver_all_form_directory + form_filename + '/'
-end #open_tax_solver_form_directory 
+end #open_tax_solver_form_directory
+def open_tax_solver_chdir
+	(Pathname.new(@open_tax_solver_all_form_directory) + '../').cleanpath
+end # open_tax_solver_chdir
 def taxpayer_basename_with_year
 	form_filename + '_' +  @tax_year.to_s + '_' + @taxpayer
 end # taxpayer_basename_with_year
@@ -117,7 +203,7 @@ def open_tax_solver_input
 	"#{open_tax_solver_form_directory}/#{taxpayer_basename}.txt"
 end # open_tax_solver_input
 def open_tax_solver_output
-	"#{open_tax_solver_form_directory}/#{taxpayer_basename}_out.txt"
+	Pathname.new("#{open_tax_solver_form_directory}/#{taxpayer_basename}_out.txt").cleanpath
 end # open_tax_solver_output
 def open_tax_solver_sysout
 	"#{open_tax_solver_form_directory}/#{taxpayer_basename}_sysout.txt"
@@ -125,11 +211,78 @@ end # open_tax_solver_sysout
 def output_xfdf_glob 
 	 "#{open_tax_solver_form_directory}/#{taxpayer_basename}*.xfdf"
 end # output_xfdf_glob 
-def build
-#	run_open_tax_solver
-	Schedule.build(self)
-	self
-end # build
+def generated_xfdf_files_regexp
+	jurisdiction_pattern = /#{@jurisdiction}/.capture(:jurisdiction)
+	form_pattern = /#{@form}/.capture(:form)
+	taxpayer_pattern = /#{@taxpayer}/.capture(:taxpayer)
+	optional_year = (/#{@tax_year.to_s}/.capture(:tax_year) * '_').group * Regexp::Optional
+	schedule_pattern = /_/* /[a-z]*/.capture(:form_prefix) * /#{@form}/ * /[a-z]*/.capture(:form_suffix) * /.xfdf/
+	xfdf_file_pattern = jurisdiction_pattern * /_/ * form_pattern * /_/ * optional_year * taxpayer_pattern * schedule_pattern
+end # generated_xfdf_files_regexp
+def new_from_xfdf_path(ots, xfdf_file)
+		xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
+		Schedule.new(ots, xdf_capture.output?[:form_prefix], xdf_capture.output?[:form_suffix])
+end # new_from_path
+def compact_message(string, max_length = 256)
+	splitter = "\n... "
+	chunk_size = (max_length-splitter.size) / 2
+		if string.size > max_length then
+			string[0..chunk_size-1] + "\n... " + string[-chunk_size..-1]
+		else
+			string # short enough already
+		end # if
+end # compact_message
+def open_tax_solver_errors(open_tax_solver_run = @cached_open_tax_solver_run)
+	errors = open_tax_solver_run.errors
+#	errors[:success?] = open_tax_solver_run.success?
+#	errors[:process_status] = open_tax_solver_run.process_status
+#	errors[:exit_status] = open_tax_solver_run.process_status.exitstatus
+	if File.exists?(open_tax_solver_sysout) then
+		sysout = IO.binread(open_tax_solver_sysout)
+		errors[:sysout] = compact_message(sysout,300)
+		errors[:ots_errors] = sysout.split("\n").map do |line|
+			regexp = /Error:/ * /[^']*/.capture(:error) * /'/ * /.+/.capture(:path) * /'/
+			capture = line.capture_start(regexp)
+			if capture.success? then
+				capture.output?
+			else
+				nil
+			end # if
+		end.compact # map
+	else
+		errors[:sysout] = "\n file = #{open_tax_solver_sysout} does not exist"
+	end #if
+	if File.exists?(open_tax_solver_output) then
+		errors[:output] = compact_message(IO.binread(open_tax_solver_output),300)
+	else
+		errors[:output] = "\n file = #{open_tax_solver_output} does not exist"
+	end #if
+	if open_tax_solver_run.errors != '' then
+		errors[:syserr] = open_tax_solver_run.errors
+	end # if
+	errors[:exception_string] = case errors[:exitstatus]
+	when 0 then 
+		'passed'
+	when 1 then
+		'OTS Error'
+	when 2 then
+		'unknown 2'
+	else
+		'unknown'
+	end #case
+	errors
+end # open_tax_solver_errors
+def explain_open_tax_solver(open_tax_solver_run = @cached_open_tax_solver_run)
+	message = ''
+	open_tax_solver_errors(open_tax_solver_run).each_pair do |key, value|
+		if (key.to_s.size +  value.to_s.size) > 80 then
+			message += key.to_s + ": \n" + value.to_s + "\n"
+		else
+			message += key.to_s + ": " + value.to_s + "\n"
+		end # if
+	end # each_pair
+	message
+end # explain_open_tax_solver
 def commit_minor_change!(files, commit_message)
 	files.each do |file|
 		diff_run = Repository::This_code_repository.git_command('diff -- '+file)
@@ -166,7 +319,6 @@ def assert_pre_conditions(message='')
 	assert_directory_exists(open_tax_solver_distribution_directory, message)
 	assert_directory_exists(open_tax_solver_form_directory, message)
 	assert_pathname_exists(open_tax_solver_binary, message)
-	assert_data_file(open_tax_solver_form_directory, message)
 end #assert_pre_conditions
 def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
@@ -176,34 +328,13 @@ def assert_post_conditions(message='')
 	self
 end #assert_post_conditions
 # Assertions custom instance methods
-def assert_open_tax_solver
-#	@cached_open_tax_solver_run.assert_post_conditions
-	refute_nil(@cached_open_tax_solver_run.process_status, @cached_open_tax_solver_run.inspect)
-	peculiar_status = @cached_open_tax_solver_run.process_status.exitstatus == 1
-	if File.exists?(open_tax_solver_sysout) then
-		message=IO.binread(open_tax_solver_sysout)
-	else
-		message="file=#{open_tax_solver_sysout} does not exist"
-	end #if
-	message += @cached_open_tax_solver_run.errors
-	@cached_open_tax_solver_run.puts
-	puts "peculiar_status=#{peculiar_status}"
-	puts "message='#{message}'"
-	case peculiar_status
-	when 0 then 
-		@cached_open_tax_solver_run.assert_post_conditions('else peculiar_status ')
-	when 1 then
-		@cached_open_tax_solver_run.assert_post_conditions('else peculiar_status ')
-	when 2 then
-		assert_pathname_exists(open_tax_solver_output)
-		assert_pathname_exists(open_tax_solver_sysout)
-		@cached_open_tax_solver_run.assert_post_conditions('else peculiar_status ')
-	else
-		warn(message)
-		warn('!@cached_open_tax_solver_run.success?='+(!@cached_open_tax_solver_run.success?).to_s)
-	end #case
-	assert_pathname_exists(open_tax_solver_output)
-	assert_pathname_exists(open_tax_solver_sysout)
+# possibly different runs (open_tax_solver_run) in context of OtsRun self
+def assert_open_tax_solver(open_tax_solver_run = @cached_open_tax_solver_run)
+	message = explain_open_tax_solver(open_tax_solver_run)
+#	open_tax_solver_run.assert_post_conditions(message)
+	assert(open_tax_solver_run.errors[:success?], open_tax_solver_run.inspect)
+	assert_pathname_exists(open_tax_solver_output, message)
+	assert_pathname_exists(open_tax_solver_sysout, message)
 end #assert_open_tax_solver
 #def assert_ots_to_json
 #	@ots_to_json_run.assert_post_conditions
@@ -219,29 +350,6 @@ end #assert_json_to_fdf
 def assert_pdf_to_jpeg
 	@pdf_to_jpeg_run.assert_post_conditions
 end #assert_json_to_fdf
-def assert_build
-#	@cached_open_tax_solver_run.assert_open_tax_solver
-#	@ots_to_json_run.assert_ots_to_json
-#	@json_to_fdf_run.assert_json_to_fdf
-#	@fdf_to_pdf_run.assert_fdf_to_pdf
-#	@pdf_to_jpeg_run.assert_pdf_to_jpeg
-	if !@cached_open_tax_solver_run.success? then
-		assert_open_tax_solver
-#	elsif !@ots_to_json_run.success? then
-#		@json_to_fdf_run.assert_post_conditions
-#	elsif !@json_to_fdf_run.success? then
-#		assert_json_to_fdf
-	else
-#		@fdf_to_pdf_run.each do |run|
-#			if !run.success? then
-#				run.puts
-#			else
-#				assert_pdf_to_jpeg
-#			end #if
-#		end # each
-	end #if
-	self
-end # build
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
@@ -270,39 +378,7 @@ end #OtsRun
 # mapping is in: 
 #
 class Schedule
-include Virtus.value_object
-  values do
- 	attribute :ots, OtsRun
-	attribute :form_prefix, String, :default => ''
-	attribute :form_suffix, Time, :default => ''
-end # values
 module ClassMethods
-def generated_xfdf_files_regexp(ots)
-	jurisdiction_pattern = /#{ots.jurisdiction}/.capture(:jurisdiction)
-	form_pattern = /#{ots.form}/.capture(:form)
-	taxpayer_pattern = /#{ots.taxpayer}/.capture(:taxpayer)
-	optional_year = (/#{ots.tax_year.to_s}/.capture(:tax_year) * '_').group * Regexp::Optional
-	schedule_pattern = /_/* /[a-z]*/.capture(:form_prefix) * /#{ots.form}/ * /[a-z]*/.capture(:form_suffix) * /.xfdf/
-	xfdf_file_pattern = jurisdiction_pattern * /_/ * form_pattern * /_/ * optional_year * taxpayer_pattern * schedule_pattern
-end # generated_xfdf_files_regexp
-def new_from_xfdf_path(ots, xfdf_file)
-		xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
-		Schedule.new(ots, xdf_capture.output?[:form_prefix], xdf_capture.output?[:form_suffix])
-end # new_from_path
-def generated_xfdf_files(ots)
-	xfdf_file_pattern = generated_xfdf_files_regexp(ots)
-	Dir[ots.output_xfdf_glob].map do |xfdf_file|
-		xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
-		Schedule.new(ots: ots, form_prefix: xdf_capture.output?[:form_prefix], form_suffix: xdf_capture.output?[:form_suffix])
-	end # map
-end # generated_xfdf_files
-def build(ots)
-	generated_xfdf_files(ots).each do |schedule|	
-		schedule.build
-	end # each
-#	run_ots_to_json
-#	run_json_to_fdf
-end # build
 def run_ots_to_json
 	@open_tax_form_filler_ots_js="#{Open_Tax_Filler_Directory}/script/json_ots.js"
 	@ots_json="#{open_tax_solver_form_directory}/#{taxpayer_basename}_OTS.json"
@@ -356,7 +432,8 @@ def fillout_form
 	Finance::IRS_pdf_directory + '/f' + @ots.form  + @form_suffix + '--' + @ots.tax_year.to_s + '.pdf'
 end # fillout_form
 def run_fdf_to_pdf
-		ShellCommands.new("pdftk fillout_form fill_form #{xfdf_file} output #{xfdf_file}.pdf")
+	FileIPO.new(input_paths: [xfdf_file], command_string: "pdftk fillout_form fill_form #{xfdf_file} output #{xfdf_file}.pdf", output_paths: [xfdf_file + '.pdf']).run
+#		ShellCommands.new("pdftk fillout_form fill_form #{xfdf_file} output #{xfdf_file}.pdf")
 	self
 end # run_fdf_to_pdf
 def run_pdf_to_jpeg
@@ -364,18 +441,12 @@ def run_pdf_to_jpeg
 	cleanpath_name = output_pdf_pathname.cleanpath
 	clean_directory = Pathname.new(File.expand_path(@ots.open_tax_solver_form_directory)).cleanpath
 	output_pdf = cleanpath_name.relative_path_from(clean_directory)
-
-	@pdf_to_jpeg_run = ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{@ots.taxpayer_basename_with_year}", :chdir=>@ots.open_tax_solver_form_directory)
+	@pdf_to_jpeg_run = FileIPO.new(input_paths: [output_pdf], command_string: "pdftoppm -jpeg  #{output_pdf} #{@ots.taxpayer_basename_with_year}").run
+#	@pdf_to_jpeg_run = ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{@ots.taxpayer_basename_with_year}", :chdir=>@ots.open_tax_solver_form_directory)
 	@display_jpeg_run = ShellCommands.new("display  Federal_f1040-1.jpg") if $VERBOSE
 	@display_jpeg_run.assert_post_conditions if $VERBOSE
 	self
 end #run_pdf_to_jpeg
-def build
-	run_fdf_to_pdf
-	run_pdf_to_jpeg
-#	run_ots_to_json
-#	run_json_to_fdf
-end # build
 module Examples
 end # Examples
 end # Schedule
