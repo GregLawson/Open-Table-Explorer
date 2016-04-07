@@ -1,5 +1,5 @@
 tax_form
-2016-04-03 03:29:22.402
+2016-04-07 00:23:46.796
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test
@@ -41,10 +41,10 @@ CaptureTest#test_success? was redefined [test_success?(CaptureTest)]
 ===============================================================================
 ...
 
-Finished in 0.051153453 seconds.
+Finished in 0.060376682 seconds.
 ------
 40 tests, 83 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 7 notifications
 100% passed
 ------
-781.96 tests/s, 1622.57 assertions/s
+662.51 tests/s, 1374.70 assertions/s
 
