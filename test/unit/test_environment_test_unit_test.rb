@@ -57,7 +57,7 @@ rescue RegexpError => exception
 	assert(exception.class.ancestors.include?(Exception))
 end # AssertionFailedError
 def test_AssertionFailedError
-	fail # test
+	assert(false) # test
 rescue Exception => exception
 	assert_kind_of(Exception, exception)
 	assert_includes(exception.class.ancestors, Exception)

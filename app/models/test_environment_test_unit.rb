@@ -13,7 +13,7 @@ AssertionsModule = Test::Unit::Assertions
 BaseTestCase = Test::Unit::TestCase 
 TestCase = BaseTestCase # allows subclassing BaseTestCase, sets default value
 AssertionFailedError = RuntimeError
-#AssertionFailedError = Test::Unit::AssertionFailedError
+AssertionFailedError = Test::Unit::AssertionFailedError
 #assert_global_name(:AssertionFailedError)
 
 include AssertionsModule
