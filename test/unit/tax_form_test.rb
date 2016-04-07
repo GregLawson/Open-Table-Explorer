@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2011-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -52,13 +52,28 @@ def test_Finance_DefinitionalConstants
 	assert_pathname_exists(IRS_pdf_directory)
 end # DefinitionalConstants
 def test_Ots_run_default
+	open_tax_solver_run = Ots_run_default.call(US1040_template, nil)
+	open_tax_solver_errors = US1040_template.open_tax_solver_errors(open_tax_solver_run)
+	assert_instance_of(Hash, open_tax_solver_errors)
+	assert_instance_of(Process::Status, open_tax_solver_errors[:process_status])
+	assert_instance_of(Fixnum, open_tax_solver_errors[:exitstatus])
+	assert_equal(1, US1040_template.open_tax_solver_errors[:exitstatus], open_tax_solver_errors.inspect)
 	ots_run_default = Ots_run_default.call(US1040_example, nil)
-	assert_equal({}, ots_run_default.errors)
-#	assert_equal('1040', US1040_user.form)
+	assert_equal(0, Ots_run_default.call(US1040_example, nil).errors[:exitstatus])
+	assert_equal(0, Ots_run_default.call(US1040_user, nil).errors[:exitstatus], US1040_user.open_tax_solver_errors.inspect)
+	assert_equal(0, Ots_run_default.call(CA540_user, nil).errors[:exitstatus], CA540_user.open_tax_solver_errors.inspect)
+	assert_equal(0, Ots_run_default.call(US1040_example, nil).errors[:exitstatus], US1040_example.explain_open_tax_solver)
+	assert_equal(0, Ots_run_default.call(CA540_example, nil).errors[:exitstatus], CA540_example.open_tax_solver_errors.inspect)
+	assert_equal(1, Ots_run_default.call(US1040_template, nil).errors[:exitstatus], US1040_template.open_tax_solver_errors.inspect)
+	assert_equal(1, Ots_run_default.call(CA540_template, nil).errors[:exitstatus], CA540_template.open_tax_solver_errors.inspect)
 end # Ots_run_default
 def test_Run_ots_to_fdf_default
-	run_ots_to_fdf_default = Run_ots_to_fdf_default.call(US1040_template, nil)
-	assert_equal({}, run_ots_to_fdf_default.errors)
+	assert_equal(0, Run_ots_to_fdf_default.call(US1040_user, nil).errors[:exitstatus])
+	assert_equal(0, Run_ots_to_fdf_default.call(CA540_user, nil).errors[:exitstatus])
+	assert_equal(0, Run_ots_to_fdf_default.call(US1040_example, nil).errors[:exitstatus])
+	assert_equal(0, Run_ots_to_fdf_default.call(CA540_example, nil).errors[:exitstatus])
+	assert_equal(0, Run_ots_to_fdf_default.call(US1040_template, nil).errors[:exitstatus])
+	assert_equal(0, Run_ots_to_fdf_default.call(CA540_template, nil).errors[:exitstatus])
 end # run_ots_to_fdf
 def test_Generated_xfdf_files_default
 	generated_xfdf_files_default = Generated_xfdf_files_default.call(US1040_template, nil)

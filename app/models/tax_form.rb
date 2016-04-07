@@ -91,6 +91,9 @@ class OtsRun # forward reference definition completed below
 end #  OtsRun
 
 class Schedule # forward reference definition completed below
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+end # DefinitionalConstants
+include DefinitionalConstants
 include Virtus.value_object
   values do
  	attribute :ots, OtsRun
