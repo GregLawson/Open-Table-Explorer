@@ -1,63 +1,15 @@
 tax_form
-2016-04-06 14:38:37.429
+2016-04-07 00:45:51.589
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test
 Started
-.........F
-===============================================================================
-Failure: test_Ots_run_default(OtsRunTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:56:in `test_Ots_run_default'
-     53: end # DefinitionalConstants
-     54: def test_Ots_run_default
-     55: 	ots_run_default = Ots_run_default.call(US1040_example, nil)
-  => 56: 	assert_equal({}, ots_run_default.errors)
-     57: #	assert_equal('1040', US1040_user.form)
-     58: end # Ots_run_default
-     59: def test_Run_ots_to_fdf_default
-<{}> expected but was
-<{:exitstatus=>0,
- :process_status=>#<Process::Status: pid 23734 exit 0>,
- :success?=>true,
- :syserr=>""}>
+..........................................
 
-diff:
-+ {:exitstatus=>0,
-+  :process_status=>#<Process::Status: pid 23734 exit 0>,
-+  :success?=>true,
-? {           }
-?  :syserr=>"" 
-===============================================================================
-F
-===============================================================================
-Failure: test_Run_ots_to_fdf_default(OtsRunTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:61:in `test_Run_ots_to_fdf_default'
-     58: end # Ots_run_default
-     59: def test_Run_ots_to_fdf_default
-     60: 	run_ots_to_fdf_default = Run_ots_to_fdf_default.call(US1040_template, nil)
-  => 61: 	assert_equal({}, run_ots_to_fdf_default.errors)
-     62: end # run_ots_to_fdf
-     63: def test_Generated_xfdf_files_default
-     64: 	generated_xfdf_files_default = Generated_xfdf_files_default.call(US1040_template, nil)
-<{}> expected but was
-<{:exitstatus=>0,
- :process_status=>#<Process::Status: pid 23736 exit 0>,
- :success?=>true,
- :syserr=>""}>
-
-diff:
-+ {:exitstatus=>0,
-+  :process_status=>#<Process::Status: pid 23736 exit 0>,
-+  :success?=>true,
-? {           }
-?  :syserr=>"" 
-===============================================================================
-...............................
-
-Finished in 2.245181187 seconds.
+Finished in 7.47192733 seconds.
 ------
-42 tests, 282 assertions, 2 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-95.2381% passed
+42 tests, 297 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
 ------
-18.71 tests/s, 125.60 assertions/s
+5.62 tests/s, 39.75 assertions/s
 
