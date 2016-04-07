@@ -237,11 +237,11 @@ end # assert_method
 def test_Capture_assert_pre_conditions
 #	Parse_string.assert_pre_conditions
 #	Parse_array.assert_pre_conditions
-	assert_raises(AssertionFailedError) {fail}
+	assert_raises(AssertionFailedError) {assert(false)}
 #	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions('test_Capture_assert_pre_conditions')}
 end # assert_pre_conditions
 def test_assert_success
-	assert_raises(AssertionFailedError) {fail}
+	assert_raises(AssertionFailedError) {assert(false)}
 #	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions}
 	MatchCapture.new(Newline_Delimited_String, Branch_line_regexp) #.assert_success
 	MatchCapture.new('   ', /  /) #.assert_success
@@ -273,7 +273,7 @@ def test_Capture_Examples
 	Limit_capture #.assert_pre_conditions
 	Parse_string #.assert_pre_conditions
 	Parse_array #.assert_pre_conditions
-	assert_raises(AssertionFailedError) {fail}
+	assert_raises(AssertionFailedError) {assert(false)}
 #	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions}
 
 	Match_capture #.assert_left_match

@@ -1,15 +1,72 @@
 tax_form
-2016-04-03 03:29:22.402
+2016-04-06 23:44:50.099
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test
 Started
-.......N
+F
+===============================================================================
+Failure: test_Capture_Examples(CaptureTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:276:in `test_Capture_Examples'
+     273: 	Limit_capture #.assert_pre_conditions
+     274: 	Parse_string #.assert_pre_conditions
+     275: 	Parse_array #.assert_pre_conditions
+  => 276: 	assert_raises(AssertionFailedError) {fail}
+     277: #	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions}
+     278: 
+     279: 	Match_capture #.assert_left_match
+
+<Test::Unit::AssertionFailedError> expected but was
+<RuntimeError(<>)>
+
+diff:
+? Test::Unit::AssertionFailedError    
+? Ru                 m            (<>)
+===============================================================================
+.F
+===============================================================================
+Failure: test_Capture_assert_pre_conditions(CaptureTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:240:in `test_Capture_assert_pre_conditions'
+     237: def test_Capture_assert_pre_conditions
+     238: #	Parse_string.assert_pre_conditions
+     239: #	Parse_array.assert_pre_conditions
+  => 240: 	assert_raises(AssertionFailedError) {fail}
+     241: #	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions('test_Capture_assert_pre_conditions')}
+     242: end # assert_pre_conditions
+     243: def test_assert_success
+
+<Test::Unit::AssertionFailedError> expected but was
+<RuntimeError(<>)>
+
+diff:
+? Test::Unit::AssertionFailedError    
+? Ru                 m            (<>)
+===============================================================================
+....N
 ===============================================================================
 CaptureTest#test_MatchCapture_output? was redefined [test_MatchCapture_output?(CaptureTest)]
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:301:in `<class:CaptureTest>'
 ===============================================================================
-.............N
+...........F
+===============================================================================
+Failure: test_assert_success(CaptureTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:244:in `test_assert_success'
+     241: #	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions('test_Capture_assert_pre_conditions')}
+     242: end # assert_pre_conditions
+     243: def test_assert_success
+  => 244: 	assert_raises(AssertionFailedError) {fail}
+     245: #	assert_raises(AssertionFailedError) {Failed_capture.assert_pre_conditions}
+     246: 	MatchCapture.new(Newline_Delimited_String, Branch_line_regexp) #.assert_success
+     247: 	MatchCapture.new('   ', /  /) #.assert_success
+
+<Test::Unit::AssertionFailedError> expected but was
+<RuntimeError(<>)>
+
+diff:
+? Test::Unit::AssertionFailedError    
+? Ru                 m            (<>)
+===============================================================================
+.N
 ===============================================================================
 CaptureTest#test_delimiters? was redefined [test_delimiters?(CaptureTest)]
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:361:in `<class:CaptureTest>'
@@ -41,10 +98,10 @@ CaptureTest#test_success? was redefined [test_success?(CaptureTest)]
 ===============================================================================
 ...
 
-Finished in 0.051153453 seconds.
+Finished in 0.080200517 seconds.
 ------
-40 tests, 83 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 7 notifications
-100% passed
+40 tests, 83 assertions, 3 failures, 0 errors, 0 pendings, 0 omissions, 7 notifications
+92.5% passed
 ------
-781.96 tests/s, 1622.57 assertions/s
+498.75 tests/s, 1034.91 assertions/s
 
