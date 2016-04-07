@@ -467,13 +467,13 @@ def capture_in(pattern, capture_class = MatchCapture)
 	capture?(pattern, capture_class)
 end # capture_in
 def capture_exact(pattern, capture_class = MatchCapture)
-	capture?(Start_string * pattern * End_string, capture_class)
+	capture?(Regexp::Start_string * pattern * Regexp::End_string, capture_class)
 end # capture_in
 def capture_start(pattern, capture_class = MatchCapture)
-	capture?(Start_string * pattern, capture_class)
+	capture?(Regexp::Start_string * pattern, capture_class)
 end # capture_in
 def capture_end(pattern, capture_class = MatchCapture)
-	capture?(pattern * End_string, capture_class)
+	capture?(pattern * Regexp::End_string, capture_class)
 end # capture_in
 def parse(regexp)
 	regexp.enumerate(:map) do |reg|

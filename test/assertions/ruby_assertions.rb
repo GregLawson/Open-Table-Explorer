@@ -72,7 +72,6 @@ def default_message
 end # default_message
 end # Kernel
 
-require_relative '../../app/models/test_environment_minitest.rb'
 module RubyAssertions
 include AssertionsModule
 extend AssertionsModule
@@ -499,9 +498,9 @@ def assert_directory_exists(pathname, message='')
 	pathname # allow chaining
 end #assert_directory_exists
 def assert_data_file(pathname, message='')
-	message += 'pathname = ' + "'" + pathname + "'"
+	message += 'pathname = ' + "'" + pathname.to_s + "'"
 	assert_pathname_exists(pathname, message)
-	assert(File.file?(pathname), "File.file?(#{pathname})=#{File.file?(pathname).inspect}, is it a directory?")
+	assert(File.file?(pathname), "File.file?(#{pathname.to_s})=#{File.file?(pathname).inspect}, is it a directory?")
 	refute_nil(File.size?(pathname), message)
 	refute_equal(0, File.size?(pathname), message)
 	pathname # allow chaining

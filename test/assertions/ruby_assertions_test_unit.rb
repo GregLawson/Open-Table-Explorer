@@ -31,15 +31,15 @@ def missing_file_message(pathname)
 	else
 		existing_dir = nil
 		pathname.ascend { |f| existing_dir = f and break if f.exist? }
-		'pathname = ' + pathname + " does not exist\n" +
+		'pathname = ' + pathname.to_s + " does not exist\n" +
 		'parent directory ' + 
 		existing_dir.to_s + 
 		' does exists containing ' + 
-		Dir[existing_dir+ '*'].map {|f| File.basename(f)}.inspect
+		Dir[existing_dir.to_s + '*'].map {|f| File.basename(f)}.inspect
 	end # if
 end # missing_file_message
 def assert_pathname_exists(pathname, message='')
-	message = missing_file_message(pathname) + message
+	message = missing_file_message(pathname.to_s) + message
 	refute_nil(pathname, message)
 	refute_empty(pathname.to_s, message+"Assume pathname to not be empty.")
 	pathname = Pathname.new(pathname).expand_path

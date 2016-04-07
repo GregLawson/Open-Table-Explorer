@@ -154,7 +154,7 @@ def help_banner_string
 		end # each
 		ret += 'args may be paths, units, branches, etc.'
 		ret += 'options:'
-end # help_string
+end # help_banner_string
 def command_line_parser
 	command_line = self
 	Trollop::Parser.new do

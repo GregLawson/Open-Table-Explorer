@@ -219,8 +219,23 @@ end #corruption
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def status(options = '--untracked-files=no')
-	changes = git_command('status -z ' + options).output
+def diff_branch_files(less_mature_branch, options = '--summary')
+	git_command('git diff ' + options +' ' + current_branch_name?.to_s + '..' + less_mature_branch.to_s + ' -- {app,test,script}')
+end # diff_files
+def pull_differences(less_mature_branch)
+	branch_file_changes = diff_branch_files(less_mature_branch, '--summary')
+	branch_num_line_changes = diff_branch_files(less_mature_branch, '--numstat')
+end # pull
+def merge_up_discard_files(less_mature_branch)
+	merge_up_file_changes = diff_branch_files(less_mature_branch, '--summary')
+end # pull
+def status(pathspec = nil, options = '--untracked-files=all --ignored')
+	if pathspec.nil? then
+		pathspec_string = ''
+	else
+		pathspec_string = ' -- ' + pathspec
+	end # if
+	changes = git_command('status -z ' + options + pathspec_string).output
 	ret=[]
 	if !changes.empty? then
 		changes.split("\u0000").map do |line|
