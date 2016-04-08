@@ -282,7 +282,7 @@ def dispatch_required_arguments(argument)
 			message = "\nIn CommandLine#dispatch_required_arguments, "
 			message += "\nargument =  " + argument
 			message += "\nsub_command =  " + sub_command.to_s
-			message += "\narity =  " + required_arguments(sub_command).to_s
+			message += "\nrequired_arguments =  " + required_arguments(sub_command).to_s
 			fail Exception.new(message)
 		end # case
 	end # if nil?
@@ -300,12 +300,12 @@ def run(&non_default_actions)
 			fail Exception.new(message)
 		elsif number_of_arguments == 0 then
 			method.call
-		elsif number_of_arguments == required_arguments(sub_command) then
+		elsif number_of_arguments == method.required_arguments then
 			dispatch_required_arguments(arguments)
-		elsif number_of_arguments < required_arguments(sub_command) then
+		elsif number_of_arguments < method.required_arguments then
 			puts 'number_of_arguments == 0 '
-		elsif required_arguments(sub_command) == 0 ||
-		(number_of_arguments % required_arguments(sub_command)) == 0 then
+		elsif method.required_arguments == 0 ||
+		(number_of_arguments % method.required_arguments) == 0 then
 			arguments.each do |argument|
 				dispatch_required_arguments(argument)
 			end # each
