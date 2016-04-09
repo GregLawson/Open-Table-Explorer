@@ -28,7 +28,6 @@ def [](command_on_remote)
 	ShellCommands.new(command_string)
 	
 end # []
-require_relative '../../test/assertions.rb'
 module Assertions
 module ClassMethods
 def assert_pre_conditions(message='')
@@ -273,7 +272,7 @@ def trace
 	$stdout.puts shorter_callers.join("\n")
 	self # return for command chaining
 end #trace
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 
 def assert_pre_conditions(message='')
