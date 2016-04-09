@@ -1,4 +1,10 @@
-# Provide ActiveRecord methods to classes with no Database
+###########################################################################
+#    Copyright (C) 2013-2016 by Greg Lawson
+#    <GregLawson123@gmail.com>
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
 class MethodModel  #<ActiveRecord::Base
 include NoDB
 attr_reader :init_path
