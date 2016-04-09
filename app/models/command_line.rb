@@ -7,7 +7,7 @@
 ###########################################################################
 require 'trollop'
 require_relative '../../app/models/shell_command.rb'
-require_relative '../../app/models/command.rb'
+#require_relative '../../app/models/command.rb'
 require_relative '../../app/models/test_executable.rb'
 # Monkey patch Mehod to give more intelligible arity methods
 class Method
@@ -31,7 +31,7 @@ def required_arguments
 end # required_arguments
 end # Method
 
-class CommandLine  < Command
+class CommandLine  #< Command
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 SUB_COMMANDS = %w(inspect test)
 Nonscriptable_methods = [:run, :executable, :executable=]
@@ -191,7 +191,7 @@ end
 end # command_line_opts
 module Constants # constant objects of the type
 include DefinitionalConstants
-Command = RailsishRubyUnit::Executable.model_basename
+#Command = RailsishRubyUnit::Executable.model_basename
 Script_class = RailsishRubyUnit::Executable.model_class?
 Script_command_line = CommandLine.new(executable: $0, unit_class: Script_class, argv: ARGV)
 # = Script_class.new(TestExecutable.new_from_path($0))
