@@ -6,6 +6,7 @@
 #
 ###########################################################################
 require 'trollop'
+require 'virtus'
 require_relative '../../app/models/shell_command.rb'
 #require_relative '../../app/models/command.rb'
 require_relative '../../app/models/test_executable.rb'
@@ -176,7 +177,7 @@ def command_line_parser
 		end # if
 		banner 'args may be paths, units, branches, etc.'
 		banner 'options:'
-		opt :inspect, 'Inspect ' + Command.to_s + ' object' 
+#		opt :inspect, 'Inspect ' + Command.to_s + ' object' 
 		opt :test, "Test unit."       # string --name <s>, default nil
 	  stop_on SUB_COMMANDS
 	  end

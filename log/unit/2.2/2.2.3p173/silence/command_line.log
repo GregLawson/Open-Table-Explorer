@@ -1,53 +1,16 @@
 passed
-2016-04-09 03:16:15.415
+2016-04-10 01:40:47.479
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test
 Started
 No arguments
-E
-===============================================================================
-Error: test_DefinitionalConstants(CommandLineTest): NameError: uninitialized constant CommandLineTest::Command
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:64:in `test_DefinitionalConstants'
-     61: 	else
-     62: 		puts "No arguments"
-     63: 	end # if
-  => 64: 	assert_equal(Command, :command_line)
-     65: 	assert_equal(Script_class, CommandLine)
-     66: 	assert_equal(Script_command_line.unit_class, Script_class)
-     67: end # DefinitionalConstants
-===============================================================================
-.........................E
-===============================================================================
-Error: test_run(CommandLineTest): NameError: uninitialized constant CommandLine::Command
-/var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/const_missing_extensions.rb:14:in `const_missing'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:179:in `block in command_line_parser'
-/var/lib/gems/2.2.0/gems/trollop-2.1.2/lib/trollop.rb:86:in `call'
-/var/lib/gems/2.2.0/gems/trollop-2.1.2/lib/trollop.rb:86:in `initialize'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:160:in `new'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:160:in `command_line_parser'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:185:in `command_line_opts'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line.rb:319:in `run'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:211:in `test_run'
-     208: 	refute_nil(ARGV)
-     209: #		SELF.run do
-     210: #		end # do run
-  => 211: 	Test_unit_commandline.run
-     212: end # run
-     213: # ruby -W0 script/command_line.rb
-     214: # ruby -W0 script/command_line.rb --help
-===============================================================================
-..N
-===============================================================================
-CommandLineTest#test_to_s was redefined [test_to_s(CommandLineTest)]
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb:185:in `<class:CommandLineTest>'
-===============================================================================
-.
+..............................
 
-Finished in 89.430908518 seconds.
+Finished in 89.832912485 seconds.
 ------
-30 tests, 74 assertions, 0 failures, 2 errors, 0 pendings, 0 omissions, 1 notifications
-93.3333% passed
+30 tests, 76 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
 ------
-0.34 tests/s, 0.83 assertions/s
+0.33 tests/s, 0.85 assertions/s
 
