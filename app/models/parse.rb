@@ -192,6 +192,7 @@ Array_answer=[{:line=>"* 1", :terminator=>"\n"}, {:line=>"  2", :terminator=>"\n
 WORD=/([^\s]*)/.capture(:word)
 end # Examples
 end # Capture
+
 # encapsulates the difference between parsing from MatchData and from Array#split
 class RawCapture < Capture
 def initialize(string, regexp)
@@ -475,6 +476,9 @@ end # capture_in
 def capture_end(pattern, capture_class = MatchCapture)
 	capture?(pattern * Regexp::End_string, capture_class)
 end # capture_in
+def capture_many(pattern)
+	capture?(pattern, SplitCapture)
+end # capture_many
 def parse(regexp)
 	regexp.enumerate(:map) do |reg|
 		capture?(reg).enumerate(:map) {|c| c.output?}
