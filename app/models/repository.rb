@@ -219,16 +219,25 @@ end #corruption
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def diff_branch_files(less_mature_branch, options = '--summary')
-	git_command('git diff ' + options +' ' + current_branch_name?.to_s + '..' + less_mature_branch.to_s + ' -- {app,test,script}')
-end # diff_files
-def pull_differences(less_mature_branch)
-	branch_file_changes = diff_branch_files(less_mature_branch, '--summary')
-	branch_num_line_changes = diff_branch_files(less_mature_branch, '--numstat')
+def diff_branch_files(more_mature_branch, options = '--summary')
+	git_command('diff -z ' + options +' ' + more_mature_branch.to_s + '..'  + current_branch_name?.to_s + ' -- *.rb')
+end # diff_branch_files
+def pull_differences(more_mature_branch)
+	branch_file_changes = diff_branch_files(more_mature_branch, '--summary').output
+	branch_num_line_changes = diff_branch_files(more_mature_branch, '--numstat').output
 end # pull
-def merge_up_discard_files(less_mature_branch)
-	merge_up_file_changes = diff_branch_files(less_mature_branch, '--summary')
+def merge_up_discard_files(more_mature_branch)
+	merge_up_file_changes = diff_branch_files(more_mature_branch, '--summary').output
 end # pull
+def subset_changes(more_mature_branch)
+	subset_change_files = diff_branch_files(more_mature_branch, options = '--numstat').output
+	'|grep -v "^0"'
+	numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/ * /[0-9]+/.capture(:additions) * /\s+/ * FilePattern::Relative_pathname_regexp.capture(:path)
+	subset_change_files.capture_many(numstat_regexp).column_output.select do |capture|
+		true # capture[:deletions] = '0'
+	end # select
+end # subset_changes
+
 def status(pathspec = nil, options = '--untracked-files=all --ignored')
 	if pathspec.nil? then
 		pathspec_string = ''
