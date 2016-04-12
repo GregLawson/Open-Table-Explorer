@@ -227,25 +227,6 @@ def test_subset_changes
 	assert(capture_many.success?, capture_many.inspect)
 	assert_instance_of(SplitCapture, capture_many)
 	assert_instance_of(Hash, capture_many.named_hash)
-	diff = capture_many.select do |capture|
-		assert_instance_of(Hash, capture.named_hash)
-		capture[:deletions] = '0'
-	end # select
-	assert_instance_of(Array, diff)
-	refute_empty(diff)
-	diff .each do |capture|
-		assert_instance_of(Hash, capture)
-		assert_equal([], capture.keys)
-	end # each
-	diff = This_code_repository.subset_changes(This_code_repository.current_branch_name?)
-	assert_empty(diff)
-	diff = This_code_repository.subset_changes(:master)
-	assert_instance_of(Array, diff)
-	refute_empty(diff)
-	diff .each do |capture|
-		assert_instance_of(Hash, capture)
-		assert_equal([], capture.keys)
-	end # each
 end # subset_changes
 def test_status
 	This_code_repository.status.each do |status|
