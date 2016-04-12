@@ -21,24 +21,8 @@ def test_symbolize_keys
 	assert_equal(hash_of_array, Capture.symbolize_keys(hash_of_array), message)
 	array_of_hash = [{a: 1}, {b:2}]
 	assert_equal(array_of_hash, Capture.symbolize_keys(array_of_hash), message)
-	message = 'Split_capture = ' + Split_capture.inspect
-	column_output = Split_capture.string.capture?(Split_capture.regexp, SplitCapture).column_output
-	message += 'column_output = ' + column_output.inspect
-	assert_equal([Branch_column_answer], column_output, message)
-	assert_equal([Branch_answer], Capture.symbolize_keys(column_output), message)
 end # symbolize_keys
 def test_initialize
-	length_hash_captures=Parse_array.regexp.named_captures.values.flatten.size
-	iterations=(Parse_array.raw_captures.size/length_hash_captures).ceil
-	assert_equal(1, Parse_array.length_hash_captures, Parse_array.raw_captures.inspect+Parse_array.regexp.named_captures.inspect)
-	output=if Parse_array.raw_captures.instance_of?(MatchData) then
-			Parse_array.named_hash(0)
-	else
-		(0..iterations-1).map do |i|
-			Parse_array.named_hash(i*(length_hash_captures+1))
-		end #map
-	end #if
-#	assert_equal(Array_answer, Parse_array.output, Parse_array.inspect)
 end # initialize
 def test_index
 	capture = Match_capture
@@ -120,7 +104,7 @@ def test_named_hash
 #	end #each
 	message +=regexp.inspect+"\n"+captures.inspect
 	assert_equal(Branch_column_answer, Match_capture.named_hash, message)
-#	assert_equal(Array_answer, Capture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
+#	assert_equal(Branch_hashes, Capture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
 	regexp = /5/.capture(:a) * /6/.capture(:a)
 	capture = '56'.capture?(regexp)
 	message = "capture = " + capture.inspect
@@ -145,7 +129,7 @@ def test_SplitCapture_output?
 	assert_equal([Branch_column_answer], column_output, Split_capture.inspect)
 	assert_equal([Branch_answer], Split_capture.string.capture?(Split_capture.regexp, SplitCapture).output?, Split_capture.inspect)
 #	assert_equal([{:branch=>"1"}, {:branch=>"2"}], Parse_array.output?, Parse_array.inspect)
-#	assert_equal(Array_answer, Capture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
+#	assert_equal(Branch_hashes, Capture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
 end # output?
 def test_output_with_key_symbols
 	assert_equal({:branch => '1'}, Match_capture.output?)
@@ -259,7 +243,13 @@ end # column_output
 def test_MatchCapture_delimiters?
 	assert_equal([], Match_capture.delimiters?, Match_capture.inspect)
 end # delimiters?
+def test_MatchCapture_Examples
+end # Examples
 
+def test_SplitCapture_initialize
+end #initialize
+def test_DplitCapture_index
+end # []
 def test_SplitCapture_raw_captures?
 	assert_equal(["\n"], Parse_delimited_array.raw_captures[2..2], Parse_string.to_a?.inspect)
 	assert_equal("\n", Parse_delimited_array.raw_captures[2])
@@ -322,6 +312,31 @@ def test_SplitCapture_number_matched_characters?
 	assert_equal(4, Split_capture.number_matched_characters?)
 end # number_matched_characters?
 def test_SplitCapture_column_output
+	length_hash_captures=Parse_array.regexp.named_captures.values.flatten.size
+	iterations=(Parse_array.raw_captures.size/length_hash_captures).ceil
+#	assert_equal(2, Parse_array.length_hash_captures, Parse_array.raw_captures.inspect+Parse_array.regexp.named_captures.inspect)
+#	assert_equal(["\n", "\n"], Parse_array.delimiters?, Parse_array.raw_captures.inspect)
+#	assert_equal(Branch_hashes.values, Parse_array.to_a?, Parse_array.raw_captures.inspect)
+#	assert_equal(Branch_hashes, Parse_array.raw_captures, Parse_array.raw_captures.inspect)
+	output=if Parse_array.raw_captures.instance_of?(MatchData) then
+			Parse_array.named_hash(0)
+	else
+		(0..iterations-1).map do |i|
+			Parse_array.named_hash(i*(length_hash_captures+1))
+		end #map
+	end #if
+	assert_instance_of(Array, output)
+	assert_instance_of(Hash, output[0])
+#	assert_equal(Branch_hashes[0].keys, Capture.symbolize_keys(output[0]).keys, output.inspect)
+#	assert_equal(Branch_hashes, Capture.symbolize_keys(output), output.inspect)
+#	assert_equal(Branch_hashes[0], Capture.symbolize_keys(output[0]), output.inspect)
+#	assert_equal(output[0], Branch_hashes[0], output.inspect)
+	message = 'Split_capture = ' + Split_capture.inspect
+	column_output = Split_capture.string.capture?(Split_capture.regexp, SplitCapture).column_output
+	message += 'column_output = ' + column_output.inspect
+	assert_equal([Branch_column_answer], column_output, message)
+	assert_equal([Branch_answer], Capture.symbolize_keys(column_output), message)
+#	assert_equal(output, Branch_hashes)
 end # column_output
 def test_SplitCapture_delimiters?
 #	assert_equal([], Parse_string.delimiters?)

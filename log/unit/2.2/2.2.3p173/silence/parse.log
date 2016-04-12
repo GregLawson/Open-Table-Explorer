@@ -1,17 +1,17 @@
 passed
-2016-04-10 01:42:14.261
+2016-04-12 05:57:38.678
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test
 Started
-................................... matched
-#<MatchCapture:0x0000000352ff78 @string="  ", @regexp=/  /, @length_hash_captures=0, @raw_captures=#<MatchData "  ">>
+...................................... matched
+#<MatchCapture:0x00000001f91298 @string="  ", @regexp=/  /, @length_hash_captures=0, @raw_captures=#<MatchData "  ">>
 ..................
 
-Finished in 0.06318423 seconds.
+Finished in 0.062812537 seconds.
 ------
-53 tests, 107 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+56 tests, 108 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-838.82 tests/s, 1693.46 assertions/s
+891.54 tests/s, 1719.40 assertions/s
 

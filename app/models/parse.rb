@@ -179,8 +179,11 @@ Newline_Terminated_String=Newline_Delimited_String+"\n"
 #Branch_regexp = /[* ]/.capture(:current) * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_regexp = /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_line_regexp = Branch_regexp * "\n"
+Current_variable = GenericVariable .new(name: 'current')
 Branch_variable = GenericVariable .new(name: 'branch')
+Current_column = GenericColumn.new(regexp_index: 0, variable: Current_variable)
 Branch_column = GenericColumn.new(regexp_index: 0, variable: Branch_variable)
+Branch_column_value = {Branch_column => '1'}
 Branch_column_answer = {Branch_column => '1'}
 Branch_answer = {:branch => '1'}
 LINE=/[^\n]*/.capture(:line)
@@ -188,6 +191,7 @@ Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
 Hash_answer={:line=>"* 1", :terminator=>"\n"}
 Array_answer=[{:line=>"* 1", :terminator=>"\n"}, {:line=>"  2", :terminator=>"\n"}]
+Branch_hashes = [{:current => '*', :branch=>"1"}, {:current => ' ', :branch=>"2"}]
 
 WORD=/([^\s]*)/.capture(:word)
 end # Examples
