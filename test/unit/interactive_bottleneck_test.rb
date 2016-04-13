@@ -39,6 +39,13 @@ def test_calc_test_maturity
 			assert_empty(Dir['log/*/*/*/*/*.xml.log'], test_executable.inspect)
 			assert_empty(Dir['log/*/*/*/*/repository20*.log'], test_executable.inspect)
 			calc_test_maturity # to be sorted
+			calc_test_maturity = InteractiveBottleneck.calc_test_maturity!(test_executable)
+			message = calc_test_maturity.inspect
+			assert_instance_of(TestExecutable, test_executable, message)
+			assert_empty(Dir['log/*/*/*/*/*.jpg.log'], test_executable.inspect)
+			assert_empty(Dir['log/*/*/*/*/*.pdf.log'], test_executable.inspect)
+			assert_empty(Dir['log/*/*/*/*/*.xml.log'], test_executable.inspect)
+			assert_empty(Dir['log/*/*/*/*/repository20*.log'], test_executable.inspect)
 		elsif test_executable.testable?.nil?
 			assert_nil(test_executable.unit, message)
 			nil
@@ -187,7 +194,7 @@ def test_clean_directory
 	dirty_test_maturities = TestInteractiveBottleneck.dirty_test_maturities(:danger).compact
 	sorted = dirty_test_maturities #.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
 	sorted.sort.map do |test_maturity|
-#		target_branch = TestInteractiveBottleneck.test_maturity.deserving_branch
+		target_branch = TestInteractiveBottleneck.test_maturity.deserving_branch
 		if test_maturity.nil? then # rercursion avoided
 		else
 			refute_nil(test_maturity, test_maturity.inspect)
