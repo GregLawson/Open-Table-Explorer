@@ -1,35 +1,34 @@
 passed
-2016-03-17 07:02:11.529
+2016-04-13 05:28:15.250
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-.......ruby script/workflow.rb --test README
-confirm_commit(:echo @repository.something_to_commit?=true
+.......confirm_commit(:echo @repository.something_to_commit?=true
 ..........confirm_commit(:echo @repository.something_to_commit?=false
 ..confirm_commit(:echo @repository.something_to_commit?=true
-......confirm_commit(:echo @repository.something_to_commit?=true
-ruby script/workflow.rb --test README
+....log/unit/2.2/2.2.3p173/silence/.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/minimal2.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/test_executable.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/unit.log is an updated log file.
+..confirm_commit(:echo @repository.something_to_commit?=true
 confirm_commit(:echo @repository.something_to_commit?=true
-ruby script/workflow.rb --test README
 confirm_commit(:echo @repository.something_to_commit?=true
-ruby script/workflow.rb --test README
 confirm_commit(:echo @repository.something_to_commit?=true
-ruby script/workflow.rb --test README
 confirm_commit(:echo @repository.something_to_commit?=true
 .$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 16638 exit 1>
+@process_status=#<Process::Status: pid 31902 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 16660 exit 128>
+@process_status=#<Process::Status: pid 31922 exit 128>
 $ git checkout master
 @errors="Already on 'master'\n"
 ....
 
-Finished in 5.277954s, 5.6840 runs/s, 27.6622 assertions/s.
+Finished in 10.743424s, 2.7924 runs/s, 15.6375 assertions/s.
 
-30 runs, 146 assertions, 0 failures, 0 errors, 0 skips
+30 runs, 168 assertions, 0 failures, 0 errors, 0 skips
 

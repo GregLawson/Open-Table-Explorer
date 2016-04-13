@@ -28,29 +28,42 @@ def test_calc_test_maturity
 	recursion_danger = :recursion_danger
 	TestInteractiveBottleneck.dirty_test_executables.map do |test_executable|
 		message = test_executable.inspect
-		calc_test_maturity = InteractiveBottleneck.calc_test_maturity!(test_executable, :recursion_danger)
-		message = calc_test_maturity.inspect
-		assert_instance_of(TestExecutable, test_executable, message)
-		testable = test_executable.testable?
-		if testable then
+		ret = 
+		if test_executable.testable? then
 			refute_nil(test_executable.unit, message)
+			calc_test_maturity = InteractiveBottleneck.calc_test_maturity!(test_executable)
+			message = calc_test_maturity.inspect
+			assert_instance_of(TestExecutable, test_executable, message)
+			assert_empty(Dir['log/*/*/*/*/*.jpg.log'], test_executable.inspect)
+			assert_empty(Dir['log/*/*/*/*/*.pdf.log'], test_executable.inspect)
+			assert_empty(Dir['log/*/*/*/*/*.xml.log'], test_executable.inspect)
+			assert_empty(Dir['log/*/*/*/*/repository20*.log'], test_executable.inspect)
 			calc_test_maturity # to be sorted
-		elsif testable.nil?
+		elsif test_executable.testable?.nil?
 			assert_nil(test_executable.unit, message)
 			nil
 		elsif !recursion_danger.nil? &&(TestInteractiveBottleneck.test_executable.argument_path == $PROGRAM_NAME) then
 			nil
 		else
 			refute_nil(test_executable.unit, message)
-			refute_nil(calc_test_maturity[:error_score], message)
-			assert_instance_of(Fixnum, calc_test_maturity[:error_score])
 			nil
 		end # if
+		assert_empty(Dir['log/*/*/*/*/*.jpg.log'], test_executable.inspect)
+		assert_empty(Dir['log/*/*/*/*/*.pdf.log'], test_executable.inspect)
+		assert_empty(Dir['log/*/*/*/*/*.xml.log'], test_executable.inspect)
+		assert_empty(Dir['log/*/*/*/*/repository20*.log'], test_executable.inspect)
+		refute_equal(test_executable.argument_path.to_s[-4..-1], '.log', test_executable.inspect)
+		refute_equal(test_executable.regression_unit_test_file.to_s[-4..-1], '.log', test_executable.inspect)
+		ret
 	end.select {|m| m && m.get_error_score!}.sort
+	assert_empty(Dir['log/*/*/*/*/*.jpg.log'])
+	assert_empty(Dir['log/*/*/*/*/*.pdf.log'])
+	assert_empty(Dir['log/*/*/*/*/*.xml.log'])
+	assert_empty(Dir['log/*/*/*/*/repository20*.log'])
 end # calc_test_maturity!
 def test_initialize
-	refute_empty(TestInteractiveBottleneck.test_executable.unit.edit_files, "TestInteractiveBottleneck.test_executable.unit.edit_files=#{TestInteractiveBottleneck.test_executable.unit.edit_files}")
-	assert_includes(TestInteractiveBottleneck.test_executable.unit.edit_files, File.expand_path($PROGRAM_NAME), "TestInteractiveBottleneck.unit=#{TestInteractiveBottleneck.test_executable.unit.inspect}")
+	refute_empty(TestInteractiveBottleneck.test_executable.unit.edit_files, 'TestInteractiveBottleneck.test_executable.unit.edit_files= ' + TestInteractiveBottleneck.test_executable.unit.inspect)
+	assert_includes(TestInteractiveBottleneck.test_executable.unit.edit_files, Pathname.new($PROGRAM_NAME).expand_path, "TestInteractiveBottleneck.unit=#{TestInteractiveBottleneck.test_executable.unit.inspect}")
 end # values
 include InteractiveBottleneck::Examples
 def test_standardize_position!
@@ -63,11 +76,28 @@ end # standardize_position!
 def test_abort_rebase_and_merge!
 end # abort_rebase_and_merge!
 def test_state?
-	assert_includes([:clean, :dirty, :merge, :rebase], TestInteractiveBottleneck.state?[0])
-	assert_equal(1, TestInteractiveBottleneck.state?.size)
+	state = TestInteractiveBottleneck.state?
+	assert_includes([:clean, :dirty, :merge, :rebase], state[0])
+	assert_equal(1, state.size, state)
 end # state?
 def test_dirty_test_executables
-	TestInteractiveBottleneck.dirty_test_executables.each do |test_executable|
+	line_by_line = TestInteractiveBottleneck.repository.status.map do |file_status|
+		if file_status[:log_file] then
+			nil
+		elsif file_status[:working_tree] == :ignore then
+			nil
+		else
+			test_executable = TestExecutable.new_from_path(file_status[:file])
+			testable = test_executable.generatable_unit_file?
+			if testable then
+				test_executable # find unique
+			else
+				nil
+			end # if
+		end # if
+	end.select{|t| !t.nil?}.uniq # map
+	assert_equal(line_by_line, TestInteractiveBottleneck.dirty_test_executables, 'diff = ' + (line_by_line - TestInteractiveBottleneck.dirty_test_executables).inspect)
+	verify_output = TestInteractiveBottleneck.dirty_test_executables.each do |test_executable|
 		assert_instance_of(TestExecutable, test_executable)
 		testable = test_executable.testable?
 		if testable then
@@ -106,7 +136,7 @@ def test_dirty_test_maturities
 	TestInteractiveBottleneck.dirty_test_executables.map do |test_executable|
 		message = test_executable.inspect
 		assert_instance_of(TestExecutable, test_executable, message)
-		calc_test_maturity = InteractiveBottleneck.calc_test_maturity!(test_executable, :recursion_danger)
+		calc_test_maturity = InteractiveBottleneck.calc_test_maturity!(test_executable)
 		message = calc_test_maturity.inspect
 		assert_instance_of(TestExecutable, test_executable, message)
 		testable = test_executable.testable?
@@ -120,8 +150,8 @@ def test_dirty_test_maturities
 			nil
 		else
 			refute_nil(test_executable.unit, message)
-			refute_nil(calc_test_maturity[:error_score], message)
-			assert_instance_of(Fixnum, calc_test_maturity[:error_score])
+#			refute_nil(calc_test_maturity[:error_score], message)
+#			assert_instance_of(Fixnum, calc_test_maturity[:error_score])
 			calc_test_maturity # to be sorted
 		end # if
 	end.compact.sort
@@ -156,25 +186,30 @@ end # dirty_test_maturities
 def test_clean_directory
 	dirty_test_maturities = TestInteractiveBottleneck.dirty_test_maturities(:danger).compact
 	sorted = dirty_test_maturities #.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
-	sorted.map do |test_maturity_hash|
-#already?		test(test_executable)
-		if test_maturity_hash.nil? then # rercursion avoided
+	sorted.sort.map do |test_maturity|
+#		target_branch = TestInteractiveBottleneck.test_maturity.deserving_branch
+		if test_maturity.nil? then # rercursion avoided
 		else
-			refute_nil(test_maturity_hash, test_maturity_hash.inspect)
-			assert_instance_of(TestMaturity, test_maturity_hash, test_maturity_hash.inspect)
-			assert_includes(Branch::Branch_enhancement, test_maturity_hash.deserving_branch, test_maturity_hash.inspect)
-			assert_equal(:unit, test_maturity_hash.test_executable.test_type, test_maturity_hash.inspect)
-	#OK		assert_equal(TestInteractiveBottleneck.repository.current_branch_name?, test_maturity_hash.deserving_branch, test_maturity_hash.inspect)
+			refute_nil(test_maturity, test_maturity.inspect)
+			assert_instance_of(TestMaturity, test_maturity, test_maturity.inspect)
+			assert_includes(Branch::Branch_enhancement, test_maturity.deserving_branch, test_maturity.inspect)
+			assert_equal(:unit, test_maturity.test_executable.test_type, test_maturity.inspect)
+	#OK		assert_equal(TestInteractiveBottleneck.repository.current_branch_name?, test_maturity.deserving_branch, test_maturity.inspect)
 			end # if
 	end # map
 end # clean_directory
 def test_discard_log_file_merge
-	unmerged_files = Repository::This_code_repository.status
-	unmerged_files.each do |conflict|
+	all_files = Repository::This_code_repository.status
+	all_files.each do |conflict|
 		if conflict[:file][-4..-1] == '.log' then
-			if conflict[:work_tree] == :modified || conflict[:working_tree] == :added then
+			if conflict[:index] == :ignored || conflict[:work_tree] == :ignored then
+				puts conflict[:file] + ' is an ignored log file.'
+			elsif conflict[:index] == :untracked || conflict[:work_tree] == :untracked then
+				puts conflict[:file] + ' is an untracked log file.'
+			elsif conflict[:index] == :unmodified && conflict[:work_tree] == :modified then
+				puts conflict[:file] + ' is an updated log file.'
 			elsif conflict[:work_tree] == :updated_but_unmerged
-				assert_equal({}, conflict[:description])
+				assert_include(['unmerged, deleted by us'], conflict[:description], conflict.inspect)
 				Repository::This_code_repository.git_command('checkout HEAD ' + conflict[:file])
 				puts 'checkout HEAD ' + conflict[:file]
 			else

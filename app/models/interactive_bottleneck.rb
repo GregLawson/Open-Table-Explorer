@@ -15,8 +15,8 @@ end # Constants
 include Constants
 module ClassMethods
 include Constants
-def calc_test_maturity!(test_executable, recursion_danger = nil)
-		if test_executable.testable?(recursion_danger) then
+def calc_test_maturity!(test_executable)
+		if test_executable.testable? then
 			TestMaturity.new(test_executable: test_executable)
 	else
 			nil
@@ -67,14 +67,20 @@ def state?
 end # state?
 def dirty_test_executables
 	@repository.status.map do |file_status|
-		test_executable = TestExecutable.new_from_path(file_status[:file])
-		testable = test_executable.testable?
-		if testable then
-			test_executable # find unique
-		else
+		if file_status[:log_file] then
 			nil
+		elsif file_status[:working_tree] == :ignore then
+			nil
+		else
+			test_executable = TestExecutable.new_from_path(file_status[:file])
+			testable = test_executable.generatable_unit_file?
+			if testable then
+				test_executable # find unique
+			else
+				nil
+			end # if
 		end # if
-	end.compact.uniq # map
+	end.select{|t| !t.nil?}.uniq # map
 end # dirty_test_executables
 def dirty_units
 	dirty_test_executables.map do |test_executable|
@@ -95,13 +101,21 @@ def dirty_test_maturities(recursion_danger = nil)
 	end.compact #.sort
 end # dirty_test_maturities
 def clean_directory
-	dirty_test_executables.sort.map do |test_executable|
-		test(test_executable)
-		stage_test_executable
+	sorted = dirty_test_maturities #.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
+	sorted.sort.map do |test_maturity|
+		target_branch = test_maturity.deserving_branch
+		case target_branch <=> Branch.current_branch
+		when +1 then 
+			switch_branch(target_branch)
+		when 0  then 
+			stage_test_executable
+		when -1 then 
+			merge_down
+		end # case
 	end # map
 end # clean_directory
 def discard_log_file_merge
-	unmerged_files = @repository.merge_conflict_files?
+	unmerged_files = @repository.status
 		unmerged_files.each do |conflict|
 			if conflict[:file][-4..-1] == '.log' then
 				@repository.git_command('checkout HEAD ' + conflict[:file])
@@ -112,8 +126,8 @@ end # discard_log_file_merge
 def merge_conflict_recovery(from_branch)
 # see man git status
 	discard_log_file_merge # each branch's log file status is independant
-	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
-	unmerged_files = @repository.merge_conflict_files?
+	puts '@repository.status = ' + @repository.status.inspect
+	unmerged_files = @repository.status
 	if !unmerged_files.empty? then
 		puts 'merge --abort'
 		merge_abort = @repository.git_command('merge --abort')
@@ -222,7 +236,7 @@ def stash_and_checkout(target_branch)
 	push # if switched?
 end # stash_and_checkout
 def merge_cleanup
-	@repository.merge_conflict_files?.each do |conflict|
+	@repository.status.each do |conflict|
 		case @interactive
 		when :interactive then
 			@repository.shell_command('diffuse -m '+conflict[:file])
@@ -303,7 +317,7 @@ def script_deserves_commit!(deserving_branch)
 		merge_down(deserving_branch)
 	end # if
 end # script_deserves_commit!
-require_relative '../../app/models/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 
 module ClassMethods

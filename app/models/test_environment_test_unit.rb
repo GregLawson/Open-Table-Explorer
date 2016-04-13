@@ -12,7 +12,7 @@ AssertionsModule = Test::Unit::Assertions
 #require_relative '../../app/models/unit.rb'
 BaseTestCase = Test::Unit::TestCase 
 TestCase = BaseTestCase # allows subclassing BaseTestCase, sets default value
-AssertionFailedError = RuntimeError
+#AssertionFailedError = RuntimeError
 AssertionFailedError = Test::Unit::AssertionFailedError
 #assert_global_name(:AssertionFailedError)
 
