@@ -31,11 +31,11 @@ extend ClassMethods
 include Virtus.value_object
   values do
 	attribute :test_executable, TestExecutable
+	attribute :interactive, Symbol, :default => :interactive # non-defaults are primarily for non-interactive testing testing
 	attribute :editor, Editor, :default => lambda { |interactive_bottleneck, attribute| Editor.new(interactive_bottleneck.test_executable) }
 	attribute :repository, Repository, :default => lambda { |interactive_bottleneck, attribute| interactive_bottleneck.test_executable.repository }
 	attribute :unit_maturity, UnitMaturity, :default => lambda { |interactive_bottleneck, attribute| UnitMaturity.new(interactive_bottleneck.test_executable.repository, interactive_bottleneck.test_executable.unit) }
 #	attribute :branch_index, Fixnum, :default => lambda { |interactive_bottleneck, attribute| InteractiveBottleneck.index(interactive_bottleneck.test_executable.repository) }
-	attribute :interactive, Symbol, :default => :interactive # non-defaults are primarily for non-interactive testing testing
 end # values
 def standardize_position!
 	 abort_rebase_and_merge!
@@ -98,7 +98,7 @@ def dirty_test_maturities(recursion_danger = nil)
 		else
 			nil # drop non-regression testable files
 		end # if
-	end.compact #.sort
+	end.compact.sort
 end # dirty_test_maturities
 def clean_directory
 	sorted = dirty_test_maturities #.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
@@ -137,26 +137,17 @@ def merge_conflict_recovery(from_branch)
 		end # if
 		unmerged_files.each do |conflict|
 				puts 'not checkout HEAD ' + conflict[:file]
-				case conflict[:conflict]
-				# DD unmerged, both deleted
-				when 'DD' then fail Exception.new(conflict.inspect)
-				# AU unmerged, added by us
-				when 'AU' then fail Exception.new(conflict.inspect)
-				# UD unmerged, deleted by them
-				when 'UD' then fail Exception.new(conflict.inspect)
-				# UA unmerged, added by them
-				when 'UA' then fail Exception.new(conflict.inspect)
-				# DU unmerged, deleted by us
-				when 'DU' then fail Exception.new(conflict.inspect)
-				# AA unmerged, both added
-				# UU unmerged, both modified
-				when 'UU', ' M', 'M ', 'MM', 'A ', 'AA' then
-					test_executable = TestExecutable.new_from_path(conflict[:file])
-					Editor.new(test_executable).edit
-	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
-				else
-					fail Exception.new(conflict.inspect)
-				end # case
+				if conflict[:index] == :ignored || conflict[:work_tree] == :ignored then
+					# ignore
+				elsif conflict[:description] == 'updated in index' then
+					# no merge conflict; test!
+				elsif conflict[:description][0..7] == 'unmerged' then
+						test_executable = TestExecutable.new_from_path(conflict[:file])
+						Editor.new(test_executable).edit
+		#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
+					else
+						fail Exception.new(conflict.inspect)
+					end # if
 		end # each
 		confirm_commit
 	end # if
@@ -295,7 +286,7 @@ def confirm_commit
 			@repository.git_command('add . ').assert_post_conditions
 			@repository.git_command('commit ').assert_post_conditions
 		else
-			raise 'Unimplemented option @interactive = ' + @interactive.inspect
+			raise 'Unimplemented option @interactive = ' + @interactive.inspect + "\n" + self.inspect
 		end #case
 	end #if
 	puts 'confirm_commit('+ @interactive.inspect+" @repository.something_to_commit?="+@repository.something_to_commit?.inspect
@@ -346,7 +337,7 @@ extend Assertions::ClassMethods
 include Constants
 module Examples
 TestTestExecutable = TestExecutable.new(argument_path: File.expand_path($PROGRAM_NAME))
-TestInteractiveBottleneck = InteractiveBottleneck.new(test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor)
+TestInteractiveBottleneck = InteractiveBottleneck.new(interactive: :interactive, test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor)
 include Constants
 end # Examples
 include Examples

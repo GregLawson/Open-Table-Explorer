@@ -5,7 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../unit/test_environment'
+#require_relative '../unit/test_environment'
+require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/interactive_bottleneck.rb'
 require_relative '../assertions/repository_assertions.rb'
 require_relative '../assertions/shell_command_assertions.rb'
@@ -25,8 +26,9 @@ def teardown
 	Repository.delete_existing(@temp_repo.path)
 end # teardown
 def test_calc_test_maturity
-	recursion_danger = :recursion_danger
-	TestInteractiveBottleneck.dirty_test_executables.map do |test_executable|
+#	recursion_danger = :recursion_danger
+	dirty_test_executables = TestInteractiveBottleneck.dirty_test_executables
+	dirty_test_executables.map do |test_executable|
 		message = test_executable.inspect
 		ret = 
 		if test_executable.testable? then
@@ -49,7 +51,7 @@ def test_calc_test_maturity
 		elsif test_executable.testable?.nil?
 			assert_nil(test_executable.unit, message)
 			nil
-		elsif !recursion_danger.nil? &&(TestInteractiveBottleneck.test_executable.argument_path == $PROGRAM_NAME) then
+		elsif !TestInteractiveBottleneck.test_executable.recursion_danger? then
 			nil
 		else
 			refute_nil(test_executable.unit, message)
@@ -71,6 +73,16 @@ end # calc_test_maturity!
 def test_initialize
 	refute_empty(TestInteractiveBottleneck.test_executable.unit.edit_files, 'TestInteractiveBottleneck.test_executable.unit.edit_files= ' + TestInteractiveBottleneck.test_executable.unit.inspect)
 	assert_includes(TestInteractiveBottleneck.test_executable.unit.edit_files, Pathname.new($PROGRAM_NAME).expand_path, "TestInteractiveBottleneck.unit=#{TestInteractiveBottleneck.test_executable.unit.inspect}")
+	assert_equal(TestTestExecutable, TestInteractiveBottleneck.test_executable, TestInteractiveBottleneck.inspect)
+	assert_equal(Repository::This_code_repository, TestInteractiveBottleneck.repository, TestInteractiveBottleneck.inspect)
+#	assert_equal(, TestInteractiveBottleneck.unit_maturity, TestInteractiveBottleneck.inspect)
+	assert_equal(Editor::Examples::TestEditor, TestInteractiveBottleneck.editor, TestInteractiveBottleneck.inspect)
+
+	refute_nil(InteractiveBottleneck.new(interactive: :interactive, test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor).interactive)
+#	refute_nil(InteractiveBottleneck.new(test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor).interactive)
+
+	refute_nil(TestInteractiveBottleneck.interactive, TestInteractiveBottleneck.inspect)
+	assert_equal(:interactive, TestInteractiveBottleneck.interactive, TestInteractiveBottleneck.inspect)
 end # values
 include InteractiveBottleneck::Examples
 def test_standardize_position!
@@ -105,6 +117,7 @@ def test_dirty_test_executables
 	end.select{|t| !t.nil?}.uniq # map
 	assert_equal(line_by_line, TestInteractiveBottleneck.dirty_test_executables, 'diff = ' + (line_by_line - TestInteractiveBottleneck.dirty_test_executables).inspect)
 	verify_output = TestInteractiveBottleneck.dirty_test_executables.each do |test_executable|
+		message = test_executable.inspect
 		assert_instance_of(TestExecutable, test_executable)
 		testable = test_executable.testable?
 		if testable then
@@ -157,8 +170,6 @@ def test_dirty_test_maturities
 			nil
 		else
 			refute_nil(test_executable.unit, message)
-#			refute_nil(calc_test_maturity[:error_score], message)
-#			assert_instance_of(Fixnum, calc_test_maturity[:error_score])
 			calc_test_maturity # to be sorted
 		end # if
 	end.compact.sort
@@ -196,6 +207,7 @@ def test_clean_directory
 	sorted.sort.map do |test_maturity|
 		target_branch = TestInteractiveBottleneck.test_maturity.deserving_branch
 		if test_maturity.nil? then # rercursion avoided
+			puts 'rercursion avoided' + test_maturity.inspect
 		else
 			refute_nil(test_maturity, test_maturity.inspect)
 			assert_instance_of(TestMaturity, test_maturity, test_maturity.inspect)
@@ -204,6 +216,7 @@ def test_clean_directory
 	#OK		assert_equal(TestInteractiveBottleneck.repository.current_branch_name?, test_maturity.deserving_branch, test_maturity.inspect)
 			end # if
 	end # map
+	TestInteractiveBottleneck.clean_directory
 end # clean_directory
 def test_discard_log_file_merge
 	all_files = Repository::This_code_repository.status
@@ -302,10 +315,10 @@ end #validate_commit
 def test_script_deserves_commit!
 #(deserving_branch)
 end # script_deserves_commit!
-def test_local_assert_pre_conditions
+def test_InteractiveBottleneck_assert_pre_conditions
 		TestInteractiveBottleneck.assert_pre_conditions
 end # assert_pre_conditions
-def test_local_assert_post_conditions
+def test_InteractiveBottleneck_assert_post_conditions
 		TestInteractiveBottleneck #.assert_post_conditions
 end # assert_post_conditions
 def test_local_assert_pre_conditions
