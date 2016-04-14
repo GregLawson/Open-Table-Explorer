@@ -11,7 +11,7 @@ class RepositoryTest < TestCase
 #include DefaultTests
 include Repository::Examples
 def setup
-	@temp_repo = Repository.create_test_repository(Empty_Repo_path)
+	@temp_repo = Repository.create_test_repository
 end # setup
 def test_recursive_delete
 end # recursive_delete
@@ -40,7 +40,7 @@ def test_Constants
 #	assert_equal(SELF_code_Repo, This_code_repository, message)
 end #Constants
 def test_Repository_git_command
-	git_execution=Repository.git_command('branch', Empty_Repo_path)
+	git_execution=Repository.git_command('branch', @temp_repo.path)
 #	git_execution=Repository.git_command('branch --list --contains HEAD', Unique_repository_directory_pathname)
 	git_execution #.assert_post_conditions
 end #git_command
@@ -245,20 +245,22 @@ def test_edited_superset_of_testing
 #?	assert_equal('', This_code_repository.edited_superset_of_testing.assert_post_conditions.output)
 end #edited_superset_of_testing
 def test_force_change
-	@temp_repo.assert_nothing_to_commit
+	empty_Repo = Repository.create_test_repository(Empty_Repo_path)
+	empty_Repo.assert_nothing_to_commit
 	IO.write(Modified_path, README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n") # timestamp make file unique
 	refute_equal(README_start_text, IO.read(Modified_path))
-	@temp_repo.revert_changes
-	@temp_repo.force_change
-	refute_equal({}, @temp_repo.grit_repo.status.changed)
-	@temp_repo.assert_something_to_commit
-	refute_equal({}, @temp_repo.grit_repo.status.changed)
-	@temp_repo.git_command('add README')
-	refute_equal({}, @temp_repo.grit_repo.status.changed)
-	assert(@temp_repo.something_to_commit?)
-#	@temp_repo.git_command('commit -m "timestamped commit of README"')
-	@temp_repo.revert_changes #.assert_post_conditions
-	@temp_repo.assert_nothing_to_commit
+	empty_Repo.revert_changes
+	empty_Repo.force_change
+	refute_equal({}, empty_Repo.grit_repo.status.changed)
+	empty_Repo.assert_something_to_commit
+	refute_equal({}, empty_Repo.grit_repo.status.changed)
+	empty_Repo.git_command('add README')
+	refute_equal({}, empty_Repo.grit_repo.status.changed)
+	assert(empty_Repo.something_to_commit?)
+#	empty_Repo.git_command('commit -m "timestamped commit of README"')
+	empty_Repo.revert_changes #.assert_post_conditions
+	empty_Repo.assert_nothing_to_commit
+	Repository.delete_existing(Unique_repository_directory_pathname)
 end #force_change
 def test_revert_changes
 	@temp_repo.revert_changes #.assert_post_conditions

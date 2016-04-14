@@ -59,10 +59,9 @@ module Examples
 #assert_includes(Repository.constants, :Constants)
 include Repository::Constants
 #	This_code_repository.assert_pre_conditions
-Removable_Source='/media/greg/SD_USB_32G/Repository Backups/'
-Empty_Repo_path=Source+'test_repository/'
-Modified_path=Empty_Repo_path+'/README'
 Unique_repository_directory_pathname = Repository.timestamped_repository_name?
+Empty_Repo_path = Unique_repository_directory_pathname
+Modified_path=Empty_Repo_path+'/README'
 #	This_code_repository.assert_pre_conditions
 end #Examples
 end #Repository
