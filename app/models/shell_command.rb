@@ -8,6 +8,7 @@
 require 'open3'
 require 'shellwords.rb'
 require_relative 'log.rb'
+require 'virtus'
 module Shell
 class Ssh
 module ClassMethods
@@ -51,6 +52,8 @@ Central = Ssh.new('greg@172.31.42.104')
 end # Examples
 end # Ssh
 end # Shell
+
+
 class ShellCommands
 module ClassMethods
 include Shellwords
@@ -309,3 +312,63 @@ Error_message_run = ShellCommands.new('ls happyHappyFailFail.junk')
 end #Examples
 include Examples
 end #ShellCommands
+
+class FileIPO # IPO = Input, Processing, and Output
+include Virtus.value_object
+  values do
+ 	attribute :input_paths, Array, :default => []
+	attribute :chdir, Pathname, :default => nil # current working directory
+	attribute :command_string, String
+	attribute :cached_run, ShellCommands, :default => nil
+ 	attribute :output_paths, Array, :default => []
+	attribute :errors, Hash, :default => {state: :not_run_yet}
+end # values
+def run
+	@errors = {} # each run resets errors
+	@input_paths.each do |path|
+		if !File.exist?(path) then
+			@errors[path] = :input_does_not_exist
+		end # if
+	end # each
+	(@output_paths - @input_paths).each do |path| # don't delete files that are both input and output
+		if File.exist?(path) then
+			Pathname.new(path).delete
+		end # if
+	end # each
+	@cached_run = if @chdir.nil? then
+		ShellCommands.new(@command_string)
+	else
+		ShellCommands.new(@command_string, :chdir => @chdir)
+	end # if
+#	@errors[:process_status] = @cached_run.process_status
+	@errors[:exitstatus] = @cached_run.process_status.exitstatus
+#	if !@cached_run.errors.empty? then
+		errors[:syserr] = @cached_run.errors
+#	end #if
+	@output_paths.each do |path|
+		if !File.exist?(path) then
+			@errors[path] = :output_does_not_exist
+		end # if
+	end # each
+	self # allows command chaining
+end # run
+def success?
+	if errors[:exitstatus] != 0 then
+		false
+#	elsif errors[:syserr] != '' then
+#		false
+	elsif @errors.values - [:input_does_not_exist, :output_does_not_exist] !=  @errors.values
+		false
+	else
+		true
+	end # if
+end # success?
+module Examples
+Pwd = FileIPO.new(command_string: 'pwd')
+Chdir = FileIPO.new(command_string: 'pwd', chdir: '/tmp')
+Touch = FileIPO.new(command_string: 'touch /tmp/junk', output_paths: ['/tmp/junk'])
+Cat = FileIPO.new(input_paths: ['/dev/null'], command_string: 'cat /dev/null')
+Touch_fail = FileIPO.new(command_string: 'touch /tmp/junk', output_paths: ['/tmp/junk2'])
+Cat_fail = FileIPO.new(input_paths: ['/dev/null2'], command_string: 'cat /dev/null')
+end # Examples
+end # FileIPO
