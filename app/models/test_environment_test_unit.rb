@@ -8,7 +8,7 @@
 require 'active_support/all'
 require "test/unit"
 AssertionsModule = Test::Unit::Assertions
-#require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../test/assertions/ruby_assertions.rb'
 #require_relative '../../app/models/unit.rb'
 BaseTestCase = Test::Unit::TestCase 
 TestCase = BaseTestCase # allows subclassing BaseTestCase, sets default value
