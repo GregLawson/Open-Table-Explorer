@@ -1,5 +1,5 @@
 tax_form
-2016-04-08 04:26:32.632
+2016-04-15 02:42:35.978
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test
@@ -7,32 +7,44 @@ Started
 F
 ===============================================================================
 Failure: test_Errors_default(OtsRunTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:156:in `test_Errors_default'
-     153: #	errors[:schedules] = ots.cached_schedules.map {|schedule| {schedule => schedule.cached_pdf_to_jpeg_run.errors} }
-     154: 	errors_default = Errors_default.call(ots, nil)
-     155: 	errors = ots.open_tax_solver_errors
-  => 156: 	assert_equal(errors_default, errors)
-     157: end # Errors_default
-     158: def test_open_tax_solver_distribution_directories
-     159: 	refute_empty(Dir[Downloaded_src_dir+"OpenTaxSolver#{Default_tax_year}*-*"])
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:132:in `test_Errors_default'
+     129: #	errors[:schedules] = ots.cached_schedules.map {|schedule| {schedule => schedule.cached_pdf_to_jpeg_run.errors} }
+     130: 	errors_default = Errors_default.call(ots, nil)
+     131: 	errors = ots.open_tax_solver_errors
+  => 132: 	assert_equal(errors_default, errors)
+     133: end # Errors_default
+     134: def test_open_tax_solver_distribution_directories
+     135: 	refute_empty(Dir[Downloaded_src_dir+"OpenTaxSolver#{Default_tax_year}*-*"])
 <{:exitstatus=>0,
  :syserr=>
-  "URL transformed to HTTPS due to an HSTS policy\n--2016-04-08 04:26:22--  https://www.irs.gov/pub/irs-prior/f1040--2014.pdf\nResolving www.irs.gov (www.irs.gov)... 23.213.7.140, 2600:1406:1f:380::f50, 2600:1406:1f:383::f50\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 192301 (188K) [application/pdf]\nSaving to: ‘f1040--2014.pdf.249’\n\n     0K .......... .......... .......... .......... .......... 26% 2.97M 0s\n    50K .......... .......... .......... .......... .......... 53% 2.32M 0s\n   100K .......... .......... .......... .......... .......... 79% 3.10M 0s\n   150K .......... .......... .......... .......              100% 4.47M=0.06s\n\n2016-04-08 04:26:22 (2.98 MB/s) - ‘f1040--2014.pdf.249’ saved [192301/192301]\n\nURL transformed to HTTPS due to an HSTS policy\n--2016-04-08 04:26:23--  https://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf\nResolving www.irs.gov (www.irs.gov)... 23.213.7.140, 2600:1406:1f:383::f50, 2600:1406:1f:380::f50\nConnecting to www.irs.gov (www.irs.gov)|23.213.7.140|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 85193 (83K) [application/pdf]\nSaving to: ‘f1040sd--2014.pdf.249’\n\n     0K .......... .......... .......... .......... .......... 60% 1.89M 0s\n    50K .......... .......... .......... ...                  100% 6.14M=0.03s\n\n2016-04-08 04:26:23 (2.61 MB/s) - ‘f1040sd--2014.pdf.249’ saved [85193/85193]\n\n"}> expected but was
+  "URL transformed to HTTPS due to an HSTS policy\n--2016-04-15 02:42:24--  https://www.irs.gov/pub/irs-prior/f1040--2014.pdf\nResolving www.irs.gov (www.irs.gov)... 184.85.230.51, 2600:1406:1f:383::f50, 2600:1406:1f:380::f50\nConnecting to www.irs.gov (www.irs.gov)|184.85.230.51|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 192301 (188K) [application/pdf]\nSaving to: ‘f1040--2014.pdf.760’\n\n     0K .......... .......... .......... .......... .......... 26% 2.70M 0s\n    50K .......... .......... .......... .......... .......... 53% 1.89M 0s\n   100K .......... .......... .......... .......... .......... 79% 3.59M 0s\n   150K .......... .......... .......... .......              100% 4.15M=0.07s\n\n2016-04-15 02:42:24 (2.76 MB/s) - ‘f1040--2014.pdf.760’ saved [192301/192301]\n\nURL transformed to HTTPS due to an HSTS policy\n--2016-04-15 02:42:24--  https://www.irs.gov/pub/irs-prior/f1040sd--2014.pdf\nResolving www.irs.gov (www.irs.gov)... 184.85.230.51, 2600:1406:1f:380::f50, 2600:1406:1f:383::f50\nConnecting to www.irs.gov (www.irs.gov)|184.85.230.51|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 85193 (83K) [application/pdf]\nSaving to: ‘f1040sd--2014.pdf.760’\n\n     0K .......... .......... .......... .......... .......... 60% 1.71M 0s\n    50K .......... .......... .......... ...                  100% 7.54M=0.03s\n\n2016-04-15 02:42:25 (2.47 MB/s) - ‘f1040sd--2014.pdf.760’ saved [85193/85193]\n\n"}> expected but was
 <{:exception_string=>"passed",
  :exitstatus=>0,
  :ots_errors=>[],
  :output=>
-  "\nTitle:  US Federal 1040 Tax Form - 2014 - EXAMPLE \tFri Apr  8 04:26:22 2016\n\nStatus = Married/Joint (2)\n (Under65 = 2)\nL6 = 2\nL7 = 48456.23\nL8a = \n... 7 = 3619.00\nL55 =   0.00\nL56 = 3619.00\nL63 = 3619.00\t\ttotal tax\nL64 = 4153.59\nL74 = 4153.59\t\ttotal payments\nL75 = 534.59  REBATE!!!\nL76a = 534.59 \n",
+  "\nTitle:  US Federal 1040 Tax Form - 2014 - EXAMPLE \tFri Apr 15 02:42:24 2016\n\nStatus = Married/Joint (2)\n (Under65 = 2)\nL6 = 2\nL7 = 48456.23\nL8a = \n... 7 = 3619.00\nL55 =   0.00\nL56 = 3619.00\nL63 = 3619.00\t\ttotal tax\nL64 = 4153.59\nL74 = 4153.59\t\ttotal payments\nL75 = 534.59  REBATE!!!\nL76a = 534.59 \n",
  :syserr=>{...},
  :sysout=>
   "US 1040 2014 - v12.01\nWriting results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/U\n... 7 = 3619.00\nL55 =   0.00\nL56 = 3619.00\nL63 = 3619.00\t\ttotal tax\nL64 = 4153.59\nL74 = 4153.59\t\ttotal payments\nL75 = 534.59  REBATE!!!\nL76a = 534.59 \n"}>
 ===============================================================================
-...........................................
+.......E
+===============================================================================
+Error: test_OtsRun_ots_user_all_forms_directory(OtsRunTest): NoMethodError: undefined method `jurisdiction' for nil:NilClass
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:160:in `test_OtsRun_ots_user_all_forms_directory'
+     157: def test_OtsRun_ots_user_all_forms_directory
+     158: 	assert_equal(OpenTableExplorer::Finance::OtsRun.ots_user_all_forms_directory, US1040_user.open_tax_solver_all_form_directory)
+     159: 	assert_equal(OpenTableExplorer::Finance::OtsRun.ots_user_all_forms_directory, CA540_user.open_tax_solver_all_form_directory)
+  => 160: 	assert_pathname_exists(OpenTableExplorer::Finance::OtsRun.ots_user_all_forms_directory(@tax_year)+"/#{@filing.jurisdiction.form_filename}/")
+     161: end # ots_user_all_forms_directory
+     162: def test_logical_primary_key
+     163: #	assert_equal([], US1040_user.attribute_set, US1040_user.inspect)
+===============================================================================
+.................................
 
-Finished in 7.459309372 seconds.
+Finished in 8.544706344 seconds.
 ------
-44 tests, 347 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-97.7273% passed
+42 tests, 319 assertions, 1 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
+95.2381% passed
 ------
-5.90 tests/s, 46.52 assertions/s
+4.92 tests/s, 37.33 assertions/s
 

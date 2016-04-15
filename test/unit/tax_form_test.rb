@@ -16,38 +16,8 @@ def model_class?
 end #model_class?
 #include DefaultTests
 include OpenTableExplorer # for FileIPO
-include FileIPO::Examples # for FileIPO
 include OpenTableExplorer::Finance
 include OpenTableExplorer::Finance::DefinitionalConstants
-def test_FileIPO_virtus
-	assert_equal([], Pwd.input_paths)
-	assert_equal([], Pwd.output_paths)
-	assert_equal([], Touch.input_paths)
-	assert_equal(['/tmp/junk'], Touch.output_paths)
-	assert_equal(['/dev/null'], Cat.input_paths)
-	assert_equal([], Cat.output_paths)
-	refute_empty(Pwd.errors, Pwd)
-	refute_empty(Touch.errors, Touch)
-	refute_empty(Cat.errors, Cat)
-	refute_empty(Touch_fail.errors, Touch_fail)
-	refute_empty(Cat_fail.errors, Cat_fail)
-end # values
-def test_run
-	assert_equal(0, Pwd.run.errors[:exitstatus], Pwd.inspect)
-	assert_equal(0, Chdir.run.errors[:exitstatus], Chdir.inspect)
-	assert_equal("/tmp\n", Chdir.run.cached_run.output, Pwd.inspect)
-	assert_equal(0, Touch.run.errors[:exitstatus], Touch)
-	assert_equal(0, Cat.run.errors[:exitstatus], Cat)
-	assert_equal(:output_does_not_exist, Touch_fail.run.errors["/tmp/junk2"], Touch_fail)
-	assert_equal(:input_does_not_exist, Cat_fail.run.errors["/dev/null2"], Cat_fail)
-end # run
-def test_success?
-	assert(Pwd.success?, Pwd.inspect)
-	assert(Touch.success?, Touch.inspect)
-	assert(Cat.success?, Cat.inspect)
-	refute(Touch_fail.success?, Touch_fail.inspect)
-	refute(Cat_fail.success?, Cat_fail.inspect)
-end # success?
 extend OpenTableExplorer::Finance::DefinitionalConstants
 include OpenTableExplorer::Finance::OtsRun::Examples
 include OpenTableExplorer::Finance::Schedule::Examples
@@ -58,13 +28,19 @@ def test_Finance_DefinitionalConstants
 	assert_pathname_exists(Open_Tax_Filler_Directory)
 	assert_pathname_exists(IRS_pdf_directory)
 end # DefinitionalConstants
-def test_Jurisdiction_to_s
-	assert_equal('on', Jurisdiction.to_s)
-	assert_equal('US', US.to_s)
+def test_Filing_to_s
+	assert_equal('ng', Filing.to_s)
+	assert_equal('US', Filing::US.to_s)
 end # to_s
+def test_form_filename
+	assert_equal('US_1040', Filing::US.form_filename)
+end # form_filename
+def test_Filing_jurisdiction
+	assert_equal(Filing::US, Filing::US.jurisdiction)
+end # jurisdiction
 def test_run_fdf_to_pdf
 	US1040_user.cached_schedules.map do |xdf_schedule|
-		matching_pdf_filename = 'f' + xdf_schedule.ots.form.to_s  + xdf_schedule.form_suffix.to_s + '--' + Default_tax_year.to_s+ '.pdf'
+		matching_pdf_filename = 'f' + xdf_schedule.ots.filing.jurisdiction.base_form.to_s  + xdf_schedule.form_suffix.to_s + '--' + Default_tax_year.to_s+ '.pdf'
 		matching_pdf_file = IRS_pdf_directory + matching_pdf_filename
 		assert(File.exist?(matching_pdf_file), matching_pdf_file + "\n" + xdf_schedule.inspect)
 		matching_pdf_filled_in_file = IRS_pdf_directory + matching_pdf_filename
@@ -181,7 +157,7 @@ end # ots_example_all_forms_directory
 def test_OtsRun_ots_user_all_forms_directory
 	assert_equal(OpenTableExplorer::Finance::OtsRun.ots_user_all_forms_directory, US1040_user.open_tax_solver_all_form_directory)
 	assert_equal(OpenTableExplorer::Finance::OtsRun.ots_user_all_forms_directory, CA540_user.open_tax_solver_all_form_directory)
-	assert_pathname_exists(OpenTableExplorer::Finance::OtsRun.ots_user_all_forms_directory(@tax_year)+"/#{@form_filename}/")
+	assert_pathname_exists(OpenTableExplorer::Finance::OtsRun.ots_user_all_forms_directory(@tax_year)+"/#{@filing.jurisdiction.form_filename}/")
 end # ots_user_all_forms_directory
 def test_logical_primary_key
 #	assert_equal([], US1040_user.attribute_set, US1040_user.inspect)
@@ -192,31 +168,26 @@ end # open_tax_solver_distribution_directory
 def test_OtsRun_virtus
 #	sysout=`#{Command}`
 #	puts "test_run_tax_solver sysout=#{sysout}"
-	assert_equal('1040', US1040_template.form)
-	assert_equal('1040', US1040_example.form)
-	assert_equal('1040', US1040_user.form)
-	assert_equal(US, US1040_template.jurisdiction)
-	assert_equal(US, US1040_example.jurisdiction)
-	assert_equal(US, US1040_user.jurisdiction)
+	assert_equal('1040', US1040_template.filing.jurisdiction.base_form)
+	assert_equal('1040', US1040_example.filing.jurisdiction.base_form)
+	assert_equal('1040', US1040_user.filing.jurisdiction.base_form)
+	assert_equal(Filing::US, US1040_template.filing.jurisdiction)
+	assert_equal(Filing::US, US1040_example.filing.jurisdiction)
+	assert_equal(Filing::US, US1040_user.filing.jurisdiction)
 	assert_pathname_exists(US1040_example.open_tax_solver_all_form_directory)
 	refute_nil(US1040_example.open_tax_solver_all_form_directory)
 end # values
-def test_form_filename
-	assert_equal('US_1040', US1040_template.form_filename)
-	assert_equal('US_1040', US1040_example.form_filename)
-	assert_equal('US_1040', US1040_user.form_filename)
-end # form_filename
 def test_open_tax_solver_form_directory 
 	form='1040'
-	jurisdiction = US
-	tax_form = OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, form: form, jurisdiction: jurisdiction, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OpenTableExplorer::Finance::OtsRun.ots_user_all_forms_directory(@tax_year))
+	filing = US_current_year
+	tax_form = OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, base_form: form, filing: filing, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OpenTableExplorer::Finance::OtsRun.ots_user_all_forms_directory(@tax_year))
 	assert_pathname_exists(tax_form.open_tax_solver_form_directory)
 	assert_pathname_exists(US1040_template.open_tax_solver_form_directory)
 	assert_pathname_exists(Simplified_example.open_tax_solver_all_form_directory)
-	assert_equal(US, Simplified_example.jurisdiction)
-	assert_equal('US', Simplified_example.jurisdiction.to_s)
-	assert_equal('US_1040', Simplified_example.form_filename)
-	assert_pathname_exists(Simplified_example.open_tax_solver_all_form_directory + Simplified_example.form_filename)
+	assert_equal(Filing::US, Simplified_example.filing.jurisdiction)
+	assert_equal('US', Simplified_example.filing.jurisdiction.to_s)
+	assert_equal('US_1040', Simplified_example.filing.jurisdiction.form_filename)
+	assert_pathname_exists(Simplified_example.open_tax_solver_all_form_directory + Simplified_example.filing.jurisdiction.form_filename)
 	assert_pathname_exists(Simplified_example.open_tax_solver_form_directory)
 end #open_tax_solver_form_directory 
 def test_taxpayer_basename 
@@ -355,8 +326,8 @@ def test_Examples
 	assert_pathname_exists(US1040_user.open_tax_solver_input)
 	assert_pathname_exists(CA540_user.open_tax_solver_input)
 	us1040_example = OpenTableExplorer::Finance::OtsRun.new(cached_open_tax_solver_run: Pwd, cached_run_ots_to_fdf: Pwd,
-																				taxpayer: :example, form: '1040', jurisdiction: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
-#	us1040_example = OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, form: '1040', jurisdiction: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+																				taxpayer: :example, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+#	us1040_example = OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
 end #Examples
 
 #def test_run_ots_to_json
@@ -367,7 +338,7 @@ end #Examples
 #	US1040_example.run_ots_to_json.ots_to_json_run.assert_post_conditions
 #	CA540_template.run_ots_to_json.ots_to_json_run.assert_post_conditions
 #	CA540_example.run_ots_to_json.ots_to_json_run.assert_post_conditions
-#	OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, form: '1040', jurisdiction: :US, open_tax_solver_all_form_directory: ).run_ots_to_json
+#	OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, filing: :US_current_year, open_tax_solver_all_form_directory: ).run_ots_to_json
 #	US1040_user.run_ots_to_json.ots_to_json_run.assert_post_conditions
 #	CA540_user.run_ots_to_json.ots_to_json_run.assert_post_conditions
 #end #run_ots_to_json
@@ -405,7 +376,7 @@ def test_new_from_path
 end # new_from_path
 def test_Schedule_initialize
 	assert_equal('', US1040_example_schedule.form_suffix)
-	assert_equal('1040', US1040_example_schedule.ots.form)
+	assert_equal('1040', US1040_example_schedule.ots.filing.jurisdiction.base_form)
 	assert_equal('f', US1040_example_schedule.form_prefix)
 end # initialize
 def test_filled_in_pdf_files

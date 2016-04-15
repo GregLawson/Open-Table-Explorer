@@ -17,65 +17,6 @@ require_relative '../../app/models/parse.rb'
 module OpenTableExplorer
 
 extend AssertionsModule
-class FileIPO # IPO = Input, Processing, and Output
-include Virtus.value_object
-  values do
- 	attribute :input_paths, Array, :default => []
-	attribute :chdir, Pathname, :default => nil # current working directory
-	attribute :command_string, String
-	attribute :cached_run, ShellCommands, :default => nil
- 	attribute :output_paths, Array, :default => []
-	attribute :errors, Hash, :default => {state: :not_run_yet}
-end # values
-def run
-	@errors = {} # each run resets errors
-	@input_paths.each do |path|
-		if !File.exist?(path) then
-			@errors[path] = :input_does_not_exist
-		end # if
-	end # each
-	(@output_paths - @input_paths).each do |path| # don't delete files that are both input and output
-		if File.exist?(path) then
-			Pathname.new(path).delete
-		end # if
-	end # each
-	@cached_run = if @chdir.nil? then
-		ShellCommands.new(@command_string)
-	else
-		ShellCommands.new(@command_string, :chdir => @chdir)
-	end # if
-#	@errors[:process_status] = @cached_run.process_status
-	@errors[:exitstatus] = @cached_run.process_status.exitstatus
-#	if !@cached_run.errors.empty? then
-		errors[:syserr] = @cached_run.errors
-#	end #if
-	@output_paths.each do |path|
-		if !File.exist?(path) then
-			@errors[path] = :output_does_not_exist
-		end # if
-	end # each
-	self # allows command chaining
-end # run
-def success?
-	if errors[:exitstatus] != 0 then
-		false
-#	elsif errors[:syserr] != '' then
-#		false
-	elsif @errors.values - [:input_does_not_exist, :output_does_not_exist] !=  @errors.values
-		false
-	else
-		true
-	end # if
-end # success?
-module Examples
-Pwd = FileIPO.new(command_string: 'pwd')
-Chdir = FileIPO.new(command_string: 'pwd', chdir: '/tmp')
-Touch = FileIPO.new(command_string: 'touch /tmp/junk', output_paths: ['/tmp/junk'])
-Cat = FileIPO.new(input_paths: ['/dev/null'], command_string: 'cat /dev/null')
-Touch_fail = FileIPO.new(command_string: 'touch /tmp/junk', output_paths: ['/tmp/junk2'])
-Cat_fail = FileIPO.new(input_paths: ['/dev/null2'], command_string: 'cat /dev/null')
-end # Examples
-end # FileIPO
 
 module Finance
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
@@ -96,6 +37,9 @@ OpenTaxSolver_directories = Dir[OpenTaxSolver_directories_glob]
 #OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
 end # DefinitionalConstants
 include DefinitionalConstants
+
+class Filing
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 Tax_form_examples = [
 {jurisdiction: :CA, base_form: '540', tax_year: 2014, web_URL_prefix: "https://www.ftb.ca.gov/forms/", example_path: "2014/14_540.pdf", path_interpolation: "\#{tax_year}/14_\#{base_form}.pdf"  },
 {jurisdiction: :CA, base_form: '540', tax_year: 2014, web_URL_prefix: "https://www.ftb.ca.gov/forms/", example_path: "2014/14_540ca.pdf", path_interpolation: "\#{tax_year}/14_\#{base_form}\#{form_suffix}.pdf" },
@@ -111,91 +55,133 @@ Tax_form_examples = [
 {jurisdiction: :US, base_form: '1040_Sched_C', tax_year: 2014, web_URL_prefix: "https://www.irs.gov/pub/irs-prior/", example_path: "f1040sc--2014.pdf", path_interpolation: "f\#{base_form}\#{form_suffix}--\#{@tax_year}.pdf" },
 {jurisdiction: :VA, base_form: '760', tax_year: 2014, web_URL_prefix: "http://www.tax.virginia.gov/sites/tax.virginia.gov/files/taxforms/income-tax/", example_path: "2014/\#{base_form}2014_1.pdf", path_interpolation: "\#{@tax_year}/\#{base_form}\#{@tax_year}_1.pdf" }
 ]
-class Jurisdiction
-def self.to_s
+end # DefinitionalConstants
+include DefinitionalConstants
+include Virtus.value_object
+  values do
+	attribute :tax_year, Fixnum, :default => Finance::Default_tax_year
+end # values
+module ClassMethods
+include DefinitionalConstants
+def to_s
 	name[-2..-1]
 end # to_s
 def path_prefix
 	''
 end # path_prefix
-end # Jurisdiction
-class CA < Jurisdiction
-def web_URL_prefix
+def form_filename
+	"#{self.to_s}_#{base_form}"
+end # form_filename
+def jurisdiction
+	self
+end # jurisdiction
+end # ClassMethods
+extend ClassMethods
+def jurisdiction
+	self.class
+end # jurisdiction
+module Constants # constant objects of the type (e.g. default_objects)
+include DefinitionalConstants
+end # Constants
+include Constants
+
+class CA < Filing
+extend ClassMethods
+def self.web_URL_prefix
 	"https://www.ftb.ca.gov/forms/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'540'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{tax_year}/\#{tax_year.mod(100)}_\#{base_form}\#{form_suffix}.pdf"
 end # path_interpolation
 end # CA
-class NJ < Jurisdiction
-def web_URL_prefix
+class NJ < Filing
+extend ClassMethods
+def self.web_URL_prefix
 	"http://www.state.nj.us/treasury/taxation/pdf/current/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'1040'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{base_form}\#{form_suffix}.pdf"
 end # path_interpolation
 end # NJ
-class NY < Jurisdiction
-def web_URL_prefix
+class NY < Filing
+extend ClassMethods
+def self.web_URL_prefix
 	"http://www.tax.ny.gov/pdf/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'IT201'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{@tax_year}/fillin/inc/\#{base_form.downcase}_\#{@tax_year}_fill_in.pdf"
 end # path_interpolation
 end # NY
-class OH < Jurisdiction
-def web_URL_prefix
+class OH < Filing
+extend ClassMethods
+def self.web_URL_prefix
 	"http://www.tax.ohio.gov/portals/0/forms/ohio_individual/individual/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'IT1040'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{@tax_year}/PIT_IT\#{base_form}_FI.pdf"
 end # path_interpolation
 end # OH
-class PA < Jurisdiction
-def web_URL_prefix
+class PA < Filing
+extend ClassMethods
+def self.web_URL_prefix
 	"http://www.revenue.pa.gov/FormsandPublications/FormsforIndividuals/Documents/Personal%20Income%20Tax/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'40'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{@tax_year}/\#{@tax_year}_\#{form_prefix}40.pdf"
 end # path_interpolation
 end # PA
-class US < Jurisdiction
-def web_URL_prefix
+class US < Filing
+extend ClassMethods
+def self.web_URL_prefix
 	"https://www.irs.gov/pub/irs-prior/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'1040'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{form_prefix}\#{base_form}\#{form_suffix}--\#{@tax_year}.pdf"
 end # path_interpolation
 end # US
-class VA < Jurisdiction
-def web_URL_prefix
+class VA < Filing
+extend ClassMethods
+def self.web_URL_prefix
 	"http://www.tax.virginia.gov/sites/tax.virginia.gov/files/taxforms/income-tax/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'760'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{@tax_year}/\#{base_form}\#{@tax_year}_1.pdf"
 end # path_interpolation
 end # VA
+module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+include DefinitionalConstants
+include Constants
+CA_current_year = CA.new(tax_year: Finance::Default_tax_year)
+NJ_current_year = NJ.new(tax_year: Finance::Default_tax_year)
+NY_current_year = NY.new(tax_year: Finance::Default_tax_year)
+OH_current_year = OH.new(tax_year: Finance::Default_tax_year)
+PA_current_year = PA.new(tax_year: Finance::Default_tax_year)
+US_current_year = US.new(tax_year: Finance::Default_tax_year)
+VA_current_year = VA.new(tax_year: Finance::Default_tax_year)
+end # Examples
+end # Filing
+
 class OtsRun # forward reference definition completed below
 end #  OtsRun
 
@@ -228,7 +214,7 @@ include Virtus.value_object
 	attribute :cached_pdf_to_jpeg_run, FileIPO #, :default => Schedule::Run_pdf_to_jpeg_default
 end # values
 def schedule_name
-	@form_prefix + @ots.form.to_s  + @form_suffix.to_s
+	@form_prefix + @ots.filing.jurisdiction.base_form.to_s  + @form_suffix.to_s
 end # schedule_name
 def base_path
 	@ots.open_tax_solver_form_directory + '/' + @ots.taxpayer_basename + '_' + schedule_name
@@ -240,22 +226,22 @@ def matching_pdf_filename
 	schedule_name + '--' + @ots.tax_year.to_s+ '.pdf'
 end # 
 def matching_pdf_file
-	Finance::IRS_pdf_directory + matching_pdf_filename
+	IRS_pdf_directory + matching_pdf_filename
 end # 
 def matching_pdf_filled_in_file
-	Finance::IRS_pdf_directory + matching_pdf_filename
+	IRS_pdf_directory + matching_pdf_filename
 end # 
 def output_pdf
 	base_path + '.pdf'
 end # output_pdf
 def fillout_form
-	Finance::IRS_pdf_directory + '/f' + @ots.form  + @form_suffix + '--' + @ots.tax_year.to_s + '.pdf'
+	Finance::IRS_pdf_directory + '/f' + @ots.filing.jurisdiction.base_form  + @form_suffix + '--' + @ots.tax_year.to_s + '.pdf'
 end # fillout_form
 def download
 	tax_form_examples = Tax_form_examples.select do |example|
-		example[:jurisdiction] == @ots.jurisdiction.to_s && example[:form] == @ots.form.to_s
+		example[:jurisdiction] == @ots.filing.jurisdiction.to_s && example[:form] == @ots.form.to_s
 	end # each
-	xfdf_script_filename = @ots.jurisdiction.to_s + '_' + @ots.form + '_' + @ots.tax_year.to_s
+	xfdf_script_filename = @ots.filing.jurisdiction.to_s + '_' + @ots.form + '_' + @ots.tax_year.to_s
 	command_string = 'wget ' + tax_form_example[:web_URL_prefix] + 
 	FileIPO.new(command_string: command_string, chdir: Finance::IRS_pdf_directory).run
 #	ShellCommands.new(xfdf_script + ' ' + @ots.open_tax_solver_output.to_s)
@@ -277,8 +263,8 @@ Run_ots_to_fdf_default = lambda do |ots, attribute|
 
 # misses ./bin/fill_form_CA_540_2014 examples_and_templates/CA_540/CA_540_2014_greg_out.txt
 # probably year in filename for state but not federal.
-	xfdf_script_filename = ots.jurisdiction.to_s + '_' + ots.form + '_' + ots.tax_year.to_s
-	xfdf_script = '/home/greg/Desktop/src/OpenTaxSolver2014_12.01-forms/bin/fill_form_' + ots.jurisdiction.to_s + '_' + ots.form + '_' + ots.tax_year.to_s
+	xfdf_script_filename = ots.filing.jurisdiction.to_s + '_' + ots.filing.jurisdiction.base_form + '_' + ots.tax_year.to_s
+	xfdf_script = '/home/greg/Desktop/src/OpenTaxSolver2014_12.01-forms/bin/fill_form_' + ots.filing.jurisdiction.to_s + '_' + ots.filing.jurisdiction.base_form + '_' + ots.tax_year.to_s
 	FileIPO.new(input_paths: [xfdf_script, ots.open_tax_solver_output],
 	 command_string: xfdf_script + ' ' + ots.open_tax_solver_output.to_s, chdir: Finance::IRS_pdf_directory).run
 #	ShellCommands.new(xfdf_script + ' ' + ots.open_tax_solver_output.to_s)
@@ -319,15 +305,15 @@ def ots_user_all_forms_directory(tax_year = Finance::Default_tax_year)
 	open_tax_solver_distribution_directory(tax_year).to_s + '/examples_and_templates/'
 end # ots_user_all_forms_directory
 def logical_primary_key
-	[:taxpayer, :form, :jurisdiction, :tax_year, :open_tax_solver_all_form_directory]
+	[:taxpayer, :base_form, :jurisdiction, :tax_year, :open_tax_solver_all_form_directory]
 end # logical_primary_key
 end # DefinitionalClassMethods
 extend DefinitionalClassMethods
 include Virtus.value_object
   values do
  	attribute :taxpayer, String
- 	attribute :form, String
-	attribute :jurisdiction, Jurisdiction, :default => US
+# 	attribute :base_form, String
+	attribute :filing, Filing
 	attribute :tax_year, Fixnum, :default => Finance::Default_tax_year
 	attribute :open_tax_solver_all_form_directory, Pathname
 	attribute :cached_open_tax_solver_run, ShellCommands, :default => OtsRun::Ots_run_default
@@ -339,27 +325,24 @@ def open_tax_solver_distribution_directory
 	OtsRun.open_tax_solver_distribution_directory(@tax_year)
 end # open_tax_solver_distribution_directory
 
-def form_filename
-	"#{@jurisdiction.to_s}_#{@form}"
-end # form_filename
 def open_tax_solver_form_directory 
-	 @open_tax_solver_all_form_directory + form_filename + '/'
+	 @open_tax_solver_all_form_directory + @filing.jurisdiction.form_filename + '/'
 end # open_tax_solver_form_directory
 def open_tax_solver_chdir
 	(Pathname.new(@open_tax_solver_all_form_directory) + '../').cleanpath
 end # open_tax_solver_chdir
 def taxpayer_basename_with_year
-	form_filename + '_' +  @tax_year.to_s + '_' + @taxpayer
+	@filing.jurisdiction.form_filename + '_' +  @tax_year.to_s + '_' + @taxpayer
 end # taxpayer_basename_with_year
 def taxpayer_basename 
 	if File.exists?(open_tax_solver_form_directory + '/' + taxpayer_basename_with_year+'.txt') then
 		 taxpayer_basename_with_year
 	else
-		"#{form_filename}_#{@taxpayer}"
+		"#{@filing.jurisdiction.form_filename}_#{@taxpayer}"
 	end #if
 end # taxpayer_basename 
 def open_tax_solver_binary
-	"#{open_tax_solver_distribution_directory}/bin/taxsolve_#{form_filename}_#{@tax_year}"
+	"#{open_tax_solver_distribution_directory}/bin/taxsolve_#{@filing.jurisdiction.form_filename}_#{@tax_year}"
 end # open_tax_solver_binary
 def open_tax_solver_input
 	"#{open_tax_solver_form_directory}/#{taxpayer_basename}.txt"
@@ -374,11 +357,11 @@ def output_xfdf_glob
 	 "#{open_tax_solver_form_directory}/#{taxpayer_basename}*.xfdf"
 end # output_xfdf_glob 
 def generated_xfdf_files_regexp
-	jurisdiction_pattern = /#{@jurisdiction.to_s}/.capture(:jurisdiction)
-	form_pattern = /#{@form}/.capture(:form)
+	jurisdiction_pattern = /#{@filing.jurisdiction.to_s}/.capture(:jurisdiction)
+	form_pattern = /#{@filing.jurisdiction.base_form}/.capture(:base_form)
 	taxpayer_pattern = /#{@taxpayer}/.capture(:taxpayer)
 	optional_year = (/#{@tax_year.to_s}/.capture(:tax_year) * '_').group * Regexp::Optional
-	schedule_pattern = /_/* /[a-z]*/.capture(:form_prefix) * /#{@form}/ * /[a-z]*/.capture(:form_suffix) * /.xfdf/
+	schedule_pattern = /_/* /[a-z]*/.capture(:form_prefix) * /#{@filing.jurisdiction.base_form}/ * /[a-z]*/.capture(:form_suffix) * /.xfdf/
 	xfdf_file_pattern = jurisdiction_pattern * /_/ * form_pattern * /_/ * optional_year * taxpayer_pattern * schedule_pattern
 end # generated_xfdf_files_regexp
 def new_from_xfdf_path(ots, xfdf_file)
@@ -520,18 +503,20 @@ module Examples
 include DefinitionalConstants
 include Finance
 include FileIPO::Examples
+#include Filing
+include Filing::Examples
 Example_Taxpayer=ENV['USER'].to_sym
 #refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
 #refute_empty(OtsRun.open_tax_solver_distribution_directory)
-US1040_user = OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example_Taxpayer, form: '1040', jurisdiction: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_user_all_forms_directory)
-CA540_user=OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example_Taxpayer, form: '540', jurisdiction: CA, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_user_all_forms_directory)
-US1040_template=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :template, form: '1040', jurisdiction: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
-CA540_template=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :template, form: '540', jurisdiction: CA, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
-US1040_example=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, form: '1040', jurisdiction: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
-#US1040_example1=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example1, form: '1040', jurisdiction: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
-CA540_example=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, form: '540', jurisdiction: CA, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+US1040_user = OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example_Taxpayer, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_user_all_forms_directory)
+CA540_user=OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example_Taxpayer, filing: CA_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_user_all_forms_directory)
+US1040_template=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :template, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+CA540_template=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :template, filing: CA_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+US1040_example=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+#US1040_example1=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example1, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+CA540_example=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, filing: CA_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
 Simplified_example = OpenTableExplorer::Finance::OtsRun.new(cached_open_tax_solver_run: Pwd, cached_run_ots_to_fdf: Pwd,
-																				taxpayer: :example, form: '1040', jurisdiction: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+																				taxpayer: :example, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
 
 Expect_to_pass=[US1040_user, CA540_user, US1040_example, CA540_example]
 Expect_to_fail=[US1040_template, CA540_template]
@@ -557,9 +542,9 @@ def run_json_to_fdf
 	form='Federal/f1040'
 	form_filename=form.sub('/','_')
 	if @jurisdiction == US then
-		@otff_form='Federal/f'+@form.to_s
+		@otff_form='Federal/f'+@jurisdiction.base_form.to_s
 	else
-		@otff_form=@jurisdiction.to_s+'/f'+@form.to_s
+		@otff_form=@jurisdiction.to_s+'/f'+@jurisdiction.base_form.to_s
 	end #if
 	@fdf='/tmp/output.fdf'
 	output_pdf="#{open_tax_solver_form_directory}/#{taxpayer_basename_with_year}_otff.pdf"
