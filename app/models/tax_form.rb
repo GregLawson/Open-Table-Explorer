@@ -17,65 +17,6 @@ require_relative '../../app/models/parse.rb'
 module OpenTableExplorer
 
 extend AssertionsModule
-class FileIPO # IPO = Input, Processing, and Output
-include Virtus.value_object
-  values do
- 	attribute :input_paths, Array, :default => []
-	attribute :chdir, Pathname, :default => nil # current working directory
-	attribute :command_string, String
-	attribute :cached_run, ShellCommands, :default => nil
- 	attribute :output_paths, Array, :default => []
-	attribute :errors, Hash, :default => {state: :not_run_yet}
-end # values
-def run
-	@errors = {} # each run resets errors
-	@input_paths.each do |path|
-		if !File.exist?(path) then
-			@errors[path] = :input_does_not_exist
-		end # if
-	end # each
-	(@output_paths - @input_paths).each do |path| # don't delete files that are both input and output
-		if File.exist?(path) then
-			Pathname.new(path).delete
-		end # if
-	end # each
-	@cached_run = if @chdir.nil? then
-		ShellCommands.new(@command_string)
-	else
-		ShellCommands.new(@command_string, :chdir => @chdir)
-	end # if
-#	@errors[:process_status] = @cached_run.process_status
-	@errors[:exitstatus] = @cached_run.process_status.exitstatus
-#	if !@cached_run.errors.empty? then
-		errors[:syserr] = @cached_run.errors
-#	end #if
-	@output_paths.each do |path|
-		if !File.exist?(path) then
-			@errors[path] = :output_does_not_exist
-		end # if
-	end # each
-	self # allows command chaining
-end # run
-def success?
-	if errors[:exitstatus] != 0 then
-		false
-#	elsif errors[:syserr] != '' then
-#		false
-	elsif @errors.values - [:input_does_not_exist, :output_does_not_exist] !=  @errors.values
-		false
-	else
-		true
-	end # if
-end # success?
-module Examples
-Pwd = FileIPO.new(command_string: 'pwd')
-Chdir = FileIPO.new(command_string: 'pwd', chdir: '/tmp')
-Touch = FileIPO.new(command_string: 'touch /tmp/junk', output_paths: ['/tmp/junk'])
-Cat = FileIPO.new(input_paths: ['/dev/null'], command_string: 'cat /dev/null')
-Touch_fail = FileIPO.new(command_string: 'touch /tmp/junk', output_paths: ['/tmp/junk2'])
-Cat_fail = FileIPO.new(input_paths: ['/dev/null2'], command_string: 'cat /dev/null')
-end # Examples
-end # FileIPO
 
 module Finance
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
@@ -96,6 +37,9 @@ OpenTaxSolver_directories = Dir[OpenTaxSolver_directories_glob]
 #OTS_template_filename="#{Open_tax_solver_data_directory}/US_1040_template.txt"
 end # DefinitionalConstants
 include DefinitionalConstants
+
+class Jurisdiction
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 Tax_form_examples = [
 {jurisdiction: :CA, base_form: '540', tax_year: 2014, web_URL_prefix: "https://www.ftb.ca.gov/forms/", example_path: "2014/14_540.pdf", path_interpolation: "\#{tax_year}/14_\#{base_form}.pdf"  },
 {jurisdiction: :CA, base_form: '540', tax_year: 2014, web_URL_prefix: "https://www.ftb.ca.gov/forms/", example_path: "2014/14_540ca.pdf", path_interpolation: "\#{tax_year}/14_\#{base_form}\#{form_suffix}.pdf" },
@@ -111,38 +55,76 @@ Tax_form_examples = [
 {jurisdiction: :US, base_form: '1040_Sched_C', tax_year: 2014, web_URL_prefix: "https://www.irs.gov/pub/irs-prior/", example_path: "f1040sc--2014.pdf", path_interpolation: "f\#{base_form}\#{form_suffix}--\#{@tax_year}.pdf" },
 {jurisdiction: :VA, base_form: '760', tax_year: 2014, web_URL_prefix: "http://www.tax.virginia.gov/sites/tax.virginia.gov/files/taxforms/income-tax/", example_path: "2014/\#{base_form}2014_1.pdf", path_interpolation: "\#{@tax_year}/\#{base_form}\#{@tax_year}_1.pdf" }
 ]
-class Jurisdiction
-def self.to_s
+end # DefinitionalConstants
+include DefinitionalConstants
+module ClassMethods
+include DefinitionalConstants
+def to_s
 	name[-2..-1]
 end # to_s
 def path_prefix
 	''
 end # path_prefix
+def form_filename
+	"#{self.to_s}_#{base_form}"
+end # form_filename
+def jurisdiction
+	self
+end # jurisdiction
+def open_tax_solver_distribution_directories(tax_year)
+	Finance::OpenTaxSolver_directories.select do |f|
+		File.directory?(f)
+	end.sort
+end # open_tax_solver_distribution_directories
+def open_tax_solver_distribution_directory(tax_year)
+	Filing.open_tax_solver_distribution_directories(tax_year).last+'/'
+end # open_tax_solver_distribution_directory
+def ots_example_all_forms_directory(tax_year = Finance::Default_tax_year)
+	Finance::OTS_example_directories.to_s + '/' + tax_year.to_s + '/examples_and_templates/'
+end # ots_example_all_forms_directory
+def ots_user_all_forms_directory(tax_year = Finance::Default_tax_year)
+	open_tax_solver_distribution_directory(tax_year).to_s + '/examples_and_templates/'
+end # ots_user_all_forms_directory
+end # ClassMethods
+extend ClassMethods
+def jurisdiction
+	self.class
+end # jurisdiction
+module Constants # constant objects of the type (e.g. default_objects)
+include DefinitionalConstants
+end # Constants
+include Constants
+def open_tax_solver_distribution_directory
+	Filing.open_tax_solver_distribution_directory(@tax_year)
+end # open_tax_solver_distribution_directory
 end # Jurisdiction
 class CA < Jurisdiction
-def web_URL_prefix
+extend ClassMethods
+def self.web_URL_prefix
 	"https://www.ftb.ca.gov/forms/"
 end # web_URL_prefix
 def base_form
 	'540'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{tax_year}/\#{tax_year.mod(100)}_\#{base_form}\#{form_suffix}.pdf"
 end # path_interpolation
 end # CA
 class NJ < Jurisdiction
-def web_URL_prefix
+extend ClassMethods
+def self.web_URL_prefix
 	"http://www.state.nj.us/treasury/taxation/pdf/current/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'1040'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{base_form}\#{form_suffix}.pdf"
 end # path_interpolation
 end # NJ
 class NY < Jurisdiction
-def web_URL_prefix
+extend ClassMethods
+def self.web_URL_prefix
 	"http://www.tax.ny.gov/pdf/"
 end # web_URL_prefix
 def base_form
@@ -153,40 +135,44 @@ def path_interpolation
 end # path_interpolation
 end # NY
 class OH < Jurisdiction
-def web_URL_prefix
+extend ClassMethods
+def self.web_URL_prefix
 	"http://www.tax.ohio.gov/portals/0/forms/ohio_individual/individual/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'IT1040'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{@tax_year}/PIT_IT\#{base_form}_FI.pdf"
 end # path_interpolation
 end # OH
 class PA < Jurisdiction
-def web_URL_prefix
+extend ClassMethods
+def self.web_URL_prefix
 	"http://www.revenue.pa.gov/FormsandPublications/FormsforIndividuals/Documents/Personal%20Income%20Tax/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'40'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{@tax_year}/\#{@tax_year}_\#{form_prefix}40.pdf"
 end # path_interpolation
 end # PA
 class US < Jurisdiction
-def web_URL_prefix
+extend ClassMethods
+def self.web_URL_prefix
 	"https://www.irs.gov/pub/irs-prior/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'1040'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{form_prefix}\#{base_form}\#{form_suffix}--\#{@tax_year}.pdf"
 end # path_interpolation
 end # US
 class VA < Jurisdiction
-def web_URL_prefix
+extend ClassMethods
+def self.web_URL_prefix
 	"http://www.tax.virginia.gov/sites/tax.virginia.gov/files/taxforms/income-tax/"
 end # web_URL_prefix
 def base_form
@@ -199,7 +185,7 @@ end # VA
 class OtsRun # forward reference definition completed below
 end #  OtsRun
 
-class Schedule # forward reference definition completed below
+class TaxpayerSchedule # forward reference definition completed below
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 Run_fdf_to_pdf_default = lambda do |schedule, attribute|
 	FileIPO.new(input_paths: [schedule.xfdf_file], command_string: "pdftk fillout_form fill_form #{schedule.xfdf_file} output #{schedule.xfdf_file}.pdf", output_paths: [schedule.xfdf_file + '.pdf']).run
@@ -224,8 +210,8 @@ include Virtus.value_object
  	attribute :ots, OtsRun
 	attribute :form_prefix, String, :default => ''
 	attribute :form_suffix, Time, :default => ''
-	attribute :cached_fdf_to_pdf_run, FileIPO #, :default => Schedule::Run_fdf_to_pdf_default
-	attribute :cached_pdf_to_jpeg_run, FileIPO #, :default => Schedule::Run_pdf_to_jpeg_default
+	attribute :cached_fdf_to_pdf_run, FileIPO #, :default => TaxpayerSchedule::Run_fdf_to_pdf_default
+	attribute :cached_pdf_to_jpeg_run, FileIPO #, :default => TaxpayerSchedule::Run_pdf_to_jpeg_default
 end # values
 def schedule_name
 	@form_prefix + @ots.form.to_s  + @form_suffix.to_s
@@ -260,8 +246,8 @@ def download
 	FileIPO.new(command_string: command_string, chdir: Finance::IRS_pdf_directory).run
 #	ShellCommands.new(xfdf_script + ' ' + @ots.open_tax_solver_output.to_s)
 end # run_ots_to_fdf
-end # Schedule
-# single run of ots can produce multiple Schedules
+end # TaxpayerSchedule
+# single run of ots can produce multiple TaxpayerSchedules
 
 class OtsRun
 include Finance::DefinitionalConstants
@@ -287,7 +273,7 @@ Generated_xfdf_files_default = lambda do |ots, attribute|
 	xfdf_file_pattern = ots.generated_xfdf_files_regexp
 	Dir[ots.output_xfdf_glob].map do |xfdf_file|
 		xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
-		Schedule.new(ots: ots, form_prefix: xdf_capture.output?[:form_prefix],
+		TaxpayerSchedule.new(ots: ots, form_prefix: xdf_capture.output?[:form_prefix],
 			 form_suffix: xdf_capture.output?[:form_suffix])
 	end # map
 end # generated_xfdf_files
@@ -383,7 +369,7 @@ def generated_xfdf_files_regexp
 end # generated_xfdf_files_regexp
 def new_from_xfdf_path(ots, xfdf_file)
 		xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
-		Schedule.new(ots, xdf_capture.output?[:form_prefix], xdf_capture.output?[:form_suffix])
+		TaxpayerSchedule.new(ots, xdf_capture.output?[:form_prefix], xdf_capture.output?[:form_suffix])
 end # new_from_path
 def compact_message(string, max_length = 256)
 	splitter = "\n... "
@@ -542,7 +528,7 @@ end #OtsRun
 # a ots run can produce multiple schedule outputs
 # mapping is in: 
 #
-class Schedule
+class TaxpayerSchedule
 module ClassMethods
 def run_ots_to_json
 	@open_tax_form_filler_ots_js="#{Open_Tax_Filler_Directory}/script/json_ots.js"
@@ -574,6 +560,6 @@ extend ClassMethods
 attr_reader :ots, :form_prefix, :form_suffix
 module Examples
 end # Examples
-end # Schedule
+end # TaxpayerSchedule
 end #Finance
 end #OpenTableExplorer

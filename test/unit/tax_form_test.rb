@@ -16,43 +16,13 @@ def model_class?
 end #model_class?
 #include DefaultTests
 include OpenTableExplorer # for FileIPO
-include FileIPO::Examples # for FileIPO
 include OpenTableExplorer::Finance
 include OpenTableExplorer::Finance::DefinitionalConstants
-def test_FileIPO_virtus
-	assert_equal([], Pwd.input_paths)
-	assert_equal([], Pwd.output_paths)
-	assert_equal([], Touch.input_paths)
-	assert_equal(['/tmp/junk'], Touch.output_paths)
-	assert_equal(['/dev/null'], Cat.input_paths)
-	assert_equal([], Cat.output_paths)
-	refute_empty(Pwd.errors, Pwd)
-	refute_empty(Touch.errors, Touch)
-	refute_empty(Cat.errors, Cat)
-	refute_empty(Touch_fail.errors, Touch_fail)
-	refute_empty(Cat_fail.errors, Cat_fail)
-end # values
-def test_run
-	assert_equal(0, Pwd.run.errors[:exitstatus], Pwd.inspect)
-	assert_equal(0, Chdir.run.errors[:exitstatus], Chdir.inspect)
-	assert_equal("/tmp\n", Chdir.run.cached_run.output, Pwd.inspect)
-	assert_equal(0, Touch.run.errors[:exitstatus], Touch)
-	assert_equal(0, Cat.run.errors[:exitstatus], Cat)
-	assert_equal(:output_does_not_exist, Touch_fail.run.errors["/tmp/junk2"], Touch_fail)
-	assert_equal(:input_does_not_exist, Cat_fail.run.errors["/dev/null2"], Cat_fail)
-end # run
-def test_success?
-	assert(Pwd.success?, Pwd.inspect)
-	assert(Touch.success?, Touch.inspect)
-	assert(Cat.success?, Cat.inspect)
-	refute(Touch_fail.success?, Touch_fail.inspect)
-	refute(Cat_fail.success?, Cat_fail.inspect)
-end # success?
 extend OpenTableExplorer::Finance::DefinitionalConstants
 include OpenTableExplorer::Finance::OtsRun::Examples
-include OpenTableExplorer::Finance::Schedule::Examples
-#US1040_example_schedule = 	OpenTableExplorer::Finance::Schedule.new(ots: OpenTableExplorer::Finance::OtsRun::Examples::US1040_example.build, '', '')
-US1040_example_schedule = 	Schedule.new(ots: OtsRun::Examples::US1040_example, form_prefix: 'f', form_suffix: '')
+include OpenTableExplorer::Finance::TaxpayerSchedule::Examples
+#US1040_example_schedule = 	OpenTableExplorer::Finance::TaxpayerSchedule.new(ots: OpenTableExplorer::Finance::OtsRun::Examples::US1040_example.build, '', '')
+US1040_example_schedule = 	TaxpayerSchedule.new(ots: OtsRun::Examples::US1040_example, form_prefix: 'f', form_suffix: '')
 def test_Finance_DefinitionalConstants
 	refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
 	assert_pathname_exists(Open_Tax_Filler_Directory)
@@ -138,7 +108,7 @@ def test_Generated_xfdf_files_default
 	refute_empty(Generated_xfdf_files_default.call(CA540_example, nil), US1040_template.inspect)
 	ots = US1040_example
 	Generated_xfdf_files_default.call(US1040_example, nil).each do |schedule|
-		Schedule.new(ots: schedule.ots, form_prefix: schedule.form_prefix, form_suffix: schedule.form_suffix)		
+		TaxpayerSchedule.new(ots: schedule.ots, form_prefix: schedule.form_prefix, form_suffix: schedule.form_suffix)		
 	end # each
 end # generated_xfdf_files
 def test_Errors_default
@@ -148,7 +118,7 @@ def test_Errors_default
 	errors[:run_ots_to_fdf] = ots.cached_run_ots_to_fdf.errors
 	refute_empty(ots.cached_schedules, ots.inspect)
 	errors[:schedules] = Generated_xfdf_files_default.call(ots, nil).map do |schedule| 
-		{schedule => Schedule::Run_pdf_to_jpeg_default.call(schedule, nil).errors}
+		{schedule => TaxpayerSchedule::Run_pdf_to_jpeg_default.call(schedule, nil).errors}
 	end # map
 #	errors[:schedules] = ots.cached_schedules.map {|schedule| {schedule => schedule.cached_pdf_to_jpeg_run.errors} }
 	errors_default = Errors_default.call(ots, nil)
@@ -250,13 +220,13 @@ def test_generated_xfdf_files_regexp
 	xfdf_file_pattern = US1040_example.generated_xfdf_files_regexp()
 	Dir[US1040_example.output_xfdf_glob].map do |xfdf_file|
 		xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
-		schedule = Schedule.new(ots: US1040_example, form_prefix: xdf_capture.output?[:form_prefix], form_suffix: xdf_capture.output?[:form_suffix])
+		schedule = TaxpayerSchedule.new(ots: US1040_example, form_prefix: xdf_capture.output?[:form_prefix], form_suffix: xdf_capture.output?[:form_suffix])
 		assert_equal('f', schedule.form_prefix)
 #		schedule.ots.
 		assert_equal(xfdf_file, schedule.xfdf_file, schedule.inspect)
 	end # map
 	US1040_example.cached_schedules.map do |xdf_schedule|
-		assert_kind_of(Schedule, xdf_schedule, US1040_example.cached_schedules.inspect)
+		assert_kind_of(TaxpayerSchedule, xdf_schedule, US1040_example.cached_schedules.inspect)
 	end # each
 end # generated_xfdf_files_regexp
 def test_compact_message
@@ -403,7 +373,7 @@ def test_run_json_to_fdf
 end #run_json_to_fdf
 def test_new_from_path
 end # new_from_path
-def test_Schedule_initialize
+def test_TaxpayerSchedule_initialize
 	assert_equal('', US1040_example_schedule.form_suffix)
 	assert_equal('1040', US1040_example_schedule.ots.form)
 	assert_equal('f', US1040_example_schedule.form_prefix)
