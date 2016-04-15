@@ -9,6 +9,7 @@ require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../test/assertions/shell_command_assertions.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../app/models/default_test_case.rb'
+require_relative '../../app/models/test_environment_test_unit.rb'
 class ShellCommandsTest < DefaultTestCase2
 #include DefaultTests
 include ShellCommands::Examples
@@ -213,3 +214,35 @@ def test_assert_post_conditions
 	Hello_world.assert_post_conditions
 end #assert_post_conditions
 end #ShellCommands
+class FileIPOTest < TestCase
+include FileIPO::Examples # for FileIPO
+def test_FileIPO_virtus
+	assert_equal([], Pwd.input_paths)
+	assert_equal([], Pwd.output_paths)
+	assert_equal([], Touch.input_paths)
+	assert_equal(['/tmp/junk'], Touch.output_paths)
+	assert_equal(['/dev/null'], Cat.input_paths)
+	assert_equal([], Cat.output_paths)
+	refute_empty(Pwd.errors, Pwd)
+	refute_empty(Touch.errors, Touch)
+	refute_empty(Cat.errors, Cat)
+	refute_empty(Touch_fail.errors, Touch_fail)
+	refute_empty(Cat_fail.errors, Cat_fail)
+end # values
+def test_run
+	assert_equal(0, Pwd.run.errors[:exitstatus], Pwd.inspect)
+	assert_equal(0, Chdir.run.errors[:exitstatus], Chdir.inspect)
+	assert_equal("/tmp\n", Chdir.run.cached_run.output, Pwd.inspect)
+	assert_equal(0, Touch.run.errors[:exitstatus], Touch)
+	assert_equal(0, Cat.run.errors[:exitstatus], Cat)
+	assert_equal(:output_does_not_exist, Touch_fail.run.errors["/tmp/junk2"], Touch_fail)
+	assert_equal(:input_does_not_exist, Cat_fail.run.errors["/dev/null2"], Cat_fail)
+end # run
+def test_success?
+	assert(Pwd.run.success?, Pwd.inspect)
+	assert(Touch.run.success?, Touch.inspect)
+	assert(Cat.run.success?, Cat.inspect)
+	refute(Touch_fail.run.success?, Touch_fail.inspect)
+	refute(Cat_fail.run.success?, Cat_fail.inspect)
+end # success?
+end # FileIPO
