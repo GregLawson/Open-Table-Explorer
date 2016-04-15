@@ -28,10 +28,22 @@ def test_Finance_DefinitionalConstants
 	assert_pathname_exists(Open_Tax_Filler_Directory)
 	assert_pathname_exists(IRS_pdf_directory)
 end # DefinitionalConstants
-def test_Jurisdiction_to_s
-	assert_equal('on', Jurisdiction.to_s)
+def test_Filing_to_s
+	assert_equal('ng', Filing.to_s)
 	assert_equal('US', US.to_s)
 end # to_s
+def test_form_filename
+	assert_equal('US_1040', US.form_filename)
+end # form_filename
+def test_Filing_jurisdiction
+	assert_equal(US, US.jurisdiction)
+end # jurisdiction
+def test_download
+	tax_form_examples = Filing::Tax_form_examples.select do |example|
+#		example[:jurisdiction] == @filing.jurisdiction.to_s && example[:form] == @filing.form.to_s
+	end # each
+#	xfdf_script_filename = @filing.jurisdiction.to_s + '_' + @filing.form + '_' + @filing.tax_year.to_s
+end # download
 def test_run_fdf_to_pdf
 	US1040_user.cached_schedules.map do |xdf_schedule|
 		matching_pdf_filename = 'f' + xdf_schedule.ots.form.to_s  + xdf_schedule.form_suffix.to_s + '--' + Default_tax_year.to_s+ '.pdf'
@@ -171,11 +183,6 @@ def test_OtsRun_virtus
 	assert_pathname_exists(US1040_example.open_tax_solver_all_form_directory)
 	refute_nil(US1040_example.open_tax_solver_all_form_directory)
 end # values
-def test_form_filename
-	assert_equal('US_1040', US1040_template.form_filename)
-	assert_equal('US_1040', US1040_example.form_filename)
-	assert_equal('US_1040', US1040_user.form_filename)
-end # form_filename
 def test_open_tax_solver_form_directory 
 	form='1040'
 	jurisdiction = US
@@ -325,7 +332,7 @@ def test_Examples
 	assert_pathname_exists(US1040_user.open_tax_solver_input)
 	assert_pathname_exists(CA540_user.open_tax_solver_input)
 	us1040_example = OpenTableExplorer::Finance::OtsRun.new(cached_open_tax_solver_run: Pwd, cached_run_ots_to_fdf: Pwd,
-																				taxpayer: :example, form: '1040', jurisdiction: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+			taxpayer: :example, form: '1040', jurisdiction: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
 #	us1040_example = OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, form: '1040', jurisdiction: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
 end #Examples
 

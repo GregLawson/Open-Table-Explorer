@@ -38,7 +38,7 @@ OpenTaxSolver_directories = Dir[OpenTaxSolver_directories_glob]
 end # DefinitionalConstants
 include DefinitionalConstants
 
-class Jurisdiction
+class Filing
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 Tax_form_examples = [
 {jurisdiction: :CA, base_form: '540', tax_year: 2014, web_URL_prefix: "https://www.ftb.ca.gov/forms/", example_path: "2014/14_540.pdf", path_interpolation: "\#{tax_year}/14_\#{base_form}.pdf"  },
@@ -97,8 +97,8 @@ include Constants
 def open_tax_solver_distribution_directory
 	Filing.open_tax_solver_distribution_directory(@tax_year)
 end # open_tax_solver_distribution_directory
-end # Jurisdiction
-class CA < Jurisdiction
+end # Filing
+class CA < Filing
 extend ClassMethods
 def self.web_URL_prefix
 	"https://www.ftb.ca.gov/forms/"
@@ -110,7 +110,7 @@ def self.path_interpolation
 	"\#{tax_year}/\#{tax_year.mod(100)}_\#{base_form}\#{form_suffix}.pdf"
 end # path_interpolation
 end # CA
-class NJ < Jurisdiction
+class NJ < Filing
 extend ClassMethods
 def self.web_URL_prefix
 	"http://www.state.nj.us/treasury/taxation/pdf/current/"
@@ -122,7 +122,7 @@ def self.path_interpolation
 	"\#{base_form}\#{form_suffix}.pdf"
 end # path_interpolation
 end # NJ
-class NY < Jurisdiction
+class NY < Filing
 extend ClassMethods
 def self.web_URL_prefix
 	"http://www.tax.ny.gov/pdf/"
@@ -134,7 +134,7 @@ def path_interpolation
 	"\#{@tax_year}/fillin/inc/\#{base_form.downcase}_\#{@tax_year}_fill_in.pdf"
 end # path_interpolation
 end # NY
-class OH < Jurisdiction
+class OH < Filing
 extend ClassMethods
 def self.web_URL_prefix
 	"http://www.tax.ohio.gov/portals/0/forms/ohio_individual/individual/"
@@ -146,7 +146,7 @@ def self.path_interpolation
 	"\#{@tax_year}/PIT_IT\#{base_form}_FI.pdf"
 end # path_interpolation
 end # OH
-class PA < Jurisdiction
+class PA < Filing
 extend ClassMethods
 def self.web_URL_prefix
 	"http://www.revenue.pa.gov/FormsandPublications/FormsforIndividuals/Documents/Personal%20Income%20Tax/"
@@ -158,7 +158,7 @@ def self.path_interpolation
 	"\#{@tax_year}/\#{@tax_year}_\#{form_prefix}40.pdf"
 end # path_interpolation
 end # PA
-class US < Jurisdiction
+class US < Filing
 extend ClassMethods
 def self.web_URL_prefix
 	"https://www.irs.gov/pub/irs-prior/"
@@ -170,7 +170,7 @@ def self.path_interpolation
 	"\#{form_prefix}\#{base_form}\#{form_suffix}--\#{@tax_year}.pdf"
 end # path_interpolation
 end # US
-class VA < Jurisdiction
+class VA < Filing
 extend ClassMethods
 def self.web_URL_prefix
 	"http://www.tax.virginia.gov/sites/tax.virginia.gov/files/taxforms/income-tax/"
@@ -182,6 +182,23 @@ def path_interpolation
 	"\#{@tax_year}/\#{base_form}\#{@tax_year}_1.pdf"
 end # path_interpolation
 end # VA
+class Taxpayer
+include Virtus.value_object
+  values do
+ 	attribute :name, String
+	attribute :open_tax_solver_all_form_directory, Pathname
+	attribute :state, Class, :default => CA
+end # values
+def open_tax_solver_chdir
+	(Pathname.new(@open_tax_solver_all_form_directory) + '../').cleanpath
+end # open_tax_solver_chdir
+module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+Example_taxpayer_name = ENV['USER'].to_sym
+User = Taxpayer.new(name: Example_taxpayer_name, open_tax_solver_all_form_directory: Filing.ots_user_all_forms_directory)
+Example = Taxpayer.new(name: :example, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory)
+Template = Taxpayer.new(name: :template, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory)
+end # Examples
+end # Taxpayer
 class OtsRun # forward reference definition completed below
 end #  OtsRun
 
@@ -313,7 +330,7 @@ include Virtus.value_object
   values do
  	attribute :taxpayer, String
  	attribute :form, String
-	attribute :jurisdiction, Jurisdiction, :default => US
+	attribute :jurisdiction, Filing, :default => US
 	attribute :tax_year, Fixnum, :default => Finance::Default_tax_year
 	attribute :open_tax_solver_all_form_directory, Pathname
 	attribute :cached_open_tax_solver_run, ShellCommands, :default => OtsRun::Ots_run_default

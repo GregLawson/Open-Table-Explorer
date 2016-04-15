@@ -1,5 +1,5 @@
 passed
-2016-04-14 16:09:53.353
+2016-04-15 16:32:39.899
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ....
 
-Finished in 0.003525s, 1134.6327 runs/s, 0.0000 assertions/s.
+Finished in 0.003919s, 1020.7014 runs/s, 0.0000 assertions/s.
 
 4 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 
