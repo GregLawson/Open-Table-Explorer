@@ -6,9 +6,10 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../app/models/script_environment_no_assertions.rb'
 require_relative '../app/models/unit.rb' # before command_line
 require_relative "../app/models/#{RailsishRubyUnit::Executable.model_basename}"
-class CommandLine  < Command
+class CommandLine  #< Command
 # help for command_line script, overrides default
 def help_banner_string
 		ret = 'Usage: ' + ' unit_basename subcommand  options args'
@@ -43,7 +44,7 @@ def command_line_parser
 		end # if
 		banner 'args may be paths, units, branches, etc.'
 		banner 'options:'
-		opt :inspect, 'Inspect ' + Command.to_s + ' object' 
+#		opt :inspect, 'Inspect ' + Command.to_s + ' object' 
 		opt :test, "Test unit."       # string --name <s>, default nil
 	  stop_on SUB_COMMANDS
 	  end

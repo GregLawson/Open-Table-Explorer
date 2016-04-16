@@ -28,6 +28,21 @@ def missing_files
 		!File.exist?(p)
 	end # select
 end # missing_files
+def edit_symbols
+	edit_files. map do |path|
+		FilePattern.find_by_file(path)
+	end # map
+end # edit_symbols
+def not_symbols
+	pathnames?.map do |path|
+		FilePattern.find_by_file(path)
+	end # map
+end # not_symbols
+def missing_symbols
+	not_files.map do |path|
+		FilePattern.find_by_file(path)
+	end # map
+end # missing_symbols
 module ClassMethods
 def new_from_path(path)
 	library_name = FilePattern.unit_base_name?(path)
@@ -79,15 +94,19 @@ def data_sources_directory?
 	pathname_pattern?(:data_sources_dir)
 	@project_root_dir+'test/data_sources/' + @model_basename.to_s
 end #data_sources_directory
-#  Initially the number of files for the model
 def pathnames?
 #	[assertions_test_pathname?, assertions_pathname?, pathname_pattern?(:unit), pathname_pattern?(:model)]
 	raise "project_root_dir" if @project_root_dir.nil?
 	raise "@model_basename" if @model_basename.nil?
 	FilePattern::Patterns.map do |pattern|
-		@project_root_dir + FilePattern.path?(pattern, @model_basename)
+		Pathname.new(@project_root_dir + FilePattern.path?(pattern, @model_basename))
 	end # map
 end #pathnames
+def symbols
+	FilePattern::Patterns.map do |pattern|
+		pattern[:name]
+	end # map
+end # symbols
 def patterned_files
 	patterned_files = FilePattern.pathnames?(@model_basename).map do |globs|
 		Dir[globs]
@@ -99,6 +118,7 @@ end #assertions_pathname?
 def assertions_test_pathname?
 	pathname_pattern?(:assertions_test)
 end #assertions_test_pathname?
+#  Initially the number of files for the unit
 def default_test_class_id?
 	if File.exists?(self.assertions_test_pathname?) then
 		4

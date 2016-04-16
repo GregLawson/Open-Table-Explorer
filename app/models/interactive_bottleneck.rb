@@ -15,8 +15,8 @@ end # Constants
 include Constants
 module ClassMethods
 include Constants
-def calc_test_maturity!(test_executable, recursion_danger = nil)
-		if test_executable.testable?(recursion_danger) then
+def calc_test_maturity!(test_executable)
+		if test_executable.testable? then
 			TestMaturity.new(test_executable: test_executable)
 	else
 			nil
@@ -31,11 +31,11 @@ extend ClassMethods
 include Virtus.value_object
   values do
 	attribute :test_executable, TestExecutable
+	attribute :interactive, Symbol, :default => :interactive # non-defaults are primarily for non-interactive testing testing
 	attribute :editor, Editor, :default => lambda { |interactive_bottleneck, attribute| Editor.new(interactive_bottleneck.test_executable) }
 	attribute :repository, Repository, :default => lambda { |interactive_bottleneck, attribute| interactive_bottleneck.test_executable.repository }
 	attribute :unit_maturity, UnitMaturity, :default => lambda { |interactive_bottleneck, attribute| UnitMaturity.new(interactive_bottleneck.test_executable.repository, interactive_bottleneck.test_executable.unit) }
 #	attribute :branch_index, Fixnum, :default => lambda { |interactive_bottleneck, attribute| InteractiveBottleneck.index(interactive_bottleneck.test_executable.repository) }
-	attribute :interactive, Symbol, :default => :interactive # non-defaults are primarily for non-interactive testing testing
 end # values
 def standardize_position!
 	 abort_rebase_and_merge!
@@ -67,14 +67,20 @@ def state?
 end # state?
 def dirty_test_executables
 	@repository.status.map do |file_status|
-		test_executable = TestExecutable.new_from_path(file_status[:file])
-		testable = test_executable.testable?
-		if testable then
-			test_executable # find unique
-		else
+		if file_status[:log_file] then
 			nil
+		elsif file_status[:working_tree] == :ignore then
+			nil
+		else
+			test_executable = TestExecutable.new_from_path(file_status[:file])
+			testable = test_executable.generatable_unit_file?
+			if testable then
+				test_executable # find unique
+			else
+				nil
+			end # if
 		end # if
-	end.compact.uniq # map
+	end.select{|t| !t.nil?}.uniq # map
 end # dirty_test_executables
 def dirty_units
 	dirty_test_executables.map do |test_executable|
@@ -92,16 +98,24 @@ def dirty_test_maturities(recursion_danger = nil)
 		else
 			nil # drop non-regression testable files
 		end # if
-	end.compact #.sort
+	end.compact.sort
 end # dirty_test_maturities
 def clean_directory
-	dirty_test_executables.sort.map do |test_executable|
-		test(test_executable)
-		stage_test_executable
+	sorted = dirty_test_maturities #.sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
+	sorted.sort.map do |test_maturity|
+		target_branch = test_maturity.deserving_branch
+		case target_branch <=> Branch.current_branch
+		when +1 then 
+			switch_branch(target_branch)
+		when 0  then 
+			stage_test_executable
+		when -1 then 
+			merge_down
+		end # case
 	end # map
 end # clean_directory
 def discard_log_file_merge
-	unmerged_files = @repository.merge_conflict_files?
+	unmerged_files = @repository.status
 		unmerged_files.each do |conflict|
 			if conflict[:file][-4..-1] == '.log' then
 				@repository.git_command('checkout HEAD ' + conflict[:file])
@@ -112,8 +126,8 @@ end # discard_log_file_merge
 def merge_conflict_recovery(from_branch)
 # see man git status
 	discard_log_file_merge # each branch's log file status is independant
-	puts '@repository.merge_conflict_files?= ' + @repository.merge_conflict_files?.inspect
-	unmerged_files = @repository.merge_conflict_files?
+	puts '@repository.status = ' + @repository.status.inspect
+	unmerged_files = @repository.status
 	if !unmerged_files.empty? then
 		puts 'merge --abort'
 		merge_abort = @repository.git_command('merge --abort')
@@ -123,26 +137,17 @@ def merge_conflict_recovery(from_branch)
 		end # if
 		unmerged_files.each do |conflict|
 				puts 'not checkout HEAD ' + conflict[:file]
-				case conflict[:conflict]
-				# DD unmerged, both deleted
-				when 'DD' then fail Exception.new(conflict.inspect)
-				# AU unmerged, added by us
-				when 'AU' then fail Exception.new(conflict.inspect)
-				# UD unmerged, deleted by them
-				when 'UD' then fail Exception.new(conflict.inspect)
-				# UA unmerged, added by them
-				when 'UA' then fail Exception.new(conflict.inspect)
-				# DU unmerged, deleted by us
-				when 'DU' then fail Exception.new(conflict.inspect)
-				# AA unmerged, both added
-				# UU unmerged, both modified
-				when 'UU', ' M', 'M ', 'MM', 'A ', 'AA' then
-					test_executable = TestExecutable.new_from_path(conflict[:file])
-					Editor.new(test_executable).edit
-	#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
-				else
-					fail Exception.new(conflict.inspect)
-				end # case
+				if conflict[:index] == :ignored || conflict[:work_tree] == :ignored then
+					# ignore
+				elsif conflict[:description] == 'updated in index' then
+					# no merge conflict; test!
+				elsif conflict[:description][0..7] == 'unmerged' then
+						test_executable = TestExecutable.new_from_path(conflict[:file])
+						Editor.new(test_executable).edit
+		#				@repository.validate_commit(@repository.current_branch_name?, [conflict[:file]])
+					else
+						fail Exception.new(conflict.inspect)
+					end # if
 		end # each
 		confirm_commit
 	end # if
@@ -222,7 +227,7 @@ def stash_and_checkout(target_branch)
 	push # if switched?
 end # stash_and_checkout
 def merge_cleanup
-	@repository.merge_conflict_files?.each do |conflict|
+	@repository.status.each do |conflict|
 		case @interactive
 		when :interactive then
 			@repository.shell_command('diffuse -m '+conflict[:file])
@@ -281,7 +286,7 @@ def confirm_commit
 			@repository.git_command('add . ').assert_post_conditions
 			@repository.git_command('commit ').assert_post_conditions
 		else
-			raise 'Unimplemented option @interactive = ' + @interactive.inspect
+			raise 'Unimplemented option @interactive = ' + @interactive.inspect + "\n" + self.inspect
 		end #case
 	end #if
 	puts 'confirm_commit('+ @interactive.inspect+" @repository.something_to_commit?="+@repository.something_to_commit?.inspect
@@ -303,7 +308,7 @@ def script_deserves_commit!(deserving_branch)
 		merge_down(deserving_branch)
 	end # if
 end # script_deserves_commit!
-require_relative '../../app/models/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 
 module ClassMethods
@@ -332,7 +337,7 @@ extend Assertions::ClassMethods
 include Constants
 module Examples
 TestTestExecutable = TestExecutable.new(argument_path: File.expand_path($PROGRAM_NAME))
-TestInteractiveBottleneck = InteractiveBottleneck.new(test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor)
+TestInteractiveBottleneck = InteractiveBottleneck.new(interactive: :interactive, test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor)
 include Constants
 end # Examples
 include Examples

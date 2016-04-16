@@ -7,8 +7,8 @@
 ###########################################################################
 require_relative '../../app/models/command_line.rb'
 require_relative '../assertions/shell_command_assertions.rb'
-class CommandLine < Command
-require_relative '../../app/models/assertions.rb'
+class CommandLine #< Command
+#require_relative '../../app/models/assertions.rb'
 module Assertions
 
 module ClassMethods

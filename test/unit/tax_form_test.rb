@@ -20,9 +20,9 @@ include OpenTableExplorer::Finance
 include OpenTableExplorer::Finance::DefinitionalConstants
 extend OpenTableExplorer::Finance::DefinitionalConstants
 include OpenTableExplorer::Finance::OtsRun::Examples
-include OpenTableExplorer::Finance::Schedule::Examples
-#US1040_example_schedule = 	OpenTableExplorer::Finance::Schedule.new(ots: OpenTableExplorer::Finance::OtsRun::Examples::US1040_example.build, '', '')
-US1040_example_schedule = 	Schedule.new(ots: OtsRun::Examples::US1040_example, form_prefix: 'f', form_suffix: '')
+include OpenTableExplorer::Finance::TaxpayerSchedule::Examples
+#US1040_example_schedule = 	OpenTableExplorer::Finance::TaxpayerSchedule.new(ots: OpenTableExplorer::Finance::OtsRun::Examples::US1040_example.build, '', '')
+US1040_example_schedule = 	TaxpayerSchedule.new(ots: OtsRun::Examples::US1040_example, form_prefix: 'f', form_suffix: '')
 def test_Finance_DefinitionalConstants
 	refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
 	assert_pathname_exists(Open_Tax_Filler_Directory)
@@ -38,6 +38,12 @@ end # form_filename
 def test_Filing_jurisdiction
 	assert_equal(Filing::US, Filing::US.jurisdiction)
 end # jurisdiction
+def test_download
+	tax_form_examples = Filing::Tax_form_examples.select do |example|
+#		example[:jurisdiction] == @filing.jurisdiction.to_s && example[:form] == @filing.form.to_s
+	end # each
+#	xfdf_script_filename = @filing.jurisdiction.to_s + '_' + @filing.form + '_' + @filing.tax_year.to_s
+end # download
 def test_run_fdf_to_pdf
 	US1040_user.cached_schedules.map do |xdf_schedule|
 		matching_pdf_filename = 'f' + xdf_schedule.ots.filing.jurisdiction.base_form.to_s  + xdf_schedule.form_suffix.to_s + '--' + Default_tax_year.to_s+ '.pdf'
@@ -114,7 +120,7 @@ def test_Generated_xfdf_files_default
 	refute_empty(Generated_xfdf_files_default.call(CA540_example, nil), US1040_template.inspect)
 	ots = US1040_example
 	Generated_xfdf_files_default.call(US1040_example, nil).each do |schedule|
-		Schedule.new(ots: schedule.ots, form_prefix: schedule.form_prefix, form_suffix: schedule.form_suffix)		
+		TaxpayerSchedule.new(ots: schedule.ots, form_prefix: schedule.form_prefix, form_suffix: schedule.form_suffix)		
 	end # each
 end # generated_xfdf_files
 def test_Errors_default
@@ -124,7 +130,7 @@ def test_Errors_default
 	errors[:run_ots_to_fdf] = ots.cached_run_ots_to_fdf.errors
 	refute_empty(ots.cached_schedules, ots.inspect)
 	errors[:schedules] = Generated_xfdf_files_default.call(ots, nil).map do |schedule| 
-		{schedule => Schedule::Run_pdf_to_jpeg_default.call(schedule, nil).errors}
+		{schedule => TaxpayerSchedule::Run_pdf_to_jpeg_default.call(schedule, nil).errors}
 	end # map
 #	errors[:schedules] = ots.cached_schedules.map {|schedule| {schedule => schedule.cached_pdf_to_jpeg_run.errors} }
 	errors_default = Errors_default.call(ots, nil)
@@ -221,13 +227,13 @@ def test_generated_xfdf_files_regexp
 	xfdf_file_pattern = US1040_example.generated_xfdf_files_regexp()
 	Dir[US1040_example.output_xfdf_glob].map do |xfdf_file|
 		xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
-		schedule = Schedule.new(ots: US1040_example, form_prefix: xdf_capture.output?[:form_prefix], form_suffix: xdf_capture.output?[:form_suffix])
+		schedule = TaxpayerSchedule.new(ots: US1040_example, form_prefix: xdf_capture.output?[:form_prefix], form_suffix: xdf_capture.output?[:form_suffix])
 		assert_equal('f', schedule.form_prefix)
 #		schedule.ots.
 		assert_equal(xfdf_file, schedule.xfdf_file, schedule.inspect)
 	end # map
 	US1040_example.cached_schedules.map do |xdf_schedule|
-		assert_kind_of(Schedule, xdf_schedule, US1040_example.cached_schedules.inspect)
+		assert_kind_of(TaxpayerSchedule, xdf_schedule, US1040_example.cached_schedules.inspect)
 	end # each
 end # generated_xfdf_files_regexp
 def test_compact_message
@@ -326,8 +332,8 @@ def test_Examples
 	assert_pathname_exists(US1040_user.open_tax_solver_input)
 	assert_pathname_exists(CA540_user.open_tax_solver_input)
 	us1040_example = OpenTableExplorer::Finance::OtsRun.new(cached_open_tax_solver_run: Pwd, cached_run_ots_to_fdf: Pwd,
-																				taxpayer: :example, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
-#	us1040_example = OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+			taxpayer: Example, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+#	us1040_example = OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, form: '1040', jurisdiction: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
 end #Examples
 
 #def test_run_ots_to_json
@@ -374,7 +380,7 @@ def test_run_json_to_fdf
 end #run_json_to_fdf
 def test_new_from_path
 end # new_from_path
-def test_Schedule_initialize
+def test_TaxpayerSchedule_initialize
 	assert_equal('', US1040_example_schedule.form_suffix)
 	assert_equal('1040', US1040_example_schedule.ots.filing.jurisdiction.base_form)
 	assert_equal('f', US1040_example_schedule.form_prefix)

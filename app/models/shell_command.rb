@@ -8,6 +8,7 @@
 require 'open3'
 require 'shellwords.rb'
 require_relative 'log.rb'
+require 'pathname'
 require 'virtus'
 module Shell
 class Ssh
@@ -276,7 +277,7 @@ def trace
 	$stdout.puts shorter_callers.join("\n")
 	self # return for command chaining
 end #trace
-require_relative '../../test/assertions.rb'
+#require_relative '../../test/assertions.rb'
 module Assertions
 
 def assert_pre_conditions(message='')
