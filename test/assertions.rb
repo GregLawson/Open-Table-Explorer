@@ -8,13 +8,13 @@
 #require 'test/unit/assertions'
 require_relative 'assertions/ruby_assertions.rb'
 module Assertions
-include AssertionsModule
-extend AssertionsModule
+#include AssertionsModule
+#extend AssertionsModule
 #include Test::Unit::Assertions
 module ClassMethods
 #include Minitest::Assertions
 #include Test::Unit::Assertions
-include AssertionsModule
+#include AssertionsModule
 def assert_pre_conditions(message='')
 	message+="In #{self.class}::assert_pre_conditions, self=#{inspect}"
 	assert_respond_to(self, :refute_nil)
