@@ -6,8 +6,9 @@
 #
 ###########################################################################
 require 'trollop'
+require 'virtus'
 require_relative '../../app/models/shell_command.rb'
-require_relative '../../app/models/command.rb'
+#require_relative '../../app/models/command.rb'
 require_relative '../../app/models/test_executable.rb'
 # Monkey patch Mehod to give more intelligible arity methods
 class Method
@@ -31,7 +32,7 @@ def required_arguments
 end # required_arguments
 end # Method
 
-class CommandLine  < Command
+class CommandLine  #< Command
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 SUB_COMMANDS = %w(inspect test)
 Nonscriptable_methods = [:run, :executable, :executable=]
@@ -176,7 +177,7 @@ def command_line_parser
 		end # if
 		banner 'args may be paths, units, branches, etc.'
 		banner 'options:'
-		opt :inspect, 'Inspect ' + Command.to_s + ' object' 
+#		opt :inspect, 'Inspect ' + Command.to_s + ' object' 
 		opt :test, "Test unit."       # string --name <s>, default nil
 	  stop_on SUB_COMMANDS
 	  end
@@ -191,7 +192,7 @@ end
 end # command_line_opts
 module Constants # constant objects of the type
 include DefinitionalConstants
-Command = RailsishRubyUnit::Executable.model_basename
+#Command = RailsishRubyUnit::Executable.model_basename
 Script_class = RailsishRubyUnit::Executable.model_class?
 Script_command_line = CommandLine.new(executable: $0, unit_class: Script_class, argv: ARGV)
 # = Script_class.new(TestExecutable.new_from_path($0))
@@ -282,7 +283,7 @@ def dispatch_required_arguments(argument)
 			message = "\nIn CommandLine#dispatch_required_arguments, "
 			message += "\nargument =  " + argument
 			message += "\nsub_command =  " + sub_command.to_s
-			message += "\narity =  " + required_arguments(sub_command).to_s
+			message += "\nrequired_arguments =  " + required_arguments(sub_command).to_s
 			fail Exception.new(message)
 		end # case
 	end # if nil?
@@ -300,12 +301,12 @@ def run(&non_default_actions)
 			fail Exception.new(message)
 		elsif number_of_arguments == 0 then
 			method.call
-		elsif number_of_arguments == required_arguments(sub_command) then
+		elsif number_of_arguments == method.required_arguments then
 			dispatch_required_arguments(arguments)
-		elsif number_of_arguments < required_arguments(sub_command) then
+		elsif number_of_arguments < method.required_arguments then
 			puts 'number_of_arguments == 0 '
-		elsif required_arguments(sub_command) == 0 ||
-		(number_of_arguments % required_arguments(sub_command)) == 0 then
+		elsif method.required_arguments == 0 ||
+		(number_of_arguments % method.required_arguments) == 0 then
 			arguments.each do |argument|
 				dispatch_required_arguments(argument)
 			end # each

@@ -75,6 +75,20 @@ end # form_filename
 def jurisdiction
 	self
 end # jurisdiction
+def open_tax_solver_distribution_directories(tax_year)
+	Finance::OpenTaxSolver_directories.select do |f|
+		File.directory?(f)
+	end.sort
+end # open_tax_solver_distribution_directories
+def open_tax_solver_distribution_directory(tax_year)
+	Filing.open_tax_solver_distribution_directories(tax_year).last+'/'
+end # open_tax_solver_distribution_directory
+def ots_example_all_forms_directory(tax_year = Finance::Default_tax_year)
+	Finance::OTS_example_directories.to_s + '/' + tax_year.to_s + '/examples_and_templates/'
+end # ots_example_all_forms_directory
+def ots_user_all_forms_directory(tax_year = Finance::Default_tax_year)
+	open_tax_solver_distribution_directory(tax_year).to_s + '/examples_and_templates/'
+end # ots_user_all_forms_directory
 end # ClassMethods
 extend ClassMethods
 def jurisdiction
@@ -84,6 +98,21 @@ module Constants # constant objects of the type (e.g. default_objects)
 include DefinitionalConstants
 end # Constants
 include Constants
+def open_tax_solver_distribution_directory
+	Filing.open_tax_solver_distribution_directory(@tax_year)
+end # open_tax_solver_distribution_directory
+module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+include DefinitionalConstants
+include Constants
+#CA_current_year = CA.new(tax_year: Finance::Default_tax_year)
+#NJ_current_year = NJ.new(tax_year: Finance::Default_tax_year)
+#NY_current_year = NY.new(tax_year: Finance::Default_tax_year)
+#OH_current_year = OH.new(tax_year: Finance::Default_tax_year)
+#PA_current_year = PA.new(tax_year: Finance::Default_tax_year)
+#US_current_year = US.new(tax_year: Finance::Default_tax_year)
+#VA_current_year = VA.new(tax_year: Finance::Default_tax_year)
+end # Examples
+end # Filing
 
 class CA < Filing
 extend ClassMethods
@@ -185,7 +214,45 @@ end # Filing
 class OtsRun # forward reference definition completed below
 end #  OtsRun
 
-class Schedule # forward reference definition completed below
+class Taxpayer
+include Virtus.value_object
+  values do
+ 	attribute :name, String
+	attribute :open_tax_solver_all_form_directory, Pathname
+	attribute :state, Class, :default => CA
+end # values
+def open_tax_solver_chdir
+	(Pathname.new(@open_tax_solver_all_form_directory) + '../').cleanpath
+end # open_tax_solver_chdir
+module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+Example_taxpayer_name = ENV['USER'].to_sym
+User = Taxpayer.new(name: Example_taxpayer_name, open_tax_solver_all_form_directory: Filing.ots_user_all_forms_directory)
+Example = Taxpayer.new(name: :example, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory)
+Template = Taxpayer.new(name: :template, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory)
+end # Examples
+end # Taxpayer
+class OtsRun # forward reference definition completed below
+end #  OtsRun
+
+class Schedule
+include Virtus.value_object
+  values do
+ 	attribute :filing, Filing
+	attribute :form_prefix, String, :default => ''
+	attribute :form_suffix, String, :default => ''
+end # values
+def schedule_name
+	@form_prefix + @filing.base_form.to_s  + @form_suffix.to_s
+end # schedule_name
+def download
+	command_string = 'wget ' + @filing.web_URL_prefix + eval(@filing.path_interpolation)
+	FileIPO.new(command_string: command_string, chdir: Finance::IRS_pdf_directory).run
+#	ShellCommands.new(xfdf_script + ' ' + @ots.open_tax_solver_output.to_s)
+end # download
+module Examples
+end # Examples
+end # Schedule
+class TaxpayerSchedule # forward reference definition completed below
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 Run_fdf_to_pdf_default = lambda do |schedule, attribute|
 	FileIPO.new(input_paths: [schedule.xfdf_file], command_string: "pdftk fillout_form fill_form #{schedule.xfdf_file} output #{schedule.xfdf_file}.pdf", output_paths: [schedule.xfdf_file + '.pdf']).run
@@ -210,8 +277,8 @@ include Virtus.value_object
  	attribute :ots, OtsRun
 	attribute :form_prefix, String, :default => ''
 	attribute :form_suffix, Time, :default => ''
-	attribute :cached_fdf_to_pdf_run, FileIPO #, :default => Schedule::Run_fdf_to_pdf_default
-	attribute :cached_pdf_to_jpeg_run, FileIPO #, :default => Schedule::Run_pdf_to_jpeg_default
+	attribute :cached_fdf_to_pdf_run, FileIPO #, :default => TaxpayerSchedule::Run_fdf_to_pdf_default
+	attribute :cached_pdf_to_jpeg_run, FileIPO #, :default => TaxpayerSchedule::Run_pdf_to_jpeg_default
 end # values
 def schedule_name
 	@form_prefix + @ots.filing.jurisdiction.base_form.to_s  + @form_suffix.to_s
@@ -237,17 +304,9 @@ end # output_pdf
 def fillout_form
 	Finance::IRS_pdf_directory + '/f' + @ots.filing.jurisdiction.base_form  + @form_suffix + '--' + @ots.tax_year.to_s + '.pdf'
 end # fillout_form
-def download
-	tax_form_examples = Tax_form_examples.select do |example|
-		example[:jurisdiction] == @ots.filing.jurisdiction.to_s && example[:form] == @ots.form.to_s
-	end # each
-	xfdf_script_filename = @ots.filing.jurisdiction.to_s + '_' + @ots.form + '_' + @ots.tax_year.to_s
-	command_string = 'wget ' + tax_form_example[:web_URL_prefix] + 
-	FileIPO.new(command_string: command_string, chdir: Finance::IRS_pdf_directory).run
-#	ShellCommands.new(xfdf_script + ' ' + @ots.open_tax_solver_output.to_s)
-end # run_ots_to_fdf
-end # Schedule
 # single run of ots can produce multiple Schedules
+end # TaxpayerSchedule
+# single run of ots can produce multiple TaxpayerSchedules
 
 class OtsRun
 include Finance::DefinitionalConstants
@@ -273,7 +332,7 @@ Generated_xfdf_files_default = lambda do |ots, attribute|
 	xfdf_file_pattern = ots.generated_xfdf_files_regexp
 	Dir[ots.output_xfdf_glob].map do |xfdf_file|
 		xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
-		Schedule.new(ots: ots, form_prefix: xdf_capture.output?[:form_prefix],
+		TaxpayerSchedule.new(ots: ots, form_prefix: xdf_capture.output?[:form_prefix],
 			 form_suffix: xdf_capture.output?[:form_suffix])
 	end # map
 end # generated_xfdf_files
@@ -366,7 +425,7 @@ def generated_xfdf_files_regexp
 end # generated_xfdf_files_regexp
 def new_from_xfdf_path(ots, xfdf_file)
 		xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
-		Schedule.new(ots, xdf_capture.output?[:form_prefix], xdf_capture.output?[:form_suffix])
+		TaxpayerSchedule.new(ots, xdf_capture.output?[:form_prefix], xdf_capture.output?[:form_suffix])
 end # new_from_path
 def compact_message(string, max_length = 256)
 	splitter = "\n... "
@@ -506,17 +565,18 @@ include FileIPO::Examples
 #include Filing
 include Filing::Examples
 Example_Taxpayer=ENV['USER'].to_sym
+include Taxpayer::Examples
 #refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
 #refute_empty(OtsRun.open_tax_solver_distribution_directory)
-US1040_user = OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example_Taxpayer, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_user_all_forms_directory)
-CA540_user=OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example_Taxpayer, filing: CA_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_user_all_forms_directory)
-US1040_template=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :template, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
-CA540_template=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :template, filing: CA_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
-US1040_example=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
-#US1040_example1=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example1, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
-CA540_example=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, filing: CA_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+US1040_user = OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example_Taxpayer, filing: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: Filing.ots_user_all_forms_directory)
+CA540_user=OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example_Taxpayer, filing: CA, tax_year: Default_tax_year, open_tax_solver_all_form_directory: Filing.ots_user_all_forms_directory)
+US1040_template=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :template, filing: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory)
+CA540_template=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :template, filing: CA, tax_year: Default_tax_year, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory)
+US1040_example=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, filing: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory)
+#US1040_example1=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example1, filing: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory)
+CA540_example=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, filing: CA, tax_year: Default_tax_year, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory)
 Simplified_example = OpenTableExplorer::Finance::OtsRun.new(cached_open_tax_solver_run: Pwd, cached_run_ots_to_fdf: Pwd,
-																				taxpayer: :example, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
+																				taxpayer: :example, filing: US, tax_year: Default_tax_year, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory)
 
 Expect_to_pass=[US1040_user, CA540_user, US1040_example, CA540_example]
 Expect_to_fail=[US1040_template, CA540_template]
@@ -528,7 +588,7 @@ end #OtsRun
 # a ots run can produce multiple schedule outputs
 # mapping is in: 
 #
-class Schedule
+class TaxpayerSchedule
 module ClassMethods
 def run_ots_to_json
 	@open_tax_form_filler_ots_js="#{Open_Tax_Filler_Directory}/script/json_ots.js"
@@ -560,6 +620,6 @@ extend ClassMethods
 attr_reader :ots, :form_prefix, :form_suffix
 module Examples
 end # Examples
-end # Schedule
+end # TaxpayerSchedule
 end #Finance
 end #OpenTableExplorer
