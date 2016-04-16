@@ -1,5 +1,5 @@
-tax_form
-2016-04-03 03:30:55.117
+master
+2016-04-16 03:36:09.637
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -7,8 +7,8 @@ Run options: --seed 0
 # Running:
 
 .....EE..rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - cd>
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:108:in `execute'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:137:in `initialize'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:110:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:139:in `initialize'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:126:in `new'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:126:in `test_03'
 /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
@@ -35,8 +35,8 @@ Run options: --seed 0
 ...FE...$ echo "1 2;3 4"
 1 2;3 4
 .FE.EEE.rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - cd>
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:108:in `execute'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:137:in `initialize'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:110:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:139:in `initialize'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:122:in `new'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:122:in `test_02'
 /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
@@ -61,8 +61,8 @@ Run options: --seed 0
 /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
 /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 ..rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - cd>
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:108:in `execute'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:137:in `initialize'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:110:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:139:in `initialize'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:130:in `new'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:130:in `test_04'
 /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
@@ -87,8 +87,8 @@ Run options: --seed 0
 /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
 /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 .rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - cd>
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:108:in `execute'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:137:in `initialize'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:110:in `execute'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:139:in `initialize'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:134:in `new'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:134:in `test_05'
 /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
@@ -114,7 +114,7 @@ Run options: --seed 0
 /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
 ..EE.......
 
-Finished in 80.676073s, 0.4834 runs/s, 0.5206 assertions/s.
+Finished in 86.645085s, 0.4501 runs/s, 0.4847 assertions/s.
 
   1) Error:
 ShellCommandsTest#test_tolerate_status:
@@ -150,7 +150,7 @@ NoMethodError: undefined method `assertions' for Hello World
 
   2) Error:
 ShellCommandsTest#test_01:
-NoMethodError: undefined method `assertions' for #<ShellCommands:0x00000001b93560>
+NoMethodError: undefined method `assertions' for #<ShellCommands:0x00000002600f98>
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
