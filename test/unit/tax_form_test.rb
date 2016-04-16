@@ -196,6 +196,14 @@ def test_open_tax_solver_form_directory
 	assert_pathname_exists(Simplified_example.open_tax_solver_all_form_directory + Simplified_example.filing.jurisdiction.form_filename)
 	assert_pathname_exists(Simplified_example.open_tax_solver_form_directory)
 end #open_tax_solver_form_directory 
+def test_open_tax_solver_chdir
+end # open_tax_solver_chdir
+def test_taxpayer_basename_with_year
+	assert_equal('US_1040', US1040_user.filing.jurisdiction.form_filename)
+	assert_equal('2014', US1040_user.tax_year.to_s)
+	assert_equal('greg', US1040_user.taxpayer)
+
+end # taxpayer_basename_with_year
 def test_taxpayer_basename 
 	assert_pathname_exists(CA540_template.open_tax_solver_form_directory+'/'+CA540_template.taxpayer_basename_with_year+'.txt')
 	assert_equal('US_1040_example', US1040_example.taxpayer_basename)
