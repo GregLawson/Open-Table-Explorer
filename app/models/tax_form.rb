@@ -40,7 +40,7 @@ include DefinitionalConstants
 
 class Filing
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-Tax_form_examples = [
+Tax_form_examples = [	# hand parsed from grep of 2014 form filler scripts
 {jurisdiction: :CA, base_form: '540', tax_year: 2014, web_URL_prefix: "https://www.ftb.ca.gov/forms/", example_path: "2014/14_540.pdf", path_interpolation: "\#{tax_year}/14_\#{base_form}.pdf"  },
 {jurisdiction: :CA, base_form: '540', tax_year: 2014, web_URL_prefix: "https://www.ftb.ca.gov/forms/", example_path: "2014/14_540ca.pdf", path_interpolation: "\#{tax_year}/14_\#{base_form}\#{form_suffix}.pdf" },
 {jurisdiction: :NJ, base_form: '1040', tax_year: 2014, web_URL_prefix: "http://www.state.nj.us/treasury/taxation/pdf/current/", example_path: "1040.pdf", path_interpolation: "\#{base_form}.pdf" },
@@ -103,7 +103,7 @@ extend ClassMethods
 def self.web_URL_prefix
 	"https://www.ftb.ca.gov/forms/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'540'
 end # base_form
 def self.path_interpolation
@@ -127,10 +127,10 @@ extend ClassMethods
 def self.web_URL_prefix
 	"http://www.tax.ny.gov/pdf/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'IT201'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{@tax_year}/fillin/inc/\#{base_form.downcase}_\#{@tax_year}_fill_in.pdf"
 end # path_interpolation
 end # NY
@@ -175,13 +175,17 @@ extend ClassMethods
 def self.web_URL_prefix
 	"http://www.tax.virginia.gov/sites/tax.virginia.gov/files/taxforms/income-tax/"
 end # web_URL_prefix
-def base_form
+def self.base_form
 	'760'
 end # base_form
-def path_interpolation
+def self.path_interpolation
 	"\#{@tax_year}/\#{base_form}\#{@tax_year}_1.pdf"
 end # path_interpolation
 end # VA
+
+class OtsRun # forward reference definition completed below
+end #  OtsRun
+
 class Taxpayer
 include Virtus.value_object
   values do
@@ -202,7 +206,26 @@ end # Taxpayer
 class OtsRun # forward reference definition completed below
 end #  OtsRun
 
-class TaxpayerSchedule # forward reference definition completed below
+class Schedule
+include Virtus.value_object
+  values do
+ 	attribute :filing, Filing
+	attribute :form_prefix, String, :default => ''
+	attribute :form_suffix, String, :default => ''
+end # values
+def schedule_name
+	@form_prefix + @filing.base_form.to_s  + @form_suffix.to_s
+end # schedule_name
+def download
+	command_string = 'wget ' + @filing.web_URL_prefix + eval(@filing.path_interpolation)
+	FileIPO.new(command_string: command_string, chdir: Finance::IRS_pdf_directory).run
+#	ShellCommands.new(xfdf_script + ' ' + @ots.open_tax_solver_output.to_s)
+end # download
+module Examples
+end # Examples
+end # Schedule
+
+class TaxpayerSchedule < Schedule # forward reference definition completed below
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 Run_fdf_to_pdf_default = lambda do |schedule, attribute|
 	FileIPO.new(input_paths: [schedule.xfdf_file], command_string: "pdftk fillout_form fill_form #{schedule.xfdf_file} output #{schedule.xfdf_file}.pdf", output_paths: [schedule.xfdf_file + '.pdf']).run
@@ -276,16 +299,6 @@ Ots_run_default = lambda do |ots, attribute|
 	IO.binwrite(ots.open_tax_solver_sysout, open_tax_solver_run.cached_run.output)
 	open_tax_solver_run
 end # Ots_run_default
-Run_ots_to_fdf_default = lambda do |ots, attribute|
-
-# misses ./bin/fill_form_CA_540_2014 examples_and_templates/CA_540/CA_540_2014_greg_out.txt
-# probably year in filename for state but not federal.
-	xfdf_script_filename = ots.jurisdiction.to_s + '_' + ots.form + '_' + ots.tax_year.to_s
-	xfdf_script = '/home/greg/Desktop/src/OpenTaxSolver2014_12.01-forms/bin/fill_form_' + ots.jurisdiction.to_s + '_' + ots.form + '_' + ots.tax_year.to_s
-	FileIPO.new(input_paths: [xfdf_script, ots.open_tax_solver_output],
-	 command_string: xfdf_script + ' ' + ots.open_tax_solver_output.to_s, chdir: Finance::IRS_pdf_directory).run
-#	ShellCommands.new(xfdf_script + ' ' + ots.open_tax_solver_output.to_s)
-end # run_ots_to_fdf
 Generated_xfdf_files_default = lambda do |ots, attribute|
 	xfdf_file_pattern = ots.generated_xfdf_files_regexp
 	Dir[ots.output_xfdf_glob].map do |xfdf_file|
@@ -322,7 +335,7 @@ def ots_user_all_forms_directory(tax_year = Finance::Default_tax_year)
 	open_tax_solver_distribution_directory(tax_year).to_s + '/examples_and_templates/'
 end # ots_user_all_forms_directory
 def logical_primary_key
-	[:taxpayer, :form, :jurisdiction, :tax_year, :open_tax_solver_all_form_directory]
+	[:taxpayer, :base_form, :jurisdiction, :tax_year, :open_tax_solver_all_form_directory]
 end # logical_primary_key
 end # DefinitionalClassMethods
 extend DefinitionalClassMethods
@@ -334,7 +347,6 @@ include Virtus.value_object
 	attribute :tax_year, Fixnum, :default => Finance::Default_tax_year
 	attribute :open_tax_solver_all_form_directory, Pathname
 	attribute :cached_open_tax_solver_run, ShellCommands, :default => OtsRun::Ots_run_default
-	attribute :cached_run_ots_to_fdf, ShellCommands, :default => OtsRun::Run_ots_to_fdf_default
 	attribute :cached_schedules, Array, :default => OtsRun::Generated_xfdf_files_default
 	attribute :errors, Hash, :default => OtsRun::Errors_default
 end # values
@@ -575,6 +587,46 @@ end #run_json_to_fdf
 end #ClassMethods
 extend ClassMethods
 attr_reader :ots, :form_prefix, :form_suffix
+def schedule_name
+	@form_prefix + @ots.form.to_s  + @form_suffix.to_s
+end # schedule_name
+def matching_pdf_filename
+	schedule_name + '--' + @ots.tax_year.to_s+ '.pdf'
+end # 
+def matching_pdf_file
+	IRS_pdf_directory + matching_pdf_filename
+end # 
+def matching_pdf_filled_in_file
+	IRS_pdf_directory + matching_pdf_filename
+end # 
+def base_path
+	@ots.open_tax_solver_form_directory + '/' + @ots.taxpayer_basename + '_' + schedule_name
+end # base_path
+def xfdf_file
+	base_path + '.xfdf'
+end # xfdf_file
+def output_pdf
+	base_path + '.pdf'
+end # output_pdf
+def fillout_form
+	Finance::IRS_pdf_directory + '/f' + @ots.form  + @form_suffix + '--' + @ots.tax_year.to_s + '.pdf'
+end # fillout_form
+def run_fdf_to_pdf
+	FileIPO.new(input_paths: [xfdf_file], command_string: "pdftk fillout_form fill_form #{xfdf_file} output #{xfdf_file}.pdf", output_paths: [xfdf_file + '.pdf']).run
+#		ShellCommands.new("pdftk fillout_form fill_form #{xfdf_file} output #{xfdf_file}.pdf")
+	self
+end # run_fdf_to_pdf
+def run_pdf_to_jpeg
+	output_pdf_pathname=Pathname.new(File.expand_path(output_pdf))
+	cleanpath_name = output_pdf_pathname.cleanpath
+	clean_directory = Pathname.new(File.expand_path(@ots.open_tax_solver_form_directory)).cleanpath
+	output_pdf = cleanpath_name.relative_path_from(clean_directory)
+	@pdf_to_jpeg_run = FileIPO.new(input_paths: [output_pdf], command_string: "pdftoppm -jpeg  #{output_pdf} #{@ots.taxpayer_basename_with_year}").run
+#	@pdf_to_jpeg_run = ShellCommands.new("pdftoppm -jpeg  #{output_pdf} #{@ots.taxpayer_basename_with_year}", :chdir=>@ots.open_tax_solver_form_directory)
+	@display_jpeg_run = ShellCommands.new("display  Federal_f1040-1.jpg") if $VERBOSE
+	@display_jpeg_run.assert_post_conditions if $VERBOSE
+	self
+end #run_pdf_to_jpeg
 module Examples
 end # Examples
 end # TaxpayerSchedule

@@ -103,14 +103,6 @@ def test_Ots_run_default
 	assert_equal(1, Ots_run_default.call(US1040_template, nil).errors[:exitstatus], US1040_template.open_tax_solver_errors.inspect)
 	assert_equal(1, Ots_run_default.call(CA540_template, nil).errors[:exitstatus], CA540_template.open_tax_solver_errors.inspect)
 end # Ots_run_default
-def test_Run_ots_to_fdf_default
-	assert_equal(0, Run_ots_to_fdf_default.call(US1040_user, nil).errors[:exitstatus])
-	assert_equal(0, Run_ots_to_fdf_default.call(CA540_user, nil).errors[:exitstatus])
-	assert_equal(0, Run_ots_to_fdf_default.call(US1040_example, nil).errors[:exitstatus])
-	assert_equal(0, Run_ots_to_fdf_default.call(CA540_example, nil).errors[:exitstatus])
-	assert_equal(0, Run_ots_to_fdf_default.call(US1040_template, nil).errors[:exitstatus])
-	assert_equal(0, Run_ots_to_fdf_default.call(CA540_template, nil).errors[:exitstatus])
-end # run_ots_to_fdf
 def test_Generated_xfdf_files_default
 	assert_empty(Generated_xfdf_files_default.call(US1040_template, nil), US1040_template.inspect)
 	assert_empty(Generated_xfdf_files_default.call(CA540_template, nil), US1040_template.inspect)
@@ -127,7 +119,6 @@ def test_Errors_default
 	ots = US1040_example
 	errors = {}
 	errors[:open_tax_solver] = ots.open_tax_solver_errors(ots.cached_open_tax_solver_run)
-	errors[:run_ots_to_fdf] = ots.cached_run_ots_to_fdf.errors
 	refute_empty(ots.cached_schedules, ots.inspect)
 	errors[:schedules] = Generated_xfdf_files_default.call(ots, nil).map do |schedule| 
 		{schedule => TaxpayerSchedule::Run_pdf_to_jpeg_default.call(schedule, nil).errors}
