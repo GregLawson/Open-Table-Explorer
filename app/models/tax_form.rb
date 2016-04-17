@@ -236,7 +236,7 @@ include DefinitionalConstants
 include Virtus.value_object
   values do
  	attribute :filing, Filing
-#	attribute :form, String, :default => Form_default
+	attribute :form, String #, :default => Form_default
 	attribute :form_prefix, String, :default => ''
 	attribute :form_suffix, String, :default => ''
 end # values
