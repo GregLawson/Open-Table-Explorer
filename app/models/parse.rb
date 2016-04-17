@@ -179,8 +179,11 @@ Newline_Terminated_String=Newline_Delimited_String+"\n"
 #Branch_regexp = /[* ]/.capture(:current) * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_regexp = /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_line_regexp = Branch_regexp * "\n"
+Current_variable = GenericVariable .new(name: 'current')
 Branch_variable = GenericVariable .new(name: 'branch')
+Current_column = GenericColumn.new(regexp_index: 0, variable: Current_variable)
 Branch_column = GenericColumn.new(regexp_index: 0, variable: Branch_variable)
+Branch_column_value = {Branch_column => '1'}
 Branch_column_answer = {Branch_column => '1'}
 Branch_answer = {:branch => '1'}
 LINE=/[^\n]*/.capture(:line)
@@ -188,10 +191,12 @@ Line_terminator=/\n/.capture(:terminator)
 Terminated_line=(LINE*Line_terminator).group
 Hash_answer={:line=>"* 1", :terminator=>"\n"}
 Array_answer=[{:line=>"* 1", :terminator=>"\n"}, {:line=>"  2", :terminator=>"\n"}]
+Branch_hashes = [{:current => '*', :branch=>"1"}, {:current => ' ', :branch=>"2"}]
 
 WORD=/([^\s]*)/.capture(:word)
 end # Examples
 end # Capture
+
 # encapsulates the difference between parsing from MatchData and from Array#split
 class RawCapture < Capture
 def initialize(string, regexp)
@@ -475,6 +480,9 @@ end # capture_in
 def capture_end(pattern, capture_class = MatchCapture)
 	capture?(pattern * Regexp::End_string, capture_class)
 end # capture_in
+def capture_many(pattern)
+	capture?(pattern, SplitCapture)
+end # capture_many
 def parse(regexp)
 	regexp.enumerate(:map) do |reg|
 		capture?(reg).enumerate(:map) {|c| c.output?}

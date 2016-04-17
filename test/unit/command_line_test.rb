@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'test_environment'
+require_relative '../../app/models/test_environment_test_unit.rb'
 #require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../assertions/command_line_assertions.rb'
 require_relative '../../app/models/unit_maturity.rb'
@@ -61,7 +61,7 @@ def test_DefinitionalConstants
 	else
 		puts "No arguments"
 	end # if
-	assert_equal(Command, :command_line)
+#	assert_equal(Command, :command_line)
 	assert_equal(Script_class, CommandLine)
 	assert_equal(Script_command_line.unit_class, Script_class)
 end # DefinitionalConstants
@@ -78,10 +78,6 @@ def test_initialize
 	refute_nil(No_args.unit_class)
 	refute_nil(Script_command_line.unit_class)
 end #initialize
-def test_to_s
-	refute_equal('', Test_unit_commandline.to_s)
-	assert_match('', Test_unit_commandline.to_s)
-end # to_s
 def test_arguments
 end # arguments
 def test_number_of_arguments
@@ -184,7 +180,7 @@ def test_equal
 end # ==
 def test_to_s
 	refute_equal('', Test_unit_commandline.to_s)
-	assert_match('', Test_unit_commandline.to_s)
+	assert_match(/argv/, Test_unit_commandline.to_s)
 end # to_s
 def test_executable_method?
 	refute_nil(Script_command_line.executable_object)

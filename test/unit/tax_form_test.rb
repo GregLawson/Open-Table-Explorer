@@ -95,8 +95,19 @@ class ScheduleTest < TestCase
 include OpenTableExplorer::Finance
 include OpenTableExplorer::Finance::DefinitionalConstants
 extend OpenTableExplorer::Finance::DefinitionalConstants
-include OpenTableExplorer::Finance::OtsRun::Examples
+include OpenTableExplorer::Finance::Schedule::DefinitionalConstants
+include OpenTableExplorer::Finance::Schedule::Examples
 include OpenTableExplorer::Finance::OtsTaxpayerSchedule::Examples
+def test_Schedule_DefinitionalConstants
+	assert_equal('1040', Form_default.call(US_1040, nil), US_1040.inspect)
+	assert_equal('1040', Form_default.call(US_8889, nil), US_8889.inspect)
+#	assert_equal('1040', US_1040.form, US_1040.inspect)
+#	assert_equal('8889', US_8889.form, US_8889.inspect)
+	assert_equal(US_current_year, US_1040.filing)
+	assert_equal(Filing::US, US_1040.filing.jurisdiction)
+	assert_equal('1040', US_1040.filing.jurisdiction.base_form)
+
+end # DefinitionalConstants
 def test_schedule_name
 	assert_equal('f1040', US1040_example_schedule.schedule_name)
 end # schedule_name

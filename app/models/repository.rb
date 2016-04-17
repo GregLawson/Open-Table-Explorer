@@ -219,16 +219,25 @@ end #corruption
 def current_branch_name?
 	@grit_repo.head.name.to_sym
 end #current_branch_name
-def diff_branch_files(less_mature_branch, options = '--summary')
-	git_command('git diff ' + options +' ' + current_branch_name?.to_s + '..' + less_mature_branch.to_s + ' -- {app,test,script}')
-end # diff_files
-def pull_differences(less_mature_branch)
-	branch_file_changes = diff_branch_files(less_mature_branch, '--summary')
-	branch_num_line_changes = diff_branch_files(less_mature_branch, '--numstat')
+def diff_branch_files(more_mature_branch, options = '--summary')
+	git_command('diff -z ' + options +' ' + more_mature_branch.to_s + '..'  + current_branch_name?.to_s + ' -- *.rb')
+end # diff_branch_files
+def pull_differences(more_mature_branch)
+	branch_file_changes = diff_branch_files(more_mature_branch, '--summary').output
+	branch_num_line_changes = diff_branch_files(more_mature_branch, '--numstat').output
 end # pull
-def merge_up_discard_files(less_mature_branch)
-	merge_up_file_changes = diff_branch_files(less_mature_branch, '--summary')
+def merge_up_discard_files(more_mature_branch)
+	merge_up_file_changes = diff_branch_files(more_mature_branch, '--summary').output
 end # pull
+def subset_changes(more_mature_branch)
+	subset_change_files = diff_branch_files(more_mature_branch, options = '--numstat').output
+	'|grep -v "^0"'
+	numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/ * /[0-9]+/.capture(:additions) * /\s+/ * FilePattern::Relative_pathname_regexp.capture(:path)
+	subset_change_files.capture_many(numstat_regexp).column_output.select do |capture|
+		true # capture[:deletions] = '0'
+	end # select
+end # subset_changes
+
 def status(pathspec = nil, options = '--untracked-files=all --ignored')
 	if pathspec.nil? then
 		pathspec_string = ''
@@ -258,6 +267,7 @@ def status_descriptions(working_file_status)
 	# AA unmerged, both added
 	# UU unmerged, both modified
 	when 'UU', ' M', 'M ', 'MM', 'A ', 'AA' then
+		'merge modifications'
 	 end # case
 end # status_descriptions
 def something_to_commit?
@@ -282,23 +292,6 @@ end #force_change
 def revert_changes
 	git_command('reset --hard')
 end #revert_changes
-def merge_conflict_files?
-	unmerged_files = git_command('status --porcelain --untracked-files=no').output
-	ret=[]
-	if !unmerged_files.empty? then
-		unmerged_files.split("\n").map do |line|
-			file=line[3..-1]
-			ret << {:conflict => line[0..1], :file => file}
-			puts 'ruby script/workflow.rb --test '+file
-			rm_orig=shell_command('rm '+file.to_s+'.BASE.*')
-			rm_orig=shell_command('rm '+file.to_s+'.BACKUP.*')
-			rm_orig=shell_command('rm '+file.to_s+'.LOCAL.*')
-			rm_orig=shell_command('rm '+file.to_s+'.REMOTE.*')
-			rm_orig=shell_command('rm '+file.to_s+'.orig')
-		end #map
-	end #if
-	ret
-end #merge_conflict_files?
 def git_parse(command, pattern)
 	output=git_command(command).output #.assert_post_conditions
 	output.parse(pattern)

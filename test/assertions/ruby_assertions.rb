@@ -73,8 +73,8 @@ end # default_message
 end # Kernel
 
 module RubyAssertions
-include AssertionsModule
-extend AssertionsModule
+#include AssertionsModule
+#extend AssertionsModule
 # returns to ruby 1.8 behavior
 =begin
 def build_message(head, template=nil, *arguments)

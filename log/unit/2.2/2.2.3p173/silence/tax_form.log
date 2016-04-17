@@ -1,15 +1,15 @@
 master
-2016-04-17 07:11:49.176
+2016-04-17 12:28:36.699
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test
 Started
-............................................
+.............................................
 
-Finished in 1.609244075 seconds.
+Finished in 1.605168186 seconds.
 ------
-44 tests, 328 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+45 tests, 333 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-27.34 tests/s, 203.82 assertions/s
+28.03 tests/s, 207.45 assertions/s
 

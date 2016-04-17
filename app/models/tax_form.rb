@@ -227,9 +227,16 @@ class OtsRun # forward reference definition completed below
 end #  OtsRun
 
 class Schedule
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+Form_default = lambda do |schedule, attribute|
+	schedule.filing.jurisdiction.base_form
+end # Filing_default
+end # DefinitionalConstants
+include DefinitionalConstants
 include Virtus.value_object
   values do
  	attribute :filing, Filing
+#	attribute :form, String, :default => Form_default
 	attribute :form_prefix, String, :default => ''
 	attribute :form_suffix, String, :default => ''
 end # values
@@ -241,16 +248,11 @@ def download
 	FileIPO.new(command_string: command_string, chdir: Finance::IRS_pdf_directory).run
 end # download
 module Examples
+include Filing::Examples
+US_1040 = Schedule.new(filing: US_current_year, prefix: 'f')
+US_8889 = Schedule.new(filing: US_current_year, form: '8889', prefix: 'f')
 end # Examples
 end # Schedule
-
-class OtsTaxpayerFiling
-include Virtus.value_object
-  values do
- 	attribute :taxpayer, OtsTaxpayer
-	attribute :filing, Filing
-end # values
-end # OtsTaxpayerFiling
 
 class OtsTaxpayerSchedule < Schedule # forward reference definition completed below
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)

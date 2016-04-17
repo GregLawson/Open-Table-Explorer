@@ -1,6 +1,6 @@
 ###########################################################################
-#    Copyright (C) 2012-2015 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2012-2016 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -11,7 +11,7 @@ class RepositoryTest < TestCase
 #include DefaultTests
 include Repository::Examples
 def setup
-	@temp_repo = Repository.create_test_repository(Empty_Repo_path)
+	@temp_repo = Repository.create_test_repository
 end # setup
 def test_recursive_delete
 end # recursive_delete
@@ -23,7 +23,7 @@ def test_Constants
 	assert_pathname_exists(Root_directory)
 	assert_pathname_exists(Source)
 	assert_equal(FilePattern.project_root_dir?(__FILE__), FilePattern.project_root_dir?($0))
-	assert_equal(FilePattern.project_root_dir?, Root_directory)
+#	assert_equal(FilePattern.project_root_dir?, Root_directory)
 #	message="SELF_code_Repo=#{SELF_code_Repo.inspect}"
 #	message+="\nThis_code_repository=#{This_code_repository.inspect}"
 #	message+="\nThis_code_repository.path=#{This_code_repository.path.inspect}"
@@ -40,7 +40,7 @@ def test_Constants
 #	assert_equal(SELF_code_Repo, This_code_repository, message)
 end #Constants
 def test_Repository_git_command
-	git_execution=Repository.git_command('branch', Empty_Repo_path)
+	git_execution=Repository.git_command('branch', @temp_repo.path)
 #	git_execution=Repository.git_command('branch --list --contains HEAD', Unique_repository_directory_pathname)
 	git_execution #.assert_post_conditions
 end #git_command
@@ -179,10 +179,59 @@ def test_current_branch_name?
 #	assert_includes(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
 
 end #current_branch_name
+def test_diff_branch_files
+	diff = This_code_repository.diff_branch_files(This_code_repository.current_branch_name?, '--numstat').output
+	assert_empty(diff)
+	diff = ShellCommands.new('pwd').output
+	refute_empty(diff)
+	diff = This_code_repository.git_command('branch').output
+	refute_empty(diff)
+	refute_empty(ShellCommands.new('git diff').output)
+	refute_empty(ShellCommands.new('git diff -z ').output)
+	refute_empty(ShellCommands.new('git diff -z --numstat master..testing ').output)
+	refute_empty(ShellCommands.new('git diff -z --numstat master..testing -- ').output)
+	refute_empty(ShellCommands.new('git diff -z --numstat master..testing -- *.rb').output)
+	diff = This_code_repository.git_command('diff -z --numstat master..testing -- *.rb').output
+	refute_empty(diff)
+	diff = This_code_repository.diff_branch_files(:master)
+	refute_empty(diff.output, diff.inspect)
+end # diff_branch_files
+def test_pull_differences
+	diff = This_code_repository.pull_differences(This_code_repository.current_branch_name?)
+	assert_empty(diff)
+	diff = This_code_repository.pull_differences(:master)
+	refute_empty(diff, diff.inspect)
+end # pull
+def test_merge_up_discard_files
+	diff = This_code_repository.merge_up_discard_files(This_code_repository.current_branch_name?)
+	assert_empty(diff)
+	diff = This_code_repository.merge_up_discard_files(:master)
+	refute_empty(diff, diff.inspect)
+end # pull
+def test_subset_changes
+	subset_change_files_run = This_code_repository.diff_branch_files(:master, '--numstat')
+	assert(subset_change_files_run.success?, subset_change_files_run.inspect)
+	refute_equal('', subset_change_files_run.output)
+	assert_equal('', subset_change_files_run.errors)
+	assert_equal(0, subset_change_files_run.process_status.exitstatus)
+	assert_instance_of(ShellCommands, subset_change_files_run)
+	subset_change_files = subset_change_files_run.output
+	
+	refute_empty(subset_change_files, 'subset_change_files_run = ' + subset_change_files_run.inspect(true))
+	numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/ * /[0-9]+/.capture(:additions) 
+	numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/
+	numstat_regexp = /[0-9]+/.capture(:deletions)
+	numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/ * /[0-9]+/.capture(:additions) * /\s+/ * FilePattern::Relative_pathname_regexp.capture(:path)
+	numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/ * /[0-9]+/.capture(:additions) * /\s+/ 
+	capture_many = subset_change_files.capture_many(numstat_regexp)
+	assert(capture_many.success?, capture_many.inspect)
+	assert_instance_of(SplitCapture, capture_many)
+	assert_instance_of(Hash, capture_many.named_hash)
+end # subset_changes
 def test_status
 	This_code_repository.status.each do |status|
 		assert_nil(status[:file].index("\u0000"), status.inspect)
-		assert(File.exists?(status[:file]), status.inspect)
+		assert(File.exists?(status[:file]) == (status[:work_tree] != :deleted), status.inspect)
 	end # each
 end # status
 def test_status_descriptions
@@ -196,20 +245,22 @@ def test_edited_superset_of_testing
 #?	assert_equal('', This_code_repository.edited_superset_of_testing.assert_post_conditions.output)
 end #edited_superset_of_testing
 def test_force_change
-	@temp_repo.assert_nothing_to_commit
+	empty_Repo = Repository.create_test_repository(Empty_Repo_path)
+	empty_Repo.assert_nothing_to_commit
 	IO.write(Modified_path, README_start_text+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+"\n") # timestamp make file unique
 	refute_equal(README_start_text, IO.read(Modified_path))
-	@temp_repo.revert_changes
-	@temp_repo.force_change
-	refute_equal({}, @temp_repo.grit_repo.status.changed)
-	@temp_repo.assert_something_to_commit
-	refute_equal({}, @temp_repo.grit_repo.status.changed)
-	@temp_repo.git_command('add README')
-	refute_equal({}, @temp_repo.grit_repo.status.changed)
-	assert(@temp_repo.something_to_commit?)
-#	@temp_repo.git_command('commit -m "timestamped commit of README"')
-	@temp_repo.revert_changes #.assert_post_conditions
-	@temp_repo.assert_nothing_to_commit
+	empty_Repo.revert_changes
+	empty_Repo.force_change
+	refute_equal({}, empty_Repo.grit_repo.status.changed)
+	empty_Repo.assert_something_to_commit
+	refute_equal({}, empty_Repo.grit_repo.status.changed)
+	empty_Repo.git_command('add README')
+	refute_equal({}, empty_Repo.grit_repo.status.changed)
+	assert(empty_Repo.something_to_commit?)
+#	empty_Repo.git_command('commit -m "timestamped commit of README"')
+	empty_Repo.revert_changes #.assert_post_conditions
+	empty_Repo.assert_nothing_to_commit
+	Repository.delete_existing(Unique_repository_directory_pathname)
 end #force_change
 def test_revert_changes
 	@temp_repo.revert_changes #.assert_post_conditions
