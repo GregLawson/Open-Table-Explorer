@@ -6,6 +6,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../app/models/script_environment_no_assertions.rb'
 require_relative '../app/models/unit.rb' # before command_line
 require_relative "../app/models/#{RailsishRubyUnit::Executable.model_basename}"
 class CommandLine  #< Command

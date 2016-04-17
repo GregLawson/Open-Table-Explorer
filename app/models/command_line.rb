@@ -238,43 +238,13 @@ def method_exception_string(method_name)
 		message += candidate_commands_strings.join("\n")
 #		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
 end # method_exception_string
-def arity(method_name)
-	executable_method = executable_method?(method_name)
-	ret = if executable_method.nil? then
-		message = "#{method_name} is not an instance method of #{executable_object.class.inspect}"
-		message = candidate_commands_strings.join("\n")
-#		message += "\n candidate_commands = " + candidate_commands.inspect
-#		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
-		fail Exception.new(message)
-	else
-		executable_method.arity
-	end # if
-end # arity
-def default_arguments?(method_name)
-	if arity(method_name) < 0 then
-		true
-	else
-		false
-	end # if
-
-
-end # default_arguments
-def required_arguments(method_name)
-
-	method_arity = arity(method_name)
-	if default_arguments?(method_name) then
-		-(method_arity+1)
-	else
-		method_arity
-	end # if
-end # required_arguments
 def dispatch_required_arguments(argument)
 	method = executable_method?(sub_command, argument)
 	if method.nil? then
 		message = method_exception_string(sub_command)
 		fail Exception.new(message)
 	else
-		case required_arguments(sub_command)
+		case method.required_arguments
 		when 0 then
 			method.call
 		when 1 then
@@ -283,7 +253,7 @@ def dispatch_required_arguments(argument)
 			message = "\nIn CommandLine#dispatch_required_arguments, "
 			message += "\nargument =  " + argument
 			message += "\nsub_command =  " + sub_command.to_s
-			message += "\nrequired_arguments =  " + required_arguments(sub_command).to_s
+			message += "\nrequired_arguments =  " + method.required_arguments.to_s
 			fail Exception.new(message)
 		end # case
 	end # if nil?

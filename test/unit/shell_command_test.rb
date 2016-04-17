@@ -5,7 +5,6 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../test/assertions/shell_command_assertions.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../app/models/default_test_case.rb'
