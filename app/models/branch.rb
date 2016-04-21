@@ -60,7 +60,7 @@ def new_from_ref(reflog_line)
 	end # if
 end # new_from_ref
 def reflog_command_string(filename, repository, range = 0..10)
-	'reflog  --all --skip=' + range.first.to_s + ' --max-count=' + range.last.to_s + ' --pretty=format:%gd,%gD,%h,%aD -- ' + filename
+	'reflog  --all --skip=' + range.first.to_s + ' --max-count=' + range.last.to_s + ' --pretty=format:%gd,%gD,%h,%aD -- ' + filename.to_s
 end # reflog_command_string
 def reflog_command_lines(filename, repository, range = 0..10)
 	repository.git_command(reflog_command_string(filename, repository, range)).output.split("\n")

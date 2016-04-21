@@ -1,18 +1,18 @@
 passed
-2016-02-25 04:02:28.566
-ruby -v -W0 test/unit/branch_test.rb
+2016-04-21 04:08:43.715
+ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-......#<LimitCapture:0x00000002e97e40 @string="* master\n  passed\n", @regexp=/[* ](?<branch>[a-z0-9A-Z_-]+)\n/, @length_hash_captures=1, @raw_captures=["*", "master", " ", "passed"]>
-#<LimitCapture:0x00000002e97788 @string="* master\n  passed\n", @regexp=/(?:[* ] (?<branch>[-a-z0-9A-Z_]+)\n)+/, @length_hash_captures=1, @raw_captures=["", "passed"]>
-#<LimitCapture:0x00000002e97120 @string="* master\n  passed\n", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
-#<LimitCapture:0x00000002e969f0 @string="* master\n  passed\n", @regexp=/^[* ] (?<branch>[a-z0-9A-Z_-]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
+......#<LimitCapture:0x000000035ccb70 @string="* master\n  passed\n", @regexp=/[* ](?<branch>[a-z0-9A-Z_-]+)\n/, @length_hash_captures=1, @raw_captures=["*", "master", " ", "passed"]>
+#<LimitCapture:0x000000035cc468 @string="* master\n  passed\n", @regexp=/(?:[* ] (?<branch>[-a-z0-9A-Z_]+)\n)+/, @length_hash_captures=1, @raw_captures=["", "passed"]>
+#<LimitCapture:0x000000035c3d68 @string="* master\n  passed\n", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
+#<LimitCapture:0x000000035c32a0 @string="* master\n  passed\n", @regexp=/^[* ] (?<branch>[a-z0-9A-Z_-]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
 ...................
 
-Finished in 2.159286s, 11.5779 runs/s, 35.6599 assertions/s.
+Finished in 2.206437s, 11.3305 runs/s, 33.5382 assertions/s.
 
-25 runs, 77 assertions, 0 failures, 0 errors, 0 skips
+25 runs, 74 assertions, 0 failures, 0 errors, 0 skips
 
