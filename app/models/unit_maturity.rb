@@ -145,7 +145,7 @@ def get_error_score!
 	else
 		@cached_error_score
 	end # if
-end # error_score
+end # get_error_score!
 def deserving_branch
 	if File.exists?(@test_executable.argument_path) then
 		deserving_commit_to_branch!
@@ -241,7 +241,7 @@ end # initialize
 def diff_command?(filename, branch_index)
 	fail filename + ' does not exist.' if !File.exists?(filename)
 	branch_string = Branch.branch_symbol?(branch_index).to_s
-	git_command = "diff --summary --shortstat #{branch_string} -- " + filename
+	git_command = "diff --summary --shortstat #{branch_string} -- " + filename.to_s
 	diff_run = @repository.git_command(git_command)
 end # diff_command?
 # What happens to non-existant versions? returns nil Are they different? 

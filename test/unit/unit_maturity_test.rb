@@ -49,7 +49,7 @@ def test_log_path?
 #	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', MinimalMaturity..est_executable.log_path?)
 end # log_path?
 def test_file_bug_reports
-	header,errors,summary=TestMaturity.parse_log_file(MinimalMaturity.test_executable.log_path?)
+	header,errors,summary=TestMaturity.parse_log_file(MinimalMaturity.test_executable.log_path?(nil))
 	headerArray=header.split("\n")
 	assert_instance_of(Array, headerArray)
 	sysout=headerArray[0..-2]
@@ -68,7 +68,7 @@ def test_file_bug_reports
 	assert_operator(run_time, :>=, 0)
 end #file_bug_reports
 def test_parse_log_file
-	log_file = MinimalMaturity.test_executable.log_path?
+	log_file = MinimalMaturity.test_executable.log_path?(nil)
 	blocks=IO.read(log_file).split("\n\n")# delimited by multiple successive newlines
 #	puts "blocks='#{blocks.inspect}'"
 	header= blocks[0]
@@ -102,7 +102,7 @@ end # summarize
 def test_parse_summary
 end #parse_summary
 def test_parse_header
-	header,errors,summary = TestMaturity.parse_log_file(MinimalMaturity.test_executable.log_path?)
+	header,errors,summary = TestMaturity.parse_log_file(MinimalMaturity.test_executable.log_path?(nil))
 	assert_operator(header.size,:>,0)
 	headerArray=header.split("\n")
 	assert_instance_of(Array, headerArray)
@@ -136,7 +136,7 @@ def test_run
 #	assert_match(parenthetical_date_pattern * bracketed_os, TestRun.new(test_command: 'ruby', options: '--version').run.output)
 #	assert_match(version_pattern, TestRun.new(test_command: 'ruby', options: '--version').run.output)
 #	output = TestRun.new(test_command: 'ruby', singular_table: 'unit').run.assert_post_conditions.output
-	unit_run = TestRun.new(test_command: 'ruby', singular_table: 'unit')
+#	unit_run = TestRun.new(test_command: 'ruby', singular_table: 'unit')
 #	assert_equal(0, unit_run.process_status, unit_run.inspect)
 #	unit_run.assert_post_conditions
 #	output = unit_run.output
@@ -198,8 +198,7 @@ def test_compare
 	assert_equal(-1, MinimalMaturity.get_error_score! <=> MinimalMaturity3.get_error_score!)
 	assert_equal(-1, MinimalMaturity <=> MinimalMaturity3)
 	assert_equal(+1, MinimalMaturity3 <=> MinimalMaturity) # symmetric
-	assert_equal(true, ExecutableMaturity.test_executable.testable?)
-	assert_equal(false, ExecutableMaturity.test_executable.testable?(:recursion_danger))
+	assert_equal(false, ExecutableMaturity.test_executable.testable?)
 	
 end # <=>
 def test_error_classification!
