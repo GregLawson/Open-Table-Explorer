@@ -291,7 +291,7 @@ def bracketing_versions?(filename, current_index)
 	right_index = scan_verions?(filename, current_index + 1..Branch::Last_slot_index, :first)
 	[left_index, right_index]
 end # bracketing_versions?
-require_relative '../../app/models/assertions.rb'
+#require_relative '../../app/models/assertions.rb'
 module Examples
 include Constants
 File_not_in_oldest_branch = 'test/long_test/repository_test.rb'
