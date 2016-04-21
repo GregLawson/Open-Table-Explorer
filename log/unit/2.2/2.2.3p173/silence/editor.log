@@ -1,24 +1,18 @@
 passed
-2016-04-21 03:14:40.721
+2016-04-21 04:05:46.721
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-.......F...F...
+.......F.......
 
-Finished in 1.460382s, 10.2713 runs/s, 26.7053 assertions/s.
+Finished in 1.443365s, 10.3924 runs/s, 27.7130 assertions/s.
 
   1) Failure:
-NewTestClass#test_test_files [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb:57]:
+NewTestClass#test_test_files [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb:59]:
 Expected [] to not be empty.
 
-
-  2) Failure:
-NewTestClass#test_initializes [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb:25]:
-TestEditor.test_executable.unit=#<Unit model_basename=:editor project_root_dir="/home/greg/Desktop/src/Open-Table-Explorer/" patterns=[{:suffix=>".rb", :name=>:model, :prefix=>"app/models/", :example_file=>"/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb", :generate=>true}, {:suffix=>"_test.rb", :name=>:unit, :prefix=>"test/unit/", :example_file=>"/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb", :generate=>true}, {:suffix=>".rb", :name=>:script, :prefix=>"script/", :example_file=>"script/work_flow.rb", :generate=>true}, {:suffix=>"_test.rb", :name=>:integration_test, :prefix=>"test/integration/", :example_file=>"test/integration/release_test.rb", :generate=>true}, {:suffix=>"_test.rb", :name=>:long_test, :prefix=>"test/long_test/", :example_file=>"test/long_test/interactive_bottleneck_test.rb", :generate=>true}, {:suffix=>"_assertions.rb", :name=>:assertions, :prefix=>"test/assertions/", :example_file=>"test/assertions/repository_assertions.rb", :generate=>true}, {:suffix=>"_assertions_test.rb", :name=>:assertions_test, :prefix=>"test/unit/", :example_file=>"test/unit/repository_assertions_test.rb", :generate=>true}, {:suffix=>".log", :name=>:unit_log, :prefix=>"log/unit/", :example_file=>"log/unit/2.2/2.2.3p173/silence/repository.log", :generate=>false}, {:suffix=>".log", :name=>:assertions_test_log, :prefix=>"log/assertions_test/", :example_file=>"log/assertions_test/2.2/2.2.3p173/silence/minimal4.log", :generate=>false}, {:suffix=>".log", :name=>:long_log, :prefix=>"log/long_test/", :example_file=>"log/long_test/2.2/2.2.3p173/silence/interactive_bottleneck.log", :generate=>false}, {:suffix=>"", :name=>:data_sources_dir, :prefix=>"test/data_sources/", :example_file=>"test/data_sources/tax_form/2014/examples_and_templates/CA_540/CA_540_2014_example.txt", :generate=>false}, {:suffix=>".log", :name=>:integration_log, :prefix=>"log/integration/", :example_file=>"log/integration/2.2/2.2.3p173/silence/repository.log", :generate=>false}]>.
-Expected [#<Pathname:/home/greg/Desktop/src/Open-Table-Explorer/app/models/editor.rb>, #<Pathname:/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb>, #<Pathname:/home/greg/Desktop/src/Open-Table-Explorer/script/editor.rb>] to include "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb".
-
-15 runs, 39 assertions, 2 failures, 0 errors, 0 skips
+15 runs, 40 assertions, 1 failures, 0 errors, 0 skips
 

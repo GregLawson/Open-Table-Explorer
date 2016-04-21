@@ -13,7 +13,7 @@ scripting_executable = TestExecutable.new_from_path($0)
 require_relative "../app/models/#{scripting_executable.unit.model_basename}"
 script_class = RailsishRubyUnit::Executable.model_class?
 
-script = CommandLine.new($0, script_class)
+script = CommandLine.new(executable: $0, unit_class: script_class)
 pp ARGV if $VERBOSE
 pp script.options if $VERBOSE
 

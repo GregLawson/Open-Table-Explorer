@@ -22,7 +22,7 @@ def test_initializes
 	refute_empty(TestEditor.test_executable.unit.edit_files, "TestEditor.test_executable.unit.edit_files=#{TestEditor.test_executable.unit.edit_files}")
 	assert_instance_of(RepositoryPathname, TestEditor.test_executable.argument_path, "TestEditor.test_executable.argument_path = #{TestEditor.test_executable.argument_path.inspect}")
 	assert(TestEditor.test_executable.argument_path.exist?, "TestEditor.test_executable.argument_path = #{TestEditor.test_executable.argument_path.inspect}")
-	assert_includes(TestEditor.test_executable.unit.edit_files, TestEditor.test_executable.argument_path.to_s, "TestEditor.test_executable.unit=#{TestEditor.test_executable.unit.inspect}")
+	assert_includes(TestEditor.test_executable.unit.edit_files, TestEditor.test_executable.argument_path, "TestEditor.test_executable.unit=#{TestEditor.test_executable.unit.inspect}")
 end #initialize
 def test_version_comparison
 	assert_equal('', TestEditor.version_comparison([]))
@@ -47,13 +47,15 @@ include Editor::Examples
 def test_test_files
 	assert_equal('', TestEditor.test_files([]))
  	refute_empty(TestEditor.test_executable.unit.edit_files)
-	pairs = TestEditor.test_executable.unit.functional_parallelism(TestEditor.test_executable.unit.edit_files).map do |p|
+	enumerator = TestEditor.test_executable.unit.functional_parallelism(TestEditor.test_executable.unit.edit_files)
+	pairs = enumerator.map do |p|
 
 		' -t ' + p.map do |f|
 			Pathname.new(f).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s
 
 		end.join(' ') # map
 	end # map
+	assert_instance_of(Array, pairs, enumerator.inspect)
  	refute_empty(pairs)
 	pairs.join(' ')
  	refute_empty(TestEditor.test_files, pairs.inspect)
