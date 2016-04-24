@@ -176,7 +176,7 @@ extend Assertions::ClassMethods
 module Examples
 Newline_Delimited_String="* 1\n  2"
 Newline_Terminated_String=Newline_Delimited_String+"\n"
-#Branch_regexp = /[* ]/.capture(:current) * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
+Branch_current_regexp = /[* ]/.capture(:current) * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_regexp = /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch)
 Branch_line_regexp = Branch_regexp * "\n"
 Current_variable = GenericVariable .new(name: 'current')
