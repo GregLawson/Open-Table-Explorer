@@ -24,23 +24,37 @@ Recent_test_default = lambda do |test_run, attribute|
 	else
 		begin	
 			recent_test =
-			Timeout::timeout(@test_run_timeout) do
+			Timeout::timeout(test_run.test_run_timeout) do
 				ShellCommands.new({'SEED' => '0'}, test_run.test_executable.ruby_test_string(test_run.test), :chdir=> test_run.test_executable.repository.path.to_s)
 			end # Timeout
 			{test: test_run.test, recent_test: recent_test, elapsed_time: Time.now - start_time}
 		rescue Timeout::Error  => exception_object_raised
-			elapsed_time = Time.now - @start_time
+			elapsed_time = Time.now - start_time
 			puts "timeout"
 			puts exception_object_raised.inspect
 			puts "start_time = " + start_time.to_s if $VERBOSE
-			puts "\n@elapsed_time = " + @elapsed_time.to_s
+			puts "\nelapsed_time = " + elapsed_time.to_s
 			puts "\nTime.now = " + Time.now.to_s if $VERBOSE
 			{test: test_run.test, exception_object_raised: exception_object_raised, elapsed_time: elapsed_time}
 		end # begin/rescue block
 	end # if
 end # Recent_test_default
+Timeout_default = lambda do |test_run, attribute|
+	if test_run[:test].nil? then
+		Too_long_for_regression_test
+	else
+		test_run.subtest_timeout
+	end # if
+end # Timeout_default
+All_test_names_default = lambda do |test_run, attribute|
+#	if test_run.cached_recent_test[:exception_object_raised].nil? then
+#		nil # not needed yet
+#	else
+		test_run.test_executable.all_test_names
+#	end # if
+end # All_test_names_default
 Too_long_for_regression_test = 30.0 # zero means infinite timeout
-
+Subtest_timeout_margin = 3.0
 end # DefinitionalConstants
 include DefinitionalConstants
 include Virtus.value_object
@@ -48,7 +62,8 @@ include Virtus.value_object
   attribute :test_executable, TestExecutable
   attribute :test, Symbol, :default => nil
   attribute :cached_recent_test, Hash, :default => TestRun::Recent_test_default
-  attribute :test_run_timeout, Float, :default => Too_long_for_regression_test
+  attribute :cached_all_test_names, Array, :default => TestRun::All_test_names_default
+  attribute :test_run_timeout, Float, :default => Timeout_default
 end # values
 def all_test_names
 	@test_executable.all_test_names
@@ -136,11 +151,11 @@ def error_score?(test = nil)
 	end # if
 end # error_score
 def subtest_timeout
-	if test.nil? then
-		@test_run_timeout / @cached_all_test_names.size
-	else
-		nil
-	end # if
+#	if test.nil? then
+		Subtest_timeout_margin * Too_long_for_regression_test / @cached_all_test_names.size
+#	else
+#		nil
+#	end # if
 end # subtest_timeout
 def run_individual_tests
 	puts @test_executable.all_test_names.inspect if $VERBOSE
@@ -176,6 +191,9 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
 include Constants
+Allways_timeout = 0.00001
 Default_testRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable)
+Default_subtestRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable, test: :test_compare)
+Forced_timeout_testRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable, test_run_timeout: Allways_timeout)
 end # Examples
 end # TestRun

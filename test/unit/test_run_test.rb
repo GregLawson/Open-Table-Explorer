@@ -1,6 +1,6 @@
 ###########################################################################
-#    Copyright (C) 2011-2016 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2011-2016 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -25,11 +25,32 @@ def test_Recent_test_default
 	assert_equal(nil, recent_test_default[:test])
 	assert_instance_of(ShellCommands, recent_test_default[:recent_test])
 	assert_instance_of(String, recent_test_default[:recent_test].output)
+	assert_includes(Forced_timeout_testRun.cached_recent_test.keys, :exception_object_raised, Forced_timeout_testRun.cached_recent_test.inspect)
 end # Recent_test_default
+def test_Timeout_default
+	assert_equal(Too_long_for_regression_test, Timeout_default.call(Default_testRun, nil))
+	
+	refute_nil(Default_subtestRun.cached_recent_test)
+	refute_nil(Default_subtestRun[:test])
+	refute_equal(Too_long_for_regression_test, Default_subtestRun.test_run_timeout)
+	refute_equal(Too_long_for_regression_test, Timeout_default.call(Default_subtestRun, nil))
+	
+	assert_equal(Default_testRun.subtest_timeout, Timeout_default.call(Default_subtestRun, nil))
+	refute_nil(Timeout_default.call(Default_subtestRun, nil))
+	assert_equal(Default_testRun.subtest_timeout, Timeout_default.call(Default_subtestRun, nil))
+	assert_equal(Default_subtestRun.test_run_timeout, Default_testRun.subtest_timeout)
+end # Timeout_default
+def test_All_test_names_default
+	refute_nil(Default_testRun.cached_recent_test)
+#	assert_equal([:exception_object_raised], Default_testRun.cached_recent_test.keys)
+	refute_nil(Default_testRun.cached_recent_test)
+	refute_nil(All_test_names_default.call(Default_testRun, nil))
+	refute_empty(All_test_names_default.call(Default_testRun, nil))
+end # All_test_names_default
 def test_TestRun_initialize
 	assert_equal(TestExecutable::Examples::TestTestExecutable, Default_testRun.test_executable)
 	assert_equal(TestExecutable::Examples::TestTestExecutable.argument_path, Default_testRun.test_executable.argument_path)
-	assert_equal($PROGRAM_NAME, TestSelf.test_executable.regression_unit_test_file.relative_pathname.to_s)
+	assert_equal(RepositoryPathname.new_from_path($PROGRAM_NAME).relative_pathname.to_s, TestSelf.test_executable.regression_unit_test_file.relative_pathname.to_s)
 	assert_equal(TestExecutable::Examples::TestTestExecutable.unit, Default_testRun.test_executable.unit)
 end # values
 def test_new_from_pathname
@@ -77,4 +98,17 @@ def test_error_score?
 	assert_equal(0, TestRun.new(test_executable: test_executable).error_score?)
 #	Default_testRun.assert_deserving_branch(:passed, executable_file)
 end # error_score
+def test_subtest_timeout
+	assert_instance_of(Float, Default_testRun.subtest_timeout)
+end # subtest_timeout
+def test_run_individual_tests
+	puts Default_testRun.test_executable.all_test_names.inspect if $VERBOSE
+	Default_testRun.run_individual_tests.each do |subtest|
+		puts 'subtest.test_executable = ' + subtest.test_executable.inspect  if $VERBOSE
+		puts '   subtest.test_executable = ' + subtest.test_executable.inspect if $VERBOSE
+	end # each
+end # run_individual_tests
+def test_TestRun_Examples
+	assert_includes(Forced_timeout_testRun.cached_recent_test.keys, :exception_object_raised, Forced_timeout_testRun.cached_recent_test.inspect)
+end # Examples
 end # TestRun

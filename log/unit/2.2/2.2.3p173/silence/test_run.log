@@ -1,23 +1,38 @@
 passed
-2016-03-31 01:28:58.574
+2016-04-25 04:14:54.042
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+timeout
+#<Timeout::Error: execution expired>
+
+elapsed_time = 1.460515979
 Run options: --seed 0
 
 # Running:
 
-....F......
+.....test_new_from_path 
+test_RepositoryPathname 
+test_compare 
+test_inspect 
+test_expand_path 
+test_to_s 
+test_coerce 
+test_unit_file_type 
+test_unit_file? 
+test_TestExecutable_initialize 
+test_new_from_path 
+test_regression_unit_test_file 
+test_recursion_danger? 
+test_testable? 
+test_regression_test 
+test_log_path? 
+test_ruby_test_string 
+test_all_test_names 
+test_all_library_method_names 
+test_Examples 
+...........
 
-Finished in 3.418463s, 3.2178 runs/s, 6.4356 assertions/s.
+Finished in 33.965397s, 0.4711 runs/s, 1.2366 assertions/s.
 
-  1) Failure:
-NewTestClass#test_TestRun_initialize [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb:32]:
---- expected
-+++ actual
-@@ -1 +1 @@
--"/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb"
-+"test/unit/test_run_test.rb"
-
-
-11 runs, 22 assertions, 1 failures, 0 errors, 0 skips
+16 runs, 42 assertions, 0 failures, 0 errors, 0 skips
 
