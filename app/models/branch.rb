@@ -1,6 +1,6 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013-2016 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -9,17 +9,16 @@
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../app/models/repository.rb'
-class Reference
-end # Reference
-class BranchReference
+class GitReference
   include Virtus.value_object
 
   values do
- 	attribute :branch, Symbol
-	attribute :age, Fixnum, :default => 789
-	attribute :timestamp, Time, :default => Time.now
+ 	attribute :name, Symbol
 end # values
-module Constants
+end # GitReference
+
+class BranchReference < GitReference
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)  (e.g. default values)
 include Repository::Constants
 Branch_name_regexp = /[a-zA-Z0-9_\/]+/ # conventional syntax
 #Branch_name_regexp = /[-a-zA-Z0-9_]+/ # extended syntax
@@ -44,9 +43,16 @@ Timestamp_regexp = (Week_day_regexp * Delimiter * ' ' * Date_regexp * ' ' * Time
 #Timestamp_regexp = /([0-9]{1,4}/|[ADFJMNOS][a-z]+ )[0-9][0-9][, /][0-9]{2,4}( [0-9]+:[0-9.]+( ?[PApa][Mm])?)?/
 Reflog_line_regexp = Regexp::Start_string * Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * 
 	Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7 * Delimiter * Timestamp_regexp
-end #Constants
-include Constants
+end # DefinitionalConstants
+include DefinitionalConstants
+  include Virtus.value_object
+
+  values do
+	attribute :age, Fixnum, :default => 789
+	attribute :timestamp, Time, :default => Time.now
+end # values
 module ClassMethods
+include DefinitionalConstants
 def previous_changes(filename)
 	reflog?(filename)
 end # previous_changes
@@ -54,9 +60,9 @@ def new_from_ref(reflog_line)
 	capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
 	fail Exception.new(capture.inspect) unless capture.success? 
 	if capture.output?[:ambiguous_branch].nil? then
-		new(branch: capture.output?[:sha_hex].to_sym, age: 0, timestamp: capture.output?[:timestamp])
+		new(name: capture.output?[:sha_hex].to_sym, age: 0, timestamp: capture.output?[:timestamp])
 	else
-		new(branch: capture.output?[:ambiguous_branch].to_sym, age: capture.output?[:age].to_i, timestamp: capture.output?[:timestamp])
+		new(name: capture.output?[:ambiguous_branch].to_sym, age: capture.output?[:age].to_i, timestamp: capture.output?[:timestamp])
 	end # if
 end # new_from_ref
 def reflog_command_string(filename, repository, range = 0..10)
@@ -86,21 +92,17 @@ def last_change?(filename, repository)
 end # last_change?
 end # ClassMethods
 extend ClassMethods
-#def initialize(branch, age)
-#	@branch = branch.to_sym
-#	@age = age.to_i
-#end # initialize
 def to_s
 	if @age.nil? then
-		@branch.to_s
+		@name.to_s
 	else
-		@branch.to_s + '@{' + @age.to_s + '}'
+		@name.to_s + '@{' + @age.to_s + '}'
 	end # if
 end # to_s
-#require_relative '../../app/models/assertions.rb'
+require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
-include BranchReference::Constants
+include DefinitionalConstants
 def assert_reflog_line(reflog_line, message = '')
 	assert_pre_conditions('in assert_reflog_line, assert_pre_conditions')
 	message = 'In assert_reflog_line, matchData = ' + reflog_line.match(BranchReference::Reflog_line_regexp).inspect
@@ -170,7 +172,7 @@ include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
-include Constants
+include DefinitionalConstants
 Reflog_line = 'master@{123},refs/heads/master@{123},1234567,Sun, 21 Jun 2015 13:51:50 -0700'
 Reflog_capture = Reflog_line.capture?(BranchReference::Reflog_line_regexp)
 Reflog_run_executable = Repository::This_code_repository.git_command("reflog  --all --pretty=format:%gd,%gD,%h,%aD -- " + $0)
@@ -182,11 +184,11 @@ No_ref_line = ',,911dea1,Sun, 21 Jun 2015 13:51:50 -0700'
 end # Examples
 end # BranchReference
 
-class Branch
+class Branch < GitReference
 #include Repository::Constants
-module Constants
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 #assert_global_name(:Repository)
-include BranchReference::Constants
+include BranchReference::DefinitionalConstants
 Branch_enhancement = [:passed, :testing, :edited] # higher inex means more enhancements/bugs
 Extended_branches = { -4 => :'origin/master',
 	-3 => :work_flow,
@@ -216,11 +218,11 @@ Patterns = [Pattern, Branches_regexp,
 				/[* ]/*/ /*/[-a-z0-9A-Z_]+/.capture(:branch),
 				/^[* ] /*/[a-z0-9A-Z_-]+/.capture(:branch)
 				]
-end #Constants
-include Constants
+end # DefinitionalConstants
+include DefinitionalConstants
 module ClassMethods
 #include Repository::Constants
-include Constants
+include DefinitionalConstants
 def branch_symbol?(branch_index)
 	case branch_index
 	when nil then fail 'branch_index=' + branch_index.inspect
@@ -276,7 +278,7 @@ def branches?(repository = Repository::This_code_repository)
 	branch_capture = branch_capture?(repository, '--list')
 	if branch_capture.success? then
 		branch_capture.output?.map do |c| 
-			Branch.new(repository, c[:branch].to_sym)
+			Branch.new(repository: repository, name: c[:branch].to_sym)
 		end # map
 	else
 		fail Exception.new('git branch parse failed = ' + branch_capture.inspect)
@@ -291,7 +293,7 @@ def merged?(repository)
 	repository.git_parse('branch --list --merged', pattern)
 end #merged?
 def branch_names?(repository = Repository::This_code_repository)
-	branches?(repository).map {|b| b.branch}.uniq
+	branches?(repository).map {|b| b.name}.uniq
 end # branch_names?
 def new_from_git_branch_line(git_branch_line)
 
@@ -301,32 +303,33 @@ def revison_tag?(branch_index)
 end # revison_tag?
 end #ClassMethods
 extend ClassMethods
-attr_reader :repository, :branch, :remote_branch
-def initialize(repository, branch=repository.current_branch_name?, remote_branch=nil)
-	fail "Branch.new first argument must be of type Repository" unless repository.instance_of?(Repository)
-#	fail "@repository must respond to :remotes?\n"+
-#		"repository.inspect=#{repository.inspect}\n" +
-#		"repository.methods(false)=#{repository.methods(false).inspect}" unless repository.respond_to?(:remotes?)
-	@repository=repository
-	@branch=branch
-	if remote_branch.nil? then
-#		@remote_branch=find_origin
-	else
-		@remote_branch=remote_branch
-	end # if
-end # initialize
+  include Virtus.value_object
+
+  values do
+	attribute :repository, Repository, :default => Repository::This_code_repository
+	attribute :remote_branch_name, Symbol, :default => lambda {|branch, attribute| branch.find_origin}
+end # values
 # Allows Branch objects to be used in most contexts where a branch name Symbol is expected
 def to_s
-	@branch.to_s
+	@name.to_s
 end # to_s
 def to_sym
-	@branch.to_sym
+	@name.to_sym
 end # to_s
+def <=>(other)
+	Branch.branch_index?(self.name) <=> Branch.branch_index?(other.name)
+end # compare
 def find_origin
 	if Branch.remotes?(@repository).include?(@repository.current_branch_name?) then
-		'origin/'+@branch.to_s
+		'origin/'+@name.to_s
 	else
 		nil
 	end #if
 end # find_origin
+module Constants # constant objects of the type (e.g. default_objects)
+end # Constants
+module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+include DefinitionalConstants
+include Constants
+end # Examples
 end # Branch

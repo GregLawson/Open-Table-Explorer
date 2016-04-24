@@ -1,6 +1,6 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013-2016 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -23,15 +23,15 @@ end # setup
 def teardown
 	Repository.delete_existing(@temp_repo.path)
 end # teardown
-include BranchReference::Constants
-def test_BranchReference_Constants
+include BranchReference::DefinitionalConstants
+def test_BranchReference_DefinitionalConstants
 	BranchReference.assert_reflog_line(Reflog_line)
 	BranchReference.assert_reflog_line(Last_change_line)
 	BranchReference.assert_reflog_line(First_change_line)
 	Reflog_lines.each do |reflog_line|
 		BranchReference.assert_reflog_line(reflog_line)
 	end # each
-end #Constants
+end # DefinitionalConstants
 def test_new_from_ref
 	reflog_line = No_ref_line
 #	Test capture with reflog line having no refs
@@ -43,7 +43,7 @@ def test_new_from_ref
 	assert_equal(refs[0], '', message)
 #	Test method
 	br = BranchReference.new_from_ref(reflog_line)
-	assert_equal(refs[2].to_sym, br.branch, br.inspect)
+	assert_equal(refs[2].to_sym, br.name, br.inspect)
 	# Now test one with refs
 	reflog_line = Last_change_line
 	capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
@@ -120,11 +120,11 @@ def test_last_change?
 	repository = @temp_repo
 	reflog = BranchReference.reflog?(filename, repository)
 	assert_equal(nil, BranchReference.last_change?(filename, repository))
-#	assert_includes(Branch.branch_names?(This_code_repository), BranchReference.last_change?(filename, This_code_repository).branch)
+#	assert_includes(Branch.branch_names?(This_code_repository), BranchReference.last_change?(filename, This_code_repository).name)
 end # last_change?
 def test_to_s
 #	BranchReference.assert_output(Reflog_line)
-	assert_equal(:master, BranchReference.new_from_ref(Reflog_line).branch, Reflog_line)
+	assert_equal(:master, BranchReference.new_from_ref(Reflog_line).name, Reflog_line)
 	message = Reflog_reference.inspect
 	assert_equal(123, Reflog_reference.age, message)
 	assert_equal('master@{123}', BranchReference.new_from_ref(Reflog_line).to_s)
@@ -196,8 +196,9 @@ def test_branches?
 #?		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches.output?, branches.inspect)
 	end # each
 	
-	assert_includes(Branch.branches?(@temp_repo).map{|b| b.branch}, @temp_repo.current_branch_name?)
-#?	assert_equal([:master, :passed], Branch.branches?(@temp_repo).map{|b| b.branch})
+	assert_includes(Branch.branches?(@temp_repo).map{|b| b.name}, @temp_repo.current_branch_name?)
+#	assert_includes(Branch.branches?(Repository::This_code_repository).map{|b| b.name}, Repository::This_code_repository.current_branch_name?)
+#?	assert_equal([:master, :passed], Branch.branches?(@temp_repo).map{|b| b.name})
 #?	assert_includes(Branch.branch_names?(This_code_repository), This_code_repository.current_branch_name?)
 end #branches?
 def test_remotes?
@@ -223,9 +224,15 @@ def test_revison_tag?
 	assert_equal('-r origin/master', Branch.revison_tag?(-4))
 end # revison_tag?
 def test_initialize
-	assert_equal(This_code_repository, Branch.new(This_code_repository).repository)
+	assert_equal(This_code_repository, Branch.new(repository: This_code_repository).repository)
 
 	branch=This_code_repository.current_branch_name?
 	onto=Branch::Examples::Executing_branch.find_origin
 end # initialize
+def test_compare
+	sorted_branches = Branch.branches?(Repository::This_code_repository).sort.map{|b| b.name}
+#	assert_equal([], sorted_branches)
+
+	assert_operator(sorted_branches[0], :==, sorted_branches[0])
+end # compare
 end # Branch
