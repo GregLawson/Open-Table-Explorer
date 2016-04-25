@@ -47,15 +47,16 @@ include Editor::Examples
 def test_test_files
 	assert_equal('', TestEditor.test_files([]))
  	refute_empty(TestEditor.test_executable.unit.edit_files)
-	enumerator = TestEditor.test_executable.unit.functional_parallelism(TestEditor.test_executable.unit.edit_files)
-	pairs = enumerator.map do |p|
+	functional_parallelism = TestEditor.test_executable.unit.functional_parallelism(TestEditor.test_executable.unit.edit_files)
+ 	refute_empty(functional_parallelism, TestEditor.test_executable.unit.edit_files.inspect)
+	pairs = functional_parallelism.map do |p|
 
 		' -t ' + p.map do |f|
 			Pathname.new(f).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s
 
 		end.join(' ') # map
 	end # map
-	assert_instance_of(Array, pairs, enumerator.inspect)
+	assert_instance_of(Array, pairs, functional_parallelism.inspect)
  	refute_empty(pairs)
 	pairs.join(' ')
  	refute_empty(TestEditor.test_files, pairs.inspect)

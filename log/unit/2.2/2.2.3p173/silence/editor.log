@@ -1,18 +1,23 @@
 passed
-2016-04-21 04:05:46.721
+2016-04-25 04:23:39.225
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+timeout
+#<Timeout::Error: execution expired>
+
+elapsed_time = 1.457234004
 Run options: --seed 0
 
 # Running:
 
 .......F.......
 
-Finished in 1.443365s, 10.3924 runs/s, 27.7130 assertions/s.
+Finished in 1.240773s, 12.0892 runs/s, 31.4320 assertions/s.
 
   1) Failure:
-NewTestClass#test_test_files [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb:59]:
+NewTestClass#test_test_files [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb:51]:
+[#<Pathname:/home/greg/Desktop/src/Open-Table-Explorer/app/models/editor.rb>, #<Pathname:/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb>, #<Pathname:/home/greg/Desktop/src/Open-Table-Explorer/script/editor.rb>].
 Expected [] to not be empty.
 
-15 runs, 40 assertions, 1 failures, 0 errors, 0 skips
+15 runs, 39 assertions, 1 failures, 0 errors, 0 skips
 

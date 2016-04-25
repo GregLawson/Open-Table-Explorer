@@ -159,8 +159,8 @@ extend Assertions::ClassMethods
 # TestEditor.assert_pre_conditions
 include Constants
 module Examples
-TestExecutable = TestExecutable.new_from_path(File.expand_path($PROGRAM_NAME))
-TestEditor = Editor.new(TestExecutable)
+EditorTestExecutable = TestExecutable.new_from_path(File.expand_path($PROGRAM_NAME))
+TestEditor = Editor.new(EditorTestExecutable)
 include Constants
 end # Examples
 include Examples
