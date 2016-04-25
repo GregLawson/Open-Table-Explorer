@@ -10,34 +10,6 @@ require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../assertions/command_line_assertions.rb'
 require_relative '../../app/models/unit_maturity.rb'
 class CommandLineTest < TestCase
-def test_arity
-	assert_equal(-1, Script_command_line.method(:candidate_commands).arity)
-	assert_equal(-1, Script_command_line.method(:initialize).arity)
-#	assert_equal(-2, No_args.unit_class.method(:initialize).arity)
-#	assert_equal(-2, Script_command_line.unit_class.method(:initialize).arity)
-	refute_nil(Script_command_line.method(:argument_types))
-	assert_equal(0, Script_command_line.method(:argument_types).arity, Script_command_line.inspect)
-	assert_equal(-1, Script_command_line.method(:executable_object).arity, Script_command_line.inspect)
-#	assert_equal(1, Script_command_line.method(:executable_method).arity, Script_command_line.inspect)
-	assert_equal(0, Script_command_line.method(:number_of_arguments).arity, Script_command_line.inspect)
-#	assert_equal(-1, Test_unit_commandline.medthod(:error_score?).arity, Test_unit_commandline.to_s)
-end # arity
-def test_default_arguments?
-	executable_object = Test_unit_commandline.executable_object
-	message = 'Script_command_line = ' + Script_command_line.inspect
-	assert_equal(false, Script_command_line.method(:argument_types).default_arguments?, message)
-	assert_equal(true, Script_command_line.method(:executable_object).default_arguments?, message)
-#	assert_equal(true, Script_command_line.method(:executable_method).default_arguments?, message)
-	assert_equal(false, Script_command_line.method(:number_of_arguments).default_arguments?, message)
-end # default_arguments
-def test_required_arguments
-	executable_object = Test_unit_commandline.executable_object
-	assert_equal(:error_score?, Test_unit_commandline.sub_command)
-	assert_respond_to(executable_object, Test_unit_commandline.sub_command)
-	method = executable_object.method(Test_unit_commandline.sub_command)
-#	assert_equal(-1, method.arity)
-	assert_equal(0, method.required_arguments, Test_unit_commandline.to_s)
-end # required_arguments
 include CommandLine::Examples
 Test_unit = RailsishRubyUnit.new(model_basename: :test_run)
 require File.expand_path(Test_unit.model_pathname?)

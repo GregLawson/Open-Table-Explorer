@@ -1,16 +1,20 @@
 passed
-2016-04-21 03:10:17.384
+2016-04-25 12:40:29.130
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+timeout
+#<Timeout::Error: execution expired>
+
+elapsed_time = 1.4499113
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test
 Started
 No arguments
-..............................
+...........................
 
-Finished in 88.783338797 seconds.
+Finished in 124.667982993 seconds.
 ------
-30 tests, 76 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+27 tests, 64 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-0.34 tests/s, 0.86 assertions/s
+0.22 tests/s, 0.51 assertions/s
 

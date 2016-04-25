@@ -10,27 +10,7 @@ require 'virtus'
 require_relative '../../app/models/shell_command.rb'
 #require_relative '../../app/models/command.rb'
 require_relative '../../app/models/test_executable.rb'
-# Monkey patch Mehod to give more intelligible arity methods
-class Method
-
-def default_arguments?
-	if arity < 0 then
-		true
-	else
-		false
-	end # if
-
-
-end # default_arguments
-def required_arguments
-
-	if default_arguments? then
-		-(arity+1)
-	else
-		arity
-	end # if
-end # required_arguments
-end # Method
+require_relative '../../app/models/method_model.rb'
 
 class CommandLine  #< Command
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
