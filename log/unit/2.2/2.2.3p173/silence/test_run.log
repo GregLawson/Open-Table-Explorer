@@ -1,38 +1,61 @@
 passed
-2016-04-25 04:14:54.042
-ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb
+2016-04-27 06:13:46.471
+/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 timeout
 #<Timeout::Error: execution expired>
 
-elapsed_time = 1.460515979
+elapsed_time = 1.455844822
 Run options: --seed 0
 
 # Running:
 
-.....test_new_from_path 
-test_RepositoryPathname 
-test_compare 
-test_inspect 
-test_expand_path 
-test_to_s 
-test_coerce 
-test_unit_file_type 
-test_unit_file? 
-test_TestExecutable_initialize 
-test_new_from_path 
-test_regression_unit_test_file 
-test_recursion_danger? 
-test_testable? 
-test_regression_test 
-test_log_path? 
-test_ruby_test_string 
-test_all_test_names 
-test_all_library_method_names 
-test_Examples 
+.......test_new_from_path in test_executable took 1.481083005 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_RepositoryPathname in test_executable took 1.455328423 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_compare in test_executable took 1.457416243 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_inspect in test_executable took 1.449927972 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_expand_path in test_executable took 1.455419744 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_to_s in test_executable took 1.454780007 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_coerce in test_executable took 1.454029367 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_unit_file_type in test_executable took 1.454436566 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_unit_file? in test_executable took 1.456034231 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_TestExecutable_initialize in test_executable took 1.456413181 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_new_from_path in test_executable took 1.467026952 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_regression_unit_test_file in test_executable took 1.46126386 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_recursion_danger? in test_executable took 1.477716998 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_testable? in test_executable took 1.474115309 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_regression_test in test_executable took 1.464221877 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_log_path? in test_executable took 1.464369693 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_ruby_test_string in test_executable took 1.47577469 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_all_test_names in test_executable took 1.479972158 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_all_library_method_names in test_executable took 1.472258334 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
+test_Examples in test_executable took 1.458115787 within timeout of 4.5 at 2016-04-27 06:13:44 -0700
 ...........
 
-Finished in 33.965397s, 0.4711 runs/s, 1.2366 assertions/s.
+Finished in 32.924247s, 0.5467 runs/s, 4.3737 assertions/s.
 
-16 runs, 42 assertions, 0 failures, 0 errors, 0 skips
+18 runs, 144 assertions, 0 failures, 0 errors, 0 skips
 
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb"
+	User time (seconds): 35.45
+	System time (seconds): 2.97
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:39.04
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 34580
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 379865
+	Voluntary context switches: 4322
+	Involuntary context switches: 4339
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 48
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
