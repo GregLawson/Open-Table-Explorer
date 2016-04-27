@@ -1,20 +1,43 @@
 passed
-2016-04-25 12:40:29.130
-ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb
+2016-04-27 06:31:59.849
+/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 timeout
 #<Timeout::Error: execution expired>
 
-elapsed_time = 1.4499113
+elapsed_time = 1.458274158
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test
 Started
 No arguments
 ...........................
 
-Finished in 124.667982993 seconds.
+Finished in 125.180604852 seconds.
 ------
 27 tests, 64 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
 0.22 tests/s, 0.51 assertions/s
 
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb"
+	User time (seconds): 160.67
+	System time (seconds): 7.78
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:50.49
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 41656
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 1007444
+	Voluntary context switches: 11556
+	Involuntary context switches: 17260
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 96
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
