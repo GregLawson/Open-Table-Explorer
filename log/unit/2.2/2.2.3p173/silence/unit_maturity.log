@@ -1,14 +1,41 @@
 passed
-2016-04-21 04:35:12.864
-ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb
+2016-04-27 06:49:44.410
+/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+timeout
+#<Timeout::Error: execution expired>
+
+elapsed_time = 1.46272667
 Run options: --seed 0
 
 # Running:
 
 .............................
 
-Finished in 8.055042s, 3.6002 runs/s, 10.1800 assertions/s.
+Finished in 7.770848s, 3.7319 runs/s, 10.5523 assertions/s.
 
 29 runs, 82 assertions, 0 failures, 0 errors, 0 skips
 
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb"
+	User time (seconds): 48.03
+	System time (seconds): 4.19
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:53.15
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 34852
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 554411
+	Voluntary context switches: 6069
+	Involuntary context switches: 5951
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 208
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
