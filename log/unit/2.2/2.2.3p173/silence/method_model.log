@@ -1,6 +1,6 @@
 passed
-2016-04-25 06:18:36.087
-ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb
+2016-04-27 06:17:05.515
+/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
@@ -192,17 +192,17 @@ constant :MethodModel fails constanization
 constant :MethodTest fails constanization
 E..EEE.
 
-Finished in 0.014932s, 937.5700 runs/s, 803.6314 assertions/s.
+Finished in 0.015425s, 907.6270 runs/s, 777.9660 assertions/s.
 
   1) Error:
 NewTestClass#test_initialize:
-NoMethodError: Expected #<Method: MethodModel(#<Virtus::AttributeSet:0x000000023dc280>)#name> to respond to #to_hash
+NoMethodError: Expected #<Method: MethodModel(#<Virtus::AttributeSet:0x000000027889d8>)#name> to respond to #to_hash
     /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:196:in `coerce'
     /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:170:in `set'
     /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/instance_methods.rb:17:in `initialize'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:46:in `new'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:46:in `assert_method_model_initialized'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:88:in `test_initialize'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:48:in `new'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:48:in `assert_method_model_initialized'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:92:in `test_initialize'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -229,7 +229,7 @@ NoMethodError: Expected #<Method: MethodModel(#<Virtus::AttributeSet:0x000000023
   2) Error:
 NewTestClass#test_method_query:
 NameError: uninitialized constant NewTestClass::ActiveRecord
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:60:in `test_method_query'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:63:in `test_method_query'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -258,7 +258,7 @@ NewTestClass#test_constantized:
 TypeError: no implicit conversion of Array into String
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:196:in `include?'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:196:in `assert_includes'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:106:in `test_constantized'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:111:in `test_constantized'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -313,7 +313,7 @@ NameError: undefined method `all_default' for class `Class'
   5) Error:
 MethodTest#test_required_arguments:
 NameError: uninitialized constant MethodTest::Test_unit_commandline
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:33:in `test_required_arguments'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:35:in `test_required_arguments'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -340,7 +340,7 @@ NameError: uninitialized constant MethodTest::Test_unit_commandline
   6) Error:
 MethodTest#test_default_arguments?:
 NameError: uninitialized constant MethodTest::Test_unit_commandline
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:25:in `test_default_arguments?'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:26:in `test_default_arguments?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
@@ -365,3 +365,27 @@ NameError: uninitialized constant MethodTest::Test_unit_commandline
 
 14 runs, 12 assertions, 0 failures, 6 errors, 0 skips
 
+Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb"
+	User time (seconds): 0.68
+	System time (seconds): 0.06
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.75
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 22412
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5733
+	Voluntary context switches: 31
+	Involuntary context switches: 84
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
