@@ -1,6 +1,6 @@
 passed
-2016-04-24 03:00:52.558
-ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/assertions_test.rb
+2016-04-27 06:53:27.205
+/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/assertions_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
@@ -8,7 +8,30 @@ Run options: --seed 0
 
 ......
 
-Finished in 0.004263s, 1407.5665 runs/s, 0.0000 assertions/s.
+Finished in 0.004192s, 1431.2049 runs/s, 0.0000 assertions/s.
 
 6 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/assertions_test.rb"
+	User time (seconds): 0.68
+	System time (seconds): 0.04
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.72
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 22504
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5754
+	Voluntary context switches: 25
+	Involuntary context switches: 69
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

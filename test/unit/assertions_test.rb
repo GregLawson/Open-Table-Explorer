@@ -8,9 +8,8 @@
 require_relative 'test_environment'
 require_relative '../../app/models/assertions.rb'
 class AssertionsTest < TestCase
-#include DefaultTests
-#include RailsishRubyUnit::Executable.model_class?::Examples
-def test_preconditions
-
-end # test_preconditions
+  # include DefaultTests
+  # include RailsishRubyUnit::Executable.model_class?::Examples
+  def test_preconditions
+    end # test_preconditions
 end # Assertions
