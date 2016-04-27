@@ -1,23 +1,47 @@
 passed
-2016-04-25 04:23:39.225
-ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb
+2016-04-27 06:40:02.356
+/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 timeout
 #<Timeout::Error: execution expired>
 
-elapsed_time = 1.457234004
+elapsed_time = 1.457236586
 Run options: --seed 0
 
 # Running:
 
 .......F.......
 
-Finished in 1.240773s, 12.0892 runs/s, 31.4320 assertions/s.
+Finished in 1.244492s, 12.0531 runs/s, 31.3381 assertions/s.
 
   1) Failure:
-NewTestClass#test_test_files [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb:51]:
+NewTestClass#test_test_files [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb:53]:
 [#<Pathname:/home/greg/Desktop/src/Open-Table-Explorer/app/models/editor.rb>, #<Pathname:/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb>, #<Pathname:/home/greg/Desktop/src/Open-Table-Explorer/script/editor.rb>].
 Expected [] to not be empty.
 
 15 runs, 39 assertions, 1 failures, 0 errors, 0 skips
 
+Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb"
+	User time (seconds): 41.98
+	System time (seconds): 3.72
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:46.58
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 34796
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 492430
+	Voluntary context switches: 5799
+	Involuntary context switches: 5375
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 48
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
