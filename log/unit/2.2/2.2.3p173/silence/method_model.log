@@ -1,202 +1,18 @@
 passed
-2016-04-27 06:17:05.515
+2016-04-28 04:42:44.761
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-...EE..constant :DefinitionalConstants fails constanization
-constant :ClassMethods fails constanization
-constant :Constructors fails constanization
-constant :Examples fails constanization
-constant :Object fails constanization
-constant :Module fails constanization
-constant :Class fails constanization
-constant :BasicObject fails constanization
-constant :Kernel fails constanization
-constant :NilClass fails constanization
-constant :NIL fails constanization
-constant :Data fails constanization
-constant :TrueClass fails constanization
-constant :TRUE fails constanization
-constant :FalseClass fails constanization
-constant :FALSE fails constanization
-constant :Encoding fails constanization
-constant :Comparable fails constanization
-constant :Enumerable fails constanization
-constant :String fails constanization
-constant :Symbol fails constanization
-constant :Exception fails constanization
-constant :SystemExit fails constanization
-constant :SignalException fails constanization
-constant :Interrupt fails constanization
-constant :StandardError fails constanization
-constant :TypeError fails constanization
-constant :ArgumentError fails constanization
-constant :IndexError fails constanization
-constant :KeyError fails constanization
-constant :RangeError fails constanization
-constant :ScriptError fails constanization
-constant :SyntaxError fails constanization
-constant :LoadError fails constanization
-constant :NotImplementedError fails constanization
-constant :NameError fails constanization
-constant :NoMethodError fails constanization
-constant :RuntimeError fails constanization
-constant :SecurityError fails constanization
-constant :NoMemoryError fails constanization
-constant :EncodingError fails constanization
-constant :SystemCallError fails constanization
-constant :Errno fails constanization
-constant :UncaughtThrowError fails constanization
-constant :ZeroDivisionError fails constanization
-constant :FloatDomainError fails constanization
-constant :Numeric fails constanization
-constant :Integer fails constanization
-constant :Fixnum fails constanization
-constant :Float fails constanization
-constant :Bignum fails constanization
-constant :Array fails constanization
-constant :Hash fails constanization
-constant :ENV fails constanization
-constant :Struct fails constanization
-constant :RegexpError fails constanization
-constant :Regexp fails constanization
-constant :MatchData fails constanization
-constant :Marshal fails constanization
-constant :Range fails constanization
-constant :IOError fails constanization
-constant :EOFError fails constanization
-constant :IO fails constanization
-constant :STDIN fails constanization
-constant :STDOUT fails constanization
-constant :STDERR fails constanization
-constant :ARGF fails constanization
-constant :FileTest fails constanization
-constant :File fails constanization
-constant :Dir fails constanization
-constant :Time fails constanization
-constant :Random fails constanization
-constant :Signal fails constanization
-constant :Proc fails constanization
-constant :LocalJumpError fails constanization
-constant :SystemStackError fails constanization
-constant :Method fails constanization
-constant :UnboundMethod fails constanization
-constant :Binding fails constanization
-constant :Math fails constanization
-constant :GC fails constanization
-constant :ObjectSpace fails constanization
-constant :Enumerator fails constanization
-constant :StopIteration fails constanization
-constant :RubyVM fails constanization
-constant :Thread fails constanization
-constant :TOPLEVEL_BINDING fails constanization
-constant :ThreadGroup fails constanization
-constant :Mutex fails constanization
-constant :ThreadError fails constanization
-constant :Process fails constanization
-constant :Fiber fails constanization
-constant :FiberError fails constanization
-constant :Rational fails constanization
-constant :Complex fails constanization
-constant :RUBY_VERSION fails constanization
-constant :RUBY_RELEASE_DATE fails constanization
-constant :RUBY_PLATFORM fails constanization
-constant :RUBY_PATCHLEVEL fails constanization
-constant :RUBY_REVISION fails constanization
-constant :RUBY_DESCRIPTION fails constanization
-constant :RUBY_COPYRIGHT fails constanization
-constant :RUBY_ENGINE fails constanization
-constant :TracePoint fails constanization
-constant :ARGV fails constanization
-constant :Gem fails constanization
-constant :RbConfig fails constanization
-constant :CROSS_COMPILING fails constanization
-constant :ConditionVariable fails constanization
-constant :Queue fails constanization
-constant :SizedQueue fails constanization
-constant :MonitorMixin fails constanization
-constant :Monitor fails constanization
-constant :OptionParser fails constanization
-constant :OptParse fails constanization
-constant :Mutex_m fails constanization
-constant :Minitest fails constanization
-constant :Delegator fails constanization
-constant :SimpleDelegator fails constanization
-constant :FileUtils fails constanization
-constant :Etc fails constanization
-constant :Tempfile fails constanization
-constant :StringIO fails constanization
-constant :MiniTest fails constanization
-constant :MockExpectationError fails constanization
-constant :OpenSSL fails constanization
-constant :Digest fails constanization
-constant :Fcntl fails constanization
-constant :SecureRandom fails constanization
-constant :ThreadSafe fails constanization
-constant :Threadsafe fails constanization
-constant :SynchronizedDelegator fails constanization
-constant :I18n fails constanization
-constant :CGI fails constanization
-constant :ActiveSupport fails constanization
-constant :Set fails constanization
-constant :SortedSet fails constanization
-constant :LoggerSilence fails constanization
-constant :Logger fails constanization
-constant :Date fails constanization
-constant :DateTime fails constanization
-constant :Base64 fails constanization
-constant :BigDecimal fails constanization
-constant :BigMath fails constanization
-constant :Singleton fails constanization
-constant :TZInfo fails constanization
-constant :DateAndTime fails constanization
-constant :QualifiedConstUtils fails constanization
-constant :JSON fails constanization
-constant :OpenStruct fails constanization
-constant :HashWithIndifferentAccess fails constanization
-constant :Benchmark fails constanization
-constant :URI fails constanization
-constant :MissingSourceFile fails constanization
-constant :ERB fails constanization
-constant :StringScanner fails constanization
-constant :ScanError fails constanization
-constant :AssertionsModule fails constanization
-constant :BaseTestCase fails constanization
-constant :TestCase fails constanization
-constant :AssertionFailedError fails constanization
-constant :Pathname fails constanization
-constant :RubyAssertions fails constanization
-constant :ActiveModel fails constanization
-constant :FilePattern fails constanization
-constant :Virtus fails constanization
-constant :DescendantsTracker fails constanization
-constant :Equalizer fails constanization
-constant :IceNine fails constanization
-constant :Axiom fails constanization
-constant :Coercible fails constanization
-constant :FileUnit fails constanization
-constant :RubyClassUnit fails constanization
-constant :Unit fails constanization
-constant :RubyUnit fails constanization
-constant :RailsishRubyUnit fails constanization
-constant :RailsUnit fails constanization
-constant :Example fails constanization
-constant :TestClassName fails constanization
-constant :NewTestClass fails constanization
-constant :MethodModelTest fails constanization
-constant :TestClass fails constanization
-constant :MethodModel fails constanization
-constant :MethodTest fails constanization
-E..EEE.
+...EE..E..EEE.
 
-Finished in 0.015425s, 907.6270 runs/s, 777.9660 assertions/s.
+Finished in 0.015737s, 889.6237 runs/s, 762.5346 assertions/s.
 
   1) Error:
 NewTestClass#test_initialize:
-NoMethodError: Expected #<Method: MethodModel(#<Virtus::AttributeSet:0x000000027889d8>)#name> to respond to #to_hash
+NoMethodError: Expected #<Method: MethodModel(#<Virtus::AttributeSet:0x00000001a3e138>)#name> to respond to #to_hash
     /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:196:in `coerce'
     /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/attribute_set.rb:170:in `set'
     /var/lib/gems/2.2.0/gems/virtus-1.0.3/lib/virtus/instance_methods.rb:17:in `initialize'
@@ -367,20 +183,20 @@ NameError: uninitialized constant MethodTest::Test_unit_commandline
 
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb"
-	User time (seconds): 0.68
-	System time (seconds): 0.06
+	User time (seconds): 0.66
+	System time (seconds): 0.07
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.75
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.74
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 22412
+	Maximum resident set size (kbytes): 22988
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5733
-	Voluntary context switches: 31
-	Involuntary context switches: 84
+	Minor (reclaiming a frame) page faults: 5878
+	Voluntary context switches: 24
+	Involuntary context switches: 75
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

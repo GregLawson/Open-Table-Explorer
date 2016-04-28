@@ -88,17 +88,17 @@ class MethodModel # <ActiveRecord::Base
         rescue ArgumentError, NameError => exc
           puts "exc=#{exc}, object=#{object.inspect}"
         end # begin
-        # if
       end # each_object
-      nil # no object found, new has side effects
+		return nil #no object found, new has side effects
     end # method_query
 
     def constantized
       @@CONSTANTIZED ||= Module.constants.map do |c|
         begin
            c = c.constantize
+         rescue Exception => exception_object
          rescue
-           puts "constant #{c.inspect} fails constanization"
+           puts "constant #{c.inspect} fails constanization" + exception_object.inspect
            nil
          end # begin
       end # map
