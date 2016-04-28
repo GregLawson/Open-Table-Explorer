@@ -26,6 +26,10 @@ class TestRunTest < TestCase
     assert_instance_of(ShellCommands, recent_test_default[:recent_test])
     assert_instance_of(String, recent_test_default[:recent_test].output)
     assert_includes(Forced_timeout_testRun.cached_recent_test.keys, :exception_object_raised, Forced_timeout_testRun.cached_recent_test.inspect)
+    refute_nil(Default_subtestRun.cached_recent_test[:recent_test])
+    refute_nil(Default_testRun.cached_recent_test[:recent_test])
+    assert_nil(Forced_timeout_testRun.cached_recent_test[:recent_test])
+    assert_nil(TestSelf.cached_recent_test)
   end # Recent_test_default
 
   def test_Timeout_default
@@ -126,7 +130,7 @@ class TestRunTest < TestCase
     assert_instance_of(Float, Default_testRun.subtest_timeout)
   end # subtest_timeout
 
-  def test_run_individual_tests
+  def run_individual_tests # moved to long_test
     puts Default_testRun.test_executable.all_test_names.inspect if $VERBOSE
     Default_testRun.run_individual_tests.each do |subtest|
       puts subtest.explain_exception

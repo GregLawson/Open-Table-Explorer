@@ -32,10 +32,10 @@ class TestRun # < ActiveRecord::Base
           elapsed_time = Time.now - start_time
           puts 'timeout'
           puts exception_object_raised.inspect
-          puts 'start_time = ' + start_time.to_s if $VERBOSE
+          puts 'start_time = ' + start_time.to_s
           puts "\nelapsed_time = " + elapsed_time.to_s
-          puts "\nTime.now = " + Time.now.to_s if $VERBOSE
-          { test: test_run.test, exception_object_raised: exception_object_raised, elapsed_time: elapsed_time }
+          puts "\nTime.now = " + Time.now.to_s
+          { test: test_run.test, recent_test: recent_test, exception_object_raised: exception_object_raised, elapsed_time: elapsed_time }
         end # begin/rescue block
       end # if
     end # Recent_test_default
@@ -60,10 +60,10 @@ class TestRun # < ActiveRecord::Base
   include Virtus.value_object
   values do
     attribute :test_executable, TestExecutable
-    attribute :test, Symbol, default: nil
-    attribute :cached_recent_test, Hash, default: TestRun::Recent_test_default
-    attribute :cached_all_test_names, Array, default: TestRun::All_test_names_default
-    attribute :test_run_timeout, Float, default: Timeout_default
+		attribute :test, Symbol, :default => nil
+		attribute :cached_all_test_names, Array, :default => TestRun::All_test_names_default
+		attribute :test_run_timeout, Float, :default => Timeout_default
+		attribute :cached_recent_test, Hash, :default => TestRun::Recent_test_default
   end # values
   def all_test_names
     @test_executable.all_test_names
