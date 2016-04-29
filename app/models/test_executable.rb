@@ -146,9 +146,13 @@ def testable?
 	if unit_file? then # probably can't test if not in a unit
 		if recursion_danger? then
 			false # terminate recursion
-		elsif @test_type == :unit then
+		elsif generatable_unit_file? && @test_type == :unit then
+			true
+		elsif regression_unit_test_file.to_s[-3..-1] == '.rb' then
 			true
 		elsif @pattern[:suffix][-8..-1] == "_test.rb" then
+			true
+		elsif @test_type == :unit then
 			true
 		else
 			false
