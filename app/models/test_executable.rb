@@ -13,6 +13,7 @@ require_relative '../../app/models/ruby_interpreter.rb'
 # require_relative '../../app/models/shell_command.rb'
 # require_relative '../../app/models/branch.rb'
 class RepositoryPathname < Pathname
+  Lint_convention_priorities = ['Metrics/MethodLength', 'Metrics/ClassLength', 'Metrics/LineLength', 'Style/MethodName', 'Metrics/AbcSize'].freeze
   module ClassMethods
     def new_from_path(pathname, repository = Repository::This_code_repository)
       pathname = Pathname.new(pathname.to_s).expand_path
@@ -56,11 +57,59 @@ class RepositoryPathname < Pathname
   module Examples
     TestSelf = RepositoryPathname.new_from_path($PROGRAM_NAME)
     Not_unit = RepositoryPathname.new_from_path('/dev/null')
-    Not_unit_executable = RepositoryPathname.new(relative_pathname: 'test/data_sources/unit_maturity/success.rb')
+    Not_unit_executable = RepositoryPathname.new(relative_pathname: 'test/data_sources/test_maturity/success.rb')
     TestMinimal = RepositoryPathname.new(relative_pathname: 'test/unit/minimal2_test.rb')
     Unit_non_executable = RepositoryPathname.new(relative_pathname: 'log/unit/2.2/2.2.3p173/silence/test_executable.log')
     Ignored_data_source = RepositoryPathname.new(relative_pathname: 'log/unit/2.2/2.2.3p173/silence/CA_540_2014_example-1.jpg')
   end # Examples
+
+  def lint_command_string(logging = :silence)
+    'rubocop --auto-correct --display-style-guide --format json ' +
+      #		' -extra-details ' +
+      case logging
+      when :silence then ''
+      when :medium then ''
+      when :verbose then ''
+      else raise Exception.new(logging.to_s + ' is not a valid logging type.')
+     end + ' ' + @relative_pathname.to_s
+  end # lint_command_string
+
+  def lint_out_file
+    log_path = 'log/'
+    log_path += 'lint'
+    log_path += '/' + @relative_pathname.to_s + '.json'
+    log_path = Pathname.new(log_path)
+    log_path.dirname.mkpath
+    log_path
+  end # lint_out_file
+
+  def lint_run
+    run = ShellCommands.new(lint_command_string)
+    IO.write(lint_out_file.to_s, run.output)
+    run
+  end # lint_run
+
+  def lint_json
+    JSON[lint_run.output]
+  end # lint_json
+
+  def lint_warnings
+    lint_json['files'][0]['offenses'].select { |o| o['severity'] == 'warning' }
+  end # lint_warnings
+
+  def lint_unconventional
+    lint_json['files'][0]['offenses'].select { |o| o['severity'] == 'convention' }.sort do |x, y|
+      Lint_convention_priorities.index(x['cop_name']) <=> Lint_convention_priorities.index(y['cop_name'])
+    end # sort
+  end # lint_unconventional
+
+  def lint_top_unconventional
+    lint_unconventional[0]
+  end # lint_top_unconventional
+
+  def lint_top_priority_unconventional
+    lint_unconventional.select { |o| o['cop_name'] == Lint_convention_priorities.first }
+  end # lint_top_unconventional
 end # RepositoryPathname
 
 class RepositoryAssociation < Virtus::Attribute
@@ -91,7 +140,7 @@ class FileArgument
    end # if
   end # unit_file_type
 
-  # argument path is in a unit andis a generatable file.
+  # argument path is in a unit and is a generatable file.
   def unit_file?
     if unit_file_type == :non_unit
       false
@@ -113,6 +162,15 @@ class FileArgument
       false
     end # if
   end # generatable_unit_file?
+
+  def lint_unit
+    @unit.edit_files.each do |p|
+      file = FileArgument.new(argument_path: p)
+      if file.generatable_unit_file?
+        file.argument_path.lint_run
+      end # if
+    end # each
+  end # lint_unit
 end # FileArgument
 
 class TestExecutable < FileArgument # executable / testable ruby unit with executable
@@ -207,16 +265,6 @@ class TestExecutable < FileArgument # executable / testable ruby unit with execu
       @ruby_test_string += ' --name ' + test.to_s
     end # if
   end # ruby_test_string
-
-  def lint
-    'rubocop --auto-correct --format json ' + 
-		case @ruby_interpreter.logging
-		when :silence then ''
-		when :medium then ''
-		when :verbose then ''
-		else raise Exception.new(logging.to_s + ' is not a valid logging type.')
-    end + ' --out ' + log_path?('.json') + regression_unit_test_file.to_s
-  end # lint
 
   def all_test_names
     grep_run = ShellCommands.new('grep "def test_" ' + regression_unit_test_file.to_s)
