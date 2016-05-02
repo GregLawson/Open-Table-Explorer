@@ -1,5 +1,5 @@
-passed
-2016-04-21 03:10:17.384
+passed-interactive
+2016-05-02 04:40:13.564
 ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test
@@ -7,7 +7,7 @@ Started
 No arguments
 ..............................
 
-Finished in 88.783338797 seconds.
+Finished in 88.330370718 seconds.
 ------
 30 tests, 76 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
