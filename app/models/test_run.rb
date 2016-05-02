@@ -53,7 +53,7 @@ class TestRun # < ActiveRecord::Base
       test_run.test_executable.all_test_names
       #	end # if
     end # All_test_names_default
-    Too_long_for_regression_test = 30.0 # zero means infinite timeout
+    Too_long_for_regression_test = 0.0 # zero means infinite timeout
     Subtest_timeout_margin = 3.0
   end # DefinitionalConstants
   include DefinitionalConstants
