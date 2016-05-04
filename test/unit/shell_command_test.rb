@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -13,39 +13,6 @@ class ShellCommandsTest < DefaultTestCase2
 #include DefaultTests
 include ShellCommands::Examples
 include Shell::Ssh::Examples
-def self.startup
-	ssh_pid = ShellCommands.new('echo $SSH_AGENT_PID $SSH_AUTH_SOCK')
-	ps =ShellCommands.new('ps -C ssh-agent').assert_post_conditions.output.split("\n")[1..-1]
-	spaced_column_regexp = /[^\s]+/.capture(:column) * /\s/
-	integer_regexp = /[0-9]+/
-	white_space = /\s/
-	string_spaceless = /[^\s]/
-	ps.map do |process_line|
-		columns = Parse.parse_into_array(process_line, spaced_column_regexp)
-		puts columns.inspect
-		ps_regexp = integer_regexp.capture(:pid)
-		assert_instance_of(Fixnum, Parse.parse(process_line, ps_regexp)[:pid].to_i)
-		ps_regexp *= white_space * string_spaceless.capture(:tty) * white_space
-		assert_equal('?', Parse.parse(process_line, ps_regexp)[:tty])
-		ps_regexp *= white_space * string_spaceless.capture(:time) * white_space
-		assert_instance_of(Hash, Parse.parse(process_line, ps_regexp))
-		assert_equal('00:00:00', Parse.parse(process_line, ps_regexp)[:time])
-		ps_regexp *= string_spaceless.capture(:command)
-		assert_equal('ssh-agent', Parse.parse(process_line, ps_regexp)[:command])
-		process = Parse.parse(process_line, ps_regexp)
-		puts process.inspect
-	end # map
-	assert_equal(1, ps.size, ps)
-end # self.startup
-def test_Ssh_initialize
-	refute_empty(Central.user)	
-end # initialize
-def test_command_on_remote
-	remote_run = Central['echo "cat"'].assert_post_conditions
-	assert_equal("cat\n", remote_run.output)	
-	assert_equal("/home/greg\n", Central['pwd'].output)	
-#	assert_equal("greg", Central['ls -l /shares/Public/Non-media/Git_repositories/Open-Table-Explorer/.git/./objects'].output)	
-end # []
 def test_assemble_hash_command
 	assert_equal('cd '+Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_hash_command(Cd_command_hash))
 end #assemble_hash_command
@@ -213,18 +180,44 @@ def test_assert_post_conditions
 	Hello_world.assert_post_conditions
 end #assert_post_conditions
 end #ShellCommands
+
+class FileDependancyTest < TestCase
+include FileDependancy::Examples # for FileIPO
+def test_input_updated?
+	assert(Pwd.input_updated?, Pwd.inspect)
+	assert(Cat.input_updated?, Cat.inspect)
+#	refute(Touch_fail.input_updated?, Touch_fail.inspect)
+#	refute(Cat_fail.input_updated?, Cat_fail.inspect)
+	assert(Touch_create.input_updated?, Touch_create.inspect)
+	FileIPO::Examples::Touch.run # creates IO file
+	input_times = Touch.input_paths.map{|p| Pathname.new(p).mtime}
+	output_times = Touch.output_paths.map{|p| Pathname.new(p).mtime}
+	if input_times.empty?
+		true
+	elsif output_times.empty?
+		true
+	else
+		input_times.max > output_times.min
+	end # if
+	assert(Touch.input_updated?, Touch.inspect)
+	refute(Touch_fail.input_updated?, Touch_fail.inspect)
+	refute(Cat_fail.input_updated?, Cat_fail.inspect)
+end # input_updated?
+end # FileDependancyTest
+
 class FileIPOTest < TestCase
 include FileIPO::Examples # for FileIPO
 def test_FileIPO_virtus
 	assert_equal([], Pwd.input_paths)
 	assert_equal([], Pwd.output_paths)
-	assert_equal([], Touch.input_paths)
-	assert_equal(['/tmp/junk'], Touch.output_paths)
+	assert_equal([], Touch_create.input_paths)
+	assert_equal([Touch_create_path], Touch.input_paths)
+	assert_equal([Touch_create_path], Touch.output_paths)
 	assert_equal(['/dev/null'], Cat.input_paths)
 	assert_equal([], Cat.output_paths)
-	refute_empty(Pwd.errors, Pwd)
-	refute_empty(Touch.errors, Touch)
-	refute_empty(Cat.errors, Cat)
+	assert_empty(Pwd.errors, Pwd)
+	assert_empty(Touch.errors, Touch)
+	assert_empty(Cat.errors, Cat)
 	refute_empty(Touch_fail.errors, Touch_fail)
 	refute_empty(Cat_fail.errors, Cat_fail)
 end # values
@@ -236,6 +229,7 @@ def test_run
 	assert_equal(0, Cat.run.errors[:exitstatus], Cat)
 	assert_equal(:output_does_not_exist, Touch_fail.run.errors["/tmp/junk2"], Touch_fail)
 	assert_equal(:input_does_not_exist, Cat_fail.run.errors["/dev/null2"], Cat_fail)
+	assert_equal(0, Touch_create.run.errors[:exitstatus], Touch_create.inspect)
 end # run
 def test_success?
 	assert(Pwd.run.success?, Pwd.inspect)

@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -312,16 +312,62 @@ end #Examples
 include Examples
 end #ShellCommands
 
-class FileIPO # IPO = Input, Processing, and Output
+class FileDependancy
 include Virtus.value_object
   values do
  	attribute :input_paths, Array, :default => []
 	attribute :chdir, Pathname, :default => nil # current working directory
+ 	attribute :output_paths, Array, :default => []
+	attribute :errors, Hash, :default => {}
+end # values
+
+def input_updated?
+	input_missing = @input_paths.map{|p| !Pathname.new(p).exist?}.any?
+	output_missing = @output_paths.map{|p| !Pathname.new(p).exist?}.any?
+	if input_missing
+		false
+	elsif output_missing
+		true
+	else
+		input_times = @input_paths.map{|p| Pathname.new(p).mtime}
+		output_times = @output_paths.map{|p| Pathname.new(p).mtime}
+		if input_times.empty?
+			true
+		elsif output_times.empty?
+			true
+		else
+			input_times.max > output_times.min
+		end # if
+	end # if
+end # input_updated?
+
+def delete_output_files!
+	(@output_paths - @input_paths).each do |path| # don't delete files that are both input and output
+		if File.exist?(path) then
+			Pathname.new(path).delete
+		end # if
+	end # each
+end # delete_output_files!
+module Examples
+Pwd = FileDependancy.new(command_string: 'pwd')
+Chdir = FileDependancy.new(command_string: 'pwd', chdir: '/tmp')
+Touch_create_path = '/tmp/junk' + Time.now.to_s
+Touch_command = ['touch', Touch_create_path]
+Touch_create = FileDependancy.new(command_string: Touch_command, output_paths: [Touch_create_path])
+Touch = FileDependancy.new(input_paths: [Touch_create_path], command_string: Touch_command, output_paths: [Touch_create_path])
+Cat = FileDependancy.new(input_paths: ['/dev/null'], command_string: 'cat /dev/null')
+Touch_fail = FileDependancy.new(command_string: Touch_command, output_paths: ['/tmp/junk2'])
+Cat_fail = FileDependancy.new(input_paths: ['/dev/null2'], command_string: 'cat /dev/null')
+end # Examples
+end # FileDependancy
+
+class FileIPO < FileDependancy # IPO = Input, Processing, and Output
+include Virtus.value_object
+  values do
 	attribute :command_string, String
 	attribute :cached_run, ShellCommands, :default => nil
- 	attribute :output_paths, Array, :default => []
-	attribute :errors, Hash, :default => {state: :not_run_yet}
 end # values
+
 def run
 	@errors = {} # each run resets errors
 	@input_paths.each do |path|
@@ -329,11 +375,7 @@ def run
 			@errors[path] = :input_does_not_exist
 		end # if
 	end # each
-	(@output_paths - @input_paths).each do |path| # don't delete files that are both input and output
-		if File.exist?(path) then
-			Pathname.new(path).delete
-		end # if
-	end # each
+	delete_output_files! # no problem if you have faith in input and output lists
 	@cached_run = if @chdir.nil? then
 		ShellCommands.new(@command_string)
 	else
@@ -351,6 +393,7 @@ def run
 	end # each
 	self # allows command chaining
 end # run
+
 def success?
 	if errors[:exitstatus] != 0 then
 		false
@@ -365,9 +408,12 @@ end # success?
 module Examples
 Pwd = FileIPO.new(command_string: 'pwd')
 Chdir = FileIPO.new(command_string: 'pwd', chdir: '/tmp')
-Touch = FileIPO.new(command_string: 'touch /tmp/junk', output_paths: ['/tmp/junk'])
+Touch_create_path = '/tmp/junk' + Time.now.to_s
+Touch_command = ['touch', Touch_create_path]
+Touch_create = FileIPO.new(command_string: Touch_command, output_paths: [Touch_create_path])
+Touch = FileIPO.new(input_paths: [Touch_create_path], command_string: Touch_command, output_paths: [Touch_create_path])
 Cat = FileIPO.new(input_paths: ['/dev/null'], command_string: 'cat /dev/null')
-Touch_fail = FileIPO.new(command_string: 'touch /tmp/junk', output_paths: ['/tmp/junk2'])
+Touch_fail = FileIPO.new(command_string: Touch_command, output_paths: ['/tmp/junk2'])
 Cat_fail = FileIPO.new(input_paths: ['/dev/null2'], command_string: 'cat /dev/null')
 end # Examples
 end # FileIPO
