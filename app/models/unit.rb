@@ -30,17 +30,17 @@ def missing_files
 end # missing_files
 def edit_symbols
 	edit_files. map do |path|
-		FilePattern.find_by_file(path)
+		FilePattern.find_from_path(path)[:name]
 	end # map
 end # edit_symbols
 def not_symbols
 	pathnames?.map do |path|
-		FilePattern.find_by_file(path)
+		FilePattern.find_from_path(path)[:name]
 	end # map
 end # not_symbols
 def missing_symbols
 	not_files.map do |path|
-		FilePattern.find_by_file(path)
+		FilePattern.find_from_path(path)[:name]
 	end # map
 end # missing_symbols
 module ClassMethods
@@ -320,13 +320,52 @@ extend ClassMethods
 include Virtus.model
 	attribute :containing_class, Class
 	attribute :example_constant_name, String
+def containing_class_name_string
+	if @containing_class.respond_to?(:name) && !@containing_class.name.nil? then
+		@containing_class.name.to_s
+	else
+		message +=  "\n @containing_class.ancestors.inspect = " + @containing_class.ancestors.inspect
+		message +=  @containing_class.instance_variables.inspect
+		message +=  @containing_class.methods(false).inspect
+		message += "\n containing_class = " + @containing_class.inspect + ' does not have a name'
+		raise message
+	end # if
+end # containing_class_name_string
 def ==(other)
 	@containing_class == other.containing_class && @example_constant_name == other.example_constant_name
 end # ==
-def fully_qualified_name
-	@containing_class.name.to_s + '::Examples::' + @example_constant_name.to_s
-end # fully_qualified_name
+def fully_qualified_name_string
+	containing_class_name_string  + '::Examples::'  + @example_constant_name.to_s
+end # fully_qualified_name_string
 def value
-	eval(fully_qualified_name)
+	eval(fully_qualified_name_string)
+rescue NameError  => exception_object_raised	
+	message = "\n Exception raised = " + exception_object_raised.inspect
+	message += "\n fully_qualified_name_string = " + fully_qualified_name_string + ' from '
+	if @containing_class.respond_to?(:name) && !@containing_class.name.nil? then
+		message +=  "\n @containing_class.name = " + @containing_class.name
+	else
+		message += "\n containing_class = " + @containing_class.inspect + ' does not have a name'
+		message +=  "\n @containing_class.ancestors.inspect = " + @containing_class.ancestors.inspect
+		message +=  @containing_class.instance_variables.inspect
+		message +=  @containing_class.methods(false).inspect
+	end # if
+	raise message
+rescue RuntimeError  => exception_object_raised	
+	message = exception_object_raised.inspect
+	message += inspect
+	message += @example_constant_name.to_s + ' in '
+	if @containing_class.respond_to?(:name) && !@containing_class.name.nil? then
+		message +=  @containing_class.name
+	else
+		message +=  "\n @containing_class.ancestors.inspect = " + @containing_class.ancestors.inspect
+		message +=  @containing_class.instance_variables.inspect
+		message +=  @containing_class.methods(false).inspect
+		message += "\n containing_class = " + @containing_class.inspect + ' does not have a name'
+	end # if
+	raise message
 end # value
+module Examples
+TestMinimal_Example = Example.new(example_constant_name: :TestMinimal, containing_class: Unit)
+end # Examples
 end # Example

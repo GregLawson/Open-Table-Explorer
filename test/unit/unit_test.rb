@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson                                      
+#    Copyright (C) 2012-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -14,17 +14,33 @@ class UnitTest < TestCase
 #include DefaultTests
 include Unit::Examples
 def test_edit_files
-	assert_equal(["/home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb"], Executable.edit_files)
+	assert_instance_of(Array, Executable.edit_files)
+	assert_kind_of(Pathname, Executable.edit_files[0])
 end # edit_files
 def test_not_files
+	assert_instance_of(Array, Executable.not_files)
+	assert_kind_of(Pathname, Executable.not_files[0])
 #	assert_equal(["/home/greg/Desktop/src/Open-Table-Explorer/script/unit.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/integration/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/long_test/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/log/library/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/assertions/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/integration/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/long/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit"], Executable.not_files)
 end # not_files
 def test_directories
 	assert_equal([], Executable.directories)
+	assert_instance_of(Array, Executable.directories)
+#	assert_kind_of(Pathname, Executable.directories[0])
 end # directories
 def test_missing_files
 #	assert_equal(["/home/greg/Desktop/src/Open-Table-Explorer/script/unit.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/integration/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/long_test/unit_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_assertions_test.rb", "/home/greg/Desktop/src/Open-Table-Explorer/log/library/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/assertions/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/integration/unit.log", "/home/greg/Desktop/src/Open-Table-Explorer/log/long/unit.log"], Executable.missing_files)
+	assert_instance_of(Array, Executable.missing_files)
+	assert_kind_of(Pathname, Executable.missing_files[0])
 end # missing_files
+def test_edit_symbols
+	assert_equal([:model, :unit, :assertions], Executable.edit_symbols)
+end # edit_symbols
+def test_not_symbols
+	assert_equal([:model, :integration_test, :long_test, :assertions_test, :log, :assertions_log, :integration_log, :long_log, :data_sources], Executable.not_symbols)
+end # not_symbols
+def test_missing_symbols
+	assert_equal([:script, :integration_test, :long_test, :assertions_test, :unit_log, :assertions_test_log, :long_log, :integration_log], Executable.missing_symbols)
+end # missing_symbols
 def test_new_from_path
 	path = $0
 	library_name = FilePattern.unit_base_name?(path)
