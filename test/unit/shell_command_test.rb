@@ -199,11 +199,23 @@ def test_input_updated?
 	else
 		input_times.max > output_times.min
 	end # if
-	assert(Touch.input_updated?, Touch.inspect)
-	refute(Touch_fail.input_updated?, Touch_fail.inspect)
+	refute(Touch.input_updated?, Touch.inspect)
+	assert(Touch_fail.input_updated?, Touch_fail.inspect + Touch_fail.explain_updated)
 	refute(Cat_fail.input_updated?, Cat_fail.inspect)
 end # input_updated?
-end # FileDependancyTest
+
+def test_explain_updated
+	assert_equal('input files are missing', Pwd.explain_updated, Pwd.inspect)
+	assert_equal('if inputs are missing, there can\'t be an update yet.', Touch.explain_updated, Touch.inspect)
+	assert_equal('output files are missing', Cat.explain_updated, Cat.inspect)
+	assert_equal('if there are missing outputs, an update is required to create them.', Touch_fail.explain_updated, Touch_fail.inspect)
+	assert_equal('if inputs are missing, there can\'t be an update yet.', Cat_fail.explain_updated, Cat_fail.inspect)
+end # explain_updated
+def test_delete_output_files!
+end # delete_output_files!
+def test_Examples
+end # Examples
+end # FileDependancy
 
 class FileIPOTest < TestCase
 include FileIPO::Examples # for FileIPO
@@ -215,23 +227,25 @@ def test_FileIPO_virtus
 	assert_equal([Touch_create_path], Touch.output_paths)
 	assert_equal(['/dev/null'], Cat.input_paths)
 	assert_equal([], Cat.output_paths)
-	assert_empty(Pwd.errors, Pwd)
-	assert_empty(Touch.errors, Touch)
-	assert_empty(Cat.errors, Cat)
-	refute_empty(Touch_fail.errors, Touch_fail)
-	refute_empty(Cat_fail.errors, Cat_fail)
+	assert_empty(Pwd.run.errors, Pwd)
+	assert_empty(Touch_create.run.errors, Touch)
+	# assert_empty(Touch.errors, Touch)
+	assert_empty(Cat.run.errors, Cat)
+	refute_empty(Touch_fail.run.errors, Touch_fail)
+	refute_empty(Cat_fail.run.errors, Cat_fail)
 end # values
 def test_run
-	assert_equal(0, Pwd.run.errors[:exitstatus], Pwd.inspect)
-	assert_equal(0, Chdir.run.errors[:exitstatus], Chdir.inspect)
+	assert_equal(0, Pwd.run.cached_run.process_status.exitstatus, Pwd.inspect)
+	assert_equal(0, Chdir.run.cached_run.process_status.exitstatus, Chdir.inspect)
 	assert_equal("/tmp\n", Chdir.run.cached_run.output, Pwd.inspect)
-	assert_equal(0, Touch.run.errors[:exitstatus], Touch)
-	assert_equal(0, Cat.run.errors[:exitstatus], Cat)
+	assert_equal(0, Touch.run.cached_run.process_status.exitstatus, Touch)
+	assert_equal(0, Cat.run.cached_run.process_status.exitstatus, Cat)
 	assert_equal(:output_does_not_exist, Touch_fail.run.errors["/tmp/junk2"], Touch_fail)
 	assert_equal(:input_does_not_exist, Cat_fail.run.errors["/dev/null2"], Cat_fail)
-	assert_equal(0, Touch_create.run.errors[:exitstatus], Touch_create.inspect)
+	assert_equal(0, Touch_create.run.cached_run.process_status.exitstatus, Touch_create.inspect)
 end # run
 def test_success?
+	assert_equal(0, Pwd.run.cached_run.process_status.exitstatus, Pwd.inspect)
 	assert(Pwd.run.success?, Pwd.inspect)
 	assert(Touch.run.success?, Touch.inspect)
 	assert(Cat.run.success?, Cat.inspect)

@@ -341,6 +341,26 @@ def input_updated?
 	end # if
 end # input_updated?
 
+def explain_updated
+	input_missing = @input_paths.map{|p| !Pathname.new(p).exist?}.any?
+	output_missing = @output_paths.map{|p| !Pathname.new(p).exist?}.any?
+	if input_missing
+		'if inputs are missing, there can\'t be an update yet.'
+	elsif output_missing
+		'if there are missing outputs, an update is required to create them.'
+	else
+		input_times = @input_paths.map{|p| Pathname.new(p).mtime}
+		output_times = @output_paths.map{|p| Pathname.new(p).mtime}
+		if input_times.empty?
+			'input files are missing'
+		elsif output_times.empty?
+			'output files are missing'
+		else
+			input_times.inspect + ' > ' + output_times.inspect
+		end # if
+	end # if
+end # explain_updated
+
 def delete_output_files!
 	(@output_paths - @input_paths).each do |path| # don't delete files that are both input and output
 		if File.exist?(path) then
@@ -382,10 +402,12 @@ def run
 		ShellCommands.new(@command_string, :chdir => @chdir)
 	end # if
 #	@errors[:process_status] = @cached_run.process_status
-	@errors[:exitstatus] = @cached_run.process_status.exitstatus
-#	if !@cached_run.errors.empty? then
+	if @cached_run.process_status.exitstatus != 0
+		@errors[:exitstatus] = @cached_run.process_status.exitstatus 
+	end # if
+	if !@cached_run.errors.empty? then
 		errors[:syserr] = @cached_run.errors
-#	end #if
+	end #if
 	@output_paths.each do |path|
 		if !File.exist?(path) then
 			@errors[path] = :output_does_not_exist
@@ -395,7 +417,7 @@ def run
 end # run
 
 def success?
-	if errors[:exitstatus] != 0 then
+	if @cached_run.process_status.exitstatus != 0 then
 		false
 #	elsif errors[:syserr] != '' then
 #		false
