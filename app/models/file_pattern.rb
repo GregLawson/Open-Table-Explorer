@@ -10,8 +10,10 @@ require_relative 'regexp.rb'
 require 'active_support/all'
 
 class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
-module Constants
+module DefinitionalConstants
 # ordered from ambiguous to specific, common to rare
+# TODO rename :generate to :unique, :reversable, or :unit_unique
+# TODO consider making :example_file into :example_unit
 Patterns = [
 	{:suffix =>'.rb', :name => :model, :prefix => 'app/models/', :example_file => __FILE__, :generate => true},
 	{:suffix =>'_test.rb', :name => :unit, :prefix => 'test/unit/', :example_file => $0, :generate => true},
@@ -38,9 +40,9 @@ Relative_pathname_regexp = Start_string*Pathname_character_regexp*Many*End_strin
 Absolute_pathname_regexp = Start_string*Directory_delimiter*Pathname_character_regexp*Many*End_string
 Relative_directory_regexp = Start_string*Pathname_character_regexp*Many*End_string
 Absolute_directory_regexp = Start_string*Directory_delimiter*Pathname_character_regexp*Many*End_string
-end # Constants
-include Constants
-module ClassMethods
+end # DefinitionalConstants
+include DefinitionalConstants
+module DefinitionalClassMethods
 def executing_path?
 	squirrely_string = $PROGRAM_NAME
 	class_name = self.name.to_s
@@ -76,7 +78,7 @@ def repository_dir?(path = $0)
 	end #if
 	begin
 		git_directory = dirname+'/.git'
-		if File.exists?(git_directory) then
+		if File.exist?(git_directory) then
 			dirname = File.expand_path(dirname)+'/'
 			done = true
 		elsif dirname.size<2 then
@@ -93,7 +95,7 @@ end #repository_dir?
 def project_root_dir?(path = $0)
 #	path = File.expand_path(path)
 	matched_pattern = find_from_path(path)
-	roots = Constants::Patterns.map do |p|
+	roots = DefinitionalConstants::Patterns.map do |p|
 		matchData = Regexp.new(p[:prefix]).match(path.to_s)
 		if matchData.nil? then
 			nil
@@ -111,7 +113,7 @@ def project_root_dir?(path = $0)
 	end #if
 end #project_root_dir
 def find_by_name(name)
-	Constants::Patterns.find do |s|
+	DefinitionalConstants::Patterns.find do |s|
 		s[:name]==name
 	end #find
 end #find_by_name
@@ -124,20 +126,11 @@ def match_path(pattern, path)
 end # match_path
 def match_all?(path)
 #	path = File.expand_path(path)
-	ret = Constants::Patterns.map do |p|
+	ret = DefinitionalConstants::Patterns.map do |p|
 		match = match_path(p, path)
 	end # map
 	ret
 end # match_all
-def find_all_from_path(path)
-	ret = match_all?(path).select do |p|
-		p[:full_match]
-	end # select
-	ret
-end #find_all_from_path
-def find_from_path(path)
-	find_all_from_path(path).last
-end #find_from_path
 def find_name_from_path(path)
 	pattern = find_from_path(path)
 	if pattern.nil? then
@@ -156,24 +149,15 @@ end # path?
 #returns Array of all possible pathnames for a unit_base_name
 def pathnames?(unit_base_name)
 	raise "unit_base_name" if unit_base_name.nil?
-	Constants::Patterns.map do |p|
+	DefinitionalConstants::Patterns.map do |p|
 		path?(p, unit_base_name)
 	end #
 end #pathnames
-def new_from_path(path)
-	raise path.inspect unless path.instance_of?(String) || path.instance_of?(Pathname)
-	path = File.expand_path(path)
-	pattern = FilePattern.find_from_path(path)
-	FilePattern.new(pattern,
-						FilePattern.unit_base_name?(path),
-						FilePattern.project_root_dir?(path),
-						FilePattern.repository_dir?(path))
-end # new_from_path
 #FilePattern.assert_pre_conditions
 #assert_includes(FilePattern.included_modules, :Assertions)
 #assert_pre_conditions
-end #ClassMethods
-extend ClassMethods
+end # DefinitionalClassMethods
+extend DefinitionalClassMethods
 attr_reader :pattern, :project_root_dir, :repository_dir, :unit_base_name
 def initialize(pattern,
 					 unit_base_name = '*',
@@ -188,6 +172,28 @@ end #initialize
 #def inspect
 #	message = "FilePattern<instance_variables = #{instance_variables.inspect}>"
 #e#nd #inspect
+module Constructors # such as alternative new methods
+include DefinitionalConstants
+def new_from_path(path)
+	raise path.inspect unless path.instance_of?(String) || path.instance_of?(Pathname)
+	path = File.expand_path(path)
+	pattern = FilePattern.find_from_path(path)
+	FilePattern.new(pattern,
+						FilePattern.unit_base_name?(path),
+						FilePattern.project_root_dir?(path),
+						FilePattern.repository_dir?(path))
+end # new_from_path
+def find_all_from_path(path)
+	ret = match_all?(path).select do |p|
+		p[:full_match]
+	end # select
+	ret
+end #find_all_from_path
+def find_from_path(path)
+	find_all_from_path(path).last
+end #find_from_path
+end # Constructors
+extend Constructors
 def path?(unit_base_name = @basename)
 	raise @pattern.inspect unless @pattern.instance_of?(Hash)
 	raise @pattern.inspect if !@pattern[:prefix].instance_of?(String)
@@ -204,16 +210,15 @@ end #pathname_glob
 def relative_path?(unit_base_name)
 	Pathname.new(path?(unit_base_name)).relative_path_from(Pathname.new(Dir.pwd))
 end #relative_path
-module Constants
+module ReferenceObjects
 Library = FilePattern.new_from_path(__FILE__)
+# TODO rename Executable to Program_name (case?)
 Executable = FilePattern.new_from_path($0)
-end #Constants
-include Constants
+end # ReferenceObjects
+include ReferenceObjects
 #require_relative '../../test/assertions.rb'
 module Assertions
-
 module ClassMethods
-
 # conditions that are always true (at least atomically)
 def assert_invariant
 #	fail "end of assert_invariant "
@@ -228,7 +233,7 @@ def assert_post_conditions
 	path = File.expand_path($0)
 #	refute_nil(path)
 #	refute_empty(path)
-#	assert(File.exists?(path))
+#	assert(File.exist?(path))
 #	refute_empty(FilePattern.class_variables)
 #	assert_includes(FilePattern.class_variables, :@@project_root_dir)
 #	assert_pathname_exists(FilePattern.class_variable_get(:@@project_root_dir))
@@ -265,7 +270,7 @@ end #assert_pre_conditions
 def assert_post_conditions(message = 'self = '+self.inspect)
 #	refute_empty(@project_root_dir, message)
 #	assert_pathname_exists(@project_root_dir)
-#	assert(File.exists?(@path))
+#	assert(File.exist?(@path))
 #	find_all_from_path = FilePattern.find_all_from_path(@path)
 #	assert_equal(1, find_all_from_path.size, find_all_from_path)
 end #assert_post_conditions

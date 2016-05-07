@@ -175,8 +175,6 @@ class CommandLineTest < TestCase
     assert(Script_command_line.executable_object.respond_to?(:argument_types))
 
     refute_nil(Script_command_line.executable_method?(:argument_types))
-    refute_nil(Script_command_line.executable_method?(:argument_types))
-    refute_nil(Script_command_line.executable_method?(:argument_types))
     test_run = ShellCommands.new('ruby -W0 script/command_line.rb editor minimal test/unit/samba_test.rb')
     #	assert(test_run.success?, test_run.inspect)
   end # executable_method?
