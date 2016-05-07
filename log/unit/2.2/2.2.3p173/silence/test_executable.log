@@ -1,84 +1,38 @@
 passed
-2016-05-03 06:16:45.221
+2016-05-07 04:08:11.828
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test
 Started
-............F
-===============================================================================
-Failure: test_lint_top_priority_unconventional(RepositoryPathnameTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:186:in `test_lint_top_priority_unconventional'
-     183:     top_priority = TestSelf.lint_unconventional.select { |o| o['cop_name'] == RepositoryPathname::Lint_convention_priorities.first }
-     184:     assert_equal(top_priority[0]['cop_name'], TestSelf.lint_top_unconventional['cop_name'], TestSelf.lint_top_unconventional)
-     185:     assert_equal(RepositoryPathname::Lint_convention_priorities[0], TestSelf.lint_top_unconventional['cop_name'], TestSelf.lint_top_unconventional)
-  => 186:     assert_equal([], TestSelf.lint_top_priority_unconventional, TestSelf.lint_top_priority_unconventional)
-     187:   end # lint_top_unconventional
-     188: end # RepositoryPathname
-     189: 
-[{"severity"=>"convention", "message"=>"Method has too many lines. [11/10] (https://github.com/bbatsov/ruby-style-guide#short-methods)", "cop_name"=>"Metrics/MethodLength", "corrected"=>nil, "location"=>{"line"=>161, "column"=>3, "length"=>1004}}]
-<[]> expected but was
-<[{"cop_name"=>"Metrics/MethodLength",
-  "corrected"=>nil,
-  "location"=>{"column"=>3, "length"=>1004, "line"=>161},
-  "message"=>
-   "Method has too many lines. [11/10] (https://github.com/bbatsov/ruby-style-guide#short-methods)",
-  "severity"=>"convention"}]>
+............................
 
-diff:
-+ [{"cop_name"=>"Metrics/MethodLength",
-+   "corrected"=>nil,
-+   "location"=>{"column"=>3, "length"=>1004, "line"=>161},
-+   "message"=>
-+    "Method has too many lines. [11/10] (https://github.com/bbatsov/ruby-style-guide#short-methods)",
-? [                          ]
-?   "severity"=>"convention"} 
-===============================================================================
-F
-===============================================================================
-Failure:
-  {"severity"=>"convention", "message"=>"Method has too many lines. [11/10] (https://github.com/bbatsov/ruby-style-guide#short-methods)", "cop_name"=>"Metrics/MethodLength", "corrected"=>nil, "location"=>{"line"=>161, "column"=>3, "length"=>1004}}.
-  <"Metrics/MethodLength"> expected to be != to
-  <"Metrics/MethodLength">.
-test_lint_top_unconventional(RepositoryPathnameTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:178:in `test_lint_top_unconventional'
-     175:   end # lint_unconventional
-     176: 
-     177:   def test_lint_top_unconventional
-  => 178:     assert_not_equal(RepositoryPathname::Lint_convention_priorities[0], TestSelf.lint_top_unconventional['cop_name'], TestSelf.lint_top_unconventional)
-     179:   end # lint_top_unconventional
-     180: 
-     181:   def test_lint_top_priority_unconventional
-===============================================================================
-...............
-
-Finished in 120.851911389 seconds.
+Finished in 0.264856781 seconds.
 ------
-29 tests, 348 assertions, 2 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-93.1034% passed
+28 tests, 445 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
 ------
-0.24 tests/s, 2.88 assertions/s
+105.72 tests/s, 1680.15 assertions/s
 
-Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb"
-	User time (seconds): 114.64
-	System time (seconds): 7.06
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:02.36
+	User time (seconds): 1.63
+	System time (seconds): 0.13
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.79
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 50372
+	Maximum resident set size (kbytes): 37272
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 934498
-	Voluntary context switches: 1110
-	Involuntary context switches: 11610
+	Minor (reclaiming a frame) page faults: 16173
+	Voluntary context switches: 167
+	Involuntary context switches: 195
 	Swaps: 0
 	File system inputs: 0
-	File system outputs: 1976
+	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0

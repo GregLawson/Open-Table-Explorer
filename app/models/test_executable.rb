@@ -13,7 +13,8 @@ require_relative '../../app/models/ruby_interpreter.rb'
 # require_relative '../../app/models/shell_command.rb'
 # require_relative '../../app/models/branch.rb'
 class RepositoryPathname < Pathname
-  Lint_convention_priorities = ['Metrics/MethodLength', 'Metrics/ClassLength', 'Metrics/LineLength', 'Style/MethodName', 'Metrics/AbcSize'].freeze
+  Lint_convention_priorities = ['Metrics/MethodLength', 'Metrics/ClassLength', 'Metrics/LineLength', 'Style/MethodName', 'Metrics/AbcSize', 'Style/IfInsideElse'].freeze
+  Lint_warning_priorities = ['Lint/UselessComparison', 'Lint/UselessAssignment'].freeze
   module ClassMethods
     def new_from_path(pathname, repository = Repository::This_code_repository)
       pathname = Pathname.new(pathname.to_s).expand_path
@@ -59,7 +60,7 @@ class RepositoryPathname < Pathname
     Not_unit = RepositoryPathname.new_from_path('/dev/null')
     Not_unit_executable = RepositoryPathname.new(relative_pathname: 'test/data_sources/test_maturity/success.rb')
     TestMinimal = RepositoryPathname.new(relative_pathname: 'test/unit/minimal2_test.rb')
-    Unit_non_executable = RepositoryPathname.new(relative_pathname: 'log/unit/2.2/2.2.3p173/silence/test_executable.log')
+    Unit_non_executable = RepositoryPathname.new(relative_pathname: 'log/unit/2.2/2.2.3p173/silence/minimal2.log')
     Ignored_data_source = RepositoryPathname.new(relative_pathname: 'log/unit/2.2/2.2.3p173/silence/CA_540_2014_example-1.jpg')
   end # Examples
 
@@ -83,14 +84,26 @@ class RepositoryPathname < Pathname
     log_path
   end # lint_out_file
 
-  def lint_run
-    run = ShellCommands.new(lint_command_string)
-    IO.write(lint_out_file.to_s, run.output)
-    run
+  def lint_output
+    input_paths = [to_s]
+    output_paths = [lint_out_file]
+    file_ipo = FileIPO.new(input_paths: input_paths, command_string: lint_command_string, output_paths: output_paths)
+    if file_ipo.input_updated?
+      message = file_ipo.inspect
+      message += "\n"
+      message += file_ipo.explain_updated
+      puts message if $VERBOSE
+      run = file_ipo.run
+      #				@errors += file_ipo.errors
+      IO.write(lint_out_file.to_s, run.cached_run.output)
+      run.cached_run.output
+    else
+      IO.read(lint_out_file.to_s)
+    end # if
   end # lint_run
 
   def lint_json
-    JSON[lint_run.output]
+    JSON[lint_output]
   end # lint_json
 
   def lint_warnings
@@ -99,16 +112,24 @@ class RepositoryPathname < Pathname
 
   def lint_unconventional
     lint_json['files'][0]['offenses'].select { |o| o['severity'] == 'convention' }.sort do |x, y|
-      Lint_convention_priorities.index(x['cop_name']) <=> Lint_convention_priorities.index(y['cop_name'])
+      if RepositoryPathname::Lint_convention_priorities.include?(x['cop_name'])
+        if RepositoryPathname::Lint_convention_priorities.include?(y['cop_name'])
+          RepositoryPathname::Lint_convention_priorities.index(x['cop_name']) <=> RepositoryPathname::Lint_convention_priorities.index(y['cop_name'])
+        else
+          +1
+        end # if
+      else
+        if RepositoryPathname::Lint_convention_priorities.include?(y['cop_name'])
+          -1
+        else
+          x['cop_name'] > y['cop_name'] # if all else fails, use alphabetical order
+        end # if
+      end # if
     end # sort
   end # lint_unconventional
 
   def lint_top_unconventional
     lint_unconventional[0]
-  end # lint_top_unconventional
-
-  def lint_top_priority_unconventional
-    lint_unconventional.select { |o| o['cop_name'] == Lint_convention_priorities.first }
   end # lint_top_unconventional
 end # RepositoryPathname
 
@@ -132,6 +153,30 @@ class FileArgument
     Unit_non_executable = FileArgument.new(argument_path: 'log/unit/2.2/2.2.3p173/silence/test_executable.log')
     Ignored_data_source = FileArgument.new(argument_path: 'log/unit/2.2/2.2.3p173/silence/CA_540_2014_example-1.jpg')
   end # Examples
+
+  def lint_output
+    if unit_file?
+      input_files = @unit.edit_files
+      output_files = [@argument_path.lint_out_file]
+      file_ipo = FileIPO.new(input_files: input_files, command_string: @argument_path.lint_command_string, output_files: output_files)
+      if file_ipo.input_updated?
+        message = file_ipo.inspect
+        message += "\n"
+        message += file_ipo.explain_updated
+        puts message if $VERBOSE
+        run = file_ipo.run
+        #				@errors += file_ipo.errors
+        IO.write(@argument_path.lint_out_file.to_s, run.cached_run.output)
+        run.cached_run.output
+      else
+        IO.read(@argument_path.lint_out_file.to_s)
+        end # if
+      run.cached_run.output
+    else
+      @argument_path.lint_output
+    end # if
+  end # lint_output
+
   def unit_file_type
     if pattern.nil?
       :non_unit
@@ -167,7 +212,7 @@ class FileArgument
     @unit.edit_files.each do |p|
       file = FileArgument.new(argument_path: p)
       if file.generatable_unit_file?
-        file.argument_path.lint_run
+        file.argument_path.lint_output
       end # if
     end # each
   end # lint_unit
@@ -221,7 +266,7 @@ class TestExecutable < FileArgument # executable / testable ruby unit with execu
       else
         false
       end # if
-    end # if
+     end # if
   end # testable?
 
   def regression_test

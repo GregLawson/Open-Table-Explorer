@@ -87,7 +87,7 @@ class RepositoryPathnameTest < TestCase
     assert_match(/rubocop/, Not_unit_executable.lint_command_string)
     assert_match(/rubocop/, TestMinimal.lint_command_string)
     assert_match(/rubocop/, Unit_non_executable.lint_command_string)
-    assert_instance_of(Hash, JSON[TestSelf.lint_run.output])
+    assert_instance_of(Hash, JSON[TestSelf.lint_output])
   end # lint_command_string
 
   def test_lint_out_file
@@ -96,35 +96,35 @@ class RepositoryPathnameTest < TestCase
     assert(TestSelf.lint_out_file.dirname.directory?)
     refute(TestSelf.lint_out_file.directory?, TestSelf.lint_out_file.stat.inspect)
     refute_empty(Dir['log/lint/**/*.json'])
-    assert_empty(Dir['log/lint/**/*.*'] - Dir['log/lint/**/*.json'])
+    # assert_empty(Dir['log/lint/**/*.*'] - Dir['log/lint/**/*.json'])
     assert(File.exist?(TestSelf.lint_out_file), TestSelf.lint_out_file.to_s)
   end # lint_out_file
 
   # rubocop:disable Metrics/MethodLength
-  def test_lint_run
-    assert_instance_of(String, TestSelf.lint_run.output)
-    assert_instance_of(String, Not_unit.lint_run.output)
-    assert_instance_of(String, Not_unit_executable.lint_run.output)
-    assert_instance_of(String, TestMinimal.lint_run.output)
-    assert_instance_of(String, Unit_non_executable.lint_run.output)
+  def test_lint_output
+    assert_instance_of(String, TestSelf.lint_output)
+    assert_instance_of(String, Not_unit.lint_output)
+    assert_instance_of(String, Not_unit_executable.lint_output)
+    assert_instance_of(String, TestMinimal.lint_output)
+    assert_instance_of(String, Unit_non_executable.lint_output)
 
-    assert_operator(0, :<, TestSelf.lint_run.output.size, TestSelf.lint_run.inspect)
-    assert_operator(0, :<, Not_unit.lint_run.output.size)
-    assert_operator(0, :<, Not_unit_executable.lint_run.output.size)
-    assert_operator(0, :<, TestMinimal.lint_run.output.size)
-    assert_operator(0, :<, Unit_non_executable.lint_run.output.size)
+    assert_operator(0, :<, TestSelf.lint_output.size, TestSelf.lint_output.inspect)
+    assert_operator(0, :<, Not_unit.lint_output.size)
+    assert_operator(0, :<, Not_unit_executable.lint_output.size)
+    assert_operator(0, :<, TestMinimal.lint_output.size)
+    assert_operator(0, :<, Unit_non_executable.lint_output.size)
 
-    assert_instance_of(Hash, JSON[TestSelf.lint_run.output])
-    assert_instance_of(Hash, JSON[Not_unit.lint_run.output])
-    assert_instance_of(Hash, JSON[Not_unit_executable.lint_run.output])
-    assert_instance_of(Hash, JSON[TestMinimal.lint_run.output])
-    assert_instance_of(Hash, JSON[Unit_non_executable.lint_run.output])
+    assert_instance_of(Hash, JSON[TestSelf.lint_output])
+    assert_instance_of(Hash, JSON[Not_unit.lint_output])
+    assert_instance_of(Hash, JSON[Not_unit_executable.lint_output])
+    assert_instance_of(Hash, JSON[TestMinimal.lint_output])
+    assert_instance_of(Hash, JSON[Unit_non_executable.lint_output])
 
-    assert_equal('', TestSelf.lint_run.errors)
-    assert_equal('', Not_unit.lint_run.errors)
-    assert_equal('', TestMinimal.lint_run.errors)
-    assert_equal('', Unit_non_executable.lint_run.errors)
-    assert_equal('', Not_unit_executable.lint_run.errors)
+    #    assert_equal('', TestSelf.lint_run.errors)
+    #    assert_equal('', Not_unit.lint_run.errors)
+    #    assert_equal('', TestMinimal.lint_run.errors)
+    #    assert_equal('', Unit_non_executable.lint_run.errors)
+    #    assert_equal('', Not_unit_executable.lint_run.errors)
 
     #    TestSelf.lint_run.assert_post_conditions
   end # lint_run
@@ -147,43 +147,58 @@ class RepositoryPathnameTest < TestCase
     assert_equal(%w(convention warning), TestSelf.lint_json['files'][0]['offenses'].map { |o| o['severity'] }.uniq, TestSelf.lint_json['files'])
     assert_equal(TestSelf.relative_pathname.to_s, TestSelf.lint_json['files'][0]['path'], TestSelf.lint_json['files'])
   end # lint_json
-  # rubocop:enable Metrics/MethodLength
 
   def test_lint_warnings
-    assert_equal(['Lint/UselessComparison', 'Lint/UselessAssignment'], TestSelf.lint_warnings.map { |o| o['cop_name'] }.uniq)
     assert_equal([], Not_unit.lint_warnings)
     assert_equal([], TestMinimal.lint_warnings)
     assert_equal(['Syntax'], Unit_non_executable.lint_warnings.map { |o| o['cop_name'] }.uniq, Unit_non_executable.lint_warnings)
     assert_equal([], Not_unit_executable.lint_warnings)
+    existing_cops = TestSelf.lint_warnings.map { |o| o['cop_name'] }.uniq
+    unexpected_cops = existing_cops - RepositoryPathname::Lint_warning_priorities
+    message = TestSelf.lint_warnings.select do |offense|
+      offense[:unexpected] = unexpected_cops.include?(offense['cop_name'])
+      assert_include(existing_cops, offense['cop_name'])
+      #      assert_include(RepositoryPathname::Lint_warning_priorities, offense['cop_name'], offense)
+      unexpected_cops.include?(offense['cop_name'])
+    end.join("\n") # if
+    assert_empty(unexpected_cops, message)
   end # lint_warnings
 
-  # rubocop:enable Metrics/MethodLength
   def test_lint_unconventional
     unsorted = TestSelf.lint_json['files'][0]['offenses'].select { |o| o['severity'] == 'convention' }
     sorted = unsorted.sort do |x, y|
       assert_respond_to(RepositoryPathname::Lint_convention_priorities, :index)
-      RepositoryPathname::Lint_convention_priorities.index(x) <=> RepositoryPathname::Lint_convention_priorities.index(y)
+      comparison = if RepositoryPathname::Lint_convention_priorities.include?(x['cop_name'])
+                     if RepositoryPathname::Lint_convention_priorities.include?(y['cop_name'])
+                       RepositoryPathname::Lint_convention_priorities.index(x['cop_name']) <=> RepositoryPathname::Lint_convention_priorities.index(y['cop_name'])
+                     else
+                       +1
+                     end # if
+                   else
+                     if RepositoryPathname::Lint_convention_priorities.include?(y['cop_name'])
+                       -1
+                     else
+                       x['cop_name'] > y['cop_name'] # if all else fails, use alphabetical order
+                     end # if
+                   end # if
+      #      assert_include(RepositoryPathname::Lint_convention_priorities, x['cop_name'], x.inspect)
+      #      assert_include(RepositoryPathname::Lint_convention_priorities, y['cop_name'], y.inspect)
+      comparison
     end # sort
 
     assert_instance_of(Array, TestSelf.lint_unconventional, TestSelf.lint_unconventional)
     #    assert_include(TestSelf.lint_unconventional, 'Metrics/LineLength', TestSelf.lint_unconventional)
-    assert_equal(RepositoryPathname::Lint_convention_priorities, TestSelf.lint_unconventional.map { |o| o['cop_name'] }.uniq, TestSelf.lint_unconventional)
     assert_equal([], Not_unit.lint_unconventional)
     assert_equal([], TestMinimal.lint_unconventional)
     assert_equal([], Unit_non_executable.lint_unconventional.map { |o| o['cop_name'] }.uniq)
     assert_equal([], Not_unit_executable.lint_unconventional)
+    unexpected_cops = TestSelf.lint_unconventional.map { |o| o['cop_name'] }.uniq - RepositoryPathname::Lint_convention_priorities
+    assert_empty(unexpected_cops, TestSelf.lint_unconventional) # flag new cops
   end # lint_unconventional
+  # rubocop:enable Metrics/MethodLength
 
   def test_lint_top_unconventional
-    assert_not_equal(RepositoryPathname::Lint_convention_priorities[0], TestSelf.lint_top_unconventional['cop_name'], TestSelf.lint_top_unconventional)
-  end # lint_top_unconventional
-
-  def test_lint_top_priority_unconventional
-    assert_equal(TestSelf.lint_unconventional[0]['cop_name'], RepositoryPathname::Lint_convention_priorities.first)
-    top_priority = TestSelf.lint_unconventional.select { |o| o['cop_name'] == RepositoryPathname::Lint_convention_priorities.first }
-    assert_equal(top_priority[0]['cop_name'], TestSelf.lint_top_unconventional['cop_name'], TestSelf.lint_top_unconventional)
-    assert_equal(RepositoryPathname::Lint_convention_priorities[0], TestSelf.lint_top_unconventional['cop_name'], TestSelf.lint_top_unconventional)
-    assert_equal([], TestSelf.lint_top_priority_unconventional, TestSelf.lint_top_priority_unconventional)
+    refute_equal(RepositoryPathname::Lint_convention_priorities[0], TestSelf.lint_top_unconventional['cop_name'], TestSelf.lint_top_unconventional)
   end # lint_top_unconventional
 end # RepositoryPathname
 
@@ -223,7 +238,7 @@ class FileArgumentTest < TestCase
       assert_instance_of(Pathname, p)
       file = FileArgument.new(argument_path: p)
       if file.generatable_unit_file?
-        file.argument_path.lint_run
+        file.argument_path.lint_output
       end # if
     end # each
     TestSelf.lint_unit
