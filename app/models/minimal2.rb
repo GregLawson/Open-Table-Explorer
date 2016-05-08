@@ -11,23 +11,23 @@ class Minimal2
 module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 end # DefinitionalConstants
 include DefinitionalConstants
+module DefinitionalClassMethods
+end # DefinitionalClassMethods
+extend DefinitionalClassMethods
 include Virtus.value_object
   values do
 # 	attribute :branch, Symbol
 #	attribute :age, Fixnum, :default => 789
 #	attribute :timestamp, Time, :default => Time.now
 end # values
-# attr_reader
-#def initialize
-#end # initialize
-module ClassMethods
+  module Constructors # such as alternative new methods
+	include DefinitionalConstants
+  end # Constructors
+  extend Constructors
+module ReferenceObjects # constant objects of the type (e.g. default_objects)
 include DefinitionalConstants
-end # ClassMethods
-extend ClassMethods
-module Constants # constant objects of the type (e.g. default_objects)
-include DefinitionalConstants
-end # Constants
-include Constants
+end # ReferenceObjects
+include ReferenceObjects
 require_relative '../../app/models/assertions.rb'
 module Assertions
 module ClassMethods
@@ -57,6 +57,6 @@ extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
 include DefinitionalConstants
-include Constants
+include ReferenceObjects
 end # Examples
 end # Minimal
