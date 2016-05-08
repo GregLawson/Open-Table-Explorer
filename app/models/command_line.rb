@@ -47,6 +47,7 @@ class CommandLine # < Command
     include DefinitionalConstants
   end # ClassMethods
   extend ClassMethods
+	
   # Deliberately raises exception if number_of_arguments == 0
   def arguments
     @argv[1..-1]

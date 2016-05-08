@@ -28,7 +28,7 @@ class CommandLineTest < TestCase
     #	assert_equal({:inspect=>false, :test=>false, :help=>false, :individual_test=>false}, Script_command_line)
     if Script_command_line.number_of_arguments > 0
       Script_command_line.arguments.each_with_index do |argument, i|
-        puts argument.to_s + ' type of ' + Script_command_line.argument_types[i]
+        puts argument.to_s + ' type of ' + Script_command_line.argument_types[i].name.to_s
       end # each
     else
       puts 'No arguments'
@@ -148,6 +148,14 @@ class CommandLineTest < TestCase
     refute_equal([], Script_command_line.candidate_commands)
     refute_equal([], Test_unit_commandline.candidate_commands)
     refute_equal([], Not_virtus_unit_commandline.candidate_commands)
+		refute_equal([], Test_unit_commandline.executable_object.methods(true))
+		executable_object = Test_unit_commandline.executable_object
+		puts executable_object.methods(true).map do |method_name|
+			ancestors = executable_object.class.ancestors.select do |ancestor|
+				ancestor.instance_methods(false).include?(method_name)
+			end # each
+			{method_name: method_name, ancestors: ancestors}
+		end.inspect # each
   end # candidate_commands
 
   def test_candidate_commands_strings
@@ -230,7 +238,7 @@ class CommandLineTest < TestCase
     assert_equal(nil, Readme_opts[:name])
     assert_equal(4, Readme_opts[:num_limbs])
 
-    assert_equal({ monkey: false, name: nil, num_limbs: 4, help: false }, Readme_opts.to_hash) #=> { host: "192.168.0.1", port: 80, verbose: true, quiet: false }end #Examples
+    assert_equal({ monkey: false, name: nil, num_limbs: 4, help: false }, Readme_opts.to_hash) #=> { host: "192.168.0.1", port: 80, verbose: true, quiet: false }
     CommandLine # .assert_pre_conditions
   end # Examples
 end # CommandLine

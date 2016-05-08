@@ -1,44 +1,45 @@
 passed
-2016-05-06 21:27:45.432
+2016-05-08 05:06:52.145
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 timeout
 #<Timeout::Error: execution expired>
-start_time = 2016-05-06 21:20:02 -0700
+start_time = 2016-05-08 05:05:09 -0700
 
-elapsed_time = 1.537261185
+elapsed_time = 1.51548646
 
-Time.now = 2016-05-06 21:20:03 -0700
+Time.now = 2016-05-08 05:05:11 -0700
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test
 Started
 No arguments
-...........................
+....#<Enumerator:0x000000032f64a0>
+.......................
 
-Finished in 461.633666009 seconds.
+Finished in 100.821357853 seconds.
 ------
-27 tests, 62 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+27 tests, 63 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-0.06 tests/s, 0.13 assertions/s
+0.27 tests/s, 0.62 assertions/s
 
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb"
-	User time (seconds): 794.62
-	System time (seconds): 45.66
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 14:05.55
+	User time (seconds): 112.59
+	System time (seconds): 3.12
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:56.93
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 51432
+	Maximum resident set size (kbytes): 42832
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 1
-	Minor (reclaiming a frame) page faults: 5972441
-	Voluntary context switches: 11297
-	Involuntary context switches: 79602
+	Major (requiring I/O) page faults: 8
+	Minor (reclaiming a frame) page faults: 445900
+	Voluntary context switches: 5242
+	Involuntary context switches: 11035
 	Swaps: 0
-	File system inputs: 40
-	File system outputs: 11984
+	File system inputs: 584
+	File system outputs: 64
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
