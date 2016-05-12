@@ -100,7 +100,7 @@ class RepositoryPathname < Pathname
     else
       IO.read(lint_out_file.to_s)
     end # if
-  end # lint_run
+  end # lint_output
 
   def lint_json
     JSON[lint_output]

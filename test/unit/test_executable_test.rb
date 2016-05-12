@@ -127,7 +127,7 @@ class RepositoryPathnameTest < TestCase
     #    assert_equal('', Not_unit_executable.lint_run.errors)
 
     #    TestSelf.lint_run.assert_post_conditions
-  end # lint_run
+  end # lint_output
 
   def test_lint_json
     assert_equal(1, TestSelf.lint_json['summary']['inspected_file_count'], TestSelf.lint_json['summary'])
