@@ -16,6 +16,14 @@ require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_executable.rb'
 class TestRun # < ActiveRecord::Base
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+    def self.handle_timeout(start_time, exception_object_raised)
+      elapsed_time = Time.now - start_time
+      puts 'timeout'
+      puts exception_object_raised.inspect
+      puts 'start_time = ' + start_time.to_s
+      puts "\nelapsed_time = " + elapsed_time.to_s
+      puts "\nTime.now = " + Time.now.to_s
+    end # handle_timeout
     Recent_test_default = lambda do |test_run, _attribute|
       test = test_run.test
       start_time = Time.now
@@ -23,19 +31,19 @@ class TestRun # < ActiveRecord::Base
         nil
       else
         begin
+          test_run.test_executable.lint_unit
           recent_test =
             Timeout.timeout(test_run.test_run_timeout) do
               ShellCommands.new({ 'SEED' => '0' }, '/usr/bin/time --verbose ' + test_run.test_executable.ruby_test_string(test_run.test), chdir: test_run.test_executable.repository.path.to_s)
             end # Timeout
+          elapsed_time = Time.now - start_time
+          if elapsed_time > test_run.test_run_timeout
+            TestRun::DefinitionalConstants.handle_timeout(start_time, nil)
+          end # if
           { test: test_run.test, recent_test: recent_test, elapsed_time: Time.now - start_time }
         rescue Timeout::Error => exception_object_raised
-          elapsed_time = Time.now - start_time
-          puts 'timeout'
-          puts exception_object_raised.inspect
-          puts 'start_time = ' + start_time.to_s
-          puts "\nelapsed_time = " + elapsed_time.to_s
-          puts "\nTime.now = " + Time.now.to_s
-          { test: test_run.test, recent_test: recent_test, exception_object_raised: exception_object_raised, elapsed_time: elapsed_time }
+          TestRun::DefinitionalConstants.handle_timeout(start_time, exception_object_raised)
+          { test: test_run.test, recent_test: recent_test, exception_object_raised: exception_object_raised, elapsed_time: Time.now - start_time }
         end # begin/rescue block
       end # if
     end # Recent_test_default
@@ -53,17 +61,17 @@ class TestRun # < ActiveRecord::Base
       test_run.test_executable.all_test_names
       #	end # if
     end # All_test_names_default
-    Too_long_for_regression_test = 0.0 # zero means infinite timeout
+    Too_long_for_regression_test = 30.0 # zero means infinite timeout
     Subtest_timeout_margin = 3.0
   end # DefinitionalConstants
   include DefinitionalConstants
   include Virtus.value_object
   values do
     attribute :test_executable, TestExecutable
-		attribute :test, Symbol, :default => nil
-		attribute :cached_all_test_names, Array, :default => TestRun::All_test_names_default
-		attribute :test_run_timeout, Float, :default => Timeout_default
-		attribute :cached_recent_test, Hash, :default => TestRun::Recent_test_default
+    attribute :test, Symbol, default: nil
+    attribute :cached_all_test_names, Array, default: TestRun::All_test_names_default
+    attribute :test_run_timeout, Float, default: Timeout_default
+    attribute :cached_recent_test, Hash, default: TestRun::Recent_test_default
   end # values
   def all_test_names
     @test_executable.all_test_names

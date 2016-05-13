@@ -1,42 +1,42 @@
 passed
-2016-04-28 12:35:28.515
+2016-05-13 04:39:27.200
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 timeout
 #<Timeout::Error: execution expired>
-start_time = 2016-04-28 12:35:23 -0700
+start_time = 2016-05-13 04:39:19 -0700
 
-elapsed_time = 1.472437356
+elapsed_time = 1.540880225
 
-Time.now = 2016-04-28 12:35:24 -0700
+Time.now = 2016-05-13 04:39:20 -0700
 Run options: --seed 0
 
 # Running:
 
 .................
 
-Finished in 3.533888s, 4.8106 runs/s, 19.2423 assertions/s.
+Finished in 6.387194s, 2.6616 runs/s, 10.6463 assertions/s.
 
 17 runs, 68 assertions, 0 failures, 0 errors, 0 skips
 
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb"
-	User time (seconds): 8.86
-	System time (seconds): 0.65
+	User time (seconds): 11.80
+	System time (seconds): 0.92
 	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:09.69
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.92
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 34296
+	Maximum resident set size (kbytes): 40752
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 102441
-	Voluntary context switches: 1235
-	Involuntary context switches: 1092
+	Minor (reclaiming a frame) page faults: 125143
+	Voluntary context switches: 1238
+	Involuntary context switches: 1442
 	Swaps: 0
 	File system inputs: 0
-	File system outputs: 48
+	File system outputs: 152
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0

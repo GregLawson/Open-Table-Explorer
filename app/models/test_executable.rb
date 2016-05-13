@@ -95,7 +95,7 @@ class RepositoryPathname < Pathname
       puts message if $VERBOSE
       run = file_ipo.run
       #				@errors += file_ipo.errors
-      IO.write(lint_out_file.to_s, run.cached_run.output)
+      IO.write(lint_out_file.to_s, run.cached_run.output.gsub('{', "{\n"))
       run.cached_run.output
     else
       IO.read(lint_out_file.to_s)
@@ -209,12 +209,16 @@ class FileArgument
   end # generatable_unit_file?
 
   def lint_unit
-    @unit.edit_files.each do |p|
-      file = FileArgument.new(argument_path: p)
-      if file.generatable_unit_file?
-        file.argument_path.lint_output
-      end # if
-    end # each
+    if unit_file?
+      @unit.edit_files.each do |p|
+        file = FileArgument.new(argument_path: p)
+        if file.generatable_unit_file?
+          file.argument_path.lint_output
+        end # if
+      end # each
+    else
+      argument_path.lint_output
+    end # if
   end # lint_unit
 end # FileArgument
 
