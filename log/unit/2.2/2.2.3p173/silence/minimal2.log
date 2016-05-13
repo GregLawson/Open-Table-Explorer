@@ -1,5 +1,5 @@
 passed
-2016-05-13 07:37:30.692
+2016-05-13 11:09:35.657
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 ....
 
-Finished in 0.004009s, 997.7384 runs/s, 0.0000 assertions/s.
+Finished in 0.003742s, 1068.9351 runs/s, 0.0000 assertions/s.
 
 4 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 
@@ -21,12 +21,12 @@ Finished in 0.004009s, 997.7384 runs/s, 0.0000 assertions/s.
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23228
+	Maximum resident set size (kbytes): 22988
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5936
-	Voluntary context switches: 26
-	Involuntary context switches: 76
+	Minor (reclaiming a frame) page faults: 5876
+	Voluntary context switches: 19
+	Involuntary context switches: 71
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
