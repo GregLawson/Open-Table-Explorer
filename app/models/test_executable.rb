@@ -95,7 +95,7 @@ class RepositoryPathname < Pathname
       puts message if $VERBOSE
       run = file_ipo.run
       #				@errors += file_ipo.errors
-      IO.write(lint_out_file.to_s, run.cached_run.output.gsub('{', "{\n"))
+      IO.write(lint_out_file.to_s, run.cached_run.output.gsub('{"s', "\n" + '{"s'))
       run.cached_run.output
     else
       IO.read(lint_out_file.to_s)

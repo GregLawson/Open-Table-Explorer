@@ -1,5 +1,5 @@
 passed
-2016-05-13 04:39:24.087
+2016-05-13 04:51:24.622
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,23 +8,23 @@ Run options: --seed 0
 
 ....
 
-Finished in 0.003836s, 1042.8078 runs/s, 0.0000 assertions/s.
+Finished in 0.003843s, 1040.7533 runs/s, 0.0000 assertions/s.
 
 4 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb"
-	User time (seconds): 0.66
-	System time (seconds): 0.06
+	User time (seconds): 0.65
+	System time (seconds): 0.07
 	Percent of CPU this job got: 99%
 	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.72
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23216
+	Maximum resident set size (kbytes): 23240
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5934
+	Minor (reclaiming a frame) page faults: 5940
 	Voluntary context switches: 22
 	Involuntary context switches: 71
 	Swaps: 0
