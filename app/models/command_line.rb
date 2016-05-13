@@ -16,6 +16,12 @@ class CommandLine # < Command
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
     SUB_COMMANDS = %w(inspect test).freeze
     Nonscriptable_methods = [:run, :executable, :executable=].freeze
+    Command_line_opts_default = lambda do |commandline, _attribute|
+      commandline.command_line_opts_initialize
+    end # command_line_opts
+    Executable_default = lambda do |commandline, _attribute|
+      TestExecutable.new_from_path(commandline.argv)
+    end # Executable_default
     end # DefinitionalConstants
   include DefinitionalConstants
   module DefinitionalClassMethods # compute sub-objects such as default attribute values
@@ -47,7 +53,7 @@ class CommandLine # < Command
     include DefinitionalConstants
   end # ClassMethods
   extend ClassMethods
-	
+
   # Deliberately raises exception if number_of_arguments == 0
   def arguments
     @argv[1..-1]
@@ -116,7 +122,7 @@ class CommandLine # < Command
         selected ||= (default_arguments?(method_name) && number_arguments <= required_arguments(method_name))
         if selected
           { candidate_command: candidate_command_name, required_arguments: method.required_arguments, default_arguments: method.default_arguments?, method_receiver: executable_object }
-        end # if
+           end # if
       end # if
     end.compact.sort { |x, y| x[:arity] <=> y[:arity] && x[:candidate_command] <=> y[:candidate_command] } # map
   end # candidate_commands

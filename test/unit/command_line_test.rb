@@ -148,14 +148,14 @@ class CommandLineTest < TestCase
     refute_equal([], Script_command_line.candidate_commands)
     refute_equal([], Test_unit_commandline.candidate_commands)
     refute_equal([], Not_virtus_unit_commandline.candidate_commands)
-		refute_equal([], Test_unit_commandline.executable_object.methods(true))
-		executable_object = Test_unit_commandline.executable_object
-		puts executable_object.methods(true).map do |method_name|
-			ancestors = executable_object.class.ancestors.select do |ancestor|
-				ancestor.instance_methods(false).include?(method_name)
-			end # each
-			{method_name: method_name, ancestors: ancestors}
-		end.inspect # each
+    refute_equal([], Test_unit_commandline.executable_object.methods(true))
+    executable_object = Test_unit_commandline.executable_object
+    puts executable_object.methods(true).map do |method_name|
+      ancestors = executable_object.class.ancestors.select do |ancestor|
+        ancestor.instance_methods(false).include?(method_name)
+      end # each
+      { method_name: method_name, ancestors: ancestors }
+    end.inspect # each
   end # candidate_commands
 
   def test_candidate_commands_strings

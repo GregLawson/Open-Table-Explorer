@@ -1,17 +1,17 @@
 passed
-2016-05-13 04:51:34.491
+2016-05-13 07:37:33.781
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test
 Started
 ............................
 
-Finished in 0.262320338 seconds.
+Finished in 0.263214572 seconds.
 ------
 28 tests, 445 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-106.74 tests/s, 1696.40 assertions/s
+106.38 tests/s, 1690.64 assertions/s
 
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb"
 	User time (seconds): 1.61
@@ -22,12 +22,12 @@ Finished in 0.262320338 seconds.
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 37296
+	Maximum resident set size (kbytes): 37276
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 16187
-	Voluntary context switches: 158
-	Involuntary context switches: 194
+	Minor (reclaiming a frame) page faults: 16169
+	Voluntary context switches: 169
+	Involuntary context switches: 201
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
