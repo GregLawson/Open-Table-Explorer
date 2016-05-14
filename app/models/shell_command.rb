@@ -139,7 +139,7 @@ class ShellCommands
   end # execute
   # prefer command as array since each element is shell escaped.
   # Most common need for shell excape is spaces in pathnames (a common GUI style)
-  attr_reader :argument_array, :env, :command, :opts, :command_string
+  attr_reader :argument_array, :env, :command, :opts, :command_string, :elapsed_time
   def initialize(*command)
     if command.size >= 1 # empty command is primarily for testing
       parse_argument_array(command)
