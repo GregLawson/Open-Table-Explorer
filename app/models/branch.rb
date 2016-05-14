@@ -20,7 +20,7 @@ end # GitReference
 class BranchReference < GitReference
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)  (e.g. default values)
     include Repository::Constants
-    Branch_name_regexp = /[a-zA-Z0-9_\/]+/ # conventional syntax
+    Branch_name_regexp = /[-a-zA-Z0-9_\/]+/ # conventional syntax
     # Branch_name_regexp = /[-a-zA-Z0-9_]+/ # extended syntax
 
     Unambiguous_ref_age_pattern = /[0-9]+/.capture(:age)

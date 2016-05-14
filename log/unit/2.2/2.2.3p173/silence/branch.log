@@ -1,36 +1,36 @@
 passed
-2016-04-27 06:36:16.272
+2016-05-14 02:43:30.404
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-......#<LimitCapture:0x00000001bd8cf0 @string="* master\n  passed\n", @regexp=/[* ](?<branch>[a-z0-9A-Z_-]+)\n/, @length_hash_captures=1, @raw_captures=["*", "master", " ", "passed"]>
-#<LimitCapture:0x00000001bdbe28 @string="* master\n  passed\n", @regexp=/(?:[* ] (?<branch>[-a-z0-9A-Z_]+)\n)+/, @length_hash_captures=1, @raw_captures=["", "passed"]>
-#<LimitCapture:0x00000001bd7030 @string="* master\n  passed\n", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
-#<LimitCapture:0x00000001bd5b18 @string="* master\n  passed\n", @regexp=/^[* ] (?<branch>[a-z0-9A-Z_-]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
+......#<LimitCapture:0x000000021a6330 @string="* master\n  passed\n", @regexp=/[* ](?<branch>[a-z0-9A-Z_-]+)\n/, @length_hash_captures=1, @raw_captures=["*", "master", " ", "passed"]>
+#<LimitCapture:0x000000021a2a50 @string="* master\n  passed\n", @regexp=/(?:[* ] (?<branch>[-a-z0-9A-Z_]+)\n)+/, @length_hash_captures=1, @raw_captures=["", "passed"]>
+#<LimitCapture:0x000000021a0a98 @string="* master\n  passed\n", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
+#<LimitCapture:0x0000000219a990 @string="* master\n  passed\n", @regexp=/^[* ] (?<branch>[a-z0-9A-Z_-]+)/, @length_hash_captures=1, @raw_captures=["", "master", "\n", "passed", "\n"]>
 ....................
 
-Finished in 2.046509s, 12.7046 runs/s, 36.6478 assertions/s.
+Finished in 2.423210s, 10.7296 runs/s, 31.7760 assertions/s.
 
-26 runs, 75 assertions, 0 failures, 0 errors, 0 skips
+26 runs, 77 assertions, 0 failures, 0 errors, 0 skips
 
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb"
-	User time (seconds): 2.70
-	System time (seconds): 0.38
-	Percent of CPU this job got: 89%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.46
+	User time (seconds): 2.90
+	System time (seconds): 0.34
+	Percent of CPU this job got: 83%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.91
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 34656
+	Maximum resident set size (kbytes): 34720
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 103434
-	Voluntary context switches: 1386
-	Involuntary context switches: 649
+	Minor (reclaiming a frame) page faults: 95941
+	Voluntary context switches: 1387
+	Involuntary context switches: 626
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 5336
