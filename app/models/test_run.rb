@@ -16,7 +16,7 @@ require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_executable.rb'
 class TestRun # < ActiveRecord::Base
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-    def self.handle_timeout(start_time, exception_object_raised)
+    def self.handle_timeout(_test_run, start_time, exception_object_raised)
       elapsed_time = Time.now - start_time
       puts 'timeout'
       puts exception_object_raised.inspect
@@ -25,7 +25,6 @@ class TestRun # < ActiveRecord::Base
       puts "\nTime.now = " + Time.now.to_s
     end # handle_timeout
     Recent_test_default = lambda do |test_run, _attribute|
-      test = test_run.test
       start_time = Time.now
       if test_run.test_executable.recursion_danger?
         nil
@@ -34,16 +33,19 @@ class TestRun # < ActiveRecord::Base
           test_run.test_executable.lint_unit
           recent_test =
             Timeout.timeout(test_run.test_run_timeout) do
-              ShellCommands.new({ 'SEED' => '0' }, '/usr/bin/time --verbose ' + test_run.test_executable.ruby_test_string(test_run.test), chdir: test_run.test_executable.repository.path.to_s)
+              ShellCommands.new({ 'SEED' => '0' }, '/usr/bin/time --verbose ' +
+                test_run.test_executable.ruby_test_string(test_run.test),
+                                chdir: test_run.test_executable.repository.path.to_s)
             end # Timeout
           elapsed_time = Time.now - start_time
           if elapsed_time > test_run.test_run_timeout
-            TestRun::DefinitionalConstants.handle_timeout(start_time, nil)
+            TestRun::DefinitionalConstants.handle_timeout(test_run, start_time, nil)
           end # if
           { test: test_run.test, recent_test: recent_test, elapsed_time: Time.now - start_time }
         rescue Timeout::Error => exception_object_raised
-          TestRun::DefinitionalConstants.handle_timeout(start_time, exception_object_raised)
-          { test: test_run.test, recent_test: recent_test, exception_object_raised: exception_object_raised, elapsed_time: Time.now - start_time }
+          TestRun::DefinitionalConstants.handle_timeout(test_run, start_time, exception_object_raised)
+          { test: test_run.test, recent_test: recent_test,
+            exception_object_raised: exception_object_raised, elapsed_time: Time.now - start_time }
         end # begin/rescue block
       end # if
     end # Recent_test_default
@@ -92,15 +94,19 @@ class TestRun # < ActiveRecord::Base
       ret += 'recursion danger'
     elsif @cached_recent_test.keys.include?(:exception_object_raised)
       if  @cached_recent_test[:exception_object_raised].instance_of?(Timeout::Error)
-        ret += ' timed-out in ' + @cached_recent_test[:elapsed_time].inspect + ' beyond timeout of ' + @test_run_timeout.to_s
+        ret += ' timed-out in ' + @cached_recent_test[:elapsed_time].inspect +
+               ret += ' beyond timeout of ' + @test_run_timeout.to_s
       else
-        ret += @cached_recent_test[:exception_object_raised].inspect + ' raised in ' + @cached_recent_test[:elapsed_time].inspect + ' with timeout ' + @test_run_timeout.to_s
+        ret += @cached_recent_test[:exception_object_raised].inspect + ' raised in '
+        ret += @cached_recent_test[:elapsed_time].inspect + ' with timeout ' + @test_run_timeout.to_s
       end # if
     else
-      ret += ' took ' + @cached_recent_test[:elapsed_time].inspect + ' within timeout of ' + @test_run_timeout.to_s
+      ret += ' took ' + @cached_recent_test[:elapsed_time].inspect
+      ret += ' within timeout of ' + @test_run_timeout.to_s
     end # if
     #	ret += ' with timeout ' + @test_run_timeout.to_s
-    ret += ' at ' + Time.now.to_s
+    #    ret += ' at ' + Time.now.to_s
+    ret
   end # explain_elapsed_time
 
   def explain_exception
@@ -164,6 +170,7 @@ class TestRun # < ActiveRecord::Base
       commit_message += "\n" + @cached_recent_test[:recent_test].output.to_s
       commit_message += @cached_recent_test[:recent_test].errors
     end # if
+    commit_message
   end # commit_message
 
   def write_commit_message(files)
@@ -214,7 +221,7 @@ class TestRun # < ActiveRecord::Base
       puts '@test_executable = ' + @test_executable.inspect if $VERBOSE
       puts '   TestSelf.test_executable = ' + TestSelf.test_executable.inspect if $VERBOSE
       @test_executable.all_test_names.map do |test_name|
-        error_score_run = TestRun.new(test_executable: @test_executable, test: test_name, test_run_timeout: subtest_timeout)
+        TestRun.new(test_executable: @test_executable, test: test_name, test_run_timeout: subtest_timeout)
       end # each
     else
       raise 'Only one level of subtests.'
