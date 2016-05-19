@@ -20,22 +20,26 @@ GEM
       posix-spawn (~> 0.3.6)
     i18n (0.6.9)
     ice_nine (0.11.0)
+    lazy_priority_queue (0.1.1)
     libusb (0.5.1)
       ffi (>= 1.0)
     mime-types (1.25.1)
     minitest (5.8.1)
     multi_xml (0.5.5)
-    nokogiri (1.5.5)
     oga (1.3.1)
       ast
       ruby-ll (~> 2.1)
     ox (2.2.1)
     posix-spawn (0.3.8)
     regexp_parser (0.1.6)
+    rgl (0.5.2)
+      lazy_priority_queue (~> 0.1.0)
+      stream (~> 0.5.0)
     rserve-client (0.3.1)
     ruby-ll (2.1.2)
       ansi
       ast
+    stream (0.5)
     thread_safe (0.3.4)
     virtus (1.0.3)
       axiom-types (~> 0.1)
@@ -52,9 +56,12 @@ DEPENDENCIES
   libusb
   minitest (~> 5.8.1)
   multi_xml
-  nokogiri
   oga
   ox
   regexp_parser
+  rgl
   rserve-client (~> 0.3.1)
   virtus
+
+BUNDLED WITH
+   1.11.2
