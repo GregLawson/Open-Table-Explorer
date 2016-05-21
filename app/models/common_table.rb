@@ -9,7 +9,7 @@ require_relative '../../app/models/global.rb'
 require_relative '../../app/models/generic_table_html.rb' # in test_helper?
 require_relative '../../app/models/generic_grep.rb' # in test_helper?
 require_relative '../../app/models/column_group.rb'
-require 'yaml'
+#require 'yaml'
 require 'active_support/all'
 # Methods in common bettween ActiveRecord::Base and NoDB
 module Common
