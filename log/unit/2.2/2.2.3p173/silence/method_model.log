@@ -1,324 +1,33 @@
 passed
-2016-05-12 05:54:44.278
+2016-05-25 02:00:11.423
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test
 Started
-..F
-===============================================================================
-Failure: test_Virtus_value_object(MethodModelTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:204:in `assert_method_model_initialized'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:244:in `test_Virtus_value_object'
-     241:     assert_respond_to(owner.new, m)
-     242:     assert_instance_of(Method, owner.new.method(m.to_sym))
-     243:     assert_instance_of(Method, owner.new.method(m.to_sym))
-  => 244:     assert_method_model_initialized(m, owner, scope)
-     245:     mr = MethodModel.new(name: m, owner: owner, scope: scope)
-     246:     #	assert_equal([:init, :theMethod_not_nil, :not_source_location, :rescue_protected, :alphanumeric], mr.init_path)
-     247:     owner = MethodModel
-<:name> expected but was
-<"name">
+...............................
 
-diff:
-? :name 
-? "    "
-===============================================================================
-E
-===============================================================================
-Error: test_ancestor_method_name(MethodModelTest): NameError: undefined local variable or method `ancestor_method_name' for #<MethodModelTest:0x00000001254cb0>
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:183:in `test_ancestor_method_name'
-     180: #		ancestor_method_name = ancestor_method_names(klass, selection)
-     181: 
-     182: 		ancestor_method_name_call = MethodModel.ancestor_method_name(MethodModel, inspect: true)
-  => 183: 		assert_equal(ancestor_method_name, ancestor_method_name_call)
-     184: 		assert_include(MethodModel.method_names(Dir, instance: false), :[])
-     185: 		assert_equal([Dir], MethodModel.ancestor_method_name(Dir, :[], instance: false), MethodModel.method_names(Dir))
-     186: 		assert_equal([Object], MethodModel.ancestor_method_name(Regexp, :superclass, instance: false))
-===============================================================================
-F
-===============================================================================
-Failure: test_ancestor_method_names(MethodModelTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:131:in `test_ancestor_method_names'
-     128: 		assert_equal(BasicObject.instance_methods(false), MethodModel.method_names(BasicObject))
-     129: 		assert_equal([BasicObject], BasicObject.ancestors)
-     130: 		assert_equal(BasicObject.ancestors, MethodModel.ancestor_method_names(BasicObject).keys)
-  => 131: 		assert_equal([BasicObject.instance_methods(false)], MethodModel.ancestor_method_names(BasicObject).values)
-     132: 		assert_equal([BasicObject.methods(false)], MethodModel.ancestor_method_names(BasicObject, instance: false).values)
-     133: 		assert_equal([Object, BasicObject], MethodModel.superclasses(Object))
-     134: 		assert_equal([Test::Unit::Assertions, JSON::Ext::Generator::GeneratorMethods::Object, Kernel], Object.included_modules)
-<[[:==, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__]]> expected but was
-<[[{:inspect=>true}]]>
-
-diff:
-? [[:==, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__]]
-?   {                          p                         t=>tru }              
-===============================================================================
-F
-===============================================================================
-Failure:
-  <[MethodModel.attribute is a class method of class MethodModel
-  ]> expected to include
-  <MethodModel#inspect is a instance method of class MethodModel
-  >.
-test_ancestor_methods(MethodModelTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:387:in `test_ancestor_methods'
-     384: 		#	assert_kind_of(Module, m.class_of_receiver)
-     385: 			m.class_of_receiver == MethodModel
-     386: 		end # select
-  => 387: 		assert_include(method_model_instance_methods, Instance_method_inspect)
-     388: 		assert_include(MethodModel.ancestors[2].methods(false), Class_method_ancestor_methods.name)
-     389: 		assert_include(MethodModel.methods(false), Class_method_ancestor_methods.name)
-     390: 		assert_include(method_model_class_methods, Class_method_ancestor_methods)
-===============================================================================
-F
-===============================================================================
-Failure: test_apply_selection_defaults(MethodModelTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:86:in `test_apply_selection_defaults'
-     83: 	
-     84: 		def test_apply_selection_defaults
-     85: 		assert_equal(Default_method_selection, MethodModel.apply_selection_defaults(Default_method_selection, Default_method_selection))
-  => 86: 		assert_equal([:instance, :method_name_selection], Default_method_selection.keys)
-     87: 		selection = {instance: false}
-     88: 		assert_equal(false, selection[:instance])
-     89: 		assert_equal(false, selection[:instance].nil?)
-<[:instance, :method_name_selection]> expected but was
-<[:instance, :method_name_selection, :include_inherited]>
-
-diff:
-? [:instance, :method_name_selection, :include_inherited]
-===============================================================================
-E
-===============================================================================
-Error: test_assert_ancestor_method_names(MethodModelTest): ArgumentError: wrong number of arguments (0 for 1..2)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:422:in `test_assert_ancestor_method_names'
-     419: 		assert_equal(BasicObject.ancestors, MethodModel.ancestor_method_names(BasicObject).keys)
-     420: end # ancestors
-     421: 
-  => 422: def test_assert_ancestor_method_names(klass, selection = MethodModel::Default_ancestor_method_selection)
-     423: 	assert_equal({BasicObject=>[:instance_eval, :instance_exec]}, MethodModel.ancestor_method_names(BasicObject, method_name_selection: /in/))
-     424: 	Ancestor_method_selections.each do |selection|
-     425: 		MethodModel.assert_ancestor_method_names(BasicObject, selection)
-===============================================================================
-.F
-===============================================================================
-Failure: test_assert_method_names(MethodModelTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:411:in `test_assert_method_names'
-     408: def test_assert_method_names
-     409: 		assert_operator(0, :<, BasicObject.instance_methods(false).size)
-     410: 		assert_equal(BasicObject.instance_methods(false), MethodModel.method_names(BasicObject))
-  => 411: 		assert_equal(BasicObject.instance_methods(false), MethodModel.ancestor_method_names(BasicObject).values.flatten)
-     412: 		assert_equal(BasicObject.methods(false), MethodModel.ancestor_method_names(BasicObject, instance: false).values.flatten)
-     413: 	assert_equal([:instance_eval, :instance_exec], MethodModel.method_names(BasicObject, method_name_selection: /in/))
-     414: 	assert_equal([:instance_values, :instance_variable_names,  :noninherited_public_instance_methods], MethodModel.method_names(Object, method_name_selection: /instance/))
-<[:==, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__]> expected but was
-<[{:inspect=>true}]>
-
-diff:
-? [:==, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__]
-?  {                          p                         t=>tru }             
-===============================================================================
-.F
-===============================================================================
-Failure: test_class_ancestor_methods(MethodModelTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:284:in `test_class_ancestor_methods'
-     281: 	 
-     282: 	
-     283: 	def test_class_ancestor_methods
-  => 284: 		assert_equal([], MethodModel.class_ancestor_methods(MethodModel).flatten)
-     285: 		assert_equal([Dir], MethodModel.matching_ancestors(Dir, false, :[]))
-     286: 	end # class_ancestor_methods
-     287: 	 def test_matching_ancestors
-<[]> expected but was
-<[MethodModel.attribute is a class method of class MethodModel
-,
- Kernel.autoload is a class method of module Kernel
-,
- Kernel.autoload? is a class method of module Kernel
-,
- Kernel.` is a class method of module Kernel
-]>
-
-diff:
-+ [MethodModel.attribute is a class method of class MethodModel
-+ ,
-+  Kernel.autoload is a class method of module Kernel
-+ ,
-+  Kernel.autoload? is a class method of module Kernel
-+ ,
-+  Kernel.` is a class method of module Kernel
-? []
-===============================================================================
-E
-===============================================================================
-Error: test_constantized(MethodModelTest): NoMethodError: undefined method `classes_and_modules' for MethodModel:Class
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:264:in `test_constantized'
-     261:     assert_equal(['Symbol'], Module.constants.map(&:objectKind).uniq)
-     262: #    assert_includes(MethodModel.constantized.map(&:objectKind).uniq, 'Symbol')
-     263:     assert_operator(1000, :>, Module.constants.size)
-  => 264:     assert_operator(MethodModel.constantized.size, :<, MethodModel.classes_and_modules.size)
-     265:     assert_operator(100, :<, MethodModel.constantized.size)
-     266:     #	puts "Module.constants=#{Module.constants.inspect}"
-     267:     method_list = Module.constants.map do |c|
-===============================================================================
-..F
-===============================================================================
-Failure: test_matching_ancestors(MethodModelTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:299:in `test_matching_ancestors'
-     296: 		assert_include(Regexp.methods(false), :escape)
-     297: 		assert_equal([MethodModel, Object, BasicObject], MethodModel.ancestors - MethodModel.included_modules)
-     298: 		assert_equal([], MethodModel.included_modules - MethodModel.ancestors)
-  => 299: 		assert_equal(MethodModel.ancestors, MethodModel.included_modules)
-     300: 		assert_equal([Regexp], MethodModel.matching_ancestors(Regexp, false, :superclass))
-     301: 	 end # matching_ancestors
-     302: 	 
-<[MethodModel,
- MethodModel::Assertions,
- MethodModel::ReferenceObjects,
- Equalizer::Methods,
- #<Equalizer:0x0000000175c028>,
- Virtus::InstanceMethods::MassAssignment,
- Virtus::Model::MassAssignment,
- Virtus::InstanceMethods::Constructor,
- Virtus::Model::Constructor,
- Virtus::ValueObject::InstanceMethods,
- Virtus::ValueObject::AllowedWriterMethods,
- Virtus::Extensions::AllowedWriterMethods,
- Virtus::InstanceMethods,
- Virtus::ClassInclusions::Methods,
- #<Virtus::AttributeSet:0x00000001771a40>,
- Virtus::Model::Core,
- #<Module:0x000000017720f8>,
- MethodModel::DefinitionalConstants,
- Object,
- PP::ObjectMixin,
- Test::Unit::Assertions,
- JSON::Ext::Generator::GeneratorMethods::Object,
- Kernel,
- BasicObject]> expected but was
-<[MethodModel::Assertions,
- MethodModel::ReferenceObjects,
- Equalizer::Methods,
- #<Equalizer:0x0000000175c028>,
- Virtus::InstanceMethods::MassAssignment,
- Virtus::Model::MassAssignment,
- Virtus::InstanceMethods::Constructor,
- Virtus::Model::Constructor,
- Virtus::ValueObject::InstanceMethods,
- Virtus::ValueObject::AllowedWriterMethods,
- Virtus::Extensions::AllowedWriterMethods,
- Virtus::InstanceMethods,
- Virtus::ClassInclusions::Methods,
- #<Virtus::AttributeSet:0x00000001771a40>,
- Virtus::Model::Core,
- #<Module:0x000000017720f8>,
- MethodModel::DefinitionalConstants,
- PP::ObjectMixin,
- Test::Unit::Assertions,
- JSON::Ext::Generator::GeneratorMethods::Object,
- Kernel]>
-
-diff:
-- [MethodModel,
-?  MethodModel::Assertions,
-? [                        
-   MethodModel::ReferenceObjects,
-   Equalizer::Methods,
-   #<Equalizer:0x0000000175c028>,
-   Virtus::InstanceMethods::MassAssignment,
-   Virtus::Model::MassAssignment,
-   Virtus::InstanceMethods::Constructor,
-   Virtus::Model::Constructor,
-   Virtus::ValueObject::InstanceMethods,
-   Virtus::ValueObject::AllowedWriterMethods,
-   Virtus::Extensions::AllowedWriterMethods,
-   Virtus::InstanceMethods,
-   Virtus::ClassInclusions::Methods,
-   #<Virtus::AttributeSet:0x00000001771a40>,
-   Virtus::Model::Core,
-   #<Module:0x000000017720f8>,
-   MethodModel::DefinitionalConstants,
--  Object,
-   PP::ObjectMixin,
-   Test::Unit::Assertions,
-   JSON::Ext::Generator::GeneratorMethods::Object,
-?  Kernel,
-?        ]
--  BasicObject]
-===============================================================================
-E
-===============================================================================
-Error: test_matching_methods(MethodModelTest): NameError: undefined local variable or method `testClass' for #<MethodModelTest:0x0000000124fdc8>
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:397:in `test_matching_methods'
-     394: 
-     395:   def test_matching_methods
-     396: #    testClass = Unit
-  => 397:     assert_instance_of(Array, testClass.matching_class_methods(//))
-     398:     assert_instance_of(Array, testClass.matching_instance_methods(//))
-     399:   end # test
-     400: 
-===============================================================================
-.E
-===============================================================================
-Error: test_method_inheritance(MethodModelTest): NameError: undefined local variable or method `klass' for #<MethodModelTest:0x0000000124fa80>
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:305:in `test_method_inheritance'
-     302: 	 
-     303: 	 def test_method_inheritance
-     304: 		method_name == :ancestor_methods
-  => 305: 			ancestors_selection = klass.ancestors.map do |ancestor|
-     306: 				selection = {method_name: method_name, ancestor: ancestor, instance: instance, ancestor_methods: ancestor.methods(false)}
-     307: 				if instance
-     308: 					selection[:ancestor_methods] = ancestor.instance_methods(false)
-===============================================================================
-....E
-===============================================================================
-Error: test_arity(MethodTest): NameError: undefined method `all_default' for class `Class'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:28:in `method'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:28:in `test_arity'
-     25: #    assert_equal(0, Script_command_line.method(:number_of_arguments).arity, Script_command_line.inspect)
-     26:     #	assert_equal(-1, Test_unit_commandline.medthod(:error_score?).arity, Test_unit_commandline.to_s)
-     27: 
-  => 28:     assert_equal(-1, Example.method(:all_default).arity)
-     29:     assert_equal(-2, Example.method(:initialize).arity)
-     30:     #	assert_equal(-2, No_args.unit_class.method(:initialize).arity)
-     31:     #	assert_equal(-2, Example.unit_class.method(:initialize).arity)
-===============================================================================
-E
-===============================================================================
-Error: test_default_arguments?(MethodTest): NoMethodError: undefined method `default_arguments?' for Example:Class
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:51:in `test_default_arguments?'
-     48: #    assert_equal(false, Script_command_line.method(:number_of_arguments).default_arguments?, message)
-     49: #    executable_object = Test_unit_commandline.executable_object
-     50:     message = 'Example = ' + Example.inspect
-  => 51:     assert_equal(false, Example.default_arguments?(:argument_types), message)
-     52:     assert_equal(true, Example.default_arguments?(:executable_object), message)
-     53:     assert_equal(false, Example.default_arguments?(:executable_method), message)
-     54:     assert_equal(false, Example.default_arguments?(:arity), message)
-===============================================================================
-.
-
-Finished in 0.33568127 seconds.
+Finished in 0.29621065 seconds.
 ------
-26 tests, 2157 assertions, 7 failures, 7 errors, 0 pendings, 0 omissions, 0 notifications
-46.1538% passed
+31 tests, 190 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
 ------
-77.45 tests/s, 6425.74 assertions/s
+104.66 tests/s, 641.44 assertions/s
 
-Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb"
-	User time (seconds): 1.02
-	System time (seconds): 0.05
+	User time (seconds): 1.07
+	System time (seconds): 0.06
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.08
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.14
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 25248
+	Maximum resident set size (kbytes): 26464
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 6445
+	Minor (reclaiming a frame) page faults: 6746
 	Voluntary context switches: 3
-	Involuntary context switches: 113
+	Involuntary context switches: 115
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -326,4 +35,4 @@ Command exited with non-zero status 1
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0

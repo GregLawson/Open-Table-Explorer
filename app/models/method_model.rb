@@ -37,15 +37,20 @@ class MethodModel # <ActiveRecord::Base
       klass.ancestors - klass.included_modules
     end # superclasses
 
+    def echo_selection(selection = {}) # no splat needed for last hash?
+      selection
+    end # echo_selection
+
     def apply_selection_defaults(selection, defaults)
       raise 'selection.inspect = ' + selection.inspect unless selection.instance_of?(Hash)
       raise defaults.inspect unless defaults.instance_of?(Hash)
+      ret = selection.dup # copy to modify, in case constant passed as selection
       defaults.each_pair do |key, value|
         if selection[key].nil?
-          selection[key] = value # default
+          ret[key] = value # default
         end # if
       end # each_pair
-      selection
+      ret
     end # apply_selection_defaults
 
     def method_names(klass, selection = Default_method_selection)
@@ -78,7 +83,7 @@ class MethodModel # <ActiveRecord::Base
                   when :superclasses then superclasses(klass)
                   else
                     klass.ancestors.select do |ancestor|
-                      ancestor.name.to_s.match(ancestor_selection)
+                      ancestor.name.to_s.match(selection[:ancestor_selection])
                     end # select
               end # case
       ancestors.map do |ancestor|
@@ -90,6 +95,13 @@ class MethodModel # <ActiveRecord::Base
       ret
     end # ancestor_method_names
 
+    def prototype_list(ancestor, _options = { ancestor_qualifier: true, argument_delimeter: '(' })
+      MethodModel.method_names(ancestor).map do |method_name|
+        MethodModel.new(ancestor: ancestor, method_name: method_name, instance: true)
+                   .prototype(_options)
+      end # map
+    end # prototype_list
+
     def ancestor_method_name(klass, method_name, selection = Default_ancestor_method_selection)
       # if instance = true, check instance_methods; if instance = false, class/module methods
       selection = apply_selection_defaults(selection, Default_ancestor_method_selection)
@@ -100,8 +112,8 @@ class MethodModel # <ActiveRecord::Base
   extend DefinitionalClassMethods
   module ClassMethods
     # include DefinitionalConstants
-    def init_path(m, class_of_receiver = nil, class_method = nil)
-      if !m.nil? && class_of_receiver.nil? && class_method.nil? # only one argument (method)
+    def init_path(m, ancestor = nil, instance: true)
+      if !m.nil? && ancestor.nil? && instance # only one argument (method)
         theMethod = m
         init_path = [:object_space_method]
         init_path << if theMethod.respond_to?(:source_location)
@@ -115,10 +127,10 @@ class MethodModel # <ActiveRecord::Base
       else # 3 arguments
         init_path = [:init]
 
-        if class_method.to_sym == :class
-          init_path << :class
+        if instance
+          init_path << :instance
         else
-          theMethod = MethodModel.method_query(m, class_of_receiver)
+          theMethod = MethodModel.method_query(m, ancestor)
         end # if
         if !theMethod.nil?
           init_path << :theMethod_not_nil
@@ -149,8 +161,23 @@ class MethodModel # <ActiveRecord::Base
       init_path
     end # init_path
 
-    def method_query(m, class_of_receiver)
-      ObjectSpace.each_object(class_of_receiver) do |object|
+    def first_object(ancestor)
+      ObjectSpace.each_object(ancestor) do |object|
+        return object
+      end # each_object
+      nil
+    end # first_object
+
+    def objects_query(ancestor)
+      ret = []
+      ObjectSpace.each_object(ancestor) do |object|
+        ret << object
+      end # each_object
+      ret
+    end # objects_query
+
+    def method_query(m, ancestor)
+      objects_query(ancestor).map do |object|
         next unless object.respond_to?(m.to_sym)
         begin
           theMethod = object.method(m.to_sym)
@@ -158,8 +185,12 @@ class MethodModel # <ActiveRecord::Base
         rescue ArgumentError, NameError => exc
           puts "exc=#{exc}, object=#{object.inspect}"
         end # begin
-      end # each_object
-      nil # no object found, new has side effects
+      end # select
+      if ret.empty?
+        nil # no object found, new has side effects
+      else
+        ret
+      end # if
     end # method_query
 
     def constantized
@@ -177,99 +208,20 @@ class MethodModel # <ActiveRecord::Base
   extend ClassMethods
   include Virtus.value_object
   values do
-    attribute :name, Symbol
-    attribute :class_of_receiver, Class
-    attribute :class_method, Object, default: true
+    attribute :method_name, Symbol
+    attribute :ancestor, Class
+    attribute :instance, Object, default: true
     attribute :new_from_method, Method, default: nil
   end # values
   module Constructors # such as alternative new methods
     include DefinitionalConstants
     def new_from_method(method_object)
       if method_object.instance_of?(Class)
-        MethodModel.new(name: method_object.name, class_of_receiver: method_object.owner.class, class_method: true, new_from_method: method_object)
+        MethodModel.new(method_name: method_object.name, ancestor: method_object.owner.class, instance: false, new_from_method: method_object)
       else
-        MethodModel.new(name: method_object.name, class_of_receiver: method_object.owner, class_method: false, new_from_method: method_object)
+        MethodModel.new(method_name: method_object.name, ancestor: method_object.owner, instance: true, new_from_method: method_object)
     end # if
     end # new_from_method
-
-    def class_ancestor_methods(object)
-      instance = false
-      if instance
-        klass = object.class
-        methods = klass.instance_methods(true)
-      else
-        klass = object
-        methods = klass.methods(true)
-      end # if
-
-      models = methods.map do |method_name|
-        ancestors = klass.ancestors.select do |ancestor|
-          if instance
-            ancestor.instance_methods(false).include?(method_name)
-          else
-            ancestor.methods(false).include?(method_name)
-          end # if
-        end # each
-        ancestors.map do |ancestor|
-          MethodModel.new(name: method_name, class_of_receiver: ancestor, class_method: !instance)
-        end # map
-      end # each
-    end # class_ancestor_methods
-
-    def matching_ancestors(klass, instance, method_name)
-      ancestors = klass.ancestors.select do |ancestor|
-        if instance
-          ancestor.instance_methods(false).include?(method_name)
-        else
-          ancestor.methods(false).include?(method_name)
-        end # if
-      end # select
-    end # matching_ancestors
-
-    def method_inheritance(object, method_name)
-      instance = !object.is_a?(Module)
-      if instance
-        klass = object.class
-        methods = klass.instance_methods(true)
-      else
-        klass = object
-        methods = klass.methods(true)
-      end # if
-      ancestors = klass.ancestors.select do |ancestor|
-        if instance
-          ancestor.instance_methods(false).include?(method_name)
-        else
-          ancestor.methods(false).include?(method_name)
-        end # if
-      end # each
-      ancestors.map do |ancestor|
-        MethodModel.new(name: method_name, class_of_receiver: ancestor, class_method: !instance)
-      end # map
-    end # method_inheritance
-
-    def ancestor_methods(object)
-      instance = !object.is_a?(Module)
-      if instance
-        klass = object.class
-        methods = klass.instance_methods(true)
-      else
-        klass = object
-        methods = klass.methods(true)
-      end # if
-
-      models = methods.map do |method_name|
-        ancestors = klass.ancestors.select do |ancestor|
-          if instance
-            ancestor.instance_methods(false).include?(method_name)
-          else
-            ancestor.methods(false).include?(method_name)
-          end # if
-        end # each
-        ancestors.map do |ancestor|
-          MethodModel.new(name: method_name, class_of_receiver: ancestor, class_method: !instance)
-        end # map
-      end # each
-      end # ancestor_methods
   end # Constructors
   extend Constructors
 
@@ -279,36 +231,61 @@ class MethodModel # <ActiveRecord::Base
   include ReferenceObjects
 
   def inspect
-    ret = @class_of_receiver.inspect
-    ret += if @class_method
-             '.'
-           else
+    ret = @ancestor.inspect
+    ret += if @instance
              '#'
-        end # if
-    ret += @name.to_s + ' is a '
-    ret += if @class_method
-             'class method of '
            else
-             'instance method of '
+             '.'
         end # if
-    ret += if @class_of_receiver.class == Class
+    ret += @method_name.to_s + ' is a '
+    ret += if @instance
+             'instance method of '
+           else
+             'class method of '
+        end # if
+    ret += if @ancestor.class == Class
              'class '
            else
              'module '
         end # if
-    ret += @class_of_receiver.inspect
+    ret += @ancestor.inspect
     unless @new_from_method.nil?
       ret += ' new_from_method = ' + @new_from_method.inspect
      end # if
     ret += "\n"
   end # inspect
 
-  # include NoDB
+  def prototype(options = { ancestor_qualifier: true, argument_delimeter: '(' })
+    options[:ancestor_qualifier] = true if options[:ancestor_qualifier].nil?
+    options[:argument_delimeter] = '(' if options[:argument_delimeter].nil?
+    if options[:ancestor_qualifier]
+      ret = @ancestor.inspect
+      ret += if @instance
+               '#'
+             else
+               '.'
+          end # if
+    else
+      ret = '' # no module qualifier
+    end # if
+    ret += @method_name.to_s
+    method = theMethod
+    ret += options[:argument_delimeter]
+    ret += (['arg'] * method.required_arguments).join(' ')
+    ret += (method.default_arguments? ? ' ...' : '')
+    ret += if options[:argument_delimeter] == '('
+             ')'
+           else
+             ''
+            end # if')'
+    ret += "\n"
+  end # prototype
+
   def theMethod
-    if @class_method
-      @class_of_receiver.method(@name.to_sym)
+    if @instance
+      MethodModel.method_query(@method_name.to_sym, @ancestor)
     else # look it up! Why? Beause can't create fully? Existence check?
-      MethodModel.method_query(@name.to_sym, @class_of_receiver)
+      @ancestor.method(@method_name.to_sym)
     end # if
   end # theMethod
 
@@ -372,36 +349,6 @@ class MethodModel # <ActiveRecord::Base
     #		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
   end # method_exception_string
 
-  def arity(method_name)
-    executable_method = executable_method?(method_name)
-    ret = if executable_method.nil?
-            message = "#{method_name} is not an instance method of #{executable_object.class.inspect}"
-            message = candidate_commands_strings.join("\n")
-            #		message += "\n candidate_commands = " + candidate_commands.inspect
-            #		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
-            raise Exception.new(message)
-          else
-            executable_method.arity
-    end # if
-  end # arity
-
-  def default_arguments?(method_name)
-    if arity(method_name) < 0
-      true
-    else
-      false
-    end # if
-    end # default_arguments
-
-  def required_arguments(method_name)
-    method_arity = arity(method_name)
-    if default_arguments?(method_name)
-      -(method_arity + 1)
-    else
-      method_arity
-    end # if
-  end # required_arguments
-
   require_relative '../../app/models/assertions.rb'
   module Assertions
     module ClassMethods
@@ -436,8 +383,8 @@ class MethodModel # <ActiveRecord::Base
         assert_empty(missing_methods)
         extra_methods = ancestor_method_names.flatten - instance_methods
         assert_empty(extra_methods)
-        assert_equal(instance_methods, ancestor_method_names.flatten)
-        assert_equal(MethodModel.method_names(klass, selection), MethodModel.ancestor_method_names(klass, selection).values.flatten)
+        assert_equal(instance_methods, ancestor_method_names.flatten.uniq)
+        assert_equal(MethodModel.method_names(klass, selection), MethodModel.ancestor_method_names(klass, selection).values.flatten.uniq)
       end # method_names
 
       def assert_ancestors(klass, selection = MethodModel::Default_ancestor_method_selection)
@@ -481,13 +428,13 @@ class MethodModel # <ActiveRecord::Base
     end # ClassMethods
     def assert_pre_conditions(message = '')
       message += "In assert_pre_conditions, self=#{inspect}"
-      if @class_method
-        assert_respond_to(@class_of_receiver, @name)
-        assert_include(@class_of_receiver.methods(true), @name, inspect)
-        assert_include(@class_of_receiver.methods(false), @name, @class_of_receiver.methods(true))
+      if !@instance
+        assert_respond_to(@ancestor, @method_name)
+        assert_include(@ancestor.methods(true), @method_name, inspect)
+        assert_include(@ancestor.methods(false), @method_name, @ancestor.methods(true))
       else
-        #		assert_respond_to(@class_of_receiver, @name)
-        assert_include(@class_of_receiver.instance_methods(false), @name)
+        #		assert_respond_to(@ancestor, @method_name)
+        assert_include(@ancestor.instance_methods(false), @method_name)
       end # if
       self
     end # assert_pre_conditions
@@ -503,8 +450,8 @@ class MethodModel # <ActiveRecord::Base
     include DefinitionalConstants
     class EmptyClass
     end
-    Instance_method_inspect = MethodModel.new(name: :inspect, class_of_receiver: MethodModel, class_method: false)
-    Class_method_ancestor_methods = MethodModel.new(name: :ancestor_methods, class_of_receiver: MethodModel, class_method: true)
+    Instance_method_inspect = MethodModel.new(method_name: :inspect, ancestor: MethodModel, instance: true)
+    Class_method_method_names = MethodModel.new(method_name: :method_names, ancestor: MethodModel, instance: false)
     Method_selections = [{ instance: true, method_name_selection: /.+/, include_inherited: false }
                   ].freeze
     Ancestor_method_selections = [{ instance: true, method_name_selection: /.+/, ancestor_selection: :ancestors },
@@ -519,7 +466,7 @@ end # MethodModel
 
 class Method
   module Examples
-    Class_method_ancestor_methods = MethodModel.method(:ancestor_methods)
+    Class_method_method_names = MethodModel.method(:method_names)
     Instance_method_inspect = MethodModel::Examples::Instance_method_inspect.method(:inspect)
   end # Examples
 end # Method
@@ -538,10 +485,10 @@ class Example
   end # all_default
   module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
     # include DefinitionalConstants
-    Method_arity = MethodModel.new(name: :arity, class_of_receiver: Method, class_method: false)
-    Method_require1 = MethodModel.new(name: :require1, class_of_receiver: Example, class_method: false)
-    Method_require2 = MethodModel.new(name: :require2, class_of_receiver: Example, class_method: false)
-    Method_require3 = MethodModel.new(name: :require3, class_of_receiver: Example, class_method: false)
-    Method_all_default = MethodModel.new(name: :all_default, class_of_receiver: Example, class_method: false)
+    Method_arity = MethodModel.new(method_name: :arity, ancestor: Method, instance: true)
+    Method_require1 = MethodModel.new(method_name: :require1, ancestor: Example, instance: true)
+    Method_require2 = MethodModel.new(method_name: :require2, ancestor: Example, instance: true)
+    Method_require3 = MethodModel.new(method_name: :require3, ancestor: Example, instance: true)
+    Method_all_default = MethodModel.new(method_name: :all_default, ancestor: Example, instance: true)
   end # Examples
 end # Example
