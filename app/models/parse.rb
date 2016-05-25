@@ -316,7 +316,7 @@ class SplitCapture < RawCapture
 
   def [](capture_index, hash_offset = 0)
     capture_index = capture_index.name if capture_index.instance_of?(GenericColumn)
-    index = hash_offset + capture_index * @regexp.names.size
+    index = 1 + hash_offset + capture_index * @regexp.names.size
     @raw_captures[index]
   end # []
 
@@ -456,6 +456,7 @@ class ParsedCapture < MatchCapture
   end # Examples
 end # ParsedCapture
 # String
+
 class String
   def map_captures?(regexp_array)
     ret = []

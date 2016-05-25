@@ -1,35 +1,118 @@
 passed
-2016-05-25 04:39:39.794
+2016-05-25 14:50:06.383
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test
 Started
-...................................... matched
-#<MatchCapture:0x00000003204a38 @string="  ", @regexp=/  /, @length_hash_captures=0, @raw_captures=#<MatchData "  ">>
-..................
+............................F
+===============================================================================
+Failure: test_SplitCapture_column_output(CaptureTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:372:in `test_SplitCapture_column_output'
+     369:     message = 'Split_capture = ' + Split_capture.inspect
+     370:     column_output = Split_capture.string.capture?(Split_capture.regexp, SplitCapture).column_output
+     371:     message += 'column_output = ' + column_output.inspect
+  => 372:     assert_equal([Branch_column_answer], column_output, message)
+     373:     assert_equal([Branch_answer], Capture.symbolize_keys(column_output), message)
+     374:     #	assert_equal(output, Branch_hashes)
+     375:   end # column_output
+Split_capture = #<SplitCapture:0x0000000331efb8 @string="* 1\n  2", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)\n/, @length_hash_captures=1, @raw_captures=["", "1", "  2"]>column_output = [{#<GenericColumn variable=#<GenericVariable name=:branch ruby_type=:String all_numbered=nil> regexp_index=0>=>"  2"}]
+<[{#<GenericColumn variable=#<GenericVariable name=:branch ruby_type=:String all_numbered=nil> regexp_index=0>=>
+   "1"}]> expected but was
+<[{#<GenericColumn variable=#<GenericVariable name=:branch ruby_type=:String all_numbered=nil> regexp_index=0>=>
+   "  2"}]>
 
-Finished in 0.068624341 seconds.
-------
-56 tests, 108 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
-------
-816.04 tests/s, 1573.79 assertions/s
+diff:
+  [{#<GenericColumn variable=#<GenericVariable name=:branch ruby_type=:String all_numbered=nil> regexp_index=0>=>
+?    "1  "}]
+?       2   
+===============================================================================
+....F
+===============================================================================
+Failure: test_SplitCapture_output?(CaptureTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:136:in `test_SplitCapture_output?'
+     133: 
+     134:   def test_SplitCapture_output?
+     135:     column_output = Split_capture.string.capture?(Split_capture.regexp, SplitCapture).column_output
+  => 136:     assert_equal([Branch_column_answer], column_output, Split_capture.inspect)
+     137:     assert_equal([Branch_answer], Split_capture.string.capture?(Split_capture.regexp, SplitCapture).output?, Split_capture.inspect)
+     138:     #	assert_equal([{:branch=>"1"}, {:branch=>"2"}], Parse_array.output?, Parse_array.inspect)
+     139:     #	assert_equal(Branch_hashes, Capture.new(captures, regexp).output?, captures.inspect) # return matched subexpressions
+#<SplitCapture:0x0000000331efb8 @string="* 1\n  2", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)\n/, @length_hash_captures=1, @raw_captures=["", "1", "  2"]>
+<[{#<GenericColumn variable=#<GenericVariable name=:branch ruby_type=:String all_numbered=nil> regexp_index=0>=>
+   "1"}]> expected but was
+<[{#<GenericColumn variable=#<GenericVariable name=:branch ruby_type=:String all_numbered=nil> regexp_index=0>=>
+   "  2"}]>
 
+diff:
+  [{#<GenericColumn variable=#<GenericVariable name=:branch ruby_type=:String all_numbered=nil> regexp_index=0>=>
+?    "1  "}]
+?       2   
+===============================================================================
+.... matched
+#<MatchCapture:0x000000030a0430 @string="  ", @regexp=/  /, @length_hash_captures=0, @raw_captures=#<MatchData "  ">>
+...............F
+===============================================================================
+Failure: test_assert_parse_once(StringTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:453:in `test_assert_parse_once'
+     450:     split_capture = SplitCapture.new(Newline_Delimited_String, pattern)
+     451:     limit_capture = SplitCapture.new(Newline_Delimited_String[0, match_capture.number_matched_characters?], pattern)
+     452:     message = "match_capture = #{match_capture.inspect}\limit_capture = #{limit_capture.inspect}"
+  => 453:     assert_equal(match_capture.output?, limit_capture.output?[0], message)
+     454:     #	Newline_Delimited_String.assert_parse_once(Branch_line_regexp)
+     455:   end # assert_parse_once
+     456: end # Capture
+match_capture = #<MatchCapture:0x00000002fca150 @string="* 1\n  2", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)\n/, @length_hash_captures=1, @raw_captures=#<MatchData "* 1\n" branch:"1">>limit_capture = #<SplitCapture:0x00000002fc9ca0 @string="* 1\n", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)\n/, @length_hash_captures=1, @raw_captures=["", "1"]>
+<{:branch=>"1"}> expected but was
+<{:branch=>nil}>
+
+diff:
+? {:branch=>"1"}
+?           nil 
+===============================================================================
+F
+===============================================================================
+Failure: test_capture(StringTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb:441:in `test_capture'
+     438: 
+     439:   def test_capture
+     440:     assert_equal(Branch_answer, Match_capture.string.capture?(Match_capture.regexp, MatchCapture).output?, Match_capture.inspect)
+  => 441:     assert_equal([Branch_answer], Match_capture.string.capture?(Match_capture.regexp, SplitCapture).output?, Match_capture.inspect)
+     442:     assert_equal([Branch_answer], Match_capture.string.capture?(Match_capture.regexp, LimitCapture).output?, Match_capture.inspect)
+     443:     assert_equal(Branch_answer, Match_capture.string.capture?(Match_capture.regexp).output?, Match_capture.inspect)
+     444:   end # capture?
+#<MatchCapture:0x0000000331f440 @string="* 1\n  2", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)\n/, @length_hash_captures=1, @raw_captures=#<MatchData "* 1\n" branch:"1">>
+<[{:branch=>"1"}]> expected but was
+<[{:branch=>"  2"}]>
+
+diff:
+? [{:branch=>"1  "}]
+?               2   
+===============================================================================
+.
+
+Finished in 0.104627034 seconds.
+------
+56 tests, 104 assertions, 4 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+92.8571% passed
+------
+535.23 tests/s, 994.01 assertions/s
+
+Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb"
-	User time (seconds): 0.95
-	System time (seconds): 0.09
+	User time (seconds): 0.94
+	System time (seconds): 0.06
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.05
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.00
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 30748
+	Maximum resident set size (kbytes): 30884
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 7852
+	Minor (reclaiming a frame) page faults: 7865
 	Voluntary context switches: 3
-	Involuntary context switches: 106
+	Involuntary context switches: 104
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -37,4 +120,4 @@ Finished in 0.068624341 seconds.
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1

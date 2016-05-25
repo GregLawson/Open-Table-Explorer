@@ -425,8 +425,14 @@ class CaptureTest < TestCase
 
   def test_ParsedCapture_delimiters?
   end # delimiters?
-
-  # String
+end # ParsedCapture
+# String
+class StringTest < TestCase
+  include MatchCapture::Examples
+  include SplitCapture::Examples
+  include LimitCapture::Examples
+  include Capture::Examples
+  include String::Examples
   def test_map_capture?
   end # map_capture?
 
