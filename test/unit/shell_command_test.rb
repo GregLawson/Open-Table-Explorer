@@ -13,6 +13,9 @@ class ShellTest < TestCase
   # include DefaultTests
   include Shell::Server::Examples
   include Shell::Ssh::Examples
+  def test_Shell_Base_Default_run
+      end # Default_run
+
   def test_assemble_hash_command
     assert_equal('cd ' + Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_hash_command(Cd_command_hash))
   end # assemble_hash_command
@@ -80,7 +83,7 @@ class ShellTest < TestCase
   end # assert_post_conditions
 
   def test_Server_Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
-    assert_equal([:@allowed_writer_methods, :@command_string, :@env, :@opts, :@errors, :@cached_run, :@start_time, :@elapsed_time, :@stdin, :@stdout, :@stderr, :@wait_thr, :@output], EXAMPLE.instance_variables, EXAMPLE.inspect)
+    assert_equal([:@allowed_writer_methods, :@command_string, :@env, :@opts, :@errors, :@cached_run, :@start_time, :@elapsed_time, :@timeout, :@stdin, :@stdout, :@stderr, :@wait_thr, :@output_at_close], EXAMPLE.instance_variables, EXAMPLE.inspect)
     assert_equal(COMMAND_STRING, EXAMPLE.command_string, EXAMPLE.inspect)
   end # Examples
   end # Server
@@ -93,10 +96,10 @@ class CommandTest < TestCase
   def test_Command_Examples
     assert_include(EXAMPLE.class.ancestors, Shell::Server)
     assert_equal(COMMAND_STRING, EXAMPLE.command_string, EXAMPLE.inspect)
-    assert_equal("1 2;3 4\n", EXAMPLE.start.close.output, EXAMPLE.inspect)
+    assert_equal("1 2;3 4\n", EXAMPLE.start.close.output_at_close, EXAMPLE.inspect)
     assert_equal({}, EXAMPLE.errors)
     assert_equal(0, EXAMPLE.process_status.exitstatus)
-    assert_equal("Hello World\n", Hello_world.start.close.output)
+    assert_equal("Hello World\n", Hello_world.start.close.output_at_close)
     Hello_world.assert_post_conditions
     shell_execution1 = Shell::Command.new(command_string: 'cd /tmp;pwd')
     shell_execution1 = Shell::Command.new(command_string: 'cd /tmp;')

@@ -12,6 +12,16 @@ require 'pathname'
 require 'virtus'
 module Shell
   class Base
+    module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+      Default_run = lambda do |_process, _attribute|
+        begin
+          _process.start
+        rescue StandardError => exception
+          _process.errors[:rescue_start] = exception
+        end # begin
+      end # Default_run
+    end # DefinitionalConstants
+    include DefinitionalConstants
     module ClassMethods
       include Shellwords
       def assemble_hash_command(command)
@@ -79,37 +89,18 @@ module Shell
   class Server < Base
     #    include Shell::Base
     extend Shell::Base::ClassMethods
-    module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-      Default_run = lambda do |_process, _attribute|
-        begin
-          _process.start
-        rescue StandardError => exception
-          _process.errors[:rescue] = exception
-        end # begin
-      end # Default_run
-    end # DefinitionalConstants
-    include DefinitionalConstants
     module DefinitionalClassMethods
     end # DefinitionalClassMethods
     extend DefinitionalClassMethods
     include Virtus.value_object
     values do
+      attribute :timeout, Float, default: 0.0 # no timeout
       attribute :stdin, File, default: nil
       attribute :stdout, File, default: nil
       attribute :stderr, File, default: nil
       attribute :wait_thr, Object, default: nil
-      attribute :output, String, default: nil
+      attribute :output_at_close, String, default: nil
     end # values
-
-    def fork
-      start
-      self # allows command chaining
-    end # fork
-
-    def server
-      start
-      self # allows command chaining
-    end # server
 
     def start
       @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(@command_string)
@@ -134,14 +125,18 @@ module Shell
 
     def close
       @stdin.close # stdin, stdout and stderr should be closed explicitly in this form.
-      @output = @stdout.read
+      begin
+        @process_status = @wait_thr.value # Process::Status object returned.
+      rescue Timeout::Error => exception_object_raised
+        _process.errors[:rescue_close] = exception_object_raised
+      end # begin/rescue block
+      @output_at_close = @stdout.read
       @stdout.close
       syserr = @stderr.read
       unless syserr.empty?
         @errors[:syserr] = @stderr.read
       end # if
       @stderr.close
-      @process_status = @wait_thr.value # Process::Status object returned.
       self # allows command chaining
     end # close
 
@@ -154,11 +149,11 @@ module Shell
     end # success
 
     module Constructors # such as alternative new methods
-      include DefinitionalConstants
+      include Shell::Base::DefinitionalConstants
     end # Constructors
     extend Constructors
     module ReferenceObjects # constant objects of the type (e.g. default_objects)
-      include DefinitionalConstants
+      include Shell::Base::DefinitionalConstants
     end # ReferenceObjects
     include ReferenceObjects
 
@@ -232,7 +227,7 @@ module Shell
     # self.assert_pre_conditions
 
     module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
-      include DefinitionalConstants
+      include Shell::Base::DefinitionalConstants
       include ReferenceObjects
       Hello_world = Shell::Server.new(command_string: 'echo "Hello World"')
       Example_output = "1 2;3 4\n".freeze
@@ -564,37 +559,6 @@ class ShellCommands
     end # case
     @command_string = ShellCommands.assemble_command_string(@command)
   end # parse_argument_array
-
-  def fork(cmd)
-    start(cmd)
-    self # allows command chaining
-  end # fork
-
-  def server(_cmd)
-    start
-    self # allows command chaining
-  end # server
-
-  def start(cmd)
-    @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(*cmd)
-    self # allows command chaining
-  end # start
-
-  def wait
-    @process_status = @wait_thr.value # Process::Status object returned.
-    close
-    self # allows command chaining
-  end # wait
-
-  def close
-    @stdin.close # stdin, stdout and stderr should be closed explicitly in this form.
-    @output = @stdout.read
-    @stdout.close
-    @errors = @stderr.read
-    @stderr.close
-    @process_status = @wait_thr.value # Process::Status object returned.
-    self # allows command chaining
-  end # close
 
   def success?
     if @process_status.nil?

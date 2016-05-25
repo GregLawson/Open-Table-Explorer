@@ -1,58 +1,58 @@
 passed
-2016-05-18 11:25:19.503
+2016-05-25 02:15:13.371
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test
 Started
-........................
+.........................
 
-Finished in 0.065488516 seconds.
+Finished in 0.06407853 seconds.
 ------
-24 tests, 67 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+25 tests, 67 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-366.48 tests/s, 1023.08 assertions/s
+390.15 tests/s, 1045.59 assertions/s
 Run options: --seed 0
 
 # Running:
 
 ...$ $?=1
-@process_status=#<Process::Status: pid 16548 exit 127>
+@process_status=#<Process::Status: pid 26311 exit 127>
 $ ls happyHappyFailFail.junk
-@process_status=#<Process::Status: pid 16550 exit 2>
+@process_status=#<Process::Status: pid 26313 exit 2>
 ........$ $?=1
-@process_status=#<Process::Status: pid 16548 exit 127>
+@process_status=#<Process::Status: pid 26311 exit 127>
 $ ls happyHappyFailFail.junk
-@process_status=#<Process::Status: pid 16550 exit 2>
+@process_status=#<Process::Status: pid 26313 exit 2>
 $ ls happyHappyFailFail.junk
-@process_status=#<Process::Status: pid 16550 exit 2>
+@process_status=#<Process::Status: pid 26313 exit 2>
 .....$ ls happyHappyFailFail.junk
-@process_status=#<Process::Status: pid 16550 exit 2>
+@process_status=#<Process::Status: pid 26313 exit 2>
 .$ $?=1
-@process_status=#<Process::Status: pid 16548 exit 127>
+@process_status=#<Process::Status: pid 26311 exit 127>
 .$ echo "1 2;3 4"
 1 2;3 4
 ................
 
-Finished in 0.038840s, 875.3819 runs/s, 849.6354 assertions/s.
+Finished in 0.039259s, 866.0517 runs/s, 840.5796 assertions/s.
 
 34 runs, 33 assertions, 0 failures, 0 errors, 0 skips
 
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb"
-	User time (seconds): 1.14
-	System time (seconds): 0.10
+	User time (seconds): 1.18
+	System time (seconds): 0.11
 	Percent of CPU this job got: 96%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.30
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.35
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 28884
+	Maximum resident set size (kbytes): 28676
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 17685
-	Voluntary context switches: 458
-	Involuntary context switches: 188
+	Minor (reclaiming a frame) page faults: 17649
+	Voluntary context switches: 450
+	Involuntary context switches: 199
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 8
