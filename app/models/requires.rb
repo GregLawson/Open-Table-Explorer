@@ -25,7 +25,7 @@ class Require
       ret = {}
       unit.edit_files.each do |file|
         code = IO.read(file)
-        parse = code.capture?(Require_regexp, SplitCapture).output?
+        parse = code.capture?(Require_regexp).output?
         ret = ret.merge(FilePattern.find_from_path(file)[:name] => parse)
       end # each
       ret
@@ -87,16 +87,16 @@ class Require
       assert_equal('_relative', split_capture.raw_captures[1], split_capture.inspect)
       assert_include(split_capture.regexp.names, :relative.to_s, split_capture.inspect)
       assert_equal('_relative', split_capture[0], split_capture.inspect)
-#      assert_equal('_relative', split_capture.column_output, split_capture.inspect)
+      #      assert_equal('_relative', split_capture.column_output, split_capture.inspect)
       assert_equal(1, split_capture.repetitions?, split_capture.inspect)
       assert_equal(2, split_capture.length_hash_captures, split_capture.inspect)
-#    (0..repetitions? - 1).map do |i|
-#      named_hash(i * (@length_hash_captures + 1))
-#    end # map
-      split_capture.output?.each_with_index do |output, i|
-	      assert_equal('_relative', split_capture[0, i], split_capture.inspect)
-				assert_equal('_relative', Capture.symbolize_keys(split_capture.named_hash(i * (split_capture.length_hash_captures + 1))))
-        assert_equal('_relative', output[:relative], output.inspect)
+      #    (0..repetitions? - 1).map do |i|
+      #      named_hash(i * (@length_hash_captures + 1))
+      #    end # map
+      split_capture.output?.each_with_index do |_output, i|
+        assert_equal('_relative', split_capture[0, i], split_capture.inspect)
+        #        assert_equal('_relative', Capture.symbolize_keys(split_capture.named_hash(i * (split_capture.length_hash_captures + 1))))
+        #        assert_equal('_relative', output[:relative], output.inspect)
       end # each
     end # assert_relative
   end # Assertions

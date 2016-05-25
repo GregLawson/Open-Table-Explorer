@@ -1,137 +1,33 @@
 passed
-2016-05-25 04:54:06.307
+2016-05-26 03:57:15.896
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test
 Started
-F
-===============================================================================
-Failure: test_DefinitionalConstants(RequireTest)
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/requires.rb:88:in `assert_relative'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb:14:in `test_DefinitionalConstants'
-     11:   # include DefaultTests
-     12:   include RailsishRubyUnit::Executable.model_class?::Examples
-     13:   def test_DefinitionalConstants
-  => 14:     Executing_requires.assert_relative(Require_line, Relative_regexp)
-     15:     assert_match(/require/ * /_relative/.capture(:relative) * /\s+/, Require_line)
-     16:     assert_match(/require/ * /_relative/.capture(:relative) * /\s+/ * /['"]/, Require_line)
-     17:     assert_match(FilePattern::Relative_pathname_included_regexp.capture(:required_path), Require_line)
-#<SplitCapture:0x000000032df958 @string="require_relative '../../app/models/unit.rb'", @regexp=/^require(?:(?<relative>_relative))?\s+['"](?<required_path>[[:word:]\. \/-]+)/, @length_hash_captures=2, @raw_captures=["", "_relative", "../../app/models/unit.rb", "'"]>
-<"_relative"> expected but was
-<["", "_relative", "../../app/models/unit.rb", "'"]>
+.....
 
-diff:
-? ["", "_relative", "../../app/models/unit.rb", "'"]
-===============================================================================
-.F
-===============================================================================
-Failure:
-  </^require(?:(?<relative>_relative))?\s+['"](?<required_path>[[:word:]\. \/-]+)\s+/> expected to be =~
-  <"require_relative '../../app/models/unit.rb'">.
-test_parse_output(RequireTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb:24:in `test_parse_output'
-     21: 
-     22:   def test_parse_output
-     23:     assert_match(Require_regexp, Require_line)
-  => 24:     assert_match(Relative_regexp * /\s+/, Require_line)
-     25:     parse = code.capture?(Require_regexp, MatchCapture).output?
-     26:     parse_array = code.capture?(Require_regexp, SplitCapture).output?
-     27:     assert_equal({}, parse_output(Require_line, capture_class = MatchCapture))
-===============================================================================
-F
-===============================================================================
-Failure: test_scan(RequireTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb:39:in `block (2 levels) in test_scan'
-     36:       assert_instance_of(SplitCapture, parse, parse.output?)
-     37:       assert_instance_of(Array, parse.output?)
-     38:       parse.output?.each do |output|
-  => 39:         assert_equal('_relative', output[:relative], output)
-     40:       end # each
-     41:       assert_instance_of([:relative, :required_path], parse.output?.keys)
-     42:       ret = ret.merge(FilePattern.find_from_path(file)[:name] => parse)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb:38:in `each'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb:38:in `block in test_scan'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb:33:in `each'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb:33:in `test_scan'
-{:relative=>"\n# require_relative '../../app/models/no_db.rb'\n", :required_path=>"../../app/models/unit.rb"}
-<"_relative"> expected but was
-<"\n# require_relative '../../app/models/no_db.rb'\n">
-
-diff:
-+ 
-? # require_relative '../../app/models/no_db.rb'
-===============================================================================
-F
-===============================================================================
-Failure: test_scan_file(RequireTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb:53:in `test_scan_file'
-     50:     path = 'test/unit/test_run_test.rb'
-     51:     unit = Unit.new_from_path(path)
-     52:     Require.scan(unit)
-  => 53:     assert_equal({}, Require.scan_file(path))
-     54:   end # scan_file
-     55: 
-     56:   def test_Require_attributes
-<{}> expected but was
-<{:model=>
-  [{:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-   {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-   {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-   {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-   {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-   {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-   {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-   {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"}],
- :unit=>
-  [{:relative=>"test_environment", :required_path=>"active_support"},
-   {:relative=>"test_environment", :required_path=>"active_support"},
-   {:relative=>"test_environment", :required_path=>"active_support"},
-   {:relative=>"test_environment", :required_path=>"active_support"},
-   {:relative=>"test_environment", :required_path=>"active_support"}]}>
-
-diff:
-? {}       
-?  :model=>
-+   [{:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-+    {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-+    {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-+    {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-+    {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-+    {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-+    {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"},
-+    {:relative=>"../../app/models/no_db.rb", :required_path=>"virtus"}],
-+  :unit=>
-+   [{:relative=>"test_environment", :required_path=>"active_support"},
-+    {:relative=>"test_environment", :required_path=>"active_support"},
-+    {:relative=>"test_environment", :required_path=>"active_support"},
-+    {:relative=>"test_environment", :required_path=>"active_support"},
-+    {:relative=>"test_environment", :required_path=>"active_support"}]}
-===============================================================================
-
-
-Finished in 0.162148458 seconds.
+Finished in 0.040328254 seconds.
 ------
-5 tests, 8 assertions, 4 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-20% passed
+5 tests, 20 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
 ------
-30.84 tests/s, 49.34 assertions/s
+123.98 tests/s, 495.93 assertions/s
 
-Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb"
-	User time (seconds): 1.07
-	System time (seconds): 0.11
+	User time (seconds): 0.96
+	System time (seconds): 0.08
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.19
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.05
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 31024
+	Maximum resident set size (kbytes): 30020
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 7935
+	Minor (reclaiming a frame) page faults: 7668
 	Voluntary context switches: 3
-	Involuntary context switches: 115
+	Involuntary context switches: 102
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -139,4 +35,4 @@ Command exited with non-zero status 1
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0
