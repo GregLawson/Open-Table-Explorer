@@ -32,7 +32,7 @@ class CaptureTest < TestCase
     message += "\n raw_capture = " + capture.raw_captures.inspect
     message += "\n named_captures = " + capture.regexp.named_captures.inspect
     assert_equal('1', Match_capture.raw_captures[1], message)
-    assert_equal(['', "* 1\n", '  2'], Match_capture.to_a?, message)
+    assert_equal(['', "* 1\n", '  2'], Match_capture.to_a, message)
     assert_equal('1', capture[1], message)
     assert_equal("* 1\n", capture.matched_characters?, message)
     assert_equal(nil, capture[2], message)
@@ -77,7 +77,7 @@ class CaptureTest < TestCase
     matchData = string.match(regexp)
     captures = matchData # [1..-1]
     parse_string = MatchCapture.new("* 1\n", Branch_regexp)
-    assert_equal(3, Parse_string.to_a?.size, Parse_string.inspect)
+    assert_equal(3, Parse_string.to_a.size, Parse_string.inspect)
     Parse_string.named_hash
     named_hash = {}
     regexp.names.each do |n| # return named subexpressions
@@ -239,8 +239,8 @@ class CaptureTest < TestCase
     assert_equal(1, parse_string.repetitions?)
   end # repetitions?
 
-  def test_MatchCapture_to_a?
-  end # to_a?
+  def test_MatchCapture_to_a
+  end # to_a
 
   def test_MatchCapture_post_match?
   end # post_match?
@@ -280,7 +280,7 @@ class CaptureTest < TestCase
   end # []
 
   def test_SplitCapture_raw_captures?
-    assert_equal(["\n"], Parse_delimited_array.raw_captures[2..2], Parse_string.to_a?.inspect)
+    assert_equal(["\n"], Parse_delimited_array.raw_captures[2..2], Parse_string.to_a.inspect)
     assert_equal("\n", Parse_delimited_array.raw_captures[2])
     assert_equal([2, 3], (2..Parse_array.raw_captures.size - 2).map { |i| i }, Parse_array.inspect)
     assert_equal([true, false], (2..Parse_array.raw_captures.size - 2).map(&:even?))
@@ -320,14 +320,14 @@ class CaptureTest < TestCase
     assert_equal(2, SplitCapture.new(Newline_Delimited_String, Branch_regexp).repetitions?)
   end # repetitions?
 
-  def test_SplitCapture_to_a?
+  def test_SplitCapture_to_a
     parse_string = MatchCapture.new(Newline_Delimited_String, Branch_line_regexp)
     parse_delimited_array = SplitCapture.new(Newline_Delimited_String, Branch_line_regexp)
     #	Newline_Delimited_String.assert_parse_once(Branch_line_regexp)
 
-    #	assert_equal(parse_string.to_a?.join, parse_delimited_array.to_a?.join)
-    #	assert_equal(parse_string.to_a?, parse_delimited_array.to_a?)
-  end # to_a?
+    #	assert_equal(parse_string.to_a.join, parse_delimited_array.to_a.join)
+    #	assert_equal(parse_string.to_a, parse_delimited_array.to_a)
+  end # to_a
 
   def test_SplitCapture_post_match?
     assert_equal('', Parse_delimited_array.post_match?, Parse_delimited_array.inspect)
@@ -351,7 +351,7 @@ class CaptureTest < TestCase
     iterations = (Parse_array.raw_captures.size / length_hash_captures).ceil
     #	assert_equal(2, Parse_array.length_hash_captures, Parse_array.raw_captures.inspect+Parse_array.regexp.named_captures.inspect)
     #	assert_equal(["\n", "\n"], Parse_array.delimiters?, Parse_array.raw_captures.inspect)
-    #	assert_equal(Branch_hashes.values, Parse_array.to_a?, Parse_array.raw_captures.inspect)
+    #	assert_equal(Branch_hashes.values, Parse_array.to_a, Parse_array.raw_captures.inspect)
     #	assert_equal(Branch_hashes, Parse_array.raw_captures, Parse_array.raw_captures.inspect)
     output = if Parse_array.raw_captures.instance_of?(MatchData)
                Parse_array.named_hash(0)

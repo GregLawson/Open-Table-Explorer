@@ -1,35 +1,35 @@
 passed
-2016-04-27 06:44:10.499
+2016-05-25 04:39:39.794
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test
 Started
 ...................................... matched
-#<MatchCapture:0x00000002c38a00 @string="  ", @regexp=/  /, @length_hash_captures=0, @raw_captures=#<MatchData "  ">>
+#<MatchCapture:0x00000003204a38 @string="  ", @regexp=/  /, @length_hash_captures=0, @raw_captures=#<MatchData "  ">>
 ..................
 
-Finished in 0.066311817 seconds.
+Finished in 0.068624341 seconds.
 ------
 56 tests, 108 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-844.50 tests/s, 1628.67 assertions/s
+816.04 tests/s, 1573.79 assertions/s
 
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb"
-	User time (seconds): 0.87
+	User time (seconds): 0.95
 	System time (seconds): 0.09
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.97
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.05
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 31184
+	Maximum resident set size (kbytes): 30748
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 7975
+	Minor (reclaiming a frame) page faults: 7852
 	Voluntary context switches: 3
-	Involuntary context switches: 94
+	Involuntary context switches: 106
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

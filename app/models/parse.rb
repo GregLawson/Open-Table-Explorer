@@ -79,7 +79,7 @@ class Capture
     # If there is a named capture in match or split, all unnamed captures are ignored
     #	possible_unnamed_capture_indices.each do |capture_index|
     #		name=Capture.default_name(capture_index).to_sym
-    #		named_hash[name]= to_a?[capture_index]
+    #		named_hash[name]= to_a[capture_index]
     #	end #each
     named_hash
   end # named_hash
@@ -121,12 +121,12 @@ class Capture
     end # ClassMethods
     # Any match at all
     def assert_pre_conditions(_message = '')
-      refute_nil(to_a?, 'no match at all.')
+      refute_nil(to_a, 'no match at all.')
       if output? == {}
 
-      #		assert_equal({}. to_a?, 'MatchData but no captures.')
+      #		assert_equal({}. to_a, 'MatchData but no captures.')
       elsif output? == []
-        refute_empty(to_a?, 'split but no captures.')
+        refute_empty(to_a, 'split but no captures.')
       end # if
       assert(success?)
     end # assert_pre_conditions
@@ -250,12 +250,12 @@ class MatchCapture < RawCapture
   end # repetitions?
 
   # Tranform split and MatchData captures into single form
-  def to_a?
+  def to_a
     raise @raw_captures.inspect unless @raw_captures.nil? || @raw_captures.instance_of?(MatchData)
     [pre_match?] +
       [@raw_captures[0]] +
       [post_match?]
-  end # to_a?
+  end # to_a
 
   def post_match?
     @raw_captures.post_match
@@ -346,9 +346,9 @@ class SplitCapture < RawCapture
   end # repetitions?
 
   # Tranform split and MatchData captures into single form
-  def to_a?
+  def to_a
     @raw_captures
-  end # to_a?
+  end # to_a
 
   def post_match?
     if @raw_captures.size.odd?
@@ -581,14 +581,14 @@ class String
       Capture.assert_method(match_capture, limit_capture, :pre_match?, message)
       #	Capture.assert_method(match_capture, limit_capture, :post_match?, message)
       Capture.assert_method(match_capture, limit_capture, :delimiters?, message)
-      #	Capture.assert_method(match_capture, limit_capture, :to_a?, message)
+      #	Capture.assert_method(match_capture, limit_capture, :to_a, message)
       assert_equal(match_capture.output?, limit_capture.output?[0], message)
-      common_capture = match_capture.to_a?[0..-2]
+      common_capture = match_capture.to_a[0..-2]
       last_common_capture = common_capture.size - 1
-      assert_equal(common_capture.join, split_capture.to_a?[0..last_common_capture].join, message)
-      assert_equal(common_capture, split_capture.to_a?[0..last_common_capture], message)
-      assert_equal(common_capture, limit_capture.to_a?[0..last_common_capture], message)
-      assert_equal(common_capture, limit_capture.to_a?, message)
+      assert_equal(common_capture.join, split_capture.to_a[0..last_common_capture].join, message)
+      assert_equal(common_capture, split_capture.to_a[0..last_common_capture], message)
+      assert_equal(common_capture, limit_capture.to_a[0..last_common_capture], message)
+      assert_equal(common_capture, limit_capture.to_a, message)
     end # assert_parse_once
 
     def assert_left_parse(pattern, _message = '')
