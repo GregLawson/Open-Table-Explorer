@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson
+#    Copyright (C) 2013-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -40,16 +40,39 @@ class Capture
   end # ClassMethods
   extend ClassMethods
   attr_reader :string, :regexp # arguments
-  attr_reader :captures, :length_hash_captures
+  attr_reader :captures
   attr_reader :raw_captures
   def initialize(string, regexp)
     @string = string
     @regexp = Regexp.promote(regexp)
-    @length_hash_captures = @regexp.named_captures.values.flatten.size
     #     named_captures for captures.size > names.size
   end # initialize
 
-  # Unlike MatchData, Capture#[0] is first capture not the entire matched string (which is accessed via Capture#matched_characters?)
+  def num_captures
+    @regexp.named_captures.values.flatten.size
+  end # num_captures
+
+  def to_hash(_hash_offset = 0)
+    named_hash = {}
+    @regexp.named_captures.each_pair do |named_capture, _indices| # return named subexpressions
+      if _indices.size == 1
+        named_hash = named_hash.merge(named_capture.to_sym =>
+           to_a(_hash_offset)[_indices[0] - 1]) # one and only capture
+      else
+        named_hash = named_hash.merge(named_capture.to_sym =>
+          _indices.map { |i| to_a(_hash_offset)[i - 1] }) # fix index to skip $0 == whole string
+      end # if
+    end # each_pair
+    # with the current ruby Regexp implementation, the following is impossible
+    # If there is a named capture in match or split, all unnamed captures are ignored
+    #	possible_unnamed_capture_indices.each do |capture_index|
+    #		name=Capture.default_name(capture_index).to_sym
+    #		named_hash[name]= to_a[capture_index]
+    #	end #each
+    named_hash
+  end # to_hash
+
+  # Unlike MatchData, Capture#[0] is first capture not the entire matched string (which is accessed via Capture#matched_characters)
   # both named and positional indices should work
   def named_hash_variable(variable, _hash_offset = 0)
     named_capture = variable.name
@@ -84,9 +107,9 @@ class Capture
     named_hash
   end # named_hash
 
-  def output?
+  def output
     Capture.symbolize_keys(column_output)
-  end # output?
+  end # output
 
   def ==(other)
     instance_variables.all? do |iv_name|
@@ -112,7 +135,7 @@ class Capture
       def assert_pre_conditions(message = '')
       end # assert_pre_conditions
 
-      def assert_method(match_capture, limit_capture, argumentless_method_name = :output?, message = '')
+      def assert_method(match_capture, limit_capture, argumentless_method_name = :output, message = '')
         message += "match_capture = #{match_capture.inspect}\limit_capture = #{limit_capture.inspect}"
         match_method_object = match_capture.method(argumentless_method_name)
         limit_method_object = limit_capture.method(argumentless_method_name)
@@ -121,11 +144,11 @@ class Capture
     end # ClassMethods
     # Any match at all
     def assert_pre_conditions(_message = '')
-      refute_nil(to_a, 'no match at all.')
-      if output? == {}
+      refute_nil(to_a(0), 'no match at all.')
+      if output == {}
 
       #		assert_equal({}. to_a, 'MatchData but no captures.')
-      elsif output? == []
+      elsif output == []
         refute_empty(to_a, 'split but no captures.')
       end # if
       assert(success?)
@@ -137,7 +160,7 @@ class Capture
       elsif @raw_captures.instance_of?(MatchData)
         true
       else # :split
-        if @length_hash_captures == 0 # no captures
+        if num_captures == 0 # no captures
           match_capture = MatchCapture.new(string, regexp)
           match_capture.assert_success
         else # captures
@@ -156,16 +179,16 @@ class Capture
       assert(success?, message)
       message += "\nregexp = " + regexp.inspect
       message += "\nstring... = " + string[0..50].inspect
-      refute_match(regexp, pre_match?)
-      assert_empty(pre_match?, message + "\nA left match requires pre_match? = #{pre_match?.inspect} to be empty.")
-      assert_empty(delimiters?.join("\n")[0..100], message + "\nDelimiters were found in a split match = " + delimiters?.inspect)
+      refute_match(regexp, pre_match)
+      assert_empty(pre_match, message + "\nA left match requires pre_match = #{pre_match.inspect} to be empty.")
+      assert_empty((delimiters - [pre_match] - [post_match]).join("\n")[0..100], message + "\nDelimiters were found in a split match = " + delimiters.inspect)
       assert_success
     end # assert_left_match
 
     # exact match, no left-overs
     def assert_post_conditions(message = '')
       #	assert_left_match(add_default_message(message))
-      #	assert_empty(post_match?, 'Only a left match.' + add_default_message(message))
+      #	assert_empty(post_match, 'Only a left match.' + add_default_message(message))
     end # assert_post_conditions
 
     def repetition_options?
@@ -209,14 +232,14 @@ end # Capture
 class RawCapture < Capture
   def initialize(string, regexp)
     super(string, regexp)
-    @raw_captures = raw_captures?
+    @raw_captures = raw_captures
     #     named_captures for captures.size > names.size
   end # initialize
 end # RawCapture
 
 class MatchCapture < RawCapture
   attr_reader :string, :regexp # arguments
-  attr_reader :captures, :length_hash_captures
+  attr_reader :captures
   attr_reader :raw_captures
   def initialize(string, regexp)
     super(string, regexp)
@@ -228,9 +251,9 @@ class MatchCapture < RawCapture
     @raw_captures[index]
   end # []
 
-  def raw_captures?
+  def raw_captures
     @string.match(@regexp)
-  end # raw_captures?
+  end # raw_captures
 
   def success?
     if @raw_captures.nil?
@@ -246,41 +269,45 @@ class MatchCapture < RawCapture
     else
       1
     end # if
-    1
   end # repetitions?
 
-  # Tranform split and MatchData captures into single form
-  def to_a
+  # Tranform split and MatchData captures into single (split) form
+  def to_a(_repetition = 0)
     raise @raw_captures.inspect unless @raw_captures.nil? || @raw_captures.instance_of?(MatchData)
-    [pre_match?] +
-      [@raw_captures[0]] +
-      [post_match?]
+    @raw_captures[1..-1] # discard $0 = whole string
   end # to_a
 
-  def post_match?
-    @raw_captures.post_match
-  end # post_match?
+  def to_tree
+    raise @raw_captures.inspect unless @raw_captures.nil? || @raw_captures.instance_of?(MatchData)
+    { pre_match: pre_match,
+      named_captures: to_hash,
+      post_match: post_match }
+  end # to_tree
 
-  def pre_match?
+  def post_match
+    @raw_captures.post_match
+  end # post_match
+
+  def pre_match
     if !success?
       ''
     else
       @raw_captures.pre_match
 
     end # if
-  end # pre_match?
+  end # pre_match
 
-  def matched_characters?
+  def matched_characters
     if @raw_captures.nil?
       ''
     else
       @raw_captures[0]
     end # if
-  end # matched_characters?
+  end # matched_characters
 
-  def number_matched_characters?
-    matched_characters?.length
-  end # number_matched_characters?
+  def number_matched_characters
+    matched_characters.length
+  end # number_matched_characters
 
   def column_output
     if !success?
@@ -294,21 +321,21 @@ class MatchCapture < RawCapture
     end # if
   end # column_output
 
-  def delimiters?
+  def delimiters
     []
-  end # delimiters?
+  end # delimiters
   module Examples
     include Capture::Examples
     Branch_capture = MatchCapture.new(Newline_Delimited_String, Branch_regexp)
     Parse_string = MatchCapture.new(Newline_Delimited_String, Branch_regexp)
     Branch_line_capture = MatchCapture.new(Newline_Delimited_String, Branch_line_regexp)
-    Match_capture = MatchCapture.new(Newline_Delimited_String, Branch_line_regexp)
+    Branch_current_capture = MatchCapture.new(Newline_Delimited_String, Branch_current_regexp)
   end # Examples
 end # MatchCapture
 
 class SplitCapture < RawCapture
   attr_reader :string, :regexp # arguments
-  attr_reader :captures, :length_hash_captures
+  attr_reader :captures
   attr_reader :raw_captures
   def initialize(string, regexp)
     super(string, regexp)
@@ -316,16 +343,16 @@ class SplitCapture < RawCapture
 
   def [](capture_index, hash_offset = 0)
     capture_index = capture_index.name if capture_index.instance_of?(GenericColumn)
-    index = 1 + hash_offset + capture_index * @regexp.names.size
+    index = hash_offset + capture_index * @regexp.names.size
     @raw_captures[index]
   end # []
 
-  def raw_captures?
+  def raw_captures
     @string.split(@regexp)
-  end # raw_captures?
+  end # raw_captures
 
   def success?
-    if @length_hash_captures == 0 # no captures
+    if num_captures == 0 # no captures
       match_capture = MatchCapture.new(string, regexp)
       match_capture.success?
     else # captures
@@ -341,44 +368,71 @@ class SplitCapture < RawCapture
     if @raw_captures.nil?
       0
     else
-      (@raw_captures.size / (@length_hash_captures + 1)).ceil
+      (@raw_captures.size / (num_captures + 1)).ceil
     end # if
   end # repetitions?
 
-  # Tranform split and MatchData captures into single form
-  def to_a
-    @raw_captures
+  # Tranform split and MatchData captures into single (split) form
+  def to_a(repetition)
+    raise @raw_captures.inspect unless @raw_captures.nil? || @raw_captures.instance_of?(Array)
+    @raw_captures[1 + repetition * (num_captures + 1), num_captures] # does not include delimiters
   end # to_a
 
-  def post_match?
+  def to_tree
+    raise @raw_captures.inspect unless @raw_captures.nil? || @raw_captures.instance_of?(Array)
+    match_tree =
+      if repetitions? == 1
+        to_hash(0)
+      else
+        (0..repetitions? - 1).map { |i| to_hash(i) }
+      end # if
+    { pre_match: pre_match,
+      named_captures: match_tree,
+      delimiters: delimiters,
+      post_match: post_match }
+  end # to_tree
+
+  def post_match
     if @raw_captures.size.odd?
       @raw_captures[-1]
     else
       ''
     end # if
-  end # post_match?
+  end # post_match
 
-  def pre_match?
+  def pre_match
     @raw_captures[0]
-  end # pre_match?
+  end # pre_match
 
-  def matched_characters?
-    @string[0, number_matched_characters?]
-  end # matched_characters?
+  def matched_characters
+    @string[0, number_matched_characters]
+  end # matched_characters
 
-  def number_matched_characters?
-    @string.length - pre_match?.length - post_match?.length
-  end # number_matched_characters?
+  def number_matched_characters
+    @string.length - pre_match.length - post_match.length
+  end # number_matched_characters
 
   def column_output
     (0..repetitions? - 1).map do |i|
-      named_hash(i * (@length_hash_captures + 1))
+      named_hash(i * (num_captures + 1))
     end # map
   end # column_output
 
-  def delimiters?
-    (2..@raw_captures.size - 2).map { |i| (i.even? ? @raw_captures[i] : nil) }.compact
-  end # delimiters?
+  # includes pre_match and post_match
+  def delimiters
+    delimiters = []
+    @raw_captures.each_with_index do |raw_capture, _i|
+      if (_i % (num_captures + 1)) == 0
+        delimiters << raw_capture
+      end # if
+    end # each_index
+    delimiters
+  end # delimiters
+
+  # within match excluding pre_match and post_match
+  def internal_delimiters
+    delimiters[1..-2]
+  end # internal_delimiters
   module Examples
     include Capture::Examples
     Split_capture = SplitCapture.new(Newline_Delimited_String, Branch_line_regexp)
@@ -391,10 +445,37 @@ class SplitCapture < RawCapture
   end # Examples
 end # SplitCapture
 
-# LimitCapture
-class LimitCapture < SplitCapture
+# class ParsedCapture
+class ParsedCapture < MatchCapture
+  attr_reader :string, :regexp # arguments
+  attr_reader :parsed_regexp
+  attr_reader :raw_captures
+  def initialize(string, regexp)
+    super(string, regexp)
+    @parsed_regexp = Regexp::Parser.parse(regexp.to_s, 'ruby/1.8')
+  end # ParsedCapture_initialize
+
+  def raw_captures
+    Regexp::Parser.parse(@regexp.to_s, 'ruby/1.8').raw_capture?(@string)
+  end # raw_captures
+
+  def column_output
+    @raw_captures.reduce({}, :merge) { |c| c[:raw_capture].output }
+  end # output
+
+  def delimiters
+    @raw_captures.reduce('', :+) { |c| c[:raw_capture].delimiters }
+  end # delimiters
+  module Examples
+    include Capture::Examples
+    # Branch_line_capture = ParsedCapture.new(Newline_Delimited_String, Branch_line_regexp)
+    Parsed_a_capture = ParsedCapture.new('a\na', /a/.capture(:label))
+  end # Examples
+end # ParsedCapture
+
+class LimitCapture < ParsedCapture
   # limit match to :match length of string
-  def raw_captures?
+  def raw_captures
     raise Exception.new('@string is not String but ' + @string.class.name) unless @string.instance_of?(String)
     method = @string.method(:match)
     match = method.call(@regexp)
@@ -404,65 +485,35 @@ class LimitCapture < SplitCapture
       string = match[0] # regexp matched string
       @string.method(:split).call(@regexp) # after string shortened
     end # if
-  end # raw_captures?
+  end # raw_captures
   module Examples
     include Capture::Examples
     Branch_line_capture = LimitCapture.new(Newline_Delimited_String, Branch_line_regexp)
     Limit_capture = LimitCapture.new(Newline_Delimited_String, Branch_line_regexp)
   end # Examples
+  def post_match
+    @raw_captures[0][:raw_capture].post_match
+  end # post_match
+
+  def pre_match
+    @raw_captures[0][:raw_capture].pre_match
+  end # pre_match
+
+  def matched_characters
+    @raw_captures.reduce('', :+) { |c| c[:raw_capture].matched_characters }
+  end # matched_characters
+
+  def delimiters
+    []
+  end # delimiters
 end # LimitCapture
-
-# class ParsedCapture
-class ParsedCapture < MatchCapture
-  attr_reader :string, :regexp # arguments
-  attr_reader :parsed_regexp, :length_hash_captures
-  attr_reader :raw_captures
-  def initialize(string, regexp)
-    super(string, regexp)
-    @parsed_regexp = Regexp::Parser.parse(regexp.to_s, 'ruby/1.8')
-  end # ParsedCapture_initialize
-
-  def raw_captures?
-    Regexp::Parser.parse(@regexp.to_s, 'ruby/1.8').raw_capture?(@string)
-  end # raw_captures?
-
-  def success?
-    @raw_captures[0][:raw_capture].success?
-  end # success?
-
-  def post_match?
-    @raw_captures[0][:raw_capture].post_match?
-  end # post_match?
-
-  def pre_match?
-    @raw_captures[0][:raw_capture].pre_match?
-  end # pre_match?
-
-  def matched_characters?
-    @raw_captures.reduce('', :+) { |c| c[:raw_capture].matched_characters? }
-  end # matched_characters?
-
-  def column_output
-    @raw_captures.reduce({}, :merge) { |c| c[:raw_capture].output? }
-  end # output?
-
-  def delimiters?
-    @raw_captures.reduce('', :+) { |c| c[:raw_capture].delimiters? }
-  end # delimiters?
-  module Examples
-    include Capture::Examples
-    # Branch_line_capture = ParsedCapture.new(Newline_Delimited_String, Branch_line_regexp)
-    Parsed_a_capture = ParsedCapture.new('a\na', /a/.capture(:label))
-  end # Examples
-end # ParsedCapture
-# String
 
 class String
   def map_captures?(regexp_array)
     ret = []
     capture = capture?(regexp_array[0])
     remaining_string = if capture.success?
-                         capture.post_match?
+                         capture.post_match
                        else
                          string # no advance in string yet
                        end # if
@@ -487,9 +538,9 @@ class String
       pattern.map do |p|
         ret = self[pos..-1].capture?(p) # recurse returning Capture
         pos += if ret.instance_of?(Array)
-                 ret.reduce(0) { |sum, c| sum + c.number_matched_characters? }
+                 ret.reduce(0) { |sum, c| sum + c.number_matched_characters }
                else
-                 ret.number_matched_characters?
+                 ret.number_matched_characters
                end # if
         ret
       end # map
@@ -523,7 +574,7 @@ class String
 
   def parse(regexp)
     regexp.enumerate(:map) do |reg|
-      capture?(reg).enumerate(:map, &:output?)
+      capture?(reg).enumerate(:map, &:output)
     end # enumerate
   end # parse
   module Constants
@@ -571,19 +622,19 @@ class String
     def assert_parse_once(pattern, message = '')
       match_capture = MatchCapture.new(self, pattern)
       split_capture = SplitCapture.new(self, pattern)
-      limit_capture = SplitCapture.new(self[0, match_capture.number_matched_characters?], pattern)
+      limit_capture = SplitCapture.new(self[0, match_capture.number_matched_characters], pattern)
       message = "match_capture = #{match_capture.inspect}\nsplit_capture = #{split_capture.inspect}"
       #	Capture.assert_method(match_capture, limit_capture, :string, message)
       Capture.assert_method(match_capture, limit_capture, :regexp, message)
-      Capture.assert_method(match_capture, limit_capture, :length_hash_captures, message)
+      Capture.assert_method(match_capture, limit_capture, :num_captures, message)
       #	Capture.assert_method(match_capture, split_capture, :captures, message)
       Capture.assert_method(match_capture, limit_capture, :repetitions?, message)
-      Capture.assert_method(match_capture, limit_capture, :matched_characters?, message)
-      Capture.assert_method(match_capture, limit_capture, :pre_match?, message)
-      #	Capture.assert_method(match_capture, limit_capture, :post_match?, message)
-      Capture.assert_method(match_capture, limit_capture, :delimiters?, message)
+      Capture.assert_method(match_capture, limit_capture, :matched_characters, message)
+      Capture.assert_method(match_capture, limit_capture, :pre_match, message)
+      #	Capture.assert_method(match_capture, limit_capture, :post_match, message)
+      Capture.assert_method(match_capture, limit_capture, :delimiters, message)
       #	Capture.assert_method(match_capture, limit_capture, :to_a, message)
-      assert_equal(match_capture.output?, limit_capture.output?[0], message)
+      assert_equal(match_capture.output, limit_capture.output[0], message)
       common_capture = match_capture.to_a[0..-2]
       last_common_capture = common_capture.size - 1
       assert_equal(common_capture.join, split_capture.to_a[0..last_common_capture].join, message)
@@ -597,7 +648,7 @@ class String
         pos = 0
         pattern.map do |p|
           ret = self[pos..-1].assert_left_parse(p) # recurse
-          pos += ret.number_matched_characters?
+          pos += ret.number_matched_characters
           ret
         end # map
       else
@@ -610,7 +661,7 @@ class String
         # limit repetitions to pattern, get all captures
         if split_capture.repetitions? == 1
           match_capture
-        elsif match_capture.output? == split_capture.output?[-1] # over-written captures
+        elsif match_capture.output == split_capture.output[-1] # over-written captures
           split_capture
         else
           match_capture
@@ -638,7 +689,7 @@ class String
       # limit repetitions to pattern, get all captures
       if split_capture.repetitions? == 1
         puts message + "\n" + match_capture.inspect
-      elsif match_capture.output? == split_capture.output?[-1] # over-written captures
+      elsif match_capture.output == split_capture.output[-1] # over-written captures
         puts message + "\n" + split_capture.inspect
       else
         puts message + "\n" + match_capture.inspect
