@@ -63,7 +63,7 @@ class BranchTest < TestCase
     age = 123
     br = BranchReference.new(branch: branch, age: age)
     new_from_ref = BranchReference.new_from_ref(Reflog_line)
-    assert_equal(123, new_from_ref.age, Reflog_capture.output?.inspect)
+    assert_equal(123, new_from_ref.age, Reflog_capture.output.inspect)
     assert_equal(123, new_from_ref[:age], Reflog_capture.inspect)
     # ?	assert_equal(br, BranchReference.new_from_ref(Reflog_line))
     # ?	assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, Reflog_reference.age, message)
@@ -72,7 +72,7 @@ class BranchTest < TestCase
     BranchReference.assert_output(Last_change_line)
     BranchReference.assert_output(First_change_line)
     BranchReference.new_from_ref(No_ref_line).assert_pre_conditions
-    #	assert_equal(nil, capture.output?[:ambiguous_branch].nil?)
+    #	assert_equal(nil, capture.output[:ambiguous_branch].nil?)
     BranchReference.new_from_ref(First_change_line).assert_pre_conditions
     BranchReference.new_from_ref(Last_change_line).assert_pre_conditions
     Reflog_reference.assert_pre_conditions
@@ -107,7 +107,7 @@ class BranchTest < TestCase
       refute_equal('', reflog_line, Reflog_lines.inspect)
       #		BranchReference.assert_reflog_line(reflog_line)
       BranchReference.new_from_ref(reflog_line)
-      #		new(capture.output?[:ambiguous_branch].to_sym,capture.output?[:age].to_i)
+      #		new(capture.output[:ambiguous_branch].to_sym,capture.output[:age].to_i)
     end # map
     reflog = BranchReference.reflog?(filename, This_code_repository)
     #	assert_equal(manual_reflog, reflog, reflog.inspect)
@@ -208,7 +208,7 @@ class BranchTest < TestCase
       assert_match(p, branch_output)
       branches = branch_output.capture?(p, LimitCapture)
       puts branches.inspect if branches.success?
-      # ?		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches.output?, branches.inspect)
+      # ?		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches.output, branches.inspect)
     end # each
 
     assert_includes(Branch.branches?(@temp_repo).map(&:name), @temp_repo.current_branch_name?)

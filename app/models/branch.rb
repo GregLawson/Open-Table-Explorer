@@ -60,10 +60,10 @@ class BranchReference < GitReference
     def new_from_ref(reflog_line)
       capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
       raise Exception.new(capture.inspect) unless capture.success?
-      if capture.output?[:ambiguous_branch].nil?
-        new(name: capture.output?[:sha_hex].to_sym, age: 0, timestamp: capture.output?[:timestamp])
+      if capture.output[:ambiguous_branch].nil?
+        new(name: capture.output[:sha_hex].to_sym, age: 0, timestamp: capture.output[:timestamp])
       else
-        new(name: capture.output?[:ambiguous_branch].to_sym, age: capture.output?[:age].to_i, timestamp: capture.output?[:timestamp])
+        new(name: capture.output[:ambiguous_branch].to_sym, age: capture.output[:age].to_i, timestamp: capture.output[:timestamp])
       end # if
     end # new_from_ref
 
@@ -132,8 +132,8 @@ class BranchReference < GitReference
         message += "\ncapture? = " + capture.inspect
         message = capture.inspect
         #	assert(capture.success?, message)
-        # ?	assert_instance_of(Hash, capture.output?, message)
-        # ?	assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex, :timestamp], capture.output?.keys, message)
+        # ?	assert_instance_of(Hash, capture.output, message)
+        # ?	assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex, :timestamp], capture.output.keys, message)
         # ?	assert_equal([:ambiguous_branch, :age, :unambiguous_branch, :sha_hex, :timestamp], capture.regexp.names.map{|n| n.to_sym}, 'capture.regexp.names')
         # ?	assert_equal(capture.length_hash_captures, capture.regexp.named_captures.values.flatten.size, message)
         capture.regexp.named_captures.each_pair do |_capture_name, index_array|
@@ -141,15 +141,15 @@ class BranchReference < GitReference
           # ?		assert_instance_of(Array, index_array, message)
           # ?		assert_operator(1, :<=, index_array.size, capture_name)
           if index_array.size > 1
-            # ?			refute_equal(capture.string, capture.output?[capture_name.to_sym])
+            # ?			refute_equal(capture.string, capture.output[capture_name.to_sym])
           end # if
         end # each_pair
-        message += "\noutput? = " + reflog_line.capture?(BranchReference::Reflog_line_regexp).output?.inspect
-        if capture.output?[:ambiguous_branch].nil?
+        message += "\noutput = " + reflog_line.capture?(BranchReference::Reflog_line_regexp).output.inspect
+        if capture.output[:ambiguous_branch].nil?
         else
-          message += "\nExact match of age in " + capture.output?.inspect
-          # ?		assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, reflog_line.capture?(BranchReference::Reflog_line_regexp).output?[:age], message)
-          # ?		assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, capture.output?[:age], message)
+          message += "\nExact match of age in " + capture.output.inspect
+          # ?		assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, reflog_line.capture?(BranchReference::Reflog_line_regexp).output[:age], message)
+          # ?		assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, capture.output[:age], message)
         end # if
       end # assert_output
 
@@ -165,7 +165,7 @@ class BranchReference < GitReference
     end # ClassMethods
     def assert_pre_conditions(message = '')
       message += "In assert_pre_conditions, self=#{inspect}"
-      #	assert_match(Branch_name_regexp, capture.output?[:ambiguous_branch])
+      #	assert_match(Branch_name_regexp, capture.output[:ambiguous_branch])
       # ?	assert_match(BranchReference::Unambiguous_ref_age_pattern, @age.to_s, message)
       # ?	assert_match(BranchReference::Unambiguous_ref_age_pattern, self.age.to_s, message)
       # ?	assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, self.age.to_s, message)
@@ -282,7 +282,7 @@ class Branch < GitReference
     def current_branch_name?(repository)
       branch_capture = branch_capture?(repository, '--list')
       if branch_capture.success?
-        branch_capture.output?.map { |c| c[:branch].to_sym }
+        branch_capture.output.map { |c| c[:branch].to_sym }
       else
         raise Exception.new('git branch parse failed = ' + branch_capture.inspect)
       end # if
@@ -291,7 +291,7 @@ class Branch < GitReference
     def branches?(repository = Repository::This_code_repository)
       branch_capture = branch_capture?(repository, '--list')
       if branch_capture.success?
-        branch_capture.output?.map do |c|
+        branch_capture.output.map do |c|
           Branch.new(repository: repository, name: c[:branch].to_sym)
         end # map
       else
