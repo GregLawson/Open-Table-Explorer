@@ -24,6 +24,8 @@ class FileTree # < ActiveRecord::Base
       else
         ret
       end # if
+    rescue StandardError => exception_raised
+      exception_raised
     end # file_type
 
     def recurse?(file)
@@ -47,11 +49,12 @@ class FileTree # < ActiveRecord::Base
       end # if
     end # path_hash
 
+    # terminates for link files to avoid recursion
     def directory_hash(directory)
       ret = {}
       Dir[directory + '/*'].each do |file|
-        if recurse?(file)
-          ret = ret.merge(File.basename(file).to_sym => FileTree.file_tree(file + '/*'))
+        if (block_given? && yeild) || recurse?(file)
+          ret = ret.merge(File.basename(file).to_sym => FileTree.path_hash(file + '/*'))
         elsif File.file?(file) && !File.zero?(file)
           ret = ret.merge(data_hash(file))
         end # if
@@ -59,8 +62,18 @@ class FileTree # < ActiveRecord::Base
       ret
     end # directory_hash
 
+    # provide path around termination condition for links
     def file_tree(directory)
-      directory_hash(directory)
+      ret = {}
+      Dir[directory + '/*'].each do |file|
+        directory_hash(directory)
+        if recurse?(file) || file_type(directory) == :link # can cause infinite loops
+          ret = ret.merge(File.basename(file).to_sym => FileTree.file_tree(file + '/*'))
+        elsif File.file?(file) && !File.zero?(file)
+          ret = ret.merge(data_hash(file))
+        end # if
+      end # each
+      ret
     end # file_tree
   end # ClassMethods
   extend ClassMethods
@@ -101,5 +114,7 @@ class FileTree # < ActiveRecord::Base
     include DefinitionalConstants
     include Constants
     Net_directory = '/sys/class/net'.freeze
+    Lo_hash = FileTree.directory_hash(Net_directory + '/lo')
+    Net_file_tree_hash = FileTree.directory_hash(Net_directory)
   end # Examples
 end # FileTree

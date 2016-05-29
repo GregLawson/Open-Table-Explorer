@@ -1,5 +1,5 @@
 passed
-2016-05-25 14:49:31.497
+2016-05-29 16:32:44.219
 /usr/bin/time --verbose ruby -v -W0 /etc/mtab
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 
@@ -10,18 +10,18 @@ Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /etc/mtab"
 	User time (seconds): 0.08
 	System time (seconds): 0.00
-	Percent of CPU this job got: 100%
+	Percent of CPU this job got: 98%
 	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.08
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 6976
+	Maximum resident set size (kbytes): 6968
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 1835
+	Minor (reclaiming a frame) page faults: 1833
 	Voluntary context switches: 3
-	Involuntary context switches: 8
+	Involuntary context switches: 12
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

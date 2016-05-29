@@ -1,37 +1,62 @@
 passed
-2016-05-13 18:36:42.068
+2016-05-29 16:33:36.670
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-..........
+.F...F.F..
 
-Finished in 0.020999s, 476.2147 runs/s, 1238.1582 assertions/s.
+Finished in 0.015811s, 632.4566 runs/s, 1707.6328 assertions/s.
 
-10 runs, 26 assertions, 0 failures, 0 errors, 0 skips
+  1) Failure:
+NewTestClass#test_file_tree [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb:91]:
+{}.
+Expected: [:lo, :eth0, :wlan0]
+  Actual: []
 
+
+  2) Failure:
+NewTestClass#test_directory_hash [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb:71]:
+--- expected
++++ actual
+@@ -1,2 +1 @@
+-{:uevent=>"INTERFACE=lo
+-IFINDEX=1", :addr_assign_type=>"0", :addr_len=>"6", :dev_id=>"0x0", :ifalias=>"", :iflink=>"1", :ifindex=>"1", :type=>"772", :link_mode=>"0", :address=>"00:00:00:00:00:00", :broadcast=>"00:00:00:00:00:00", :carrier=>"1", :speed=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/speed>, :duplex=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/duplex>, :dormant=>"0", :operstate=>"unknown", :mtu=>"16436", :flags=>"0x109", :tx_queue_len=>"0", :netdev_group=>"0", :statistics=>{:*=>#<Errno::ENOENT: No such file or directory @ rb_sysopen - /sys/class/net/lo/statistics/*>}, :power=>{:*=>#<Errno::ENOENT: No such file or directory @ rb_sysopen - /sys/class/net/lo/power/*>}, :queues=>{:*=>#<Errno::ENOENT: No such file or directory @ rb_sysopen - /sys/class/net/lo/queues/*>}}
++"../../devices/virtual/net/lo"
+
+
+
+  3) Failure:
+NewTestClass#test_path_hash [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb:41]:
+{:uevent=>"INTERFACE=lo\nIFINDEX=1", :addr_assign_type=>"0", :addr_len=>"6", :dev_id=>"0x0", :ifalias=>"", :iflink=>"1", :ifindex=>"1", :type=>"772", :link_mode=>"0", :address=>"00:00:00:00:00:00", :broadcast=>"00:00:00:00:00:00", :carrier=>"1", :speed=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/speed>, :duplex=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/duplex>, :dormant=>"0", :operstate=>"unknown", :mtu=>"16436", :flags=>"0x109", :tx_queue_len=>"0", :netdev_group=>"0", :statistics=>{:*=>#<Errno::ENOENT: No such file or directory @ rb_sysopen - /sys/class/net/lo/statistics/*>}, :power=>{:*=>#<Errno::ENOENT: No such file or directory @ rb_sysopen - /sys/class/net/lo/power/*>}, :queues=>{:*=>#<Errno::ENOENT: No such file or directory @ rb_sysopen - /sys/class/net/lo/queues/*>}}.
+Expected: 0
+  Actual: 1
+
+10 runs, 27 assertions, 3 failures, 0 errors, 0 skips
+
+Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb"
-	User time (seconds): 0.68
-	System time (seconds): 0.07
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.76
+	User time (seconds): 0.74
+	System time (seconds): 0.05
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.81
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 22828
+	Maximum resident set size (kbytes): 23160
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5837
-	Voluntary context switches: 23
-	Involuntary context switches: 74
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 6344
+	Voluntary context switches: 35
+	Involuntary context switches: 90
 	Swaps: 0
-	File system inputs: 0
-	File system outputs: 0
+	File system inputs: 56
+	File system outputs: 16
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1

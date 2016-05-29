@@ -37,23 +37,20 @@ class FileTreeTest < TestCase
   def test_path_hash
     assert_equal({ null: '' }, FileTree.path_hash('/dev/null'))
     assert_equal({ dev_id: '0x0' }, FileTree.path_hash(Net_directory + '/lo/dev_id'))
-    path = Net_directory + '/lo'
-    assert_equal(:link, FileTree.file_type(path))
-    #	assert_equal({}, {File.basename(path).to_sym => FileTree.directory_hash(path + '/*')})
-    lo_hash = FileTree.path_hash(path)
-    assert_equal(0, lo_hash.size, lo_hash.inspect)
-    #	assert_equal('0x0', lo_hash[:dev_id])
-    #	assert_equal({}, FileTree.path_hash('/dev/null'))
+    assert_includes(Lo_hash.keys, :statistics)
+    assert_equal(0, Lo_hash[:statistics].size, Lo_hash.inspect)
+    assert_equal('0x0', Lo_hash[:dev_id])
+    assert_equal([:_errors], Lo_hash[:statistics].keys)
+    assert_equal({}, FileTree.path_hash('/dev/null'))
     path = Net_directory
     assert_equal(:directory, FileTree.file_type(path))
     net_hash = FileTree.path_hash(path)
-    #	assert_equal([:eth0], net_hash.keys, net_hash.inspect)
+    assert_equal([:eth0], net_hash.keys, net_hash.inspect)
   end # path_hash
 
   def test_directory_hash
-    lo_hash = FileTree.directory_hash(Net_directory + '/lo')
-    #	assert_equal(31, lo_hash.size)
-    assert_equal('0x0', lo_hash[:dev_id])
+    #	assert_equal(31, Lo_hash.size)
+    assert_equal('0x0', Lo_hash[:dev_id])
     assert_equal({}, FileTree.directory_hash('/dev/null'))
     directory = Net_directory
     ret = {}
@@ -71,13 +68,14 @@ class FileTreeTest < TestCase
     assert_equal(ret.keys.size, Dir[directory + '/*'].size)
     refute_nil(ret)
     assert_instance_of(Hash, ret)
-    #	assert_instance_of(Hash, ret[:lo])
-    #	assert_equal([:lo, :eth0, :wlan0], ret.keys)
-    #	assert_equal(3, ret.values.size, ret)
-    #	assert_equal(ret[:wlan0].keys, ret[:eth0].keys, ret)
-    #	ret = FileTree.file_tree('/sys/class/net/*')
+    assert_equal(Lo_hash, ret[:lo])
+    assert_instance_of(Hash, ret[:lo])
+    assert_equal([:lo, :eth0, :wlan0], ret.keys)
+    assert_equal(3, ret.values.size, ret)
+    assert_equal(ret[:wlan0].keys, ret[:eth0].keys, ret)
+    ret = FileTree.file_tree('/sys/class/net/*')
     assert_instance_of(Hash, ret)
-    #	assert_instance_of(Hash, ret[:lo])
+    assert_instance_of(Hash, ret[:lo])
     #	assert_equal([:lo, :eth0, :wlan0], ret.keys)
     #	assert_equal(3, ret.values.size, ret)
     #	assert_equal(ret[:wlan0].keys, ret[:eth0].keys, ret)
@@ -90,6 +88,6 @@ class FileTreeTest < TestCase
     assert_equal(true, FileTree.recurse?(directory), FileTree.file_type(directory))
     #	assert_equal([:lo, :eth0, :wlan0], FileTree.directory_hash(directory).keys, FileTree.directory_hash(directory).inspect)
     file_tree = FileTree.file_tree(directory)
-    #    assert_equal([:lo, :eth0, :wlan0], file_tree.keys, file_tree.inspect)
+    assert_equal([:lo, :eth0, :wlan0], file_tree.keys, file_tree.inspect)
   end # file_tree
 end # FileTree
