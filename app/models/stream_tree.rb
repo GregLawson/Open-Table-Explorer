@@ -489,6 +489,39 @@ class Hash
     merge(other)
   end # +
 
+  def -(rhs)
+    ret = {}
+    lhs = self
+    each_pair do |key, value|
+      if value.instance_of?(Hash) || value.instance_of?(Array)
+        ret = ret.merge(key => value - rhs[key])
+      elsif rhs[key].nil? || lhs[key] != rhs[key]
+        ret = ret.merge(key => value)
+      end # if
+    end # each_pair
+    ret
+  end # -
+
+  def operator(rhs)
+    lhs = self
+    ret = {}
+    each_pair do |key, value|
+      if value.instance_of?(Hash) || value.instance_of?(Array)
+        ret = ret.merge(key => lhs[key].operator(rhs[key])) # recurse
+      else
+        rhs_value = yield(key, lhs, rhs)
+        unless rhs_value.nil?
+          ret = ret.merge(key => rhs_value)
+        end # unless
+      end # if
+    end # each_pair
+    ret
+  end # operator
+
+  def &(other)
+    other - (self - other)
+  end # intersection
+
   def <<(other)
     merge(other)
   end # :+

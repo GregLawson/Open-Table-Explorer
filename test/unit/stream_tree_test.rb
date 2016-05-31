@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'test_environment'
+require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/stream_tree.rb'
 class StreamTreeTest < TestCase
   # include DefaultTests
@@ -296,6 +296,58 @@ class StreamTreeTest < TestCase
     idenity_map = tree.class::Constants::Identity_map_pair
     assert_equal(tree, tree.map_pair(&idenity_map))
   end # map_pair
+
+  def test_hash_minus
+    assert_equal({}, {} - {})
+    assert_equal({}, { cat: 1 } - { cat: 1 })
+    assert_equal({ cat: 1 }, { cat: 1 } - { dog: 1 })
+    assert_equal({ cat: 1 }, { cat: 1 } - { cat: 2 })
+    assert_equal({ cat: 1 }, { cat: 1, dog: 3 } - { cat: 2, dog: 3 })
+    assert_equal({ cat: 1, dog: { fish: 5 } }, { cat: 1, dog: { fish: 5, bird: 6 } } - { cat: 2, dog:  { bird: 6 } })
+  end # -
+
+  def test_operator
+    assert_equal({}, {}.operator({}))
+    assert_equal({ lhs_key: :lhs_value }, { lhs_key: :lhs_value }.operator(rhs_key: :rhs_value) { |key, lhs, _rhs| lhs[key] })
+    assert_equal({ common_key: :lhs_value }, { common_key: :lhs_value }.operator(common_key: :rhs_value) { |key, lhs, _rhs| lhs[key] })
+    assert_equal({ common_key: :rhs_value }, { common_key: :lhs_value }.operator(common_key: :rhs_value) { |key, _lhs, rhs| rhs[key] })
+    assert_equal({}, { lhs_key: :lhs_value }.operator(rhs_key: :rhs_value) { |key, _lhs, rhs| rhs[key] })
+
+    operator_lambda = lambda do |key, lhs, rhs|
+      assert_instance_of(Symbol, key)
+      assert_instance_of(Hash, lhs)
+      assert_instance_of(Hash, rhs)
+      refute_nil(lhs[key])
+      if rhs[key].nil? || lhs[key] != rhs[key]
+        lhs[key]
+      end # if
+    end # lambda
+    assert_equal({}, {}.operator({}, &operator_lambda))
+
+    assert_equal({ cat: 1 }, { cat: 1 }.operator({ dog: 1 }, &operator_lambda))
+    assert_equal({ cat: 1 }, { cat: 1 }.operator({ cat: 2 }, &operator_lambda))
+    assert_equal({ cat: 1 }, { cat: 1, dog: 3 }.operator({ cat: 2, dog: 3 }, &operator_lambda))
+    assert_equal({ fish: 5 }, { fish: 5, bird: 6 }.operator({ bird: 6 }, &operator_lambda))
+    assert_equal({ cat: 1, dog: { fish: 5 } }, { cat: 1, dog: { fish: 5, bird: 6 } }.operator({ cat: 2, dog:  { bird: 6 } }, &operator_lambda))
+    assert_equal({ cat: 1 }, { cat: 1 }.operator({ dog: 2 }, &operator_lambda))
+    assert_equal({ cat: 1 }, { cat: 1 }.operator({ dog: 1 }, &operator_lambda))
+
+    assert_equal({ cat: 1 }, { cat: 1 }.operator(dog: 2) { |key, lhs, _rhs| lhs[key] })
+    assert_equal({ cat: nil }, { cat: 1 }.operator(dog: 1) { |key, _lhs, rhs| rhs[key] })
+    assert_equal({ cat: 1 }, { cat: 1 }.operator(dog: 1) { |key, lhs, rhs| lhs[key] - rhs[key] })
+    assert_equal({ cat: 1 }, { cat: 1 }.operator(cat: 2) { |key, lhs, rhs| lhs[key] - rhs[key] })
+    assert_equal({ cat: 1 }, { cat: 1, dog: 3 }.operator(cat: 2, dog: 3) { |key, lhs, rhs| lhs[key] - rhs[key] })
+    assert_equal({ cat: 1, dog: { fish: 5 } }, { cat: 1, dog: { fish: 5, bird: 6 } }.operator(cat: 2, dog:  { bird: 6 }) { |key, lhs, rhs| lhs[key] - rhs[key] })
+    assert_equal({ cat: 0 }, { cat: 1 }.operator({ cat: 1 }, &operator_lambda))
+  end # operator
+
+  def test_intersection
+    assert_equal({}, {} & {})
+    assert_equal({ cat: 1 }, { cat: 1 } & { cat: 1 })
+    assert_equal({}, { cat: 1 } & { dog: 1 })
+    assert_equal({ cat: 1 }, { cat: 1 } & { cat: 2 })
+    assert_equal({ dog: { bird: 6 } }, { cat: 1, dog: { fish: 5, bird: 6 } } & { cat: 2, dog:  { bird: 6 } })
+  end # intersection
 
   def test_enumerate_single
     atom = /5/

@@ -1,249 +1,229 @@
 passed
-2016-05-19 02:55:05.471
+2016-05-31 04:34:39.271
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-Run options: --seed 0
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test
+Started
+E
+===============================================================================
+Error: test_Assertions(StreamTreeTest): LocalJumpError: no block given (yield)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:155:in `inspect_node'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:226:in `assert_pre_conditions'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:194:in `test_Assertions'
+     191:   end # inspect_recursive
+     192: 
+     193:   def test_Assertions
+  => 194:     Connectivity.assert_pre_conditions
+     195:     Connectivity.assert_post_conditions
+     196:   end # Assertions
+     197: 
+===============================================================================
+..F
+===============================================================================
+Failure:
+  <[:children?]> expected to include
+  <:each_pair>.
+test_NestedArrayType_Assertions(StreamTreeTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:219:in `test_NestedArrayType_Assertions'
+     216:     assert_includes(NestedArrayType.methods, :children?)
+     217:     assert_empty(NestedArrayType::ClassMethods.methods(false))
+     218:     assert_empty(NestedArrayType::ClassMethods.methods(false))
+  => 219:     assert_includes(NestedArrayType::ClassMethods.instance_methods(false), :each_pair)
+     220:     #	assert_includes(NestedArrayType::ClassMethods.instance_methods, :ref)
+     221:     assert_equal(NestedArrayType.instance_methods, [])
+     222: 
+===============================================================================
+.E
+===============================================================================
+Error: test_Node_format(StreamTreeTest): LocalJumpError: no block given (yield)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:155:in `inspect_node'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:263:in `test_Node_format'
+     260:   end # test_node_Examples
+     261: 
+     262:   def test_Node_format
+  => 263:     assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array))
+     264:     assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array, &Node_format))
+     265:     #	assert_match(/cat/, Tree_node_format.call('cat', depth=0, false))
+     266:   end # Node_format
+===============================================================================
+E
+===============================================================================
+Error: test_at(StreamTreeTest): NoMethodError: undefined method `explain_assert_respond_to' for #<StreamTreeTest:0x00000003319fb8>
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:243:in `test_at'
+     240: 
+     241:   def test_at
+     242:     assert_includes(Node::Examples::Nested_array_root.methods, :at, Node::Examples::Nested_array_root.inspect)
+  => 243:     explain_assert_respond_to(Node::Examples::Nested_array_root, :at, Node::Examples::Nested_array_root.inspect)
+     244:     assert_equal(GraphPath.new(*Root_path), Root_path)
+     245:     path = GraphPath.new(Root_path)
+     246:     assert_empty(Root_path.parent_index)
+===============================================================================
+.F
+===============================================================================
+Failure:
+  The object must respond to :empty?.
+  <nil>.respond_to?(:empty?) expected
+  (Class: <NilClass>)
+test_children?(StreamTreeTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:118:in `test_children?'
+     115:   end # square_brackets
+     116: 
+     117:   def test_children?
+  => 118:     assert_empty(nil)
+     119:     assert(nil.to_a.empty?) # allows uniform testing of empty Array and nil
+     120:     assert_equal(Nested_array, Connectivity.children?(Nested_array))
+     121:     assert_equal(Son_nested_array, Connectivity.children?(Son_nested_array), 'Son_nested_array = ' + Son_nested_array.inspect)
+===============================================================================
+.N
+===============================================================================
+StreamTreeTest#test_each_pair was redefined [test_each_pair(StreamTreeTest)]
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:198:in `<class:StreamTreeTest>'
+===============================================================================
+.....E
+===============================================================================
+Error: test_inspect_node(StreamTreeTest): LocalJumpError: no block given (yield)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:155:in `inspect_node'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:144:in `test_inspect_node'
+     141:   end # map_pair
+     142: 
+     143:   def test_inspect_node
+  => 144:     assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array))
+     145:     assert_equal('[2, [3], 4]', NestedArrayType.inspect_node(Son_nested_array))
+     146:     assert_equal('3', NestedArrayType.inspect_node(Grandson_nested_array))
+     147:     assert_match(NestedArrayType.inspect_node(Nested_array), Tree_node_root)
+===============================================================================
+.E
+===============================================================================
+Error: test_inspect_recursive(StreamTreeTest): LocalJumpError: no block given (yield)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:155:in `inspect_node'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:250:in `block in <module:Examples>'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:174:in `map_recursive'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:183:in `test_inspect_recursive'
+     180:   end # inspect_nonterminal?
+     181: 
+     182:   def test_inspect_recursive
+  => 183:     assert_equal(Grandson_nested_array_map, NestedArrayType.map_recursive(Grandson_nested_array, depth = 2, &Tree_node_format))
+     184:     assert_equal(Son_nested_array_map, NestedArrayType.map_recursive(Son_nested_array, depth = 1, &Tree_node_format))
+     185:     assert_equal(Nested_array_map, NestedArrayType.map_recursive(Nested_array, &Tree_node_format))
+     186:     assert_equal((Nested_array_map.flatten.map { |s| s + "\n" }).join, NestedArrayType.inspect_recursive(Nested_array, &Tree_node_format), NestedArrayType.inspect_recursive(Nested_array, &Tree_node_format))
+===============================================================================
+F
+===============================================================================
+Failure: test_intersection(StreamTreeTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:347:in `test_intersection'
+     344:   def test_intersection
+     345:     assert_equal({}, {} & {})
+     346:     assert_equal({ cat: 1 }, { cat: 1 } & { cat: 1 })
+  => 347:     assert_equal({}, { cat: 1 } & { dog: 1 })
+     348:     assert_equal({ cat: 1 }, { cat: 1 } & { cat: 2 })
+     349:     assert_equal({ dog: { bird: 6 } }, { cat: 1, dog: { fish: 5, bird: 6 } } & { cat: 2, dog:  { bird: 6 } })
+     350:   end # intersection
+<{}> expected but was
+<{:dog=>1}>
 
-# Running:
+diff:
+? {:dog=>1}
+===============================================================================
+....E
+===============================================================================
+Error: test_map_recursive(StreamTreeTest): LocalJumpError: no block given (yield)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:155:in `inspect_node'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:250:in `block in <module:Examples>'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:157:in `call'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:157:in `test_map_recursive'
+     154:     refute_nil(node)
+     155:     refute_nil(node.graph_type, node.inspect)
+     156:     assert_respond_to(node.graph_type, :inspect_node)
+  => 157:     assert_equal(Tree_node_root, visit_proc.call(NestedArrayType.ref(Nested_array), depth, false))
+     158:     assert_equal(1, Children_nested_array.size)
+     159:     assert_respond_to(Son_nested_array, Children_method_name)
+     160:     assert_instance_of(Array, Grandchildren_nested_array)
+===============================================================================
+...E
+===============================================================================
+Error: test_operator(StreamTreeTest): LocalJumpError: no block given (yield)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:512:in `block in operator'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:508:in `each_pair'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:508:in `operator'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:510:in `block in operator'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:508:in `each_pair'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:508:in `operator'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:331:in `test_operator'
+     328:     assert_equal({ cat: 1 }, { cat: 1 }.operator({ cat: 2 }, &operator_lambda))
+     329:     assert_equal({ cat: 1 }, { cat: 1, dog: 3 }.operator({ cat: 2, dog: 3 }, &operator_lambda))
+     330:     assert_equal({ fish: 5 }, { fish: 5, bird: 6 }.operator({ bird: 6 }, &operator_lambda))
+  => 331:     assert_equal({ cat: 1, dog: { fish: 5 } }, { cat: 1, dog: { fish: 5, bird: 6 } }.operator({ cat: 2, dog:  { bird: 6 } }, &operator_lambda))
+     332:     assert_equal({ cat: 1 }, { cat: 1 }.operator({ dog: 2 }, &operator_lambda))
+     333:     assert_equal({ cat: 1 }, { cat: 1 }.operator({ dog: 1 }, &operator_lambda))
+     334: 
+===============================================================================
+..E
+===============================================================================
+Error: test_ref(StreamTreeTest): NameError: undefined local variable or method `ref' for #<StreamTreeTest:0x000000033188c0>
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:111:in `test_ref'
+     108: 
+     109:   # Connectivity
+     110:   def test_ref
+  => 111:     assert_instance_of(Node, ref)
+     112:   end # ref
+     113: 
+     114:   def test_square_brackets(*params)
+===============================================================================
+F
+===============================================================================
+Failure: test_rgl_readme(StreamTreeTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:23:in `test_rgl_readme'
+     20:     # Use DOT to visualize this graph:
+     21:     dg.write_to_graphic_file('jpg')
+     22:     assert_equal(true, dg.directed?)
+  => 23:     assert_equal([5, 6, 1, 2, 3, 4], dg.vertices)
+     24:     assert_equal(true, dg.has_vertex?(4))
+     25:     assert_equal(false, dg.has_vertex?(Object))
+     26:     assert_equal('(1-2)(1-6)(2-3)(2-4)(4-5)(6-4)', dg.edges.sort.to_s)
+<[5, 6, 1, 2, 3, 4]> expected but was
+<[1, 2, 3, 4, 5, 6]>
 
-.E..E.....EE.EE....F....E..F....F...
+diff:
+? [1, 2, 3, 4, 5, 6, 1, 2, 3, 4]
+===============================================================================
+.E
+===============================================================================
+Error: test_to_hash(StreamTreeTest): NoMethodError: undefined method `each_pair' for [1, 2, 3]:Array
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:434:in `to_hash'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:288:in `test_to_hash'
+     285:   end # keys
+     286: 
+     287:   def test_to_hash
+  => 288:     assert_equal(Example_array, Example_array.to_hash.to_a.values)
+     289:   end # to_hash
+     290: 
+     291:   def test_each_with_index
+===============================================================================
+.
 
-Finished in 0.013781s, 2612.2172 runs/s, 7111.0358 assertions/s.
-
-  1) Error:
-NewTestClass#test_map_recursive:
-LocalJumpError: no block given (yield)
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:155:in `inspect_node'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:250:in `block in <module:Examples>'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:157:in `call'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:157:in `test_map_recursive'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  2) Error:
-NewTestClass#test_Assertions:
-NoMethodError: undefined method `assertions' for Connectivity:Class
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:163:in `assert_equal'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:211:in `assert_pre_conditions'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:194:in `test_Assertions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  3) Error:
-NewTestClass#test_inspect_recursive:
-LocalJumpError: no block given (yield)
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:155:in `inspect_node'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:250:in `block in <module:Examples>'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:174:in `map_recursive'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:183:in `test_inspect_recursive'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  4) Error:
-NewTestClass#test_to_hash:
-NoMethodError: undefined method `each_pair' for [1, 2, 3]:Array
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:434:in `to_hash'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:288:in `test_to_hash'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  5) Error:
-NewTestClass#test_inspect_node:
-LocalJumpError: no block given (yield)
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:155:in `inspect_node'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:144:in `test_inspect_node'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  6) Error:
-NewTestClass#test_ref:
-NameError: undefined local variable or method `ref' for #<NewTestClass:0x000000022b6900>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:111:in `test_ref'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  7) Failure:
-NewTestClass#test_NestedArrayType_Assertions [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:219]:
-Expected [:children?] to include :each_pair.
-
-
-  8) Error:
-NewTestClass#test_Node_format:
-LocalJumpError: no block given (yield)
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:155:in `inspect_node'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:263:in `test_Node_format'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  9) Failure:
-NewTestClass#test_children? [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:118]:
-Expected nil (NilClass) to respond to #empty?.
-
-
- 10) Failure:
-NewTestClass#test_rgl_readme [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:23]:
-Expected: [5, 6, 1, 2, 3, 4]
-  Actual: [1, 2, 3, 4, 5, 6]
-
-36 runs, 98 assertions, 3 failures, 7 errors, 0 skips
+Finished in 0.0636703 seconds.
+------
+35 tests, 122 assertions, 4 failures, 9 errors, 0 pendings, 0 omissions, 1 notifications
+62.8571% passed
+------
+549.71 tests/s, 1916.12 assertions/s
 
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb"
-	User time (seconds): 0.69
-	System time (seconds): 0.06
+	User time (seconds): 0.77
+	System time (seconds): 0.07
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.76
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.85
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23468
+	Maximum resident set size (kbytes): 24876
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5996
-	Voluntary context switches: 20
-	Involuntary context switches: 84
+	Minor (reclaiming a frame) page faults: 6353
+	Voluntary context switches: 5
+	Involuntary context switches: 83
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 8

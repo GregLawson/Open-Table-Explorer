@@ -28,7 +28,7 @@ class NetworkTest < TestCase
     assert_match(Private_C, example_nmap_line)
     ip_regexp = Private_Network_Pattern
     assert_match(ip_regexp, example_nmap_line)
-		assert_equal([], Net_file_tree_hash)
+    assert_equal({}, Net_file_tree_hash)
     assert_match(IP_Pattern, IFCONFIG_capture.output[:ipv4], IFCONFIG_capture.inspect)
     assert_match(IP_Pattern, IFCONFIG_capture.output[:netmask], IFCONFIG_capture.inspect)
     assert_match(IP_Pattern, IFCONFIG_capture.output[:broadcast], IFCONFIG_capture.inspect)

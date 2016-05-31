@@ -1,0 +1,9 @@
+{"metadata":{"rubocop_version":"0.39.0","ruby_engine":"ruby","ruby_version":"2.2.4","ruby_patchlevel":"230","ruby_platform":"x86_64-linux-gnu"},"files":[{"path":"app/models/network.rb","offenses":[
+{"severity":"convention","message":"Freeze mutable objects assigned to constants.","cop_name":"Style/MutableConstant","corrected":true,"location":{"line":31,"column":23,"length":3187}},
+{"severity":"convention","message":"Space missing after comma. (https://github.com/bbatsov/ruby-style-guide#spaces-operators)","cop_name":"Style/SpaceAfterComma","corrected":true,"location":{"line":31,"column":34,"length":1}},
+{"severity":"convention","message":"Freezing immutable objects is pointless.","cop_name":"Style/RedundantFreeze","corrected":true,"location":{"line":31,"column":35,"length":39}},
+{"severity":"convention","message":"Freeze mutable objects assigned to constants.","cop_name":"Style/MutableConstant","corrected":true,"location":{"line":32,"column":17,"length":3197}},
+{"severity":"convention","message":"Space missing after comma. (https://github.com/bbatsov/ruby-style-guide#spaces-operators)","cop_name":"Style/SpaceAfterComma","corrected":true,"location":{"line":32,"column":32,"length":1}},
+{"severity":"convention","message":"Freeze mutable objects assigned to constants.","cop_name":"Style/MutableConstant","corrected":true,"location":{"line":34,"column":17,"length":3187}},
+{"severity":"convention","message":"Space missing after comma. (https://github.com/bbatsov/ruby-style-guide#spaces-operators)","cop_name":"Style/SpaceAfterComma","corrected":true,"location":{"line":34,"column":28,"length":1}},
+{"severity":"convention","message":"Freezing immutable objects is pointless.","cop_name":"Style/RedundantFreeze","corrected":true,"location":{"line":34,"column":29,"length":39}}]}],"summary":{"offense_count":8,"target_file_count":1,"inspected_file_count":0}}
