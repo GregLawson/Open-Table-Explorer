@@ -111,10 +111,6 @@ class Capture
     named_hash
   end # named_hash
 
-  def output
-    Capture.symbolize_keys(column_output)
-  end # output
-
   def ==(other)
     instance_variables.all? do |iv_name|
       if ![:@raw_captures].include?(iv_name)
@@ -282,6 +278,10 @@ class MatchCapture < RawCapture
       post_match: post_match }
   end # to_tree
 
+  def output
+    to_hash(0)
+  end # output
+
   def post_match
     @raw_captures.post_match
   end # post_match
@@ -383,6 +383,12 @@ class SplitCapture < RawCapture
       delimiters: delimiters,
       post_match: post_match }
   end # to_tree
+
+  def output
+    (0..(repetitions? - 1)).map do |i|
+      to_hash(i)
+    end # map
+  end # output
 
   def post_match
     if @raw_captures.size.odd?
