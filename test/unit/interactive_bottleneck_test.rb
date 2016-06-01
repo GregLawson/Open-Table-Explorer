@@ -88,22 +88,6 @@ class InteractiveBottleneckTest < TestCase
     assert_equal(:interactive, TestInteractiveBottleneck.interactive, TestInteractiveBottleneck.inspect)
   end # values
   include InteractiveBottleneck::Examples
-  def test_standardize_position!
-    @temp_repo.git_command('rebase --abort').puts
-    @temp_repo.git_command('merge --abort').puts
-    @temp_repo.git_command('stash save') # .assert_post_conditions
-    @temp_repo.git_command('checkout master').puts
-    @temp_interactive_bottleneck.standardize_position!
-  end # standardize_position!
-
-  def test_abort_rebase_and_merge!
-  end # abort_rebase_and_merge!
-
-  def test_state?
-    state = TestInteractiveBottleneck.state?
-    assert_includes([:clean, :dirty, :merge, :rebase], state[0])
-    assert_equal(1, state.size, state)
-  end # state?
 
   def test_dirty_test_executables
     line_by_line = TestInteractiveBottleneck.repository.status.map do |file_status|
@@ -223,30 +207,6 @@ class InteractiveBottleneckTest < TestCase
     TestInteractiveBottleneck.clean_directory
   end # clean_directory
 
-  def test_discard_log_file_merge
-    all_files = Repository::This_code_repository.status
-    all_files.each do |conflict|
-      next unless conflict[:file][-4..-1] == '.log'
-      if conflict[:index] == :ignored || conflict[:work_tree] == :ignored
-        puts conflict[:file] + ' is an ignored log file.'
-      elsif conflict[:index] == :untracked || conflict[:work_tree] == :untracked
-        puts conflict[:file] + ' is an untracked log file.'
-      elsif conflict[:index] == :unmodified && conflict[:work_tree] == :modified
-        puts conflict[:file] + ' is an updated log file.'
-      elsif conflict[:work_tree] == :updated_but_unmerged
-        assert_include(['unmerged, deleted by us'], conflict[:description], conflict.inspect)
-        Repository::This_code_repository.git_command('checkout HEAD ' + conflict[:file])
-        puts 'checkout HEAD ' + conflict[:file]
-      else
-        raise Exception.new(conflict.inspect)
-      end # if
-      # if
-    end # each
-  end # discard_log_file_merge
-
-  def test_merge_conflict_recovery
-  end # merge_conflict_recovery
-
   def test_confirm_branch_switch
     assert_equal(:master, @temp_repo.current_branch_name?)
     @temp_interactive_bottleneck.confirm_branch_switch(:passed)
@@ -289,27 +249,6 @@ class InteractiveBottleneckTest < TestCase
 
   def test_switch_branch
   end # switch_branch
-
-  def test_merge_interactive
-  end # merge_interactive
-
-  def test_stash_and_checkout
-  end # stash_and_checkout
-
-  def test_merge_cleanup
-    @temp_repo.force_change
-    @temp_interactive_bottleneck.merge_cleanup
-  end # merge_cleanup
-
-  def test_merge
-    TestInteractiveBottleneck.repository.testing_superset_of_passed # .assert_post_conditions
-    TestInteractiveBottleneck.repository.edited_superset_of_testing # .assert_post_conditions
-    #	TestInteractiveBottleneck.merge(:edited, :testing) # not too long or too dangerous
-  end # merge
-
-  def test_merge_down
-    # (deserving_branch = @repository.current_branch_name?)
-  end # merge_down
 
   def test_stage_files
   end # stage_files
