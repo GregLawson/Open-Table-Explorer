@@ -23,12 +23,8 @@ class Merge
   # record error_score, recent_test, time
   include Virtus.value_object
   values do
-    attribute :test_executable, TestExecutable
     attribute :interactive, Symbol, default: :interactive # non-defaults are primarily for non-interactive testing testing
-    attribute :editor, Editor, default: ->(interactive_bottleneck, _attribute) { Editor.new(interactive_bottleneck.test_executable) }
-    attribute :repository, Repository, default: ->(interactive_bottleneck, _attribute) { interactive_bottleneck.test_executable.repository }
-    attribute :unit_maturity, UnitMaturity, default: ->(interactive_bottleneck, _attribute) { UnitMaturity.new(interactive_bottleneck.test_executable.repository, interactive_bottleneck.test_executable.unit) }
-    #	attribute :branch_index, Fixnum, :default => lambda { |interactive_bottleneck, attribute| Merge.index(interactive_bottleneck.test_executable.repository) }
+    attribute :repository, Repository
   end # values
   def standardize_position!
     abort_rebase_and_merge!
@@ -187,7 +183,7 @@ class Merge
   include Constants
   module Examples
     TestSelf = TestExecutable.new(argument_path: File.expand_path($PROGRAM_NAME))
-    TestMerge = Merge.new(interactive: :interactive, test_executable: TestSelf, editor: Editor::Examples::TestEditor)
+    TestMerge = Merge.new(interactive: :interactive, repository: Repository::This_code_repository)
     include Constants
   end # Examples
   include Examples

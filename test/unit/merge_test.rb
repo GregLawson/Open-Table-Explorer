@@ -7,7 +7,6 @@
 ###########################################################################
 # require_relative '../unit/test_environment'
 require_relative '../../app/models/test_environment_test_unit.rb'
-require_relative '../../app/models/interactive_bottleneck.rb'
 require_relative '../assertions/repository_assertions.rb'
 require_relative '../assertions/shell_command_assertions.rb'
 require_relative '../../app/models/merge.rb'
@@ -19,7 +18,7 @@ class MergeTest < TestCase
   def setup
     @temp_repo = Repository.create_test_repository
     refute_equal(Repository::This_code_repository, @temp_repo)
-    @temp_merge = Merge.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME), repository: @temp_repo, interactive: :echo)
+    @temp_merge = Merge.new(repository: @temp_repo, interactive: :echo)
     assert_equal(@temp_repo, @temp_merge.repository)
     refute_nil(@temp_merge.interactive)
   end # setup
@@ -29,15 +28,9 @@ class MergeTest < TestCase
   end # teardown
 
   def test_initialize
-    refute_empty(TestMerge.test_executable.unit.edit_files, 'TestMerge.test_executable.unit.edit_files= ' + TestMerge.test_executable.unit.inspect)
-    assert_includes(TestMerge.test_executable.unit.edit_files, Pathname.new($PROGRAM_NAME).expand_path, "TestMerge.unit=#{TestMerge.test_executable.unit.inspect}")
-    assert_equal(TestSelf, TestMerge.test_executable, TestMerge.inspect)
     assert_equal(Repository::This_code_repository, TestMerge.repository, TestMerge.inspect)
-    #	assert_equal(, TestMerge.unit_maturity, TestMerge.inspect)
-    assert_equal(Editor::Examples::TestEditor, TestMerge.editor, TestMerge.inspect)
 
-    refute_nil(Merge.new(interactive: :interactive, test_executable: TestSelf, editor: Editor::Examples::TestEditor).interactive)
-    #	refute_nil(Merge.new(test_executable: TestSelf, editor: Editor::Examples::TestEditor).interactive)
+    refute_nil(Merge.new(interactive: :interactive, repository: Repository::This_code_repository).interactive)
 
     refute_nil(TestMerge.interactive, TestMerge.inspect)
     assert_equal(:interactive, TestMerge.interactive, TestMerge.inspect)
