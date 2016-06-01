@@ -52,6 +52,10 @@ class Capture
     @regexp.named_captures.values.flatten.size
   end # num_captures
 
+  def [](index, _hash_offset = 0)
+    to_a(_hash_offset)[index]
+  end # []
+
   def to_hash(_hash_offset = 0)
     named_hash = {}
     @regexp.named_captures.each_pair do |named_capture, _indices| # return named subexpressions
@@ -245,12 +249,6 @@ class MatchCapture < RawCapture
     super(string, regexp)
   end # initialize
 
-  def [](capture_index, _hash_offset = 0)
-    capture_index = capture_index.name if capture_index.instance_of?(GenericColumn)
-    index = capture_index
-    @raw_captures[index]
-  end # []
-
   def raw_captures
     @string.match(@regexp)
   end # raw_captures
@@ -340,12 +338,6 @@ class SplitCapture < RawCapture
   def initialize(string, regexp)
     super(string, regexp)
   end # initialize
-
-  def [](capture_index, hash_offset = 0)
-    capture_index = capture_index.name if capture_index.instance_of?(GenericColumn)
-    index = hash_offset + capture_index * @regexp.names.size
-    @raw_captures[index]
-  end # []
 
   def raw_captures
     @string.split(@regexp)
