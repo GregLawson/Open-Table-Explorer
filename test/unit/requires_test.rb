@@ -22,8 +22,8 @@ class RequireTest < TestCase
   def test_parse_output
     assert_match(Require_regexp, Require_line)
     #    assert_match(Relative_regexp * /\s+/, Require_line)
-    parse = Require_line.capture?(Require_regexp, MatchCapture).output?
-    parse_array = Require_line.capture?(Require_regexp, SplitCapture).output?
+    parse = Require_line.capture?(Require_regexp, MatchCapture).output
+    parse_array = Require_line.capture?(Require_regexp, SplitCapture).output
     assert_equal({ relative: '_relative', required_path: '../../app/models/unit.rb' }, Require.parse_output(Require_line, capture_class = MatchCapture))
       #    assert_equal({}, Require.parse_output(Require_line, capture_class = SplitCapture))
     end # parse_output
@@ -32,7 +32,7 @@ class RequireTest < TestCase
     ret = {}
     Unit::Executable.edit_files.each do |file|
       code = IO.read(file)
-      parse = code.capture?(Require_regexp).output?
+      parse = code.capture?(Require_regexp).output
       parse.enumerate(:each) do |output|
         assert_instance_of(Hash, output)
         assert_includes(output.keys, :required_path)

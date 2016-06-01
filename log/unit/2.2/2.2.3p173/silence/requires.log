@@ -1,33 +1,33 @@
 passed
-2016-05-26 03:57:15.896
+2016-06-01 05:26:27.913
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test
 Started
 .....
 
-Finished in 0.040328254 seconds.
+Finished in 0.012515723 seconds.
 ------
 5 tests, 20 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-123.98 tests/s, 495.93 assertions/s
+399.50 tests/s, 1597.99 assertions/s
 
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb"
-	User time (seconds): 0.96
-	System time (seconds): 0.08
+	User time (seconds): 0.95
+	System time (seconds): 0.07
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.05
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.03
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 30020
+	Maximum resident set size (kbytes): 29088
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 7668
+	Minor (reclaiming a frame) page faults: 7433
 	Voluntary context switches: 3
-	Involuntary context switches: 102
+	Involuntary context switches: 118
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
