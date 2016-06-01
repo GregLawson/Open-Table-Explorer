@@ -16,16 +16,40 @@ require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_executable.rb'
 class TestRun # < ActiveRecord::Base
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-    def self.handle_timeout(_test_run, start_time, exception_object_raised)
-      elapsed_time = Time.now - start_time
-      puts 'timeout'
-      puts exception_object_raised.inspect
-      puts 'start_time = ' + start_time.to_s
-      puts "\nelapsed_time = " + elapsed_time.to_s
-      puts "\nTime.now = " + Time.now.to_s
-    end # handle_timeout
+    def self.explain_elapsed_time(_test_run, recent_test)
+      ret = if _test_run.test.nil?
+              'all tests'
+            else
+              _test_run.test.to_s
+            end # if
+      ret += ' in ' + _test_run.test_executable.unit.model_basename.to_s
+      #      raise ret + ' recent_test is not a ShellCommands but a ' + recent_test.class.name unless recent_test.instance_of?(ShellCommands)
+      if recent_test.nil?
+        ret += 'recursion danger'
+      elsif recent_test.keys.include?(:exception_object_raised)
+        if  recent_test[:exception_object_raised].instance_of?(Timeout::Error)
+          ret += ' timed-out in ' + recent_test[:elapsed_time].inspect +
+                 ret += ' beyond timeout of ' + _test_run.test_run_timeout.to_s
+        else
+          #					ret += recent_test[:exception_object_raised].inspect + ' raised in '
+          ret += recent_test.elapsed_time.inspect + ' with timeout ' + _test_run.test_run_timeout.to_s
+        end # if
+      else
+        ret += ' took ' + recent_test.elapsed_time.inspect
+        ret += ' within timeout of ' + _test_run.test_run_timeout.to_s
+      end # if
+      #	ret += ' with timeout ' + _test_run.test_run_timeout.to_s
+      #    ret += ' at ' + Time.now.to_s
+      ret
+    end # explain_elapsed_time
+
+    def self.report_timeout(_test_run, recent_test)
+      _test_run.errors[:timeout] = 'timeout ' + _test_run.test.to_s + ' of ' + _test_run.test_executable.regression_unit_test_file.relative_pathname.to_s +
+                                   ' exception ' + ' with timeout of ' + _test_run.test_run_timeout.to_s +
+                                   TestRun::DefinitionalConstants.explain_elapsed_time(_test_run, recent_test)
+      puts _test_run.errors[:timeout]
+    end # report_timeout
     Recent_test_default = lambda do |test_run, _attribute|
-      start_time = Time.now
       if test_run.test_executable.recursion_danger?
         nil
       else
@@ -37,15 +61,14 @@ class TestRun # < ActiveRecord::Base
                 test_run.test_executable.ruby_test_string(test_run.test),
                                 chdir: test_run.test_executable.repository.path.to_s)
             end # Timeout
-          elapsed_time = Time.now - start_time
-          if elapsed_time > test_run.test_run_timeout
-            TestRun::DefinitionalConstants.handle_timeout(test_run, start_time, nil)
+          if recent_test.elapsed_time > test_run.test_run_timeout
+            TestRun::DefinitionalConstants.report_timeout(test_run, recent_test)
           end # if
-          { test: test_run.test, recent_test: recent_test, elapsed_time: Time.now - start_time }
+          { test: test_run.test, recent_test: recent_test }
         rescue Timeout::Error => exception_object_raised
-          TestRun::DefinitionalConstants.handle_timeout(test_run, start_time, exception_object_raised)
+          TestRun::DefinitionalConstants.report_timeout(test_run, recent_test)
           { test: test_run.test, recent_test: recent_test,
-            exception_object_raised: exception_object_raised, elapsed_time: Time.now - start_time }
+            exception_object_raised: exception_object_raised }
         end # begin/rescue block
       end # if
     end # Recent_test_default
@@ -64,7 +87,7 @@ class TestRun # < ActiveRecord::Base
       #	end # if
     end # All_test_names_default
     Too_long_for_regression_test = 30.0 # zero means infinite timeout
-    Subtest_timeout_margin = 3.0
+    Subtest_timeout_margin = 3.0 # allow some variation in test runtimes
   end # DefinitionalConstants
   include DefinitionalConstants
   include Virtus.value_object
@@ -73,6 +96,7 @@ class TestRun # < ActiveRecord::Base
     attribute :test, Symbol, default: nil
     attribute :cached_all_test_names, Array, default: TestRun::All_test_names_default
     attribute :test_run_timeout, Float, default: Timeout_default
+    attribute :errors, Hash, default: {}
     attribute :cached_recent_test, Hash, default: TestRun::Recent_test_default
   end # values
   def all_test_names
@@ -98,10 +122,10 @@ class TestRun # < ActiveRecord::Base
                ret += ' beyond timeout of ' + @test_run_timeout.to_s
       else
         ret += @cached_recent_test[:exception_object_raised].inspect + ' raised in '
-        ret += @cached_recent_test[:elapsed_time].inspect + ' with timeout ' + @test_run_timeout.to_s
+        ret += @cached_recent_test.elapsed_time.inspect + ' with timeout ' + @test_run_timeout.to_s
       end # if
     else
-      ret += ' took ' + @cached_recent_test[:elapsed_time].inspect
+      ret += ' took ' + @cached_recent_test[:recent_test].elapsed_time.inspect
       ret += ' within timeout of ' + @test_run_timeout.to_s
     end # if
     #	ret += ' with timeout ' + @test_run_timeout.to_s
@@ -203,6 +227,7 @@ class TestRun # < ActiveRecord::Base
                      else
                        @cached_recent_test[:recent_test].process_status.exitstatus # num_errors>1
         end # if
+      conditionally_run_individual_tests
       @error_score
     end # if
   end # error_score
@@ -215,13 +240,23 @@ class TestRun # < ActiveRecord::Base
     #	end # if
   end # subtest_timeout
 
+  def conditionally_run_individual_tests
+    if @cached_recent_test[:recent_test].elapsed_time > @test_run_timeout
+
+      run_individual_tests
+    else
+      puts 'not timed out: ' + explain_elapsed_time
+    end # if
+  end # conditionally_run_individual_tests
+
   def run_individual_tests
     puts @test_executable.all_test_names.inspect if $VERBOSE
     if test.nil? && @test_executable.regression_unit_test_file != TestSelf.test_executable.regression_unit_test_file
       puts '@test_executable = ' + @test_executable.inspect if $VERBOSE
       puts '   TestSelf.test_executable = ' + TestSelf.test_executable.inspect if $VERBOSE
       @test_executable.all_test_names.map do |test_name|
-        TestRun.new(test_executable: @test_executable, test: test_name, test_run_timeout: subtest_timeout)
+        subtest_run = TestRun.new(test_executable: @test_executable, test: test_name, test_run_timeout: subtest_timeout)
+        puts test_name.to_s + ' ' + subtest_run.explain_elapsed_time
       end # each
     else
       raise 'Only one level of subtests.'
@@ -249,9 +284,5 @@ class TestRun # < ActiveRecord::Base
   # self.assert_pre_conditions
   module Examples
     include Constants
-    Allways_timeout = 0.00001
-    Default_testRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable)
-    Default_subtestRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable, test: :test_compare)
-    Forced_timeout_testRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable, test_run_timeout: Allways_timeout)
   end # Examples
 end # TestRun
