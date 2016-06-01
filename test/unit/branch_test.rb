@@ -218,6 +218,10 @@ class BranchTest < TestCase
   end # branches?
 
   def test_remotes?
+    pattern = /  / * /[a-z0-9\/A-Z]+/.capture(:remote)
+    remote_run = This_code_repository.git_command('branch --list --remote')
+    captures = remote_run.output.capture?(pattern, SplitCapture)
+    This_code_repository.git_parse('branch --list --remote', pattern)
     assert_empty(Branch.remotes?(@temp_repo))
     refute_empty(Branch.remotes?(This_code_repository))
   end # remotes?
@@ -251,9 +255,17 @@ class BranchTest < TestCase
   end # initialize
 
   def test_compare
-    sorted_branches = Branch.branches?(Repository::This_code_repository).sort.map(&:name)
+    branches = Branch.branches?(Repository::This_code_repository)
+    assert_instance_of(Array, branches)
+    branch0 = branches[0]
+    comparisons_fail = branches.select do |branch|
+      assert_instance_of(Branch, branch)
+      (branch <=> branch0).nil?
+    end # each
+    assert_includes(comparisons_fail.map(&:name), :edited_interactive)
+    #    sorted_branches = branches.sort.map(&:name)
     #	assert_equal([], sorted_branches)
 
-    assert_operator(sorted_branches[0], :==, sorted_branches[0])
+    #    assert_operator(sorted_branches[0], :==, sorted_branches[0])
   end # compare
 end # Branch

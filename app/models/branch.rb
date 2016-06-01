@@ -63,7 +63,7 @@ class BranchReference < GitReference
       if capture.output[:ambiguous_branch].nil?
         new(name: capture.output[:sha_hex].to_sym, age: 0, timestamp: capture.output[:timestamp])
       else
-        new(name: capture.output[:ambiguous_branch].to_sym, age: capture.output[:age].to_i, timestamp: capture.output[:timestamp])
+        new(name: capture.output[:ambiguous_branch].to_sym, age: capture.output[:age].uniq[0].to_i, timestamp: capture.output[:timestamp])
       end # if
     end # new_from_ref
 
@@ -301,7 +301,9 @@ class Branch < GitReference
 
     def remotes?(repository)
       pattern = /  / * /[a-z0-9\/A-Z]+/.capture(:remote)
-      repository.git_parse('branch --list --remote', pattern)
+      remote_run = repository.git_command('branch --list --remote')
+      captures = remote_run.output.capture?(pattern, SplitCapture)
+      captures.output
     end # remotes?
 
     def merged?(repository)
