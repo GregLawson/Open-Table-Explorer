@@ -58,7 +58,7 @@ def test_executing_path?
 end # executing_path?
 
 def test_path2model_name
-	path='test/long_test/rebuild_test.rb'
+	path='test/slowest/rebuild_test.rb'
 #	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
 	assert_equal(:Rebuild, FilePattern.path2model_name?(path))
 	assert_equal(:MatchData, FilePattern.path2model_name?('app/models/match_data.rb'))
@@ -96,7 +96,7 @@ def test_unit_base_name
 	name_length=basename.size+extension.size-Patterns[expected_match][:suffix].size
 	assert_equal(3, name_length, "basename.size=#{basename.size}, extension.size=#{extension.size}\n Patterns[expected_match]=#{Patterns[expected_match].inspect}\n Patterns[expected_match][:suffix].size=#{Patterns[expected_match][:suffix].size}, ")
 	expected_match=4
-	path='test/long_test/rebuild_test.rb'
+	path='test/slowest/rebuild_test.rb'
 	assert_equal(:rebuild, FilePattern.unit_base_name?(path))
 	assert_equal(:match_data, FilePattern.unit_base_name?('app/models/match_data.rb'))
 end # unit_base_name
