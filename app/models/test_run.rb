@@ -54,7 +54,10 @@ class TestRun # < ActiveRecord::Base
         nil
       else
         begin
-          test_run.test_executable.lint_unit
+					unless test_run.test_executable.test_type == :unit
+						test_run.test_executable.lint_unit
+			      raise 'unexpected lint run.'
+					end # if
           recent_test =
             Timeout.timeout(test_run.test_run_timeout) do
               ShellCommands.new({ 'SEED' => '0' }, '/usr/bin/time --verbose ' +

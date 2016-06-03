@@ -9,38 +9,49 @@ require 'virtus'
 # require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/unit.rb'
 require_relative '../../app/models/parse.rb'
+require_relative '../../app/models/test_executable.rb'
 class Require
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-    Relative_regexp = /^require/ * /_relative/.capture(:relative).group * Regexp::Optional * /\s+/ * /['"]/ * FilePattern::Relative_pathname_included_regexp.capture(:required_path)
-    Require_regexp = /^require/ * /_relative/.capture(:relative).group * Regexp::Optional * /\s+/ * /['"]/ * FilePattern::Relative_pathname_included_regexp.capture(:required_path) * /['"]/
+    Relative_regexp = /^/ * (/require/ * (/_relative/ .group * Regexp::Optional)).group.capture(:require_command)
+		End_of_line_comment = /\s*/ * /#/ * /[^\n]*/.capture(:comment) * /\n/
+    Require_regexp = Relative_regexp * /\s+/ * /['"]/ * FilePattern::Relative_pathname_included_regexp.capture(:required_path) * /['"]/
   end # DefinitionalConstants
   include DefinitionalConstants
   module DefinitionalClassMethods # compute sub-objects such as default attribute values
     include DefinitionalConstants
-    def parse_output(code, capture_class = SplitCapture)
-      parse = code.capture?(Require_regexp, capture_class).output
+		def capture_to_hash(capture)
+		end # capture_to_hash
+		
+    def parse_output(path, capture_class = SplitCapture)
+			code = IO.read(path)
+      parse = code.capture?(Require_regexp, capture_class)
     end # parse_output
 
-    def scan(unit)
-      ret = {}
-      unit.edit_files.each do |file|
-        code = IO.read(file)
-        parse = code.capture?(Require_regexp).output
-        ret = ret.merge(FilePattern.find_from_path(file)[:name] => parse)
-      end # each
-      ret
-    end # scan
+    def scan_path(path)
+      puts 'path = ' + path.to_s
+			capture = parse_output(path, SplitCapture)
+			capture.output.enumerate(:map) do |output| 
+				if output[:require_command] == 'require' # don't recurse
+					output[:required_path]
+				else
+					relative_path = Pathname.new(File.dirname(path) + '/' + output[:required_path]).cleanpath
+					raise if File.expand_path(relative_path) == File.expand_path(path) # recursion
+					Require.scan_path(relative_path)
+				end # if
+			end # if
+    end # scan_path
 
-    def scan_file(path)
-      unit = Unit.new_from_path(path)
-      scan(unit)
-    end # scan_file
+    def scan_unit(unit)
+      unit.edit_files.map do |path|
+				parse_output(path, SplitCapture)
+      end # each
+    end # scan_unit
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
   include Virtus.value_object
   values do
-    attribute :unit, Unit
-    attribute :requires, Hash, default: ->(require, _attribute) { Require.scan(require.unit) }
+    attribute :path, Pathname
+    attribute :cached_require_captures, Hash, default: ->(require, _attribute) { Require.scan_path(require.path) }
     #	attribute :age, Fixnum, :default => 789
     #	attribute :timestamp, Time, :default => Time.now
   end # values
@@ -107,6 +118,8 @@ class Require
     include DefinitionalConstants
     include Constants
     Require_line = "require_relative '../../app/models/unit.rb'".freeze
-    Executing_requires = Require.new(unit: Unit::Executable)
+    No_scan = Require.new(path: $0, cached_require_captures: nil)
+		Nonrelative_line = "require 'active_support' # for singularize and pluralize\n"
+
   end # Examples
 end # Require

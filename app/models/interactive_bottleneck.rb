@@ -18,6 +18,8 @@ class InteractiveBottleneck
     def calc_test_maturity!(test_executable)
       if test_executable.testable?
         TestMaturity.new(test_executable: test_executable)
+	else
+			nil
      end # if
     end # calc_test_maturity!
   end # ClassMethods

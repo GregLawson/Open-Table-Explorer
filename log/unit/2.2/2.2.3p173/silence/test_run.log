@@ -1,44 +1,47 @@
 passed
-2016-05-13 04:39:27.200
+2016-06-01 02:34:55.752
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-timeout
-#<Timeout::Error: execution expired>
-start_time = 2016-05-13 04:39:19 -0700
 
-elapsed_time = 1.540880225
-
-Time.now = 2016-05-13 04:39:20 -0700
-Run options: --seed 0
-
-# Running:
-
-.................
-
-Finished in 6.387194s, 2.6616 runs/s, 10.6463 assertions/s.
-
-17 runs, 68 assertions, 0 failures, 0 errors, 0 skips
-
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:26:in `explain_elapsed_time': all tests in test_executable recent_test is not a ShellCommands but a NilClass (RuntimeError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:49:in `report_timeout'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:69:in `rescue in block in <module:DefinitionalConstants>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:56:in `block in <module:DefinitionalConstants>'
+	from /var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute/default_value/from_callable.rb:29:in `call'
+	from /var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute/default_value/from_callable.rb:29:in `call'
+	from /var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute/accessor.rb:79:in `set_default_value'
+	from /var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:186:in `block in set_defaults'
+	from /var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:46:in `block in each'
+	from /var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:46:in `each'
+	from /var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:46:in `each'
+	from /var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:184:in `set_defaults'
+	from /var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:185:in `set_default_attributes'
+	from /var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:18:in `initialize'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb:21:in `new'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb:21:in `<module:Examples>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb:16:in `<class:TestRunTest>'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb:13:in `<main>'
+Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb"
-	User time (seconds): 11.80
-	System time (seconds): 0.92
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.92
+	User time (seconds): 25.86
+	System time (seconds): 2.00
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:28.10
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 40752
+	Maximum resident set size (kbytes): 51408
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 125143
-	Voluntary context switches: 1238
-	Involuntary context switches: 1442
+	Minor (reclaiming a frame) page faults: 215463
+	Voluntary context switches: 944
+	Involuntary context switches: 2856
 	Swaps: 0
 	File system inputs: 0
-	File system outputs: 152
+	File system outputs: 280
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1

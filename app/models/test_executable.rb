@@ -97,6 +97,7 @@ class RepositoryPathname < Pathname
       #				@errors += file_ipo.errors
       IO.write(lint_out_file.to_s, run.cached_run.output.gsub('{"s', "\n" + '{"s'))
       run.cached_run.output
+      raise 'unexpected lint run.'
     else
       IO.read(lint_out_file.to_s)
     end # if
@@ -168,12 +169,14 @@ class FileArgument
         #				@errors += file_ipo.errors
         IO.write(@argument_path.lint_out_file.to_s, run.cached_run.output)
         run.cached_run.output
+        raise 'unexpected lint run.'
       else
         IO.read(@argument_path.lint_out_file.to_s)
         end # if
       run.cached_run.output
     else
       @argument_path.lint_output
+      raise 'unexpected lint run.'
     end # if
   end # lint_output
 
@@ -214,10 +217,12 @@ class FileArgument
         file = FileArgument.new(argument_path: p)
         if file.generatable_unit_file?
           file.argument_path.lint_output
+          raise 'unexpected lint run.'
         end # if
       end # each
     else
       argument_path.lint_output
+      raise 'unexpected lint run.'
     end # if
   end # lint_unit
 end # FileArgument

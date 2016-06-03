@@ -193,7 +193,7 @@ class InteractiveBottleneckTest < TestCase
     dirty_test_maturities = TestInteractiveBottleneck.dirty_test_maturities(:danger).compact
     sorted = dirty_test_maturities # .sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
     sorted.sort.map do |test_maturity|
-      target_branch = TestInteractiveBottleneck.test_maturity.deserving_branch
+      target_branch = test_maturity.deserving_branch
       if test_maturity.nil? # rercursion avoided
         puts 'rercursion avoided' + test_maturity.inspect
       else

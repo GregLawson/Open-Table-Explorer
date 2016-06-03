@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'test_environment'
+require_relative 'test_environment.rb'
 require 'active_support' # for singularize and pluralize
 require_relative '../../app/models/regexp.rb'
 require_relative '../../app/models/test_run.rb'

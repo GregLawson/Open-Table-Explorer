@@ -1,0 +1,120 @@
+passed
+2016-06-02 02:26:36.009
+/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb
+ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test
+Started
+.E
+===============================================================================
+Error: test_Require_attributes(RequireTest): NameError: undefined local variable or method `code' for Require:Class
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:28:in `block in scan'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:27:in `each'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:27:in `scan'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:48:in `block (2 levels) in <class:Require>'
+/var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute/default_value/from_callable.rb:29:in `call'
+/var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute/default_value/from_callable.rb:29:in `call'
+/var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute/accessor.rb:79:in `set_default_value'
+/var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:186:in `block in set_defaults'
+/var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:46:in `block in each'
+/var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:46:in `each'
+/var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:46:in `each'
+/var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:184:in `set_defaults'
+/var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:185:in `set_default_attributes'
+/var/lib/gems/2.2.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:18:in `initialize'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:62:in `new'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:62:in `test_Require_attributes'
+     59:                  Require.scan_file(path))
+     60:   end # scan_file
+     61:   def test_Require_attributes
+  => 62:     executing_requires = Require.new(unit: Unit::Executable)
+     63:     assert_instance_of(Hash, executing_requires.requires)
+     64:     assert_includes(executing_requires.requires.keys, :unit)
+     65:     assert_instance_of(Hash, executing_requires.requires[:model])
+===============================================================================
+E
+===============================================================================
+Error: test_parse_output(RequireTest): Errno::ENOENT: No such file or directory @ rb_sysopen - require_relative '../../app/models/unit.rb'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:21:in `read'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:21:in `parse_output'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:30:in `test_parse_output'
+     27:     #    assert_match(Relative_regexp * /\s+/, Require_line)
+     28:     parse = Require_line.capture?(Require_regexp, MatchCapture).output
+     29:     parse_array = Require_line.capture?(Require_regexp, SplitCapture).output
+  => 30:     assert_equal({ relative: '_relative', required_path: '../../app/models/unit.rb' }, Require.parse_output(Require_line, capture_class = MatchCapture))
+     31:       #    assert_equal({}, Require.parse_output(Require_line, capture_class = SplitCapture))
+     32:     end # parse_output
+     33: 
+===============================================================================
+F
+===============================================================================
+Failure: test_scan(RequireTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:42:in `block (2 levels) in test_scan'
+     39:         assert_instance_of(Hash, output)
+     40:         assert_includes(output.keys, :required_path)
+     41:         unless output[:relative].nil?
+  => 42:           assert_equal('_relative', output[:relative], output)
+     43:            end # unless
+     44:       end # each
+     45:       keys = parse.enumerate(:map, &:keys)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:541:in `each'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:541:in `call'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:541:in `enumerate'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:38:in `block in test_scan'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:36:in `each'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:36:in `test_scan'
+{:relative=>"virtus", :required_path=>"\n# require_relative '../../app/models/no_db.rb'\n"}
+<"_relative"> expected but was
+<"virtus">
+
+diff:
+? _ relative
+? vi     us 
+===============================================================================
+E
+===============================================================================
+Error: test_scan_file(RequireTest): NameError: undefined local variable or method `code' for Require:Class
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:28:in `block in scan'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:27:in `each'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:27:in `scan'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:56:in `test_scan_file'
+     53:   def test_scan_file
+     54:     path = 'test/unit/test_run_test.rb'
+     55:     unit = Unit.new_from_path(path)
+  => 56:     Require.scan(unit)
+     57:     assert_equal({ model: { relative: '_relative', required_path: '../../app/models/no_db.rb' },
+     58:                    unit: { relative: '_relative', required_path: 'test_environment' } },
+     59:                  Require.scan_file(path))
+===============================================================================
+
+
+Finished in 0.02691177 seconds.
+------
+5 tests, 9 assertions, 1 failures, 3 errors, 0 pendings, 0 omissions, 0 notifications
+20% passed
+------
+185.79 tests/s, 334.43 assertions/s
+
+Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb"
+	User time (seconds): 0.92
+	System time (seconds): 0.04
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.96
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 29528
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 7563
+	Voluntary context switches: 3
+	Involuntary context switches: 97
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
