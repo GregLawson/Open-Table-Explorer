@@ -1,58 +1,59 @@
 passed
-2016-05-25 02:15:13.371
+2016-06-08 06:27:09.437
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test
 Started
-.........................
+................................Hello World
+..
 
-Finished in 0.06407853 seconds.
+Finished in 20.112664727 seconds.
 ------
-25 tests, 67 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+34 tests, 106 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-390.15 tests/s, 1045.59 assertions/s
+1.69 tests/s, 5.27 assertions/s
 Run options: --seed 0
 
 # Running:
 
 ...$ $?=1
-@process_status=#<Process::Status: pid 26311 exit 127>
+@process_status=#<Process::Status: pid 12022 exit 127>
 $ ls happyHappyFailFail.junk
-@process_status=#<Process::Status: pid 26313 exit 2>
+@process_status=#<Process::Status: pid 12024 exit 2>
 ........$ $?=1
-@process_status=#<Process::Status: pid 26311 exit 127>
+@process_status=#<Process::Status: pid 12022 exit 127>
 $ ls happyHappyFailFail.junk
-@process_status=#<Process::Status: pid 26313 exit 2>
+@process_status=#<Process::Status: pid 12024 exit 2>
 $ ls happyHappyFailFail.junk
-@process_status=#<Process::Status: pid 26313 exit 2>
+@process_status=#<Process::Status: pid 12024 exit 2>
 .....$ ls happyHappyFailFail.junk
-@process_status=#<Process::Status: pid 26313 exit 2>
+@process_status=#<Process::Status: pid 12024 exit 2>
 .$ $?=1
-@process_status=#<Process::Status: pid 26311 exit 127>
+@process_status=#<Process::Status: pid 12022 exit 127>
 .$ echo "1 2;3 4"
 1 2;3 4
 ................
 
-Finished in 0.039259s, 866.0517 runs/s, 840.5796 assertions/s.
+Finished in 0.045508s, 747.1263 runs/s, 725.1520 assertions/s.
 
 34 runs, 33 assertions, 0 failures, 0 errors, 0 skips
 
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb"
-	User time (seconds): 1.18
-	System time (seconds): 0.11
-	Percent of CPU this job got: 96%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.35
+	User time (seconds): 1.13
+	System time (seconds): 0.10
+	Percent of CPU this job got: 5%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:21.31
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 28676
+	Maximum resident set size (kbytes): 29080
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 17649
-	Voluntary context switches: 450
-	Involuntary context switches: 199
+	Minor (reclaiming a frame) page faults: 20472
+	Voluntary context switches: 533
+	Involuntary context switches: 235
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 8

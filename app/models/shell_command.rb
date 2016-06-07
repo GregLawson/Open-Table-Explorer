@@ -10,14 +10,15 @@ require 'shellwords.rb'
 require_relative 'log.rb'
 require 'pathname'
 require 'virtus'
+require 'timeout'
 module Shell
   class Base
     module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
       Default_run = lambda do |_process, _attribute|
         begin
           _process.start
-        rescue StandardError => exception
-          _process.errors[:rescue_start] = exception
+        rescue StandardError => exception_object_raised
+          _process.errors[:rescue_start] = exception_object_raised
         end # begin
       end # Default_run
     end # DefinitionalConstants
@@ -102,6 +103,29 @@ module Shell
       attribute :output_at_close, String, default: nil
     end # values
 
+			def select(timeout = 0.01)
+				all3 = [@stdout, @stderr, @stdin].select {|fd| !fd.closed?}
+				IO.select(all3, all3, all3, timeout)
+			end # select
+
+		def io_to_sym(io)
+			case io
+			when @stdin then :stdin
+			when @stdout then :stdout
+			when @stderr then :stderr
+			else raise io.select + ' not recognized in io_to_sym.'
+			end # case
+		end # io_to_sym
+		
+		def select_symbols(timeout = 0.01)
+			selection = select(timeout)
+			if selection.nil? # timedout
+				{}
+			else
+				{readable: selection[0].map {|fd| io_to_sym(fd)}, writeable: selection[1].map {|fd| io_to_sym(fd)}, exceptions: selection[2].map {|fd| io_to_sym(fd)}}
+			end # if
+		end # select_symbols
+								
     def start
       @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(@command_string)
       #      @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(@env, @command_string, @opts)
@@ -123,18 +147,29 @@ module Shell
       self # allows command chaining
     end # wait
 
+		def tee
+			Timeout.timeout(@timeout) do
+				output = @stdout.read
+				puts output
+			end # Timeout
+		rescue Timeout::Error => exception_object_raised
+			@errors[:rescue_tee] = exception_object_raised
+		end # tee
+		
     def close
       @stdin.close # stdin, stdout and stderr should be closed explicitly in this form.
       begin
-        @process_status = @wait_thr.value # Process::Status object returned.
+        Timeout.timeout(@timeout) do
+					@process_status = @wait_thr.value # Process::Status object returned.
+        end # Timeout
       rescue Timeout::Error => exception_object_raised
-        _process.errors[:rescue_close] = exception_object_raised
+        @errors[:rescue_close] = exception_object_raised
       end # begin/rescue block
       @output_at_close = @stdout.read
       @stdout.close
-      syserr = @stderr.read
-      unless syserr.empty?
-        @errors[:syserr] = @stderr.read
+      stderr = @stderr.read
+      unless stderr.empty?
+        @errors[:stderr] = @stderr.read
       end # if
       @stderr.close
       self # allows command chaining
@@ -172,6 +207,36 @@ module Shell
           message += "In assert_post_conditions, self=#{inspect}"
           self
         end # assert_post_conditions
+      
+			def assert_pipe(stream, message = '')
+        assert_instance_of(IO, stream, message)
+			end # pipe
+
+      def assert_readable(stream)
+				begin
+	        assert_equal(false, stream.closed?, message) # hangs
+        rescue StandardError => exception_object_raised
+					assert_equal('', exception_object_raised.class.name)
+				end # begin
+			end # readable
+			
+      def assert_writable(stream)
+				begin
+	        assert_equal(false, stream.eof?, message) # hangs
+        rescue StandardError => exception_object_raised
+					assert_instance_of(IOError, exception_object_raised)
+					assert_include(exception_object_raised.methods, :inspect)
+					assert_include(Exception.instance_methods(false), :message)
+					assert_include(exception_object_raised.methods, :message)
+					assert_equal('not opened for reading', exception_object_raised.message)
+				end # begin
+				begin
+	        assert_equal(false, stream.closed?, message) # hangs
+        rescue StandardError => exception_object_raised
+					assert_equal('', exception_object_raised.class.name)
+				end # begin
+			end # writable
+			
       end # ClassMethods
       def assert_pre_conditions(_message = '')
         message += "In assert_pre_conditions, self=#{inspect}"
@@ -184,7 +249,7 @@ module Shell
         assert_empty(@errors, message + 'expected errors to be empty\n')
         #				assert_equal(0, process_status.exitstatus & ~@accumulated_tolerance_bits, message)
         assert_not_nil(@errors, 'expect @errors to not be nil.')
-        assert_not_nil(process_status)
+#        assert_not_nil(process_status)
         #				assert_instance_of(Process::Status, process_status)
 
         self # return for command chaining
@@ -194,10 +259,32 @@ module Shell
         #        message += "In assert_post_conditions, self=#{inspect}"
         assert_instance_of(Process::Waiter, wait_thr)
         assert_instance_of(Process::Status, process_status)
+				Shell::Server.assert_pipe(stdin)
+				Shell::Server.assert_pipe(stdout)
+				Shell::Server.assert_pipe(stderr)
+        assert_equal(false, stdin.closed?, message)
+        assert_equal(false, stdout.closed?, message)
+        assert_equal(false, stderr.closed?, message)
+				
+				selection = IO.select([@stdout], [@stdin], [@stderr], 15)
+				assert_equal([@stdout], selection[0])
+				assert_equal([@stdin], selection[1])
+				assert_equal([], selection[2])
+				Shell::Server.assert_writable(@stdin)
+#        assert_equal(false, stdin.eof?, message)
+        assert_equal(false, stdout.eof?, message) # hangs
+#        assert_equal(false, stderr.eof?, message)
+        self # return for command chaining
+      end # assert_started
+      def assert_ended(_message = '')
         assert_equal([:pid], wait_thr.class.instance_methods(false), wait_thr.inspect)
         assert_instance_of(IO, stdin, message)
         assert_instance_of(IO, stdout, message)
         assert_instance_of(IO, stderr, message)
+        assert_equal(true, stdin.closed?, message)
+        assert_equal(true, stdout.closed?, message)
+        assert_equal(true, stderr.closed?, message)
+
         assert_equal(0, wait_thr.value.exitstatus, wait_thr.inspect)
         assert_include(wait_thr.value.class.instance_methods(false), :exitstatus, wait_thr.inspect)
         assert_equal(0, wait_thr.value.exitstatus, wait_thr.value)
@@ -253,8 +340,8 @@ module Shell
         begin
           start
           close
-        rescue StandardError => exception
-          @errors[:rescue] = exception
+        rescue StandardError => exception_object_raised
+          @errors[:rescue] = exception_object_raised
         end # begin
       end # Default_run
     end # DefinitionalConstants
@@ -435,7 +522,7 @@ class FileIPO < FileDependancy # IPO = Input, Processing, and Output
       @errors[:exitstatus] = @cached_run.process_status.exitstatus
     end # if
     unless @cached_run.errors.empty?
-      errors[:syserr] = @cached_run.errors
+      errors[:stderr] = @cached_run.errors
     end # if
     @output_paths.each do |path|
       if File.exist?(path)
@@ -458,7 +545,7 @@ class FileIPO < FileDependancy # IPO = Input, Processing, and Output
   def success?
     if @cached_run.process_status.exitstatus != 0
       false
-    #	elsif errors[:syserr] != '' then
+    #	elsif errors[:stderr] != '' then
     #		false
     elsif @errors.values - [:input_does_not_exist, :output_does_not_exist] != @errors.values
       false
@@ -499,16 +586,16 @@ class ShellCommands
       @process_status = wait_thr.value # Process::Status object returned.
     end
     self # allows command chaining
-  rescue StandardError => exception
-    message = 'rescue exception in Shell#execute' + exception.inspect
+  rescue StandardError => exception_object_raised
+    message = 'rescue exception in Shell#execute' + exception_object_raised.inspect
     message += "\n" + caller.join("\n")
     #    $stdout.puts message
     info '@command=' + @command.inspect
     info '@command_string=' + @command_string.inspect
     if @errors.nil?
-      @errors = exception.inspect
+      @errors = exception_object_raised.inspect
     else
-      @errors += exception.inspect
+      @errors += exception_object_raised.inspect
     end # if
   end # execute
   # prefer command as array since each element is shell escaped.
