@@ -49,20 +49,30 @@ class EditorTest < TestCase
   def test_test_files
     assert_equal('', TestEditor.test_files([]))
     refute_empty(TestEditor.test_executable.unit.edit_files)
-    functional_parallelism = TestEditor.test_executable.unit.functional_parallelism(TestEditor.test_executable.unit.edit_files)
-    refute_empty(functional_parallelism, TestEditor.test_executable.unit.edit_files.inspect)
-    pairs = functional_parallelism.map do |p|
-      ' -t ' + p.map do |f|
-        Pathname.new(f).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s
-      end.join(' ') # map
-    end # map
-    assert_instance_of(Array, pairs, functional_parallelism.inspect)
-    refute_empty(pairs)
+    parallel_display = TestEditor.test_executable.unit.parallel_display
+    refute_empty(parallel_display, TestEditor.test_executable.unit.edit_files.inspect)
+    pairs = TestEditor.test_executable.unit.edit_files.map do |file| 
+			assert_data_file(file)
+			symbol = FilePattern.find_name_from_path(file)
+			parallel_symbol = TestEditor.test_executable.unit.parallel_display[symbol]
+			if parallel_symbol.nil?
+				nil
+			else
+				assert_instance_of(Symbol, parallel_symbol)
+				parallel_file = TestEditor.test_executable.unit.pathname_pattern?(parallel_symbol)
+				assert_data_file(parallel_file)
+				' -t ' + Pathname.new(parallel_file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s +
+					' ' + Pathname.new(file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s
+			end # if
+				
+    end.compact # map
+    assert_instance_of(Array, pairs, parallel_display.inspect)
+    refute_empty(pairs, parallel_display.inspect)
     pairs.join(' ')
     refute_empty(TestEditor.test_files, pairs.inspect)
     assert_equal(TestEditor.test_files, pairs.join(' '))
     refute_empty(TestEditor.test_files(TestEditor.test_executable.unit.edit_files), pairs.inspect)
-    assert_equal(' -t app/models/editor.rb test/unit/editor_test.rb', TestEditor.test_files(TestEditor.test_executable.unit.edit_files))
+    assert_equal(' -t app/models/editor.rb test/unit/editor_test.rb  -t app/models/editor.rb script/editor.rb', TestEditor.test_files(TestEditor.test_executable.unit.edit_files))
   end # test_files
 
   def test_minimal_comparison

@@ -71,11 +71,17 @@ class Editor
   end # goldilocks
 
   def test_files(edit_files = @test_executable.unit.edit_files)
-    pairs = @test_executable.unit.functional_parallelism(edit_files).map do |p|
-      ' -t ' + p.map do |f|
-        Pathname.new(f).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s
-      end.join(' ') # map
-    end # map
+    pairs = edit_files.map do |file| 
+			symbol = FilePattern.find_name_from_path(file)
+			parallel_symbol = @test_executable.unit.parallel_display[symbol]
+			if parallel_symbol.nil?
+				nil
+			else
+				parallel_file = @test_executable.unit.pathname_pattern?(parallel_symbol)
+				' -t ' + Pathname.new(parallel_file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s +
+					' ' + Pathname.new(file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s
+			end # if
+    end.compact # map
     pairs.join(' ')
   end # test_files
 
@@ -86,7 +92,7 @@ class Editor
       unit_pattern = FilePattern.new_from_path(@test_executable.unit.edit_files[0])
     end # if
     unit_name = unit_pattern.unit_base_name
-    FilePattern::Constants::Patterns.map do |p|
+    FilePattern::Patterns.map do |p|
       pattern = FilePattern.new(p)
       pwd = Pathname.new(Dir.pwd)
       default_test_class_id = @test_executable.unit.default_test_class_id?.to_s
