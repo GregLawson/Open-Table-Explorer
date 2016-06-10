@@ -152,16 +152,14 @@ module FileUnit
     end # if
   end # default_test_class_id
 
-  def functional_parallelism(edit_files)
-    [
-      [pathname_pattern?(:model), pathname_pattern?(:unit)],
-      [assertions_pathname?, pathname_pattern?(:unit)],
-      [pathname_pattern?(:unit), pathname_pattern?(:integration_test)],
-      [assertions_pathname?, assertions_test_pathname?]
-    ].select do |fp|
-      fp - edit_files == [] # files must exist to be edited?
-    end # map
-  end # functional_parallelism
+  def parallel_display
+    {unit: :model,
+		script: :model,
+    assertions: :unit,
+		integration_test: :unit,
+		assertions_test: :assertions
+    }
+  end # parallel_display
 
   def tested_files(executable) # for staging after test
     if executable == pathname_pattern?(:script) # script only
@@ -250,17 +248,18 @@ class RubyUnit < Unit
     attribute :model_class_name, Symbol, default: ->(unit, _attribute) { unit.model_basename.to_s.classify }
   end # values
   extend FileUnit::ClassMethods
+	
   def default_tests_module_name?
-    'DefaultTests' + default_test_class_id?.to_s
+    ('DefaultTests' + default_test_class_id?.to_s).to_sym
   end # default_tests_module?
 
   def test_case_class_name?
-    'DefaultTestCase' + default_test_class_id?.to_s
+    ('DefaultTestCase' + default_test_class_id?.to_s).to_sym
   end # test_case_class?
 
   def test_class_name
-    @model_class_name.to_s + 'Test'
-  end # test_class
+    (@model_class_name.to_s + 'Test').to_sym
+  end # test_class_name
 
   def test_class
     eval(test_class_name)
@@ -275,6 +274,9 @@ class RubyUnit < Unit
   end # create_test_class
   module Constants
     Executable = RubyUnit.new_from_path($PROGRAM_NAME)
+		Self = RubyUnit.new(model_basename: :ruby_unit)
+		TestMinimal = RubyUnit.new(model_basename: :minimal)
+
   end # Constants
   include Constants
 end # RubyUnit
@@ -284,6 +286,8 @@ class RailsishRubyUnit < RubyUnit
   extend FileUnit::ClassMethods
   module Constants
     Executable = RailsishRubyUnit.new_from_path($PROGRAM_NAME)
+		Self = RailsishRubyUnit.new(model_basename: :ruby_unit)
+		TestMinimal = RailsishRubyUnit.new(model_basename: :minimal)
   end # Constants
   include Constants
   def model_class?
