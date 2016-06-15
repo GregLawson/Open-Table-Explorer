@@ -95,10 +95,15 @@ class MethodModel # <ActiveRecord::Base
       ret
     end # ancestor_method_names
 
-    def prototype_list(ancestor, _options = { ancestor_qualifier: true, argument_delimeter: '(' })
+    def instance_method_models(ancestor)
       MethodModel.method_names(ancestor).map do |method_name|
         MethodModel.new(ancestor: ancestor, method_name: method_name, instance: true)
-                   .prototype(_options)
+      end.sort { |x, y| x.theMethod.arity <=> y.theMethod.arity && x.method_name.to_s <=> y.method_name.to_s } # map
+    end # instance_method_models
+
+    def prototype_list(ancestor, _options = { ancestor_qualifier: true, argument_delimeter: '(' })
+      instance_method_models(ancestor).map do |method_model|
+        method_model.prototype(_options)
       end # map
     end # prototype_list
 
@@ -278,13 +283,13 @@ class MethodModel # <ActiveRecord::Base
            else
              ''
             end # if')'
-    ret += "\n"
+#    ret += "\n"
   end # prototype
 
   def theMethod
-    if @instance
+    if @instance  # look it up! Why? Beause can't create fully? Existence check?
       MethodModel.method_query(@method_name.to_sym, @ancestor)
-    else # look it up! Why? Beause can't create fully? Existence check?
+    else
       @ancestor.method(@method_name.to_sym)
     end # if
   end # theMethod

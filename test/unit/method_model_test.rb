@@ -8,6 +8,7 @@
 require_relative '../../app/models/test_environment_test_unit.rb'
 # require_relative 'test_environment'
 require_relative '../../app/models/method_model.rb'
+require_relative '../../app/models/merge.rb'
 # require_relative '../../app/models/object_memory.rb'
 class MethodTest < TestCase
   include Method::Examples
@@ -194,6 +195,9 @@ end # apply_selection_defaults
     #    assert_equal(MethodModel.instance_methods(true), MethodModel.ancestor_method_names(MethodModel).values.flatten.uniq)
     #    assert_equal(MethodModel.instance_methods(true), method_model_ancestor_names.values.flatten.uniq)
   end # ancestor_method_names
+	def test_instance_method_models
+		merge_methods = MethodModel.instance_method_models(Merge)	
+	end # instance_method_models
 
   def test_prototype_list
     prototype_list = MethodModel.method_names(MethodModel).map do |method_name|
@@ -201,8 +205,12 @@ end # apply_selection_defaults
                  .prototype(ancestor_qualifier: true, argument_delimeter: ' ')
     end # map
     assert_match(/theMethod /, prototype_list.join)
-    assert_match(/^theMethod \n/, MethodModel.prototype_list(MethodModel, ancestor_qualifier: false, argument_delimeter: ' ').join)
+    assert_match(/theMethod/, MethodModel.prototype_list(MethodModel, ancestor_qualifier: false, argument_delimeter: ' ').join("\n"))
     #    assert_match(/catfish /, MethodModel.prototype_list(MethodModel).join)
+    
+		merge_methods = MethodModel.prototype_list(Merge, ancestor_qualifier: false, argument_delimeter: ' ').join("\n")
+		
+    assert_match(/merge_down/, merge_methods)
   end # prototype_list
 
   def test_ancestor_method_name
@@ -370,8 +378,8 @@ end # apply_selection_defaults
   end # inspect
 
   def test_prototype
-    assert_equal("MethodModel#inspect()\n", Instance_method_inspect.prototype)
-    assert_equal("method_names arg ...\n",
+    assert_equal("MethodModel#inspect()", Instance_method_inspect.prototype)
+    assert_equal("method_names arg ...",
                  Class_method_method_names.prototype(ancestor_qualifier: false, argument_delimeter: ' '))
   end # prototype
 
