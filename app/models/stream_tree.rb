@@ -89,8 +89,8 @@ class GraphPath < Array # nested Array
     First_grandson = [First_son, 0].freeze
   end # Examples
 end # GraphPath
-
 # Connectivity
+
 class Connectivity
   module ClassMethods
     def ref(tree)

@@ -20,7 +20,7 @@ class StreamTreeTest < TestCase
     # Use DOT to visualize this graph:
     dg.write_to_graphic_file('jpg')
     assert_equal(true, dg.directed?)
-    assert_equal([5, 6, 1, 2, 3, 4], dg.vertices)
+    assert_equal([5, 6, 1, 2, 3, 4].sort, dg.vertices)
     assert_equal(true, dg.has_vertex?(4))
     assert_equal(false, dg.has_vertex?(Object))
     assert_equal('(1-2)(1-6)(2-3)(2-4)(4-5)(6-4)', dg.edges.sort.to_s)
