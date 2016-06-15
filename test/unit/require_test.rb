@@ -118,4 +118,46 @@ class RequireTest < TestCase
     assert_instance_of(Array, executing_requires.cached_require_captures)
     executing_requires.assert_relative(Require_line, Relative_regexp)
   end # values
+	
+	def test_require_graph
+
+    g = module_graph
+    # We only want to see the ancestors of {RGL::AdjacencyGraph}:
+
+    require 'rgl/traversal'
+    tree = g.bfs_search_tree_from(RGL::AdjacencyGraph)
+    # Now we want to visualize this component of g with DOT. We therefore create a subgraph of the original graph, using a filtered graph:
+
+    g = g.vertices_filtered_by { |v| tree.has_vertex? v }
+    g.write_to_graphic_file('jpg')
+	end # require_graph
 end # Require
+
+class BoostGraphTest < TestCase
+    def module_graph
+      RGL::ImplicitGraph.new do |g|
+        g.vertex_iterator do |b|
+          ObjectSpace.each_object(Module, &b)
+        end
+        g.adjacent_iterator do |x, b|
+          x.ancestors.each do |y|
+            b.call(y) unless x == y || y == Kernel || y == Object
+          end
+        end
+        g.directed = true
+      end
+    end
+    # This function creates a directed graph, with vertices being all loaded modules:
+
+	def test_module_graph
+    g = module_graph
+    # We only want to see the ancestors of {RGL::AdjacencyGraph}:
+
+    require 'rgl/traversal'
+    tree = g.bfs_search_tree_from(RGL::AdjacencyGraph)
+    # Now we want to visualize this component of g with DOT. We therefore create a subgraph of the original graph, using a filtered graph:
+
+    g = g.vertices_filtered_by { |v| tree.has_vertex? v }
+    g.write_to_graphic_file('jpg')
+	end # module_graph
+end # BoostGraph

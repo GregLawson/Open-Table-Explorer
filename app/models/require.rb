@@ -10,6 +10,9 @@ require 'virtus'
 require_relative '../../app/models/unit.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../app/models/test_executable.rb'
+require 'rgl/implicit'
+require 'rgl/adjacency'
+require 'rgl/dot'
 class Require
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
     Relative_regexp = /^/ * (/require/ * (/_relative/ .group * Regexp::Optional)).group.capture(:require_command)
@@ -55,6 +58,21 @@ class Require
     #	attribute :age, Fixnum, :default => 789
     #	attribute :timestamp, Time, :default => Time.now
   end # values
+	
+    # This function creates a directed graph, with vertices being all loaded modules:
+    def module_graph
+      RGL::ImplicitGraph.new do |g|
+        g.vertex_iterator do |b|
+          ObjectSpace.each_object(Module, &b)
+        end # vertex_iterator
+        g.adjacent_iterator do |x, b|
+          x.ancestors.each do |y|
+            b.call(y) unless x == y || y == Kernel
+          end # ancestors
+        end # adjacent_iterator
+        g.directed = true
+      end # ImplicitGraph
+    end # module_graph
   module ClassMethods
     include DefinitionalConstants
     def all
