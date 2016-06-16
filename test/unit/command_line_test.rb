@@ -8,12 +8,12 @@
 require_relative '../../app/models/test_environment_test_unit.rb'
 # require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../assertions/command_line_assertions.rb'
-require_relative '../../app/models/unit_maturity.rb'
+#require_relative '../../app/models/unit_maturity.rb'
 class CommandLineTest < TestCase
   include CommandLine::Examples
-  Test_unit = RailsishRubyUnit.new(model_basename: :test_run)
-  require File.expand_path(Test_unit.model_pathname?)
-  Test_unit_commandline = CommandLine.new(test_executable: Test_unit.model_test_pathname?, unit_class: Test_unit.model_class?, argv: ['error_score?', $PROGRAM_NAME])
+  Test_test_executable = TestExecutable.new(model_basename: :test_run)
+  require File.expand_path(Test_test_executable.unit.model_pathname?)
+  Test_unit_commandline = CommandLine.new(test_executable: Test_test_executable, unit_class: Test_unit.model_class?, argv: ['error_score?', $PROGRAM_NAME])
   Not_virtus_unit = RailsishRubyUnit.new(model_basename: :unit_maturity)
   Not_virtus_unit_commandline = CommandLine.new(test_executable: Not_virtus_unit.model_test_pathname?, unit_class: Not_virtus_unit.model_class?, argv: ['help', $PROGRAM_NAME])
   def test_ruby_assertions

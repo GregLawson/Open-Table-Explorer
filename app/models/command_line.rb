@@ -44,7 +44,7 @@ class CommandLine # < Command
   include Virtus.value_object
   values do
     attribute :test_executable, TestExecutable 
-#    attribute :unit_class, Class, default: CommandLine
+    attribute :unit_class, Class, default: ->(command_line, _attribute) { command_line.test_executable.unit.model_class? }
     attribute :argv, Array, default: ARGV
     #	attribute :command_line_opts, Hash, :default => lambda {|commandline, attribute| commandline.command_line_opts_initialize}
   end # values
@@ -111,24 +111,23 @@ class CommandLine # < Command
     end # if
   end # executable_object
 
-  def candidate_commands(number_arguments = nil)
-    executable_object.methods(true).map do |candidate_command_name|
-      if Nonscriptable_methods.include?(candidate_command_name)
-        nil
-      else
-        method = executable_object.method(candidate_command_name)
-        selected = number_arguments.nil?
-        selected ||= number_arguments == required_arguments(method_name)
-        selected ||= (default_arguments?(method_name) && number_arguments <= required_arguments(method_name))
-        if selected
-          { candidate_command: candidate_command_name, required_arguments: method.required_arguments, default_arguments: method.default_arguments?, method_receiver: executable_object }
-           end # if
-      end # if
-    end.compact.sort { |x, y| x[:arity] <=> y[:arity] && x[:candidate_command] <=> y[:candidate_command] } # map
-  end # candidate_commands
+  def command_instance_methods
+		command_class = @test_executable.unit.model_class?	
+		MethodModel.instance_method_models(command_class)	
+  end # command_instance_methods
 
+	def sub_command_method
+      ret = command_instance_methods.find do |method_model|
+        method_model.method_name == sub_command
+      end # find
+			message = sub_command.to_s + ' is not in ' + command_instance_methods.inspect
+			raise message if ret.nil?
+			ret
+	end # sub_command_method
   def candidate_commands_strings
-		MethodModel.instance_method_models(@test_executablke.unit.model_class_name)	
+      command_instance_methods.map do |method_model|
+        method_model.prototype(ancestor_qualifier: true, argument_delimeter: '(')
+      end # map
   end # candidate_commands_strings
 
   # default help, override as needed
@@ -256,18 +255,18 @@ class CommandLine # < Command
              false # non-default commands not done cause they don't exist
     end # if
     ret = unless done
-            method = executable_method?(sub_command)
-            if method.nil?
+            method_model = sub_command_method
+            if method_model.nil?
               message = method_exception_string(sub_command)
               raise Exception.new(message)
             elsif number_of_arguments == 0
-              method.call
-            elsif number_of_arguments == method.required_arguments
+              method_model.theMethod.call
+            elsif number_of_arguments == method_model.theMethod.required_arguments
               dispatch_required_arguments(arguments)
-            elsif number_of_arguments < method.required_arguments
+            elsif number_of_arguments < method_model.theMethod.required_arguments
               puts 'number_of_arguments == 0 '
-            elsif method.required_arguments == 0 ||
-                  (number_of_arguments % method.required_arguments) == 0
+            elsif method_model.theMethod.required_arguments == 0 ||
+                  (number_of_arguments % method_model.theMethod.required_arguments) == 0
               arguments.each do |argument|
                 dispatch_required_arguments(argument)
               end # each
