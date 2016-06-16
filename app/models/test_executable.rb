@@ -239,8 +239,8 @@ class TestExecutable < FileArgument # executable / testable ruby unit with execu
                       test_type = nil,
                       repository = Repository::This_code_repository)
       argument_path = RepositoryPathname.new_from_path(argument_path) if argument_path.instance_of?(String)
-      unit = Unit.new_from_path(argument_path)
-      test_type = FilePattern.find_from_path(argument_path) if test_type.nil?
+      unit = RailsishRubyUnit.new_from_path(argument_path)
+      test_type = FilePattern.find_from_path(argument_path)[:name] if test_type.nil?
       new_executable = TestExecutable.new(argument_path: argument_path,
                                           unit: unit,
                                           test_type: test_type,
@@ -339,7 +339,7 @@ class TestExecutable < FileArgument # executable / testable ruby unit with execu
   # Filename of log file from test run
   module Examples
     # include Constants
-    TestTestExecutable = TestExecutable.new_from_path(__FILE__) # used as Example in TestRun avoiding recursion_danger
+    TestTestExecutable = TestExecutable.new_from_path(__FILE__, :unit) # used as Example in TestRun avoiding recursion_danger
     TestSelf = TestExecutable.new(argument_path: $PROGRAM_NAME)
     Not_unit = TestExecutable.new(argument_path: '/dev/null')
     Not_unit_executable = TestExecutable.new(argument_path: 'test/data_sources/unit_maturity/success.rb')
