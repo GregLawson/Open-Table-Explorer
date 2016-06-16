@@ -43,8 +43,8 @@ class CommandLine # < Command
   extend DefinitionalClassMethods
   include Virtus.value_object
   values do
-    attribute :executable, Symbol # Symbol not RepositoryPathname or TestExecutable?
-    attribute :unit_class, Class, default: CommandLine
+    attribute :test_executable, TestExecutable 
+#    attribute :unit_class, Class, default: CommandLine
     attribute :argv, Array, default: ARGV
     #	attribute :command_line_opts, Hash, :default => lambda {|commandline, attribute| commandline.command_line_opts_initialize}
   end # values
@@ -128,11 +128,7 @@ class CommandLine # < Command
   end # candidate_commands
 
   def candidate_commands_strings
-    candidate_commands.map do |c|
-      c[:candidate_command].to_s + ' ' +
-        (['arg'] * c[:required_arguments]).join(' ') +
-        (c[:default_arguments] ? '...' : '')
-    end # map
+		MethodModel.instance_method_models(@test_executablke.unit.model_class_name)	
   end # candidate_commands_strings
 
   # default help, override as needed
@@ -188,13 +184,13 @@ class CommandLine # < Command
     include DefinitionalConstants
     # Command = RailsishRubyUnit::Executable.model_basename
     Script_class = RailsishRubyUnit::Executable.model_class?
-    Script_command_line = CommandLine.new(executable: $PROGRAM_NAME, unit_class: Script_class, argv: ARGV)
+    Script_command_line = CommandLine.new(test_executable: TestExecutable.new_from_path($PROGRAM_NAME), argv: ARGV)
       # = Script_class.new(TestExecutable.new_from_path($0))
     end # Constants
   include Constants
   def ==(other)
     if self.class == other.class
-      @executable == other.executable && @unit_class == other.unit_class && @argv == other.argv
+      @test_executable == other.test_executable && @unit_class == other.unit_class && @argv == other.argv
     else
       false
     end # if

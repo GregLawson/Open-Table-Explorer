@@ -1,5 +1,5 @@
 passed
-2016-06-02 02:26:32.936
+2016-06-15 16:50:44.646
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test
@@ -48,29 +48,29 @@ Error: test_lint_json(RepositoryPathnameTest): RuntimeError: unexpected lint run
 ===============================================================================
 ..................
 
-Finished in 3.461653721 seconds.
+Finished in 3.437866159 seconds.
 ------
 30 tests, 452 assertions, 0 failures, 3 errors, 0 pendings, 0 omissions, 0 notifications
 90% passed
 ------
-8.67 tests/s, 130.57 assertions/s
+8.73 tests/s, 131.48 assertions/s
 
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb"
-	User time (seconds): 4.79
+	User time (seconds): 4.76
 	System time (seconds): 0.31
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:05.15
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:05.12
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 50308
+	Maximum resident set size (kbytes): 50324
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 39487
-	Voluntary context switches: 208
-	Involuntary context switches: 519
+	Minor (reclaiming a frame) page faults: 39630
+	Voluntary context switches: 206
+	Involuntary context switches: 501
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 64

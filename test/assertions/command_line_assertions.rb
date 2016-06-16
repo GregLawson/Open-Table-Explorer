@@ -57,7 +57,7 @@ class CommandLine # < Command
       message += "\n AssertionsModule.instance_methods = " + AssertionsModule.instance_methods(false).inspect
       exception = Exception.new(message)
       raise exception unless AssertionsModule.instance_methods(false).include?(:assert_equal)
-      assert_equal(Unit.new_from_path(@executable).model_class?, @unit_class)
+      assert_equal(Unit.new_from_path(@test_executable).model_class?, @unit_class)
     end # assert_pre_conditions
 
     def assert_post_conditions
@@ -69,7 +69,7 @@ class CommandLine # < Command
   extend RubyAssertions
   module Examples
     include Constants
-    No_args = CommandLine.new(executable: $PROGRAM_NAME, unit_class: CommandLine, argv: [])
+    No_args = CommandLine.new(test_executable: TestExecutable.new_from_path($PROGRAM_NAME), unit_class: CommandLine, argv: [])
 
     Readme_opts = Trollop.options do
       opt :monkey, 'Use monkey mode' # flag --monkey, default false

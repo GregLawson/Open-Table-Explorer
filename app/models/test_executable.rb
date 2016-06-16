@@ -97,7 +97,7 @@ class RepositoryPathname < Pathname
       #				@errors += file_ipo.errors
       IO.write(lint_out_file.to_s, run.cached_run.output.gsub('{"s', "\n" + '{"s'))
       run.cached_run.output
-      raise 'unexpected lint run.'
+    # tested      raise 'unexpected lint run.'
     else
       IO.read(lint_out_file.to_s)
     end # if
@@ -169,14 +169,14 @@ class FileArgument
         #				@errors += file_ipo.errors
         IO.write(@argument_path.lint_out_file.to_s, run.cached_run.output)
         run.cached_run.output
-        raise 'unexpected lint run.'
+      # tested        raise 'unexpected lint run.'
       else
         IO.read(@argument_path.lint_out_file.to_s)
         end # if
       run.cached_run.output
     else
       @argument_path.lint_output
-      raise 'unexpected lint run.'
+      # tested      raise 'unexpected lint run.'
     end # if
   end # lint_output
 
@@ -217,7 +217,7 @@ class FileArgument
         file = FileArgument.new(argument_path: p)
         if file.generatable_unit_file?
           file.argument_path.lint_output
-          raise 'unexpected lint run.'
+          # tested          raise 'unexpected lint run.'
         end # if
       end # each
     else
@@ -236,9 +236,11 @@ class TestExecutable < FileArgument # executable / testable ruby unit with execu
   end # values
   module ClassMethods
     def new_from_path(argument_path,
-                      test_type = :unit,
+                      test_type = nil,
                       repository = Repository::This_code_repository)
+      argument_path = RepositoryPathname.new_from_path(argument_path) if argument_path.instance_of?(String)
       unit = Unit.new_from_path(argument_path)
+      test_type = FilePattern.find_from_path(argument_path) if test_type.nil?
       new_executable = TestExecutable.new(argument_path: argument_path,
                                           unit: unit,
                                           test_type: test_type,

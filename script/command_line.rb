@@ -87,7 +87,7 @@ CommandLine::Script_command_line.run do
       raise "required_library_file #{required_library_file} does not exist."
       end # if
     puts 'sub_command = ' + sub_command.inspect + unit.inspect if $VERBOSE
-    unit_commandline = CommandLine.new(executable: $PROGRAM_NAME, unit_class: unit.model_class?, argv: ARGV[1..-1])
+    unit_commandline = CommandLine.new(test_executable: $PROGRAM_NAME, unit_class: unit.model_class?, argv: ARGV[1..-1])
     unit_commandline.run do
       puts 'run in command_line script.' + CommandLine::Script_command_line.command_line_parser.inspect if $VERBOSE
       false # not done

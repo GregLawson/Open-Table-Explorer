@@ -11,11 +11,17 @@ require_relative '../assertions/command_line_assertions.rb'
 require_relative '../../app/models/unit_maturity.rb'
 class CommandLineTest < TestCase
   include CommandLine::Examples
+  module Examples
   Test_unit = RailsishRubyUnit.new(model_basename: :test_run)
   require File.expand_path(Test_unit.model_pathname?)
   Test_unit_commandline = CommandLine.new(test_executable: Test_unit.model_test_pathname?, unit_class: Test_unit.model_class?, argv: ['error_score?', $PROGRAM_NAME])
   Not_virtus_unit = RailsishRubyUnit.new(model_basename: :unit_maturity)
   Not_virtus_unit_commandline = CommandLine.new(test_executable: Not_virtus_unit.model_test_pathname?, unit_class: Not_virtus_unit.model_class?, argv: ['help', $PROGRAM_NAME])
+  No_arg_run = CommandLine.new(argv: '')
+#        test_run = ShellCommands.new('ruby -W0 script/command_line.rb ' + args)
+  Help_run = CommandLine.new(argv: '--help')
+  end # Examples
+  include Examples
   def test_ruby_assertions
     assert(self.class.included_modules.include?(AssertionsModule))
     refute_empty([1])
@@ -50,7 +56,7 @@ class CommandLineTest < TestCase
   def test_initialize
     refute_nil(No_args.unit_class)
     refute_nil(Script_command_line.unit_class)
-  end # initialize
+  end # values
 
   def test_arguments
   end # arguments
@@ -92,6 +98,7 @@ class CommandLineTest < TestCase
     refute_equal([], Test_unit_commandline.find_examples)
     refute_equal([], Not_virtus_unit_commandline.find_examples)
     refute_equal([], Script_command_line.find_examples)
+    assert_equal([], Test_unit_commandline.find_examples, Test_unit_commandline.inspect)
   end # find_examples
 
   def test_find_example?
@@ -101,8 +108,8 @@ class CommandLineTest < TestCase
     refute_nil(Test_unit_commandline.find_example?)
     refute_nil(Not_virtus_unit_commandline.find_example?)
     refute_nil(Script_command_line.find_example?)
-    #	assert_equal(TestRun::Examples::Default_testRun, Test_unit_commandline.find_example?.value)
-    #	assert_equal(CommandLine::Examples::Script_command_line, Not_virtus_unit_commandline.find_example?.value)
+    assert_equal(TestRun::Examples::Default_testRun, Test_unit_commandline.find_example?.value)
+    assert_equal(CommandLine::Examples::Script_command_line, Not_virtus_unit_commandline.find_example?.value)
     assert_equal(CommandLine::Examples::Script_command_line, Script_command_line.find_example?.value)
   end # find_example?
 
@@ -118,7 +125,7 @@ class CommandLineTest < TestCase
     #	assert_equal(test_run_object.test_executable, Test_unit_commandline.executable_object.test_executable)
     refute_nil(test_run_object.test_executable)
     #	assert_equal($0, test_run_object.test_executable.argument_path)
-    #	assert_equal($0, Test_unit_commandline.test_executable_object.test_executable.argument_path.relative_pathname.to_s)
+    assert_equal($PROGRAM_NAME, Test_unit_commandline.executable_object.test_executable.argument_path.relative_pathname.to_s)
 
     assert_includes(CommandLine.included_modules, Virtus::InstanceMethods)
     refute_includes(Not_virtus_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
@@ -128,8 +135,8 @@ class CommandLineTest < TestCase
     #	assert_equal(test_run_object.test_executable, Test_unit_commandline.executable_object.test_executable)
     refute_nil(test_run_object.test_executable)
     assert_instance_of(TestExecutable, test_run_object.test_executable)
-    #	assert_equal($0, test_run_object.test_executable.argument_path.relative_pathname.to_s)
-    #	assert_equal($0, Test_unit_commandline.test_executable_object.test_test_executable.argument_path.relative_pathname.to_s)
+    assert_equal($PROGRAM_NAME, test_run_object.test_executable.argument_path.relative_pathname.to_s)
+    assert_equal($PROGRAM_NAME, Test_unit_commandline.executable_object.test_executable.argument_path.relative_pathname.to_s)
   end # executable_object
 
   def test_candidate_commands
@@ -148,14 +155,14 @@ class CommandLineTest < TestCase
     refute_equal([], Script_command_line.candidate_commands)
     refute_equal([], Test_unit_commandline.candidate_commands)
     refute_equal([], Not_virtus_unit_commandline.candidate_commands)
-    refute_equal([], Test_unit_commandline.executable_object.methods(true))
-    executable_object = Test_unit_commandline.executable_object
-    puts executable_object.methods(true).map do |method_name|
-      ancestors = executable_object.class.ancestors.select do |ancestor|
-        ancestor.instance_methods(false).include?(method_name)
-      end # each
-      { method_name: method_name, ancestors: ancestors }
-    end.inspect # each
+		refute_equal([], Test_unit_commandline.executable_object.methods(true))
+		executable_object = Test_unit_commandline.executable_object
+		puts executable_object.methods(true).map do |method_name|
+			ancestors = executable_object.class.ancestors.select do |ancestor|
+				ancestor.instance_methods(false).include?(method_name)
+			end # each
+			{method_name: method_name, ancestors: ancestors}
+		end.inspect # each
   end # candidate_commands
 
   def test_candidate_commands_strings
@@ -168,7 +175,7 @@ class CommandLineTest < TestCase
   end # command_line_parser
 
   def test_command_line_opts
-  end # command_line_opts
+end # command_line_opts_initialize
 
   def test_equal
   end # ==
@@ -188,7 +195,7 @@ class CommandLineTest < TestCase
   end # executable_method?
 
   def test_dispatch_required_arguments
-    #	assert_equal(0, Test_unit_commandline.method(:error_score?).required_arguments, Test_unit_commandline.to_s)
+    assert_equal(0, Test_unit_commandline.method(:error_score?).required_arguments, Test_unit_commandline.to_s)
 
     #	fail Exception.new('infinite loop follows')
 
