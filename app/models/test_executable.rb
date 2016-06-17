@@ -346,5 +346,6 @@ class TestExecutable < FileArgument # executable / testable ruby unit with execu
     TestMinimal = TestExecutable.new(argument_path: 'test/unit/minimal2_test.rb')
     Unit_non_executable = TestExecutable.new(argument_path: 'log/unit/2.2/2.2.3p173/silence/test_executable.log')
     Ignored_data_source = TestExecutable.new(argument_path: 'log/unit/2.2/2.2.3p173/silence/CA_540_2014_example-1.jpg')
+    Non_test = TestExecutable.new_from_path('app/models/test_executable.rb', :unit)
   end # Examples
 end # TestExecutable

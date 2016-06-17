@@ -310,6 +310,8 @@ class TestExecutableTest < TestCase
     #	assert_equal(Pathname.new(Not_unit.argument_path).expand_path.to_s, Not_unit.regression_unit_test_file.to_s)
     #	assert_equal(Pathname.new(Not_unit_executable.argument_path).expand_path.to_s, Not_unit_executable.regression_unit_test_file.to_s)
     #	assert_equal(Pathname.new(Unit_non_executable.argument_path).expand_path.to_s, Unit_non_executable.regression_unit_test_file.to_s)
+    assert_equal(true, Non_test.generatable_unit_file?)
+    assert_equal('test/unit/test_executable_test.rb', Non_test.regression_unit_test_file.relative_pathname.to_s)
   end # regression_unit_test_file
 
   def test_recursion_danger?
@@ -318,6 +320,9 @@ class TestExecutableTest < TestCase
     assert_equal(false, Unit_non_executable.recursion_danger?)
     assert_equal(false, Not_unit.recursion_danger?)
     assert_equal(false, Not_unit_executable.recursion_danger?)
+    assert_equal('test/unit/test_executable_test.rb', Non_test.regression_unit_test_file.relative_pathname.to_s)
+    assert_equal(File.expand_path($PROGRAM_NAME), Non_test.regression_unit_test_file.expand_path.to_s)
+    assert_equal(true, Non_test.recursion_danger?)
   end # recursion_danger?
 
   def test_testable?
