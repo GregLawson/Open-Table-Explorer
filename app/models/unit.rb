@@ -91,7 +91,7 @@ module FileUnit
   end # data_source_directory?
 
   def pathname_pattern?(file_spec, test = nil)
-    raise 'project_root_dir' if @project_root_dir.nil?
+    raise 'project_root_dir of self = ' + inspect if @project_root_dir.nil?
     file_pattern = FilePattern.find_by_name(file_spec)
     raise "FilePattern.find_by_name(#{file_spec.inspect})=#{file_pattern.inspect} not found" if file_pattern.nil?
     raise '@model_basename' if @model_basename.nil?
