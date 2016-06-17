@@ -232,7 +232,7 @@ end #default_test_class_id
     project_root_dir = FilePattern.project_root_dir?
     assert_equal(:Unit, RubyUnit::Executable.model_class_name)
     assert_equal(:unit, RubyUnit::Executable.model_basename)
-#	refute_empty(RubyUnit::Executable.project_root_dir)
+	refute_empty(RubyUnit::Executable.project_root_dir)
 	Executable #.assert_pre_conditions
 end # values
 def test_Examples
