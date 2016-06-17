@@ -1,24 +1,9 @@
 passed
-2016-06-01 17:09:02.393
+2016-06-17 03:22:10.114
 /usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test.rb
 ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test
 Started
-
-
-It is best for example files to actually exist. But 
-slowest_test file test/slowest/interactive_bottleneck_test.rb does not exist.
-{:suffix=>"_test.rb", :name=>:slowest_test, :prefix=>"test/slowest/", :example_file=>"test/slowest/interactive_bottleneck_test.rb", :generate=>true}
-
-
-It is best for example files to actually exist. But 
-slower_test file test/slower/require_test.rb does not exist.
-{:suffix=>"_test.rb", :name=>:slower_test, :prefix=>"test/slower/", :example_file=>"test/slower/require_test.rb", :generate=>true}
-
-
-It is best for example files to actually exist. But 
-interactive_test file test/interactive/interactive_bottleneck_test.rb does not exist.
-{:suffix=>"_test.rb", :name=>:interactive_test, :prefix=>"test/interactive/", :example_file=>"test/interactive/interactive_bottleneck_test.rb", :generate=>true}
 
 
 It is best for example files to actually exist. But 
@@ -36,28 +21,28 @@ integration_log file log/integration/2.2/2.2.3p173/silence/repository.log does n
 {:suffix=>".log", :name=>:integration_log, :prefix=>"log/integration/", :example_file=>"log/integration/2.2/2.2.3p173/silence/repository.log", :generate=>false}
 .......................
 
-Finished in 0.044895506 seconds.
+Finished in 0.042682573 seconds.
 ------
 23 tests, 192 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-512.30 tests/s, 4276.60 assertions/s
+538.86 tests/s, 4498.32 assertions/s
 
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test.rb"
-	User time (seconds): 0.68
-	System time (seconds): 0.06
+	User time (seconds): 0.70
+	System time (seconds): 0.04
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.75
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.74
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23512
+	Maximum resident set size (kbytes): 23472
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 6008
-	Voluntary context switches: 2
-	Involuntary context switches: 72
+	Minor (reclaiming a frame) page faults: 5998
+	Voluntary context switches: 3
+	Involuntary context switches: 78
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

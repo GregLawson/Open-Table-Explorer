@@ -99,7 +99,7 @@ class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
 
     # returns nil if file does not follow any pattern
     def project_root_dir?(path = $PROGRAM_NAME)
-      #	path = File.expand_path(path)
+      path = File.expand_path(path)
       matched_pattern = find_from_path(path)
       roots = DefinitionalConstants::Patterns.map do |p|
         matchData = Regexp.new(p[:prefix]).match(path.to_s)

@@ -143,7 +143,6 @@ end #repository_dir?
 def test_project_root_dir
 #	require 'optparse'
     assert(File.exist?($PROGRAM_NAME), $PROGRAM_NAME + ' does not exist.')
-    assert(File.exist?($PROGRAM_NAME), $PROGRAM_NAME + ' does not exist.')
 	path=File.expand_path($PROGRAM_NAME)
 	refute_nil(path)
 	refute_empty(path)
@@ -163,7 +162,7 @@ def test_project_root_dir
 	path=File.expand_path(path)
 	assert_pathname_exists(path)
 	refute_empty(FilePattern.project_root_dir?(File.expand_path($PROGRAM_NAME)))
-#	refute_empty(FilePattern.project_root_dir?($0))
+	refute_empty(FilePattern.project_root_dir?($0))
 end #project_root_dir
 
 def test_find_by_name
