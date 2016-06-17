@@ -22,5 +22,4 @@ class TestRunTest < TestCase
       refute_match(/all tests in test_executable took /, subtest.explain_elapsed_time)
     end # each
   end # run_individual_tests
-
 end # TestRun

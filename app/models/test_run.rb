@@ -54,10 +54,10 @@ class TestRun # < ActiveRecord::Base
         nil
       else
         begin
-					unless test_run.test_executable.test_type == :unit
-						test_run.test_executable.lint_unit
-			      raise 'unexpected lint run.'
-					end # if
+          unless test_run.test_executable.test_type == :unit
+            test_run.test_executable.lint_unit
+            # tested raise 'unexpected lint run.'
+          end # if
           recent_test =
             Timeout.timeout(test_run.test_run_timeout) do
               ShellCommands.new({ 'SEED' => '0' }, '/usr/bin/time --verbose ' +
@@ -149,7 +149,7 @@ class TestRun # < ActiveRecord::Base
   end # explain_exception
   module Constants
     include DefinitionalConstants
-    TestSelf = TestRun.new(test_executable: TestExecutable.new_from_path(__FILE__)) # avoid recursion
+    TestSelf = TestRun.new(test_executable: TestExecutable.new_from_path(__FILE__, :unit)) # avoid recursion
   end # Constants
   include Constants
   # include Generic_Table

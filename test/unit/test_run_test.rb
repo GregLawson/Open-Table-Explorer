@@ -31,6 +31,7 @@ class TestRunTest < TestCase
   end # report_timeout
 
   def test_Recent_test_default
+    assert_equal(true, TestSelf.test_executable.recursion_danger?)
     assert_equal(nil, Recent_test_default.call(TestSelf, nil))
     assert_equal(Default_testRun, ->(test_run, _attribute) { test_run }.call(Default_testRun, nil))
     assert_equal(true, ->(test_run, _attribute) { test_run.test_executable.recursion_danger? }.call(TestSelf, nil))
