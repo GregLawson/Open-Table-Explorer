@@ -27,7 +27,7 @@
 {"severity":"convention","message":"Missing top-level class documentation comment.","cop_name":"Style/Documentation","corrected":null,"location":{"line":137,"column":1,"length":5}},
 {"severity":"convention","message":"Line is too long. [84/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":139,"column":81,"length":4}},
 {"severity":"convention","message":"Missing top-level class documentation comment.","cop_name":"Style/Documentation","corrected":null,"location":{"line":143,"column":1,"length":5}},
-{"severity":"convention","message":"Line is too long. [105/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":146,"column":81,"length":25}},
+{"severity":"convention","message":"Line is too long. [129/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":146,"column":81,"length":49}},
 {"severity":"convention","message":"Line is too long. [118/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":147,"column":81,"length":38}},
 {"severity":"convention","message":"Line is too long. [103/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":152,"column":81,"length":23}},
 {"severity":"convention","message":"Line is too long. [111/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":154,"column":81,"length":31}},

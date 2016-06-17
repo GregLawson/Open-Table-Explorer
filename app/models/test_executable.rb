@@ -143,7 +143,7 @@ end # RepositoryAssociation
 class FileArgument
   include Virtus.model
   attribute :argument_path, RepositoryAssociation
-  attribute :unit, Unit, default: ->(argument, _attribute) { Unit.new_from_path(argument.argument_path) }
+  attribute :unit, RailsishRubyUnit, default: ->(argument, _attribute) { RailsishRubyUnit.new_from_path(argument.argument_path) }
   attribute :pattern, Symbol, default: ->(argument, _attribute) { FilePattern.find_from_path(argument.argument_path) }
   attribute :repository, Repository, default: Repository::This_code_repository
   module Examples
