@@ -44,7 +44,7 @@ class CommandLine # < Command
   include Virtus.value_object
   values do
     attribute :test_executable, TestExecutable 
-    attribute :unit_class, Class, default: ->(command_line, _attribute) { command_line.test_executable.unit.model_class? }
+#    attribute :unit_class, Class, default: ->(command_line, _attribute) { command_line.test_executable.unit.model_class? }
     attribute :argv, Array, default: ARGV
     #	attribute :command_line_opts, Hash, :default => lambda {|commandline, attribute| commandline.command_line_opts_initialize}
   end # values
@@ -74,11 +74,11 @@ class CommandLine # < Command
   end # argument_types
 
   def find_examples
-    Example.find_by_class(@unit_class, @unit_class)
+    Example.find_by_class(@test_executable.unit.model_class?, @test_executable.unit.model_class?)
   end # find_examples
 
   def find_example?
-    examples = Example.find_by_class(@unit_class, @unit_class)
+    examples = Example.find_by_class(@test_executable.unit.model_class?, @test_executable.unit.model_class?)
     if examples.empty?
       nil
     else
@@ -87,10 +87,10 @@ class CommandLine # < Command
   end # find_example?
 
   def make_executable_object(file_argument)
-    if @unit_class.included_modules.include?(Virtus::InstanceMethods)
-      @unit_class.new(test_executable: TestExecutable.new(argument_path: file_argument))
+    if @test_executable.unit.model_class?.included_modules.include?(Virtus::InstanceMethods)
+      @test_executable.unit.model_class?.new(test_executable: TestExecutable.new(argument_path: file_argument))
     else
-      @unit_class.new(TestExecutable.new_from_path(file_argument))
+      @test_executable.unit.model_class?.new(TestExecutable.new_from_path(file_argument))
     end # if
   end # make_executable_object
 
@@ -124,6 +124,7 @@ class CommandLine # < Command
 			raise message if ret.nil?
 			ret
 	end # sub_command_method
+	
   def candidate_commands_strings
       command_instance_methods.map do |method_model|
         method_model.prototype(ancestor_qualifier: true, argument_delimeter: '(')
@@ -189,7 +190,7 @@ class CommandLine # < Command
   include Constants
   def ==(other)
     if self.class == other.class
-      @test_executable == other.test_executable && @unit_class == other.unit_class && @argv == other.argv
+      @test_executable == other.test_executable && @test_executable.unit.model_class? == other.test_executable.unit.model_class? && @argv == other.argv
     else
       false
     end # if
