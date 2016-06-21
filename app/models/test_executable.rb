@@ -256,6 +256,14 @@ class TestExecutable < FileArgument # executable / testable ruby unit with execu
     end # if
   end # regression_unit_test_file
 
+  def recursion_message
+    if recursion_danger?
+      'recursion_danger? since ' + regression_unit_test_file.expand_path.to_s + '==' + File.expand_path($PROGRAM_NAME)
+    else
+      ''
+    end # if
+  end # recursion_message
+
   def recursion_danger?
     regression_unit_test_file.expand_path.to_s == File.expand_path($PROGRAM_NAME)
   end # recursion_danger?
@@ -323,16 +331,16 @@ class TestExecutable < FileArgument # executable / testable ruby unit with execu
   end # ruby_test_string
 
   def all_test_names
-    grep_run = ShellCommands.new('grep "def test_" ' + regression_unit_test_file.to_s)
+    grep_run = ShellCommands.new('grep "^ *def test_" ' + regression_unit_test_file.to_s)
     test_names = grep_run.output.split("\n").map do |line|
-      line[4..-1]
+      line[11..-1]
     end # map
   end # all_test_names
 
   def all_library_method_names
-    grep_run = ShellCommands.new('grep "def " ' + RepositoryPathname.new_from_path(@unit.pathname_pattern?(:model)).to_s)
+    grep_run = ShellCommands.new('grep "^ *def " ' + RepositoryPathname.new_from_path(@unit.pathname_pattern?(:model)).to_s)
     test_names = grep_run.output.split("\n").map do |line|
-      line[4..-1]
+      line[6..-1]
     end # map
   end # all_library_method_names
   # log_file => String

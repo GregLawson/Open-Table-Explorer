@@ -314,6 +314,19 @@ class TestExecutableTest < TestCase
     assert_equal('test/unit/test_executable_test.rb', Non_test.regression_unit_test_file.relative_pathname.to_s)
   end # regression_unit_test_file
 
+  def test_recursion_message
+    message = 'recursion_danger? since ' + TestSelf.regression_unit_test_file.expand_path.to_s + '==' + File.expand_path($PROGRAM_NAME)
+
+    assert_equal(message, TestSelf.recursion_message)
+    assert_equal('', TestMinimal.recursion_message)
+    assert_equal('', Unit_non_executable.recursion_message)
+    assert_equal('', Not_unit.recursion_message)
+    assert_equal('', Not_unit_executable.recursion_message)
+    assert_equal('test/unit/test_executable_test.rb', Non_test.regression_unit_test_file.relative_pathname.to_s)
+    assert_equal(File.expand_path($PROGRAM_NAME), Non_test.regression_unit_test_file.expand_path.to_s)
+    assert_equal(message, Non_test.recursion_message)
+  end # recursion_message
+
   def test_recursion_danger?
     assert_equal(true, TestSelf.recursion_danger?)
     assert_equal(false, TestMinimal.recursion_danger?)
@@ -350,17 +363,20 @@ class TestExecutableTest < TestCase
   end # ruby_test_string
 
   def test_all_test_names
-    grep_run = ShellCommands.new('grep "def test_" ' + TestTestExecutable.regression_unit_test_file.to_s)
+    grep_run = ShellCommands.new('grep "^ *def test_" ' + TestTestExecutable.regression_unit_test_file.to_s)
+    refute_empty(grep_run.output.split("\n"))
     test_names = grep_run.output.split("\n").map do |line|
-      line[4..-1]
+      line[11..-1]
     end # map
     assert_equal(test_names, TestTestExecutable.all_test_names)
+    assert_include(TestSelf.all_test_names, 'all_test_names')
   end # all_test_names
 
   def test_all_library_method_names
-    grep_run = ShellCommands.new('grep "def " ' + RepositoryPathname.new_from_path(TestTestExecutable.unit.pathname_pattern?(:model)).to_s)
+    grep_run = ShellCommands.new('grep "^ *def " ' + RepositoryPathname.new_from_path(TestTestExecutable.unit.pathname_pattern?(:model)).to_s)
+    refute_empty(grep_run.output.split("\n"))
     library_method_names = grep_run.output.split("\n").map do |line|
-      line[4..-1]
+      line[6..-1]
     end # map
     assert_equal(library_method_names, TestTestExecutable.all_library_method_names)
   end # all_library_method_names
