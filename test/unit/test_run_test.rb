@@ -19,12 +19,13 @@ class TestRunTest < TestCase
     Default_testRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable)
     Default_subtestRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable, test: :test_compare)
     Forced_timeout_testRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable, test_run_timeout: Allways_timeout)
+    TestSelf = TestRun.new(test_executable: TestExecutable.new_from_path(__FILE__, :unit)) # avoid recursion
   end # Examples
   include Examples
   include Repository::Constants
   def test_TestRun_explain_elapsed_time
-    #    assert_equal(TestRun::DefinitionalConstants.explain_elapsed_time(Default_subtestRun, Default_subtestRun.cached_recent_test[:recent_test]), Default_subtestRun.explain_exception)
-    #    assert_equal(TestRun::DefinitionalConstants.explain_elapsed_time(Default_testRun, Default_testRun.cached_recent_test[:recent_test]), Default_testRun.explain_exception)
+    assert_equal(TestRun::DefinitionalConstants.explain_elapsed_time(Default_testRun, Default_testRun.cached_recent_test[:recent_test]), Default_testRun.explain_exception)
+    assert_equal(TestRun::DefinitionalConstants.explain_elapsed_time(Default_subtestRun, Default_subtestRun.cached_recent_test[:recent_test]), Default_subtestRun.explain_exception)
   end # explain_elapsed_time
 
   def test_report_timeout
@@ -37,12 +38,15 @@ class TestRunTest < TestCase
     assert_equal(true, ->(test_run, _attribute) { test_run.test_executable.recursion_danger? }.call(TestSelf, nil))
     assert_equal(false, Default_testRun.test_executable.recursion_danger?, Default_testRun.inspect)
     assert_equal(false, ->(test_run, _attribute) { test_run.test_executable.recursion_danger? }.call(Default_testRun, nil))
+
     recent_test_default = Recent_test_default.call(Default_testRun, nil)
     assert_instance_of(Hash, recent_test_default)
     assert_instance_of(ShellCommands, recent_test_default[:recent_test])
     assert_instance_of(Float, recent_test_default[:recent_test].elapsed_time)
     assert_equal(nil, recent_test_default[:test])
     assert_instance_of(ShellCommands, recent_test_default[:recent_test])
+    assert_instance_of(Float, recent_test_default[:recent_test].elapsed_time)
+    assert_equal(nil, recent_test_default[:test])
     assert_instance_of(String, recent_test_default[:recent_test].output)
     assert_equal([:test, :recent_test], recent_test_default.keys, recent_test_default.inspect)
     assert_includes(Forced_timeout_testRun.cached_recent_test.keys, :exception_object_raised, Forced_timeout_testRun.cached_recent_test.inspect)
@@ -73,6 +77,8 @@ class TestRunTest < TestCase
     refute_nil(Default_testRun.cached_recent_test)
     refute_nil(All_test_names_default.call(Default_testRun, nil))
     refute_empty(All_test_names_default.call(Default_testRun, nil))
+		assert_includes(TestSelf.test_executable.all_test_names, 'All_test_names_default')
+		assert_includes(All_test_names_default.call(TestSelf, nil), 'All_test_names_default')
   end # All_test_names_default
 
   def test_TestRun_initialize

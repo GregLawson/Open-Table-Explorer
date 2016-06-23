@@ -17,27 +17,40 @@ require_relative '../../app/models/test_executable.rb'
 class TestRun # < ActiveRecord::Base
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
     def self.explain_elapsed_time(_test_run, recent_test)
+			raise 'First argument is not a TestRun, but ' + _test_run.inspect unless _test_run.instance_of?(TestRun)
       ret = if _test_run.test.nil?
               'all tests'
             else
               _test_run.test.to_s
             end # if
       ret += ' in ' + _test_run.test_executable.unit.model_basename.to_s
-      #      raise ret + ' recent_test is not a ShellCommands but a ' + recent_test.class.name unless recent_test.instance_of?(ShellCommands)
-      if recent_test.nil?
-        ret += 'recursion danger'
-      elsif recent_test.keys.include?(:exception_object_raised)
-        if  recent_test[:exception_object_raised].instance_of?(Timeout::Error)
-          ret += ' timed-out in ' + recent_test[:elapsed_time].inspect +
-                 ret += ' beyond timeout of ' + _test_run.test_run_timeout.to_s
-        else
-          #					ret += recent_test[:exception_object_raised].inspect + ' raised in '
-          ret += recent_test.elapsed_time.inspect + ' with timeout ' + _test_run.test_run_timeout.to_s
-        end # if
-      else
-        ret += ' took ' + recent_test.elapsed_time.inspect
-        ret += ' within timeout of ' + _test_run.test_run_timeout.to_s
-      end # if
+			ret += _test_run.elapsed_time.inspect + ' with timeout ' + _test_run.test_run_timeout.to_s
+			if _test_run.test_executable.recursion_danger?
+				ret += 					_test_run.test_executable.recursion_message + caller.join("\n")
+#			else
+								
+#				ret += 	' timeout interrupt without recursion danger(' + _test_run.test_executable.recursion_message + ')' + caller.join("\n")
+			elsif recent_test.instance_of?(Hash) 
+				puts recent_test.inspect
+			 if recent_test.keys.include?(:exception_object_raised)
+					if  recent_test[:exception_object_raised].instance_of?(Timeout::Error)
+						ret += ' timed-out in ' + recent_test[:elapsed_time].inspect +
+									 ret += ' beyond timeout of ' + _test_run.test_run_timeout.to_s
+					else
+						#					ret += recent_test[:exception_object_raised].inspect + ' raised in '
+						ret += recent_test.elapsed_time.inspect + ' with timeout ' + _test_run.test_run_timeout.to_s
+					end # if
+				else
+					ret += ' took ' + recent_test.elapsed_time.inspect
+					ret += ' within timeout of ' + _test_run.test_run_timeout.to_s
+				end # if
+			elsif recent_test.nil?
+				puts 'nil recent_test but ' + _test_run.inspect
+			elsif recent_test.instance_of?(ShellCommands)
+				puts recent_test.elapsed_time.to_s +  caller.join("\n")
+			else
+				raise 'Second argument is not a Hash, but ' + recent_test.class.name + ' = ' + recent_test.inspect +  caller.join("\n")
+			end # if
       #	ret += ' with timeout ' + _test_run.test_run_timeout.to_s
       #    ret += ' at ' + Time.now.to_s
       ret
@@ -47,8 +60,9 @@ class TestRun # < ActiveRecord::Base
       _test_run.errors[:timeout] = 'timeout ' + _test_run.test.to_s + ' of ' + _test_run.test_executable.regression_unit_test_file.relative_pathname.to_s +
                                    ' exception ' + ' with timeout of ' + _test_run.test_run_timeout.to_s +
                                    TestRun::DefinitionalConstants.explain_elapsed_time(_test_run, recent_test)
-      puts _test_run.errors[:timeout]
+      puts _test_run.errors[:timeout] # debug output
     end # report_timeout
+		
     Recent_test_default = lambda do |test_run, _attribute|
       if test_run.test_executable.recursion_danger?
         nil
@@ -287,5 +301,7 @@ class TestRun # < ActiveRecord::Base
   # self.assert_pre_conditions
   module Examples
     include Constants
+		Self_executable = TestExecutable.new_from_path(__FILE__, :unit)
+		No_side_effects = TestRun.new(test_executable: Self_executable, cached_recent_test: nil, cached_all_test_names: nil) # avoid recursion
   end # Examples
 end # TestRun
