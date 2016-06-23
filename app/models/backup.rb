@@ -19,6 +19,7 @@ def initialize(pairing)
 	@backup_dir = pairing[:backup]
 	@options = '-ruav --links'
 end #initialize
+
 def backup
 	command_string = 'rsync ' + @options + ' ' + @source_dir + '* ' + @backup_dir
 #	ShellCommands.new(command_string)
@@ -83,6 +84,7 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
+
 module Examples
 Backups_dir='/media/central-greg/'
 Media_dir = '/media/central/'
