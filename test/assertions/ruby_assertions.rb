@@ -475,7 +475,7 @@ def missing_file_message(pathname)
 	else
 		existing_dir = nil
 		pathname.ascend { |f| existing_dir = f and break if f.exist? }
-		'pathname = ' + pathname + " does not exist\n" +
+		'pathname = ' + pathname.to_s + " does not exist\n" +
 		'parent directory ' + 
 		existing_dir.to_s + 
 		' does exists containing ' + 
