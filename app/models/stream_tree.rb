@@ -29,7 +29,6 @@ class GraphPath < Array # nested Array
     elsif params.size == 1
       if params[0].is_a?(Array)
         super(2) { |index| params[0][index] } # how I wish super(params) would work
-
       else
         []
       end # if
@@ -525,6 +524,15 @@ class Hash
   def <<(other)
     merge(other)
   end # :+
+	
+	def inspect_lines
+		ret = '{'
+		each_pair do |key, value|
+			ret += key.inspect + ' => ' + value.inspect.gsub('}', '}' + "\n") + ",\n"
+		end # each_pair
+		ret.chomp.chomp + "\n" + "}\n" # remove terminating linefeed and comma
+	end # inspect_lines
+	
 end # Hash
 class Object
   def enumerate_single(enumerator_method = :map, &proc)
