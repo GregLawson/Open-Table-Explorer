@@ -14,81 +14,172 @@ require_relative '../../app/models/bug.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_executable.rb'
-class TestRun # < ActiveRecord::Base
+class RecentRun
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-    def self.explain_elapsed_time(_test_run, recent_test)
-			raise 'First argument is not a TestRun, but ' + _test_run.inspect unless _test_run.instance_of?(TestRun)
-      ret = if _test_run.test.nil?
-              'all tests'
-            else
-              _test_run.test.to_s
-            end # if
-      ret += ' in ' + _test_run.test_executable.unit.model_basename.to_s
-			ret += _test_run.elapsed_time.inspect + ' with timeout ' + _test_run.test_run_timeout.to_s
-			if _test_run.test_executable.recursion_danger?
-				ret += 					_test_run.test_executable.recursion_message + caller.join("\n")
-#			else
-								
-#				ret += 	' timeout interrupt without recursion danger(' + _test_run.test_executable.recursion_message + ')' + caller.join("\n")
-			elsif recent_test.instance_of?(Hash) 
-				puts recent_test.inspect
-			 if recent_test.keys.include?(:exception_object_raised)
-					if  recent_test[:exception_object_raised].instance_of?(Timeout::Error)
-						ret += ' timed-out in ' + recent_test[:elapsed_time].inspect +
-									 ret += ' beyond timeout of ' + _test_run.test_run_timeout.to_s
-					else
-						#					ret += recent_test[:exception_object_raised].inspect + ' raised in '
-						ret += recent_test.elapsed_time.inspect + ' with timeout ' + _test_run.test_run_timeout.to_s
-					end # if
-				else
-					ret += ' took ' + recent_test.elapsed_time.inspect
-					ret += ' within timeout of ' + _test_run.test_run_timeout.to_s
-				end # if
-			elsif recent_test.nil?
-				puts 'nil recent_test but ' + _test_run.inspect
-			elsif recent_test.instance_of?(ShellCommands)
-				puts recent_test.elapsed_time.to_s +  caller.join("\n")
+    Cached_run_default = lambda do |recent_run, _attribute|
+        begin
+					recent_run.start_time = Time.now
+          cached_run =
+            Timeout.timeout(recent_run.timeout) do
+              ShellCommands.new(recent_run.env, recent_run.command_string, recent_run.opts)
+            end # Timeout
+					recent_run.output = cached_run.output
+					recent_run.elapsed_time = Time.now - recent_run.start_time
+        rescue Timeout::Error => exception_object_raised
+          recent_run.errors[:rescue_exception] = exception_object_raised
+					recent_run.elapsed_time = Time.now - recent_run.start_time
+        end # begin/rescue block
+				cached_run
+    end # Recent_test_default
+  end # DefinitionalConstants
+  include DefinitionalConstants
+
+  include Virtus.model
+      attribute :command_string, String
+      attribute :env, Hash, default: {}
+      attribute :opts, Hash, default: {}
+      attribute :errors, Hash, default: {}
+      attribute :start_time, Time, default: nil
+      attribute :cached_run, Object, default: Cached_run_default
+      attribute :elapsed_time, Float
+      attribute :timeout, Float, default: 0.0 # no timeout
+      attribute :stdin, File, default: nil
+      attribute :stdout, File, default: nil
+      attribute :stderr, File, default: nil
+      attribute :wait_thr, Object, default: nil
+      attribute :output, String, default: nil
+	def timed_out?
+          @errors[:rescue_exception].kind_of?(Exception)
+	end # timed_out?
+	
+	def shell_elapsed_time?
+		if timed_out?
+			false
+		elsif @cached_run.nil?
+			nil
+		elsif @cached_run.instance_of?(ShellCommands)
+			if @cached_run.instance_variables.include?(:@elapsed_time)
+				if @cached_run.elapsed_time.nil?
+					:timeout_elapsed_time_nil
+      else
+					true
+      end # if
+			elsif @errors[:rescue_exception].instance_of?(ShellCommands)
+				:timeout_exception
 			else
-				raise 'Second argument is not a Hash, but ' + recent_test.class.name + ' = ' + recent_test.inspect +  caller.join("\n")
+				:unknown_ShellCommands
 			end # if
-      #	ret += ' with timeout ' + _test_run.test_run_timeout.to_s
-      #    ret += ' at ' + Time.now.to_s
+		else
+			:unknown
+		end # if
+	end # shell_elapsed_time?
+	
+  def elapsed_time
+		if shell_elapsed_time?
+			@cached_run.elapsed_time
+		elsif @cached_run.nil?
+			if @elapsed_time.nil?
+				nil
+			else
+				@elapsed_time # timeout
+			end # if
+		elsif @cached_run.instance_of?(ShellCommands)
+			if @cached_run.instance_variables.include?(:@elapsed_time)
+				if @cached_run.elapsed_time.nil?
+					:timeout_elapsed_time_nil
+				else
+					@cached_run.elapsed_time
+				end # if
+			elsif @errors[:rescue_exception].instance_of?(ShellCommands)
+				:timeout_exception
+			else
+				:unknown_ShellCommands
+			end # if
+		else
+			:unknown
+		end # if
+  end # elapsed_time
+
+	def success?
+		if @cached_run.nil?
+			false
+		else
+			@cached_run.success?
+		end # if
+	end # success?
+	
+	def process_status
+		if @cached_run.nil?
+			nil
+		else
+			@cached_run.process_status
+		end # if
+	end # process_status
+	
+	def soft_timeout
+		0.05 + (0.5 *  @timeout)
+	end # soft_timeout
+
+    def explain_elapsed_time
+			ret = 'took ' + elapsed_time.inspect + 's '
+			if @timeout == 0.0
+				ret += 'with no timeout'
+			elsif timed_out?
+				ret += 'beyond timeout of ' + @timeout.to_s + 's'
+			elsif elapsed_time > @timeout
+				ret += 'timedout within timeout of ' + @timeout.to_s + 's'
+			else
+				ret += 'unknown with timeout of ' + @timeout.to_s + 's'
+			end # if
       ret
     end # explain_elapsed_time
 
-    def self.report_timeout(_test_run, recent_test)
-      _test_run.errors[:timeout] = 'timeout ' + _test_run.test.to_s + ' of ' + _test_run.test_executable.regression_unit_test_file.relative_pathname.to_s +
-                                   ' exception ' + ' with timeout of ' + _test_run.test_run_timeout.to_s +
-                                   TestRun::DefinitionalConstants.explain_elapsed_time(_test_run, recent_test)
-      puts _test_run.errors[:timeout] # debug output
-    end # report_timeout
+  # require_relative '../../app/models/assertions.rb'
+  module Assertions
+    module ClassMethods
+      def assert_pre_conditions(message = '')
+        message += "In assert_pre_conditions, self=#{inspect}"
+      end # assert_pre_conditions
+
+      def assert_post_conditions(message = '')
+        message += "In assert_post_conditions, self=#{inspect}"
+      end # assert_post_conditions
+    end # ClassMethods
 		
-    Recent_test_default = lambda do |test_run, _attribute|
-      if test_run.test_executable.recursion_danger?
-        nil
-      else
-        begin
-          unless test_run.test_executable.test_type == :unit
-            test_run.test_executable.lint_unit
-            # tested raise 'unexpected lint run.'
-          end # if
-          recent_test =
-            Timeout.timeout(test_run.test_run_timeout) do
-              ShellCommands.new({ 'SEED' => '0' }, '/usr/bin/time --verbose ' +
-                test_run.test_executable.ruby_test_string(test_run.test),
-                                chdir: test_run.test_executable.repository.path.to_s)
-            end # Timeout
-          if recent_test.elapsed_time > test_run.test_run_timeout
-            TestRun::DefinitionalConstants.report_timeout(test_run, recent_test)
-          end # if
-          { test: test_run.test, recent_test: recent_test }
-        rescue Timeout::Error => exception_object_raised
-          TestRun::DefinitionalConstants.report_timeout(test_run, recent_test)
-          { test: test_run.test, recent_test: recent_test,
-            exception_object_raised: exception_object_raised }
-        end # begin/rescue block
-      end # if
-    end # Recent_test_default
+    def assert_pre_conditions(message = '')
+			assert_includes(instance_variables, :@errors, inspect)
+			self # for command chaining
+    end # assert_pre_conditions
+
+    def assert_post_conditions(message = '')
+			unless @errors.nil?
+				if @errors.keys.include?(:rescue_exception)
+					assert_includes(@errors.keys, :rescue_exception, @cached_run.inspect)
+					assert_instance_of(Timeout::Error, @errors[:rescue_exception], inspect)
+				end # if
+			end # unless
+			self # for command chaining
+    end # assert_post_conditions
+  end # Assertions
+  include Assertions
+  extend Assertions::ClassMethods
+end # RecentRun
+
+class TestRun # < ActiveRecord::Base
+  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+		
+		
+    All_test_names_default = lambda do |test_run, _attribute|
+      #	if test_run.cached_recent_test[:rescue_exception].nil? then
+      #		nil # not needed yet
+      #	else
+      test_run.test_executable.all_test_names
+      #	end # if
+    end # All_test_names_default
+		
+    Too_long_for_regression_test = 30.0 # zero means infinite timeout
+    Subtest_timeout_margin = 3.0 # allow some variation in test runtimes
+
     Timeout_default = lambda do |test_run, _attribute|
       if test_run[:test].nil?
         Too_long_for_regression_test
@@ -96,17 +187,30 @@ class TestRun # < ActiveRecord::Base
         test_run.subtest_timeout
       end # if
     end # Timeout_default
-    All_test_names_default = lambda do |test_run, _attribute|
-      #	if test_run.cached_recent_test[:exception_object_raised].nil? then
-      #		nil # not needed yet
-      #	else
-      test_run.test_executable.all_test_names
-      #	end # if
-    end # All_test_names_default
-    Too_long_for_regression_test = 30.0 # zero means infinite timeout
-    Subtest_timeout_margin = 3.0 # allow some variation in test runtimes
+
+		
+    Recent_test_default = lambda do |test_run, _attribute|
+			unless test_run.test_executable.test_type == :unit
+				test_run.test_executable.lint_unit
+				# tested raise 'unexpected lint run.'
+			end # if
+      if test_run.test_executable.recursion_danger?
+        nil
+      else
+          unless test_run.test_executable.test_type == :unit
+            test_run.test_executable.lint_unit
+            # tested raise 'unexpected lint run.'
+          end # if
+          recent_test =
+              RecentRun.new(env: { 'SEED' => '0' }, command_string: '/usr/bin/time --verbose ' +
+                test_run.test_executable.ruby_test_string(test_run.test),
+                                opts: {chdir: test_run.test_executable.repository.path.to_s},
+																timeout: test_run.test_run_timeout)
+      end # if
+    end # Recent_test_default
   end # DefinitionalConstants
   include DefinitionalConstants
+	
   include Virtus.value_object
   values do
     attribute :test_executable, TestExecutable
@@ -114,15 +218,26 @@ class TestRun # < ActiveRecord::Base
     attribute :cached_all_test_names, Array, default: TestRun::All_test_names_default
     attribute :test_run_timeout, Float, default: Timeout_default
     attribute :errors, Hash, default: {}
-    attribute :cached_recent_test, Hash, default: TestRun::Recent_test_default
+    attribute :cached_recent_test, RecentRun, default: TestRun::Recent_test_default
   end # values
   def all_test_names
     @test_executable.all_test_names
   end # all_test_names
 
-  def elapsed_time
-    @cached_recent_test[:elapsed_time]
-  end # elapsed_time
+	def run_style(recent_test = @cached_recent_test)
+		if @test_executable.recursion_danger?
+			:recursion_danger
+		elsif recent_test.nil?
+			:cached_recent_test_nil
+		elsif recent_test.timed_out?
+			:timeout_exception
+		elsif recent_test.cached_run.instance_of?(ShellCommands)
+			:recent_test_as_shell_command
+
+		else
+			:unknown
+		end # if
+	end # run_style
 
   def explain_elapsed_time
     ret = if @test.nil?
@@ -133,34 +248,11 @@ class TestRun # < ActiveRecord::Base
     ret += ' in ' + @test_executable.unit.model_basename.to_s
     if cached_recent_test.nil?
       ret += 'recursion danger'
-    elsif @cached_recent_test.keys.include?(:exception_object_raised)
-      if  @cached_recent_test[:exception_object_raised].instance_of?(Timeout::Error)
-        ret += ' timed-out in ' + @cached_recent_test[:elapsed_time].inspect +
-               ret += ' beyond timeout of ' + @test_run_timeout.to_s
       else
-        ret += @cached_recent_test[:exception_object_raised].inspect + ' raised in '
-        ret += @cached_recent_test.elapsed_time.inspect + ' with timeout ' + @test_run_timeout.to_s
+      ret += ' ' + @cached_recent_test.explain_elapsed_time
       end # if
-    else
-      ret += ' took ' + @cached_recent_test[:recent_test].elapsed_time.inspect
-      ret += ' within timeout of ' + @test_run_timeout.to_s
-    end # if
-    #	ret += ' with timeout ' + @test_run_timeout.to_s
-    #    ret += ' at ' + Time.now.to_s
     ret
   end # explain_elapsed_time
-
-  def explain_exception
-    if @cached_recent_test.nil?
-      ret = 'recursion danger'
-    elsif @cached_recent_test.keys.include?(:exception_object_raised)
-      ret = 'explain timeout '
-      ret += 'exception_object_raised = ' + @cached_recent_test[:exception_object_raised].inspect
-      ret += explain_elapsed_time
-    else
-      ret = explain_elapsed_time
-    end # if
-  end # explain_exception
   module Constants
     include DefinitionalConstants
     TestSelf = TestRun.new(test_executable: TestExecutable.new_from_path(__FILE__, :unit)) # avoid recursion
@@ -185,18 +277,21 @@ class TestRun # < ActiveRecord::Base
     end # ruby
   end # ClassMethods
   extend ClassMethods
-  # attr_reader
+	
+	def command_string
+	end # command_string
+	
   def <=>(other)
     error_score? <=> other.error_score?
   end # <=>
 
   # returns nil if recursion danger
   def error_file
-    ret = @test_executable.repository.current_branch_name?.to_s
-    ret += "\n" + Time.now.strftime('%Y-%m-%d %H:%M:%S.%L')
-    ret += "\n" + @cached_recent_test[:recent_test].command_string
-    ret += "\n" + @cached_recent_test[:recent_test].output.to_s
-    ret += "\n" + @cached_recent_test[:recent_test].errors
+    ret = {current_branch_name: @test_executable.repository.current_branch_name?.to_s,
+    start_time: Time.now.strftime('%Y-%m-%d %H:%M:%S.%L'),
+    command_string: @cached_recent_test.command_string,
+    output: @cached_recent_test.output.to_s,
+    errors: @cached_recent_test.errors}.inspect_lines
   end # error_file
 
   def write_error_file(test)
@@ -205,11 +300,11 @@ class TestRun # < ActiveRecord::Base
 
   def commit_message(files)
     commit_message = 'fixup! ' + Unit.unit_names?(files).uniq.join(', ')
-    unless @cached_recent_test[:recent_test].nil?
+    unless @cached_recent_test.nil?
       commit_message += "\n" + @test_executable.repository.current_branch_name?.to_s + "\n"
-      commit_message += "\n" + @cached_recent_test[:recent_test].command_string
-      commit_message += "\n" + @cached_recent_test[:recent_test].output.to_s
-      commit_message += @cached_recent_test[:recent_test].errors
+      commit_message += "\n" + @cached_recent_test.command_string
+      commit_message += "\n" + @cached_recent_test.output.to_s
+      commit_message += @cached_recent_test.errors.inspect
     end # if
     commit_message
   end # commit_message
@@ -219,17 +314,17 @@ class TestRun # < ActiveRecord::Base
   end # write_commit_message
 
   def error_score?(test = nil)
-    if @cached_recent_test.nil? || @cached_recent_test[:recent_test].nil?
+    if @cached_recent_test.nil? || @cached_recent_test.nil?
       nil
     else
       write_error_file(test)
       write_commit_message([@test_executable.regression_unit_test_file])
-      #	@cached_recent_test[:recent_test].puts if $VERBOSE
-      @error_score = if @cached_recent_test[:recent_test].success?
+      #	@cached_recent_test.puts if $VERBOSE
+      @error_score = if @cached_recent_test.success?
                        0
-                     elsif @cached_recent_test[:recent_test].process_status.nil?
+                     elsif @cached_recent_test.process_status.nil?
                        100_000 # really bad
-                     elsif @cached_recent_test[:recent_test].process_status.exitstatus == 1 # 1 error or syntax error
+                     elsif @cached_recent_test.process_status.exitstatus == 1 # 1 error or syntax error
                        syntax_test = @test_executable.repository.shell_command('ruby -c ' + @test_executable.regression_unit_test_file.to_s)
                        if syntax_test.output == "Syntax OK\n"
                          initialize_test = @test_executable.repository.shell_command('ruby ' + @test_executable.regression_unit_test_file.to_s + ' --name test_initialize')
@@ -242,7 +337,7 @@ class TestRun # < ActiveRecord::Base
                          10_000 # syntax error can hide many sins
                        end # if
                      else
-                       @cached_recent_test[:recent_test].process_status.exitstatus # num_errors>1
+                       @cached_recent_test.process_status.exitstatus # num_errors>1
         end # if
       conditionally_run_individual_tests
       @error_score
@@ -258,7 +353,7 @@ class TestRun # < ActiveRecord::Base
   end # subtest_timeout
 
   def conditionally_run_individual_tests
-    if @cached_recent_test[:recent_test].elapsed_time > @test_run_timeout
+    if @cached_recent_test.elapsed_time > @test_run_timeout
 
       run_individual_tests
     else
@@ -268,17 +363,31 @@ class TestRun # < ActiveRecord::Base
 
   def run_individual_tests
     puts @test_executable.all_test_names.inspect if $VERBOSE
-    if test.nil? && @test_executable.regression_unit_test_file != TestSelf.test_executable.regression_unit_test_file
+    if !test.nil?
+			message = 'test = ' + test.inspect + '@test_executable = ' + @test_executable.inspect + "\n\n"
+			message += '@test_executable.regression_unit_test_file = ' + @test_executable.regression_unit_test_file.inspect  + "\n\n"
+			message += 'TestSelf.test_executable.regression_unit_test_file = ' + TestSelf.test_executable.regression_unit_test_file.inspect + "\n\n"
+			message += 'Only one level of subtests.' + "\n\n"
+      raise message
+    elsif @test_executable.regression_unit_test_file == TestSelf.test_executable.regression_unit_test_file
       puts '@test_executable = ' + @test_executable.inspect if $VERBOSE
       puts '   TestSelf.test_executable = ' + TestSelf.test_executable.inspect if $VERBOSE
       @test_executable.all_test_names.map do |test_name|
-        subtest_run = TestRun.new(test_executable: @test_executable, test: test_name, test_run_timeout: subtest_timeout)
-        puts test_name.to_s + ' ' + subtest_run.explain_elapsed_time
+        unless test_name == 'test_run_individual_tests' # recursion again
+					subtest_run = TestRun.new(test_executable: @test_executable, test: 'test_' + test_name.to_s, test_run_timeout: subtest_timeout)
+        puts subtest_run.explain_elapsed_time
+				end # unless
       end # each
     else
-      raise 'Only one level of subtests.'
+      puts '@test_executable = ' + @test_executable.inspect if $VERBOSE
+      puts '   TestSelf.test_executable = ' + TestSelf.test_executable.inspect if $VERBOSE
+      @test_executable.all_test_names.map do |test_name|
+        subtest_run = TestRun.new(test_executable: @test_executable, test: 'test_' + test_name.to_s, test_run_timeout: subtest_timeout)
+        puts test_name.to_s + ' ' + subtest_run.explain_elapsed_time
+      end # each
     end # if
   end # run_individual_tests
+	
   # require_relative '../../app/models/assertions.rb'
   module Assertions
     module ClassMethods
@@ -291,9 +400,18 @@ class TestRun # < ActiveRecord::Base
       end # assert_post_conditions
     end # ClassMethods
     def assert_pre_conditions(message = '')
+			unless @cached_recent_test.nil?
+				assert_instance_of(RecentRun, @cached_recent_test, inspect)
+				@cached_recent_test.assert_pre_conditions
+			end # if
+			self # for command chaining
     end # assert_pre_conditions
 
     def assert_post_conditions(message = '')
+			unless @recent_test_default.nil? 
+				@cached_recent_test.assert_post_conditions
+			end # if
+			self # for command chaining
     end # assert_post_conditions
   end # Assertions
   include Assertions
