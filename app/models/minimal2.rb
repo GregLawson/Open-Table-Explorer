@@ -11,6 +11,7 @@ class Minimal2
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
   end # DefinitionalConstants
   include DefinitionalConstants
+	
   module DefinitionalClassMethods
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
@@ -24,10 +25,12 @@ class Minimal2
     include DefinitionalConstants
   end # Constructors
   extend Constructors
+	
   module ReferenceObjects # constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
   end # ReferenceObjects
   include ReferenceObjects
+	
   require_relative '../../app/models/assertions.rb'
   module Assertions
     module ClassMethods
@@ -44,6 +47,7 @@ class Minimal2
         self
       end # assert_post_conditions
     end # ClassMethods
+
     def assert_pre_conditions(message = '')
       message += "In assert_pre_conditions, self=#{inspect}"
       self
