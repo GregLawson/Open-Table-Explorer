@@ -370,6 +370,7 @@ class TestExecutableTest < TestCase
     end # map
     assert_equal(test_names, TestTestExecutable.all_test_names)
     assert_include(TestSelf.all_test_names, 'all_test_names')
+    assert_include(TestMinimal.all_test_names, 'Minimal_Virtus')
   end # all_test_names
 
   def test_all_library_method_names
