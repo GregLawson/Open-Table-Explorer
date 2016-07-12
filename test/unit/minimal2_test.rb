@@ -11,23 +11,24 @@ class Minimal2Test < TestCase
   # include DefaultTests
   include RailsishRubyUnit::Executable.model_class?::Examples
 
-	def test_Minimal_DefinitionalConstants
-	end # DefinitionalConstants
+  def test_Minimal_DefinitionalConstants
+  end # DefinitionalConstants
+
   def test_Minimal_Virtus
   end # values
-	
-      def test_Minimal_assert_pre_conditions
-      end # assert_pre_conditions
 
-      def test_Minimal_assert_post_conditions
-      end # assert_post_conditions
-			
-    def assert_pre_conditions
-    end # assert_pre_conditions
+  def test_Minimal_assert_pre_conditions
+  end # assert_pre_conditions
 
-    def assert_post_conditions
-    end # assert_post_conditions
-		
+  def test_Minimal_assert_post_conditions
+  end # assert_post_conditions
+
+  def assert_pre_conditions
+  end # assert_pre_conditions
+
+  def assert_post_conditions
+  end # assert_post_conditions
+
   def test_Minimal_Examples
   end # Examples
 end # Minimal
