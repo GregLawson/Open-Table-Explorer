@@ -7,6 +7,115 @@
 ###########################################################################
 require 'virtus'
 require_relative '../../app/models/interactive_bottleneck.rb'
+class Resource
+  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+		Cpu_info_header_regexp = /cpu cores\t: /
+		Cpu_info_number_regexp = /[0-9]+/.capture(:cores)
+		Cpu_info_regexp = Cpu_info_header_regexp * Cpu_info_number_regexp
+	end # DefinitionalConstants
+  include DefinitionalConstants
+
+  module DefinitionalClassMethods
+  include DefinitionalConstants
+
+	def sample_resources
+		[StatResource.new, MemoryResource.new, LoadAverageResource.new, SchedulingResource.new]
+	end # resources
+	
+	def saturated?
+		sample_resources.any? do |resource|
+			resource.saturated?
+		end # any?
+	end # saturated?
+	
+	def cores
+		line = ShellCommands.new('grep cores /proc/cpuinfo').output.split("\n").uniq[0]
+		line.capture?(DefinitionalConstants::Cpu_info_regexp).output[:cores].to_i
+	end # cores
+
+  end # DefinitionalClassMethods
+
+	def saturated?
+		metric.enumerate(:any?) do |m|
+			m >= saturation
+		end # enumerate(:any?)
+	end # saturated?
+	
+end # Resource
+
+class StatResource < Resource
+  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+		Cpu_info_number_regexp = /[0-9]+/.capture(:cores)
+	end # DefinitionalConstants
+
+	def acquisition
+		IO.read('/proc/stat')
+	end # acquisition
+		
+	def metric
+		acquisition.split("\n")
+	end # metric
+	
+	def saturation
+		cores
+	end # saturation
+end # StatResource
+
+class MemoryResource < Resource
+  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+		Acquisition =	IO.read('/proc/meminfo')
+		Cpu_info_number_regexp = /[0-9]+/.capture(:cores)
+	end # DefinitionalConstants
+	
+	def acquisition
+		IO.read('/proc/meminfo')
+	end # acquisition
+		
+	def header_regexp
+		/cpu cores\t: /
+	end # header_regexp
+	
+	def metric
+			Acquisition.split("\n")
+	end # metric
+	
+	def saturation
+	end # saturation
+end # MemoryResource
+
+class LoadAverageResource < Resource
+  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+		Acquisition =	IO.read('/proc/meminfo')
+		Cpu_info_number_regexp = /[0-9]+/.capture(:cores)
+	end # DefinitionalConstants
+	
+	def acquisition
+		IO.read('/proc/meminfo')
+	end # acquisition
+		
+	def metric
+		Acquisition.split(" ")
+	end # metric
+	
+	def saturation
+		cores - 0.5
+	end # saturation
+end # LoadAverageResource
+
+class DiskResource < Resource
+  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+		Acquisition =	IO.read('/proc/meminfo')
+		Cpu_info_number_regexp = /[0-9]+/.capture(:cores)
+	end # DefinitionalConstants
+	
+	def acquisition
+		IO.read('/proc/diskstats')
+	end # acquisition
+		
+	def saturation
+	end # saturation
+end # DiskResource
+
 class Schedule
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 		Slowest_priority = 1

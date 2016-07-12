@@ -1,7 +1,7 @@
 {:current_branch_name => "passed",
-:start_time => "2016-07-12 05:04:39.841",
+:start_time => "2016-07-12 05:34:30.110",
 :command_string => "/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb",
-:output => "ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]\nRun options: --seed 0\n\n# Running:\n\n.........\n\nFinished in 0.003789s, 2375.0243 runs/s, 0.0000 assertions/s.\n\n9 runs, 0 assertions, 0 failures, 0 errors, 0 skips\n",
+:output => "ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]\nRun options: --seed 0\n\n# Running:\n\n.........\n\nFinished in 0.004016s, 2240.9242 runs/s, 0.0000 assertions/s.\n\n9 runs, 0 assertions, 0 failures, 0 errors, 0 skips\n",
 :errors => {}
 ,
 }
