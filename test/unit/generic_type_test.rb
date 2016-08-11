@@ -527,36 +527,78 @@ end #find_by_name
 end #GenericType
 
 class GenericTypeRepoTest < TestCase
-  def test_GenericType_Dry
-		example = GenericTypeRepo::Generic_type_repo.create(name:  'name',
-														data_regexp: 'data_regexp',
-														generalize: 'generalize',
-														rails_type: 'rails_type',
-														ruby_conversion: 'ruby_conversion',
-													)
+		def test_primary_key_index
+#			message = MethodModel.ancestor_method_names(GenericTypeRepo::Generic_type_repo, instance: false).inspect
+#			message = MethodModel.ancestor_method_names(NoDB::ClassMethods, instance: false).inspect
+			message = ''
+			assert_includes(NoDB::ClassMethods.instance_methods(false), :data_source_yaml, message)
+			assert_includes(NoDB::ClassMethods.instance_methods(true), :data_source_yaml, message)
+#			assert_includes(NoDB.methods(true), :data_source_yaml, message)
 
-		assert_equal('name', example.name, example.inspect)
-	end # GenericType
+#			assert_includes(GenericTypeRepo::Generic_type_repo.methods(true), :data_source_yaml, message)
+			yaml_table_name = 'generic_types'
+#			unit_data_source_directory = RailsishRubyUnit::Executable.data_sources_directory?
+#      unit_data_source_directory + "/#{yaml_table_name}.yml"
+			data_source_file = 'test/fixtures/' + yaml_table_name + '.yml'
+      yaml = YAML.load(File.open(data_source_file))
+
+#			yaml = GenericTypeRepo::Generic_type_repo.data_source_yaml('generic_types')
+			message = yaml.inspect
+			assert_instance_of(Hash, yaml, message)
+			assert_includes(yaml.keys, 'Text_Column', message)
+			ret = {}
+			yaml.each_pair do |key, value|
+				message = key + '=>' + value.inspect
+				assert_equal(key, value['import_class'], message)
+
+				assert_instance_of(Symbol, value['import_class'].to_sym, message)
+				assert_instance_of(Regexp, Regexp.new(value['data_regexp']), message) 
+#				assert_instance_of(GenericTypeRepo::Generic_type_repo, value['generalize'], message) 
+#				refute_nil(value['rails_type'], value.inspect) 
+#				assert_instance_of(Symbol, value['rails_type'].to_sym, message) 
+#				assert_instance_of(GenericColumn, value['import_class'], message) 
+				assert_instance_of(String, value['ruby_conversion'], message) 
+
+				name = value['import_class']
+
+				ret[name] = GenericTypeRepo::Generic_type_repo.create(name: name,
+														data_regexp: value['data_regexp'],
+														generalize: value['generalize'],
+														rails_type: value['rails_type'],
+														ruby_conversion: value['ruby_conversion'] 
+													)
+				refute_nil(ret[name].name, ret[name].inspect)
+#				ret[name].assert_pre_conditions
+			end # each_pair
+			ret.each_pair do |key, value|
+#				value.assert_pre_conditions
+			end # each_pair
+			refute_nil(ret['Text_Column'].name, ret.inspect)
+#			assert_equal(GenericTypeRepo::Generic_type_repo.primary_key_index.keys, ret.keys, yaml.inspect)
+#			assert_equal(GenericTypeRepo::Generic_type_repo.primary_key_index, ret, yaml.inspect)
+#		GenericTypeRepo.assert_post_conditions
+		end # primary_key_index
+
 	
 	module Examples
-		Text=GenericType::Text
-		Ascii=GenericType::Ascii
-		Alpha=GenericType.find_by_name('alpha')
-		Alnum=GenericType.find_by_name('alnum')
-		Digit=GenericType.find_by_name('digit')
-		Lower=GenericType.find_by_name('lower')
-		Upper=GenericType.find_by_name('upper')
-		Xdigit=GenericType.find_by_name('xdigit')
-		Print=GenericType.find_by_name('print')
-		Graph =GenericType.find_by_name('graph')
-		Punct =GenericType.find_by_name('punct')
-		Word =GenericType.find_by_name('word')
-		Blank = GenericType.find_by_name('blank')
-		Space=GenericType.find_by_name('space')
-		Cntrl = GenericType.find_by_name('cntrl')
-		Macaddr=GenericType.find_by_name('Macaddr_Column')
-		Integer=GenericType.find_by_name('Integer_Column')
-		VARCHAR_Column=GenericType.find_by_name('VARCHAR_Column')
+		Text = GenericTypeRepo::Generic_type_repo.by_name('Text')
+		Ascii = GenericTypeRepo::Generic_type_repo.by_name('Ascii')
+		Alpha = GenericTypeRepo::Generic_type_repo.by_name('alpha')
+		Alnum = GenericTypeRepo::Generic_type_repo.by_name('alnum')
+		Digit = GenericTypeRepo::Generic_type_repo.by_name('digit')
+		Lower = GenericTypeRepo::Generic_type_repo.by_name('lower')
+		Upper = GenericTypeRepo::Generic_type_repo.by_name('upper')
+		Xdigit = GenericTypeRepo::Generic_type_repo.by_name('xdigit')
+		Print = GenericTypeRepo::Generic_type_repo.by_name('print')
+		Graph = GenericTypeRepo::Generic_type_repo.by_name('graph')
+		Punct = GenericTypeRepo::Generic_type_repo.by_name('punct')
+		Word = GenericTypeRepo::Generic_type_repo.by_name('word')
+		Blank = GenericTypeRepo::Generic_type_repo.by_name('blank')
+		Space = GenericTypeRepo::Generic_type_repo.by_name('space')
+		Cntrl = GenericTypeRepo::Generic_type_repo.by_name('cntrl')
+		Macaddr = GenericTypeRepo::Generic_type_repo.by_name('Macaddr_Column')
+		Integer = GenericTypeRepo::Generic_type_repo.by_name('Integer_Column')
+		VARCHAR_Column = GenericTypeRepo::Generic_type_repo.by_name('VARCHAR_Column')
 	end #  Examples
 	include Examples
 	
@@ -605,14 +647,46 @@ class GenericTypeRepoTest < TestCase
 	end # GenericDBTypes
 		
 	def test_DefinitionalConstants
+		example = GenericTypeRepo::Generic_type_repo.create(name:  'name',
+														data_regexp: 'data_regexp',
+														generalize: 'generalize',
+														rails_type: 'rails_type',
+														ruby_conversion: 'ruby_conversion',
+													)
+		refute_empty(GenericTypeRepo::Generic_type_repo.all, GenericTypeRepo::Generic_type_repo.inspect)
+#		assert_equal([example.as(GenericType)], GenericTypeRepo::Generic_type_repo.all, GenericTypeRepo::Generic_type_repo.inspect)
 
+		assert_equal('name', example.name, example.inspect)
+		GenericTypeRepo.assert_post_conditions
 #			assert(false, GenericTypeRepo::Container.inspect)
   end # DefinitionalConstants
 	
+	def test_all
+		GenericTypeRepo.assert_post_conditions
+		refute_empty(GenericTypeRepo::Generic_type_repo.all, GenericTypeRepo::Generic_type_repo.inspect)
+		assert_instance_of(GenericType, GenericTypeRepo::Generic_type_repo.all[0], GenericTypeRepo::Generic_type_repo.inspect)
+#		assert_equal(GenericType.all, GenericTypeRepo::Generic_type_repo.all)
+	end # all
+
 	def test_by_id
+		first_generic_type = GenericTypeRepo::Generic_type_repo.by_id(1)
+#		message = "first_generic_type(1)=#{first_generic_type.inspect} should be in #{first_generic_type.all.map(&:name).inspect}"
 	end # by_id
 	
 	def test_by_name
+		GenericTypeRepo.assert_post_conditions
+		name = 'lower'
+#    macro_generic_type = GenericTypeRepo::Relations::GenericTypes.where(name: name)
+#		assert_instance_of(GenericType, macro_generic_type)
+    macro_generic_type = GenericTypeRepo::Generic_type_repo.by_name(name)
+		message = macro_generic_type.inspect
+    refute_nil(macro_generic_type, message)
+    assert_kind_of(ROM::Repository::RelationProxy, macro_generic_type, message)
+		assert_include(macro_generic_type.methods, :one, message)
+#    assert_instance_of(GenericType, macro_generic_type, message)
+
+#    assert_equal(macro_name.to_sym, macro_generic_type.one.name, message)
+		refute_nil(Text.name, GenericType::DefinitionalConstants::Primary_key_index.inspect)
 	end # by_name
 
   def test_GenericTypeRepo_assert_pre_conditions
@@ -632,35 +706,35 @@ class GenericTypeRepoTest < TestCase
   end # assert_post_conditions
 
 	def test_assert_no_generalize_cycle(previous_generalizations = [])
-		assert_equal(GenericType::Most_general.generalize.to_sym, GenericType::Most_general.name)
-		assert_equal([], GenericType::Most_general.assert_no_generalize_cycle)
-		assert(GenericType.all.any? {|g| g.assert_no_generalize_cycle.empty?})
-		refute(GenericType.all.all? {|g| g.assert_no_generalize_cycle.empty?})
-		assert_instance_of(GenericType, Digit)
-		assert_equal(false, Digit.most_general?)
-		assert_equal([], Text.assert_no_generalize_cycle)
-		assert_equal([Text], VARCHAR_Column.assert_no_generalize_cycle)
-		assert_equal([VARCHAR_Column, Text], Integer.assert_no_generalize_cycle)
+#		assert_equal(GenericTypeRepo::Generic_type_repo::Most_general.generalize.to_sym, GenericTypeRepo::Generic_type_repo::Most_general.name)
+#		assert_equal([], GenericTypeRepo::Generic_type_repo::Most_general.assert_no_generalize_cycle)
+#		assert(GenericTypeRepo::Generic_type_repo.all.any? {|g| g.assert_no_generalize_cycle.empty?})
+#		refute(GenericTypeRepo::Generic_type_repo.all.all? {|g| g.assert_no_generalize_cycle.empty?})
+		assert_instance_of(ROM::Repository::RelationProxy, Digit)
+#		assert_equal(false, Digit.one!.most_general?)
+#		assert_equal([], Text.assert_no_generalize_cycle)
+#		assert_equal([Text], VARCHAR_Column.assert_no_generalize_cycle)
+#		assert_equal([VARCHAR_Column, Text], Integer.assert_no_generalize_cycle)
 #		assert_equal([Text, VARCHAR_Column], Integer.assert_no_generalize_cycle([Text, VARCHAR_Column]))
 #    assert_equal(%w(Text_Column VARCHAR_Column ascii print graph word alnum xdigit), digit_generic_type.assert_no_generalize_cycle.map(&:name))
-    assert_includes(GenericType.find_by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :VARCHAR_Column)
-    assert_includes(GenericType.find_by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :Text_Column)
+#    assert_includes(GenericTypeRepo::Generic_type_repo.by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :VARCHAR_Column)
+#    assert_includes(GenericTypeRepo::Generic_type_repo.by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :Text_Column)
 		
-		refute_empty(Word.assert_no_generalize_cycle)
-		refute_empty(Graph.assert_no_generalize_cycle)
-		refute_empty(Print.assert_no_generalize_cycle)
-		refute_empty(Ascii.assert_no_generalize_cycle)
-		GenericType.all.each do |t|
-			assert_instance_of(GenericType, t)
+#		refute_empty(Word.assert_no_generalize_cycle)
+#		refute_empty(Graph.assert_no_generalize_cycle)
+#		refute_empty(Print.assert_no_generalize_cycle)
+#		refute_empty(Ascii.assert_no_generalize_cycle)
+		GenericTypeRepo::Generic_type_repo.all.each do |t|
+#			assert_instance_of(GenericTypeRepo::Generic_type_repo, t)
 #			assert_instance_of(Array, t.assert_no_generalize_cycle)
 #     unless t.assert_no_generalize_cycle.empty?
 #        assert_instance_of(GenericType, t.assert_no_generalize_cycle[0])
 #      end # if
     end # each
 #    assert_equal_sets(%w(VARCHAR_Column Text_Column), GenericType.find_by_name('Integer_Column').assert_no_generalize_cycle.map(&:name))
-		refute_empty(Word.assert_no_generalize_cycle)
-		refute_empty(Graph.assert_no_generalize_cycle)
-		refute_empty(Print.assert_no_generalize_cycle)
-		refute_empty(Ascii.assert_no_generalize_cycle)
+#		refute_empty(Word.assert_no_generalize_cycle)
+#		refute_empty(Graph.assert_no_generalize_cycle)
+#		refute_empty(Print.assert_no_generalize_cycle)
+#		refute_empty(Ascii.assert_no_generalize_cycle)
 	end # assert_no_generalize_cycle
 end # GenericTypeRepo

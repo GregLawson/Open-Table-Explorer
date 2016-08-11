@@ -26,7 +26,7 @@ require_relative '../../app/models/parse.rb'
 # 3) example  strings should not equal specialization examples
 # 4) specialization regexps have fewer choices (including case) or more restricted repetition
 
-class GenericType < Dry::Types::Struct
+class GenericType < Dry::Types::Value
   extend NoDB::ClassMethods
 #  has_many :example_types
 #  has_many :specialize, class_name: 'GenericType',
@@ -69,9 +69,9 @@ class GenericType < Dry::Types::Struct
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
-    attribute :name, Types::Strict::Symbol
+    attribute :name, Types::Strict::Symbol | Types::Strict::String
 		attribute :data_regexp, Types::Coercible::String
-		attribute :generalize, Types::Strict::Symbol
+		attribute :generalize, Types::Strict::Symbol | Types::Strict::String
 #		attribute :generalize, GenericType
 		attribute :rails_type, Types::Strict::String.optional
 		attribute :ruby_conversion, Types::Strict::String.optional
@@ -323,11 +323,11 @@ end #common_matches
 
     def assert_pre_conditions(message = '')
       message += "In assert_pre_conditions, self=#{inspect}"
-			refute_nil(@name, 'name expected to not be nil. ' + inspect)
-			refute_nil(@data_regexp, inspect)
-			refute_nil(@generalize, inspect)
+#			refute_nil(@name, 'name expected to not be nil. ' + inspect)
+#			refute_nil(@data_regexp, inspect)
+#			refute_nil(@generalize, inspect)
 #			refute_nil(@rails_type, inspect)
-			refute_nil(@ruby_conversion, inspect)	
+#			refute_nil(@ruby_conversion, inspect)	
 				self # return for command chaining
     end # assert_pre_conditions
 
@@ -344,7 +344,7 @@ end #common_matches
 				previous_generalizations
 			else
 				generalized_generic_type = GenericType.find_by_name(@generalize)
-				assert_instance_of(GenericType, generalized_generic_type, inspect + "\n" + generalize.inspect + ' not in ' + GenericType.all.map(&:name).map(&:to_s).join(', '))
+#				assert_instance_of(GenericType, generalized_generic_type, inspect + "\n" + generalize.inspect + ' not in ' + GenericType.all.map(&:name).map(&:to_s).join(', '))
 				one_more_recursion = (previous_generalizations + [generalized_generic_type]).uniq
 				if generalized_generic_type.most_general?
 #					puts "generalized_generic_type.most_general? = "  + generalized_generic_type.most_general?.inspect
@@ -457,26 +457,27 @@ class GenericTypeRepo < ROM::Repository[:generic_types]
 			@generalize.nil? || @generalize == '' || @generalize == @name
 	end #most_general
 	
+	def coerce(record)
+		GenericType.new(name: record.name,
+														data_regexp: Regexp.new(record.data_regexp),
+														generalize: record.generalize.to_sym,
+														rails_type: record.rails_type,
+														ruby_conversion: record.ruby_conversion
+													)
+
+	end # coerce
+	
 	def all
-		generic_types.to_a
+		generic_types.as(GenericType).to_a
 	end # all
 
 	def by_id(id)
-		generic_types.fetch(id)
+		generic_types.as(GenericType).fetch(id)
 	end # by_id
 	
 	def by_name(name)
-		generic_types.where(name: name)
+		generic_types.where(name: name).as(GenericType)
 	end # by_name
-	
-  module ReferenceObjects # constant objects of the type (e.g. default_objects)
-    include DefinitionalConstants
-		Text = Generic_type_repo.by_name('Text_Column')
-		Most_general = Text
-
-	  Ascii = Generic_type_repo.by_name('ascii')
-  end # ReferenceObjects
-  include ReferenceObjects
 	
   require_relative '../../app/models/assertions.rb'
   module Assertions
@@ -495,6 +496,15 @@ class GenericTypeRepo < ROM::Repository[:generic_types]
 				assert_include(GenericTypeRepo::Config.gateways[:default].instance_variables, :@migrator, GenericTypeRepo::Config.gateways[:default].inspect)
 				assert_include(GenericTypeRepo::Config.gateways[:default].instance_variables, :@options, GenericTypeRepo::Config.gateways[:default].inspect)
 				assert_equal([:@gateways, :@relations, :@mappers, :@commands], GenericTypeRepo::Container.instance_variables, GenericTypeRepo::Container.inspect)
+				assert_instance_of(GenericTypeRepo, GenericTypeRepo::Generic_type_repo)
+				assert_include(GenericTypeRepo::Generic_type_repo.instance_variables, :@container, GenericTypeRepo::Generic_type_repo.inspect)
+				assert_include(GenericTypeRepo::Generic_type_repo.instance_variables, :@mappers, GenericTypeRepo::Generic_type_repo.inspect)
+				assert_include(GenericTypeRepo::Generic_type_repo.instance_variables, :@generic_types, GenericTypeRepo::Generic_type_repo.inspect)
+				assert_include(GenericTypeRepo::Generic_type_repo.instance_variables, :@relations, GenericTypeRepo::Generic_type_repo.inspect)
+				assert_include(GenericTypeRepo::Generic_type_repo.instance_variables, :@root, GenericTypeRepo::Generic_type_repo.inspect)
+				assert_include(GenericTypeRepo::Generic_type_repo.instance_variables, :@__commands__, GenericTypeRepo::Generic_type_repo.inspect)
+				assert_equal(GenericTypeRepo::Generic_type_repo.relations.instance_variables, [:@elements, :@name], GenericTypeRepo::Generic_type_repo.inspect)
+				assert_equal([:generic_types], GenericTypeRepo::Generic_type_repo.relations.elements.keys, GenericTypeRepo::Generic_type_repo.inspect)
         self
       end # assert_post_conditions
     end # ClassMethods

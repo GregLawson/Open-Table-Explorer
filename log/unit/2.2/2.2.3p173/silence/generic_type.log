@@ -1,7 +1,7 @@
 {:current_branch_name => "passed",
-:start_time => "2016-08-11 01:08:25.322",
+:start_time => "2016-08-13 04:20:41.760",
 :command_string => "/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb",
-:output => "ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]\nLoaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test\nStarted\n...........................................\n\nFinished in 0.446374276 seconds.\n------\n43 tests, 682 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications\n100% passed\n------\n96.33 tests/s, 1527.87 assertions/s\n",
+:output => "ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]\nLoaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test\nStarted\n............................................\n\nFinished in 0.498771011 seconds.\n------\n44 tests, 776 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications\n100% passed\n------\n88.22 tests/s, 1555.82 assertions/s\n",
 :errors => {}
 ,
 }
