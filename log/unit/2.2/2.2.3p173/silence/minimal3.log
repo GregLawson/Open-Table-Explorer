@@ -1,29 +1,29 @@
-passed
-2016-04-27 06:49:37.523
-/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-
-/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal3_assertions.rb:59:in `<module:Examples>': uninitialized constant Minimal3::Examples::Constants (NameError)
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 8, 17, 17, 23, Rational(47586598307, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+',
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal3_assertions.rb:59:in `<module:Examples>': uninitialized constant Minimal3::Examples::Constants (NameError)
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal3_assertions.rb:58:in `<class:Minimal3>'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal3_assertions.rb:8:in `<top (required)>'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb:9:in `require_relative'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb:9:in `<main>'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb"
-	User time (seconds): 0.61
-	System time (seconds): 0.04
+	User time (seconds): 0.63
+	System time (seconds): 0.03
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.65
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.67
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 19780
+	Maximum resident set size (kbytes): 23980
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5074
+	Minor (reclaiming a frame) page faults: 4420
 	Voluntary context switches: 3
-	Involuntary context switches: 65
+	Involuntary context switches: 8
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -32,3 +32,7 @@ Command exited with non-zero status 1
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
+',
+}
+,
+}

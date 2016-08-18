@@ -1,37 +1,41 @@
-passed
-2016-06-09 04:03:29.462
-/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 8, 17, 17, 22, Rational(26666201303, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
 ...............
 
-Finished in 0.727072s, 20.6307 runs/s, 123.7842 assertions/s.
+Finished in 0.964700s, 15.5489 runs/s, 93.2933 assertions/s.
 
 15 runs, 90 assertions, 0 failures, 0 errors, 0 skips
-
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb"
-	User time (seconds): 17.96
-	System time (seconds): 1.61
-	Percent of CPU this job got: 97%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:20.01
+',
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb"
+	User time (seconds): 9.23
+	System time (seconds): 0.92
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:10.77
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 50680
+	Maximum resident set size (kbytes): 46436
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 212528
-	Voluntary context switches: 2400
-	Involuntary context switches: 2187
+	Major (requiring I/O) page faults: 6
+	Minor (reclaiming a frame) page faults: 94101
+	Voluntary context switches: 1470
+	Involuntary context switches: 410
 	Swaps: 0
-	File system inputs: 0
-	File system outputs: 168
+	File system inputs: 640
+	File system outputs: 48
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 0
+',
+}
+,
+}

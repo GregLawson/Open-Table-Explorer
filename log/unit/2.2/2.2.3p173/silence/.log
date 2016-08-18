@@ -1,27 +1,28 @@
-passed
-2016-06-15 16:50:44.936
-/usr/bin/time --verbose ruby -v -W0 /etc/mtab
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-
-/etc/mtab:1: syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('
-rootfs / rootfs rw 0 0
-                  ^
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 8, 17, 17, 23, Rational(43009844125, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /etc/mtab',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+',
+:errors => {:syserr => '/etc/mtab:2: unknown regexp options - prc
+/etc/mtab:2: syntax error, unexpected tIDENTIFIER, expecting end-of-input
+proc /proc proc rw,nosuid,nodev,noexec,relatime 0 0
+               ^
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /etc/mtab"
-	User time (seconds): 0.07
+	User time (seconds): 0.09
 	System time (seconds): 0.00
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.08
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.09
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 6972
+	Maximum resident set size (kbytes): 8676
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 1830
+	Minor (reclaiming a frame) page faults: 1172
 	Voluntary context switches: 3
-	Involuntary context switches: 7
+	Involuntary context switches: 1
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -30,3 +31,7 @@ Command exited with non-zero status 1
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
+',
+}
+,
+}

@@ -1,38 +1,70 @@
-passed
-2016-06-22 18:35:43.236
-/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 8, 17, 17, 10, Rational(30636153425, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test
 Started
-...
+..F
+===============================================================================
+Failure:
+  pathname = /media/greg/6ebdfdee-acca-425b-b03e-00d60e6d7d09 does not exist
+  parent directory /media/greg does exists containing ["5C41-197B", "Seagate Backup Plus Drive"]
+  Pathname(/media/greg/6ebdfdee-acca-425b-b03e-00d60e6d7d09).exist?=false
+  pathname = /media/greg/6ebdfdee-acca-425b-b03e-00d60e6d7d09 does not exist
+  parent directory /media/greg does exists containing ["5C41-197B", "Seagate Backup Plus Drive"].
+  <false> is not true.
+test_config(BackupTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:491:in `assert_pathname_exists'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:496:in `assert_directory_exists'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:23:in `block (3 levels) in test_config'
+     20: 			assert(File.exist?(backup_dir), backup_dir)
+     21: 			assert_directory_exists(backup_dir)
+     22: 			sub_directory_map.each_pair do |source_sub_directory, backup_sub_directory|
+  => 23: 				assert_directory_exists(source_dir + source_sub_directory)
+     24: 				assert_directory_exists(backup_dir + backup_sub_directory)
+     25: 			end # map
+     26: 		end # each_pair
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:22:in `each_pair'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:22:in `block (2 levels) in test_config'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:18:in `each_pair'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:18:in `block in test_config'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:17:in `each_pair'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:17:in `test_config'
+===============================================================================
 
-Finished in 0.00998352 seconds.
-------
-3 tests, 25 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
-------
-300.50 tests/s, 2504.13 assertions/s
 
+Finished in 0.133091956 seconds.
+------
+3 tests, 18 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+66.6667% passed
+------
+22.54 tests/s, 135.24 assertions/s
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb"
-	User time (seconds): 0.56
-	System time (seconds): 0.05
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.63
+	User time (seconds): 0.57
+	System time (seconds): 0.04
+	Percent of CPU this job got: 83%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.74
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 25116
+	Maximum resident set size (kbytes): 23808
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4683
-	Voluntary context switches: 47
-	Involuntary context switches: 5
+	Minor (reclaiming a frame) page faults: 4337
+	Voluntary context switches: 30
+	Involuntary context switches: 8
 	Swaps: 0
-	File system inputs: 0
+	File system inputs: 376
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
+',
+}
+,
+}

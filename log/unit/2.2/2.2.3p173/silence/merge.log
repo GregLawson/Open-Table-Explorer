@@ -1,0 +1,98 @@
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 8, 17, 17, 23, Rational(34897573685, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/merge_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/merge_test
+Started
+....log/unit/2.2/2.2.3p173/silence/.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/EEG.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/arp.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/assertions.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/backup.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/battery.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/battery_measurement.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/battery_type.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/blue_tooth.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/branch.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/bug.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/code.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/column_group.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/command.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/command_line.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/default.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/default_test_case.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/dhcp.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/discrete_dimension.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/edison.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/editor.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/error_type.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/example_type.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/file_pattern.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/file_tree.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/flora.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/frequency.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/generic_column.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/generic_file.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/generic_grep.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/generic_table.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/generic_table_association.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/generic_table_examples.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/generic_table_html.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/generic_type.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/global.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/gnome.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/grub.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/homerun.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/host.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/huelserie.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/huelshow.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/iwup.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/kernel_module.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/match_data.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/minimal2.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/dependancy.log is an untracked log file.
+.........$ git rebase --abort
+@errors="No rebase in progress?\n"
+@process_status=#<Process::Status: pid 20066 exit 1>
+$ git merge --abort
+@errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
+@process_status=#<Process::Status: pid 20087 exit 128>
+$ git checkout master
+@errors="Already on 'master'\n"
+...
+
+Finished in 1.038517707 seconds.
+------
+16 tests, 54 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+------
+15.41 tests/s, 52.00 assertions/s
+',
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/merge_test.rb"
+	User time (seconds): 7.69
+	System time (seconds): 0.86
+	Percent of CPU this job got: 92%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:09.26
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 47368
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 41
+	Minor (reclaiming a frame) page faults: 85590
+	Voluntary context switches: 1605
+	Involuntary context switches: 714
+	Swaps: 0
+	File system inputs: 3816
+	File system outputs: 3800
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+',
+}
+,
+}

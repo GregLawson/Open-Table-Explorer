@@ -14,6 +14,7 @@ require_relative '../../app/models/bug.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_executable.rb'
+require_relative '../../app/models/ruby_lines_storage.rb'
 class RecentRun
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
     Cached_run_default = lambda do |recent_run, _attribute|

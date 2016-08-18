@@ -1,64 +1,131 @@
-passed
-2016-04-29 03:13:30.081
-/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-timeout
-#<Timeout::Error: execution expired>
-start_time = 2016-04-29 03:13:24 -0700
-
-elapsed_time = 1.456786722
-
-Time.now = 2016-04-29 03:13:26 -0700
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 8, 17, 17, 23, Rational(12502148937, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test
 Started
-.......confirm_commit(:echo @repository.something_to_commit?=false
-....log/unit/2.2/2.2.3p173/silence/.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/minimal2.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/test_executable.log is an updated log file.
-.....confirm_commit(:echo @repository.something_to_commit?=true
-....confirm_commit(:echo @repository.something_to_commit?=true
+...E
+===============================================================================
+Error: test_calc_test_maturity(InteractiveBottleneckTest): NoMethodError: undefined method `[]' for nil:NilClass
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_executable.rb:243:in `new_from_path'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:47:in `block in dirty_test_executables'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:41:in `map'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:41:in `dirty_test_executables'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb:32:in `test_calc_test_maturity'
+     29: 
+     30:   def test_calc_test_maturity
+     31:     #	recursion_danger = :recursion_danger
+  => 32:     dirty_test_executables = TestInteractiveBottleneck.dirty_test_executables
+     33:     dirty_test_executables.map do |test_executable|
+     34:       message = test_executable.inspect
+     35:       ret =
+===============================================================================
+E
+===============================================================================
+Error: test_clean_directory(InteractiveBottleneckTest): NoMethodError: undefined method `[]' for nil:NilClass
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_executable.rb:243:in `new_from_path'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:47:in `block in dirty_test_executables'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:41:in `map'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:41:in `dirty_test_executables'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:67:in `dirty_test_maturities'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb:193:in `test_clean_directory'
+     190:   end # dirty_test_maturities
+     191: 
+     192:   def test_clean_directory
+  => 193:     dirty_test_maturities = TestInteractiveBottleneck.dirty_test_maturities(:danger).compact
+     194:     sorted = dirty_test_maturities # .sort{|n1, n2| n1[:error_score] <=> n2[:error_score]}
+     195:     sorted.sort.map do |test_maturity|
+     196:       target_branch = test_maturity.deserving_branch
+===============================================================================
+.confirm_commit(:echo @repository.something_to_commit?=false
+.E
+===============================================================================
+Error: test_dirty_test_executables(InteractiveBottleneckTest): NoMethodError: undefined method `[]' for nil:NilClass
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_executable.rb:243:in `new_from_path'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb:99:in `block in test_dirty_test_executables'
+      96:       elsif file_status[:working_tree] == :ignore
+      97:         nil
+      98:       else
+  =>  99:         test_executable = TestExecutable.new_from_path(file_status[:file])
+     100:         testable = test_executable.generatable_unit_file?
+     101:         if testable
+     102:           test_executable # find unique
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb:93:in `map'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb:93:in `test_dirty_test_executables'
+===============================================================================
+E
+===============================================================================
+Error: test_dirty_test_maturities(InteractiveBottleneckTest): NoMethodError: undefined method `[]' for nil:NilClass
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_executable.rb:243:in `new_from_path'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:47:in `block in dirty_test_executables'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:41:in `map'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:41:in `dirty_test_executables'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb:144:in `test_dirty_test_maturities'
+     141: 
+     142:   def test_dirty_test_maturities
+     143:     recursion_danger = :recursion_danger
+  => 144:     TestInteractiveBottleneck.dirty_test_executables.map do |test_executable|
+     145:       message = test_executable.inspect
+     146:       assert_instance_of(TestExecutable, test_executable, message)
+     147:       calc_test_maturity = InteractiveBottleneck.calc_test_maturity!(test_executable)
+===============================================================================
+E
+===============================================================================
+Error: test_dirty_units(InteractiveBottleneckTest): NoMethodError: undefined method `[]' for nil:NilClass
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_executable.rb:243:in `new_from_path'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:47:in `block in dirty_test_executables'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:41:in `map'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:41:in `dirty_test_executables'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/interactive_bottleneck.rb:57:in `dirty_units'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb:130:in `test_dirty_units'
+     127:   end # dirty_test_executables
+     128: 
+     129:   def test_dirty_units
+  => 130:     TestInteractiveBottleneck.dirty_units.each do |prospective_unit|
+     131:       if prospective_unit[:unit].nil?
+     132:         puts prospective_unit.inspect + ' does not match a known pattern.'
+     133:       else
+===============================================================================
+...confirm_commit(:echo @repository.something_to_commit?=true
 confirm_commit(:echo @repository.something_to_commit?=true
 confirm_commit(:echo @repository.something_to_commit?=true
 confirm_commit(:echo @repository.something_to_commit?=true
 confirm_commit(:echo @repository.something_to_commit?=true
-...$ git rebase --abort
-@errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 6102 exit 1>
-$ git merge --abort
-@errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 6122 exit 128>
-$ git checkout master
-@errors="Already on 'master'\n"
 ....confirm_commit(:echo @repository.something_to_commit?=true
 .
 
-Finished in 3.878118471 seconds.
+Finished in 3.047020737 seconds.
 ------
-28 tests, 152 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
+18 tests, 69 assertions, 0 failures, 5 errors, 0 pendings, 0 omissions, 0 notifications
+72.2222% passed
 ------
-7.22 tests/s, 39.19 assertions/s
-
+5.91 tests/s, 22.65 assertions/s
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb"
-	User time (seconds): 16.42
-	System time (seconds): 1.72
-	Percent of CPU this job got: 91%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:19.81
+	User time (seconds): 8.32
+	System time (seconds): 1.26
+	Percent of CPU this job got: 84%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:11.38
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 40064
+	Maximum resident set size (kbytes): 46484
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 479207
-	Voluntary context switches: 5474
-	Involuntary context switches: 3061
+	Major (requiring I/O) page faults: 17
+	Minor (reclaiming a frame) page faults: 156827
+	Voluntary context switches: 3481
+	Involuntary context switches: 1492
 	Swaps: 0
-	File system inputs: 0
-	File system outputs: 7808
+	File system inputs: 4664
+	File system outputs: 6040
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
+',
+}
+,
+}

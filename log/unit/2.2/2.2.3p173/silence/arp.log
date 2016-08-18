@@ -1,48 +1,77 @@
-passed
-2016-02-01 18:30:29.668
-ruby -v -W0 test/unit/arp_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 8, 17, 17, 10, Rational(28273779186, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/arp_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
 .E.IP address       HW type     Flags       HW address            Mask     Device
+192.168.1.1      0x1         0x2         00:13:10:17:b5:99     *        eth0
 
 F..
 
-Finished in 0.030403s, 197.3481 runs/s, 65.7827 assertions/s.
+Finished in 0.005942s, 1009.8180 runs/s, 336.6060 assertions/s.
 
   1) Error:
 NewTestClass#test_MAC:
-ArgumentError: wrong number of arguments (0 for 1)
-    test/unit/arp_test.rb:22:in `test_MAC'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+ArgumentError: wrong number of arguments (given 0, expected 1)
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/arp_test.rb:22:in `test_MAC'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
 
 
   2) Failure:
-NewTestClass#test_inialize [test/unit/arp_test.rb:9]:
+NewTestClass#test_inialize [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/arp_test.rb:9]:
 arp.errors=.
 Expected /DHCPACK/ to match "".
 
 6 runs, 2 assertions, 1 failures, 1 errors, 0 skips
-
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/arp_test.rb"
+	User time (seconds): 0.70
+	System time (seconds): 0.05
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.76
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 24664
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 4942
+	Voluntary context switches: 41
+	Involuntary context switches: 20
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+',
+}
+,
+}

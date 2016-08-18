@@ -1,57 +1,71 @@
-passed
-2016-05-30 04:30:18.884
-/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 8, 17, 17, 22, Rational(32862715056, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-.....F.F..
+.F...FFF..
 
-Finished in 0.031251s, 319.9892 runs/s, 1439.9513 assertions/s.
+Finished in 0.026375s, 379.1454 runs/s, 1478.6671 assertions/s.
 
   1) Failure:
+NewTestClass#test_file_tree [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb:97]:
+{:wlan0=>"../../devices/pci0000:00/0000:00:1c.0/0000:01:00.0/net/wlan0", :eth0=>"../../devices/pci0000:00/0000:00:1c.2/0000:03:00.0/net/eth0", :lo=>"../../devices/virtual/net/lo"}.
+Expected: [:lo, :eth0, :wlan0]
+  Actual: [:wlan0, :eth0, :lo]
+
+
+  2) Failure:
 NewTestClass#test_directory_hash_value [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb:77]:
 --- expected
 +++ actual
 @@ -1 +1 @@
 -{}
-+{:speed=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/speed>, :duplex=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/duplex>, :statistics=>{}, :power=>{:autosuspend_delay_ms=>#<Errno::EIO: Input/output error @ io_fread - /sys/class/net/lo/power/autosuspend_delay_ms>}, :queues=>{:"rx-0"=>{}, :"tx-0"=>{:byte_queue_limits=>{}}}}
++{:phys_port_name=>#<Errno::EOPNOTSUPP: Operation not supported @ io_fread - /sys/class/net/lo/phys_port_name>, :power=>{:autosuspend_delay_ms=>#<Errno::EIO: Input/output error @ io_fread - /sys/class/net/lo/power/autosuspend_delay_ms>}, :speed=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/speed>, :name_assign_type=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/name_assign_type>, :phys_switch_id=>#<Errno::EOPNOTSUPP: Operation not supported @ io_fread - /sys/class/net/lo/phys_switch_id>, :duplex=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/duplex>, :phys_port_id=>#<Errno::EOPNOTSUPP: Operation not supported @ io_fread - /sys/class/net/lo/phys_port_id>, :queues=>{:"rx-0"=>{}, :"tx-0"=>{:byte_queue_limits=>{}}}, :statistics=>{}}
 
 
 
-  2) Failure:
-NewTestClass#test_path_hash_value [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb:50]:
---- expected
-+++ actual
-@@ -1 +1 @@
--{}
-+{:speed=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/speed>, :duplex=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/duplex>, :statistics=>{}, :power=>{:autosuspend_delay_ms=>#<Errno::EIO: Input/output error @ io_fread - /sys/class/net/lo/power/autosuspend_delay_ms>}, :queues=>{:"rx-0"=>{}, :"tx-0"=>{:byte_queue_limits=>{}}}}
+  3) Failure:
+NewTestClass#test_file_type [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb:21]:
+Expected: :nonexistant_path
+  Actual: :data
 
 
-10 runs, 45 assertions, 2 failures, 0 errors, 0 skips
+  4) Failure:
+NewTestClass#test_path_hash_value [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb:46]:
+{:mtu=>"65536", :type=>"772", :phys_port_name=>#<Errno::EOPNOTSUPP: Operation not supported @ io_fread - /sys/class/net/lo/phys_port_name>, :netdev_group=>"0", :flags=>"0x9", :power=>{:control=>"auto", :async=>"disabled", :runtime_enabled=>"disabled", :runtime_active_kids=>"0", :runtime_active_time=>"0", :autosuspend_delay_ms=>#<Errno::EIO: Input/output error @ io_fread - /sys/class/net/lo/power/autosuspend_delay_ms>, :runtime_status=>"unsupported", :runtime_usage=>"0", :runtime_suspended_time=>"0"}, :speed=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/speed>, :dormant=>"0", :name_assign_type=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/name_assign_type>, :proto_down=>"0", :addr_assign_type=>"0", :phys_switch_id=>#<Errno::EOPNOTSUPP: Operation not supported @ io_fread - /sys/class/net/lo/phys_switch_id>, :dev_id=>"0x0", :duplex=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/duplex>, :gro_flush_timeout=>"0", :iflink=>"1", :phys_port_id=>#<Errno::EOPNOTSUPP: Operation not supported @ io_fread - /sys/class/net/lo/phys_port_id>, :subsystem=>"../../../../class/net", :addr_len=>"6", :address=>"00:00:00:00:00:00", :operstate=>"unknown", :carrier_changes=>"0", :broadcast=>"00:00:00:00:00:00", :queues=>{:"rx-0"=>{:rps_flow_cnt=>"0", :rps_cpus=>"0"}, :"tx-0"=>{:xps_cpus=>"0", :tx_maxrate=>"0", :tx_timeout=>"0", :byte_queue_limits=>{:limit=>"0", :limit_max=>"1879048192", :limit_min=>"0", :hold_time=>"1000", :inflight=>"0"}}}, :tx_queue_len=>"1", :uevent=>"INTERFACE=lo\nIFINDEX=1", :statistics=>{:rx_fifo_errors=>"0", :collisions=>"0", :rx_errors=>"0", :rx_nohandler=>"0", :rx_compressed=>"0", :rx_dropped=>"0", :tx_packets=>"7484", :tx_errors=>"0", :rx_missed_errors=>"0", :rx_over_errors=>"0", :tx_carrier_errors=>"0", :tx_heartbeat_errors=>"0", :rx_crc_errors=>"0", :multicast=>"0", :tx_fifo_errors=>"0", :tx_aborted_errors=>"0", :rx_bytes=>"2482032", :tx_compressed=>"0", :tx_dropped=>"0", :rx_packets=>"7484", :tx_bytes=>"2482032", :tx_window_errors=>"0", :rx_frame_errors=>"0", :rx_length_errors=>"0"}, :dev_port=>"0", :ifalias=>"", :ifindex=>"1", :link_mode=>"0", :carrier=>"1"}.
+Expected: 23
+  Actual: 24
 
-Command exited with non-zero status 1
+10 runs, 39 assertions, 4 failures, 0 errors, 0 skips
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb"
-	User time (seconds): 0.79
-	System time (seconds): 0.08
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.88
+	User time (seconds): 0.69
+	System time (seconds): 0.04
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.73
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23704
+	Maximum resident set size (kbytes): 24956
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 6706
-	Voluntary context switches: 38
-	Involuntary context switches: 104
+	Minor (reclaiming a frame) page faults: 4853
+	Voluntary context switches: 26
+	Involuntary context switches: 20
 	Swaps: 0
 	File system inputs: 0
-	File system outputs: 32
+	File system outputs: 16
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
+',
+}
+,
+}
