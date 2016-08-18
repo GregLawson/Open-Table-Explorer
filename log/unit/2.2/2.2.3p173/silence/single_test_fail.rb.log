@@ -1,27 +1,27 @@
-passed
-2016-04-27 06:49:40.687
-/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb:11:in `<top (required)>': uninitialized constant MiniTest (NameError)
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 8, 17, 18, 22, Rational(52276513478, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+',
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb:11:in `<top (required)>': uninitialized constant MiniTest (NameError)
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb:8:in `require_relative'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb:8:in `<main>'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb"
-	User time (seconds): 0.39
-	System time (seconds): 0.02
+	User time (seconds): 0.38
+	System time (seconds): 0.05
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.42
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.44
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 16428
+	Maximum resident set size (kbytes): 18092
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4235
+	Minor (reclaiming a frame) page faults: 2999
 	Voluntary context switches: 3
-	Involuntary context switches: 44
+	Involuntary context switches: 8
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -30,3 +30,7 @@ Command exited with non-zero status 1
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
+',
+}
+,
+}

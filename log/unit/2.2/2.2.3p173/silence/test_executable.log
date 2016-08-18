@@ -1,35 +1,119 @@
-{:current_branch_name => "passed",
-:start_time => "2016-07-11 09:46:54.896",
-:command_string => "/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb",
-:output => "ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]\nLoaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test\nStarted\n...........F\n===============================================================================\nFailure: test_lint_json(RepositoryPathnameTest)\n/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:143:in `test_lint_json'\n     140:     assert_equal(0, Not_unit.lint_json['summary']['offense_count'], Not_unit.lint_json)\n     141:     assert_equal(0, Not_unit_executable.lint_json['summary']['offense_count'], Not_unit_executable.lint_command_string)\n     142:     assert_equal(0, Not_unit_executable.lint_json['summary']['offense_count'], Not_unit_executable.lint_json)\n  => 143:     assert_equal(0, TestMinimal.lint_json['summary']['offense_count'], TestMinimal.lint_json)\n     144:     assert_operator(10, :<, Unit_non_executable.lint_json['summary']['offense_count'], Unit_non_executable.lint_json)\n     145:     assert_equal(1, TestSelf.lint_json['files'].size, TestSelf.lint_json['files'])\n     146:     assert_include(TestSelf.lint_json['files'][0].keys, 'offenses', TestSelf.lint_json['files'])\n{\"metadata\"=>{\"rubocop_version\"=>\"0.39.0\", \"ruby_engine\"=>\"ruby\", \"ruby_version\"=>\"2.2.4\", \"ruby_patchlevel\"=>\"230\", \"ruby_platform\"=>\"x86_64-linux-gnu\"}
-, \"files\"=>[{\"path\"=>\"test/unit/minimal2_test.rb\", \"offenses\"=>[{\"severity\"=>\"convention\", \"message\"=>\"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)\", \"cop_name\"=>\"Style/MethodName\", \"corrected\"=>nil, \"location\"=>{\"line\"=>14, \"column\"=>7, \"length\"=>34}
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 8, 17, 18, 22, Rational(15389862173, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test
+Started
+...........F
+===============================================================================
+Failure: test_lint_json(RepositoryPathnameTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:143:in `test_lint_json'
+     140:     assert_equal(0, Not_unit.lint_json['summary']['offense_count'], Not_unit.lint_json)
+     141:     assert_equal(0, Not_unit_executable.lint_json['summary']['offense_count'], Not_unit_executable.lint_command_string)
+     142:     assert_equal(0, Not_unit_executable.lint_json['summary']['offense_count'], Not_unit_executable.lint_json)
+  => 143:     assert_equal(0, TestMinimal.lint_json['summary']['offense_count'], TestMinimal.lint_json)
+     144:     assert_operator(10, :<, Unit_non_executable.lint_json['summary']['offense_count'], Unit_non_executable.lint_json)
+     145:     assert_equal(1, TestSelf.lint_json['files'].size, TestSelf.lint_json['files'])
+     146:     assert_include(TestSelf.lint_json['files'][0].keys, 'offenses', TestSelf.lint_json['files'])
+{"metadata"=>{"rubocop_version"=>"0.39.0", "ruby_engine"=>"ruby", "ruby_version"=>"2.2.4", "ruby_patchlevel"=>"230", "ruby_platform"=>"x86_64-linux-gnu"}, "files"=>[{"path"=>"test/unit/minimal2_test.rb", "offenses"=>[{"severity"=>"convention", "message"=>"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)", "cop_name"=>"Style/MethodName", "corrected"=>nil, "location"=>{"line"=>14, "column"=>7, "length"=>34}}, {"severity"=>"convention", "message"=>"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)", "cop_name"=>"Style/MethodName", "corrected"=>nil, "location"=>{"line"=>17, "column"=>7, "length"=>19}}, {"severity"=>"convention", "message"=>"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)", "cop_name"=>"Style/MethodName", "corrected"=>nil, "location"=>{"line"=>20, "column"=>7, "length"=>34}}, {"severity"=>"convention", "message"=>"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)", "cop_name"=>"Style/MethodName", "corrected"=>nil, "location"=>{"line"=>23, "column"=>7, "length"=>35}}, {"severity"=>"convention", "message"=>"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)", "cop_name"=>"Style/MethodName", "corrected"=>nil, "location"=>{"line"=>32, "column"=>7, "length"=>21}}]}], "summary"=>{"offense_count"=>5, "target_file_count"=>1, "inspected_file_count"=>1}}
+<0> expected but was
+<5>
+===============================================================================
+...F
+===============================================================================
+Failure: test_lint_unconventional(RepositoryPathnameTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:192:in `test_lint_unconventional'
+     189:     assert_instance_of(Array, TestSelf.lint_unconventional, TestSelf.lint_unconventional)
+     190:     #    assert_include(TestSelf.lint_unconventional, 'Metrics/LineLength', TestSelf.lint_unconventional)
+     191:     assert_equal([], Not_unit.lint_unconventional)
+  => 192:     assert_equal([], TestMinimal.lint_unconventional)
+     193:     assert_equal([], Unit_non_executable.lint_unconventional.map { |o| o['cop_name'] }.uniq)
+     194:     assert_equal([], Not_unit_executable.lint_unconventional)
+     195:     unexpected_cops = TestSelf.lint_unconventional.map { |o| o['cop_name'] }.uniq - RepositoryPathname::Lint_convention_priorities
+<[]> expected but was
+<[{"cop_name"=>"Style/MethodName",
+  "corrected"=>nil,
+  "location"=>{"column"=>7, "length"=>34, "line"=>14},
+  "message"=>
+   "Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Style/MethodName",
+  "corrected"=>nil,
+  "location"=>{"column"=>7, "length"=>19, "line"=>17},
+  "message"=>
+   "Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Style/MethodName",
+  "corrected"=>nil,
+  "location"=>{"column"=>7, "length"=>34, "line"=>20},
+  "message"=>
+   "Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Style/MethodName",
+  "corrected"=>nil,
+  "location"=>{"column"=>7, "length"=>35, "line"=>23},
+  "message"=>
+   "Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Style/MethodName",
+  "corrected"=>nil,
+  "location"=>{"column"=>7, "length"=>21, "line"=>32},
+  "message"=>
+   "Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)",
+  "severity"=>"convention"}]>
+===============================================================================
+F
+===============================================================================
+Failure: test_lint_warnings(RepositoryPathnameTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:154:in `test_lint_warnings'
+     151:   def test_lint_warnings
+     152:     assert_equal([], Not_unit.lint_warnings)
+     153:     assert_equal([], TestMinimal.lint_warnings)
+  => 154:     assert_equal(['Syntax'], Unit_non_executable.lint_warnings.map { |o| o['cop_name'] }.uniq, Unit_non_executable.lint_warnings)
+     155:     assert_equal([], Not_unit_executable.lint_warnings)
+     156:     existing_cops = TestSelf.lint_warnings.map { |o| o['cop_name'] }.uniq
+     157:     unexpected_cops = existing_cops - RepositoryPathname::Lint_warning_priorities
+[]
+<["Syntax"]> expected but was
+<[]>
+
+diff:
+? ["Syntax"]
+===============================================================================
+..............
+
+Finished in 21.626568646 seconds.
+------
+31 tests, 547 assertions, 3 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+90.3226% passed
+------
+1.43 tests/s, 25.29 assertions/s
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb"
+	User time (seconds): 21.78
+	System time (seconds): 1.27
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:23.27
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 52664
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 28
+	Minor (reclaiming a frame) page faults: 164157
+	Voluntary context switches: 322
+	Involuntary context switches: 393
+	Swaps: 0
+	File system inputs: 480
+	File system outputs: 272
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+',
 }
-, {\"severity\"=>\"convention\", \"message\"=>\"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)\", \"cop_name\"=>\"Style/MethodName\", \"corrected\"=>nil, \"location\"=>{\"line\"=>17, \"column\"=>7, \"length\"=>19}
-}
-, {\"severity\"=>\"convention\", \"message\"=>\"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)\", \"cop_name\"=>\"Style/MethodName\", \"corrected\"=>nil, \"location\"=>{\"line\"=>20, \"column\"=>7, \"length\"=>34}
-}
-, {\"severity\"=>\"convention\", \"message\"=>\"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)\", \"cop_name\"=>\"Style/MethodName\", \"corrected\"=>nil, \"location\"=>{\"line\"=>23, \"column\"=>7, \"length\"=>35}
-}
-, {\"severity\"=>\"convention\", \"message\"=>\"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)\", \"cop_name\"=>\"Style/MethodName\", \"corrected\"=>nil, \"location\"=>{\"line\"=>32, \"column\"=>7, \"length\"=>21}
-}
-]}
-], \"summary\"=>{\"offense_count\"=>5, \"target_file_count\"=>1, \"inspected_file_count\"=>1}
-}
-\n<0> expected but was\n<5>\n===============================================================================\n...F\n===============================================================================\nFailure: test_lint_unconventional(RepositoryPathnameTest)\n/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:192:in `test_lint_unconventional'\n     189:     assert_instance_of(Array, TestSelf.lint_unconventional, TestSelf.lint_unconventional)\n     190:     #    assert_include(TestSelf.lint_unconventional, 'Metrics/LineLength', TestSelf.lint_unconventional)\n     191:     assert_equal([], Not_unit.lint_unconventional)\n  => 192:     assert_equal([], TestMinimal.lint_unconventional)\n     193:     assert_equal([], Unit_non_executable.lint_unconventional.map { |o| o['cop_name'] }
-.uniq)\n     194:     assert_equal([], Not_unit_executable.lint_unconventional)\n     195:     unexpected_cops = TestSelf.lint_unconventional.map { |o| o['cop_name'] }
-.uniq - RepositoryPathname::Lint_convention_priorities\n<[]> expected but was\n<[{\"cop_name\"=>\"Style/MethodName\",\n  \"corrected\"=>nil,\n  \"location\"=>{\"column\"=>7, \"length\"=>34, \"line\"=>14}
-,\n  \"message\"=>\n   \"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)\",\n  \"severity\"=>\"convention\"}
-,\n {\"cop_name\"=>\"Style/MethodName\",\n  \"corrected\"=>nil,\n  \"location\"=>{\"column\"=>7, \"length\"=>19, \"line\"=>17}
-,\n  \"message\"=>\n   \"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)\",\n  \"severity\"=>\"convention\"}
-,\n {\"cop_name\"=>\"Style/MethodName\",\n  \"corrected\"=>nil,\n  \"location\"=>{\"column\"=>7, \"length\"=>34, \"line\"=>20}
-,\n  \"message\"=>\n   \"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)\",\n  \"severity\"=>\"convention\"}
-,\n {\"cop_name\"=>\"Style/MethodName\",\n  \"corrected\"=>nil,\n  \"location\"=>{\"column\"=>7, \"length\"=>35, \"line\"=>23}
-,\n  \"message\"=>\n   \"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)\",\n  \"severity\"=>\"convention\"}
-,\n {\"cop_name\"=>\"Style/MethodName\",\n  \"corrected\"=>nil,\n  \"location\"=>{\"column\"=>7, \"length\"=>21, \"line\"=>32}
-,\n  \"message\"=>\n   \"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)\",\n  \"severity\"=>\"convention\"}
-]>\n===============================================================================\nF\n===============================================================================\nFailure: test_lint_warnings(RepositoryPathnameTest)\n/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:154:in `test_lint_warnings'\n     151:   def test_lint_warnings\n     152:     assert_equal([], Not_unit.lint_warnings)\n     153:     assert_equal([], TestMinimal.lint_warnings)\n  => 154:     assert_equal(['Syntax'], Unit_non_executable.lint_warnings.map { |o| o['cop_name'] }
-.uniq, Unit_non_executable.lint_warnings)\n     155:     assert_equal([], Not_unit_executable.lint_warnings)\n     156:     existing_cops = TestSelf.lint_warnings.map { |o| o['cop_name'] }
-.uniq\n     157:     unexpected_cops = existing_cops - RepositoryPathname::Lint_warning_priorities\n[]\n<[\"Syntax\"]> expected but was\n<[]>\n\ndiff:\n? [\"Syntax\"]\n===============================================================================\n.....F\n===============================================================================\nFailure:\n  <[\"Minimal_DefinitionalConstants\",\n   \"Minimal_Virtus\",\n   \"Minimal_assert_pre_conditions\",\n   \"Minimal_assert_post_conditions\",\n   \"Minimal_Examples\"]> expected to include\n  <\"Virtus\">.\ntest_all_test_names(TestExecutableTest)\n/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:373:in `test_all_test_names'\n     370:     end # map\n     371:     assert_equal(test_names, TestTestExecutable.all_test_names)\n     372:     assert_include(TestSelf.all_test_names, 'all_test_names')\n  => 373:     assert_include(TestMinimal.all_test_names, 'Virtus')\n     374:   end # all_test_names\n     375: \n     376:   def test_all_library_method_names\n===============================================================================\n........\n\nFinished in 22.694332848 seconds.\n------\n31 tests, 547 assertions, 4 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications\n87.0968% passed\n------\n1.37 tests/s, 24.10 assertions/s\n",
-:errors => {}
 ,
 }

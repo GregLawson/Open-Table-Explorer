@@ -1,7 +1,7 @@
-passed
-2016-04-27 06:49:43.249
-/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 8, 17, 18, 22, Rational(54935919891, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail
 Started
 F
@@ -47,29 +47,29 @@ Error: test_requires(InitializationFailTest): ArgumentError: assertion message m
 ===============================================================================
 
 
-Finished in 0.020246229 seconds.
+Finished in 0.017732427 seconds.
 ------
 8 tests, 10 assertions, 1 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
 62.5% passed
 ------
-395.14 tests/s, 493.92 assertions/s
-
-Command exited with non-zero status 1
+451.15 tests/s, 563.94 assertions/s
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb"
-	User time (seconds): 0.57
-	System time (seconds): 0.06
+	User time (seconds): 0.60
+	System time (seconds): 0.04
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.64
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.65
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 22124
+	Maximum resident set size (kbytes): 23488
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5661
-	Voluntary context switches: 3
-	Involuntary context switches: 71
+	Minor (reclaiming a frame) page faults: 4340
+	Voluntary context switches: 2
+	Involuntary context switches: 11
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -78,3 +78,7 @@ Command exited with non-zero status 1
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
+',
+}
+,
+}

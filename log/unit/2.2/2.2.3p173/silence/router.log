@@ -1,8 +1,37 @@
-passed
-2016-02-01 18:59:38.532
-ruby -v -W0 test/unit/router_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/router.rb:30:in `<top (required)>': uninitialized constant ActiveRecord (NameError)
-	from test/unit/router_test.rb:2:in `require_relative'
-	from test/unit/router_test.rb:2:in `<main>'
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 8, 17, 18, 20, Rational(21724054182, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/router_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+',
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/router.rb:30:in `<top (required)>': uninitialized constant ActiveRecord (NameError)
+Did you mean?  ActiveModel
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/router_test.rb:2:in `require_relative'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/router_test.rb:2:in `<main>'
+Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/router_test.rb"
+	User time (seconds): 0.73
+	System time (seconds): 0.04
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.78
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 24424
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 4847
+	Voluntary context switches: 30
+	Involuntary context switches: 27
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+',
+}
+,
+}

@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 17, 23, Rational(43009844125, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 8, 17, 18, 23, Rational(35424150968, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /etc/mtab',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
@@ -9,18 +9,18 @@ proc /proc proc rw,nosuid,nodev,noexec,relatime 0 0
                ^
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /etc/mtab"
-	User time (seconds): 0.09
+	User time (seconds): 0.10
 	System time (seconds): 0.00
-	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.09
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.10
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 8676
+	Maximum resident set size (kbytes): 8604
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 1172
+	Minor (reclaiming a frame) page faults: 1176
 	Voluntary context switches: 3
 	Involuntary context switches: 1
 	Swaps: 0
