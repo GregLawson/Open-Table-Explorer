@@ -1,40 +1,40 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 22, Rational(56257358923, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 8, 18, 9, 17, Rational(11204412685, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-....F...EE.not timed out: all tests in minimal3 took 0.001178481s unknown with timeout of 30.0s
-not timed out: all tests in minimal2 took 0.001555824s unknown with timeout of 30.0s
-......not timed out: all tests in success.rb took 0.001100024s unknown with timeout of 30.0s
-not timed out: all tests in success.rb took 0.001184469s unknown with timeout of 30.0s
-not timed out: all tests in single_test_fail.rb took 0.001495571s unknown with timeout of 30.0s
-not timed out: all tests in single_test_fail.rb took 0.001019936s unknown with timeout of 30.0s
-not timed out: all tests in initialization_fail.rb took 0.000725862s unknown with timeout of 30.0s
-not timed out: all tests in initialization_fail.rb took 0.001053296s unknown with timeout of 30.0s
-not timed out: all tests in syntax_error.rb took 0.000914671s unknown with timeout of 30.0s
-not timed out: all tests in syntax_error.rb took 0.00122683s unknown with timeout of 30.0s
-............
+....F...EE.not timed out: all tests in minimal3 took 0.00086577s unknown with timeout of 30.0s
+not timed out: all tests in minimal2 took 0.000791227s unknown with timeout of 30.0s
+......not timed out: all tests in success.rb took 0.000746538s unknown with timeout of 30.0s
+not timed out: all tests in success.rb took 0.000863503s unknown with timeout of 30.0s
+not timed out: all tests in single_test_fail.rb took 0.001282666s unknown with timeout of 30.0s
+not timed out: all tests in single_test_fail.rb took 0.000785298s unknown with timeout of 30.0s
+not timed out: all tests in initialization_fail.rb took 0.000878215s unknown with timeout of 30.0s
+not timed out: all tests in initialization_fail.rb took 0.0009095s unknown with timeout of 30.0s
+not timed out: all tests in syntax_error.rb took 0.000726377s unknown with timeout of 30.0s
+not timed out: all tests in syntax_error.rb took 0.000930632s unknown with timeout of 30.0s
+...........
 
-Finished in 8.414379s, 3.4465 runs/s, 9.6264 assertions/s.
+Finished in 8.743338s, 3.2024 runs/s, 9.2642 assertions/s.
 
   1) Failure:
-NewTestClass#test_working_different_from? [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb:267]:
+NewTestClass#test_working_different_from? [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb:261]:
 Expected [] to not be equal to [].
 
 
   2) Error:
 NewTestClass#test_differences?:
 RuntimeError: test/long_test/repository_test.rb does not exist.
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:254:in `diff_command?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:263:in `working_different_from?'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb:277:in `block in test_differences?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:261:in `diff_command?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:270:in `working_different_from?'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb:271:in `block in test_differences?'
     /usr/lib/ruby/vendor_ruby/active_support/core_ext/range/each.rb:7:in `each'
     /usr/lib/ruby/vendor_ruby/active_support/core_ext/range/each.rb:7:in `each_with_time_with_zone'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb:276:in `map'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb:276:in `test_differences?'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb:270:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb:270:in `test_differences?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
@@ -61,14 +61,14 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
   3) Error:
 NewTestClass#test_scan_verions?:
 RuntimeError: test/long_test/repository_test.rb does not exist.
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:254:in `diff_command?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:263:in `working_different_from?'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:275:in `block in differences?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:261:in `diff_command?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:270:in `working_different_from?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:282:in `block in differences?'
     /usr/lib/ruby/vendor_ruby/active_support/core_ext/range/each.rb:7:in `each'
     /usr/lib/ruby/vendor_ruby/active_support/core_ext/range/each.rb:7:in `each_with_time_with_zone'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:274:in `map'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:274:in `differences?'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb:288:in `test_scan_verions?'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:281:in `map'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit_maturity.rb:281:in `differences?'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb:282:in `test_scan_verions?'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
@@ -91,26 +91,26 @@ RuntimeError: test/long_test/repository_test.rb does not exist.
     /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
     /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
 
-29 runs, 81 assertions, 1 failures, 2 errors, 0 skips
+28 runs, 81 assertions, 1 failures, 2 errors, 0 skips
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb"
-	User time (seconds): 16.14
-	System time (seconds): 1.49
-	Percent of CPU this job got: 96%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:18.19
+	User time (seconds): 14.69
+	System time (seconds): 1.07
+	Percent of CPU this job got: 92%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:16.98
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 46188
+	Maximum resident set size (kbytes): 46292
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 5
-	Minor (reclaiming a frame) page faults: 140330
-	Voluntary context switches: 1825
-	Involuntary context switches: 763
+	Major (requiring I/O) page faults: 13
+	Minor (reclaiming a frame) page faults: 129591
+	Voluntary context switches: 1683
+	Involuntary context switches: 678
 	Swaps: 0
-	File system inputs: 408
+	File system inputs: 5336
 	File system outputs: 208
 	Socket messages sent: 0
 	Socket messages received: 0

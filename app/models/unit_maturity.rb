@@ -142,6 +142,13 @@ class TestMaturity
     end # parse_header
   end # ClassMethods
   extend ClassMethods
+
+	def read_state(commit, test = nil)
+		git_command = 'git cat-file blob ' + commit.to_s + ':' + @test_executable.log_path?(test)
+    file_contents = @repository.git_command(git_command)
+		eval(file_contents)
+	end # read_state
+	
   def get_error_score!
     if @test_executable.recursion_danger?
       nil # avoid recursion

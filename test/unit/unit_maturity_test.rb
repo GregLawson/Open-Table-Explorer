@@ -45,12 +45,6 @@ class TestMaturityTest < TestCase
     assert_equal(4, TestMaturity.example_files.values.size, TestMaturity.example_files.inspect)
   end # example_files
 
-  def test_log_path?
-    argument_path = $PROGRAM_NAME
-    #	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', MinimalMaturity.test_executable.log_path?(argument_path))
-    #	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', MinimalMaturity..est_executable.log_path?)
-  end # log_path?
-
   def test_file_bug_reports
     header, errors, summary = TestMaturity.parse_log_file(MinimalMaturity.test_executable.log_path?(nil))
     headerArray = header.split("\n")
