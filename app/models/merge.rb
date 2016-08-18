@@ -5,10 +5,14 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require 'dry-types'
 require_relative 'unit.rb'
 require_relative 'repository.rb'
 require_relative 'unit_maturity.rb'
 require_relative 'editor.rb'
+module Types
+	include Dry::Types.module
+end # Types
 class Merge
   module Constants
   end # Constants
@@ -23,8 +27,12 @@ class Merge
   # record error_score, recent_test, time
   include Virtus.value_object
   values do
+    attribute :repository, Repository, default: Repository::This_code_repository
+
+    attribute :source_commit, Branch, default: Branch.new(name: :passed)
+    attribute :target_branch_name, Symbol, default: Repository::This_code_repository.current_branch_name?
     attribute :interactive, Symbol, default: :interactive # non-defaults are primarily for non-interactive testing testing
-    attribute :repository, Repository
+    attribute :editor, Editor, default: Editor::TestEditor
   end # values
   def standardize_position!
     abort_rebase_and_merge!
@@ -121,29 +129,40 @@ class Merge
       changes_branch = :stash
     end # if
 
-    if stash_branch != target_branch
+    if stash_branch != target_branch_name
       confirm_branch_switch(target_branch)
     end # if
     push # if switched?
   end # stash_and_checkout
 
-  def merge(target_branch, source_branch)
-    puts 'merge(' + target_branch.inspect + ', ' + source_branch.inspect + ', ' + @interactive.inspect + ')'
-    safely_visit_branch(target_branch) do |_changes_branch|
-      merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
-      puts 'merge_status= ' + merge_status.inspect
-      if merge_status.output == "Automatic merge went well; stopped before committing as requested\n"
-        puts 'merge OK'
-      else
-        if merge_status.success?
-          puts 'not merge_conflict_recovery' + merge_status.inspect
-        else
-          puts 'merge_conflict_recovery' + merge_status.inspect
-          merge_conflict_recovery(source_branch)
-        end # if
+	def trial_merge
+		merge_status = @repository.git_command('merge --no-commit ' + source_commit.to_s)
+		puts 'merge_status= ' + merge_status.inspect
+		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n"
+			puts 'merge OK'
+		else
+			if merge_status.success?
+				puts 'not merge_conflict_recovery' + merge_status.inspect
+			else
+				puts 'merge_conflict_recovery' + merge_status.inspect
+				merge_conflict_recovery(source_branch)
+			end # if
+		end # if
+    unmerged_files = @repository.status
+    unless unmerged_files.empty?
+      merge_abort = @repository.git_command('merge --abort')
+      if merge_abort.success?
+        remerge = @repository.git_command('merge --X ours ' + from_branch.to_s)
       end # if
+    end # if
+		unmerged_files # work still to do
+	end # trial_merge
+	
+  def merge(target_branch, source_branch)
+    puts 'merge(' + @target_branch_name.inspect + ', ' + @source_commit.inspect + ', ' + @interactive.inspect + ')'
+		stash_and_checkout
+    trial_merge
       confirm_commit
-    end # safely_visit_branch
   end # merge
 
   def merge_down(deserving_branch = @repository.current_branch_name?)

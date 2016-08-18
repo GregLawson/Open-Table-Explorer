@@ -7,9 +7,9 @@
 ###########################################################################
 # require_relative '../unit/test_environment'
 require_relative '../../app/models/test_environment_test_unit.rb'
+require_relative '../../app/models/merge.rb'
 require_relative '../assertions/repository_assertions.rb'
 require_relative '../assertions/shell_command_assertions.rb'
-require_relative '../../app/models/merge.rb'
 class MergeTest < TestCase
   # include DefaultTests
   # include Merge
@@ -54,6 +54,7 @@ class MergeTest < TestCase
   end # state?
 
   def test_discard_log_file_merge
+    @temp_repo.force_change
     all_files = Repository::This_code_repository.status
     all_files.each do |conflict|
       next unless conflict[:file][-4..-1] == '.log'
@@ -63,6 +64,8 @@ class MergeTest < TestCase
         puts conflict[:file] + ' is an untracked log file.'
       elsif conflict[:index] == :unmodified && conflict[:work_tree] == :modified
         puts conflict[:file] + ' is an updated log file.'
+      elsif conflict[:index] == :modified && conflict[:work_tree] == :unmodified
+        puts conflict[:file] + ' is a staged log file.'
       elsif conflict[:work_tree] == :updated_but_unmerged
         assert_include(['unmerged, deleted by us'], conflict[:description], conflict.inspect)
         Repository::This_code_repository.git_command('checkout HEAD ' + conflict[:file])
@@ -75,27 +78,35 @@ class MergeTest < TestCase
   end # discard_log_file_merge
 
   def test_merge_conflict_recovery
+    @temp_repo.force_change
   end # merge_conflict_recovery
 
   def test_merge_interactive
   end # merge_interactive
 
   def test_stash_and_checkout
+    @temp_repo.force_change
   end # stash_and_checkout
 
-  def test_merge_cleanup
+	def test_trial_merge
+		assert_equal([], @temp_repo.status)
     @temp_repo.force_change
-    #    @temp_merge.merge_cleanup
-  end # merge_cleanup
+    unmerged_files = @temp_merge.trial_merge
+		assert_instance_of(Array, unmerged_files, @temp_repo.inspect)
+		assert_equal(@temp_repo.status, unmerged_files)
+		assert_equal([{:description=>"not updated", :file=>"README", :index=>:unmodified, :log_file=>false, :work_tree=>:modified}], unmerged_files)
+	end # trial_merge
 
   def test_merge
     TestMerge.repository.testing_superset_of_passed # .assert_post_conditions
     TestMerge.repository.edited_superset_of_testing # .assert_post_conditions
     #	TestMerge.merge(:edited, :testing) # not too long or too dangerous
+    @temp_repo.force_change
   end # merge
 
   def test_merge_down
     # (deserving_branch = @repository.current_branch_name?)
+    @temp_repo.force_change
   end # merge_down
 
   def test_Merge_assert_pre_conditions
