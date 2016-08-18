@@ -25,6 +25,7 @@ class RecentRun
             end # Timeout
 					recent_run.output = cached_run.output
 					recent_run.elapsed_time = Time.now - recent_run.start_time
+          recent_run.errors[:syserr] = cached_run.errors
         rescue Timeout::Error => exception_object_raised
           recent_run.errors[:rescue_exception] = exception_object_raised
 					recent_run.elapsed_time = Time.now - recent_run.start_time
@@ -285,17 +286,16 @@ class TestRun # < ActiveRecord::Base
     error_score? <=> other.error_score?
   end # <=>
 
-  # returns nil if recursion danger
-  def error_file
-    ret = {current_branch_name: @test_executable.repository.current_branch_name?.to_s,
-    start_time: Time.now.strftime('%Y-%m-%d %H:%M:%S.%L'),
+	def state
+		{current_branch_name: @test_executable.repository.current_branch_name?,
+    start_time: Time.now,
     command_string: @cached_recent_test.command_string,
     output: @cached_recent_test.output.to_s,
-    errors: @cached_recent_test.errors}.inspect_lines
-  end # error_file
+    errors: @cached_recent_test.errors}
+	end # state
 
   def write_error_file(test)
-    IO.write(@test_executable.log_path?(test), error_file)
+    IO.write(@test_executable.log_path?(test), state.ruby_lines_storage)
   end # write_error_file
 
   def commit_message(files)
