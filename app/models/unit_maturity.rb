@@ -317,7 +317,7 @@ class UnitMaturity
   # require_relative '../../app/models/assertions.rb'
   module Examples
     include Constants
-    File_not_in_oldest_branch = 'test/long_test/repository_test.rb'.freeze
+    File_not_in_oldest_branch = 'test/slowest/repository_test.rb'.freeze
     Most_stable_file = 'test/unit/minimal2_test.rb'.freeze
     Formerly_existant_file = 'test/unit/related_file.rb'.freeze
     TestUnitMaturity = UnitMaturity.new(Repository::This_code_repository, Repository::Repository_Unit)
