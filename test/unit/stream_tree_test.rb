@@ -134,7 +134,11 @@ class StreamTreeTest < TestCase
     assert_equal(true, NestedArrayType.nonterminal?(Son_nested_array), Son_nested_array.inspect)
   end # nonterminal?
 
-  def test_each_pair
+  def test_Connectivity_each_pair
+    collect = []
+    NestedArrayType.each_pair(Example_array) { |key, value| collect << [key, value] }
+    assert_equal(collect, [[0, 1], [1, 2], [2, 3]])
+
   end # each_pair
 
   def test_map_pair
@@ -194,12 +198,6 @@ class StreamTreeTest < TestCase
     Connectivity.assert_pre_conditions
     Connectivity.assert_post_conditions
   end # Assertions
-
-  def test_each_pair
-    collect = []
-    NestedArrayType.each_pair(Example_array) { |key, value| collect << [key, value] }
-    assert_equal(collect, [[0, 1], [1, 2], [2, 3]])
-  end # each_pair
 
   def test_map_pair_Array
     tree = Flat_array
@@ -348,6 +346,10 @@ class StreamTreeTest < TestCase
     assert_equal({ cat: 1 }, { cat: 1 } & { cat: 2 })
     assert_equal({ dog: { bird: 6 } }, { cat: 1, dog: { fish: 5, bird: 6 } } & { cat: 2, dog:  { bird: 6 } })
   end # intersection
+
+
+	def test_inspect_lines
+	end # inspect_lines
 
   def test_enumerate_single
     atom = /5/

@@ -5,6 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../../app/models/ruby_lines_storage.rb'
 # merge in rgl library and begin porting to it
 # require 'rgl/adjacency'
 # require 'rgl/dot'
@@ -447,6 +448,7 @@ class Array
     each_pair { |key, value| ret. << yield(key, value) }
     ret
   end # map_pair
+	
   module Constants
     Identity_map_pair = proc { |_key, value| value }
   end # Constants
@@ -534,6 +536,7 @@ class Hash
 	end # inspect_lines
 	
 end # Hash
+
 class Object
   def enumerate_single(enumerator_method = :map, &proc)
     result = [self].enumerate(enumerator_method, &proc) # simulate array
@@ -552,6 +555,7 @@ class Object
     end # if
   end # enumerate
 end # Object
+
 module Stream # see http://rgl.rubyforge.org/stream/classes/Stream.html
   include Enumerable
 end # Stream
