@@ -10,8 +10,6 @@ require_relative '../../app/models/stream_tree.rb'
 class EnumeratorTest < TestCase
   # include DefaultTests
   # include RailsishRubyUnit::Executable.model_class?::Examples
-	include Array::Examples
-	include Hash::Examples
 	module Array
 		module Examples
 			Trivial_array = [0].freeze
@@ -21,9 +19,10 @@ class EnumeratorTest < TestCase
 			Inspect_node_root = '[1, [2, [3], 4], 5]'.freeze
 		end # Examples
 	end # Array
-	
+	include Array::Examples
+	include Hash::Examples
   def test_values
-    assert_equal(Array::Examples::Example_array, Array::Examples::Example_array.values)
+    assert_equal(Example_array, Example_array.values)
   end # values
 
   def test_keys
@@ -31,9 +30,16 @@ class EnumeratorTest < TestCase
   end # keys
 
   def test_to_hash
+    assert_equal(Array::Examples::Example_array, Array::Examples::Example_array.to_hash.to_a.values)
 #    assert_equal(Array::Examples::Example_array, Array::Examples::Example_array.to_hash.to_a.values)
   end # to_hash
 
+  def test_to_hash_from_to_a
+  end # to_hash_from_to_a
+
+  def test_map_pair
+  end # map_pair
+	
   def test_each_with_index
   end # each_with_index
 

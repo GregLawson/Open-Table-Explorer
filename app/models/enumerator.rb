@@ -18,7 +18,7 @@ class Array
 #  include Tree
   # Array#each_with_index yields only index
   def each_pair
-    with_index do |element, index|
+    each.with_index do |element, index|
       if element[index].instance_of?(Array) && element.size == 2 # from Hash#to_a
         yield(element[0], element[1])
       else
