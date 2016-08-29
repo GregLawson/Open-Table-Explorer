@@ -1,35 +1,35 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 28, 7, 21, Rational(54260544632, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 8, 28, 22, 56, Rational(42819391369, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test
 Started
 .........................
 
-Finished in 0.085617027 seconds.
+Finished in 0.087985467 seconds.
 ------
 25 tests, 83 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-292.00 tests/s, 969.43 assertions/s
+284.14 tests/s, 943.34 assertions/s
 ',
 :errors => {:syserr => 'Format: "jpg" not recognized. Use one of: canon cmap cmapx cmapx_np dot eps fig gd gd2 gv imap imap_np ismap pdf pic plain plain-ext png pov ps ps2 svg svgz tk vml vmlz x11 xdot xdot1.2 xdot1.4 xlib
 Format: "jpg" not recognized. Use one of: canon cmap cmapx cmapx_np dot eps fig gd gd2 gv imap imap_np ismap pdf pic plain plain-ext png pov ps ps2 svg svgz tk vml vmlz x11 xdot xdot1.2 xdot1.4 xlib
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb"
 	User time (seconds): 0.80
 	System time (seconds): 0.10
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.91
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.90
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 25504
+	Maximum resident set size (kbytes): 25344
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5440
+	Minor (reclaiming a frame) page faults: 5436
 	Voluntary context switches: 9
-	Involuntary context switches: 331
+	Involuntary context switches: 268
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 16

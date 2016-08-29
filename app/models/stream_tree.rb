@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2014-2015 by Greg Lawson
+#    Copyright (C) 2014-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -369,6 +369,7 @@ module Leaf
     true # end recursion
   end # nonterminal?
 end # Leaf
+
 module Tree
   include DAG
   module Constants
