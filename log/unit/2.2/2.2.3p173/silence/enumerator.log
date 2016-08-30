@@ -1,33 +1,50 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 28, 22, 53, Rational(58274440689, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 8, 29, 22, 12, Rational(8863398919, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test
 Started
-............
+.........F
+===============================================================================
+Failure:
+  <[1, 2, 3]> expected to be instance_of?
+  <Hash> but was
+  <Array>.
+test_to_hash(EnumeratorTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test.rb:34:in `test_to_hash'
+     31: 
+     32:   def test_to_hash
+     33:     assert_equal(Array::Examples::Example_array, Array::Examples::Example_array.to_hash.to_a.values)
+  => 34:     assert_instance_of(Hash, Array::Examples::Example_array.to_hash)
+     35: #    assert_equal(Array::Examples::Example_array, Array::Examples::Example_array.to_hash.to_a.values)
+     36:   end # to_hash
+     37: 
+===============================================================================
+..
 
-Finished in 0.005323737 seconds.
+Finished in 0.018526599 seconds.
 ------
-12 tests, 69 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
+12 tests, 70 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+91.6667% passed
 ------
-2254.06 tests/s, 12960.82 assertions/s
+647.72 tests/s, 3778.35 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test.rb"
-	User time (seconds): 0.76
-	System time (seconds): 0.10
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test.rb"
+	User time (seconds): 0.75
+	System time (seconds): 0.05
 	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.88
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.82
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 25040
+	Maximum resident set size (kbytes): 25052
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4691
+	Minor (reclaiming a frame) page faults: 4714
 	Voluntary context switches: 3
-	Involuntary context switches: 253
+	Involuntary context switches: 275
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -35,7 +52,7 @@ Finished in 0.005323737 seconds.
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
 ',
 }
 ,

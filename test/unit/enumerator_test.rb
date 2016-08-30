@@ -31,6 +31,7 @@ class EnumeratorTest < TestCase
 
   def test_to_hash
     assert_equal(Array::Examples::Example_array, Array::Examples::Example_array.to_hash.to_a.values)
+    assert_instance_of(Hash, Array::Examples::Example_array.to_hash)
 #    assert_equal(Array::Examples::Example_array, Array::Examples::Example_array.to_hash.to_a.values)
   end # to_hash
 
