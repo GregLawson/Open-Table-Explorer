@@ -7,6 +7,7 @@
 ###########################################################################
 require 'dry-types'
 require_relative 'unit.rb'
+require_relative 'interactive_bottleneck.rb'
 require_relative 'repository.rb'
 require_relative 'unit_maturity.rb'
 require_relative 'editor.rb'
@@ -73,7 +74,7 @@ class Merge
     end # each
   end # discard_log_file_merge
 
-  def merge_conflict_recovery(from_branch)
+  def merge_conflict_recovery
     # see man git status
     discard_log_file_merge # each branch's log file status is independant
     puts '@repository.status = ' + @repository.status.inspect
@@ -82,8 +83,8 @@ class Merge
       puts 'merge --abort'
       merge_abort = @repository.git_command('merge --abort')
       if merge_abort.success?
-        puts 'merge --X ours ' + from_branch.to_s
-        remerge = @repository.git_command('merge --X ours ' + from_branch.to_s)
+        puts 'merge --X ours ' + @source_commit.to_s
+        remerge = @repository.git_command('merge --X ours ' + @source_commit.to_s)
       end # if
       unmerged_files.each do |conflict|
         puts 'not checkout HEAD ' + conflict[:file]
@@ -110,8 +111,8 @@ class Merge
     push = stash_and_checkout(target_branch)
   end # switch_branch
 
-  def merge_interactive(source_branch)
-    merge_status = @repository.git_command('merge --no-commit ' + source_branch.to_s)
+  def merge_interactive
+    merge_status = @repository.git_command('merge --no-commit ' + @source_commit.to_s)
   end # merge_interactive
 
   def stash_and_checkout(target_branch)
@@ -145,27 +146,27 @@ class Merge
 				puts 'not merge_conflict_recovery' + merge_status.inspect
 			else
 				puts 'merge_conflict_recovery' + merge_status.inspect
-				merge_conflict_recovery(source_branch)
+				merge_conflict_recovery
 			end # if
 		end # if
     unmerged_files = @repository.status
     unless unmerged_files.empty?
       merge_abort = @repository.git_command('merge --abort')
       if merge_abort.success?
-        remerge = @repository.git_command('merge --X ours ' + from_branch.to_s)
+        remerge = @repository.git_command('merge --X ours ' + @source_commit.to_s)
       end # if
     end # if
 		unmerged_files # work still to do
 	end # trial_merge
 	
-  def merge(target_branch, source_branch)
+  def merge
     puts 'merge(' + @target_branch_name.inspect + ', ' + @source_commit.inspect + ', ' + @interactive.inspect + ')'
 		stash_and_checkout
     trial_merge
       confirm_commit
   end # merge
 
-  def merge_down(deserving_branch = @repository.current_branch_name?)
+  def merge_down
     Branch.merge_range(deserving_branch).each do |i|
       safely_visit_branch(Branch::Branch_enhancement[i]) do |_changes_branch|
         puts 'merge(' + Branch::Branch_enhancement[i].to_s + '), ' + Branch::Branch_enhancement[i - 1].to_s + ')' unless $VERBOSE.nil?
