@@ -1,54 +1,50 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 18, 18, 33, Rational(24375577549, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 8, 29, 22, 11, Rational(3839603797, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/merge_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/merge_test
 Started
 ....log/unit/2.2/2.2.3p173/silence/.log is an updated log file.
 log/unit/2.2/2.2.3p173/silence/generic_type.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/merge.log is an updated log file.
 log/unit/2.2/2.2.3p173/silence/minimal2.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/minimal3.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/success.rb.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/syntax_error.rb.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/stream_tree.log is an updated log file.
+log/unit/2.2/2.2.3p173/silence/version.log is an updated log file.
 ........$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 13647 exit 1>
+@process_status=#<Process::Status: pid 21580 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 13668 exit 128>
+@process_status=#<Process::Status: pid 21601 exit 128>
 $ git checkout master
 @errors="Already on 'master'\n"
 ...merge_status= Already up-to-date.
 not merge_conflict_recoveryAlready up-to-date.
 .
 
-Finished in 1.114717023 seconds.
+Finished in 1.018176218 seconds.
 ------
 16 tests, 58 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-14.35 tests/s, 52.03 assertions/s
+15.71 tests/s, 56.96 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/merge_test.rb"
-	User time (seconds): 9.60
-	System time (seconds): 1.44
-	Percent of CPU this job got: 95%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:11.60
+	User time (seconds): 9.99
+	System time (seconds): 1.61
+	Percent of CPU this job got: 92%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.49
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 46280
+	Maximum resident set size (kbytes): 46244
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 95971
-	Voluntary context switches: 1664
-	Involuntary context switches: 4532
+	Major (requiring I/O) page faults: 27
+	Minor (reclaiming a frame) page faults: 99342
+	Voluntary context switches: 1921
+	Involuntary context switches: 4053
 	Swaps: 0
-	File system inputs: 0
+	File system inputs: 1048
 	File system outputs: 3872
 	Socket messages sent: 0
 	Socket messages received: 0
