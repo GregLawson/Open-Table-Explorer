@@ -14,9 +14,6 @@ class Minimal2Test < TestCase
   def test_Minimal_DefinitionalConstants
   end # DefinitionalConstants
 
-  def test_Minimal_Virtus
-  end # values
-
   def test_Minimal_assert_pre_conditions
   end # assert_pre_conditions
 
