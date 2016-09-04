@@ -93,7 +93,7 @@ class GenericType < Dry::Types::Value
  
   def find_by_name(macro_name)
     DefinitionalConstants::Primary_key_index[macro_name.to_sym]
-end #find_by_name
+	end #find_by_name
 	
 # Define some constants, after find_by_name redefinition
   end # DefinitionalClassMethods
