@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 4, 12, 3, Rational(6919089804, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 4, 13, 28, Rational(19122225244, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,25 +8,25 @@ Run options: --seed 0
 
 ........
 
-Finished in 0.003960s, 2020.2224 runs/s, 0.0000 assertions/s.
+Finished in 0.003909s, 2046.5933 runs/s, 0.0000 assertions/s.
 
 8 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb"
-	User time (seconds): 1.23
-	System time (seconds): 0.14
+	User time (seconds): 1.26
+	System time (seconds): 0.13
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.39
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.40
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 36480
+	Maximum resident set size (kbytes): 36200
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 7539
-	Voluntary context switches: 19
-	Involuntary context switches: 506
+	Minor (reclaiming a frame) page faults: 7534
+	Voluntary context switches: 24
+	Involuntary context switches: 432
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
