@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson
+#    Copyright (C) 2013-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -10,7 +10,7 @@ require_relative '../app/models/unit.rb' # before command_line
 require_relative "../app/models/#{Unit::Executable.model_basename}"
 require_relative '../app/models/command_line.rb'
 scripting_executable = TestExecutable.new_from_path($PROGRAM_NAME)
-require_relative "../app/models/#{scripting_executable.unit.model_basename}"
+require_relative "../app/models/#{scripting_executable.unit.model_basename}.rb"
 script_class = RailsishRubyUnit::Executable.model_class?
 
 script = CommandLine.new(executable: $PROGRAM_NAME, unit_class: script_class)
