@@ -1,29 +1,32 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 25, 11, 3, Rational(15945183884, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 6, 4, 35, Rational(22425438128, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+........
+
+Finished in 0.003835s, 2086.1725 runs/s, 0.0000 assertions/s.
+
+8 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal3_assertions.rb:59:in `<module:Examples>': uninitialized constant Minimal3::Examples::Constants (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal3_assertions.rb:58:in `<class:Minimal3>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/minimal3_assertions.rb:8:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb:9:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb:9:in `<main>'
-Command exited with non-zero status 1
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb"
-	User time (seconds): 0.64
-	System time (seconds): 0.06
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb"
+	User time (seconds): 1.25
+	System time (seconds): 0.14
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.70
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.40
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23736
+	Maximum resident set size (kbytes): 36416
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4420
-	Voluntary context switches: 3
-	Involuntary context switches: 178
+	Minor (reclaiming a frame) page faults: 7544
+	Voluntary context switches: 19
+	Involuntary context switches: 512
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -31,7 +34,7 @@ Command exited with non-zero status 1
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0
 ',
 }
 ,
