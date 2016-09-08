@@ -35,16 +35,16 @@ class BootTest < TestCase
     assert_match(/[N1-5] [1-5]\n/, Run_levels.output, Run_levels.inspect)
     assert_include(["degraded\n", "offline\n"], Is_system_running.output, Is_system_running.inspect)
     assert_equal("Linux acer-desktop 4.6.0-1-rt-amd64 #1 SMP PREEMPT RT Debian 4.6.4-1 (2016-07-18) x86_64 GNU/Linux\n", Uname.output, Uname.inspect)
-    assert_repeat_match(Uuid_regexp, 137)
+    assert_repeat_match(Uuid_regexp, 193)
     assert_match(Classes_regexp, Grubs_run.output, Grubs_run.inspect)
     assert_match(Boot_line_regexp, One_menu_entry, One_menu_entry.inspect)
     assert_match(Boot_line_regexp, Grubs_run.output, Grubs_run.inspect)
-    assert_repeat_match(Linux_version_regexp, 505)
-    assert_repeat_match(Vmlinuz_regexp, 361)
-    assert_repeat_match(Paranthetic_title_regexp, 57)
-    assert_repeat_match(/\tlinux /, 33)
+    assert_repeat_match(Linux_version_regexp, 721)
+    assert_repeat_match(Vmlinuz_regexp, 505)
+    assert_repeat_match(Paranthetic_title_regexp, 81)
+    assert_repeat_match(/\tlinux /, 45)
     assert_repeat_match(Regexp::Start_string * Boot_line_regexp, 10)
-    assert_repeat_match(/^/ * Boot_line_regexp, 289)
+    assert_repeat_match(/^/ * Boot_line_regexp, 397)
 #    assert_repeat_match(Menu_title_regexp, 60)
   end # DefinitionalConstants
 
@@ -59,6 +59,10 @@ class BootTest < TestCase
     end # each regexp
   end # remove_matches
 
+	def test_state
+		
+	end # state
+	
   def test_Minimal_Virtus
   end # values
 

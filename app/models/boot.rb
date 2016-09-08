@@ -55,6 +55,11 @@ class Boot
     #	attribute :age, Fixnum, :default => 789
     #	attribute :timestamp, Time, :default => Time.now
   end # values
+	
+	def state
+		
+	end # state
+	
   module Constructors # such as alternative new methods
     include DefinitionalConstants
   end # Constructors
