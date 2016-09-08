@@ -191,11 +191,7 @@ class MethodModel # <ActiveRecord::Base
           puts "exc=#{exc}, object=#{object.inspect}"
         end # begin
       end # select
-      if ret.empty?
-        nil # no object found, new has side effects
-      else
-        ret
-      end # if
+			nil # no object found, new has side effects
     end # method_query
 
     def constantized
