@@ -67,7 +67,7 @@ puts 'command_line_opts.class = ' + CommandLine::Script_command_line.command_lin
 puts 'command_line_opts[:test] = ' + CommandLine::Script_command_line.command_line_opts[:test].inspect
 puts 'command_line_opts[:inspect] = ' + CommandLine::Script_command_line.command_line_opts[:inspect].inspect
 puts 'command_line_opts[:inspect_given] = ' + CommandLine::Script_command_line.command_line_opts[:inspect_given].inspect
-puts 'CommandLine::Script_command_line = ' + CommandLine::Script_command_line.inspect
+puts 'CommandLine::Script_command_line = ' + CommandLine::Script_command_line.inspect if $VERBOSE
 CommandLine::Script_command_line.run do
   if CommandLine::Script_command_line.command_line_opts[:help]
     puts 'command_line_opts[:help] = ' + CommandLine::Script_command_line.command_line_opts[:help].inspect

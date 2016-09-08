@@ -12,13 +12,10 @@ require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/test_executable.rb'
 require_relative '../../app/models/method_model.rb'
 
-class CommandLine # < Command
+class CommandLineExecutable
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-    SUB_COMMANDS = %w(inspect test).freeze
+    SUB_COMMANDS = %w(help inspect test).freeze
     Nonscriptable_methods = [:run, :executable, :executable=].freeze
-    Command_line_opts_default = lambda do |commandline, _attribute|
-      commandline.command_line_opts_initialize
-    end # command_line_opts
     Executable_default = lambda do |commandline, _attribute|
       TestExecutable.new_from_path(commandline.argv)
     end # Executable_default
@@ -46,7 +43,6 @@ class CommandLine # < Command
     attribute :test_executable, TestExecutable 
 #    attribute :unit_class, Class, default: ->(command_line, _attribute) { command_line.test_executable.unit.model_class? }
     attribute :argv, Array, default: ARGV
-    #	attribute :command_line_opts, Hash, :default => lambda {|commandline, attribute| commandline.command_line_opts_initialize}
   end # values
 
   module ClassMethods # such as alternative new methods
@@ -67,6 +63,21 @@ class CommandLine # < Command
     end # if
   end # number_of_arguments
 
+  def sub_command
+    if @argv.nil? || @argv.empty? || command_line_opts[:help]
+      :help # default subcommand
+    else
+      @argv[0].to_sym # get the subcommand
+    end # if
+  end # sub_command
+
+	def sub_command_commandline
+    sub_command_unit = RailsishRubyUnit.new(model_basename: sub_command.to_sym)
+    required_library_file = sub_command_unit.model_pathname?
+		sub_command_test_executable = TestExecutable.new_from_path(required_library_file)
+		CommandLine.new(test_executable: sub_command_test_executable, argv: @argv[1..-1])
+	end # sub_command_commandline
+	
   def argument_types
     arguments.map do |argument|
       CommandLine.argument_type(argument)
@@ -111,19 +122,126 @@ class CommandLine # < Command
     end # if
   end # executable_object
 
-  def command_instance_methods
+  def sub_command_instance_methods
 		command_class = @test_executable.unit.model_class?	
 		MethodModel.instance_method_models(command_class)	
-  end # command_instance_methods
+  end # sub_command_instance_methods
 
-	def sub_command_method
-      ret = command_instance_methods.find do |method_model|
+	def find_sub_command_instance_method(method_name = sub_command)
+      ret = sub_command_instance_methods.find do |method_model|
         method_model.method_name == sub_command
       end # find
-			message = sub_command.to_s + ' is not in ' + command_instance_methods.inspect
-			raise message if ret.nil?
-			ret
+	end # find_sub_command_instance_method
+	
+	def sub_command_method
+      ret = find_sub_command_instance_method(method_name = sub_command)
+			if ret.nil? # no sub_command, default to help
+				raise
+			else
+				ret
+			end # if
 	end # sub_command_method
+	
+  def executable_method?(method_name, argument = nil)
+    executable_object = executable_object(argument)
+    ret = if executable_object.respond_to?(method_name)
+            method = executable_object.method(method_name)
+          end # if
+  end # executable_method?
+
+  def method_exception_string(method_name)
+    message = "#{method_name} is not an instance method of #{executable_object.class.inspect}"
+    message += "\n candidate_commands = "
+    message += candidate_commands_strings.join("\n")
+    #		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
+  end # method_exception_string
+
+  def dispatch_required_arguments(argument)
+    method = executable_method?(sub_command, argument)
+    if method.nil?
+      message = method_exception_string(sub_command)
+      raise Exception.new(message)
+    else
+      case method.required_arguments
+      when 0 then
+        method.call
+      when 1 then
+        method.call(argument)
+      else
+        message = "\nIn CommandLine#dispatch_required_arguments, "
+        message += "\nargument =  " + argument
+        message += "\nsub_command =  " + sub_command.to_s
+        message += "\nrequired_arguments =  " + method.required_arguments.to_s
+        raise Exception.new(message)
+      end # case
+    end # if nil?
+  end # dispatch_required_arguments
+
+  def run
+    done = if block_given?
+             yield
+           else
+             false # non-default commands not done cause they don't exist
+    end # if
+    ret = unless done
+            method_model = sub_command_method
+            if method_model.nil?
+              message = method_exception_string(sub_command)
+              raise Exception.new(message)
+            elsif number_of_arguments == 0
+              method_model.theMethod.call
+            elsif number_of_arguments == method_model.theMethod.required_arguments
+              dispatch_required_arguments(arguments)
+            elsif number_of_arguments < method_model.theMethod.required_arguments
+              puts 'number_of_arguments == 0 '
+            elsif method_model.theMethod.required_arguments == 0 ||
+                  (number_of_arguments % method_model.theMethod.required_arguments) == 0
+              arguments.each do |argument|
+                dispatch_required_arguments(argument)
+              end # each
+            else
+              raise
+            end # if
+    end # if
+    #	cleanup_ARGV
+    #		scripting_workflow.script_deserves_commit!(:passed)
+    message = 'command_line  (' + inspect + ') '
+    message += ' run returns ' + ret.inspect + command_line_opts.inspect + caller.join("\n")
+    puts message if command_line_opts[:inspect]
+    puts 'run returns ' + ret.inspect if command_line_opts[:inspect]
+    ret
+  end # run
+
+  def cleanup_ARGV
+    ARGV.delete_at(0)
+  end # cleanup_ARGV
+
+  def test
+    puts 'Method :test called in class ' + self.class.name + ' but not over-ridden.'
+  end # test
+end # CommandLineExecutable
+
+class CommandLine < CommandLineExecutable # < Command
+  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+    Command_line_opts_default = lambda do |commandline, _attribute|
+      commandline.command_line_opts_initialize
+    end # command_line_opts
+    end # DefinitionalConstants
+  include DefinitionalConstants
+  module DefinitionalClassMethods # compute sub-objects such as default attribute values
+    include DefinitionalConstants
+  end # DefinitionalClassMethods
+  extend DefinitionalClassMethods
+  include Virtus.value_object
+  values do
+    #	attribute :command_line_opts, Hash, :default => lambda {|commandline, attribute| commandline.command_line_opts_initialize}
+  end # values
+
+  module ClassMethods # such as alternative new methods
+    include DefinitionalConstants
+  end # ClassMethods
+  extend ClassMethods
+
 	
   def candidate_commands_strings
       command_instance_methods.map do |method_model|
@@ -206,89 +324,4 @@ class CommandLine # < Command
     ret
   end # to_s
 
-  def sub_command
-    if @argv.nil? || @argv.empty?
-      :help # default subcommand
-    else
-      @argv[0].to_sym # get the subcommand
-    end # if
-  end # sub_command
-
-  def executable_method?(method_name, argument = nil)
-    executable_object = executable_object(argument)
-    ret = if executable_object.respond_to?(method_name)
-            method = executable_object.method(method_name)
-          end # if
-  end # executable_method?
-
-  def method_exception_string(method_name)
-    message = "#{method_name} is not an instance method of #{executable_object.class.inspect}"
-    message += "\n candidate_commands = "
-    message += candidate_commands_strings.join("\n")
-    #		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
-  end # method_exception_string
-
-  def dispatch_required_arguments(argument)
-    method = executable_method?(sub_command, argument)
-    if method.nil?
-      message = method_exception_string(sub_command)
-      raise Exception.new(message)
-    else
-      case method.required_arguments
-      when 0 then
-        method.call
-      when 1 then
-        method.call(argument)
-      else
-        message = "\nIn CommandLine#dispatch_required_arguments, "
-        message += "\nargument =  " + argument
-        message += "\nsub_command =  " + sub_command.to_s
-        message += "\nrequired_arguments =  " + method.required_arguments.to_s
-        raise Exception.new(message)
-      end # case
-    end # if nil?
-  end # dispatch_required_arguments
-
-  def run
-    done = if block_given?
-             yield
-           else
-             false # non-default commands not done cause they don't exist
-    end # if
-    ret = unless done
-            method_model = sub_command_method
-            if method_model.nil?
-              message = method_exception_string(sub_command)
-              raise Exception.new(message)
-            elsif number_of_arguments == 0
-              method_model.theMethod.call
-            elsif number_of_arguments == method_model.theMethod.required_arguments
-              dispatch_required_arguments(arguments)
-            elsif number_of_arguments < method_model.theMethod.required_arguments
-              puts 'number_of_arguments == 0 '
-            elsif method_model.theMethod.required_arguments == 0 ||
-                  (number_of_arguments % method_model.theMethod.required_arguments) == 0
-              arguments.each do |argument|
-                dispatch_required_arguments(argument)
-              end # each
-            else
-              raise
-            end # if
-    end # if
-    #	cleanup_ARGV
-    #		scripting_workflow.script_deserves_commit!(:passed)
-    message = 'command_line  (' + inspect + ') '
-    message += ' run returns ' + ret.inspect + command_line_opts.inspect + caller.join("\n")
-    puts message if command_line_opts[:inspect]
-    puts 'run returns ' + ret.inspect if command_line_opts[:inspect]
-    ret
-  end # run
-
-  def cleanup_ARGV
-    ARGV.delete_at(0)
-  end # cleanup_ARGV
-
-  def test
-    puts 'Method :test called in class ' + self.class.name + ' but not over-ridden.'
-  end # test
 end # CommandLine
