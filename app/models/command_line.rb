@@ -8,7 +8,7 @@
 require 'trollop'
 require 'virtus'
 require_relative '../../app/models/shell_command.rb'
-# require_relative '../../app/models/command.rb'
+require_relative '../../app/models/command.rb'
 require_relative '../../app/models/test_executable.rb'
 require_relative '../../app/models/method_model.rb'
 
@@ -50,13 +50,22 @@ class CommandLineExecutable
   end # ClassMethods
   extend ClassMethods
 
+  module Constants # constant objects of the type
+    include DefinitionalConstants
+    # Command = RailsishRubyUnit::Executable.model_basename
+    Script_class = CommandLineExecutable
+    Script_command_line = CommandLineExecutable.new(test_executable: TestExecutable.new_from_path($PROGRAM_NAME), argv: ARGV)
+      # = Script_class.new(TestExecutable.new_from_path($0))
+    end # Constants
+  include Constants
+
   # Deliberately raises exception if number_of_arguments == 0
   def arguments
     @argv[1..-1]
   end # arguments
 
   def number_of_arguments
-    if @argv.nil? || @argv.empty?
+    if @argv.nil? || @argv.empty? || @argv == ['']
       0
     else
       arguments.size # don't include sub_command
@@ -64,12 +73,64 @@ class CommandLineExecutable
   end # number_of_arguments
 
   def sub_command
-    if @argv.nil? || @argv.empty? || command_line_opts[:help]
+    if @argv.nil? || @argv.empty? || @argv == ['']
       :help # default subcommand
     else
       @argv[0].to_sym # get the subcommand
     end # if
   end # sub_command
+
+  def argument_types
+    arguments.map do |argument|
+      CommandLine.argument_type(argument)
+    end # map
+  end # argument_types
+
+  def cleanup_ARGV
+    ARGV.delete_at(0)
+  end # cleanup_ARGV
+
+  def test
+    puts 'Method :test called in class ' + self.class.name + ' but not over-ridden.'
+  end # test
+
+  def ==(other)
+    if self.class == other.class
+      @test_executable == other.test_executable && @test_executable.unit.model_class? == other.test_executable.unit.model_class? && @argv == other.argv
+    else
+      false
+    end # if
+  end # ==
+
+  def to_s
+    ret = '@argv = ' + @argv.inspect
+    ret += "\n sub_command = " + sub_command.inspect
+    if number_of_arguments != 0
+      ret += "\n arguments = " + arguments.inspect
+      ret += "\n argument_types = " + argument_types.inspect
+    end # if
+    ret
+  end # to_s
+end # CommandLineExecutable
+
+class CommandLineSubExecutable < CommandLineExecutable
+  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+    SUB_COMMANDS = %w(help inspect test).freeze
+    Nonscriptable_methods = [:run, :executable, :executable=].freeze
+    Executable_default = lambda do |commandline, _attribute|
+      TestExecutable.new_from_path(commandline.argv)
+    end # Executable_default
+    end # DefinitionalConstants
+  include DefinitionalConstants
+	
+  module Constants # constant objects of the type
+    include DefinitionalConstants
+    # Command = RailsishRubyUnit::Executable.model_basename
+    Script_class = CommandLineExecutable
+    Script_command_line = CommandLineExecutable.new(test_executable: TestExecutable.new_from_path($PROGRAM_NAME), argv: ARGV)
+      # = Script_class.new(TestExecutable.new_from_path($0))
+    end # Constants
+  include Constants
 
 	def sub_command_commandline
     sub_command_unit = RailsishRubyUnit.new(model_basename: sub_command.to_sym)
@@ -77,12 +138,7 @@ class CommandLineExecutable
 		sub_command_test_executable = TestExecutable.new_from_path(required_library_file)
 		CommandLine.new(test_executable: sub_command_test_executable, argv: @argv[1..-1])
 	end # sub_command_commandline
-	
-  def argument_types
-    arguments.map do |argument|
-      CommandLine.argument_type(argument)
-    end # map
-  end # argument_types
+
 
   def find_examples
     Example.find_by_class(@test_executable.unit.model_class?, @test_executable.unit.model_class?)
@@ -106,17 +162,12 @@ class CommandLineExecutable
   end # make_executable_object
 
   def executable_object(file_argument = nil)
-    example = find_example?
     if file_argument.nil?
-      if example.nil? # default
         if number_of_arguments == 0
           make_executable_object($PROGRAM_NAME) # script file
         else
           make_executable_object(@argv[1])
         end # if
-      else
-        example.value
-      end # if
     else
       make_executable_object(file_argument)
     end # if
@@ -127,21 +178,6 @@ class CommandLineExecutable
 		MethodModel.instance_method_models(command_class)	
   end # sub_command_instance_methods
 
-	def find_sub_command_instance_method(method_name = sub_command)
-      ret = sub_command_instance_methods.find do |method_model|
-        method_model.method_name == sub_command
-      end # find
-	end # find_sub_command_instance_method
-	
-	def sub_command_method
-      ret = find_sub_command_instance_method(method_name = sub_command)
-			if ret.nil? # no sub_command, default to help
-				raise
-			else
-				ret
-			end # if
-	end # sub_command_method
-	
   def executable_method?(method_name, argument = nil)
     executable_object = executable_object(argument)
     ret = if executable_object.respond_to?(method_name)
@@ -155,6 +191,21 @@ class CommandLineExecutable
     message += candidate_commands_strings.join("\n")
     #		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
   end # method_exception_string
+	
+	def find_sub_command_instance_method(method_name = sub_command)
+      ret = sub_command_instance_methods.find do |method_model|
+        method_model.method_name == sub_command
+      end # find
+	end # find_sub_command_instance_method
+	
+	def sub_command_method
+      ret = find_sub_command_instance_method(method_name = sub_command)
+			if ret.nil? # no sub_command, default to help
+				raise 'method_name not found = ' + method_name.to_s
+			else
+				ret
+			end # if
+	end # sub_command_method
 
   def dispatch_required_arguments(argument)
     method = executable_method?(sub_command, argument)
@@ -206,22 +257,13 @@ class CommandLineExecutable
     #	cleanup_ARGV
     #		scripting_workflow.script_deserves_commit!(:passed)
     message = 'command_line  (' + inspect + ') '
-    message += ' run returns ' + ret.inspect + command_line_opts.inspect + caller.join("\n")
-    puts message if command_line_opts[:inspect]
-    puts 'run returns ' + ret.inspect if command_line_opts[:inspect]
+    message += ' run returns ' + ret.inspect + caller.join("\n")
     ret
   end # run
 
-  def cleanup_ARGV
-    ARGV.delete_at(0)
-  end # cleanup_ARGV
+end # CommandLineSubExecutable
 
-  def test
-    puts 'Method :test called in class ' + self.class.name + ' but not over-ridden.'
-  end # test
-end # CommandLineExecutable
-
-class CommandLine < CommandLineExecutable # < Command
+class CommandLine < CommandLineSubExecutable # < Command
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
     Command_line_opts_default = lambda do |commandline, _attribute|
       commandline.command_line_opts_initialize
@@ -242,12 +284,20 @@ class CommandLine < CommandLineExecutable # < Command
   end # ClassMethods
   extend ClassMethods
 
+  def sub_command
+    if command_line_opts[:help]
+      :help # default subcommand
+    else
+      super # get the subcommand
+    end # if
+  end # sub_command
+
 	
-  def candidate_commands_strings
-      command_instance_methods.map do |method_model|
-        method_model.prototype(ancestor_qualifier: true, argument_delimeter: '(')
+  def candidate_sub_commands_strings
+      sub_command_instance_methods.map do |method_model|
+        method_model.prototype(ancestor_qualifier: false, argument_delimeter: ' ')
       end # map
-  end # candidate_commands_strings
+  end # candidate_sub_commands_strings
 
   # default help, override as needed
   def help_banner_string
@@ -256,7 +306,7 @@ class CommandLine < CommandLineExecutable # < Command
     ret += Unit.all_basenames.join(', ')
     ret += ' subcommands or units:  ' + SUB_COMMANDS.join(', ')
     ret += ' candidate_commands with ' + command_line.number_of_arguments.to_s + ' or variable number of arguments:  '
-    command_line.candidate_commands_strings.each do |candidate_commands_string|
+    command_line.candidate_sub_commands_strings.each do |candidate_commands_string|
       ret += '   ' + candidate_commands_string
     end # each
     ret += 'args may be paths, units, branches, etc.'
@@ -273,12 +323,12 @@ class CommandLine < CommandLineExecutable # < Command
         banner Unit.all_basenames.join(' ,')
       elsif command_line.number_of_arguments == 1
         banner ' all candidate_commands '
-        command_line.candidate_commands_strings.each do |candidate_commands_string|
+        command_line.candidate_sub_commands_strings.each do |candidate_commands_string|
           banner '   '  + candidate_commands_string
         end # each
       else
         banner ' candidate_commands with ' + command_line.number_of_arguments.to_s + ' or variable number of arguments:  '
-        command_line.candidate_commands_strings.each do |candidate_commands_string|
+        command_line.candidate_sub_commands_strings.each do |candidate_commands_string|
           banner '   '  + candidate_commands_string
         end # each
       end # if
@@ -298,6 +348,7 @@ class CommandLine < CommandLineExecutable # < Command
       o
     end
   end # command_line_opts
+	
   module Constants # constant objects of the type
     include DefinitionalConstants
     # Command = RailsishRubyUnit::Executable.model_basename
@@ -306,22 +357,5 @@ class CommandLine < CommandLineExecutable # < Command
       # = Script_class.new(TestExecutable.new_from_path($0))
     end # Constants
   include Constants
-  def ==(other)
-    if self.class == other.class
-      @test_executable == other.test_executable && @test_executable.unit.model_class? == other.test_executable.unit.model_class? && @argv == other.argv
-    else
-      false
-    end # if
-  end # ==
-
-  def to_s
-    ret = '@argv = ' + @argv.inspect
-    ret += "\n sub_command = " + sub_command.inspect
-    if number_of_arguments != 0
-      ret += "\n arguments = " + arguments.inspect
-      ret += "\n argument_types = " + argument_types.inspect
-    end # if
-    ret
-  end # to_s
 
 end # CommandLine

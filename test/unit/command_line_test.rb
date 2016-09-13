@@ -6,15 +6,11 @@
 #
 ###########################################################################
 require_relative '../../app/models/test_environment_test_unit.rb'
-# require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../assertions/command_line_assertions.rb'
-#require_relative '../../app/models/unit_maturity.rb'
-
-class CommandLineExecutableTest < TestCase
-end # CommandLineExecutable
 
 class CommandLineTest < TestCase
   include CommandLine::Examples
+  include CommandLine::Constants
   module Examples
 		Not_virtus_test_executable = TestExecutable.new_from_path('app/models/editor.rb')
 		Not_virtus_unit_commandline = CommandLine.new(test_executable: Not_virtus_test_executable, argv: ['help', $PROGRAM_NAME])
@@ -61,6 +57,7 @@ class CommandLineTest < TestCase
 
   def test_initialize
     refute_nil(No_args.test_executable.unit.model_class?)
+    refute_nil(No_arg_run.test_executable.unit.model_class?)
     refute_nil(Script_command_line.test_executable.unit.model_class?)
   end # values
 
@@ -75,8 +72,9 @@ class CommandLineTest < TestCase
 #    assert_equal(:state?, No_side_effects_sub_command_line.sub_command)
 #		assert_equal(:help, Not_virtus_unit_commandline.sub_command)
 		assert_equal(:version_comparison, No_side_effects_default_line.sub_command)
-#		assert_equal(:help, No_arg_run.sub_command)
-#		assert_equal(:help, Help_run.sub_command)
+		assert_equal(:help, No_arg_run.sub_command, No_arg_run.inspect)
+		assert_equal(:help, Help_run.command_line_opts[:help], Help_run.inspect)
+		assert_equal(:help, Help_run.sub_command, Help_run.inspect)
     assert_equal(:help, Script_command_line.sub_command, Script_command_line.inspect)
   end # sub_command
 
@@ -88,7 +86,6 @@ class CommandLineTest < TestCase
   end # argument_types
 
   def test_find_examples
-    assert(RailsishRubyUnit::Executable.model_class?.constants.include?(:Examples), RailsishRubyUnit::Executable.model_class?.constants.inspect)
     constants = RailsishRubyUnit::Executable.model_class?.constants
     assert(constants.include?(:Examples))
     example_constants = RailsishRubyUnit::Executable.model_class?::Examples.constants
@@ -120,7 +117,7 @@ class CommandLineTest < TestCase
     refute_nil(Script_command_line.find_example?)
     #	assert_equal(TestRun::Examples::Default_testRun, No_side_effects_sub_command_line.find_example?.value)
     #	assert_equal(CommandLine::Examples::Script_command_line, Not_virtus_unit_commandline.find_example?.value)
-    assert_equal(CommandLine::Examples::Script_command_line, Script_command_line.find_example?.value)
+    assert_equal(CommandLine::Constants::Script_command_line, Script_command_line.find_example?.value)
   end # find_example?
 
   def test_make_executable_object
@@ -148,6 +145,26 @@ class CommandLineTest < TestCase
     #	assert_equal($0, test_run_object.test_executable.argument_path.relative_pathname.to_s)
     #	assert_equal($0, No_side_effects_sub_command_line.test_executable_object.test_test_executable.argument_path.relative_pathname.to_s)
   end # executable_object
+
+	def test_find_sub_command_instance_method
+#    assert_instance_of(MethodModel, No_side_effects_sub_command_line.find_sub_command_instance_method(:state?), No_side_effects_sub_command_line.sub_command_instance_methods)
+#    assert_instance_of(NilClass, Not_virtus_unit_commandline.find_sub_command_instance_method(:help), Not_virtus_unit_commandline.sub_command_instance_methods)
+		assert_instance_of(MethodModel, No_side_effects_default_line.find_sub_command_instance_method)
+
+#    assert_instance_of(MethodModel, No_side_effects_sub_command_line.find_sub_command_instance_method)
+    assert_instance_of(NilClass, Script_command_line.find_sub_command_instance_method, Script_command_line.sub_command_instance_methods)
+		assert_instance_of(NilClass, Help_run.find_sub_command_instance_method)
+		assert_instance_of(NilClass, No_arg_run.find_sub_command_instance_method)
+
+#    assert_equal("Merge#state? is a instance method of class Merge\n", No_side_effects_sub_command_line.find_sub_command_instance_method(:state?), No_side_effects_sub_command_line.sub_command_instance_methods)
+    assert_equal({}, Not_virtus_unit_commandline.find_sub_command_instance_method(:help), Not_virtus_unit_commandline.sub_command_instance_methods)
+
+#    assert_equal({}, No_side_effects_sub_command_line.find_sub_command_instance_method)
+		assert_equal({}, No_side_effects_default_line.find_sub_command_instance_method)
+		assert_equal({}, No_arg_run.find_sub_command_instance_method)
+		assert_equal({}, Help_run.find_sub_command_instance_method)
+    assert_equal({}, Script_command_line.find_sub_command_instance_method, Script_command_line.sub_command_instance_methods)
+	end # find_sub_command_instance_method
 
   def test_sub_command_instance_methods
     assert_equal(-1, Script_command_line.method(:initialize).arity)
