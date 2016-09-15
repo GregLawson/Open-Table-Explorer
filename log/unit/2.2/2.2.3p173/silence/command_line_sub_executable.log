@@ -1,0 +1,10 @@
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 9, 14, 18, 20, Rational(37391968660, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_sub_executable_test.rb',
+:output => '',
+:errors => {:rescue_exception => <Timeout::Error
+>
+,
+}
+,
+}
