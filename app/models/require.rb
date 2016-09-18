@@ -23,6 +23,7 @@ class Require
   module DefinitionalClassMethods # compute sub-objects such as default attribute values
     include DefinitionalConstants
 		def capture_to_hash(capture)
+			capture.output
 		end # capture_to_hash
 		
     def parse_output(path, capture_class = SplitCapture)
