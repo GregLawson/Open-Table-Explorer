@@ -1,102 +1,49 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 20, Rational(41106626377, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 22, 5, 58, Rational(6117780643, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test
 Started
-.[-91, -2, -1, 0, 11573]
-min = 0.0max = 11573.0
-F
-===============================================================================
-Failure: test_DateTime_ruby_lines_storage(RubyLinesStorageTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:146:in `test_DateTime_ruby_lines_storage'
-     143: 		message = 'min = ' + errors.min.to_f.to_s + 'max = ' + errors.max.to_f.to_s
-     144: 		puts message
-     145: 		assert_equal(0, errors.min)
-  => 146: 		assert_equal(11574, errors.max)
-     147: 		assert_equal(11574, 2**13, 11574.pack("H*")) # not a simple truncation!
-     148: 		assert_approximate(DateTime.now, message)
-     149: 	end # ruby_lines_storage
-<11574> expected but was
-<11573>
+.[-141, -65, -45, -20, -19, -18, -17, -13, -12, -11, -10, -9, -8, -2, -1, 0, 11574]
+min = 0.0max = 11574.0
+............syntax error, unexpected \':\', expecting \'}\' in context: 
+:errors => {:syserr => \'/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb:11:in `<top (required)>\': uninitialized constant MiniTest (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb:8:in `require_relative\'
+syntax error, unexpected tREGEXP_BEG, expecting \'}\' in context: 
+/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:61:in `test_AssertionFailedError\'
+     58: 	assert(exception.class.ancestors.include?(Exception))
+.
 
-diff:
-? 11574
-?     3
-===============================================================================
-........F
-===============================================================================
-Failure:
-  "Time.new(2016, 8, 17, 18, 20, 27552185016/1000000000, \"-07:00\").to_datetime" should eval to approximately Wed, 17 Aug 2016 18:20:27 -0700.
-  <6.391030277777778e-06> expected to be
-  <=
-  <1.0e-09>.
-test_assert_approximate(RubyLinesStorageTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:49:in `assert_approximate'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:83:in `block in test_assert_approximate'
-     80: 	def test_assert_approximate
-     81: 		Examples.constants.each do |name|
-     82: 			if name.to_s[0,12] == 'Approximate_'
-  => 83: 				assert_approximate(eval_name(name))
-     84: 			end # if
-     85: 		end # each
-     86: 	end # assert_approximate
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:81:in `each'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:81:in `test_assert_approximate'
-===============================================================================
-.F
-===============================================================================
-Failure:
-  "Time.new(2016, 8, 17, 18, 20, 27552185016/1000000000, \"-07:00\").to_datetime" should eval to approximately Wed, 17 Aug 2016 18:20:27 -0700.
-  <6.391030277777778e-06> expected to be
-  <=
-  <1.0e-09>.
-test_assert_reversible(RubyLinesStorageTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:49:in `assert_approximate'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:63:in `block in test_assert_reversible'
-     60: 		Examples.constants.each do |name|
-     61: 
-     62: 			if name.to_s[0,12] == 'Approximate_'
-  => 63: 				assert_approximate(eval_name(name))
-     64: 			else
-     65: 				assert_reversible(eval_name(name))
-     66: 			end # if
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:60:in `each'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:60:in `test_assert_reversible'
-===============================================================================
-
-
-Finished in 13.489976382 seconds.
+Finished in 13.503075362 seconds.
 ------
-13 tests, 53 assertions, 3 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-76.9231% passed
+14 tests, 42 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
 ------
-0.96 tests/s, 3.93 assertions/s
+1.04 tests/s, 3.11 assertions/s
 ',
-:errors => {:syserr => 'Command exited with non-zero status 1
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb"
-	User time (seconds): 12.78
-	System time (seconds): 1.34
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb"
+	User time (seconds): 13.10
+	System time (seconds): 1.28
 	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.11
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.37
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 46672
+	Maximum resident set size (kbytes): 49620
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 1
-	Minor (reclaiming a frame) page faults: 10266
-	Voluntary context switches: 4
-	Involuntary context switches: 61
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 11141
+	Voluntary context switches: 3
+	Involuntary context switches: 39
 	Swaps: 0
-	File system inputs: 32
+	File system inputs: 0
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0
 ',
 }
 ,

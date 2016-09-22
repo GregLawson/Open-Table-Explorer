@@ -5,6 +5,25 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../../app/models/parse.rb'
+module RubyLinesStorage
+	module DefinitionalConstants
+		Eval_syntax_error_regexp = /\(eval\):/ * /[0-9]+/.capture(:line) * /: / */.*/.capture(:message)
+	end # DefinitionalConstants
+	include DefinitionalConstants
+	def RubyLinesStorage.read(path)
+		file_contents =IO.read(path)
+		raise file_contents if file_contents[0] != '{'
+		eval(file_contents)
+	rescue SyntaxError => exception_object
+		exception_message = exception_object.message
+		exception_hash = exception_message.parse(Eval_syntax_error_regexp)
+		line_number = exception_hash[:line].to_i
+		context = file_contents.lines[(line_number-1)..line_number].join
+		puts exception_hash[:message] + " in context: \n" + context
+	end # read
+end # RubyLinesStorage
+
 class Array
 	def ruby_lines_storage(line_length_limit = 50)
 		elements = map do |element|
@@ -50,7 +69,8 @@ end # Fixnum
 
 class String
 	def ruby_lines_storage
-		"'" + to_s + "'" 
+		string = to_s
+		"'" + string.gsub("'", "\\\\'") + "'" 
 	end # ruby_lines_storage
 end # String
 
