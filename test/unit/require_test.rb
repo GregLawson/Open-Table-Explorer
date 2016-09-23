@@ -11,6 +11,8 @@ class RequireTest < TestCase
   # include DefaultTests
   module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
     include Require::Examples
+		File_with_no_requires = '/dev/null'
+		File_with_minimum_requires = 'app/models/ruby_lines_storage.rb'
   end # Examples
 	include Examples
   include RailsishRubyUnit::Executable.model_class?::Examples
@@ -68,55 +70,64 @@ class RequireTest < TestCase
     assert_equal([{ require_command: 'require_relative', required_path: '../../app/models/unit.rb' }], parse_array)
 
     path = 'test/unit/test_run_test.rb'
-    capture =  Require.parse_output(path, SplitCapture)
-    assert_equal({:require_command=>"require", :required_path=>"active_support"}, capture.output[1])
+    parse =  Require.parse_output(path, SplitCapture)
+    assert_equal({:require_command=>"require", :required_path=>"active_support"}, parse[1])
 #    assert_equal([{ require_command: 'require_relative', required_path: '../../app/models/unit.rb' }], capture.output)
     end # parse_output
 
   def test_scan_path
-    path = 'test/unit/test_run_test.rb'
+    path = File_with_no_requires
+		already_seen = []
       capture = Require.parse_output(path, SplitCapture)
-		assert_instance_of(SplitCapture, capture)
+		assert_instance_of(Array, capture)
 			ret =
-				capture.output.enumerate(:map) do |output| 
+				capture.enumerate(:map) do |output| 
 					assert_kind_of(Hash, output)
 					if output[:require_command] == 'require' # don't recurse
 						output[:required_path]
-					else
+				elsif output[:require_command] == 'require_relative'
 						assert_instance_of(Hash, output)
-						relative_path = File.dirname(path) + '/' + output[:required_path]
-#						Require.scan_path(relative_path)
+					relative_path = Pathname.new(File.dirname(path) + '/' + output[:required_path]).cleanpath
+					unless already_seen.include?(File.expand_path(relative_path)) # recursion
+						Require.scan_path(relative_path, already_seen << File.expand_path(relative_path))
+					end # unless
+					else
+					raise capture.inspect
 					end # if
 				end # if
-#    requires = Require.scan_path(path)
-#		assert_instance_of(Hash, requires)
-#    assert_equal({ model: { require_command: 'require_relative', required_path: '../../app/models/no_db.rb' },
-#                   unit: { require_command: 'require_relative', required_path: 'test_environment' } },
-#                 requires.output)
+    requires = Require.scan_path(path)
+		assert_instance_of(Array, requires)
+		assert_equal(requires, ret)
+    path = 'test/unit/test_run_test.rb'
+#		File_with_no_requires = 'app/models/minimal2.rb'
+#		File_with_one_require = 'test/unit/minimal2_test.rb'
+		assert_equal([], Require.scan_path(File_with_no_requires))
+#		assert_equal(["rom", "rom-sql", "rom-repository", "dry-types"], Require.scan_path(File_with_minimum_requires))
   end # scan_path
 
   def test_scan_unit
 		ret = {}
-    Unit::Executable.edit_files.each do |file|
-        parse = Require.parse_output(file, SplitCapture)
-      parse.output.enumerate(:each) do |output|
+    Unit::Executable.edit_files.each do |path|
+			parse = Require.parse_output(path, SplitCapture)
+      parse.enumerate(:each) do |output|
         assert_instance_of(Hash, output)
         assert_includes(output.keys, :required_path)
           assert_includes(['require', 'require_relative'], output[:require_command], output)
       end # each
-      keys = parse.output.enumerate(:map, &:keys).flatten.uniq
+      keys = parse.enumerate(:map, &:keys).flatten.uniq
       assert_equal([:require_command, :required_path], keys)
-      ret = ret.merge(FilePattern.find_from_path(file)[:name] => parse)
+      ret = ret.merge(FilePattern.find_from_path(path)[:name] => parse)
     end # each
     assert_instance_of(Hash, ret)
-#    assert_equal(ret, Require.scan_unit(Unit::Executable))
+		assert_equal([:model, :unit, :slower_test], ret.keys, ret[0].inspect)
+		assert_equal([:require_command, :required_path], ret[:unit][0].keys, ret.inspect)
+    assert_equal(ret, Require.scan_unit(Unit::Executable))
   end # scan_unit
   def test_Require_attributes
-#    executing_requires = Require.new(path: $0)
-#    assert_instance_of(Hash, executing_requires.cached_require_captures)
-#    assert_includes(executing_requires.cached_require_captures.keys, :require_command)
-#    assert_instance_of(Array, executing_requires.cached_require_captures)
-#    executing_requires.assert_relative(Require_line, Relative_regexp)
+    executing_requires = Require.new(path: $0)
+    assert_instance_of(Hash, executing_requires.cached_require_captures)
+    assert_includes(executing_requires.cached_require_captures.keys, 'active_support/all')
+    assert_instance_of(Hash, executing_requires.cached_require_captures)
   end # values
 	
 	def test_require_graph
@@ -131,6 +142,30 @@ class RequireTest < TestCase
 #    g = g.vertices_filtered_by { |v| tree.has_vertex? v }
 #    g.write_to_graphic_file('jpg')
 	end # require_graph
+	
+    def test_all
+    end # all
+      def test_Require_assert_pre_conditions
+      end # assert_pre_conditions
+
+      def test_Require_assert_post_conditions
+      end # assert_post_conditions
+
+    def test_assert_requires
+			Require.assert_requires(Require_line, Require_regexp)
+    end # assert_requires
+		
+	def test_assert_path_requires
+#		Require.assert_path_requires(File_with_no_requires)
+		Require.assert_path_requires(File_with_minimum_requires)
+	end # assert_path_requires
+		
+    def test_assert_pre_conditions(message = '')
+    end # assert_pre_conditions
+
+    def test_assert_post_conditions(message = '')
+    end # assert_post_conditions
+
 end # Require
 
 class BoostGraphTest < TestCase

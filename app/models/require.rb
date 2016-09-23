@@ -28,27 +28,33 @@ class Require
 		
     def parse_output(path, capture_class = SplitCapture)
 			code = IO.read(path)
-      parse = code.capture?(Require_regexp, capture_class)
+      parse = capture_to_hash(code.capture?(Require_regexp, capture_class))
     end # parse_output
 
-    def scan_path(path)
-      puts 'path = ' + path.to_s
+    def scan_path(path, already_seen = [])
+#      puts 'path = ' + path.to_s
 			capture = parse_output(path, SplitCapture)
-			capture.output.enumerate(:map) do |output| 
+			capture.enumerate(:map) do |output| 
 				if output[:require_command] == 'require' # don't recurse
 					output[:required_path]
-				else
+				elsif output[:require_command] == 'require_relative'
 					relative_path = Pathname.new(File.dirname(path) + '/' + output[:required_path]).cleanpath
-					raise if File.expand_path(relative_path) == File.expand_path(path) # recursion
-					Require.scan_path(relative_path)
+					unless already_seen.include?(File.expand_path(relative_path)) # recursion
+						Require.scan_path(relative_path, already_seen << File.expand_path(relative_path))
+					end # unless
+				else
+					raise capture.inspect
 				end # if
-			end # if
+			end # map
     end # scan_path
 
     def scan_unit(unit)
-      unit.edit_files.map do |path|
-				parse_output(path, SplitCapture)
+			ret = {}
+      unit.edit_files.each do |path|
+				parse = parse_output(path, SplitCapture)
+				ret = ret.merge(FilePattern.find_from_path(path)[:name] => parse)
       end # each
+			ret
     end # scan_unit
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods

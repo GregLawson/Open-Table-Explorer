@@ -1,33 +1,33 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 22, 5, 8, Rational(55453310419, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 23, 0, 58, Rational(53750957437, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test
 Started
-........
+...............
 
-Finished in 0.119740621 seconds.
+Finished in 0.135959033 seconds.
 ------
-8 tests, 85 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+15 tests, 85 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-66.81 tests/s, 709.87 assertions/s
+110.33 tests/s, 625.19 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb"
-	User time (seconds): 1.56
-	System time (seconds): 0.14
+	User time (seconds): 1.57
+	System time (seconds): 0.15
 	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.74
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.75
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 35800
+	Maximum resident set size (kbytes): 35768
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 11692
-	Voluntary context switches: 132
-	Involuntary context switches: 52
+	Minor (reclaiming a frame) page faults: 11712
+	Voluntary context switches: 129
+	Involuntary context switches: 51
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 104
