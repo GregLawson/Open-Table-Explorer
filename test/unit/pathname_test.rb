@@ -8,7 +8,7 @@
 require_relative 'test_environment'
 require_relative '../../app/models/pathname.rb'
 class PathnameTest < TestCase
-include DefaultTests
+#include DefaultTests
 include RailsishRubyUnit::Executable.model_class?::Examples
 def test_touch_rescued!
 	assert_kind_of(Exception, Example_no_write.touch_rescued!)
