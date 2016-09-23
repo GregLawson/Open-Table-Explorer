@@ -10,6 +10,7 @@ require 'virtus'
 # assert_global_name(:Repository)
 require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_run.rb'
+require_relative '../../app/models/ruby_lines_storage.rb'
 # abstracts TestRun and git commits for comparison
 class TestMaturity
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
@@ -30,9 +31,16 @@ class TestMaturity
                     initialization_fail: :testing,
                     syntax_error:        :edited
         }.freeze
-    Error_score_directory = Unit.data_source_directories + '/test_maturity/'
+		Error_classification_keys = Push_branch.keys
+    Error_score_directory = Unit.data_source_directories + 'test_maturity/'
+#		raise RubyLinesStorage.instance_methods(false).inspect unless RubyLinesStorage.instance_methods.include?(:read) 
+#    Example_minitest_log = RubyLinesStorage.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
+#    Example_testunit_log = RubyLinesStorage.read('./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log')
     Example_minitest_log = IO.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
     Example_testunit_log = IO.read('./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log')
+		Fixed_regexp = /[0-9]+\.[0-9]+/
+		Finished_regexp = /Finished in / * Fixed_regexp.capture(:test_finished)
+    User_time_regexp = /User time \(seconds\): / * Fixed_regexp.capture(:user_time)
     Tests_pattern = /[0-9]+/.capture(:tests) * / / * (/tests/ | /runs/) * /, /
     Assertions_pattern = /[0-9]+/.capture(:assertions) * / / * /assertions/ * /, /
     Failures_pattern = /[0-9]+/.capture(:failures) * / / * /failures/ * /, /
@@ -54,9 +62,9 @@ class TestMaturity
     include DefinitionalConstants
     def example_files
       ret = {} # accumulate a hash
-      Error_classification.each_pair do |_expected_error_score, classification|
+      Error_classification_keys.each do |classification|
         argument_path = Error_score_directory + classification.to_s + '.rb'
-        ret = ret.merge(argument_path => classification)
+        ret = ret.merge(classification => argument_path)
       end # each_pair
       ret
     end # example_files
@@ -227,12 +235,6 @@ class TestMaturity
       assert_equal(deserving_branch, branch_expected, message)
     end # deserving_branch
   end # Assertions
-  module Examples
-    include DefinitionalConstants
-    ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
-    MinimalMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal2_test.rb'))
-    MinimalMaturity3 = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal3_test.rb'))
-  end # Examples
 end # TestMaturity
 
 class UnitMaturity
@@ -314,12 +316,4 @@ class UnitMaturity
     right_index = scan_verions?(filename, current_index + 1..Branch::Last_slot_index, :first)
     [left_index, right_index]
   end # bracketing_versions?
-  # require_relative '../../app/models/assertions.rb'
-  module Examples
-    include Constants
-    File_not_in_oldest_branch = 'test/slowest/repository_test.rb'.freeze
-    Most_stable_file = 'test/unit/minimal2_test.rb'.freeze
-    Formerly_existant_file = 'test/unit/related_file.rb'.freeze
-    TestUnitMaturity = UnitMaturity.new(Repository::This_code_repository, Repository::Repository_Unit)
-  end # Examples
 end # UnitMaturity

@@ -1,25 +1,25 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 25, 11, 3, Rational(23150477548, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 23, 1, 20, Rational(58901519416, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/syntax_error.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
 :errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/syntax_error.rb:1: syntax error, unexpected &
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/syntax_error.rb"
-	User time (seconds): 0.08
-	System time (seconds): 0.01
-	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.09
+	User time (seconds): 0.10
+	System time (seconds): 0.00
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.11
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 8620
+	Maximum resident set size (kbytes): 8432
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 1172
-	Voluntary context switches: 3
-	Involuntary context switches: 25
+	Minor (reclaiming a frame) page faults: 1178
+	Voluntary context switches: 2
+	Involuntary context switches: 16
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

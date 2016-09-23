@@ -6,10 +6,14 @@
 #
 ###########################################################################
 require_relative '../../unit/test_environment'
-class Minimal2Test < TestCase
+class MultipleTestsFailTest < TestCase
 def test_initialize
 end # initialize
-def test_minimal
+def test_fail
 	fail
-end # minimal
-end # Minimal2
+end # fail
+
+def test_fail2
+	fail
+end # fail2
+end # MultipleTestsFail
