@@ -13,7 +13,8 @@ class RubyLinesStorageTest < TestCase
 		include RubyLinesStorage::DefinitionalConstants
 		Short_array = [1,2,3]
 		Long_array = Array.new(50, 1)
-		Short_hash = {}
+		Empty_hash = {}
+		Short_hash = {a:1, b:2}
 		Short_nil = nil
 		Short_fixnum = 123
 		Short_string = '123'
@@ -31,15 +32,7 @@ class RubyLinesStorageTest < TestCase
 		raise example_string + "\n" + exception_raised.inspect
 	end # eval_example
 	
-	def eval_name(name)
-			expression_string = 'Examples::' + name.to_s
-			eval_rescued(expression_string)
-		rescue 
-			raise 'name = ' + name.inspect + ' in expression ' + expression_string + ' should eval.'
-	end # eval_name
-	
-	def test_read
-    example_minitest_log = IO.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
+	def test_RubyLinesStorage_read
 		assert_match(/\(eval\):/ * /[0-9]+/.capture(:line), Exception_message)
 		assert_match(/\(eval\):/ * /[0-9]+/.capture(:line) * /: / */.*/, Exception_message)
 		assert_match(Eval_syntax_error_regexp, Exception_message)
@@ -48,8 +41,25 @@ class RubyLinesStorageTest < TestCase
 
     example_minitest = RubyLinesStorage.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
     example_testunit = RubyLinesStorage.read('./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log')
-	end # read
 
+    example_minitest_log = IO.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
+		log_files = Dir['log/unit/2.2/2.2.3p173/silence/*.log']
+		file_times = log_files.map do |path|
+			file_contents = IO.read(path)
+			hash = RubyLinesStorage.read(path)
+		end # each
+		message = file_times.ruby_lines_storage
+#		assert_equal
+
+	end # read
+	
+	def eval_name(name)
+			expression_string = 'Examples::' + name.to_s
+			eval_rescued(expression_string)
+		rescue 
+			raise 'name = ' + name.inspect + ' in expression ' + expression_string + ' should eval.'
+	end # eval_name
+	
 	def assert_reversible(object)
 		ruby_lines_storage = object.ruby_lines_storage
 		message = ruby_lines_storage.inspect + ' should eval to ' + object.inspect
@@ -104,41 +114,51 @@ class RubyLinesStorageTest < TestCase
 		assert_match(/\n/, Long_array.ruby_lines_storage)
 		assert_reversible(Short_array)
 		assert_reversible(Long_array)
-	end # ruby_lines_storage
+end # Array
 
 	def test_Hash_ruby_lines_storage
-#		assert_equal('{}', {}.ruby_lines_storage)
+		assert_equal("{\n}\n", Empty_hash.ruby_lines_storage)
+		assert_reversible(Empty_hash)
+
+		ret = []
+		Short_hash.each_pair do |key, value|
+			ret << key.ruby_lines_storage + ' => ' + value.ruby_lines_storage
+		end # each_pair
+		assert_equal([":a => 1", ":b => 2"], ret)
+		ret = '{' + ret.join(",\n") + "\n" + "}\n"
+		assert_equal("{:a => 1,\n:b => 2\n}\n", ret)
+		assert_equal("{:a => 1,\n:b => 2\n}\n", Short_hash.ruby_lines_storage)
 		assert_reversible(Short_hash)
-	end # ruby_lines_storage
+end # Hash
 	
 	def test_NilClass_ruby_lines_storage
 		assert_equal('nil', nil.ruby_lines_storage)
 		assert_reversible(nil)
-	end # ruby_lines_storage
+end # NilClass
 
 	def test_Fixnum_ruby_lines_storage
 		assert_equal('123', 123.ruby_lines_storage)
 		assert_reversible(123)
-	end # ruby_lines_storage
+end # Fixnum
 
 	def test_String_ruby_lines_storage
 		assert_equal("'cat'", 'cat'.ruby_lines_storage)
 		assert_equal("'cat\ndog'", "cat\ndog".ruby_lines_storage)
 		refute_equal("'cat\ndog'".inspect, "cat\ndog".ruby_lines_storage)
 		assert_reversible('12\'3')
-	end # ruby_lines_storage
+end # String
 
 	def test_Symbol_ruby_lines_storage
 		assert_equal(':cat', :cat.ruby_lines_storage)
 		assert_reversible(:cat)
 		assert_reversible(:"cat\ndog")
 		assert_equal(':"cat\\ndog"', :"cat\ndog".ruby_lines_storage)
-	end # ruby_lines_storage
+end # Symbol
 	
 	def test_Date_ruby_lines_storage
 		time = Date.today
 		assert_reversible(time)
-	end # ruby_lines_storage
+end # Date
 	
 require 'prime'	
 	def test_DateTime_ruby_lines_storage
@@ -162,7 +182,7 @@ require 'prime'
 		assert_equal([[2, 1], [3, 2], [643, 1]], 11574.prime_division)
 		assert_equal(11574, "2D36".to_i(16), "%02X" % 11574) # not a simple truncation!
 		assert_approximate(DateTime.now, Rational(11574, 1000000000))
-	end # ruby_lines_storage
+	end # DateTime
 	
 	def test_Time_ruby_lines_storage
 		time = Time.now
@@ -173,7 +193,7 @@ require 'prime'
 		round_off = time - eval_time
 		assert_equal(time, eval_time, time.strftime('%Y-%m-%d %H:%M:%S.%9N %z') + time.ruby_lines_storage + round_off.to_f.to_s)
 		assert_reversible(time)
-	end # ruby_lines_storage
+	end # Time
 	
 	def test_Object_ruby_lines_storage
 		assert_equal('[1, 2, 3]', [1,2,3].ruby_lines_storage)
@@ -181,5 +201,5 @@ require 'prime'
 		assert_equal([1, 1, 1], [1,2,3].map {|e| e.ruby_lines_storage.size})
 		assert_equal(['1', '2', '3'], [1,2,3].map(&:ruby_lines_storage))
 		assert_equal([1, 1, 1], [1,2,3].map(&:ruby_lines_storage).map(&:size))
-	end # ruby_lines_storage
+	end # Object
 end # RubyLinesStorage

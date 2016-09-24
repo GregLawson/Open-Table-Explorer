@@ -11,17 +11,29 @@ module RubyLinesStorage
 		Eval_syntax_error_regexp = /\(eval\):/ * /[0-9]+/.capture(:line) * /: / */.*/.capture(:message)
 	end # DefinitionalConstants
 	include DefinitionalConstants
+
+	def RubyLinesStorage.read_error_context(path, file_contents, line_number = 2)
+		context = "\n" + 'path = ' + path.to_s + "\n" + " in context: \n"
+		context += file_contents.lines[(line_number-2)..line_number].join
+		context
+	end # read_error_context
+	
 	def RubyLinesStorage.read(path)
 		file_contents =IO.read(path)
-		raise file_contents if file_contents[0] != '{'
+		puts 'Must start with open curly brace.' + read_error_context(path, file_contents) if file_contents[0] != '{'
 		eval(file_contents)
 	rescue SyntaxError => exception_object
 		exception_message = exception_object.message
 		exception_hash = exception_message.parse(Eval_syntax_error_regexp)
 		line_number = exception_hash[:line].to_i
-		context = file_contents.lines[(line_number-1)..line_number].join
-		puts exception_hash[:message] + " in context: \n" + context
+		context = read_error_context(path, file_contents, line_number)
+		puts exception_hash[:message] + context
 	end # read
+	
+	module Assertions
+	module ClassMethods
+	end # ClassMethods
+	end # Assertions
 end # RubyLinesStorage
 
 class Array
@@ -47,11 +59,11 @@ end # Array
 
 class Hash
 	def ruby_lines_storage
-		ret = '{'
+		ret = []
 		each_pair do |key, value|
-			ret += key.ruby_lines_storage + ' => ' + value.ruby_lines_storage + ",\n"
+			ret << key.ruby_lines_storage + ' => ' + value.ruby_lines_storage
 		end # each_pair
-		ret.chomp.chomp + "\n" + "}\n" # remove terminating linefeed and comma
+		'{' + ret.join(",\n") + "\n" + "}\n"
 	end # ruby_lines_storage
 end # Hash
 

@@ -1,41 +1,875 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 22, 5, 58, Rational(6117780643, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 4, 37, Rational(39096665814, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test
 Started
-.[-141, -65, -45, -20, -19, -18, -17, -13, -12, -11, -10, -9, -8, -2, -1, 0, 11574]
+.[-142, -64, -35, -21, -19, -18, -17, -12, -11, -10, -9, -8, -2, -1, 0, 11574]
 min = 0.0max = 11574.0
-............syntax error, unexpected \':\', expecting \'}\' in context: 
-:errors => {:syserr => \'/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb:11:in `<top (required)>\': uninitialized constant MiniTest (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb:8:in `require_relative\'
-syntax error, unexpected tREGEXP_BEG, expecting \'}\' in context: 
-/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:61:in `test_AssertionFailedError\'
-     58: 	assert(exception.class.ancestors.include?(Exception))
-.
+......syntax error, unexpected \',\', expecting \'}\'
+path = ./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = ./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/file_pattern.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/pathname.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/generic_type.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/nested_loop.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/minimal_no_test_environment.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/to_do_list.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/unbounded_range.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/regexp_parse.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/stream_pattern_argument.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/zillow.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/syntax_error.rb.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/editor.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/network.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/nmap.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/global.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/work_flow.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/open_tax_form_filler.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/ruby_interpreter.log
+ in context: 
+}
+,
+}
+Must start with open curly brace.
+path = log/unit/2.2/2.2.3p173/silence/requires.log
+ in context: 
+passed
+2016-06-01 15:47:38.048
+/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb
+syntax error, unexpected tINTEGER, expecting end-of-input
+path = log/unit/2.2/2.2.3p173/silence/requires.log
+ in context: 
+passed
+2016-06-01 15:47:38.048
+/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/requires_test.rb
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/match_data.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/stream.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/router.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/minimal3.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/regexp_sequence.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/file_tree.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/pcf8591.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/iwup.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/column_group.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/generic_table.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/kernel_module.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/r_rsruby.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/homerun.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/parse_tree.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/stream_tree.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/example_type.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/ruby.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/enumerator.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/boot.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/r.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/battery.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/test_environment_test_unit.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/test_run.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/test_environment_minitest.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/test_environment_ruby.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/url.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/unbounded_fixnum.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/branch.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/rebase.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/error_type.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/parse.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/default_test_case.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/ruby_lines_storage.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/usb.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/generic_column.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/shell_command.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/transfer.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/stream_link.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/huelserie.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/generic_file.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/regexp_tree.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/edison.log
+ in context: 
+}
+,
+}
+Must start with open curly brace.
+path = log/unit/2.2/2.2.3p173/silence/dependancies.log
+ in context: 
+passed
+2016-02-01 18:31:23.674
+ruby -v -W0 test/unit/dependancies_test.rb
+syntax error, unexpected tINTEGER, expecting end-of-input
+path = log/unit/2.2/2.2.3p173/silence/dependancies.log
+ in context: 
+passed
+2016-02-01 18:31:23.674
+ruby -v -W0 test/unit/dependancies_test.rb
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/regexp_generalization.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/gnome.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/discrete_dimension.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/stream_parameter.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/grub.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/version.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/tax_form.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/arp.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/assertions.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/dependancy.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/udev.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/no_db.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/success.rb.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/repository.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/stream_method_argument.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/regexp_match.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/regexp.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/frequency.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/unit_maturity.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/default.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/schedule.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/stream_pattern.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/generic_table_html.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/xrandr.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/regexp_repetition.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/samba.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/test_executable.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \'<\'
+path = log/unit/2.2/2.2.3p173/silence/command_line_sub_executable.log
+ in context: 
+:output => \'\',
+:errors => {:rescue_exception => <Timeout::Error
+>
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/code.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/production_ftp.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/require.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/tedprimary.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \'<\'
+path = log/unit/2.2/2.2.3p173/silence/command_line.log
+ in context: 
+:output => \'\',
+:errors => {:rescue_exception => <Timeout::Error
+>
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/battery_measurement.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/weather.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/method_model.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/dhcp.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \'<\'
+path = log/unit/2.2/2.2.3p173/silence/rebuild.log
+ in context: 
+:output => \'\',
+:errors => {:rescue_exception => <Timeout::Error
+>
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/host.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/string.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/huelshow.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/unit.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/bug.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/minimal4.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/visa.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/backup.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/flora.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/sleep_study.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/command.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/usc.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/stream_method_call.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/ofx.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/generic_grep.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/test_environment_default_test_case.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/x.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/open_tax_solver.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/production.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/merge.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/nested_array.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/stream_method.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/EEG.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/generic_table_association.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/partition.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/test_method.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/generic_table_examples.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/battery_type.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/command_line_executable.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/blue_tooth.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/regexp_alternative.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/test_environment.log
+ in context: 
+}
+,
+}
+syntax error, unexpected \',\', expecting \'}\'
+path = log/unit/2.2/2.2.3p173/silence/ssbc.log
+ in context: 
+}
+,
+}
+.......
 
-Finished in 13.503075362 seconds.
+Finished in 13.742137124 seconds.
 ------
-14 tests, 42 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+14 tests, 47 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-1.04 tests/s, 3.11 assertions/s
+1.02 tests/s, 3.42 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb"
-	User time (seconds): 13.10
-	System time (seconds): 1.28
+	User time (seconds): 13.31
+	System time (seconds): 1.32
 	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.37
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.61
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 49620
+	Maximum resident set size (kbytes): 50968
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 11141
+	Minor (reclaiming a frame) page faults: 11824
 	Voluntary context switches: 3
-	Involuntary context switches: 39
+	Involuntary context switches: 49
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -44,7 +878,7 @@ Finished in 13.503075362 seconds.
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 0
-',
+'
 }
-,
+
 }
