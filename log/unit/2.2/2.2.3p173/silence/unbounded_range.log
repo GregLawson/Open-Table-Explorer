@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 22, Rational(37056946485, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 5, 2, Rational(17604721349, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_range_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,59 +8,59 @@ Run options: --seed 0
 
 ...E..F...
 
-Finished in 0.006977s, 1433.3554 runs/s, 5733.4214 assertions/s.
+Finished in 0.007515s, 1330.6653 runs/s, 5322.6610 assertions/s.
 
   1) Error:
 NewTestClass#test_UnboundedRange_initialize:
-NoMethodError: undefined method `assert_raise' for #<NewTestClass:0x00000002e527f0>
+NoMethodError: undefined method `assert_raise\' for #<NewTestClass:0x0000000251abb0>
 Did you mean?  assert_raises
                assert_same
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_range_test.rb:17:in `test_UnboundedRange_initialize'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_range_test.rb:17:in `test_UnboundedRange_initialize\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
   2) Failure:
 NewTestClass#test_intersect [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_range_test.rb:77]:
-Expected #<NewTestClass:0x00000002e24a58 @NAME="test_intersect", @failures=[], @assertions=1> (NewTestClass) to respond to #assert_include.
+Expected #<NewTestClass:0x00000002512b18 @NAME="test_intersect", @failures=[], @assertions=1> (NewTestClass) to respond to #assert_include.
 
 10 runs, 40 assertions, 1 failures, 1 errors, 0 skips
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_range_test.rb"
-	User time (seconds): 0.77
-	System time (seconds): 0.07
+	User time (seconds): 0.81
+	System time (seconds): 0.06
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.85
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.87
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 25564
+	Maximum resident set size (kbytes): 25616
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4835
-	Voluntary context switches: 21
-	Involuntary context switches: 16
+	Minor (reclaiming a frame) page faults: 4841
+	Voluntary context switches: 15
+	Involuntary context switches: 25
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -69,7 +69,7 @@ Expected #<NewTestClass:0x00000002e24a58 @NAME="test_intersect", @failures=[], @
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
-',
+'
 }
-,
+
 }

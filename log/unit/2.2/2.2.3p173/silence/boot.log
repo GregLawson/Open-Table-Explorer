@@ -1,42 +1,63 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 4, 2, 53, Rational(42031421921, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 4, 40, Rational(33918975812, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test
 Started
+F
+===============================================================================
+Failure: test_Minimal_DefinitionalConstants(BootTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:37:in `test_Minimal_DefinitionalConstants\'
+     34:   def test_Minimal_DefinitionalConstants
+     35:     assert_match(/[N1-5] [1-5]\n/, Run_levels.output, Run_levels.inspect)
+     36:     assert_include(["degraded\n", "offline\n"], Is_system_running.output, Is_system_running.inspect)
+  => 37:     assert_equal("Linux acer-desktop 4.6.0-1-rt-amd64 #1 SMP PREEMPT RT Debian 4.6.4-1 (2016-07-18) x86_64 GNU/Linux\n", Uname.output, Uname.inspect)
+     38:     assert_repeat_match(Uuid_regexp, 193)
+     39:     assert_match(Classes_regexp, Grubs_run.output, Grubs_run.inspect)
+     40:     assert_match(Boot_line_regexp, One_menu_entry, One_menu_entry.inspect)
+Linux acer-desktop 4.7.0-1-amd64 #1 SMP Debian 4.7.2-1 (2016-08-28) x86_64 GNU/Linux
+
+<"Linux acer-desktop 4.6.0-1-rt-amd64 #1 SMP PREEMPT RT Debian 4.6.4-1 (2016-07-18) x86_64 GNU/Linux\n"> expected but was
+<"Linux acer-desktop 4.7.0-1-amd64 #1 SMP Debian 4.7.2-1 (2016-08-28) x86_64 GNU/Linux\n">
+
+diff:
+? Linux acer-desktop 4.6.0-1-rt-amd64 #1 SMP PREEMPT RT Debian 4.6.4-1 (2016-07-18) x86_64 GNU/Linux
+?                      7                                         7 2          8 2                   
+===============================================================================
 .....
 
-Finished in 0.030255691 seconds.
+Finished in 0.04952124 seconds.
 ------
-5 tests, 62 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
+6 tests, 3 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+83.3333% passed
 ------
-165.26 tests/s, 2049.20 assertions/s
+121.16 tests/s, 60.58 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb"
-	User time (seconds): 0.97
-	System time (seconds): 0.14
-	Percent of CPU this job got: 95%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.17
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb"
+	User time (seconds): 1.07
+	System time (seconds): 0.08
+	Percent of CPU this job got: 76%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.52
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 33540
+	Maximum resident set size (kbytes): 32668
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8849
-	Voluntary context switches: 114
-	Involuntary context switches: 437
+	Major (requiring I/O) page faults: 18
+	Minor (reclaiming a frame) page faults: 8565
+	Voluntary context switches: 135
+	Involuntary context switches: 50
 	Swaps: 0
-	File system inputs: 0
+	File system inputs: 5062
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
-',
+	Exit status: 1
+'
 }
-,
+
 }

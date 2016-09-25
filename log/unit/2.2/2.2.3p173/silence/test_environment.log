@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 21, Rational(51370799148, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 5, 1, Rational(18367623250, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_environment_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,7 +8,7 @@ Run options: --seed 0
 
 .......
 
-Finished in 0.004771s, 1467.1251 runs/s, 1886.3037 assertions/s.
+Finished in 0.003492s, 2004.5791 runs/s, 2577.3159 assertions/s.
 
 7 runs, 9 assertions, 0 failures, 0 errors, 0 skips
 ',
@@ -21,12 +21,12 @@ Finished in 0.004771s, 1467.1251 runs/s, 1886.3037 assertions/s.
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23984
+	Maximum resident set size (kbytes): 23688
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4463
-	Voluntary context switches: 19
-	Involuntary context switches: 17
+	Minor (reclaiming a frame) page faults: 4470
+	Voluntary context switches: 15
+	Involuntary context switches: 14
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -35,7 +35,7 @@ Finished in 0.004771s, 1467.1251 runs/s, 1886.3037 assertions/s.
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 0
-',
+'
 }
-,
+
 }

@@ -1,24 +1,24 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 23, Rational(7750316376, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 5, 2, Rational(54228934078, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/url_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/url_test.rb:9:in `require_relative': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case.rb (LoadError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/url_test.rb:9:in `<main>'
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/url_test.rb:9:in `require_relative\': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case.rb (LoadError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/url_test.rb:9:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/url_test.rb"
-	User time (seconds): 0.61
-	System time (seconds): 0.05
-	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.67
+	User time (seconds): 0.66
+	System time (seconds): 0.04
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.70
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23780
+	Maximum resident set size (kbytes): 23596
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4418
+	Minor (reclaiming a frame) page faults: 4441
 	Voluntary context switches: 3
 	Involuntary context switches: 9
 	Swaps: 0
@@ -29,7 +29,7 @@ Command exited with non-zero status 1
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
-',
+'
 }
-,
+
 }

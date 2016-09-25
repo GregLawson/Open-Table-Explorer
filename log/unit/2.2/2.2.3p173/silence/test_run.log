@@ -1,44 +1,44 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 22, Rational(26953827981, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 5, 2, Rational(3673297501, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test
 Started
-......................not timed out: all tests in  took 0.001398502s unknown with timeout of 30.0s
-not timed out: all tests in minimal2 took 0.00100598s unknown with timeout of 30.0s
+......................not timed out: all tests in  took 0.001032224s unknown with timeout of 30.0s
+not timed out: all tests in minimal2 took 0.000904303s unknown with timeout of 30.0s
 .........
 
-Finished in 2.816119993 seconds.
+Finished in 5.007070626 seconds.
 ------
 31 tests, 78 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-11.01 tests/s, 27.70 assertions/s
+6.19 tests/s, 15.58 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb"
-	User time (seconds): 6.99
-	System time (seconds): 0.66
-	Percent of CPU this job got: 96%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:07.88
+	User time (seconds): 10.56
+	System time (seconds): 1.00
+	Percent of CPU this job got: 83%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:13.89
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
 	Maximum resident set size (kbytes): 46204
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 12
-	Minor (reclaiming a frame) page faults: 59057
-	Voluntary context switches: 764
-	Involuntary context switches: 278
+	Major (requiring I/O) page faults: 886
+	Minor (reclaiming a frame) page faults: 76347
+	Voluntary context switches: 1916
+	Involuntary context switches: 506
 	Swaps: 0
-	File system inputs: 2640
+	File system inputs: 12752
 	File system outputs: 48
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 0
-',
+'
 }
-,
+
 }

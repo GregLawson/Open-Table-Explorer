@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 17, 22, Rational(32068099430, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 4, 54, Rational(27531138478, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test
@@ -21,28 +21,28 @@ integration_log file log/integration/2.2/2.2.3p173/silence/repository.log does n
 {:suffix=>".log", :name=>:integration_log, :prefix=>"log/integration/", :example_file=>"log/integration/2.2/2.2.3p173/silence/repository.log", :generate=>false}
 .......................
 
-Finished in 0.037729063 seconds.
+Finished in 0.056532487 seconds.
 ------
 23 tests, 192 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-609.61 tests/s, 5088.92 assertions/s
+406.85 tests/s, 3396.28 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test.rb"
-	User time (seconds): 0.60
-	System time (seconds): 0.07
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.68
+	User time (seconds): 0.81
+	System time (seconds): 0.05
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.86
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 25180
+	Maximum resident set size (kbytes): 24856
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4703
-	Voluntary context switches: 3
-	Involuntary context switches: 7
+	Minor (reclaiming a frame) page faults: 4696
+	Voluntary context switches: 2
+	Involuntary context switches: 43
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -51,7 +51,7 @@ Finished in 0.037729063 seconds.
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 0
-',
+'
 }
-,
+
 }

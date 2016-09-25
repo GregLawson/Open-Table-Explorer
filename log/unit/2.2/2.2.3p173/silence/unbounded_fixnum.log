@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 22, Rational(34295846153, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 5, 2, Rational(13687171989, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_fixnum_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,25 +8,25 @@ Run options: --seed 0
 
 ........
 
-Finished in 0.003864s, 2070.2937 runs/s, 5693.3077 assertions/s.
+Finished in 0.004128s, 1938.1826 runs/s, 5330.0022 assertions/s.
 
 8 runs, 22 assertions, 0 failures, 0 errors, 0 skips
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unbounded_fixnum_test.rb"
-	User time (seconds): 0.75
-	System time (seconds): 0.04
+	User time (seconds): 0.77
+	System time (seconds): 0.05
 	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.79
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.82
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 25152
+	Maximum resident set size (kbytes): 25328
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4785
-	Voluntary context switches: 18
-	Involuntary context switches: 12
+	Minor (reclaiming a frame) page faults: 4804
+	Voluntary context switches: 15
+	Involuntary context switches: 17
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -35,7 +35,7 @@ Finished in 0.003864s, 2070.2937 runs/s, 5693.3077 assertions/s.
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 0
-',
+'
 }
-,
+
 }

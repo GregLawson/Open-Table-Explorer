@@ -1,40 +1,40 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 23, Rational(27386592131, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 5, 3, Rational(19996859561, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:39:in `initialize': undefined method `executable_file' for #<TestExecutable:0x00000001e23988> (NoMethodError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:146:in `new'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:146:in `<module:Examples>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:144:in `<class:WorkFlow>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:12:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb:9:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb:9:in `<main>'
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:39:in `initialize\': undefined method `executable_file\' for #<TestExecutable:0x000000036c2818> (NoMethodError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:146:in `new\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:146:in `<module:Examples>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:144:in `<class:WorkFlow>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/work_flow.rb:12:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb:9:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb:9:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/work_flow_test.rb"
-	User time (seconds): 8.73
-	System time (seconds): 0.85
-	Percent of CPU this job got: 97%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:09.81
+	User time (seconds): 11.30
+	System time (seconds): 1.19
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.73
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 46224
+	Maximum resident set size (kbytes): 46288
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 2
-	Minor (reclaiming a frame) page faults: 72975
-	Voluntary context switches: 975
-	Involuntary context switches: 480
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 81391
+	Voluntary context switches: 1020
+	Involuntary context switches: 856
 	Swaps: 0
-	File system inputs: 536
+	File system inputs: 384
 	File system outputs: 48
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
-',
+'
 }
-,
+
 }

@@ -1,29 +1,29 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 17, 15, Rational(25598327984, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 4, 53, Rational(37785865486, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb:11:in `<top (required)>': uninitialized constant MiniTest (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_default_test_case.rb:9:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_default_test_case.rb:9:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case_test.rb:8:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case_test.rb:8:in `<main>'
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb:11:in `<top (required)>\': uninitialized constant MiniTest (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_default_test_case.rb:9:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_default_test_case.rb:9:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case_test.rb:8:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case_test.rb:8:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case_test.rb"
 	User time (seconds): 0.39
-	System time (seconds): 0.04
+	System time (seconds): 0.06
 	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.43
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.45
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 18176
+	Maximum resident set size (kbytes): 17924
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 3002
+	Minor (reclaiming a frame) page faults: 3004
 	Voluntary context switches: 3
-	Involuntary context switches: 8
+	Involuntary context switches: 7
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -32,7 +32,7 @@ Command exited with non-zero status 1
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
-',
+'
 }
-,
+
 }

@@ -1,26 +1,26 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 17, 23, Rational(59537189242, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 4, 56, Rational(39431180009, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/no_db_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/no_db_test.rb:9:in `require_relative': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case.rb (LoadError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/no_db_test.rb:9:in `<main>'
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/no_db_test.rb:9:in `require_relative\': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case.rb (LoadError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/no_db_test.rb:9:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/no_db_test.rb"
-	User time (seconds): 0.60
+	User time (seconds): 0.65
 	System time (seconds): 0.05
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.66
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.71
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23848
+	Maximum resident set size (kbytes): 23580
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4415
+	Minor (reclaiming a frame) page faults: 4435
 	Voluntary context switches: 3
-	Involuntary context switches: 7
+	Involuntary context switches: 10
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -29,7 +29,7 @@ Command exited with non-zero status 1
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
-',
+'
 }
-,
+
 }

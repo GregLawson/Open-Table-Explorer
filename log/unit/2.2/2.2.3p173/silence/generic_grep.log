@@ -1,27 +1,27 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 17, 22, Rational(39569478068, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 4, 54, Rational(39176064248, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_grep_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require': cannot load such file -- test_helper.rb (LoadError)
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_grep_test.rb:8:in `<main>'
+:errors => {:syserr => '/usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\': cannot load such file -- test_helper.rb (LoadError)
+	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_grep_test.rb:8:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_grep_test.rb"
-	User time (seconds): 0.12
+	User time (seconds): 0.14
 	System time (seconds): 0.00
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.13
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.15
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 9096
+	Maximum resident set size (kbytes): 9172
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 1303
+	Minor (reclaiming a frame) page faults: 1326
 	Voluntary context switches: 3
-	Involuntary context switches: 3
+	Involuntary context switches: 2
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -30,7 +30,7 @@ Command exited with non-zero status 1
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
-',
+'
 }
-,
+
 }

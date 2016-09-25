@@ -1,41 +1,36 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 17, 22, Rational(26666201303, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 4, 54, Rational(3891659889, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
-Run options: --seed 0
-
-# Running:
-
-...............
-
-Finished in 0.964700s, 15.5489 runs/s, 93.2933 assertions/s.
-
-15 runs, 90 assertions, 0 failures, 0 errors, 0 skips
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb"
-	User time (seconds): 9.23
-	System time (seconds): 0.92
-	Percent of CPU this job got: 94%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:10.77
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb:16:in `<class:EditorTest>\': uninitialized constant UnitMaturity::Examples (NameError)
+Did you mean?  Example
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb:11:in `<main>\'
+Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb"
+	User time (seconds): 12.32
+	System time (seconds): 1.34
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:13.88
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 46436
+	Maximum resident set size (kbytes): 46348
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 6
-	Minor (reclaiming a frame) page faults: 94101
-	Voluntary context switches: 1470
-	Involuntary context switches: 410
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 93126
+	Voluntary context switches: 1065
+	Involuntary context switches: 577
 	Swaps: 0
-	File system inputs: 640
+	File system inputs: 0
 	File system outputs: 48
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
-',
+	Exit status: 1
+'
 }
-,
+
 }

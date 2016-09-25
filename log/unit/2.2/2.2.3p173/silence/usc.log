@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 23, Rational(11875284425, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 5, 2, Rational(59493320932, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/usc_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,63 +8,63 @@ Run options: --seed 0
 
 .E...
 
-Finished in 0.003542s, 1411.8208 runs/s, 0.0000 assertions/s.
+Finished in 0.003298s, 1516.0432 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_Constants:
 TypeError: no implicit conversion of nil into String
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/usc.rb:24:in `+'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/usc.rb:24:in `path'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/usc_test.rb:15:in `test_Constants'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/usc.rb:24:in `+\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/usc.rb:24:in `path\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/usc_test.rb:15:in `test_Constants\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 5 runs, 0 assertions, 0 failures, 1 errors, 0 skips
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/usc_test.rb"
-	User time (seconds): 0.77
-	System time (seconds): 0.06
+	User time (seconds): 0.82
+	System time (seconds): 0.07
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.84
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.89
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 26652
+	Maximum resident set size (kbytes): 27068
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5189
+	Minor (reclaiming a frame) page faults: 5280
 	Voluntary context switches: 13
-	Involuntary context switches: 23
+	Involuntary context switches: 26
 	Swaps: 0
-	File system inputs: 0
+	File system inputs: 8
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
-',
+'
 }
-,
+
 }

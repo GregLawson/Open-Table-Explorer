@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 25, 11, 3, Rational(22029939231, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 23, 1, 20, Rational(57670584017, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail
@@ -11,8 +11,8 @@ Failure:
   <Test::Unit::AssertionFailedError> but was
   <RuntimeError>.
 test_AssertionFailedError(InitializationFailTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:65:in `rescue in test_AssertionFailedError'
-/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:61:in `test_AssertionFailedError'
+/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:65:in `rescue in test_AssertionFailedError\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:61:in `test_AssertionFailedError\'
      58: 	assert(exception.class.ancestors.include?(Exception))
      59: end # AssertionFailedError
      60: def test_AssertionFailedError
@@ -24,7 +24,7 @@ test_AssertionFailedError(InitializationFailTest)
 .....E
 ===============================================================================
 Error: test_initialize(InitializationFailTest): RuntimeError: 
-/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:14:in `test_initialize'
+/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:14:in `test_initialize\'
      11: include AssertionsModule
      12: extend AssertionsModule
      13: def test_initialize
@@ -36,7 +36,7 @@ Error: test_initialize(InitializationFailTest): RuntimeError:
 E
 ===============================================================================
 Error: test_requires(InitializationFailTest): ArgumentError: assertion message must be String, Proc or Test::Unit::Assertions::AssertionMessage: <[]>(<Array>)
-/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:18:in `test_requires'
+/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb:18:in `test_requires\'
      15: end #initialize
      16: def test_requires
      17: #	assert_included_modules(:Fish, Test::Unit::Assertions)
@@ -47,29 +47,29 @@ Error: test_requires(InitializationFailTest): ArgumentError: assertion message m
 ===============================================================================
 
 
-Finished in 0.017000675 seconds.
+Finished in 0.017632023 seconds.
 ------
 8 tests, 10 assertions, 1 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
 62.5% passed
 ------
-470.57 tests/s, 588.21 assertions/s
+453.72 tests/s, 567.15 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb"
-	User time (seconds): 0.58
-	System time (seconds): 0.04
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.63
+	User time (seconds): 0.69
+	System time (seconds): 0.05
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.74
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23864
+	Maximum resident set size (kbytes): 23392
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4338
-	Voluntary context switches: 5
-	Involuntary context switches: 238
+	Minor (reclaiming a frame) page faults: 4332
+	Voluntary context switches: 2
+	Involuntary context switches: 69
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

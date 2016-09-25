@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 21, Rational(25888028896, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 5, 0, Rational(38838246874, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/sleep_study_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -10,34 +10,34 @@ Run options: --seed 0
 factors = [[2, 8], [3, 1], [5, 3], [7, 1], [659, 1]]
 .....
 
-Finished in 2.825921s, 10.6160 runs/s, 58.7419 assertions/s.
+Finished in 3.004932s, 9.9836 runs/s, 55.2425 assertions/s.
 
 30 runs, 166 assertions, 0 failures, 0 errors, 0 skips
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/sleep_study_test.rb"
 	User time (seconds): 0.79
-	System time (seconds): 0.67
+	System time (seconds): 0.77
 	Percent of CPU this job got: 40%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.65
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.87
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 456500
+	Maximum resident set size (kbytes): 456644
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 112652
-	Voluntary context switches: 3394
-	Involuntary context switches: 39
+	Minor (reclaiming a frame) page faults: 112684
+	Voluntary context switches: 3388
+	Involuntary context switches: 26
 	Swaps: 0
-	File system inputs: 865528
+	File system inputs: 864976
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 0
-',
+'
 }
-,
+
 }

@@ -1,25 +1,25 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 19, Rational(48739555102, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 4, 58, Rational(38910183402, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_repetition_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_repetition_test.rb:10:in `<main>': uninitialized constant NestedArray (NameError)
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_repetition_test.rb:10:in `<main>\': uninitialized constant NestedArray (NameError)
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_repetition_test.rb"
-	User time (seconds): 0.64
+	User time (seconds): 0.67
 	System time (seconds): 0.04
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.69
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.71
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23944
+	Maximum resident set size (kbytes): 23540
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4466
+	Minor (reclaiming a frame) page faults: 4427
 	Voluntary context switches: 3
-	Involuntary context switches: 8
+	Involuntary context switches: 13
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -28,7 +28,7 @@ Command exited with non-zero status 1
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
-',
+'
 }
-,
+
 }

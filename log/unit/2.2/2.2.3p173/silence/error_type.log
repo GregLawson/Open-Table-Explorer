@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 17, 22, Rational(29040404743, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 4, 54, Rational(22750967542, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/error_type_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -8,165 +8,165 @@ Run options: --seed 0
 
 .EEEEE..
 
-Finished in 0.004525s, 1767.9722 runs/s, 0.0000 assertions/s.
+Finished in 0.003716s, 2153.0686 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_id_equal:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000003208250>
+NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x0000000173e9b0>
 Did you mean?  define_singleton_method
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/error_type_test.rb:8:in `setup'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/error_type_test.rb:8:in `setup\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
   2) Error:
 NewTestClass#test_aaa_test_new_assertions_:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000003208480>
+NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x0000000173e668>
 Did you mean?  define_singleton_method
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/error_type_test.rb:8:in `setup'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/error_type_test.rb:8:in `setup\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
   3) Error:
 NewTestClass#test_class_name:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000003208fc0>
+NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x0000000173e2d0>
 Did you mean?  define_singleton_method
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/error_type_test.rb:8:in `setup'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/error_type_test.rb:8:in `setup\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
   4) Error:
 NewTestClass#test_general_associations:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x00000003209b00>
+NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x0000000173df60>
 Did you mean?  define_singleton_method
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/error_type_test.rb:8:in `setup'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/error_type_test.rb:8:in `setup\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
   5) Error:
 NewTestClass#test_specific__stable_and_working:
-NameError: undefined local variable or method `define_model_of_test' for #<NewTestClass:0x0000000320a730>
+NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x0000000173db78>
 Did you mean?  define_singleton_method
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/error_type_test.rb:8:in `setup'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/error_type_test.rb:8:in `setup\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 8 runs, 0 assertions, 0 failures, 5 errors, 0 skips
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/error_type_test.rb"
-	User time (seconds): 0.71
-	System time (seconds): 0.06
+	User time (seconds): 0.79
+	System time (seconds): 0.07
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.78
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.86
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 24396
+	Maximum resident set size (kbytes): 24476
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4558
-	Voluntary context switches: 18
-	Involuntary context switches: 17
+	Minor (reclaiming a frame) page faults: 4590
+	Voluntary context switches: 16
+	Involuntary context switches: 19
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -175,7 +175,7 @@ Did you mean?  define_singleton_method
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
-',
+'
 }
-,
+
 }

@@ -1,40 +1,44 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 19, Rational(53899608287, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 4, 58, Rational(45758467988, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_tree_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:457:in `raw_captures': undefined method `raw_capture?' for #<Regexp::Expression::Root:0x00000001089f70> (NoMethodError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:235:in `initialize'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:245:in `initialize'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:452:in `initialize'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:470:in `new'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:470:in `<module:Examples>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:467:in `<class:ParsedCapture>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:447:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:11:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:11:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_tree.rb:11:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_tree.rb:11:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_tree_assertions.rb:9:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_tree_assertions.rb:9:in `<top (required)>'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_tree_test.rb:9:in `require_relative'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_tree_test.rb:9:in `<main>'
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:457:in `raw_captures\': undefined method `raw_capture?\' for #<Regexp::Expression::Root:0x0000000307c8f0> (NoMethodError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:235:in `initialize\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:245:in `initialize\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:452:in `initialize\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:470:in `new\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:470:in `<module:Examples>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:467:in `<class:ParsedCapture>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:447:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_lines_storage.rb:8:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_lines_storage.rb:8:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:8:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:8:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:9:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:9:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_tree.rb:11:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_tree.rb:11:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_tree_assertions.rb:9:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_tree_assertions.rb:9:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_tree_test.rb:9:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_tree_test.rb:9:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_tree_test.rb"
-	User time (seconds): 0.77
-	System time (seconds): 0.04
-	Percent of CPU this job got: 97%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.84
+	User time (seconds): 0.78
+	System time (seconds): 0.06
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.85
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 25112
+	Maximum resident set size (kbytes): 26728
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4792
+	Minor (reclaiming a frame) page faults: 5166
 	Voluntary context switches: 4
-	Involuntary context switches: 9
+	Involuntary context switches: 10
 	Swaps: 0
 	File system inputs: 16
 	File system outputs: 0
@@ -43,7 +47,7 @@ Command exited with non-zero status 1
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
-',
+'
 }
-,
+
 }

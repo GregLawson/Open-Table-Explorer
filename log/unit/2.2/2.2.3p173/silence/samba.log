@@ -1,130 +1,130 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 8, 17, 18, 20, Rational(45132283697, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 4, 59, Rational(42606084091, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-.EE.EE.F.E.E..
+.EE.EE.F.EEE..
 
-Finished in 0.150128s, 93.2540 runs/s, 1112.3871 assertions/s.
+Finished in 0.112192s, 124.7858 runs/s, 1452.8630 assertions/s.
 
   1) Error:
 NewTestClass#test_parse_options:
 TypeError: no implicit conversion of nil into String
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:101:in `+'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:101:in `test_parse_options'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:101:in `+\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:101:in `test_parse_options\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
   2) Error:
 NewTestClass#test_Constants:
 TypeError: no implicit conversion of Symbol into Integer
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:56:in `[]'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:56:in `[]'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:33:in `test_Constants'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:56:in `[]\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:56:in `[]\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:33:in `test_Constants\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
   3) Error:
 NewTestClass#test_mounted?:
-NoMethodError: undefined method `assertions' for #<Samba:0x00000002e66d90>
+NoMethodError: undefined method `assertions\' for #<Samba:0x000000033e23c8>
 Did you mean?  assert
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:174:in `assert_equal'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/samba.rb:202:in `assert_mounted'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:164:in `test_mounted?'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert\'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:174:in `assert_equal\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/samba.rb:202:in `assert_mounted\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:164:in `test_mounted?\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
   4) Error:
 NewTestClass#test_servers:
 TypeError: no implicit conversion of LimitCapture into String
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:207:in `include?'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:207:in `assert_includes'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:78:in `test_servers'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:207:in `include?\'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:207:in `assert_includes\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:78:in `test_servers\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
   5) Failure:
@@ -135,91 +135,152 @@ Expected: false
 
   6) Error:
 NewTestClass#test_tree:
-TypeError: no implicit conversion of Array into String
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:207:in `include?'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:207:in `assert_includes'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:86:in `test_tree'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+NoMethodError: undefined method `[]\' for nil:NilClass
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:271:in `to_a\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:64:in `block in to_hash\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:61:in `each_pair\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:61:in `to_hash\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:282:in `output\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `map\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `call\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:155:in `enumerate_single\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:167:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:575:in `block in parse\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `map\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `call\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:155:in `enumerate_single\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:167:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:574:in `parse\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/samba.rb:46:in `tree\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:85:in `test_tree\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
   7) Error:
-NewTestClass#test_mount:
-NoMethodError: undefined method `assertions' for #<ShellCommands:0x0000000301dee0>
-Did you mean?  assert
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:340:in `assert_respond_to'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:153:in `assert_empty'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:739:in `assert_post_conditions'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:142:in `test_mount'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun'
+NewTestClass#test_workgroups:
+NoMethodError: undefined method `[]\' for nil:NilClass
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:271:in `to_a\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:64:in `block in to_hash\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:61:in `each_pair\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:61:in `to_hash\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:282:in `output\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `map\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `call\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:155:in `enumerate_single\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:167:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:575:in `block in parse\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `map\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `call\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:155:in `enumerate_single\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:167:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:574:in `parse\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/samba.rb:38:in `workgroups\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:74:in `test_workgroups\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
-14 runs, 167 assertions, 1 failures, 6 errors, 0 skips
+
+  8) Error:
+NewTestClass#test_mount:
+NoMethodError: undefined method `assertions\' for #<ShellCommands:0x00000003599a90>
+Did you mean?  assert
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert\'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:340:in `assert_respond_to\'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:153:in `assert_empty\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:739:in `assert_post_conditions\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:142:in `test_mount\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+14 runs, 163 assertions, 1 failures, 7 errors, 0 skips
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb"
-	User time (seconds): 1.12
-	System time (seconds): 0.12
-	Percent of CPU this job got: 38%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.27
+	User time (seconds): 1.17
+	System time (seconds): 0.14
+	Percent of CPU this job got: 11%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:11.42
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 29480
+	Maximum resident set size (kbytes): 30312
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 99
-	Minor (reclaiming a frame) page faults: 9897
-	Voluntary context switches: 324
-	Involuntary context switches: 71
+	Major (requiring I/O) page faults: 126
+	Minor (reclaiming a frame) page faults: 9976
+	Voluntary context switches: 358
+	Involuntary context switches: 60
 	Swaps: 0
-	File system inputs: 15800
+	File system inputs: 24848
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
-',
+'
 }
-,
+
 }
