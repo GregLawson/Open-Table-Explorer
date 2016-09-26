@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 56, Rational(32680998208, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 25, 11, 41, Rational(30165419299, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nested_loop_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
@@ -11,16 +11,16 @@ Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nested_loop_test.rb"
 	User time (seconds): 0.09
 	System time (seconds): 0.00
-	Percent of CPU this job got: 96%
+	Percent of CPU this job got: 97%
 	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.09
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 8512
+	Maximum resident set size (kbytes): 8544
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 1183
+	Minor (reclaiming a frame) page faults: 1182
 	Voluntary context switches: 3
 	Involuntary context switches: 1
 	Swaps: 0

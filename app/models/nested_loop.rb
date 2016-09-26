@@ -16,8 +16,9 @@ module ClassMethods
 def next
 	Loops.map do |dimension_class|
 		if dimension.methods.includes?(:enumerator) then
-			set_instance_variable(index_name, enumerator.next
-		end # map
+			set_instance_variable(index_name, enumerator.next)
+		end # if
+	end # map
 end # next
 end # ClassMethods
 extend ClassMethods

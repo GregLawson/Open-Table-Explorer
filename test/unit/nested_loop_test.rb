@@ -8,14 +8,14 @@
 require_relative 'test_environment'
 require_relative '../../app/models/minimal2.rb'
 class NestedLoopTest < TestCase
-include DefaultTests
+#include DefaultTests
 include RailsishRubyUnit::Executable.model_class?::Examples
 def test_Constants
 	Loops.map do |dimension|
 		if dimension.methods.includes?(:enumerator) then
 			index_name = dimension.name.model_name?
 			set_instance_variable(index_name, enumerator.next
-		end # map
+		end # if
 	end # map
 end # Constants
 def test_NestedLoop_next
