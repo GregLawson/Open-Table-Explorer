@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2011-2015 by Greg Lawson
+#    Copyright (C) 2011-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -10,49 +10,6 @@ require 'active_support' # for singularize and pluralize
 require_relative '../../app/models/regexp.rb'
 require_relative '../assertions/shell_command_assertions.rb'
 require_relative '../../app/models/ruby_interpreter.rb'
-class ReportedVersionTest < TestCase
-  include ReportedVersion::Examples
-  include ReportedVersion::DefinitionalConstants
-  def test_ReportedVersion_DefinitionalConstants
-    assert_match(/.1.gz/, Ruby_whereis)
-    assert_match(/[a-z]+/ * /.1.gz/, Ruby_whereis)
-    assert_match(/usr/, Ruby_whereis)
-    assert_match(/\/usr/, Ruby_whereis)
-    assert_match(/\/usr\/share\/man\/man1\//, Ruby_whereis)
-    assert_match(/\/usr\/share\/man\/man1\// * /[a-z]+/ * /.1.gz/, Ruby_whereis)
-    assert_match(Bin_regexp, Ruby_whereis)
-    assert_match(Lib_regexp, Ruby_whereis)
-    assert_match(Man_regexp, Ruby_whereis)
-    assert_match(/ruby: / * Bin_regexp, Ruby_whereis)
-    assert_match(Bin_regexp * / / * Lib_regexp, Ruby_whereis)
-    assert_match(/ruby: / * Bin_regexp * / / * (Bin_regexp * / /).group * Regexp::Any * Lib_regexp * / / * Man_regexp, Ruby_whereis)
-    #	assert_match(Whereis_regexp, Ruby_whereis)
-  end # DefinitionalConstants
-
-  def test_virtus_initialize
-  end # virtus_initialize
-
-  def test_DefinitionalConstants
-  end # DefinitionalConstants
-
-  def test_which
-    ruby_version = ReportedVersion.new(test_command: 'ruby') # system version
-    assert_equal('/usr/bin/ruby', ruby_version.which, ruby_version.inspect)
-    #	assert_equal("/usr/bin/ruby\n", ruby_version.version_report, ruby_version.inspect)
-  end # which
-
-  def test_whereis
-    ruby_version = ReportedVersion.new(test_command: 'ruby') # system version
-    capture = ruby_version.whereis.capture?(Whereis_regexp)
-    #	assert_equal('/usr/lib/ruby', capture.output[:pathname], capture.inspect)
-  end # whereis
-
-  def test_versions
-  end # versions
-
-  def test_Examples
-  end # Examples
-end # ReportedVersion
 
 class RubyVersionTest < TestCase
   include RubyVersion::Examples
@@ -67,6 +24,16 @@ class RubyVersionTest < TestCase
     #	assert_match(Ruby_pattern * / / * Parenthetical_date_pattern, Ruby_version)
     assert_match(Parenthetical_date_pattern * Bracketed_os, Ruby_version)
     #	assert_match(Version_pattern, Ruby_version)
+    assert_match(Ruby_version_regexp, RUBY_ENGINE_VERSION)
+    assert_match(/ruby/, RUBY_DESCRIPTION)
+
+    assert_instance_of(Fixnum, RUBY_REVISION)
+    assert_operator(0, :<=, RUBY_REVISION)
+		assert_match(Ruby_version_regexp, RUBY_VERSION)
+		assert_instance_of(Class, RubyVM)
+		assert_equal([], RubyVM.instance_variables)
+		assert_equal([:stat], RubyVM.methods(false))
+		assert_equal({:global_method_state=>213, :global_constant_state=>3091, :class_serial=>50169}, RubyVM.stat)
   end # DefinitionalConstants
 
   def test_virtus_initialize
