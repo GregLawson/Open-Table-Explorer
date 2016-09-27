@@ -37,6 +37,37 @@ class Editor
                     end # if
   end # initialize
 
+
+  # require_relative '../../app/models/assertions.rb'
+  module Assertions
+    module ClassMethods
+      def assert_pre_conditions
+      end # assert_pre_conditions
+
+      def assert_post_conditions
+        #	assert_pathname_exists(TestEditor.test_executable.argument_path, "assert_post_conditions")
+      end # assert_post_conditions
+    end # ClassMethods
+    def assert_pre_conditions
+      # sometimes	refute_nil(@test_executable.unit)
+      #	refute_empty(@test_executable.unit.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @test_executable.unit.edit_files=#{@test_executable.unit.edit_files.inspect}")
+      #	assert_kind_of(Grit::Repo, @test_executable.repository.grit_repo)
+      #	assert_respond_to(@test_executable.repository.grit_repo, :status)
+      #	assert_respond_to(@test_executable.repository.grit_repo.status, :changed)
+    end # assert_pre_conditions
+
+    def assert_post_conditions
+      odd_files = Dir['/home/greg/Desktop/src/Open-Table-Explorer/test/unit/*_test.rb~HEAD*']
+      #	assert_empty(odd_files, 'Editor#assert_post_conditions')
+    end # assert_post_conditions
+  end # Assertions
+  include Assertions
+  extend Assertions::ClassMethods
+  # TestEditor.assert_pre_conditions
+	
+end # Editor
+
+class Diffuse < Editor
   def version_comparison(files = nil)
     if files.nil?
       files = [@test_executable.log_path?(nil)].concat(@test_executable.unit.edit_files)
@@ -137,43 +168,13 @@ class Editor
     puts status.command_string
     status # .assert_post_conditions
   end # minimal_edit
-
+	end # Diffuse
+	
+	class Emacs < Editor
   def emacs(_test_executable = @test_executable.unit.model_test_pathname?)
     status = @test_executable.repository.shell_command('emacs --no-splash ' + @test_executable.unit.edit_files.join(' '))
     puts status.command_string
     status # .assert_post_conditions
   end # emacs
-  # require_relative '../../app/models/assertions.rb'
-  module Assertions
-    module ClassMethods
-      def assert_pre_conditions
-      end # assert_pre_conditions
-
-      def assert_post_conditions
-        #	assert_pathname_exists(TestEditor.test_executable.argument_path, "assert_post_conditions")
-      end # assert_post_conditions
-    end # ClassMethods
-    def assert_pre_conditions
-      # sometimes	refute_nil(@test_executable.unit)
-      #	refute_empty(@test_executable.unit.edit_files, "assert_pre_conditions, @test_environmen=#{@test_environmen.inspect}, @test_executable.unit.edit_files=#{@test_executable.unit.edit_files.inspect}")
-      #	assert_kind_of(Grit::Repo, @test_executable.repository.grit_repo)
-      #	assert_respond_to(@test_executable.repository.grit_repo, :status)
-      #	assert_respond_to(@test_executable.repository.grit_repo.status, :changed)
-    end # assert_pre_conditions
-
-    def assert_post_conditions
-      odd_files = Dir['/home/greg/Desktop/src/Open-Table-Explorer/test/unit/*_test.rb~HEAD*']
-      #	assert_empty(odd_files, 'Editor#assert_post_conditions')
-    end # assert_post_conditions
-  end # Assertions
-  include Assertions
-  extend Assertions::ClassMethods
-  # TestEditor.assert_pre_conditions
-  include Constants
-  module Examples
-    EditorTestExecutable = TestExecutable.new_from_path(File.expand_path($PROGRAM_NAME))
-    TestEditor = Editor.new(EditorTestExecutable)
-    include Constants
-  end # Examples
-  include Examples
-end # Editor
+end # Emacs
+Default_editor = Diffuse

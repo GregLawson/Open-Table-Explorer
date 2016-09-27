@@ -1,27 +1,32 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 54, Rational(3891659889, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 9, 27, 1, 53, Rational(56879247038, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+...............
+
+Finished in 0.960643s, 15.6145 runs/s, 93.6873 assertions/s.
+
+15 runs, 90 assertions, 0 failures, 0 errors, 0 skips
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb:16:in `<class:EditorTest>\': uninitialized constant UnitMaturity::Examples (NameError)
-Did you mean?  Example
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb:11:in `<main>\'
-Command exited with non-zero status 1
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb"
-	User time (seconds): 12.32
-	System time (seconds): 1.34
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:13.88
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb"
+	User time (seconds): 12.88
+	System time (seconds): 1.54
+	Percent of CPU this job got: 97%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.86
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 46348
+	Maximum resident set size (kbytes): 46236
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 93126
-	Voluntary context switches: 1065
-	Involuntary context switches: 577
+	Minor (reclaiming a frame) page faults: 117150
+	Voluntary context switches: 1691
+	Involuntary context switches: 870
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 48
@@ -29,7 +34,7 @@ Command exited with non-zero status 1
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0
 '
 }
 
