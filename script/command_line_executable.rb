@@ -11,6 +11,7 @@ require_relative '../app/models/unit.rb' # before command_line
 #require_relative "../app/models/#{RailsishRubyUnit::Executable.model_basename}"
 require_relative '../app/models/command_line.rb'
 puts 'CommandLineExecutable::Script_command_line = ' + CommandLineExecutable::Script_command_line.inspect if $VERBOSE
-CommandLineExecutable::Script_command_line.run do
+ret = CommandLineExecutable::Script_command_line.run do
 end # do run
+puts 'Returns ' + ret.inspect
 1 # successfully completed
