@@ -454,7 +454,11 @@ class ParsedCapture < MatchCapture
   end # ParsedCapture_initialize
 
   def raw_captures
-    Regexp::Parser.parse(@regexp.to_s, 'ruby/1.8').raw_capture?(@string)
+    if @parsed_regexp.nil? # quantifier
+			MatchCapture.new(@string, @regexp)
+		else
+			SplitCapture.new(@string, @regexp)
+		end # if
   end # raw_captures
 
   def column_output
@@ -467,7 +471,7 @@ class ParsedCapture < MatchCapture
   module Examples
     include Capture::Examples
     # Branch_line_capture = ParsedCapture.new(Newline_Delimited_String, Branch_line_regexp)
-    Parsed_a_capture = ParsedCapture.new('a\na', /a/.capture(:label))
+    Parsed_a_capture = ParsedCapture.new('a,a,', (/a,/.capture(:label)) * 2)
   end # Examples
 end # ParsedCapture
 

@@ -1,35 +1,35 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 56, Rational(49274144106, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 10, 4, 7, 18, Rational(26435822783, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test
 Started
 ........................................................... matched
-#<MatchCapture:0x00000003484f88 @string="  ", @regexp=/  /, @raw_captures=#<MatchData "  ">>
+#<MatchCapture:0x00000002bdb698 @string="  ", @regexp=/  /, @raw_captures=#<MatchData "  ">>
 .......
 
-Finished in 0.052595 seconds.
+Finished in 0.051799415 seconds.
 ------
-66 tests, 130 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+66 tests, 133 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-1254.87 tests/s, 2471.72 assertions/s
+1274.15 tests/s, 2567.60 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb"
-	User time (seconds): 0.89
-	System time (seconds): 0.07
-	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.97
+	User time (seconds): 0.86
+	System time (seconds): 0.08
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.95
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 31552
+	Maximum resident set size (kbytes): 31540
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 6343
+	Minor (reclaiming a frame) page faults: 6341
 	Voluntary context switches: 3
-	Involuntary context switches: 17
+	Involuntary context switches: 26
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

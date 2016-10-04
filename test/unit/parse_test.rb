@@ -492,6 +492,7 @@ end # SplitCapture
 class ParsedCaptureTest < TestCase
   include MatchCapture::Examples
   include SplitCapture::Examples
+  include ParsedCapture::Examples
   include LimitCapture::Examples
   include Capture::Examples
   include String::Examples
@@ -499,6 +500,12 @@ class ParsedCaptureTest < TestCase
   end # ParsedCapture_initialize
 
   def test_ParsedCapture_raw_captures
+		quantified_parse = Parsed_a_capture.parsed_regexp
+		refute_includes(quantified_parse.instance_variables, :@quantifier)
+		assert_instance_of(Array, quantified_parse.expressions)
+		message = RegexpParseType.inspect_recursive(Parsed_a_capture.parsed_regexp)
+		message += "\n" + quantified_parse.inspect
+		assert_equal('a,a,', Parsed_a_capture.string, message)
   end # raw_captures
 
   def test_ParsedCapture_success?
