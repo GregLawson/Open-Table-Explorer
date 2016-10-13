@@ -701,7 +701,7 @@ class String
   include Assertions
   module Examples
     include Constants
-    include Regexp::Constants
+    include Regexp::DefinitionalConstants
     LINES_cryptic = /([^\n]*)(?:\n([^\n]*))*/
     CSV = /([^,]*)(?:,([^,]*?))*?/
     Ls_octet_pattern = /rwx/

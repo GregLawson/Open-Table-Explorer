@@ -1,38 +1,41 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 58, Rational(43505171134, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 10, 21, 13, 16, Rational(34130336138, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_test
+Started
+...............................
+
+Finished in 0.099189272 seconds.
+------
+31 tests, 927 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+------
+312.53 tests/s, 9345.77 assertions/s
 ',
-:errors => {:syserr => '/usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert\': undefined method `assertions\' for main:Object (NoMethodError)
-Did you mean?  assert
-	from /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:340:in `assert_respond_to\'
-	from /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:206:in `assert_includes\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:392:in `assert_global_name\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_test.rb:9:in `<main>\'
-Command exited with non-zero status 1
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_test.rb"
-	User time (seconds): 0.69
-	System time (seconds): 0.04
-	Percent of CPU this job got: 96%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.76
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_test.rb"
+	User time (seconds): 0.88
+	System time (seconds): 0.05
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.94
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23940
+	Maximum resident set size (kbytes): 25400
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 1
-	Minor (reclaiming a frame) page faults: 4472
-	Voluntary context switches: 5
-	Involuntary context switches: 9
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 4767
+	Voluntary context switches: 3
+	Involuntary context switches: 12
 	Swaps: 0
-	File system inputs: 56
+	File system inputs: 0
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0
 '
 }
 

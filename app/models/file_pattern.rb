@@ -31,7 +31,7 @@ class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
       { suffix: '', name: :data_sources_dir, prefix: 'test/data_sources/', example_file: 'test/data_sources/tax_form/2014/examples_and_templates/CA_540/CA_540_2014_example.txt', generate: false },
       { suffix: '.log', name: :integration_log, prefix: 'log/integration/', example_file: 'log/integration/2.2/2.2.3p173/silence/repository.log', generate: false }
     ].freeze
-    include Regexp::Constants
+    include Regexp::DefinitionalConstants
     Directory_delimiter = /\//
     Basename_character_regexp = /[[:word:]\. -]/
     Basename_regexp = Basename_character_regexp * Many
