@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2014-2015 by Greg Lawson
+#    Copyright (C) 2014-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -114,6 +114,8 @@ class RubyLinesStorageTest < TestCase
 		assert_match(/\n/, Long_array.ruby_lines_storage)
 		assert_reversible(Short_array)
 		assert_reversible(Long_array)
+		assert_reversible([])
+		assert_reversible([1])
 end # Array
 
 	def test_Hash_ruby_lines_storage

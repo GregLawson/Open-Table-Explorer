@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2014-2015 by Greg Lawson
+#    Copyright (C) 2014-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -53,7 +53,11 @@ class Array
 			ret += element
 			line_length += element.size + 2 # delimiters
 		end # while
-		'[' + ret[2..-1] + ']' # remove last delimiter
+		if elements.empty?
+			'[]'
+		else
+			'[' + ret[2..-1] + ']' # remove pre-delimiter
+		end # if
 	end # ruby_lines_storage
 end # Array
 
@@ -85,6 +89,18 @@ class String
 		"'" + string.gsub("'", "\\\\'") + "'" 
 	end # ruby_lines_storage
 end # String
+
+class Regexp
+	def ruby_lines_storage
+		'/' + source + '/'
+	end # ruby_lines_storage
+end # Regexp
+
+class Module
+	def ruby_lines_storage
+		name.to_s
+	end # ruby_lines_storage
+end # Module
 
 class Symbol
 	def ruby_lines_storage
@@ -119,11 +135,11 @@ end # Time
 
 class Object
 	def ruby_lines_storage
-		ret = '<' + self.class.name.to_s +
+		ret = self.class.name.to_s + '.new(' +
 			instance_variables.map do |iv_name|
 				instance_variable_value = instance_variable_get(iv_name).ruby_lines_storage
-				iv_name.to_s + ' => ' + instance_variable_value + ",\n"
+				iv_name.to_s + ': ' + instance_variable_value + ",\n"
 			end.join("\n") # map
-		ret.chomp.chomp + "\n" + ">\n" # remove terminating linefeed and comma
+		ret.chomp.chomp + ")\n" # remove terminating linefeed and comma
 	end # ruby_lines_storage
 end # Object
