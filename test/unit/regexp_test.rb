@@ -42,16 +42,59 @@ class RegexpTest < TestCase
     assert_equal('{2,5}', Regexp.to_regexp_escaped_string(2..5))
   end # to_regexp_escaped_string
 
+	def test_escape_state
+		assert_equal(:literal, Regexp.escape_state("\x00")[:state][:regexp_escape_kind])
+		assert_equal(:literal, Regexp.escape_state("\a")[:state][:regexp_escape_kind])
+		assert_equal(:literal, Regexp.escape_state("\b")[:state][:regexp_escape_kind])
+		assert_equal(:escaped, Regexp.escape_state("\t")[:state][:regexp_escape_kind])
+		assert_equal(:literal, Regexp.escape_state('/')[:state][:regexp_escape_kind])
+		assert_equal(:meta_character, Regexp.escape_state('(')[:state][:regexp_escape_kind])
+		all_states = Binary_bytes.map do |character|
+			Regexp.escape_state(character)
+		end # each
+		assert_equal([:literal, :escaped, :meta_character], all_states.map {|state| state[:state][:regexp_escape_kind]}.uniq)
+
+		assert(Regexp.escape_state('(')[:state][:regexp_error])
+		assert(Regexp.escape_state(')')[:state][:regexp_error])
+		assert(Regexp.escape_state('*')[:state][:regexp_error])
+		assert(Regexp.escape_state('+')[:state][:regexp_error])
+		assert(Regexp.escape_state('?')[:state][:regexp_error])
+		assert(Regexp.escape_state('[')[:state][:regexp_error])
+
+		refute(Regexp.escape_state('(')[:state][:string_same])
+		refute(Regexp.escape_state(')')[:state][:string_same])
+		refute(Regexp.escape_state('*')[:state][:string_same])
+		refute(Regexp.escape_state('+')[:state][:string_same])
+		refute(Regexp.escape_state('?')[:state][:string_same])
+		refute(Regexp.escape_state('[')[:state][:string_same])
+
+		assert(Regexp.escape_state('/')[:state][:string_same])
+		assert_equal([false, true], all_states.map {|state| state[:state][:regexp_error]}.compact.uniq)
+		uniq_states = all_states.map do |state|
+			state[:state]
+		end.uniq # each
+		assert_equal('{:character_size=>1, :regexp_escape_length=>1, :regexp_error=>false, :string_same=>true, :regexp_escape_kind=>:literal},{:character_size=>1, :regexp_escape_length=>2, :regexp_error=>false, :string_same=>false, :regexp_escape_kind=>:escaped},{:character_size=>1, :regexp_escape_length=>2, :regexp_error=>false, :string_same=>false, :regexp_escape_kind=>:meta_character},{:character_size=>1, :regexp_escape_length=>2, :regexp_error=>true, :string_same=>false, :regexp_escape_kind=>:meta_character}', uniq_states.map(&:to_s).join(','))
+	end # escape_state
+
+	def test_state_characters
+	end # state_characters
+		
 	def test_escape_type
 		assert_equal(:literal, Regexp.escape_type('a'))
 		assert_equal(:nonprintable, Regexp.escape_type("\x00"))
-		assert_equal(:meta_chararcter, Regexp.escape_type("\("))
-		assert_equal(:escaped, Regexp.escape_type("\t"))
-
-		assert_equal(:meta_chararcter, Regexp.escape_type('"'))
-		assert_equal(:meta_chararcter, Regexp.escape_type("'"))
-		assert_equal(:escaped, Regexp.escape_type("\a"))
+		assert_equal(:meta_character, Regexp.escape_type("\("))
+		assert_equal(:regexp_meta_character, Regexp.escape_type('"'))
+		assert_equal(:regexp_meta_character, Regexp.escape_type("'"))
+		assert_equal(:nonprintable_but_named, Regexp.escape_type("\a"), Regexp.inspect_character("\a"))
 		assert_equal(:nonprintable, Regexp.escape_type("\x00"))
+		all_types = Binary_bytes.map do |character|
+			Regexp.escape_type(character)
+		end # each
+		assert_equal(Escape_types, all_types.uniq.sort)
+		assert_equal(:regexp_meta_character, Regexp.escape_type('/'), Regexp.inspect_character('/'))
+		assert_equal(:nonprintable, Regexp.escape_type("\x0E"), Regexp.inspect_character("\x0E"))
+		assert_equal(:nonprintable_but_named, Regexp.escape_type("\a"))
+		assert_equal('\\t', Regexp.escape("\t"))
 		end # escape_type
 		
 	def test_hex_escape
@@ -68,14 +111,37 @@ class RegexpTest < TestCase
 	end # hex_escape
 	
 	def test_escape_character
-		assert_equal("\'", Regexp.escape_character("'"))
-		assert_equal("\a", Regexp.escape_character("\a"), Regexp.inspect_character("\a"))
-#		assert_equal('\"', Regexp.escape_character('"'), Regexp.inspect_character('"'))
+		character = "\a"
+		assert_equal(character, Regexp.escape(character), Regexp.inspect_character(character))
+		assert_equal(:nonprintable_but_named, Regexp.escape_type(character), Regexp.inspect_character(character))
+		regexp_escape = Regexp.escape(character)
+			case Regexp.escape_type(character)
+			when :literal
+				character
+			when :nonprintable
+				Regexp.hex_escape(character)
+			when :meta_character, :regexp_meta_character
+				regexp_escape
+				'\\' + character # escape back slash works inside single quotes!
+			when :nonprintable_but_named
+					character.inspect[1..-2] # /a and /b
+			when :escaped
+					'\\' + regexp_escape[1] # escape back slash works inside single quotes!
+			else
+				raise character.inspect + ' unexpected.'
+			end # case
+		assert_equal("\\'", Regexp.escape_character("'"))
 		Binary_bytes.each do |character|
+			regexp = Regexp.regexp_rescued(character)
 			escape = Regexp.escape_character(character)
 #			assert_equal(escape, eval('"' + escape + '"'), Regexp.inspect_character(character))
-#			assert_match(eval('/^' + escape + '$/'), character, Regexp.inspect_character(character))
+#	\a		assert_match(eval('/' + escape + '/'), character, Regexp.inspect_character(character))
+#debug			assert_match(eval('/' + escape + '/'), escape, Regexp.inspect_character(character))
+# \b			assert_match(eval('/^' + escape + '$/'), character, Regexp.inspect_character(character))
 		end # each
+		assert_equal('\\"', Regexp.escape_character('"'), Regexp.inspect_character('"'))
+		assert_equal('\\\\', Regexp.escape_character('\\'), Regexp.inspect_character('\\'))
+		assert_equal('\\a', Regexp.escape_character("\a"), Regexp.inspect_character("\a"))
 	end # escape_character
 		
 		def test_inspect_character
@@ -83,7 +149,7 @@ class RegexpTest < TestCase
 				assert_equal(0x20, ' '.codepoints[0])
 				assert_equal('65', "%02X" % 0x65)
 			character = 'a'
-			escaped = Regexp.reversably_escaped(Regexp.new(character))
+			escaped = Regexp.readably_escaped(Regexp.new(character))
 			if escaped.size == 1
 				quote = "'"
 			else
@@ -91,7 +157,7 @@ class RegexpTest < TestCase
 			end # if
 			quote + escaped + quote + ' (' + Regexp.hex_escape(character) + ')'
 			
-#			assert_equal("'a'", "'" + Regexp.reversably_escaped(Regexp.new(character)))
+#			assert_equal("'a'", "'" + Regexp.readably_escaped(Regexp.new(character)))
 #				assert_equal('"a" (0x61)', Regexp.inspect_character('a'))
 #				assert_equal('"\x00" (0x00)', Regexp.inspect_character("\00"))
 #				assert_equal('"\/" (0x65)', Regexp.inspect_character('/')) # slash not escaped!
@@ -108,7 +174,7 @@ class RegexpTest < TestCase
 		end # each
 	end # regexp_escape_bug
 		
-	def test_reversably_escaped
+	def test_readably_escaped
 		assert_equal(' ', / /.source)
 		assert_equal('\ ', /\ /.source)
 		assert_equal('\ ', Regexp.escape(' '))
@@ -122,39 +188,50 @@ class RegexpTest < TestCase
 				Regexp.escape(byte.chr)
 			end # if
 		end # map
-		Regexp.escaped_characters.each do |character|
+		Regexp.select_characters(:escaped).each do |character|
 #			regexp = Regexp.new(character)
-#			assert_equal(regexp, Regexp.new(Regexp.reversably_escaped(regexp)), Regexp.inspect_character(character))
-#			assert_equal(regexp, eval('/' + Regexp.reversably_escaped(regexp) + '/'), Regexp.inspect_character(character))
+#			assert_equal(regexp, Regexp.new(Regexp.readably_escaped(regexp)), Regexp.inspect_character(character))
+#			assert_equal(regexp, eval('/' + Regexp.readably_escaped(regexp) + '/'), Regexp.inspect_character(character))
 		end # each
 		Regexp.nonprintable_characters.each do |character|
 			regexp = Regexp.new(character)
-			assert_equal(regexp, Regexp.new(Regexp.reversably_escaped(regexp)), Regexp.inspect_character(character))
-			assert_equal(regexp, eval('/' + Regexp.reversably_escaped(regexp) + '/'), Regexp.inspect_character(character))
+			assert_equal(regexp.source, Regexp.new(Regexp.readably_escaped(regexp)).source, Regexp.inspect_character(character))
+			assert_equal(regexp.options, Regexp.new(Regexp.readably_escaped(regexp)).options, Regexp.inspect_character(character))
+			assert_equal(regexp.inspect, Regexp.new(Regexp.readably_escaped(regexp)).inspect, Regexp.inspect_character(character))
+			assert_equal(regexp, Regexp.new(Regexp.readably_escaped(regexp)), Regexp.inspect_character(character))
+			assert_equal(regexp, eval('/' + Regexp.readably_escaped(regexp) + '/'), Regexp.inspect_character(character))
 		end # each
-		Regexp.meta_characters.each do |character|
+		Regexp.select_characters(:meta_character).each do |character|
 #			regexp = Regexp.new(character)
-#			assert_equal(regexp, Regexp.new(Regexp.reversably_escaped(regexp)), Regexp.inspect_character(character))
-#			assert_equal(regexp, eval('/' + Regexp.reversably_escaped(regexp) + '/'), Regexp.inspect_character(character))
+#			assert_equal(regexp, Regexp.new(Regexp.readably_escaped(regexp)), Regexp.inspect_character(character))
+#			assert_equal(regexp, eval('/' + Regexp.readably_escaped(regexp) + '/'), Regexp.inspect_character(character))
 		end # each
 		character = '/'
 		regexp = /\//
-		assert_equal(regexp, Regexp.new(Regexp.reversably_escaped(regexp)), Regexp.inspect_character(character))
-#		assert_equal(regexp, eval('/' + Regexp.reversably_escaped(regexp) + '/'), Regexp.inspect_character(character))
-		Regexp.literal_characters.each do |character|
+		assert_equal(regexp, Regexp.new(Regexp.readably_escaped(regexp)), Regexp.inspect_character(character))
+#		assert_equal(regexp, eval('/' + Regexp.readably_escaped(regexp) + '/'), Regexp.inspect_character(character))
+		Regexp.select_characters(:literal).each do |character|
 			regexp = Regexp.new(character)
-#			assert_equal(regexp.source, Regexp.new(Regexp.reversably_escaped(regexp)).source, Regexp.inspect_character(character))
-#			assert_equal(regexp, Regexp.new(Regexp.reversably_escaped(regexp)), Regexp.inspect_character(character))
-#			assert_equal(regexp, eval('/' + Regexp.reversably_escaped(regexp) + '/'), Regexp.inspect_character(character))
+#			assert_equal(regexp.source, Regexp.new(Regexp.readably_escaped(regexp)).source, Regexp.inspect_character(character))
+#			assert_equal(regexp, Regexp.new(Regexp.readably_escaped(regexp)), Regexp.inspect_character(character))
+#			assert_equal(regexp, eval('/' + Regexp.readably_escaped(regexp) + '/'), Regexp.inspect_character(character))
+				regexp = Regexp.new(Regexp.escape(character))
+#				assert_equal(regexp.source, Regexp.new(Regexp.reversably_escaped(regexp)).source, Regexp.inspect_character(character))
+#				assert_equal(regexp.options, Regexp.new(Regexp.reversably_escaped(regexp)).options, Regexp.inspect_character(character))
+#				assert_equal(regexp.inspect, Regexp.new(Regexp.reversably_escaped(regexp)).inspect, Regexp.inspect_character(character))
+				regexp = Regexp::Start_string * Regexp.new(Regexp.escape(character)) * Regexp::End_string
+#				assert_equal(regexp.options, Regexp.new(Regexp.reversably_escaped(regexp)).options, Regexp.inspect_character(character))
+#				assert_equal(regexp.source, Regexp.new(Regexp.reversably_escaped(regexp)).source, Regexp.inspect_character(character))
+#				assert_equal(regexp.inspect, Regexp.new(Regexp.reversably_escaped(regexp)).inspect, Regexp.inspect_character(character))
 		end # each
 
 		regexp = /\ /
-#		assert_equal(regexp, Regexp.new(Regexp.reversably_escaped(regexp)), Regexp.inspect_character(character))
-#		assert_equal(regexp, eval('/' + Regexp.reversably_escaped(regexp) + '/'), Regexp.inspect_character(character))
+#		assert_equal(regexp, Regexp.new(Regexp.readably_escaped(regexp)), Regexp.inspect_character(character))
+#		assert_equal(regexp, eval('/' + Regexp.readably_escaped(regexp) + '/'), Regexp.inspect_character(character))
 #		assert_equal(/ /.source, /\ /.source)
 #		assert_equal(/ /, /\ /)
 #		assert_equal('\ ', Regexp.escape(/\ /.source))
-	end # reversably_escaped
+	end # readably_escaped
 
 	def test_promote
 		assert_equal(/ab/, Regexp.promote(/ab/))
@@ -192,72 +269,32 @@ class RegexpTest < TestCase
   end # regexp_error
 
 		def test_select_characters
-#			assert_equal('\a\b\t\n\v\f\r', Regexp.select_characters(:escaped).map {|c| Regexp.escape_character(c)}.join)
-#			assert_equal('0123456789:;<=>@ABCDEFGHIJKLMNOPQRSTUVWXYZ_`abcdefghijklmnopqrstuvwxyz', Regexp.select_characters(:literal).map {|c| Regexp.escape_character(c)}.join)
-#			assert_equal(' \#$()*+-.?[\\]^{|}', Regexp.select_characters(:meta_character).map {|c| Regexp.escape_character(c)}.join)
-#			assert_equal('\x00\x01\x02\x03\x04\x05\x06\x7F\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8A\x8B\x8C\x8D\x8E\x8F\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9A\x9B\x9C\x9D\x9E\x9F\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF', Regexp.select_characters(:nonprintable).map {|c| Regexp.escape_character(c)}.join)
+			assert_include(Regexp.select_characters(:literal), 'a')
+			assert_equal('!%&,0123456789:;<=>@ABCDEFGHIJKLMNOPQRSTUVWXYZ_`abcdefghijklmnopqrstuvwxyz~', Regexp.select_characters(:literal).map {|c| Regexp.escape_character(c)}.join)
+			assert_equal('\x00\x01\x02\x03\x04\x05\x06\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F\x7F\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8A\x8B\x8C\x8D\x8E\x8F\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9A\x9B\x9C\x9D\x9E\x9F\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF', Regexp.select_characters(:nonprintable).map {|c| Regexp.escape_character(c)}.join)
+			assert_equal('\t\n\v\f\r', Regexp.select_characters(:escaped).map {|c| Regexp.escape_character(c)}.join)
+			assert_equal('\\ \\#\\$\\(\\)\\*\\+\\-\\.\\?\\[\\\\\\]\\^\\{\\|\\}', Regexp.select_characters(:meta_character).map {|c| Regexp.escape_character(c)}.join)
+			assert_equal('\\"\\\'\\/', Regexp.select_characters(:regexp_meta_character).map {|c| Regexp.escape_character(c)}.join)
+			assert_equal('\\a\\b', Regexp.select_characters(:nonprintable_but_named).map {|c| Regexp.escape_character(c)}.join)
+
+			all = Regexp.select_characters(:literal) +
+				Regexp.select_characters(:meta_character) +
+				Regexp.select_characters(:regexp_meta_character) +
+				Regexp.select_characters(:nonprintable) +
+				Regexp.select_characters(:nonprintable_but_named) +
+				Regexp.select_characters(:escaped)
+			assert_equal(Binary_bytes.join, all.sort.join)
+			assert_equal(Binary_bytes, all.sort)
+
 		end # select_characters
 
-		def test_literal_characters
-			assert_include(Regexp.literal_characters, 'a')
-
-			character = "\n"
-			escape = Regexp.escape(character)
-			assert_equal(2, escape.size, escape.inspect)
-			refute_equal(escape, character)
-			assert_equal('\n', escape)
-
-			character = "\x00"
-			escape = Regexp.escape(character)
-			assert_instance_of(String, escape)
-			expected_escape = '\x00'
-#			assert_equal(4, expected_escape.size, Regexp.inspect_character(expected_escape))
-			assert_equal("\x00", escape)
-			assert_equal('\x00', Regexp.hex_escape(character))
-#			assert_equal('\x00', escape, Regexp.inspect_character(expected_escape))
-#			assert_equal(expected_escape, escape, Regexp.inspect_character(expected_escape))
-#			assert_equal(4, escape.size, Regexp.inspect_character(escape))
-#			assert_equal(expected_escape, escape, Regexp.inspect_character(expected_escape))
-#			refute_equal(escape, character, Regexp.inspect_character(expected_escape))
-
-			Regexp.literal_characters.each do |character|
-				escape = Regexp.escape(character)
-#				assert_match(Regexp.new(Regexp.escape(character)), character, Regexp.inspect_character(expected_escape))
-				assert_equal(1, escape.size, Regexp.inspect_character(character) + ' is not a literal character.')
-				assert_equal(character, escape)
-			end # each
-#			assert_equal('0123456789:;<=>@ABCDEFGHIJKLMNOPQRSTUVWXYZ_`abcdefghijklmnopqrstuvwxyz', Regexp.literal_characters.join)
-		end # literal_characters
-		
-		def test_escaped_characters
-			assert_include(Regexp.escaped_characters, "\t")
-			Regexp.escaped_characters.each do |character|
-				escape = Regexp.escape(character)
-				assert_equal(2, escape.size, Regexp.inspect_character(character) + ' is not an escaped character.')
-#				refute_equal("\\" + character, escape)
-			end # each
-#			assert_equal('\t', Regexp.escaped_characters.join)
-		end # escaped_characters
-		
-		def test_meta_characters
-			assert_include(Regexp.meta_characters, "{")
-			Regexp.meta_characters.each do |character|
-				escape = Regexp.escape(character)
-				assert_equal(2, escape.size, Regexp.inspect_character(character) + ' is not a meta character.')
-				assert_equal("\\" + character, escape)
-			end # each
-#			assert_equal(' \#$()*+-.?[\\]^{|}', Regexp.meta_characters.join)
-		end # meta_characters
-		
 		def test_nonprintable_characters
-#			assert_include(Regexp.nonprintable_characters, "{")
-			Regexp.nonprintable_characters.each do |character|
+			assert_include(Regexp.select_characters(:nonprintable), "\x80")
+			Regexp.select_characters(:nonprintable).each do |character|
 				escape = Regexp.escape(character)
 				assert_equal(1, character.size, Regexp.inspect_character(character) + ' is not a nonprintable character.')
 #				assert_equal('\x' + "%02X" % character.codepoints[0], escape, Regexp.inspect_character(character))
-#				assert_equal(4, escape.size, Regexp.inspect_character(character) + ' is not a nonprintable character.')
 			end # each
-#			assert_equal('\x00\x01\x02\x03\x04\x05\x06\\x00\x01\x02\x03\x04\x05\x06\\x7F\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8A\x8B\x8C\x8D\x8E\x8F\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9A\x9B\x9C\x9D\x9E\x9F\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF', Regexp.nonprintable_characters.join)
 		end # nonprintable_characters
 		
   def test_terminator_regexp
@@ -350,6 +387,18 @@ class RegexpTest < TestCase
     assert_equal(/a{1,3}/, /a/ * (1..3))
     assert_equal(/a\n/, /a/ * "\n")
     assert_match(/a/ * "\n", "a\n")
+		coerce_escaped_string = /\A\x80\z/.coerce_escaped_string("\x80")
+		assert_equal(["\\A\\x80\\z", "\x80"], coerce_escaped_string)
+		assert_match(/\A\x80\z/, "\x80")
+		character = "\x80"
+			assert_match(Regexp::Start_string * Regexp.new(Regexp.escape(character)), character, Regexp.inspect_character(character))
+
+		assert_equal(/\x80/.options, Regexp.new(Regexp.escape(character)).options, Regexp.inspect_character(character))
+		assert_equal(/\x80/.source.encoding, Regexp.new(Regexp.escape(character)).source.encoding, Regexp.inspect_character(character))
+#		assert_equal(/\x80/.source, Regexp.new(Regexp.escape(character)).source, Regexp.inspect_character(character))
+#		assert_equal(/\x80/, Regexp.new(Regexp.escape(character)), Regexp.inspect_character(character))
+#			assert_match(Regexp.new(Regexp.escape(character)) * Regexp::End_string, character, Regexp.inspect_character(character))
+#			assert_match(Regexp::Start_string * Regexp.new(Regexp.escape(character)) * Regexp::End_string, character, Regexp.inspect_character(character))
   end # sequence
 
   def test_alterative
@@ -398,6 +447,40 @@ class RegexpTest < TestCase
     assert_equal('2', matchData[0], message)
   end # group
 
+	def test_group_not_needed?
+	end # group_not_needed?
+  def test_optional
+	end # optional
+
+  def test_exact
+		assert_match(/a/.exact, 'a')
+		Binary_bytes.each do |character|
+#			Regexp.assert_readably_escaped(character)
+#			regexp = Regexp.new(Regexp.escape_character(character))
+#			assert_match(Regexp::Start_string * regexp * Regexp::End_string, character, Regexp.inspect_character(character))
+		end # each
+	end # exact
+
+  def test_at_start
+		assert_match(/a/.at_start, 'a')
+	end # at_start
+
+  def test_at_end
+		assert_match(/a/.at_end, 'a')
+	end # at_end
+
+  def test_exact_line
+		assert_match(/a/.exact_line, 'a')
+	end # exact
+
+  def test_at_start_line
+		assert_match(/a/.at_start_line, 'a')
+	end # at_start
+
+  def test_at_end_line
+		assert_match(/a/.at_end_line, 'a')
+	end # at_end
+
   def test_assert_pre_conditions
     assert_instance_of(RegexpError, Regexp_exception)
     assert_instance_of(String, Regexp_exception.backtrace[0])
@@ -416,6 +499,26 @@ class RegexpTest < TestCase
     Regexp.new(']').assert_pre_conditions
   end # assert_pre_conditions
 
+	def test_assert_readably_escaped
+		Regexp.select_characters(:literal).each do |character|
+			Regexp.assert_readably_escaped(character)
+		end # each
+		Regexp.select_characters(:escaped).each do |character|
+			Regexp.assert_readably_escaped(character)
+		end # each
+		Regexp.select_characters(:nonprintable).each do |character|
+#			Regexp.assert_readably_escaped(character)
+		end # each
+		Regexp.select_characters(:meta_character).each do |character|
+			Regexp.assert_readably_escaped(character)
+		end # each
+		Binary_bytes.each do |character|
+#			Regexp.assert_readably_escaped(character)
+#			regexp = Regexp.new(Regexp.escape_character(character))
+#			assert_match(Regexp::Start_string * regexp * Regexp::End_string, character, Regexp.inspect_character(character))
+		end # each
+	end # assert_readably_escaped
+	
   def test_assert_named_captures
     /a/.capture(:a).assert_named_captures
     (/a/.capture(:a) * /b/.capture).assert_named_captures

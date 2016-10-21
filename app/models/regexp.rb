@@ -24,6 +24,9 @@ module DefinitionalConstants # constant parameters of the type (suggest all CAPS
     Start_string = /\A/
     End_string = /\z/
     End_string_less_newline = /\Z/
+    Start_line = /^/
+    End_line = /$/
+		Escape_types = [:escaped, :literal, :meta_character, :nonprintable, :nonprintable_but_named, :regexp_meta_character]
 end # DefinitionalConstants
 include DefinitionalConstants
 	
@@ -82,23 +85,61 @@ include DefinitionalConstants
       end # case
     end # to_regexp_escaped_string
 
+		def escape_state(character)
+			raise character + ' size = ' + character.size.to_s unless character.size == 1
+			regexp_escape = Regexp.escape(character)
+			regexp_escape_kind = 	if character == regexp_escape
+				:literal
+			else case regexp_escape.size
+				when 2 
+					if character == regexp_escape[1] 
+						:meta_character
+					else
+						:escaped
+					end # if
+				when 4 then :binary_byte # e.g. /x00
+					:binary_byte
+				when 6 then :utf8_chgaracter # e.g. /u0000
+					:utf8_wide_character
+				else
+					raise character.inspect + ' unexpected.'
+				end # case
+			end # if
+			{character: character,
+				state: {
+					character_size: character.size,
+					regexp_escape_length: regexp_escape.size,
+					regexp_error: !Regexp.regexp_error(character).nil?,
+					string_same: regexp_escape == character.to_s,
+					regexp_escape_kind: regexp_escape_kind
+					}
+				}
+		end # escape_state
+
+		def state_characters
+			
+		end # state_characters
+		
 		def escape_type(character)
+			# use Regexp.escape to classify escape sequences but also identify anomalous escape sequences
+			# Regexp escape sequences != String escape sequences
+			# named but inconsistantly handled escape sequences
 			regexp_escape = Regexp.escape(character)
 			byte = character.codepoints[0]
 			case regexp_escape.size
 			when 1 
 				if character == "\b" || character == "\a"
-					:escaped
+					:nonprintable_but_named
 				elsif (byte < 32) || (byte >= 127)
 					:nonprintable
-				elsif character == '"' || character == "'"
-					:meta_chararcter
+				elsif character == '"' || character == "'" || character == "/"
+					:regexp_meta_character
 				else
 					:literal
 				end # if
 			when 2 
 				if character == regexp_escape[1] 
-					:meta_chararcter
+					:meta_character
 				else
 					:escaped
 				end # if
@@ -120,10 +161,12 @@ include DefinitionalConstants
 				character
 			when :nonprintable
 				hex_escape(character)
-			when :meta_chararcter
-				regexp_escape
+			when :meta_character, :regexp_meta_character
+				'\\' + character # escape back slash works inside single quotes!
+			when :nonprintable_but_named
+					character.inspect[1..-2] # /a and /b
 			when :escaped
-				regexp_escape
+				'\\' + regexp_escape[1] # escape back slash works inside single quotes!
 			else
 				raise character.inspect + ' unexpected.'
 			end # case
@@ -135,15 +178,18 @@ include DefinitionalConstants
 				quote = "'"
 			else
 				if character == '"'
-					quote = "'" # default until we know better
+					quote = "'"
 				else
-					quote = '"' # default until we know better
+					quote = '"'
 				end # if
 			end # case
-			quote + escape_character(character) + quote + ' /' + escape_character(character) + '/ '+ ' (' + hex_escape(character) + ' ' + character.encoding.to_s + ')'
+			quote + escape_character(character) + quote + 
+				' ' + Regexp.escape(character).inspect +
+				' /' + escape_character(character) + '/'+ 
+				' (' + hex_escape(character) + ' ' + character.encoding.to_s + ')'
 		end # inspect_character
 		
-		def reversably_escaped(regexp)
+		def readably_escaped(regexp)
 			# according to documentation see: https://ruby-doc.org/core-2.1.1/Regexp.html#method-c-escape
 			#	Regexp.new(Regexp.escape(str)) =~ str
 			correct_escape = regexp.source.bytes.map do |byte|
@@ -156,7 +202,7 @@ include DefinitionalConstants
 					regexp_escape
 				end # if
 			end.join # map
-		end # reversably_escaped
+		end # readably_escaped
 		
     def promote(alternative_form)
       case alternative_form.class.to_s
@@ -185,44 +231,12 @@ include DefinitionalConstants
     end # regexp_error
 
 		def select_characters(escape_type)
+			raise escape_type.inspect + ' not in ' + Regexp::Escape_types.inspect unless Regexp::Escape_types.include?(escape_type)
 			Regexp::Binary_bytes.select do |character|
 				escape_type(character) == escape_type
 			end # select
 		end # select_characters
 
-		def literal_characters
-			Regexp::Ascii_characters.select do |character|
-				escape = Regexp.escape(character)
-				if escape.size == 1 && escape == character
-					true
-				else
-					false
-				end # if
-			end # select
-		end # literal_characters
-		
-		def escaped_characters
-			Regexp::Ascii_characters.select do |character|
-				escape = Regexp.escape(character)
-				if escape.size != 1 && escape != character
-					true
-				else
-					false
-				end # if
-			end # select
-		end # escaped_characters
-		
-		def meta_characters
-			Regexp::Ascii_characters.select do |character|
-				escape = Regexp.escape(character)
-				if escape.size == 2 && escape[1] == character
-					true
-				else
-					false
-				end # if
-			end # select
-		end # meta_characters
-		
 		def nonprintable_characters
 			Regexp::Binary_bytes.select do |character|
 				escape = Regexp.escape(character)
@@ -357,17 +371,134 @@ include DefinitionalConstants
           "\nIn order to evaluate left to right, place parenthesis around operator expressions."
   end # back_reference
 
-  def group
+  def group # non-capturing "parenthesis" for forcing operator precedence
     /(?:#{source})/
   end # group
 
+	def group_not_needed?
+		source.size == 1
+	end # group_not_needed?
+	
   def optional
-		if source.size == 1
+		if group_not_needed?
 			/#{source}?/
 		else
 			group * Optional
 		end # if
-end #group
+	end # optional
+
+  def exact
+		Regexp::Start_string * self * Regexp::End_string
+	end # exact
+
+  def at_start
+		Regexp::Start_string * self
+	end # at_start
+
+  def at_end
+		self * Regexp::End_string
+	end # at_end
+
+  def exact_line
+		Regexp::Start_string * self * Regexp::End_string
+	end # exact
+
+  def at_start_line
+		Regexp::Start_string * self
+	end # at_start
+
+  def at_end_line
+		self * Regexp::End_string
+	end # at_end
+
+  module Assertions
+    module ClassMethods
+      def assert_post_conditions
+      end # assert_post_conditions
+
+      def assert_pre_conditions
+      end # assert_pre_conditions
+			
+			def assert_readably_escaped(character)
+			# according to documentation see: https://ruby-doc.org/core-2.1.1/Regexp.html#method-c-escape
+			#	Regexp.new(Regexp.escape(str)) =~ str
+				refute_nil(Regexp.new(Regexp.escape(character)) =~ character)
+				assert_match(Regexp.new(Regexp.escape(character)), character)
+				assert_match(Regexp.new(Regexp::Start_string.source + Regexp.escape(character) + Regexp::End_string.source), character, Regexp.inspect_character(character))
+				assert_match(Regexp::Start_string * Regexp.new(Regexp.escape(character)) * Regexp::End_string, character, Regexp.inspect_character(character))
+
+				escape = Regexp.escape_character(character)
+				assert_instance_of(String, escape, 'By definition.')
+				escaped_regexp = eval('/' + escape + '/') # escapes in Regexp literals may not match String escapes!
+				regexp = Regexp.regexp_rescued(character)
+				if regexp.nil?
+					assert_equal(:meta_character, Regexp.escape_type(character))
+				else
+					assert_equal(character, regexp.source, Regexp.inspect_character(character))
+				end # if
+				case Regexp.escape_type(character)
+				when :literal
+					assert_equal(1, escape.size, Regexp.inspect_character(character) + ' is not a literal character.')
+					assert_equal(character, escape)
+					assert_equal(character, escaped_regexp.source, Regexp.inspect_character(character))
+				when :nonprintable
+					assert_equal(4, escape.size, Regexp.inspect_character(character) + ' is not a nonprintable character.')
+					if character == '/x00'
+						assert_equal(character, escaped_regexp.source, Regexp.inspect_character(character))
+					else
+						assert_equal(escape, escaped_regexp.source, Regexp.inspect_character(character))
+					end # if
+				when :meta_character
+					assert_equal(2, escape.size, Regexp.inspect_character(character) + ' is not an meta_character character.')
+					assert_equal(escape, '\\' + character)
+					if character == '/'
+						assert_equal(character, escaped_regexp.source, Regexp.inspect_character(character))
+					else
+						assert_equal(escape, escaped_regexp.source, Regexp.inspect_character(character))
+					end # if
+				when :escaped
+					assert_equal(2, escape.size, Regexp.inspect_character(character) + ' is not an escaped character.')
+					refute_equal("\\" + character, escape)
+					assert_equal(escape, escaped_regexp.source, Regexp.inspect_character(character))
+				else
+					raise character.inspect + ' unexpected.'
+				end # case
+
+#				regexp = Regexp.new(Regexp.readably_escaped(character))
+#				assert_equal(regexp.source, Regexp.new(Regexp.readably_escaped(regexp)).source, Regexp.inspect_character(character))
+#				assert_equal(regexp.options, Regexp.new(Regexp.readably_escaped(regexp)).options, Regexp.inspect_character(character))
+#				assert_equal(regexp.inspect, Regexp.new(Regexp.readably_escaped(regexp)).inspect, Regexp.inspect_character(character))
+				regexp = Regexp::Start_string * Regexp.new(Regexp.escape(character)) * Regexp::End_string
+#				assert_equal(regexp.source, Regexp.new(Regexp.readably_escaped(regexp)).source, Regexp.inspect_character(character))
+				assert_equal(regexp.options, Regexp.new(Regexp.readably_escaped(regexp)).options, Regexp.inspect_character(character))
+#				assert_equal(regexp.inspect, Regexp.new(Regexp.readably_escaped(regexp)).inspect, Regexp.inspect_character(character))
+			end # assert_readably_escaped
+			
+    end # ClassMethods
+		
+    def assert_named_captures
+      assert_operator(names.size, :>=, 1, named_captures.inspect)
+      assert_operator(named_captures.size, :>=, 1, named_captures.inspect)
+      assert_equal(names, named_captures.keys)
+      all_indices = named_captures.values.flatten.sort
+      assert_equal((1..all_indices.size).to_a, all_indices)
+    end # assert_named_captures
+
+    def assert_pre_conditions
+      # by definition 	assert_match(Regexp.new(Regexp.escape(str), str)
+      #	assert_equal(self, Regexp.promote(self))
+      #	assert_equal(self, /#{self.unescaped_string}/)
+      #	assert_equal(self, Regexp.promote(self).unescaped_string)
+    end # assert_pre_conditions
+
+    def assert_post_conditions
+    end # assert_post_conditions
+
+    def assert_no_exception(message)
+    end # assert_no_exception
+  end # Assertions
+  include Assertions
+  extend Assertions::ClassMethods
 end #Regexp
 
 class RegexpError
