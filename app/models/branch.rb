@@ -8,7 +8,8 @@
 # require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
-require_relative '../../app/models/repository.rb'
+#require_relative '../../app/models/repository.rb'
+require_relative '../../test/assertions/repository_assertions.rb'
 class GitReference
   include Virtus.value_object
 
@@ -48,7 +49,7 @@ class BranchReference < GitReference
   include Virtus.value_object
 
   values do
-    attribute :age, Fixnum, default: 789
+    attribute :age, Fixnum, default: 0
     attribute :timestamp, Time, default: Time.now
   end # values
   module ClassMethods
@@ -193,12 +194,17 @@ class BranchReference < GitReference
   end # Examples
 end # BranchReference
 
+require 'rgl/implicit'
+require 'rgl/adjacency'
+require 'rgl/dot'
+
 class Branch < GitReference
+	include Comparable
   # include Repository::Constants
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
     # assert_global_name(:Repository)
     include BranchReference::DefinitionalConstants
-    Branch_enhancement = [:passed, :testing, :edited].freeze # higher inex means more enhancements/bugs
+    Branch_enhancement = [:passed, :tested, :edited].freeze # higher inex means more enhancements/bugs
     Extended_branches = { -4 => :'origin/master',
                           -3 => :work_flow,
                           -2 => :tax_form,
@@ -207,7 +213,7 @@ class Branch < GitReference
       master: :'origin/master',
       passed: :master,
       testing: :passed,
-      edited: :testing
+      edited: :tested
     }.freeze
     Subset_branch = {
       master: :tax_form,
@@ -215,8 +221,11 @@ class Branch < GitReference
       work_flow: :unit,
       unit: :regexp
     }.freeze
+		Interactive_branches = Branch_enhancement.map {|branch_symbol| (branch_symbol.to_s + '_interactive').to_sym}
+		All_standard_branches = Branch_enhancement + Extended_branches.values + Interactive_branches
+		Name_regexp = /[_a-z]+/.capture(:maturity) * /_interactive/.capture(:interactive).optional
     First_slot_index = Extended_branches.keys.min
-    Last_slot_index = Branch_enhancement.size + 10 # how many is too slow?
+    Last_slot_index = Branch_enhancement.size # how many is too slow?
     Branch_name_alternative = [Branch_name_regexp.capture(:branch)].freeze
     Pattern = /[* ]/ * /[a-z0-9A-Z_-]+/.capture(:branch) * /\n/
     Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)].freeze
@@ -263,7 +272,7 @@ class Branch < GitReference
     def merge_range(deserving_branch)
       deserving_index = Branch.branch_index?(deserving_branch)
       if deserving_index.nil?
-        raise deserving_branch.inspect + ' not found in ' + Branch::Branch_enhancement.inspect + ' or ' + Extended_branches.inspect
+        raise deserving_branch.inspect + ' not found in ' + Branch::Branch_enhancement.inspect + ' or ' + Extended_branches.values.inspect
       else
         deserving_index + 1..Branch::Branch_enhancement.size - 1
       end # if
@@ -303,7 +312,9 @@ class Branch < GitReference
       pattern = /  / * /[a-z0-9\/A-Z]+/.capture(:remote)
       remote_run = repository.git_command('branch --list --remote')
       captures = remote_run.output.capture?(pattern, SplitCapture)
-      captures.output
+      captures.output.map do |remote_hash|
+				remote_hash[:remote].to_sym
+			end # map
     end # remotes?
 
     def merged?(repository)
@@ -321,15 +332,24 @@ class Branch < GitReference
     def revison_tag?(branch_index)
       '-r ' + Branch.branch_symbol?(branch_index).to_s
     end # revison_tag?
+	
+		def stash_wip(repository)
+			command_string = 'git stash list'
+			@cached_run = repository.git_command(command_string)
+			regexp = /stash@{0}: WIP on / * Branch_name_regexp.capture(:parent_branch) * /: / *
+				 SHA_hex_7.capture(:sha7) * / Merge branch '/ * Branch_name_regexp.capture(:merge_from) * /' into / * Branch_name_regexp.capture(:merge_into)
+			capture = @cached_run.output.capture?(regexp)
+			capture.output
+		end # stash_wip
   end # ClassMethods
   extend ClassMethods
   include Virtus.value_object
-
   values do
     attribute :repository, Repository, default: Repository::This_code_repository
     attribute :remote_branch_name, Symbol, default: ->(branch, _attribute) { branch.find_origin }
   end # values
   # Allows Branch objects to be used in most contexts where a branch name Symbol is expected
+
   def to_s
     @name.to_s
   end # to_s
@@ -339,15 +359,61 @@ class Branch < GitReference
   end # to_s
 
   def <=>(other)
-    Branch.branch_index?(name) <=> Branch.branch_index?(other.name)
+		if self == other
+			0
+		else
+	    self_index = Branch.branch_index?(self.name)
+	    other_index = Branch.branch_index?(other.name)
+			if self_index.nil? || other_index.nil?
+				nil
+			else
+				comparison = -(self_index <=> other_index) # indices in reverse order of maturity
+			end # if
+		end # if
   end # compare
 
   def find_origin
-    if Branch.remotes?(@repository).include?(@repository.current_branch_name?)
-      'origin/' + @name.to_s
+    if Branch.remotes?(@repository).include?(@name)
+      ('origin/' + @name.to_s).to_sym
     end # if
   end # find_origin
+	
+	def interactive?
+			to_s.capture?(Name_regexp).output[:interactive]
+	end # interactive?
+	
+	def maturity
+			to_s.capture?(Name_regexp).output[:maturity]
+	end # maturity
+	
+	def succ
+		index = Branch.branch_index?(to_sym)
+		if index.nil? || index + 1 > Last_slot_index
+			nil
+		else
+			index + 1
+		end # if
+	end # succ
+	
+	def less_mature
+		ret = []
+		if interactive?
+			ret << maturity
+			ret << Branch.new(repository: @repository, name: Branch.branch_symbol?(maturity.succ))
+		end # if
+		index = succ
+		unless index.nil?
+			ret << Branch.new(repository: @repository, name: Branch.branch_symbol?(index))
+		end # unless
+		ret
+	end # less_mature
+	
   module Constants # constant objects of the type (e.g. default_objects)
+		Master_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: :master)
+		Passed_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: :passed)
+    Tested_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: :tested)
+    Edited_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: :edited)
+    Stash_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: :stash)
   end # Constants
   module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
     include DefinitionalConstants

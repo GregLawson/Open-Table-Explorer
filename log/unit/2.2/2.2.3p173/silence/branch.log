@@ -1,39 +1,35 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 40, Rational(41196597937, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 11, 7, 9, 38, Rational(13975818900, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-......#<LimitCapture:0x00000001999cc8 @string="* master\n  passed\n", @regexp=/[* ](?<branch>[a-z0-9A-Z_-]+)\n/, @raw_captures=["*", "master", " ", "passed"], @parsed_regexp=#<Regexp::Expression::Root:0x00000001999980 @type=:expression, @token=:root, @text="", @ts=0, @level=nil, @set_level=nil, @conditional_level=nil, @options=nil, @expressions=[#<Regexp::Expression::Group::Options:0x00000001997180 @type=:group, @token=:options, @text="(?-mix:", @ts=0, @level=0, @set_level=0, @conditional_level=0, @options={:m=>false, :i=>false, :x=>false, :d=>false, :a=>false, :u=>false}, @expressions=[#<Regexp::Expression::CharacterSet:0x00000001997018 @members=["*", " "], @negative=false, @closed=true, @type=:set, @token=:character, @text="[", @ts=7, @level=1, @set_level=0, @conditional_level=0, @options=nil>, #<Regexp::Expression::Group::Named:0x00000001996fc8 @name="branch", @type=:group, @token=:named, @text="(?<branch>", @ts=11, @level=1, @set_level=0, @conditional_level=0, @options=nil, @expressions=[#<Regexp::Expression::CharacterSet:0x00000001996f50 @members=["a-z", "0-9", "A-Z", "_", "-"], @negative=false, @closed=true, @type=:set, @token=:character, @text="[", @ts=21, @level=2, @set_level=0, @conditional_level=0, @options=nil, @quantifier=#<Regexp::Expression::Quantifier:0x00000001996f00 @token=:one_or_more, @text="+", @mode=:greedy, @min=1, @max=-1>>]>, #<Regexp::Expression::EscapeSequence::Newline:0x00000001996ed8 @type=:escape, @token=:newline, @text="\\n", @ts=36, @level=1, @set_level=0, @conditional_level=0, @options=nil>]>]>>
-#<LimitCapture:0x00000001995b78 @string="* master\n  passed\n", @regexp=/(?:[* ] (?<branch>[-a-z0-9A-Z_]+)\n)+/, @raw_captures=["", "passed"], @parsed_regexp=#<Regexp::Expression::Root:0x000000019958d0 @type=:expression, @token=:root, @text="", @ts=0, @level=nil, @set_level=nil, @conditional_level=nil, @options=nil, @expressions=[#<Regexp::Expression::Group::Options:0x00000001992dd8 @type=:group, @token=:options, @text="(?-mix:", @ts=0, @level=0, @set_level=0, @conditional_level=0, @options={:m=>false, :i=>false, :x=>false, :d=>false, :a=>false, :u=>false}, @expressions=[#<Regexp::Expression::Group::Passive:0x00000001992c70 @type=:group, @token=:passive, @text="(?:", @ts=7, @level=1, @set_level=0, @conditional_level=0, @options=nil, @expressions=[#<Regexp::Expression::CharacterSet:0x00000001992c20 @members=["*", " "], @negative=false, @closed=true, @type=:set, @token=:character, @text="[", @ts=10, @level=2, @set_level=0, @conditional_level=0, @options=nil>, #<Regexp::Expression::Literal:0x00000001992bd0 @type=:literal, @token=:literal, @text=" ", @ts=14, @level=2, @set_level=0, @conditional_level=0, @options=nil>, #<Regexp::Expression::Group::Named:0x00000001992ba8 @name="branch", @type=:group, @token=:named, @text="(?<branch>", @ts=15, @level=2, @set_level=0, @conditional_level=0, @options=nil, @expressions=[#<Regexp::Expression::CharacterSet:0x00000001992b30 @members=["-", "a-z", "0-9", "A-Z", "_"], @negative=false, @closed=true, @type=:set, @token=:character, @text="[", @ts=25, @level=3, @set_level=0, @conditional_level=0, @options=nil, @quantifier=#<Regexp::Expression::Quantifier:0x00000001992ae0 @token=:one_or_more, @text="+", @mode=:greedy, @min=1, @max=-1>>]>, #<Regexp::Expression::EscapeSequence::Newline:0x00000001992ab8 @type=:escape, @token=:newline, @text="\\n", @ts=40, @level=2, @set_level=0, @conditional_level=0, @options=nil>], @quantifier=#<Regexp::Expression::Quantifier:0x00000001992a90 @token=:one_or_more, @text="+", @mode=:greedy, @min=1, @max=-1>>]>]>>
-#<LimitCapture:0x000000019913c0 @string="* master\n  passed\n", @regexp=/[* ] (?<branch>[-a-z0-9A-Z_]+)/, @raw_captures=["", "master", "\n", "passed", "\n"], @parsed_regexp=#<Regexp::Expression::Root:0x000000019910a0 @type=:expression, @token=:root, @text="", @ts=0, @level=nil, @set_level=nil, @conditional_level=nil, @options=nil, @expressions=[#<Regexp::Expression::Group::Options:0x0000000198eb20 @type=:group, @token=:options, @text="(?-mix:", @ts=0, @level=0, @set_level=0, @conditional_level=0, @options={:m=>false, :i=>false, :x=>false, :d=>false, :a=>false, :u=>false}, @expressions=[#<Regexp::Expression::CharacterSet:0x0000000198e9b8 @members=["*", " "], @negative=false, @closed=true, @type=:set, @token=:character, @text="[", @ts=7, @level=1, @set_level=0, @conditional_level=0, @options=nil>, #<Regexp::Expression::Literal:0x0000000198e968 @type=:literal, @token=:literal, @text=" ", @ts=11, @level=1, @set_level=0, @conditional_level=0, @options=nil>, #<Regexp::Expression::Group::Named:0x0000000198e940 @name="branch", @type=:group, @token=:named, @text="(?<branch>", @ts=12, @level=1, @set_level=0, @conditional_level=0, @options=nil, @expressions=[#<Regexp::Expression::CharacterSet:0x0000000198e8c8 @members=["-", "a-z", "0-9", "A-Z", "_"], @negative=false, @closed=true, @type=:set, @token=:character, @text="[", @ts=22, @level=2, @set_level=0, @conditional_level=0, @options=nil, @quantifier=#<Regexp::Expression::Quantifier:0x0000000198e878 @token=:one_or_more, @text="+", @mode=:greedy, @min=1, @max=-1>>]>]>]>>
-#<LimitCapture:0x0000000198d428 @string="* master\n  passed\n", @regexp=/^[* ] (?<branch>[a-z0-9A-Z_-]+)/, @raw_captures=["", "master", "\n", "passed", "\n"], @parsed_regexp=#<Regexp::Expression::Root:0x0000000198d108 @type=:expression, @token=:root, @text="", @ts=0, @level=nil, @set_level=nil, @conditional_level=nil, @options=nil, @expressions=[#<Regexp::Expression::Group::Options:0x00000001986a60 @type=:group, @token=:options, @text="(?-mix:", @ts=0, @level=0, @set_level=0, @conditional_level=0, @options={:m=>false, :i=>false, :x=>false, :d=>false, :a=>false, :u=>false}, @expressions=[#<Regexp::Expression::Anchor::BeginningOfLine:0x000000019868f8 @type=:anchor, @token=:bol, @text="^", @ts=7, @level=1, @set_level=0, @conditional_level=0, @options=nil>, #<Regexp::Expression::CharacterSet:0x000000019868d0 @members=["*", " "], @negative=false, @closed=true, @type=:set, @token=:character, @text="[", @ts=8, @level=1, @set_level=0, @conditional_level=0, @options=nil>, #<Regexp::Expression::Literal:0x00000001986880 @type=:literal, @token=:literal, @text=" ", @ts=12, @level=1, @set_level=0, @conditional_level=0, @options=nil>, #<Regexp::Expression::Group::Named:0x00000001986858 @name="branch", @type=:group, @token=:named, @text="(?<branch>", @ts=13, @level=1, @set_level=0, @conditional_level=0, @options=nil, @expressions=[#<Regexp::Expression::CharacterSet:0x000000019867e0 @members=["a-z", "0-9", "A-Z", "_", "-"], @negative=false, @closed=true, @type=:set, @token=:character, @text="[", @ts=23, @level=2, @set_level=0, @conditional_level=0, @options=nil, @quantifier=#<Regexp::Expression::Quantifier:0x00000001986790 @token=:one_or_more, @text="+", @mode=:greedy, @min=1, @max=-1>>]>]>]>>
-....................
+....................................
 
-Finished in 3.845712s, 6.7608 runs/s, 24.1828 assertions/s.
+Finished in 2.288987s, 15.7275 runs/s, 54.6093 assertions/s.
 
-26 runs, 93 assertions, 0 failures, 0 errors, 0 skips
+36 runs, 125 assertions, 0 failures, 0 errors, 0 skips
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb"
-	User time (seconds): 2.07
-	System time (seconds): 0.79
-	Percent of CPU this job got: 52%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:05.47
+	User time (seconds): 2.65
+	System time (seconds): 0.84
+	Percent of CPU this job got: 88%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.96
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 36004
+	Maximum resident set size (kbytes): 36832
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 694
-	Minor (reclaiming a frame) page faults: 52068
-	Voluntary context switches: 1985
-	Involuntary context switches: 634
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 53180
+	Voluntary context switches: 1520
+	Involuntary context switches: 947
 	Swaps: 0
-	File system inputs: 7728
-	File system outputs: 5336
+	File system inputs: 0
+	File system outputs: 7208
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
