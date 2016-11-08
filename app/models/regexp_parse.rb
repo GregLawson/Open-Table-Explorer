@@ -10,7 +10,7 @@ require_relative 'stream_tree.rb'
 require_relative 'regexp.rb'
 require_relative 'parse.rb'
 module RegexpParseType
-extend Connectivity::ClassMethods
+#  extend Connectivity::ClassMethods
 module ClassMethods
 def RegexpParseType.children?(node)
 		children_if_exist?(node, :expressions)
@@ -19,10 +19,10 @@ def expression_class_symbol?(node)
 	node.class.name[20..-1].to_sym # should be magic-number-free
 end # expression_class_symbol?
 end #ClassMethods
-extend Connectivity::ClassMethods
+#  extend Connectivity::ClassMethods
 extend ClassMethods
 module Examples
-include Connectivity::Examples
+#    include Connectivity::Examples
 Node_format = proc do |e|
 	"#{RegexpParseType.expression_class_symbol?(e).to_s}(:#{e.type}, :#{e.token}, '#{e.text}')"
 end # Node_format
@@ -56,7 +56,7 @@ end # RegexpParseType
 
 class Regexp
 class Expression::Base
-include Tree
+#    include Tree
 module Constants
 end # Constants
 include Constants
