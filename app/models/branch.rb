@@ -6,10 +6,7 @@
 #
 ###########################################################################
 # require_relative '../../app/models/no_db.rb'
-require_relative '../../app/models/shell_command.rb'
-require_relative '../../app/models/parse.rb'
-#require_relative '../../app/models/repository.rb'
-require_relative '../../test/assertions/repository_assertions.rb'
+require_relative '../../app/models/git_reference.rb'
 class GitReference
   include Virtus.value_object
 
