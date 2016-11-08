@@ -40,6 +40,7 @@ class Array
     each_pair do |key, value|
       hash[key] = value
     end # each_pair
+		hash
   end # to_hash
 
   def to_hash_from_to_a

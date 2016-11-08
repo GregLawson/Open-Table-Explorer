@@ -1,34 +1,33 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 54, Rational(20396362663, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 11, 8, 3, 14, Rational(45083941807, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test
+Started
+............
+
+Finished in 0.007469485 seconds.
+------
+12 tests, 69 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+------
+1606.54 tests/s, 9237.58 assertions/s
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:13:in `<module:RegexpParseType>\': uninitialized constant RegexpParseType::Connectivity (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:12:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:11:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:11:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_lines_storage.rb:8:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_lines_storage.rb:8:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:8:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:8:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test.rb:9:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test.rb:9:in `<main>\'
-Command exited with non-zero status 1
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test.rb"
-	User time (seconds): 0.70
-	System time (seconds): 0.06
-	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.76
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test.rb"
+	User time (seconds): 1.00
+	System time (seconds): 0.10
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.12
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 26140
+	Maximum resident set size (kbytes): 31132
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5030
-	Voluntary context switches: 3
-	Involuntary context switches: 11
+	Minor (reclaiming a frame) page faults: 6268
+	Voluntary context switches: 2
+	Involuntary context switches: 122
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -36,7 +35,7 @@ Command exited with non-zero status 1
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0
 '
 }
 
