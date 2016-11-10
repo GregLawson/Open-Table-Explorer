@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 11, 10, 1, 2, Rational(31599913330, 1000000000), "-08:00"),
+:start_time => Time.new(2016, 11, 10, 1, 21, Rational(28931785812, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test
@@ -27,28 +27,28 @@ Started
 {:Json=>[:Nil, :Date, :DateTime, :Time, :Decimal, :Array, :Hash]}
 .......
 
-Finished in 0.778269545 seconds.
+Finished in 0.688566017 seconds.
 ------
 11 tests, 34 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-14.13 tests/s, 43.69 assertions/s
+15.98 tests/s, 49.38 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test.rb"
-	User time (seconds): 2.62
-	System time (seconds): 0.55
-	Percent of CPU this job got: 95%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.31
+	User time (seconds): 2.96
+	System time (seconds): 0.50
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.70
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 44636
+	Maximum resident set size (kbytes): 44632
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 32700
-	Voluntary context switches: 496
-	Involuntary context switches: 236
+	Minor (reclaiming a frame) page faults: 31504
+	Voluntary context switches: 601
+	Involuntary context switches: 1474
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 2552

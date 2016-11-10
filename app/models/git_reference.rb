@@ -169,10 +169,6 @@ class BranchReference < GitReference
     end # ClassMethods
     def assert_pre_conditions(message = '')
       message += "In assert_pre_conditions, self=#{inspect}"
-      #	assert_match(Branch_name_regexp, capture.output[:ambiguous_branch])
-      # ?	assert_match(BranchReference::Unambiguous_ref_age_pattern, @age.to_s, message)
-      # ?	assert_match(BranchReference::Unambiguous_ref_age_pattern, self.age.to_s, message)
-      # ?	assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, self.age.to_s, message)
       self
     end # assert_pre_conditions
 
