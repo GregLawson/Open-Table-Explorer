@@ -16,12 +16,8 @@ end # Types
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
-class GitReference
-  include Virtus.value_object
-
-  values do
-    attribute :name, Symbol
-  end # values
+class GitReference < Dry::Types::Value
+    attribute :name, Types::Strict::Symbol
 end # GitReference
 
 class BranchReference < GitReference
@@ -52,12 +48,8 @@ class BranchReference < GitReference
                          Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7 * Delimiter * Timestamp_regexp
   end # DefinitionalConstants
   include DefinitionalConstants
-  include Virtus.value_object
-
-  values do
-    attribute :age, Fixnum, default: 789
-    attribute :timestamp, Time, default: Time.now
-  end # values
+    attribute :age, Types::Maybe::Strict::Int
+    attribute :timestamp, Types::Form::Time.default(Time.now)
   module ClassMethods
     include DefinitionalConstants
     def previous_changes(filename)
@@ -105,10 +97,10 @@ class BranchReference < GitReference
   end # ClassMethods
   extend ClassMethods
   def to_s
-    if @age.nil?
+    if @age.nil? || @age == 0
       @name.to_s
     else
-      @name.to_s + '@{' + @age.to_s + '}'
+      @name.to_s + '@{' + @age.value.to_s + '}'
     end # if
   end # to_s
   require_relative '../../app/models/assertions.rb'
@@ -131,6 +123,11 @@ class BranchReference < GitReference
         #	assert_equal(true, reflog_line.capture?(BranchReference::Reflog_line_regexp).success?, capture.inspect)
         #	assert(capture.success?, capture.inspect)
         #	assert_match(BranchReference::Reflog_line_regexp, reflog_line)
+
+				#	assert_match(Branch_name_regexp, capture.output[:ambiguous_branch])
+				# ?	assert_match(BranchReference::Unambiguous_ref_age_pattern, @age.to_s, message)
+				# ?	assert_match(BranchReference::Unambiguous_ref_age_pattern, self.age.to_s, message)
+				# ?	assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, self.age.to_s, message)
       end # reflog_line
 
       def assert_output(reflog_line, message = '')
