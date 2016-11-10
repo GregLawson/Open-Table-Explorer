@@ -105,7 +105,7 @@ class BranchReference < GitReference
   end # ClassMethods
   extend ClassMethods
   def to_s
-    if @age.nil?
+    if @age.nil? || @age == 0
       @name.to_s
     else
       @name.to_s + '@{' + @age.to_s + '}'
@@ -131,6 +131,11 @@ class BranchReference < GitReference
         #	assert_equal(true, reflog_line.capture?(BranchReference::Reflog_line_regexp).success?, capture.inspect)
         #	assert(capture.success?, capture.inspect)
         #	assert_match(BranchReference::Reflog_line_regexp, reflog_line)
+
+				#	assert_match(Branch_name_regexp, capture.output[:ambiguous_branch])
+				# ?	assert_match(BranchReference::Unambiguous_ref_age_pattern, @age.to_s, message)
+				# ?	assert_match(BranchReference::Unambiguous_ref_age_pattern, self.age.to_s, message)
+				# ?	assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, self.age.to_s, message)
       end # reflog_line
 
       def assert_output(reflog_line, message = '')
@@ -172,10 +177,6 @@ class BranchReference < GitReference
     end # ClassMethods
     def assert_pre_conditions(message = '')
       message += "In assert_pre_conditions, self=#{inspect}"
-      #	assert_match(Branch_name_regexp, capture.output[:ambiguous_branch])
-      # ?	assert_match(BranchReference::Unambiguous_ref_age_pattern, @age.to_s, message)
-      # ?	assert_match(BranchReference::Unambiguous_ref_age_pattern, self.age.to_s, message)
-      # ?	assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, self.age.to_s, message)
       self
     end # assert_pre_conditions
 
