@@ -16,8 +16,36 @@ end # Types
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
-class GitReference < Dry::Types::Value
-    attribute :name, Types::Strict::Symbol
+class GitReference
+	module ClassMethods
+		def head(repository)
+			GitReference.new(name: :HEAD, repository: repository)
+		end # head
+	end # ClassMethods
+	extend ClassMethods
+  include Virtus.value_object
+
+  values do
+    attribute :name, Symbol
+#		attribute :repository, Reposirory, :default => Repository:: # maybe repository independant for copying
+#		attribute :sha1, String
+  end # values
+
+	def name
+		@name	
+	end # name
+		
+	def to_s
+		name.to_s
+	end # to_s
+	
+	def to_sym
+		to_s.to_sym
+	end # to_s
+	
+	def sha1
+			run = repository.git_command('git show ' + to_s + ' --pretty=oneline  --no-abbrev-commit --no-patch')
+	end # sha1
 end # GitReference
 
 class BranchReference < GitReference
@@ -48,22 +76,30 @@ class BranchReference < GitReference
                          Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7 * Delimiter * Timestamp_regexp
   end # DefinitionalConstants
   include DefinitionalConstants
-    attribute :age, Types::Maybe::Strict::Int
-    attribute :timestamp, Types::Form::Time.default(Time.now)
+  include Virtus.value_object
+
+  values do
+    attribute :age, Fixnum, default: 0
+    attribute :timestamp, Time, default: Time.now
+  end # values
   module ClassMethods
     include DefinitionalConstants
     def previous_changes(filename)
       reflog?(filename)
     end # previous_changes
 
-    def new_from_ref(reflog_line)
+    def reflog_to_constructor_hash(reflog_line)
       capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
       raise Exception.new(capture.inspect) unless capture.success?
       if capture.output[:ambiguous_branch].nil?
-        new(name: capture.output[:sha_hex].to_sym, age: 0, timestamp: capture.output[:timestamp])
+        { initialization_string: capture.output[:sha_hex].to_sym, age: 0, timestamp: capture.output[:timestamp] }
       else
-        new(name: capture.output[:ambiguous_branch].to_sym, age: capture.output[:age].uniq[0].to_i, timestamp: capture.output[:timestamp])
+        { initialization_string: capture.output[:ambiguous_branch].to_sym, age: capture.output[:age].uniq[0].to_i, timestamp: capture.output[:timestamp] }
       end # if
+		end # reflog_to_constructor_hash
+		
+		def new_from_ref(reflog_line)
+			new(reflog_to_constructor_hash(reflog_line))
     end # new_from_ref
 
     def reflog_command_string(filename, _repository, range = 0..10)
@@ -98,9 +134,9 @@ class BranchReference < GitReference
   extend ClassMethods
   def to_s
     if @age.nil? || @age == 0
-      @name.to_s
+      name.to_s
     else
-      @name.to_s + '@{' + @age.value.to_s + '}'
+      name.to_s + '@{' + @age.to_s + '}'
     end # if
   end # to_s
   require_relative '../../app/models/assertions.rb'
@@ -114,6 +150,7 @@ class BranchReference < GitReference
         #	assert_match(BranchReference::Unambiguous_ref_pattern, reflog_line)
         #	assert_match(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional, reflog_line, message)
         #	assert_match(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7, reflog_line, message)
+				assert_match(BranchReference::Reflog_line_regexp, reflog_line)
         capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
         #	assert_equal(true, reflog_line.capture?(BranchReference::Ambiguous_ref_pattern).success?, capture.inspect)
         #	assert_equal(true, reflog_line.capture?(BranchReference::Unambiguous_ref_pattern).success?, capture.inspect)
