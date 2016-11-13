@@ -164,11 +164,11 @@ class Branch < GitReference
   # Allows Branch objects to be used in most contexts where a branch name Symbol is expected
 
   def to_s
-    @name.to_s
+    name.to_s
   end # to_s
 
   def to_sym
-    @name.to_sym
+    name.to_sym
   end # to_s
 
   def <=>(other)
@@ -186,8 +186,8 @@ class Branch < GitReference
   end # compare
 
   def find_origin
-    if Branch.remotes?(@repository).include?(@name)
-      ('origin/' + @name.to_s).to_sym
+    if Branch.remotes?(@repository).include?(name)
+      ('origin/' + name.to_s).to_sym
     end # if
   end # find_origin
 	
