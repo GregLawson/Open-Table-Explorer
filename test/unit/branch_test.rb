@@ -24,10 +24,33 @@ class BranchTest < TestCase
   def teardown
     Repository.delete_existing(@temp_repo.path)
   end # teardown
+
+	def reset_temp
+    Repository.delete_existing(@temp_repo.path)
+    @temp_repo = Repository.create_test_repository
+	end # reset_temp
+	
   include BranchReference::DefinitionalConstants
 
-  def test_Branch_Constants
-  end # Constants
+
+  def character_array(&selector)
+		Regexp::Binary_bytes.select do |character|
+			selector.call(character)
+		end # select
+	end # character_array
+	
+	def test_MaturityBranches
+		branch_characters = character_array do |character| 
+			git_run = @temp_repo.git_command('branch ' + character)
+			git_run.success?
+		end # character_array
+		puts branch_characters.join.inspect
+		reset_temp
+		literal_characters = Regexp.select_characters(:literal) - [':', '<', '>', '`', '~', '%']
+		literal_characters.each do |character|
+			@temp_repo.git_command('branch ' + character).assert_post_conditions('character = ' + character.inspect)
+		end # each
+  end # MaturityBranches
 
   def test_branch_symbol?
     assert_equal(:master, Branch.branch_symbol?(-1))
@@ -209,8 +232,7 @@ class BranchTest < TestCase
 		end # vertex_iterator
 		
 		def adjacent_iterator(branch, block) # point to less mature (merge down) branch
-			regexp = /[_a-z]+/.capture(:maturity) * /_interactive/.capture(:interactive).optional
-			capture = branch.to_s.capture?(regexp)
+			capture = branch.to_s.capture?(Name_regexp)
 			assert_kind_of(Branch, branch)
 			assert_instance_of(Proc, block)
 			ret = branch.less_mature

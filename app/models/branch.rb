@@ -11,18 +11,9 @@ require 'rgl/implicit'
 require 'rgl/adjacency'
 require 'rgl/dot'
 
-class Branch < GitReference
-	include Comparable
-  # include Repository::Constants
-  module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
-  end # DefinitionalClassMethods
-  extend DefinitionalClassMethods
-
-  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+module MaturityBranches
     # assert_global_name(:Repository)
 #    include BranchReference::DefinitionalConstants
-    Branch_name_regexp = /[-a-zA-Z0-9_\/]+/ # conventional syntax
-    # Branch_name_regexp = /[-a-zA-Z0-9_]+/ # extended syntax
 
     Branch_enhancement = [:passed, :tested, :edited].freeze # higher inex means more enhancements/bugs
     Extended_branches = { -4 => :'origin/master',
@@ -35,18 +26,17 @@ class Branch < GitReference
       tested: :passed,
       edited: :tested
     }.freeze
-    Subset_branch = {
-      master: :tax_form,
-      master: :work_flow, # duplicate key!
-      work_flow: :unit,
-      unit: :regexp
+    Superset_branch = {
+      tax_form: :master,
+      work_flow: :master,
+      unit: :work_flow,
+      regexp: :unit
     }.freeze
-		Interactive_branches = Branch_enhancement.map {|branch_symbol| (branch_symbol.to_s + '_interactive').to_sym}
-		All_standard_branches = Branch_enhancement + Extended_branches.values + Interactive_branches
+		# Regexp 
+    Branch_name_regexp = /[-a-zA-Z0-9_\/]+/ # conventional syntax
 		Name_regexp = /[_a-z]+/.capture(:maturity) * /_interactive/.capture(:interactive).optional
-    First_slot_index = Extended_branches.keys.min
-    Last_slot_index = Branch_enhancement.size # how many is too slow?
-    Branch_name_alternative = [Branch_name_regexp.capture(:branch)].freeze
+    # Branch_name_regexp = /[-a-zA-Z0-9_]+/ # extended syntax
+		Branch_name_alternative = [Branch_name_regexp.capture(:branch)].freeze
     Pattern = /[* ]/ * /[a-z0-9A-Z_-]+/.capture(:branch) * /\n/
     Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)].freeze
     Git_branch_remote_line = [/[* ]/, / /, Branch_name_alternative].freeze
@@ -56,6 +46,28 @@ class Branch < GitReference
                 /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch),
                 /^[* ] / * /[a-z0-9A-Z_-]+/.capture(:branch)
           ].freeze
+
+end # MaturityBranches
+
+class PsuedoBranch < GitReference # can checkout but not commit
+  include MaturityBranches
+	
+end # PsuedoBranch
+
+class Branch < GitReference # can commit to
+  include MaturityBranches
+	include Comparable
+  # include Repository::Constants
+  module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
+  end # DefinitionalClassMethods
+  extend DefinitionalClassMethods
+
+  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+	  include MaturityBranches
+		Interactive_branches = Branch_enhancement.map {|branch_symbol| (branch_symbol.to_s + '_interactive').to_sym}
+		All_standard_branches = Branch_enhancement + Extended_branches.values + Interactive_branches
+    First_slot_index = Extended_branches.keys.min
+    Last_slot_index = Branch_enhancement.size # how many is too slow?
   end # DefinitionalConstants
   include DefinitionalConstants
 	
@@ -111,12 +123,21 @@ class Branch < GitReference
 
     def current_branch_name?(repository)
       branch_capture = branch_capture?(repository, '--list')
-      if branch_capture.success?
-        branch_capture.output.map { |c| c[:branch].to_sym }
+      current_branch_output = if branch_capture.success?
+        branch_capture.output.select { |c| c[:current] == '*' }
       else
         raise Exception.new('git branch parse failed = ' + branch_capture.inspect)
       end # if
+		if current_branch_output.empty?
+			nil
+		else
+			current_branch_output[0][:branch].to_sym
+      end # if
     end # current_branch_name
+
+    def current_branch(repository)
+			Branch.new(repository: repository, name: current_branch_name?(repository))
+    end # current_branch
 
     def branches?(repository = Repository::This_code_repository)
       branch_capture = branch_capture?(repository, '--list')
@@ -168,8 +189,7 @@ class Branch < GitReference
   include Virtus.value_object
   values do
     attribute :name, Symbol
-    attribute :repository, Repository, default: Repository::This_code_repository
-    attribute :remote_branch_name, Symbol, default: ->(branch, _attribute) { branch.find_origin }
+#    attribute :remote_branch_name, Symbol, default: ->(branch, _attribute) { branch.find_origin }
   end # values
   # Allows Branch objects to be used in most contexts where a branch name Symbol is expected
 
