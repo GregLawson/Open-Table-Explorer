@@ -32,7 +32,7 @@ class Branch < GitReference
     More_mature = {
       master: :'origin/master',
       passed: :master,
-      testing: :passed,
+      tested: :passed,
       edited: :tested
     }.freeze
     Subset_branch = {
@@ -167,6 +167,7 @@ class Branch < GitReference
 	
   include Virtus.value_object
   values do
+    attribute :name, Symbol
     attribute :repository, Repository, default: Repository::This_code_repository
     attribute :remote_branch_name, Symbol, default: ->(branch, _attribute) { branch.find_origin }
   end # values
