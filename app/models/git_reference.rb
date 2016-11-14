@@ -32,7 +32,7 @@ class GitReference # base class for all git references (readable, maybe not writ
 
   values do
     attribute :name, Symbol
-#		attribute :repository, Reposirory, :default => Repository:: # maybe repository independant for copying
+    attribute :repository, Repository, default: Repository::This_code_repository
 #		attribute :sha1, String
   end # values
 
