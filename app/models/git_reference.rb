@@ -17,31 +17,27 @@ require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
 class GitReference # base class for all git references (readable, maybe not writeable)
+	module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+	end # DefinitionalConstants
+	include DefinitionalConstants
+	
   module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
 		def head(repository)
-			GitReference.new(name: :HEAD, repository: repository)
+			GitReference.new(initialization_string: :HEAD, repository: repository)
 		end # head
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
-
-	module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
-	end # DefinitionalConstants
-	include DefinitionalConstants
 	
   include Virtus.value_object
 
   values do
-    attribute :name, Symbol
+    attribute :initialization_string, Symbol
     attribute :repository, Repository, default: Repository::This_code_repository
 #		attribute :sha1, String
   end # values
 
-	def name
-		@name	
-	end # name
-		
 	def to_s
-		name.to_s
+		@initialization_string.to_s
 	end # to_s
 	
 	def to_sym
@@ -54,7 +50,7 @@ class GitReference # base class for all git references (readable, maybe not writ
   
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
-		Head_at_start = GitReference.new(name: :HEAD, repository: Repository::This_code_repository)
+		Head_at_start = GitReference.new(initialization_string: :HEAD, repository: Repository::This_code_repository)
   end # ReferenceObjects
   include ReferenceObjects
 	end # GitReference

@@ -9,8 +9,6 @@ require_relative '../../app/models/git_reference.rb'
 # require_relative '../unit/test_environment'
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../test/assertions/shell_command_assertions.rb'
-require_relative '../../app/models/method_model.rb'
-# require_relative '../../test/assertions/repository_assertions.rb'
 require_relative '../../app/models/parse.rb'
 class GitReferenceTest < TestCase
   # include DefaultTests
