@@ -15,27 +15,28 @@ module Types
 end # Types
 
 class Minimal2 < Dry::Types::Value
-  module DefinitionalClassMethods
+  module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
+  end # DefinitionalClassMethods
+  extend DefinitionalClassMethods
+
+	module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
+	end # DefinitionalConstants
+	include DefinitionalConstants
+	
+  module DefinitionalClassMethods # if reference DefinitionalConstants
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
 #    attribute :name, Types::Strict::Symbol | Types::Strict::String
 #		attribute :data_regexp, Types::Coercible::String
 #		attribute :ruby_conversion, Types::Strict::String.optional
-module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-end # DefinitionalConstants
-include DefinitionalConstants
-	
-  module DefinitionalClassMethods
-  end # DefinitionalClassMethods
-  extend DefinitionalClassMethods
-	
+
   module Constructors # such as alternative new methods
     include DefinitionalConstants
   end # Constructors
   extend Constructors
 	
-  module ReferenceObjects # constant objects of the type (e.g. default_objects)
+  module ReferenceObjects # example constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
   end # ReferenceObjects
   include ReferenceObjects
