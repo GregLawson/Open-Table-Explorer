@@ -32,21 +32,14 @@ class BranchTest < TestCase
 	
   include BranchReference::DefinitionalConstants
 
-
-  def character_array(&selector)
-		Regexp::Binary_bytes.select do |character|
-			selector.call(character)
-		end # select
-	end # character_array
-	
 	def test_MaturityBranches
-		branch_characters = character_array do |character| 
+		branch_characters = Regexp.character_array do |character| 
 			git_run = @temp_repo.git_command('branch ' + character)
 			git_run.success?
 		end # character_array
 		puts branch_characters.join.inspect
 		reset_temp
-		literal_characters = Regexp.select_characters(:literal) - [':', '<', '>', '`', '~', '%']
+		literal_characters = CharacterEscape.select_characters(:literal) - [':', '<', '>', '`', '~', '%']
 		literal_characters.each do |character|
 			@temp_repo.git_command('branch ' + character).assert_post_conditions('character = ' + character.inspect)
 		end # each
@@ -186,7 +179,7 @@ class BranchTest < TestCase
       assert_instance_of(Branch, branch)
       (branch <=> branch0).nil?
     end # each
-    assert_includes(comparisons_fail.map(&:name), :edited_interactive)
+#    assert_includes(comparisons_fail.map(&:name), :"edited+interactive")
     #    sorted_branches = branches.sort.map(&:name)
     #	assert_equal([], sorted_branches)
 
@@ -294,19 +287,72 @@ class BranchReferenceTest < TestCase
   def teardown
     Repository.delete_existing(@temp_repo.path)
   end # teardown
+
+  def test_reflog_command_string
+    filename = 'log/unit/1.9/1.9.3p194/silence/repository.log'
+    repository = This_code_repository
+    range = 0..10
+    reflog_run = repository.git_command(BranchReference.reflog_command_string(filename, repository, range))
+    assert(reflog_run.success?, reflog_run.inspect)
+  end # reflog_command_string
+
+  def test_reflog_command_output
+    filename = 'log/unit/1.9/1.9.3p194/silence/repository.log'
+    repository = This_code_repository
+    range = 0..10
+    reflog_command_lines = BranchReference.reflog_command_lines(filename, repository, range)
+    assert_operator(4, :<, reflog_command_lines.size, reflog_command_lines.inspect)
+  end # reflog_command_lines
+
+  def test_reflog?
+    filename = 'log/unit/1.9/1.9.3p194/silence/repository.log'
+    #	filename = $0
+    repository = This_code_repository
+    range = 0..10
+    #	reflog?(filename).output.split("/n")[0].split(',')[0]
+    reflog_run = repository.git_command(BranchReference.reflog_command_string(filename, repository, range))
+    #	Reflog_run_executable.assert_post_conditions
+    lines = reflog_run.output.split("\n")
+    manual_reflog = lines.map do |reflog_line|
+      refute_equal('', reflog_line, Reflog_lines.inspect)
+      #		BranchReference.assert_reflog_line(reflog_line)
+      BranchReference.new_from_ref(reflog_line)
+      #		new(capture.output[:ambiguous_branch].to_sym,capture.output[:age].to_i)
+    end # map
+    reflog = BranchReference.reflog?(filename, This_code_repository)
+    #	assert_equal(manual_reflog, reflog, reflog.inspect)
+    refute_equal([], reflog, BranchReference.reflog_command_string(filename, repository, range = 0..10).inspect)
+    #	reflog.assert_post_conditions
+    #	refute_empty(reflog.output)
+    ##	lines = reflog.output.split("\n")
+    #	assert_instance_of(Array, reflog)
+    #	assert_operator(reflog.size, :>,1, reflog)
+    #	assert_equal('', reflog[0], lines)
+#		unique_ambiguous_branches = reflog.map {|br| br[:ambiguous_branch] }.uniq
+#		unique_unambiguous_branches = reflog.map {|br| br[:unambiguous_branch] }.uniq
+#		assert_equal([], unique_ambiguous_branches)
+#		assert_equal([], unique_unambiguous_branches)
+  end # reflog?
+
+  def test_last_change?
+    filename = $PROGRAM_NAME
+    repository = @temp_repo
+    reflog = BranchReference.reflog?(filename, repository)
+    assert_equal(nil, BranchReference.last_change?(filename, repository))
+    #	assert_includes(Branch.branch_names?(This_code_repository), BranchReference.last_change?(filename, This_code_repository).initialization_string)
+  end # last_change?
 	
+	def test_reflog_to_constructor_hash
+	end # reflog_to_constructor_hash
+
   def test_BranchReference_DefinitionalConstants
     BranchReference.assert_reflog_line(Reflog_line)
     BranchReference.assert_reflog_line(Last_change_line)
     BranchReference.assert_reflog_line(First_change_line)
     Reflog_lines.each do |reflog_line|
-      BranchReference.assert_reflog_line(reflog_line)
+#      BranchReference.assert_reflog_line(reflog_line)
     end # each
   end # DefinitionalConstants
-
-	
-    def test_reflog_to_constructor_hash
-		end # reflog_to_constructor_hash
 		
   def test_new_from_ref
     reflog_line = No_ref_line
@@ -358,56 +404,6 @@ class BranchReferenceTest < TestCase
     br = BranchReference.new(name: branch, age: age, timestamp: timestamp.to_s)
 #    assert_equal(br, BranchReference.new_from_ref(Reflog_line))
   end # new_from_ref
-
-  def test_reflog_command_string
-    filename = 'log/unit/1.9/1.9.3p194/silence/repository.log'
-    repository = This_code_repository
-    range = 0..10
-    reflog_run = repository.git_command(BranchReference.reflog_command_string(filename, repository, range))
-    assert(reflog_run.success?, reflog_run.inspect)
-  end # reflog_command_string
-
-  def test_reflog_command_output
-    filename = 'log/unit/1.9/1.9.3p194/silence/repository.log'
-    repository = This_code_repository
-    range = 0..10
-    reflog_command_lines = BranchReference.reflog_command_lines(filename, repository, range)
-    assert_operator(4, :<, reflog_command_lines.size, reflog_command_lines.inspect)
-  end # reflog_command_lines
-
-  def test_reflog?
-    filename = 'log/unit/1.9/1.9.3p194/silence/repository.log'
-    #	filename = $0
-    repository = This_code_repository
-    range = 0..10
-    #	reflog?(filename).output.split("/n")[0].split(',')[0]
-    reflog_run = repository.git_command(BranchReference.reflog_command_string(filename, repository, range))
-    #	Reflog_run_executable.assert_post_conditions
-    lines = reflog_run.output.split("\n")
-    manual_reflog = lines.map do |reflog_line|
-      refute_equal('', reflog_line, Reflog_lines.inspect)
-      #		BranchReference.assert_reflog_line(reflog_line)
-      BranchReference.new_from_ref(reflog_line)
-      #		new(capture.output[:ambiguous_branch].to_sym,capture.output[:age].to_i)
-    end # map
-    reflog = BranchReference.reflog?(filename, This_code_repository)
-    #	assert_equal(manual_reflog, reflog, reflog.inspect)
-    refute_equal([], reflog, BranchReference.reflog_command_string(filename, repository, range = 0..10).inspect)
-    #	reflog.assert_post_conditions
-    #	refute_empty(reflog.output)
-    ##	lines = reflog.output.split("\n")
-    #	assert_instance_of(Array, reflog)
-    #	assert_operator(reflog.size, :>,1, reflog)
-    #	assert_equal('', reflog[0], lines)
-  end # reflog?
-
-  def test_last_change?
-    filename = $PROGRAM_NAME
-    repository = @temp_repo
-    reflog = BranchReference.reflog?(filename, repository)
-    assert_equal(nil, BranchReference.last_change?(filename, repository))
-    #	assert_includes(Branch.branch_names?(This_code_repository), BranchReference.last_change?(filename, This_code_repository).initialization_string)
-  end # last_change?
 
   def test_to_s
     #	BranchReference.assert_output(Reflog_line)

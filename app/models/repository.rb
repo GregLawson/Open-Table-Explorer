@@ -60,7 +60,7 @@ class Repository # <Grit::Repo
 
     def delete_existing(path)
       # @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
-      FileUtils.remove_entry_secure(path) # , force = false)
+      FileUtils.remove_entry_secure(path, force = false)
     end # delete_existing
 
     def replace_or_create(path)

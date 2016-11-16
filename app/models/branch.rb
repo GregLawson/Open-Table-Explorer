@@ -34,7 +34,7 @@ module MaturityBranches
     }.freeze
 		# Regexp 
     Branch_name_regexp = /[-a-zA-Z0-9_\/]+/ # conventional syntax
-		Name_regexp = /[_a-z]+/.capture(:maturity) * /_interactive/.capture(:interactive).optional
+		Name_regexp = /[_a-z]+/.capture(:maturity) * (/\+/ * /interactive/).capture(:interactive).optional
     # Branch_name_regexp = /[-a-zA-Z0-9_]+/ # extended syntax
 		Branch_name_alternative = [Branch_name_regexp.capture(:branch)].freeze
     Pattern = /[* ]/ * /[a-z0-9A-Z_-]+/.capture(:branch) * /\n/
@@ -46,7 +46,6 @@ module MaturityBranches
                 /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch),
                 /^[* ] / * /[a-z0-9A-Z_-]+/.capture(:branch)
           ].freeze
-
 end # MaturityBranches
 
 class PsuedoBranch < GitReference # can checkout but not commit
@@ -64,7 +63,7 @@ class Branch < GitReference # can commit to
 
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 	  include MaturityBranches
-		Interactive_branches = Branch_enhancement.map {|branch_symbol| (branch_symbol.to_s + '_interactive').to_sym}
+		Interactive_branches = Branch_enhancement.map {|branch_symbol| (branch_symbol.to_s + '+interactive').to_sym}
 		All_standard_branches = Branch_enhancement + Extended_branches.values + Interactive_branches
     First_slot_index = Extended_branches.keys.min
     Last_slot_index = Branch_enhancement.size # how many is too slow?
@@ -354,6 +353,7 @@ class BranchReference < GitReference
 
   end # Constructors
   extend Constructors
+	
   def to_s
     if @age.nil? || @age == 0
       name.to_s
