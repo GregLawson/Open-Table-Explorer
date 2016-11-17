@@ -18,6 +18,7 @@ require_relative '../../app/models/parse.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
 class GitReference # base class for all git references (readable, maybe not writeable)
 	module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+    SHA_hex_7 = /[[:xdigit:]]{7}/.capture(:sha_hex)
 	end # DefinitionalConstants
 	include DefinitionalConstants
 	
