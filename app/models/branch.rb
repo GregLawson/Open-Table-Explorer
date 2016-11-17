@@ -40,7 +40,8 @@ module MaturityBranches
     Pattern = /[* ]/ * /[a-z0-9A-Z_-]+/.capture(:branch) * /\n/
     Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)].freeze
     Git_branch_remote_line = [/[* ]/, / /, Branch_name_alternative].freeze
-    Branch_regexp = /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch) * /\n/
+#    Branch_regexp = /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch) * /\n/
+		Branch_regexp = Capture::Examples::Branch_current_regexp
     Branches_regexp = Branch_regexp.group * Regexp::Many
     Patterns = [Pattern, Branches_regexp,
                 /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch),
@@ -173,15 +174,6 @@ class Branch < GitReference # can commit to
     def revison_tag?(branch_index)
       '-r ' + Branch.branch_symbol?(branch_index).to_s
     end # revison_tag?
-	
-		def stash_wip(repository)
-			command_string = 'git stash list'
-			@cached_run = repository.git_command(command_string)
-			regexp = /stash@{0}: WIP on / * Branch_name_regexp.capture(:parent_branch) * /: / *
-				 SHA_hex_7.capture(:sha7) * / Merge branch '/ * Branch_name_regexp.capture(:merge_from) * /' into / * Branch_name_regexp.capture(:merge_into)
-			capture = @cached_run.output.capture?(regexp)
-			capture.output
-		end # stash_wip
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 	
@@ -267,6 +259,7 @@ class Branch < GitReference # can commit to
 end # Branch
 
 class BranchReference < GitReference
+	include Branch::ReferenceObjects
   module DefinitionalClassMethods # if reference by DefinitionalConstants
     def reflog_command_string(filename, _repository, range = 0..10)
       'reflog  --all --skip=' + range.first.to_s + ' --max-count=' + range.last.to_s + ' --pretty=format:%gd,%gD,%h,%aD -- ' + filename.to_s
@@ -315,12 +308,12 @@ class BranchReference < GitReference
 
 	module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     include Repository::Constants
+    include GitReference::DefinitionalConstants
     include Branch::DefinitionalConstants
     Unambiguous_ref_age_pattern = /[0-9]+/.capture(:age)
     Ambiguous_ref_pattern = Branch_name_regexp.capture(:ambiguous_branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
     Unambiguous_ref_pattern = Branch_name_regexp.capture(:unambiguous_branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
     Delimiter = ','.freeze
-    SHA_hex_7 = /[[:xdigit:]]{7}/.capture(:sha_hex)
     Week_day_regexp = /[MTWFS][a-z]{2}/
     Day_regexp = /[0-9]{1,2}/
     Month_regexp = /[ADFJMNOS][a-z]+/
@@ -338,6 +331,20 @@ class BranchReference < GitReference
                          Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7 * Delimiter * Timestamp_regexp
   end # DefinitionalConstants
   include DefinitionalConstants
+	
+  module DefinitionalClassMethods # if reference DefinitionalConstants
+    include BranchReference::DefinitionalConstants
+		def stash_wip(repository)
+			command_string = 'git stash list'
+			@cached_run = repository.git_command(command_string)
+			regexp = /stash@{0}: WIP on / * Branch_name_regexp.capture(:parent_branch) * /: / *
+				 SHA_hex_7.capture(:sha7) * / Merge branch '/ * Branch_name_regexp.capture(:merge_from) * /' into / * Branch_name_regexp.capture(:merge_into)
+			capture = @cached_run.output.capture?(regexp)
+			capture.output
+		end # stash_wip
+  end # DefinitionalClassMethods
+  extend DefinitionalClassMethods
+
   include Virtus.value_object
 
   values do
@@ -442,6 +449,7 @@ class BranchReference < GitReference
   # self.assert_pre_conditions
   module Examples
     include DefinitionalConstants
+		include Branch::ReferenceObjects
     Reflog_line = 'master@{123},refs/heads/master@{123},1234567,Sun, 21 Jun 2015 13:51:50 -0700'.freeze
     Reflog_capture = Reflog_line.capture?(BranchReference::Reflog_line_regexp)
     Reflog_run_executable = Repository::This_code_repository.git_command('reflog  --all --pretty=format:%gd,%gD,%h,%aD -- ' + $PROGRAM_NAME)

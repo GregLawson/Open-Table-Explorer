@@ -84,6 +84,7 @@ class BranchTest < TestCase
     git_command = 'branch --list'
     branch_output = repository.git_command(git_command).output # .assert_post_conditions
     parse = branch_output.parse(Branch_regexp)
+		assert_equal([{:current=>"*", :branch=>"master"}, {:current=>" ", :branch=>"passed"}], Branch.branch_capture?(@temp_repo).output)
   end # branch_capture?
 
   def test_current_branch_name?
@@ -92,6 +93,13 @@ class BranchTest < TestCase
     #	assert_equal([:master, :passed], Branch.current_branch_name?(@temp_repo))
   end # current_branch_name
 
+    def test_current_branch
+			current_branch = Branch.current_branch(This_code_repository)
+			assert_instance_of(Branch, current_branch)
+#			assert_equal(Branch.current_branch(@temp_repo), GitReference.head(@temp_repo))
+#			assert_equal(Branch.current_branch(This_code_repository), GitReference.head(This_code_repository))
+    end # current_branch
+		
   def test_branches?
     # ?	explain_assert_respond_to(Parse, :parse_split)
     branch_output = @temp_repo.git_command('branch --list').output # .assert_post_conditions
@@ -138,13 +146,6 @@ class BranchTest < TestCase
     assert_equal('-r origin/master', Branch.revison_tag?(-4))
   end # revison_tag?
 	
-	def test_stash_wip
-		wip_example = "stash@{0}: WIP on testing: 0eeec72 Merge branch 'passed' into testing"
-		command_string = 'show stash'
-		cached_run = Repository::This_code_repository.git_command(command_string)
-#		assert_include([Master_branch, Passed_branch, Tested_branch, Edited_branch], Branch.stash_wip(Repository::This_code_repository))
-	end # stash_wip
-
   def test_initialize
     assert_equal(This_code_repository, Branch.new(repository: This_code_repository).repository)
 
@@ -354,6 +355,16 @@ class BranchReferenceTest < TestCase
     end # each
   end # DefinitionalConstants
 		
+	def test_stash_wip
+		wip_example = "stash@{0}: WIP on testing: 0eeec72 Merge branch 'passed' into testing"
+		command_string = 'show stash'
+		cached_run = Repository::This_code_repository.git_command(command_string)
+			regexp = /stash@{0}: WIP on / * Branch_name_regexp.capture(:parent_branch) * /: / *
+				 SHA_hex_7.capture(:sha7) * / Merge branch '/ * Branch_name_regexp.capture(:merge_from) * /' into / * Branch_name_regexp.capture(:merge_into)
+#		assert_match(regexp, cached_run.output, cached_run.inspect)
+#		assert_include([Master_branch, Passed_branch, Tested_branch, Edited_branch], BranchReference.stash_wip(Repository::This_code_repository),cached_run.inspect)
+	end # stash_wip
+
   def test_new_from_ref
     reflog_line = No_ref_line
     #	Test capture with reflog line having no refs
