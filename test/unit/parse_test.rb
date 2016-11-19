@@ -496,17 +496,40 @@ class ParsedCaptureTest < TestCase
   include LimitCapture::Examples
   include Capture::Examples
   include String::Examples
+
+	def test_remove_matches
+		assert_equal([], ParsedCapture.remove_matches(['a'], [/a/]))
+		assert_equal(['b'], ParsedCapture.remove_matches(['ab'], [/a/]))
+		assert_equal(['b'], ParsedCapture.remove_matches(['ab'], [/a/, /b/]))
+	end # remove_matches
+
+	def test_show_matches
+#		assert_equal([], ParsedCapture.show_matches(['a'], [/a/]))
+#		assert_equal(['b'], ParsedCapture.show_matches(['ab'], [/a/]))
+#		assert_equal(['b'], ParsedCapture.show_matches(['ab'], [/a/, /b/]))
+	end # show_matches
+
   def test_ParsedCapture_initialize
+		message = Parsed_a_capture.parsed_regexp.inspect
+		message += "\n" + Parsed_a_capture.inspect
+		assert_equal('a,a,', Parsed_a_capture.string, message)
+		assert_equal(true, Parsed_a_capture.success?, message)
   end # ParsedCapture_initialize
 
   def test_ParsedCapture_raw_captures
 		quantified_parse = Parsed_a_capture.parsed_regexp
 		refute_includes(quantified_parse.instance_variables, :@quantifier)
 		assert_instance_of(Array, quantified_parse.expressions)
-		message = RegexpParseType.inspect_recursive(Parsed_a_capture.parsed_regexp)
+		message = Parsed_a_capture.parsed_regexp.inspect
 		message += "\n" + quantified_parse.inspect
 		assert_equal('a,a,', Parsed_a_capture.string, message)
+		assert_instance_of(MatchCapture, ParsedCapture::Examples::Parsed_a_capture.raw_captures, message)
   end # raw_captures
+	
+	def test_ruby_lines_storage
+		ruby_lines_storage = Parsed_a_capture.ruby_lines_storage
+#		assert_match(/   a{2}/, ruby_lines_storage, ruby_lines_storage)
+	end # ruby_lines_storage
 
   def test_ParsedCapture_success?
   end # success?
@@ -520,10 +543,16 @@ class ParsedCaptureTest < TestCase
   def test_ParsedCapture_matched_characters
   end # matched_characters
 
-  def test_ParsedCapture_output
+  def test_ParsedCapture_column_output
+		message = Parsed_a_capture.parsed_regexp.inspect
+		message += "\n" + Parsed_a_capture.inspect
+#		assert_equal(',', Parsed_a_capture.column_output, message)
   end # output
 
   def test_ParsedCapture_delimiters
+		message = Parsed_a_capture.parsed_regexp.inspect
+		message += "\n" + Parsed_a_capture.inspect
+#		assert_equal(',', Parsed_a_capture.delimiters, message)
   end # delimiters
 end # ParsedCapture
 

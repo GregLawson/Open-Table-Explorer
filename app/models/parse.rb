@@ -445,6 +445,31 @@ end # SplitCapture
 
 # class ParsedCapture
 class ParsedCapture < MatchCapture
+	module ClassMethods
+		def remove_matches(unmatches, regexp_array)
+			regexp_array.map do |regexp|    
+				unmatches = unmatches.map do |unmatched|
+					capture = unmatched.capture?(regexp, SplitCapture)
+					capture.delimiters
+				end.flatten.select {|um| um != ''}# map
+			end.flatten # map regexp
+		end # remove_matches
+
+		def show_matches(unmatches, regexp_array)
+			regexp_array.map do |regexp|    
+				unmatches = unmatches.map do |unmatched|
+					capture = unmatched.capture?(regexp, SplitCapture)
+					if capture.success?
+						[ { regexp => capture.output}, show_matches(capture.delimiters, regexp_array) ]
+					else
+							show_matches(delimiters, regexp_array)
+					end # if
+				end.flatten.select {|um| um != ''}# map
+			end.flatten # map regexp
+		end # show_matches
+	end # ClassMethods
+	extend ClassMethods
+	
   attr_reader :string, :regexp # arguments
   attr_reader :parsed_regexp
   attr_reader :raw_captures
@@ -454,16 +479,16 @@ class ParsedCapture < MatchCapture
   end # ParsedCapture_initialize
 
   def raw_captures
-    if @parsed_regexp.nil? # quantifier
-			MatchCapture.new(@string, @regexp)
-		else
+    if @parsed_regexp.instance_variables.include?(:@quantifier) # quantifier
 			SplitCapture.new(@string, @regexp)
+		else
+			MatchCapture.new(@string, @regexp)
 		end # if
   end # raw_captures
 
   def column_output
     @raw_captures.reduce({}, :merge) { |c| c[:raw_capture].output }
-  end # output
+  end # column_output
 
   def delimiters
     @raw_captures.reduce('', :+) { |c| c[:raw_capture].delimiters }
@@ -471,7 +496,8 @@ class ParsedCapture < MatchCapture
   module Examples
     include Capture::Examples
     # Branch_line_capture = ParsedCapture.new(Newline_Delimited_String, Branch_line_regexp)
-    Parsed_a_capture = ParsedCapture.new('a,a,', (/a,/.capture(:label)) * 2)
+    Parsed_a_capture = ParsedCapture.new('a,a,', /a{2}/.capture(:label))
+    Parsed_aa_capture = ParsedCapture.new('a,a,', (/a,/.capture(:label)) * 2)
   end # Examples
 end # ParsedCapture
 
