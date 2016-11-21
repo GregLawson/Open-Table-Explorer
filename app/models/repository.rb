@@ -5,6 +5,11 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require 'dry-types'
+module Types
+	include Dry::Types.module
+end # Types
+
 # assert_includes(Module.constants, :ShellCommands)
 # refute_includes(Module.constants, :FilePattern)
 # refute_includes(Module.constants, :Unit)
@@ -33,16 +38,17 @@ require_relative 'parse.rb'
 # require_relative 'branch.rb'
 # assert_includes(Module.constants, :Branch)
 # refute_includes(Module.constants, :Repository)
-class Repository # <Grit::Repo
-  module Constants
+class Repository
+	module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     Repository_Unit = Unit.new_from_path(__FILE__)
     Root_directory = FilePattern.project_root_dir?(__FILE__)
     Source = File.dirname(Root_directory) + '/'
     README_start_text = 'Minimal repository.'.freeze
-  end # Constants
-  include Constants
+	end # DefinitionalConstants
+	include DefinitionalConstants
+	
   module ClassMethods
-    include Constants
+    include DefinitionalConstants
     def git_command(git_command, repository_dir)
       ShellCommands.new('git ' + ShellCommands.assemble_command_string(git_command), chdir: repository_dir)
     end # git_command
@@ -203,10 +209,6 @@ class Repository # <Grit::Repo
     end # if
   end # compare
 
-  module Constants
-    This_code_repository = Repository.new(Root_directory)
-  end # Constants
-  include Constants
   def shell_command(command, working_directory = @path)
     ShellCommands.new(command, chdir: working_directory)
   end # shell_command
@@ -321,6 +323,18 @@ class Repository # <Grit::Repo
     output = git_command(command).output # .assert_post_conditions
     output.parse(pattern)
   end # git_parse
+
+  module Constructors # such as alternative new methods
+    include DefinitionalConstants
+  end # Constructors
+  extend Constructors
+	
+  module ReferenceObjects # example constant objects of the type (e.g. default_objects)
+    include DefinitionalConstants
+    This_code_repository = Repository.new(Root_directory)
+  end # ReferenceObjects
+  include ReferenceObjects
+	
 end # Repository
 # assert_includes(Module.constants, :ShellCommands)
 # assert_includes(Module.constants, :FilePattern)

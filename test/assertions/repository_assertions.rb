@@ -12,7 +12,7 @@
 # assert_includes(Module.constants, :Capture)
 # assert_includes(Module.constants, :Branch)
 # assert_includes(Module.constants, :Repository)
-# assert_includes(Repository.constants, :Constants)
+# assert_includes(Repository.constants, :DefinitionalConstants)
 require_relative '../../app/models/repository.rb'
 # assert_includes(Module.constants, :ShellCommands)
 # assert_includes(Module.constants, :FilePattern)
@@ -20,8 +20,8 @@ require_relative '../../app/models/repository.rb'
 # assert_includes(Module.constants, :Capture)
 # assert_includes(Module.constants, :Branch)
 # assert_includes(Module.constants, :Repository)
-# assert_includes(Repository.constants, :Constants)
-# assert_includes(Repository.constants, :Constants)
+# assert_includes(Repository.constants, :DefinitionalConstants)
+# assert_includes(Repository.constants, :DefinitionalConstants)
 class Repository # <Grit::Repo
   require_relative '../../app/models/assertions.rb'
   module Assertions
@@ -60,8 +60,9 @@ class Repository # <Grit::Repo
   Repository.assert_pre_conditions
   module Examples
     # assert_equal(Repository::Examples, self)
-    # assert_includes(Repository.constants, :Constants)
-    include Repository::Constants
+    # assert_includes(Repository.constants, :DefinitionalConstants)
+    include Repository::DefinitionalConstants
+    include Repository::ReferenceObjects
     #	This_code_repository.assert_pre_conditions
     Unique_repository_directory_pathname = Repository.timestamped_repository_name?
     Empty_Repo_path = Unique_repository_directory_pathname
@@ -69,4 +70,4 @@ class Repository # <Grit::Repo
     #	This_code_repository.assert_pre_conditions
   end # Examples
 end # Repository
-# assert_includes(Repository.constants, :Constants)
+# assert_includes(Repository.constants, :DefinitionalConstants)

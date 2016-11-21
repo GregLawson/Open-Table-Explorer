@@ -307,7 +307,7 @@ class BranchReference < GitReference
   extend DefinitionalClassMethods
 
 	module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
-    include Repository::Constants
+    include Repository::DefinitionalConstants
     include GitReference::DefinitionalConstants
     include Branch::DefinitionalConstants
     Unambiguous_ref_age_pattern = /[0-9]+/.capture(:age)

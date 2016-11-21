@@ -14,7 +14,7 @@ require_relative '../../app/models/method_model.rb'
 # require_relative '../../app/models/branch.rb'
 class BranchTest < TestCase
   # include DefaultTests
-  # include Repository::Examples
+  include Repository::Examples
   include Branch::Constants
   include Branch::Examples
   def setup
@@ -278,6 +278,7 @@ class BranchTest < TestCase
 end # Branch
 
 class BranchReferenceTest < TestCase
+  include Repository::Examples
   include BranchReference::DefinitionalConstants
   include BranchReference::Examples
 

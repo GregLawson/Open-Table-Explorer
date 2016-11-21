@@ -21,7 +21,7 @@ class RepositoryTest < TestCase
     Repository.delete_existing(@temp_repo.path)
   end # teardown
 
-  def test_Constants
+  def test_DefinitionalConstants
     #	assert_pathname_exists(Temporary)
     assert_pathname_exists(Root_directory)
     assert_pathname_exists(Source)
@@ -41,7 +41,7 @@ class RepositoryTest < TestCase
     #	assert_equal(SELF_code_Repo.path, Root_directory, message)
     #	assert_equal(SELF_code_Repo.path, This_code_repository.path, message)
     #	assert_equal(SELF_code_Repo, This_code_repository, message)
-  end # Constants
+  end # DefinitionalConstants
 
   def test_Repository_git_command
     git_execution = Repository.git_command('branch', @temp_repo.path)
