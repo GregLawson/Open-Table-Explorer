@@ -455,16 +455,36 @@ class ParsedCapture < MatchCapture
 			end.flatten # map regexp
 		end # remove_matches
 
-		def show_matches(unmatches, regexp_array)
+		def priority_match(unmatched, regexp_array) # first match deletes string
 			regexp_array.map do |regexp|    
-				unmatches = unmatches.map do |unmatched|
+				if unmatched.instance_of?(String)
 					capture = unmatched.capture?(regexp, SplitCapture)
 					if capture.success?
-						[ { regexp => capture.output}, show_matches(capture.delimiters, regexp_array) ]
+						delimiters = capture.delimiters.select {|delimiter| delimiter != ''}.uniq
+						if delimiters == []
+							[{ regexp => capture.output}]
+						else
+							if regexp_array.size == 1
+								[{ regexp => capture.output} ] + delimiters # out of regexps to try
+							else
+								recurse_on_delimiters = delimiters.map do |delimiter|
+									ParsedCapture.priority_match(delimiter, regexp_array[1..-1]) # one try in priority order
+								end.flatten # map
+								[{ regexp => capture.output} ] + recurse_on_delimiters
+							end # if
+						end # if
 					else
-							show_matches(delimiters, regexp_array)
+							nil
 					end # if
-				end.flatten.select {|um| um != ''}# map
+				else
+					nil
+				end # if
+			end.flatten.uniq.compact.select {|um| um != ''}# map
+		end # priority_match
+		
+		def show_matches(unmatches, regexp_array)
+			unmatches.map do |unmatched|
+				priority_match(unmatched, regexp_array)
 			end.flatten # map regexp
 		end # show_matches
 	end # ClassMethods
@@ -498,6 +518,10 @@ class ParsedCapture < MatchCapture
     # Branch_line_capture = ParsedCapture.new(Newline_Delimited_String, Branch_line_regexp)
     Parsed_a_capture = ParsedCapture.new('a,a,', /a{2}/.capture(:label))
     Parsed_aa_capture = ParsedCapture.new('a,a,', (/a,/.capture(:label)) * 2)
+		Match_a = {/(?<alpha>a)/=>[{:alpha=>"a"}]}
+		Match_b = {/(?<beta>b)/=>[{:beta=>"b"}]}
+		Unmatched_c = 'c'
+		Ordered_matches = [Match_a, Match_b, Unmatched_c]
   end # Examples
 end # ParsedCapture
 

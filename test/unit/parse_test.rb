@@ -503,8 +503,68 @@ class ParsedCaptureTest < TestCase
 		assert_equal(['b'], ParsedCapture.remove_matches(['ab'], [/a/, /b/]))
 	end # remove_matches
 
+	def test_priority_match
+		unmatches = ['abc']
+		regexp_array = [/a/.capture(:alpha), /b/.capture(:beta)]
+		unmatched = unmatches[0] # pick one out
+		regexp = regexp_array[1] # pick one out
+		ret = regexp_array.map do |regexp|    
+				matches = if unmatched.instance_of?(String)
+					capture = unmatched.capture?(regexp, SplitCapture)
+					assert_instance_of(SplitCapture, capture)
+					assert(capture.success?, capture.inspect)
+					match = if capture.success?
+						delimiters = capture.delimiters.select {|delimiter| delimiter != ''}.uniq
+						if delimiters == []
+							[{ regexp => capture.output}]
+						else
+							assert_equal([Match_b.keys[0]], regexp_array[1..-1])
+							if regexp_array.size == 1
+								assert_equal(['c'], delimiters)
+								[{ regexp => capture.output} ] + delimiters # out of regexps to try
+							else
+#								assert_equal(['bc'], delimiters)
+								recurse_on_delimiters = delimiters.map do |delimiter|
+									ParsedCapture.priority_match(delimiter, regexp_array[1..-1]) # one try in priority order
+								end.flatten # map
+								[{ regexp => capture.output} ] + recurse_on_delimiters
+							end # if
+						end # if
+					else
+							nil
+					end # if
+				else
+					nil
+				end # if
+				matches.each do |match|
+					message = 'matches = ' + matches.inspect
+					message += "\n match = " + match.inspect
+					message += "\n capture = " + capture.inspect
+					message += "\n delimiters = " + delimiters.inspect
+					assert_includes(Ordered_matches, match, message)
+				end # each
+#				assert_equal(['bc'], delimiters)
+				matches
+			end.flatten.uniq.compact.select {|um| um != ''}# map
+			
+			assert_includes(ret, Match_a)
+			assert_includes(ret, Match_b)
+			assert_includes(ret, Unmatched_c)
+		assert_equal(Ordered_matches, ParsedCapture.priority_match(unmatched, regexp_array))
+	end # priority_match
+		
 	def test_show_matches
-#		assert_equal([], ParsedCapture.show_matches(['a'], [/a/]))
+		unmatches = ['abc']
+		regexp_array = [/a/.capture(:alpha), /b/.capture(:beta)]
+		unmatched = unmatches[0] # pick one out
+		regexp = regexp_array[1] # pick one out
+					capture = unmatched.capture?(regexp, SplitCapture)
+		assert_instance_of(SplitCapture, capture)
+		assert(capture.success?, capture.inspect)
+		assert_equal([{:beta=>"b"}], capture.output, capture.inspect)
+		ret = [ { regexp => capture.output}, ParsedCapture.show_matches(capture.delimiters, regexp_array) ]
+		assert_equal([{/(?<beta>b)/=>[{:beta=>"b"}]}, [{/(?<alpha>a)/=>[{:alpha=>"a"}]}]], ret)
+		assert_equal(Ordered_matches, ParsedCapture.show_matches(unmatches, regexp_array))
 #		assert_equal(['b'], ParsedCapture.show_matches(['ab'], [/a/]))
 #		assert_equal(['b'], ParsedCapture.show_matches(['ab'], [/a/, /b/]))
 	end # show_matches
