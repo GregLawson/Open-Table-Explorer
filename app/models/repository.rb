@@ -10,98 +10,8 @@ module Types
 	include Dry::Types.module
 end # Types
 
-# assert_includes(Module.constants, :ShellCommands)
-# refute_includes(Module.constants, :FilePattern)
-# refute_includes(Module.constants, :Unit)
-# assert_includes(Module.constants, :Capture)
-# assert_includes(Module.constants, :Branch)
-# @see http://grit.rubyforge.org/
-require 'grit' # sudo gem install grit
-# partial API at @see less /usr/share/doc/ruby-grit/API.txt
-# code in @see /usr/lib/ruby/vendor_ruby/grit
-# assert_includes(Module.constants, :ShellCommands)
-# assert_includes(Module.constants, :FilePattern)
-# assert_includes(Module.constants, :Unit)
-# assert_includes(Module.constants, :Capture)
-# assert_includes(Module.constants, :Branch)
-# refute_includes(Module.constants, :Unit)
-require_relative 'unit.rb'
-# assert_includes(Module.constants, :Unit)
-# assert_includes(Module.constants, :FilePattern)
-require_relative 'shell_command.rb'
-# assert_includes(Module.constants, :ShellCommands)
-# require_relative 'global.rb'
-# refute_includes(Module.constants, :Capture)
-require_relative 'parse.rb'
-# assert_includes(Module.constants, :Capture)
-# refute_includes(Module.constants, :Branch)
-# require_relative 'branch.rb'
-# assert_includes(Module.constants, :Branch)
-# refute_includes(Module.constants, :Repository)
-class Repository
-	module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
-    Repository_Unit = Unit.new_from_path(__FILE__)
-    Root_directory = FilePattern.project_root_dir?(__FILE__)
-    Source = File.dirname(Root_directory) + '/'
-    README_start_text = 'Minimal repository.'.freeze
-	end # DefinitionalConstants
-	include DefinitionalConstants
-	
-  module ClassMethods
-    include DefinitionalConstants
-    def git_command(git_command, repository_dir)
-      ShellCommands.new('git ' + ShellCommands.assemble_command_string(git_command), chdir: repository_dir)
-    end # git_command
-
-    def create_empty(path)
-      Dir.mkdir(path)
-      if File.exist?(path)
-        ShellCommands.new([['cd', path], '&&', %w(git init)])
-        new_repository = Repository.new(path)
-      else
-        raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exist?(path)}"
-      end # if
-      new_repository
-    end # create_empty
-
-    def delete_existing(path)
-      # @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
-      FileUtils.remove_entry_secure(path, force = false)
-    end # delete_existing
-
-    def replace_or_create(path)
-      if File.exist?(path)
-        delete_existing(path)
-      end # if
-      create_empty(path)
-    end # replace_or_create
-
-    def create_if_missing(path)
-      if File.exist?(path)
-        Repository.new(path)
-      else
-        create_empty(path)
-      end # if
-    end # create_if_missing
-
-    def timestamped_repository_name?
-      Repository_Unit.data_sources_directory? + Time.now.strftime('%Y-%m-%d_%H.%M.%S.%L')
-    end # timestamped_repository_name?
-
-    def create_test_repository(path = timestamped_repository_name?)
-      replace_or_create(path)
-      if File.exist?(path)
-        new_repository = Repository.new(path)
-        IO.write(path + '/README', README_start_text + "\n") # two consecutive slashes = one slash
-        new_repository.git_command('add README')
-        new_repository.git_command('commit -m "create_empty initial commit of README"')
-        new_repository.git_command('branch passed')
-      else
-        raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exist?(path)}"
-      end # if
-      new_repository
-    end # create_test_repository
-
+class FileStatus < Dry::Types::Value
+  module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
     # The following decoding is from man git status
     def file_change(status_char)
       case status_char
@@ -171,16 +81,106 @@ class Repository
       when 'UU' then 'unmerged, both modified'
       end # case
     end # unmerged_status_descriptions
-  end # ClassMethods
-  extend ClassMethods
-  attr_reader :path, :grit_repo, :recent_test, :deserving_branch, :related_files
+  end # DefinitionalClassMethods
+  extend DefinitionalClassMethods
+
+	module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
+		Commitable = [:modified, :added, :deleted, :renamed, :copied]
+	end # DefinitionalConstants
+	include DefinitionalConstants
+	
+    attribute :index, Types::Strict::Symbol
+    attribute :work_tree, Types::Strict::Symbol
+		attribute :file, Types::Strict::String
+
+  module Constructors # such as alternative new methods
+#    include DefinitionalConstants
+		def new_from_status_line(status_line)
+			file = status_line[3..-1]
+			FileStatus.new(index: FileStatus.file_change(status_line[0..0]), work_tree: FileStatus.file_change(status_line[1..1]), file: file)
+		end # new_from_status_line
+  end # Constructors
+  extend Constructors
+
+  module ReferenceObjects # example constant objects of the type (e.g. default_objects)
+#    include DefinitionalConstants
+  end # ReferenceObjects
+  include ReferenceObjects
+	
+	def log_file?
+		@file[-4..-1] == '.log'
+	end # log_file?
+	
+	def description
+		FileStatus.normal_status_descriptions(@index.to_s + @work_tree.to_s)
+	end # description
+	
+	def needs_commit?
+			Commitable.include?(@work_tree) ||
+			Commitable.include?(@index) ||
+			needs_merge?
+	end # needs_commit?
+	
+	def needs_merge?
+			@work_tree == :updated_but_unmerged ||
+			@index == :updated_but_unmerged
+	end # needs_commit?
+end # FileStatus
+
+# assert_includes(Module.constants, :ShellCommands)
+# refute_includes(Module.constants, :FilePattern)
+# refute_includes(Module.constants, :Unit)
+# assert_includes(Module.constants, :Capture)
+# assert_includes(Module.constants, :Branch)
+# @see http://grit.rubyforge.org/
+require 'grit' # sudo gem install grit
+# partial API at @see less /usr/share/doc/ruby-grit/API.txt
+# code in @see /usr/lib/ruby/vendor_ruby/grit
+# assert_includes(Module.constants, :ShellCommands)
+# assert_includes(Module.constants, :FilePattern)
+# assert_includes(Module.constants, :Unit)
+# assert_includes(Module.constants, :Capture)
+# assert_includes(Module.constants, :Branch)
+# refute_includes(Module.constants, :Unit)
+require_relative 'unit.rb'
+# assert_includes(Module.constants, :Unit)
+# assert_includes(Module.constants, :FilePattern)
+require_relative 'shell_command.rb'
+# assert_includes(Module.constants, :ShellCommands)
+# require_relative 'global.rb'
+# refute_includes(Module.constants, :Capture)
+require_relative 'parse.rb'
+# assert_includes(Module.constants, :Capture)
+# refute_includes(Module.constants, :Branch)
+# require_relative 'branch.rb'
+# assert_includes(Module.constants, :Branch)
+# refute_includes(Module.constants, :Repository)
+class Repository
+	module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
+    Repository_Unit = Unit.new_from_path(__FILE__)
+    Root_directory = FilePattern.project_root_dir?(__FILE__)
+    Source = File.dirname(Root_directory) + '/'
+    README_start_text = 'Minimal repository.'.freeze
+	end # DefinitionalConstants
+	include DefinitionalConstants
+	
+  module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
+    include DefinitionalConstants
+    def git_command(git_command, repository_dir)
+      ShellCommands.new('git ' + ShellCommands.assemble_command_string(git_command), chdir: repository_dir)
+    end # git_command
+
+  end # DefinitionalClassMethods
+  extend DefinitionalClassMethods
+	
+  attr_reader :path, :grit_repo
   def initialize(path)
     if path.to_s[-1, 1] != '/'
       path = path.to_s + '/'
     end # if
-    @url = path
+#    @url = path
     @path = path.to_s
-    puts '@path=' + @path if $VERBOSE
+#    puts '@path=' + @path if $VERBOSE
     @grit_repo = Grit::Repo.new(@path)
   end # initialize
 
@@ -243,11 +243,11 @@ class Repository
   def pull_differences(more_mature_branch)
     branch_file_changes = diff_branch_files(more_mature_branch, '--summary').output
     branch_num_line_changes = diff_branch_files(more_mature_branch, '--numstat').output
-  end # pull
+  end # pull_differences
 
   def merge_up_discard_files(more_mature_branch)
     merge_up_file_changes = diff_branch_files(more_mature_branch, '--summary').output
-  end # pull
+  end # merge_up_discard_files
 
   def subset_changes(more_mature_branch)
     subset_change_files = diff_branch_files(more_mature_branch, options = '--numstat').output
@@ -267,40 +267,19 @@ class Repository
     changes = git_command('status -z ' + options + pathspec_string).output
     ret = []
     unless changes.empty?
-      changes.split("\u0000").map do |line|
-        file = line[3..-1]
-        log_file = file[-4..-1] == '.log'
-        ret << { index: Repository.file_change(line[0..0]), work_tree: Repository.file_change(line[1..1]), description: Repository.normal_status_descriptions(line[0..1]), file: file, log_file: log_file }
+      changes.split("\u0000").map do |status_line|
+        ret << FileStatus.new_from_status_line(status_line)
       end # map
     end # if
     ret
   end # status
 
-  def status_descriptions(working_file_status)
-    case working_file_status[:change]
-    when 'DD' then 'unmerged, both deleted'
-    when 'AU' then 'unmerged, added by us'
-    when 'UD' then 'unmerged, deleted by them'
-    # UA unmerged, added by them
-    when 'UA' then raise Exception.new(conflict.inspect)
-    # DU unmerged, deleted by us
-    when 'DU' then raise Exception.new(conflict.inspect)
-    # AA unmerged, both added
-    # UU unmerged, both modified
-    when 'UU', ' M', 'M ', 'MM', 'A ', 'AA' then
-      'merge modifications'
-     end # case
-  end # status_descriptions
-
   def something_to_commit?
-    status = @grit_repo.status
-    ret = status.added != {} || status.changed != {} || status.deleted != {}
-    message = "status.added=#{status.added.inspect}"
-    message += "\nstatus.changed=#{status.changed.inspect}"
-    message += "\nstatus.deleted=#{status.deleted.inspect}"
-    message += "\nstatus.added!={}||status.changed!={}||status.deleted!={}==#{ret}"
-    puts message if $VERBOSE
-    ret
+    status.select(&:needs_commit?) != []
+  end # something_to_commit
+
+  def something_to_merge?
+    status.select(&:needs_merge?) != []
   end # something_to_commit
 
   def testing_superset_of_passed
@@ -312,7 +291,7 @@ class Repository
   end # edited_superset_of_testing
 
   def force_change(content = README_start_text + Time.now.strftime('%Y-%m-%d %H:%M:%S.%L') + "\n")
-    IO.write(@path + '/README', content) # timestamp make file unique
+    IO.write(@path + '/README', content) # timestamp makes file content unique
   end # force_change
 
   def revert_changes
@@ -326,6 +305,72 @@ class Repository
 
   module Constructors # such as alternative new methods
     include DefinitionalConstants
+    def create_empty(path)
+      Dir.mkdir(path)
+      if File.exist?(path)
+        ShellCommands.new([['cd', path], '&&', %w(git init)])
+        new_repository = Repository.new(path)
+      else
+        raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exist?(path)}"
+      end # if
+      new_repository
+    end # create_empty
+
+    def delete_existing(path)
+      # @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
+      if File.exists?(path) && File.exists?(path + '/.git') # make sure its a repository
+      FileUtils.remove_entry_secure(path, force = false)
+			else
+				raise path + ' does not exist as a git repository.'
+			end # if
+    end # delete_existing
+
+    def delete_even_nonxisting(path, force = nil)
+      # @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
+      if File.exists?(path)
+				if File.exists?(path + '/.git')   # make sure its a repository
+					FileUtils.remove_entry_secure(path, force = false)
+				elsif force
+					FileUtils.remove_entry_secure(path, force = false)
+				else
+					raise path + ' is not a git repository.'
+				end # if
+			end # if
+    end # delete_existing
+
+    def replace_or_create(path)
+      if File.exist?(path)
+        delete_existing(path)
+      end # if
+      create_empty(path)
+    end # replace_or_create
+
+    def create_if_missing(path)
+      if File.exist?(path)
+        Repository.new(path)
+      else
+        create_empty(path)
+      end # if
+    end # create_if_missing
+
+    def timestamped_repository_name?
+      Repository_Unit.data_sources_directory? + Time.now.strftime('%Y-%m-%d_%H.%M.%S.%L')
+    end # timestamped_repository_name?
+
+    def create_test_repository(path = timestamped_repository_name?)
+      replace_or_create(path)
+      if File.exist?(path)
+        new_repository = Repository.new(path)
+        IO.write(path + '/README', README_start_text + "\n") # two consecutive slashes = one slash
+        new_repository.git_command('add README')
+        new_repository.git_command('commit -m "create_empty initial commit of README"')
+        new_repository.git_command('branch passed')
+      else
+        raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exist?(path)}"
+      end # if
+      new_repository
+    end # create_test_repository
+
   end # Constructors
   extend Constructors
 	
@@ -343,4 +388,4 @@ end # Repository
 # assert_includes(Module.constants, :Branch)
 # assert_includes(Module.constants, :Repository)
 # assert_includes(Repository.constants, :Constants)
-# assert_includes(Repository.constants, :ClassMethods)
+# assert_includes(Repository.constants, :DefinitionalClassMethods)

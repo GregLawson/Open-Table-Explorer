@@ -27,6 +27,7 @@ def test_stage_file
 	Minimal_repository.git_command('checkout passed') #.assert_post_conditions
 	refute_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
 end #stage_files
+
 def test_something_to_commit?
 	assert_respond_to(Minimal_repository.grit_repo, :status)
 	assert_instance_of(Grit::Status, Minimal_repository.grit_repo.status)
@@ -42,11 +43,13 @@ def test_something_to_commit?
 	Minimal_repository.force_change
 	assert(Minimal_repository.something_to_commit?, Minimal_repository.grit_repo.status.inspect)
 end #something_to_commit
+
 def setup
 	Minimal_repository.revert_changes # so next test starts clean
 	Minimal_repository.assert_nothing_to_commit  # check if next test starts clean
 	Minimal_repository.git_command('checkout master')
 end #setup
+
 def teardown
 	Minimal_repository.revert_changes # so next test starts clean
 end #teardown

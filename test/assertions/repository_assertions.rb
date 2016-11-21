@@ -64,9 +64,9 @@ class Repository # <Grit::Repo
     include Repository::DefinitionalConstants
     include Repository::ReferenceObjects
     #	This_code_repository.assert_pre_conditions
-    Unique_repository_directory_pathname = Repository.timestamped_repository_name?
-    Empty_Repo_path = Unique_repository_directory_pathname
-    Modified_path = Empty_Repo_path + '/README'
+#    Unique_repository_directory_pathname = Repository.timestamped_repository_name?
+#    Empty_Repo_path = Unique_repository_directory_pathname
+#    Modified_path = Empty_Repo_path + '/README'
     #	This_code_repository.assert_pre_conditions
   end # Examples
 end # Repository

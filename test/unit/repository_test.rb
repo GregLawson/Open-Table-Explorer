@@ -5,11 +5,91 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../unit/test_environment'
+# require_relative '../unit/test_environment'
+require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
+class FileStatusTest < TestCase
+  def test_file_change
+    assert_equal(:unmodified, FileStatus.file_change(' '))
+    assert_equal(:modified, FileStatus.file_change('M'))
+    assert_equal(:added, FileStatus.file_change('A'))
+    assert_equal(:deleted, FileStatus.file_change('D'))
+    assert_equal(:renamed, FileStatus.file_change('R'))
+    assert_equal(:copied, FileStatus.file_change('C'))
+    assert_equal(:updated_but_unmerged, FileStatus.file_change('U'))
+    assert_equal(:untracked, FileStatus.file_change('?'))
+    assert_equal(:ignored, FileStatus.file_change('!'))
+  end # file_change
+
+  def test_match_possibilities?
+    assert_equal(true, FileStatus.match_possibilities?(' ', ' '))
+    assert_equal(false, FileStatus.match_possibilities?('A', 'B'))
+    assert_equal(false, FileStatus.match_possibilities?('A', 'a')) # no lower case seen
+    assert_equal(true, FileStatus.match_possibilities?(' ', '[ A]'))
+    assert_equal(false, FileStatus.match_possibilities?('A', '[BC]'))
+    assert_equal(false, FileStatus.match_possibilities?('[', '[BC]')) # array
+    assert_equal(false, FileStatus.match_possibilities?(']', '[BC]')) # array
+    assert_equal(true, FileStatus.match_possibilities?(' ', '[ A]'))
+  end # match_possibilities?
+
+  def test_match_two_possibilities?
+    assert_equal(true, FileStatus.match_two_possibilities?('  ', ' ', ' '))
+    assert_equal(true, FileStatus.match_two_possibilities?('MM', 'M', '[ MD]'))
+    assert_equal(true, FileStatus.match_two_possibilities?('AD', 'A', '[ MD]'))
+    assert_equal(true, FileStatus.match_two_possibilities?('DM', 'D', ' [ M]'))
+    assert_equal(true, FileStatus.match_two_possibilities?('R ', 'R', '[ MD]'))
+    assert_equal(true, FileStatus.match_two_possibilities?('CD', 'C', '[ MD]'))
+    assert_equal(true, FileStatus.match_two_possibilities?('A ', '[MARC]', ' '))
+    assert_equal(true, FileStatus.match_two_possibilities?(' M', '[ MARC]', 'M'))
+    assert_equal(true, FileStatus.match_two_possibilities?('CD', '[ MARC]', 'D'))
+    assert_equal(false, FileStatus.match_two_possibilities?('[D', '[ MARC]', 'D'))
+    assert_equal(false, FileStatus.match_two_possibilities?(']D', '[ MARC]', 'D'))
+  end # match_two_possibilities?
+
+  def test_normal_status_descriptions
+    assert_equal(true, FileStatus.match_two_possibilities?('  ', ' ', ' '))
+    assert_equal(FileStatus.normal_status_descriptions(' D'), 'not updated')
+    assert_equal(FileStatus.normal_status_descriptions('MM'), 'updated in index')
+    assert_equal(FileStatus.normal_status_descriptions('AD'), 'added to index')
+    assert_equal(FileStatus.normal_status_descriptions('DM'), 'deleted from index')
+    assert_equal(FileStatus.normal_status_descriptions('R '), 'renamed in index')
+    assert_equal(FileStatus.normal_status_descriptions('CD'), 'copied in index')
+    assert_equal(true, FileStatus.match_two_possibilities?('A ', '[MARC]', ' '))
+    # ambigujous	assert_equal(FileStatus.normal_status_descriptions('A '), 'index and work tree matches')
+    assert_equal(true, FileStatus.match_two_possibilities?(' M', '[ MARC]', 'M'))
+    # ambigujous	assert_equal(FileStatus.normal_status_descriptions(' M'), 'work tree changed since index')
+    # ambigujous	assert_equal(FileStatus.normal_status_descriptions('CD'), 'deleted in work tree')
+    assert_equal(FileStatus.normal_status_descriptions('??'), 'both untracked')
+    assert_equal(FileStatus.normal_status_descriptions('!!'), 'both ignored')
+  end # normal_status_descriptions
+
+  def test_unmerged_status_descriptions
+    assert_equal(FileStatus.unmerged_status_descriptions('DD'), 'unmerged, both deleted')
+    assert_equal(FileStatus.unmerged_status_descriptions('AU'), 'unmerged, added by us')
+    assert_equal(FileStatus.unmerged_status_descriptions('UD'), 'unmerged, deleted by them')
+    assert_equal(FileStatus.unmerged_status_descriptions('UA'), 'unmerged, added by them')
+    assert_equal(FileStatus.unmerged_status_descriptions('DU'), 'unmerged, deleted by us')
+    assert_equal(FileStatus.unmerged_status_descriptions('AA'), 'unmerged, both added')
+    assert_equal(FileStatus.unmerged_status_descriptions('UU'), 'unmerged, both modified')
+
+    assert_equal(FileStatus.normal_status_descriptions('DD'), 'unmerged, both deleted')
+    assert_equal(FileStatus.normal_status_descriptions('AU'), 'unmerged, added by us')
+    assert_equal(FileStatus.normal_status_descriptions('UD'), 'unmerged, deleted by them')
+    assert_equal(FileStatus.normal_status_descriptions('UA'), 'unmerged, added by them')
+    assert_equal(FileStatus.normal_status_descriptions('DU'), 'unmerged, deleted by us')
+    assert_equal(FileStatus.normal_status_descriptions('AA'), 'unmerged, both added')
+    assert_equal(FileStatus.normal_status_descriptions('UU'), 'unmerged, both modified')
+  end # unmerged_status_descriptions
+end # FileStatus
+
 class RepositoryTest < TestCase
-  # include DefaultTests
+  include RubyAssertions
   include Repository::Examples
+	Cleanup_failed_test_paths = Root_directory + '/test/data_sources/repository20*/'
+	Cleanup_failed_test_repositories = Dir[Cleanup_failed_test_paths]
+	Cleanup_failed_test_repositories.each do |temp_git_repository|
+		Repository.delete_even_nonxisting(temp_git_repository, :force)
+	end # each
   def setup
     @temp_repo = Repository.create_test_repository
   end # setup
@@ -18,7 +98,8 @@ class RepositoryTest < TestCase
   end # recursive_delete
 
   def teardown
-    Repository.delete_existing(@temp_repo.path)
+    Repository.delete_even_nonxisting(@temp_repo.path)
+		assert_empty(Dir[Cleanup_failed_test_paths], Cleanup_failed_test_paths)
   end # teardown
 
   def test_DefinitionalConstants
@@ -32,11 +113,11 @@ class RepositoryTest < TestCase
     #	message+="\nThis_code_repository.path=#{This_code_repository.path.inspect}"
     this_code_repository = Repository.new(Root_directory)
     sELF_code_Repo = Repository.new(Root_directory)
-    assert_equal(Root_directory, this_code_repository.path, message)
+    assert_equal(Root_directory, this_code_repository.path)
     #	SELF_code_Repo.assert_pre_conditions
     this_code_repository.assert_pre_conditions
     This_code_repository.assert_pre_conditions
-    assert_equal(Root_directory, This_code_repository.path, message)
+    assert_equal(Root_directory, This_code_repository.path)
 
     #	assert_equal(SELF_code_Repo.path, Root_directory, message)
     #	assert_equal(SELF_code_Repo.path, This_code_repository.path, message)
@@ -46,113 +127,9 @@ class RepositoryTest < TestCase
   def test_Repository_git_command
     git_execution = Repository.git_command('branch', @temp_repo.path)
     #	git_execution=Repository.git_command('branch --list --contains HEAD', Unique_repository_directory_pathname)
-    git_execution # .assert_post_conditions
+    git_execution.assert_post_conditions
   end # git_command
 
-  def test_create_empty
-    Dir.mkdir(Unique_repository_directory_pathname)
-    assert_pathname_exists(Unique_repository_directory_pathname)
-    switch_dir = ShellCommands.new([['cd', Unique_repository_directory_pathname], '&&', ['pwd']])
-    assert_equal(Unique_repository_directory_pathname + "\n", switch_dir.output)
-    #	ShellCommands.new('cd "'+Unique_repository_directory_pathname+'";git init').assert_post_conditions
-    ShellCommands.new([['cd', Unique_repository_directory_pathname], '&&', %w(git init)])
-    new_repository = Repository.new(Unique_repository_directory_pathname)
-    IO.write(Unique_repository_directory_pathname + '/README', README_start_text + "1\n") # two consecutive slashes = one slash
-    new_repository.git_command('add README')
-    new_repository.git_command('commit -m "test_create_empty initial commit of README"')
-    Repository.delete_existing(Unique_repository_directory_pathname)
-    Repository.create_empty(Unique_repository_directory_pathname)
-    Repository.delete_existing(Unique_repository_directory_pathname)
-  end # create_empty
-
-  def test_delete_existing
-    Repository.create_if_missing(Unique_repository_directory_pathname)
-    Repository.delete_existing(Unique_repository_directory_pathname)
-    assert(!File.exist?(Unique_repository_directory_pathname))
-  end # delete_existing
-
-  def test_replace_or_create
-  end # replace_or_create
-
-  def test_create_if_missing
-    Repository.create_if_missing(Unique_repository_directory_pathname)
-    FileUtils.remove_entry_secure(Unique_repository_directory_pathname) # , force = false)
-  end # create_if_missing
-
-  def test_create_test_repository
-  end # create_test_repository
-
-  def test_file_change
-    assert_equal(:unmodified, Repository.file_change(' '))
-    assert_equal(:modified, Repository.file_change('M'))
-    assert_equal(:added, Repository.file_change('A'))
-    assert_equal(:deleted, Repository.file_change('D'))
-    assert_equal(:renamed, Repository.file_change('R'))
-    assert_equal(:copied, Repository.file_change('C'))
-    assert_equal(:updated_but_unmerged, Repository.file_change('U'))
-    assert_equal(:untracked, Repository.file_change('?'))
-    assert_equal(:ignored, Repository.file_change('!'))
-  end # file_change
-
-  def test_match_possibilities?
-    assert_equal(true, Repository.match_possibilities?(' ', ' '))
-    assert_equal(false, Repository.match_possibilities?('A', 'B'))
-    assert_equal(false, Repository.match_possibilities?('A', 'a')) # no lower case seen
-    assert_equal(true, Repository.match_possibilities?(' ', '[ A]'))
-    assert_equal(false, Repository.match_possibilities?('A', '[BC]'))
-    assert_equal(false, Repository.match_possibilities?('[', '[BC]')) # array
-    assert_equal(false, Repository.match_possibilities?(']', '[BC]')) # array
-    assert_equal(true, Repository.match_possibilities?(' ', '[ A]'))
-  end # match_possibilities?
-
-  def test_match_two_possibilities?
-    assert_equal(true, Repository.match_two_possibilities?('  ', ' ', ' '))
-    assert_equal(true, Repository.match_two_possibilities?('MM', 'M', '[ MD]'))
-    assert_equal(true, Repository.match_two_possibilities?('AD', 'A', '[ MD]'))
-    assert_equal(true, Repository.match_two_possibilities?('DM', 'D', ' [ M]'))
-    assert_equal(true, Repository.match_two_possibilities?('R ', 'R', '[ MD]'))
-    assert_equal(true, Repository.match_two_possibilities?('CD', 'C', '[ MD]'))
-    assert_equal(true, Repository.match_two_possibilities?('A ', '[MARC]', ' '))
-    assert_equal(true, Repository.match_two_possibilities?(' M', '[ MARC]', 'M'))
-    assert_equal(true, Repository.match_two_possibilities?('CD', '[ MARC]', 'D'))
-    assert_equal(false, Repository.match_two_possibilities?('[D', '[ MARC]', 'D'))
-    assert_equal(false, Repository.match_two_possibilities?(']D', '[ MARC]', 'D'))
-  end # match_two_possibilities?
-
-  def test_normal_status_descriptions
-    assert_equal(true, Repository.match_two_possibilities?('  ', ' ', ' '))
-    assert_equal(Repository.normal_status_descriptions(' D'), 'not updated')
-    assert_equal(Repository.normal_status_descriptions('MM'), 'updated in index')
-    assert_equal(Repository.normal_status_descriptions('AD'), 'added to index')
-    assert_equal(Repository.normal_status_descriptions('DM'), 'deleted from index')
-    assert_equal(Repository.normal_status_descriptions('R '), 'renamed in index')
-    assert_equal(Repository.normal_status_descriptions('CD'), 'copied in index')
-    assert_equal(true, Repository.match_two_possibilities?('A ', '[MARC]', ' '))
-    # ambigujous	assert_equal(Repository.normal_status_descriptions('A '), 'index and work tree matches')
-    assert_equal(true, Repository.match_two_possibilities?(' M', '[ MARC]', 'M'))
-    # ambigujous	assert_equal(Repository.normal_status_descriptions(' M'), 'work tree changed since index')
-    # ambigujous	assert_equal(Repository.normal_status_descriptions('CD'), 'deleted in work tree')
-    assert_equal(Repository.normal_status_descriptions('??'), 'both untracked')
-    assert_equal(Repository.normal_status_descriptions('!!'), 'both ignored')
-  end # normal_status_descriptions
-
-  def test_unmerged_status_descriptions
-    assert_equal(Repository.unmerged_status_descriptions('DD'), 'unmerged, both deleted')
-    assert_equal(Repository.unmerged_status_descriptions('AU'), 'unmerged, added by us')
-    assert_equal(Repository.unmerged_status_descriptions('UD'), 'unmerged, deleted by them')
-    assert_equal(Repository.unmerged_status_descriptions('UA'), 'unmerged, added by them')
-    assert_equal(Repository.unmerged_status_descriptions('DU'), 'unmerged, deleted by us')
-    assert_equal(Repository.unmerged_status_descriptions('AA'), 'unmerged, both added')
-    assert_equal(Repository.unmerged_status_descriptions('UU'), 'unmerged, both modified')
-
-    assert_equal(Repository.normal_status_descriptions('DD'), 'unmerged, both deleted')
-    assert_equal(Repository.normal_status_descriptions('AU'), 'unmerged, added by us')
-    assert_equal(Repository.normal_status_descriptions('UD'), 'unmerged, deleted by them')
-    assert_equal(Repository.normal_status_descriptions('UA'), 'unmerged, added by them')
-    assert_equal(Repository.normal_status_descriptions('DU'), 'unmerged, deleted by us')
-    assert_equal(Repository.normal_status_descriptions('AA'), 'unmerged, both added')
-    assert_equal(Repository.normal_status_descriptions('UU'), 'unmerged, both modified')
-  end # unmerged_status_descriptions
 
   def test_initialize
     assert_pathname_exists(This_code_repository.path)
@@ -224,14 +201,14 @@ class RepositoryTest < TestCase
     assert_empty(diff)
     diff = This_code_repository.pull_differences(:master)
     refute_empty(diff, diff.inspect)
-  end # pull
+  end # pull_differences
 
   def test_merge_up_discard_files
     diff = This_code_repository.merge_up_discard_files(This_code_repository.current_branch_name?)
     assert_empty(diff)
     diff = This_code_repository.merge_up_discard_files(:master)
     refute_empty(diff, diff.inspect)
-  end # pull
+  end # merge_up_discard_files
 
   def test_subset_changes
     subset_change_files_run = This_code_repository.diff_branch_files(:master, '--numstat')
@@ -261,10 +238,13 @@ class RepositoryTest < TestCase
     end # each
   end # status
 
-  def test_status_descriptions
-  end # status_descriptions
-
   def test_something_to_commit?
+    message = This_code_repository.status.inspect
+		assert(This_code_repository.something_to_commit?, message)
+    This_code_repository.status.each do |file_stat|
+#			puts file_stat.inspect
+      assert(File.exist?(file_stat[:file]) == (file_stat[:work_tree] != :deleted), message)
+    end # each
   end # something_to_commit
 
   def test_testing_superset_of_passed
@@ -276,28 +256,29 @@ class RepositoryTest < TestCase
   end # edited_superset_of_testing
 
   def test_force_change
-    empty_Repo = Repository.create_test_repository(Empty_Repo_path)
-    empty_Repo.assert_nothing_to_commit
-    IO.write(Modified_path, README_start_text + Time.now.strftime('%Y-%m-%d %H:%M:%S.%L') + "\n") # timestamp make file unique
-    refute_equal(README_start_text, IO.read(Modified_path))
-    empty_Repo.revert_changes
-    empty_Repo.force_change
-    refute_equal({}, empty_Repo.grit_repo.status.changed)
-    empty_Repo.assert_something_to_commit
-    refute_equal({}, empty_Repo.grit_repo.status.changed)
-    empty_Repo.git_command('add README')
-    refute_equal({}, empty_Repo.grit_repo.status.changed)
-    assert(empty_Repo.something_to_commit?)
-    #	empty_Repo.git_command('commit -m "timestamped commit of README"')
-    empty_Repo.revert_changes # .assert_post_conditions
-    empty_Repo.assert_nothing_to_commit
-    Repository.delete_existing(Unique_repository_directory_pathname)
+    @temp_repo.assert_nothing_to_commit
+		modified_path = @temp_repo.path + '/README'
+
+    IO.write(modified_path, README_start_text + Time.now.strftime('%Y-%m-%d %H:%M:%S.%L') + "\n") # timestamp make file unique
+    refute_equal(README_start_text, IO.read(modified_path))
+    @temp_repo.revert_changes
+    @temp_repo.force_change
+    refute_equal({}, @temp_repo.grit_repo.status.changed)
+    @temp_repo.assert_something_to_commit
+    refute_equal({}, @temp_repo.grit_repo.status.changed)
+    @temp_repo.git_command('add README')
+    refute_equal({}, @temp_repo.grit_repo.status.changed)
+    assert(@temp_repo.something_to_commit?, @temp_repo.status.inspect)
+    #	@temp_repo.git_command('commit -m "timestamped commit of README"')
+    @temp_repo.revert_changes # .assert_post_conditions
+    @temp_repo.assert_nothing_to_commit
   end # force_change
 
   def test_revert_changes
     @temp_repo.revert_changes # .assert_post_conditions
     @temp_repo.assert_nothing_to_commit
-    #	assert_equal(README_start_text+"\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
+		modified_path = @temp_repo.path + '/README'
+    assert_equal(README_start_text+"\n", IO.read(modified_path), "modified_path=#{modified_path}")
   end # revert_changes
 
   # add_commits("postgres", :postgres, Temporary+"details")
@@ -327,4 +308,41 @@ class RepositoryTest < TestCase
 
     assert_instance_of(String, remotes_output.fetch(:remote), capture.inspect)
   end # git_parse
+
+  def test_create_empty
+		unique_repository_directory_pathname = Repository.timestamped_repository_name?
+    Dir.mkdir(unique_repository_directory_pathname)
+    assert_pathname_exists(unique_repository_directory_pathname)
+    switch_dir = ShellCommands.new([['cd', unique_repository_directory_pathname], '&&', ['pwd']])
+    assert_equal(unique_repository_directory_pathname + "\n", switch_dir.output)
+    #	ShellCommands.new('cd "'+unique_repository_directory_pathname+'";git init').assert_post_conditions
+    ShellCommands.new([['cd', unique_repository_directory_pathname], '&&', %w(git init)])
+    new_repository = Repository.new(unique_repository_directory_pathname)
+    IO.write(unique_repository_directory_pathname + '/README', README_start_text + "1\n") # two consecutive slashes = one slash
+    new_repository.git_command('add README')
+    new_repository.git_command('commit -m "test_create_empty initial commit of README"')
+    Repository.delete_existing(unique_repository_directory_pathname)
+    Repository.create_empty(unique_repository_directory_pathname)
+    Repository.delete_existing(unique_repository_directory_pathname)
+  end # create_empty
+
+  def test_delete_existing
+    Repository.create_if_missing(@temp_repo.path)
+    Repository.delete_existing(@temp_repo.path)
+    assert(!File.exist?(@temp_repo.path))
+  end # delete_existing
+
+  def test_replace_or_create
+  end # replace_or_create
+
+  def test_create_if_missing
+    Repository.create_if_missing(@temp_repo.path)
+    FileUtils.remove_entry_secure(@temp_repo.path) # , force = false)
+		unique_repository_directory_pathname = Repository.timestamped_repository_name?
+    Repository.create_if_missing(unique_repository_directory_pathname)
+    FileUtils.remove_entry_secure(unique_repository_directory_pathname) # , force = false)
+  end # create_if_missing
+
+  def test_create_test_repository
+  end # create_test_repository
 end # Repository
