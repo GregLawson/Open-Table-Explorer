@@ -83,6 +83,18 @@ class Fixnum
 	end # ruby_lines_storage
 end # Fixnum
 
+class FalseClass
+	def ruby_lines_storage
+		'false'
+	end # ruby_lines_storage
+end # FalseClass
+
+class TrueClass
+	def ruby_lines_storage
+		'true'
+	end # ruby_lines_storage
+end # TrueClass
+
 class String
 	def ruby_lines_storage
 		string = to_s
@@ -92,7 +104,7 @@ end # String
 
 class Regexp
 	def ruby_lines_storage
-		'/' + source + '/'
+		'/' + CharacterEscape.readably_escaped(self) + '/'
 	end # ruby_lines_storage
 end # Regexp
 

@@ -1,10 +1,10 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 10, 13, 7, 50, Rational(45438413566, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 11, 25, 7, 13, Rational(45670803983, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test
 Started
-.[-160, -80, -54, -24, -21, -20, -19, -13, -12, -11, -10, -3, -2, -1, 0, 11574]
+.[-139, -64, -42, -19, -18, -17, -15, -11, -10, -9, -8, -2, -1, 0, 11574]
 min = 0.0max = 11574.0
 ......syntax error, unexpected \',\', expecting \'}\'
 path = ./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log
@@ -62,28 +62,28 @@ path = log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log
 }
 .......
 
-Finished in 14.073713723 seconds.
+Finished in 13.654567057 seconds.
 ------
 14 tests, 49 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-0.99 tests/s, 3.48 assertions/s
+1.03 tests/s, 3.59 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb"
-	User time (seconds): 13.64
-	System time (seconds): 1.42
+	User time (seconds): 13.21
+	System time (seconds): 1.35
 	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:15.03
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.55
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 95572
+	Maximum resident set size (kbytes): 91764
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 23012
+	Minor (reclaiming a frame) page faults: 22122
 	Voluntary context switches: 3
-	Involuntary context switches: 65
+	Involuntary context switches: 99
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
