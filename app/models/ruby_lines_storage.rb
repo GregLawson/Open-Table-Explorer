@@ -104,7 +104,7 @@ end # String
 
 class Regexp
 	def ruby_lines_storage
-		'/' + CharacterEscape.readably_escaped(self) + '/'
+		'/' + source + '/'
 	end # ruby_lines_storage
 end # Regexp
 

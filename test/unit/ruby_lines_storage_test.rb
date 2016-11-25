@@ -143,12 +143,31 @@ end # NilClass
 		assert_reversible(123)
 end # Fixnum
 
+	def test_FalseClass_ruby_lines_storage
+	  assert_reversible(false)
+	end # Fixnum
+
+	def test_TrueClass_ruby_lines_storage
+	  assert_reversible(true)
+	end # Fixnum
+
 	def test_String_ruby_lines_storage
 		assert_equal("'cat'", 'cat'.ruby_lines_storage)
 		assert_equal("'cat\ndog'", "cat\ndog".ruby_lines_storage)
 		refute_equal("'cat\ndog'".inspect, "cat\ndog".ruby_lines_storage)
 		assert_reversible('12\'3')
 end # String
+
+	def test_Regexp_ruby_lines_storage
+		assert_reversible(/a|b/)
+		assert_reversible(/a|"b/)
+		assert_reversible(/a|'b/)
+#		assert_reversible(/a|\/b/)
+	end # Regexp
+
+	def test_Module_ruby_lines_storage
+		assert_reversible(Object)
+	end # Module
 
 	def test_Symbol_ruby_lines_storage
 		assert_equal(':cat', :cat.ruby_lines_storage)
