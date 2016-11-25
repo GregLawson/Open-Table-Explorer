@@ -501,12 +501,13 @@ class Regexp
 				escape = CharacterEscape.escape_character(character)
 				assert_instance_of(String, escape, 'By definition.')
 				escaped_regexp = eval('/' + escape + '/') # escapes in Regexp literals may not match String escapes!
-				regexp = CharacterEscape.regexp_rescued(character)
-				if regexp.nil?
+				regexp_rescued = CharacterEscape.regexp_rescued(character)
+				if regexp_rescued.nil?
 					assert_equal(:meta_character, CharacterEscape.escape_type(character))
 				else
-					assert_equal(character, regexp.source, CharacterEscape.inspect_character(character))
+					assert_equal(character, regexp_rescued.source, CharacterEscape.inspect_character(character))
 				end # if
+				regexp = Regexp.new(CharacterEscape.escape_character(character))
 				case CharacterEscape.escape_type(character)
 				when :literal
 					assert_equal(1, escape.size, CharacterEscape.inspect_character(character) + ' is not a literal character.')
@@ -531,6 +532,12 @@ class Regexp
 					assert_equal(2, escape.size, CharacterEscape.inspect_character(character) + ' is not an escaped character.')
 					refute_equal("\\" + character, escape)
 					assert_equal(escape, escaped_regexp.source, CharacterEscape.inspect_character(character))
+				when :nonprintable_but_named
+					assert_equal(2, escape.size, CharacterEscape.inspect_character(character) + ' is not an escaped character.')
+				when :regexp_meta_character
+					assert_match(Regexp::Start_string * regexp * Regexp::End_string, character, CharacterEscape.inspect_character(character))
+					assert_equal(2, escape.size, CharacterEscape.inspect_character(character) + ' is not an escaped character.')
+#					refute_equal("\\" + character, escape)
 				else
 					raise character.inspect + ' unexpected.'
 				end # case

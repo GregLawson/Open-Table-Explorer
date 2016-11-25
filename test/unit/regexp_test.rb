@@ -477,10 +477,8 @@ class CharacterEscapeTest < TestCase
 
   def test_exact
 		assert_match(/a/.exact, 'a')
-		Binary_bytes.each do |character|
-#			Regexp.assert_readably_escaped(character)
-#			regexp = Regexp.new(CharacterEscape.escape_character(character))
-#			assert_match(Regexp::Start_string * regexp * Regexp::End_string, character, CharacterEscape.inspect_character(character))
+		Ascii_characters.each do |character|
+			Regexp.assert_readably_escaped(character)
 		end # each
 	end # exact
 
