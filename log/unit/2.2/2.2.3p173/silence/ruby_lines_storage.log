@@ -1,11 +1,11 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 11, 25, 7, 19, Rational(16612063878, 1000000000), "-08:00"),
+:start_time => Time.new(2016, 11, 25, 8, 42, Rational(47769181733, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test
 Started
-.[-140, -66, -45, -19, -18, -17, -15, -11, -10, -9, -8, -2, -1, 0, 11574]
-min = 0.0max = 11574.0
+.[-138, -56, -17, -16, -15, -13, -12, -11, -9, -8, -7, -3, -1, 0]
+min = 168.0max = 9863.0
 .........syntax error, unexpected \',\', expecting \'}\'
 path = ./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log
  in context: 
@@ -62,28 +62,28 @@ path = log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log
 }
 ........
 
-Finished in 13.703978019 seconds.
+Finished in 13.694752781 seconds.
 ------
-18 tests, 55 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+18 tests, 59 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-1.31 tests/s, 4.01 assertions/s
+1.31 tests/s, 4.31 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb"
-	User time (seconds): 13.28
-	System time (seconds): 1.36
+	User time (seconds): 13.25
+	System time (seconds): 1.39
 	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.63
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.62
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 95320
+	Maximum resident set size (kbytes): 93776
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 23048
+	Minor (reclaiming a frame) page faults: 22555
 	Voluntary context switches: 3
-	Involuntary context switches: 70
+	Involuntary context switches: 71
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

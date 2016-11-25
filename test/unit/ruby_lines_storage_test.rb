@@ -162,6 +162,11 @@ end # String
 		assert_reversible(/a|b/)
 		assert_reversible(/a|"b/)
 		assert_reversible(/a|'b/)
+		assert_match(/\//, '/')
+		assert_equal('/', /\//.source)
+		assert_equal('/', Regexp.escape('/')) # slash not escaped!
+		assert_equal('/', Regexp.escape(/\//.source))
+#		assert_reversible(/\//)
 #		assert_reversible(/a|\/b/)
 	end # Regexp
 
