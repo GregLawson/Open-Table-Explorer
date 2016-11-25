@@ -13,6 +13,9 @@ require_relative '../../app/models/test_run.rb'
 require_relative '../../test/assertions/shell_command_assertions.rb'
 class RecentRunTest < TestCase
   module Examples
+#    include Constants
+		Self_executable = TestExecutable.new_from_path(__FILE__, :unit)
+		No_side_effects = TestRun.new(test_executable: Self_executable, cached_recent_test: nil, cached_all_test_names: nil) # avoid recursion
 #    include RecentRun::Constants
     Allways_timeout = 0.00001
     Hello_world = RecentRun.new(command_string: 'echo "Hello World"')
@@ -93,7 +96,7 @@ end # RecentRun
 
 class TestRunTest < TestCase
   include TestExecutable::Examples
-  include TestRun::Examples
+  include RecentRunTest::Examples
   module Examples
     include TestRun::Constants
 #    Allways_timeout = 0.00001
@@ -103,7 +106,7 @@ class TestRunTest < TestCase
     TestSelf = TestRun.new(test_executable: TestExecutable.new_from_path(__FILE__, :unit)) # avoid recursion
   end # Examples
   include Examples
-  include Repository::Constants
+  include Repository::DefinitionalConstants
 
   def test_All_test_names_default
     refute_nil(Default_testRun.cached_recent_test)
@@ -146,7 +149,7 @@ class TestRunTest < TestCase
 #    assert_equal([:test, :recent_test, :rescue_exception], Forced_timeout_testRun.cached_recent_test.instance_variables, Forced_timeout_testRun.cached_recent_test.inspect)
     refute_nil(Default_subtestRun.cached_recent_test)
     refute_nil(Default_testRun.cached_recent_test)
-#    assert_nil(Forced_timeout_testRun.cached_recent_test)
+    assert_nil(Forced_timeout_testRun.cached_recent_test.cached_run)
     assert_nil(TestSelf.cached_recent_test)
   end # Recent_test_default
 
@@ -184,7 +187,30 @@ class TestRunTest < TestCase
     refute_empty(TestRun.shell('pwd', &:inspect))
   end # shell
 
+
+	def state
+		assert_instance_of(String, Default_testRun.state[:current_branch_name])
+		assert_instance_of(String, Default_testRun.state[:start_time])
+		assert_instance_of(String, Default_testRun.state[:command_string])
+		assert_instance_of(String, Default_testRun.state[:output])
+		assert_instance_of(String, Default_testRun.state[:errors])
+	end # state
+
+
   def test_write_error_file
+		assert_instance_of(String, Default_testRun.state.ruby_lines_storage)
+
+		assert_equal(Default_testRun.state[:current_branch_name].inspect, Default_testRun.state[:current_branch_name].ruby_lines_storage)
+		
+		time = Default_testRun.state[:start_time]
+		eval_time = eval(time.ruby_lines_storage)
+		round_off = time - eval_time
+		assert_equal(time, eval_time, time.strftime('%Y-%m-%d %H:%M:%S.%9N %z') + time.ruby_lines_storage + round_off.to_f.to_s)
+#		assert_equal(Default_testRun.state[:command_string].inspect, Default_testRun.state[:command_string].ruby_lines_storage)
+#		assert_equal(Default_testRun.state[:output].inspect, Default_testRun.state[:output].ruby_lines_storage)
+#		assert_equal(Default_testRun.state[:errors].inspect, Default_testRun.state[:errors].ruby_lines_storage)
+
+#		assert_equal(Default_testRun.state.inspect, Default_testRun.state.ruby_lines_storage)
     Default_testRun.write_error_file(nil)
   end # write_error_file
 
@@ -196,12 +222,12 @@ class TestRunTest < TestCase
     argument_path = '/etc/mtab' # force syntax error with non-ruby text
     test_executable = TestExecutable.new(argument_path: argument_path)
     ruby_test_string = test_executable.ruby_test_string(nil)
-    recent_test = This_code_repository.shell_command(ruby_test_string)
+    recent_test = Repository::This_code_repository.shell_command(ruby_test_string)
     error_message = recent_test.process_status.inspect + "\n" + recent_test.inspect
     assert_equal(1, recent_test.process_status.exitstatus, error_message)
     assert_equal(false, recent_test.success?, error_message)
     assert(!recent_test.success?, error_message)
-    syntax_test = This_code_repository.shell_command('ruby -c ' + argument_path)
+    syntax_test = Repository::This_code_repository.shell_command('ruby -c ' + argument_path)
     refute_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
     #	test_run = TestRun.new(test_executable: executable)
     test_run = TestRun.new(test_executable: TestExecutable.new(argument_path: argument_path))
@@ -215,9 +241,9 @@ class TestRunTest < TestCase
     log_path = test_executable.log_path?(nil)
     ShellCommands.new('grep "seed 0" ' + log_path) # .assert_post_conditions
 
-    recent_test = This_code_repository.shell_command('ruby ' + argument_path)
+    recent_test = Repository::This_code_repository.shell_command('ruby ' + argument_path)
     assert_equal(recent_test.process_status.exitstatus, 0, recent_test.inspect)
-    syntax_test = This_code_repository.shell_command('ruby -c ' + argument_path)
+    syntax_test = Repository::This_code_repository.shell_command('ruby -c ' + argument_path)
     assert_equal("Syntax OK\n", syntax_test.output, syntax_test.inspect)
     assert_equal(0, TestRun.new(test_executable: test_executable).error_score?)
     #	Default_testRun.assert_deserving_branch(:passed, executable_file)

@@ -302,7 +302,7 @@ class TestRun # < ActiveRecord::Base
   def commit_message(files)
     commit_message = 'fixup! ' + Unit.unit_names?(files).uniq.join(', ')
     unless @cached_recent_test.nil?
-      commit_message += "\n" + @test_executable.repository.current_branch_name?.to_s + "\n"
+      commit_message += "\n" + state[:current_branch_name].to_s + "\n"
       commit_message += "\n" + @cached_recent_test.command_string
       commit_message += "\n" + @cached_recent_test.output.to_s
       commit_message += @cached_recent_test.errors.inspect
@@ -418,9 +418,4 @@ class TestRun # < ActiveRecord::Base
   include Assertions
   extend Assertions::ClassMethods
   # self.assert_pre_conditions
-  module Examples
-    include Constants
-		Self_executable = TestExecutable.new_from_path(__FILE__, :unit)
-		No_side_effects = TestRun.new(test_executable: Self_executable, cached_recent_test: nil, cached_all_test_names: nil) # avoid recursion
-  end # Examples
 end # TestRun

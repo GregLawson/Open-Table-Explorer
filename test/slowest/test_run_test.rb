@@ -12,8 +12,12 @@ require_relative '../../app/models/test_run.rb'
 require_relative '../../test/assertions/shell_command_assertions.rb'
 class TestRunTest < TestCase
   include TestExecutable::Examples
-  include TestRun::Examples
-  include Repository::Constants
+  module Examples
+    Default_testRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable)
+    Default_subtestRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable, test: :test_compare)
+  end # Examples
+  include Examples
+  include Repository::DefinitionalConstants
   def run_individual_tests
     puts Default_testRun.test_executable.all_test_names.inspect if $VERBOSE
     Default_testRun.run_individual_tests.each do |subtest|
