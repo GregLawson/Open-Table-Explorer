@@ -25,37 +25,41 @@ class TestMaturityTest < TestCase
     end # each_pair
     assert_equal(4, Error_classification.keys.size, Error_classification.inspect)
     assert_equal(4, Error_classification.values.size, Error_classification.inspect)
-    #	assert_match(Tests_pattern, Example_minitest_log)
-    #	assert_match(Assertions_pattern, Example_minitest_log)
-    #	assert_match(Failures_pattern, Example_minitest_log)
-    #	assert_match(Errors_pattern, Example_minitest_log)
-    #	assert_match(Tests_pattern, Example_testunit_log)
-    #	assert_match(Pendings_pattern, Example_testunit_log)
-    assert_match(Fixed_regexp, Example_testunit_log)
-    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished), Example_testunit_log)
-    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished), Example_testunit_log)
-#    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished) * /s, / * Fixed_regexp, Example_testunit_log)
-#    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished) * /s, / * Fixed_regexp * / runs\/s, /, Example_testunit_log)
-#    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished) * /s, / * Fixed_regexp * / runs\/s, / * Fixed_regexp, Example_testunit_log)
-    assert_match(Finished_regexp, Example_testunit_log)
-    assert_match(User_time_regexp, Example_testunit_log)
+    example_minitest_log = RubyLinesStorage.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
+    example_testunit_log = RubyLinesStorage.read('./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log')
+    example_minitest_log = IO.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
+    example_testunit_log = IO.read('./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log')
+    #	assert_match(Tests_pattern, example_minitest_log)
+    #	assert_match(Assertions_pattern, example_minitest_log)
+    #	assert_match(Failures_pattern, example_minitest_log)
+    #	assert_match(Errors_pattern, example_minitest_log)
+    #	assert_match(Tests_pattern, example_testunit_log)
+    #	assert_match(Pendings_pattern, example_testunit_log)
+    assert_match(Fixed_regexp, example_testunit_log)
+    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished), example_testunit_log)
+    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished), example_testunit_log)
+#    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished) * /s, / * Fixed_regexp, example_testunit_log)
+#    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished) * /s, / * Fixed_regexp * / runs\/s, /, example_testunit_log)
+#    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished) * /s, / * Fixed_regexp * / runs\/s, / * Fixed_regexp, example_testunit_log)
+    assert_match(Finished_regexp, example_testunit_log)
+    assert_match(User_time_regexp, example_testunit_log)
 
-    assert_match(Fixed_regexp, Example_minitest_log)
-#    assert_match(Finished_regexp, Example_minitest_log)
-    assert_match(User_time_regexp, Example_minitest_log)
+    assert_match(Fixed_regexp, example_minitest_log)
+#    assert_match(Finished_regexp, example_minitest_log)
+    assert_match(User_time_regexp, example_minitest_log)
 
-#    assert_match(Tests_pattern, Example_minitest_log)
-#    assert_match(Assertions_pattern, Example_minitest_log)
-#    assert_match(Failures_pattern, Example_minitest_log)
-#    assert_match(Errors_pattern, Example_minitest_log)
-    assert_match(Tests_pattern, Example_testunit_log)
-    assert_match(Pendings_pattern, Example_testunit_log)
-    assert_match(Omissions_pattern, Example_testunit_log)
-    assert_match(Notifications_pattern, Example_testunit_log)
+#    assert_match(Tests_pattern, example_minitest_log)
+#    assert_match(Assertions_pattern, example_minitest_log)
+#    assert_match(Failures_pattern, example_minitest_log)
+#    assert_match(Errors_pattern, example_minitest_log)
+    assert_match(Tests_pattern, example_testunit_log)
+    assert_match(Pendings_pattern, example_testunit_log)
+    assert_match(Omissions_pattern, example_testunit_log)
+    assert_match(Notifications_pattern, example_testunit_log)
     minitest_summary_regexp = Tests_pattern * Assertions_pattern * Failures_pattern * Errors_pattern
-#    assert_match(Common_summary_regexp, Example_minitest_log)
+#    assert_match(Common_summary_regexp, example_minitest_log)
     testunit_summary_regexp = Common_summary_regexp * Pendings_pattern * Omissions_pattern * Notifications_pattern
-    assert_match(testunit_summary_regexp, Example_testunit_log)
+    assert_match(testunit_summary_regexp, example_testunit_log)
   end # DefinitionalConstants
 
   def test_example_files
@@ -196,7 +200,9 @@ class TestMaturityTest < TestCase
     error_classifications = []
     branch_compressions = []
     branch_enhancements = []
-    TestMaturity.example_files.each_pair do |argument_path, _expected_error_score|
+    TestMaturity.example_files.each_pair do |classification, argument_path|
+			assert_instance_of(Symbol, classification, TestMaturity.example_files.inspect)
+			assert(File.exists?(argument_path.to_s), TestMaturity.example_files.inspect)
       test_executable = TestExecutable.new(argument_path: argument_path)
       refute_nil(test_executable.unit) # nonstandard unit assignment
       assert_equal(:unit, test_executable.test_type) # nonstandard unit assignment
@@ -207,20 +213,16 @@ class TestMaturityTest < TestCase
                          else
                            :edited
       end # if
-      error_score = test_run.error_score?
       #		assert_equal(expected_error_score, error_score, test_run.inspect)
-      error_classification = Error_classification.fetch(error_score, :multiple_tests_fail)
-      error_classifications << error_classification
-      #		branch_compression = Deserving_commit_to_branch[error_classification]
-      #		branch_compressions<<branch_compression
-      #		branch_enhancement=Branch_enhancement[branch_compression]
-      #		branch_enhancements<<branch_enhancement
+      error_classifications << test_maturity.error_classification!
+			branch_compressions << test_maturity.expected_next_commit_branch!
+#			branch_enhancements << test_maturity.branch_enhancement!
     end # each
-    #	assert_equal(4, error_classifications.uniq.size, error_classifications.inspect)
-    #	assert_equal(3, branch_compressions.uniq.size, branch_compressions.inspect)
-    #	assert_equal(3, branch_enhancements.uniq.size, branch_enhancements.inspect)
-    #	error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
-    #	assert_equal(:passed, Branch_enhancement[Deserving_commit_to_branch[error_classification]])
+    assert_equal(4, error_classifications.uniq.size, error_classifications.inspect)
+    assert_equal(3, branch_compressions.uniq.size, branch_compressions.inspect)
+#    assert_equal(3, branch_enhancements.uniq.size, branch_enhancements.inspect)
+#    error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
+#    assert_equal(:passed, Branch_enhancement[Deserving_commit_to_branch[error_classification]])
   end # deserving_branch
 
   def test_compare

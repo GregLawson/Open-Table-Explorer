@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 23, 1, 20, Rational(57670584017, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 11, 27, 1, 14, Rational(49397616166, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail
@@ -47,29 +47,29 @@ Error: test_requires(InitializationFailTest): ArgumentError: assertion message m
 ===============================================================================
 
 
-Finished in 0.017632023 seconds.
+Finished in 0.016623321 seconds.
 ------
 8 tests, 10 assertions, 1 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
 62.5% passed
 ------
-453.72 tests/s, 567.15 assertions/s
+481.25 tests/s, 601.56 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb"
-	User time (seconds): 0.69
-	System time (seconds): 0.05
-	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.74
+	User time (seconds): 0.57
+	System time (seconds): 0.04
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.62
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23392
+	Maximum resident set size (kbytes): 23436
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4332
-	Voluntary context switches: 2
-	Involuntary context switches: 69
+	Minor (reclaiming a frame) page faults: 4337
+	Voluntary context switches: 3
+	Involuntary context switches: 4
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -78,7 +78,7 @@ Finished in 0.017632023 seconds.
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 1
-',
+'
 }
-,
+
 }

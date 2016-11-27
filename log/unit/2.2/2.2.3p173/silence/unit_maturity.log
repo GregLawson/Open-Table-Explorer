@@ -1,53 +1,47 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 5, 2, Rational(37676825429, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 11, 27, 1, 14, Rational(50606680152, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-...........not timed out: all tests in minimal3 took 0.001777058s unknown with timeout of 30.0s
-not timed out: all tests in minimal2 took 0.001132509s unknown with timeout of 30.0s
-.F....not timed out: all tests in  took 0.000991232s unknown with timeout of 30.0s
-not timed out: all tests in  took 0.000635045s unknown with timeout of 30.0s
-not timed out: all tests in  took 0.000874411s unknown with timeout of 30.0s
-not timed out: all tests in  took 0.001134945s unknown with timeout of 30.0s
-not timed out: all tests in  took 0.001135881s unknown with timeout of 30.0s
-............
+...........not timed out: all tests in minimal3 took 0.002112984s unknown with timeout of 30.0s
+not timed out: all tests in minimal2 took 0.001610853s unknown with timeout of 30.0s
+......not timed out: all tests in success.rb took 0.001869527s unknown with timeout of 30.0s
+not timed out: all tests in single_test_fail.rb took 0.001736326s unknown with timeout of 30.0s
+not timed out: all tests in multiple_tests_fail.rb took 0.000992369s unknown with timeout of 30.0s
+not timed out: all tests in initialization_fail.rb took 0.001613613s unknown with timeout of 30.0s
+not timed out: all tests in syntax_error.rb took 0.003455743s unknown with timeout of 30.0s
+...........
 
-Finished in 4.670653s, 6.2090 runs/s, 26.9770 assertions/s.
+Finished in 9.758677s, 2.8692 runs/s, 12.3992 assertions/s.
 
-  1) Failure:
-TestMaturityTest#test_times [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb:59]:
-log/unit/2.2/2.2.3p173/silence/nested_loop.log.
-Expected /Finished in (?<test_finished>[0-9]+\.[0-9]+)/ to match "{:current_branch_name => :passed,\n:start_time => Time.new(2016, 9, 25, 4, 56, Rational(32680998208, 1000000000), \"-07:00\"),\n:command_string => \'/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nested_loop_test.rb\',\n:output => \'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]\n\',\n:errors => {:syserr => \'/home/greg/Desktop/src/Open-Table-Explorer/test/unit/nested_loop_test.rb:18: syntax error, unexpected keyword_end, expecting \\\')\\\'\n\t\tend # map\n\t\t   ^\n/home/greg/Desktop/src/Open-Table-Explorer/test/unit/nested_loop_test.rb:29: syntax error, unexpected end-of-input, expecting keyword_end\nCommand exited with non-zero status 1\n\tCommand being timed: \"ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nested_loop_test.rb\"\n\tUser time (seconds): 0.09\n\tSystem time (seconds): 0.00\n\tPercent of CPU this job got: 96%\n\tElapsed (wall clock) time (h:mm:ss or m:ss): 0:00.09\n\tAverage shared text size (kbytes): 0\n\tAverage unshared data size (kbytes): 0\n\tAverage stack size (kbytes): 0\n\tAverage total size (kbytes): 0\n\tMaximum resident set size (kbytes): 8512\n\tAverage resident set size (kbytes): 0\n\tMajor (requiring I/O) page faults: 0\n\tMinor (reclaiming a frame) page faults: 1183\n\tVoluntary context switches: 3\n\tInvoluntary context switches: 1\n\tSwaps: 0\n\tFile system inputs: 0\n\tFile system outputs: 0\n\tSocket messages sent: 0\n\tSocket messages received: 0\n\tSignals delivered: 0\n\tPage size (bytes): 4096\n\tExit status: 1\n\'\n}\n\n}\n".
-
-29 runs, 126 assertions, 1 failures, 0 errors, 0 skips
+28 runs, 121 assertions, 0 failures, 0 errors, 0 skips
 ',
-:errors => {:syserr => 'Command exited with non-zero status 1
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb"
-	User time (seconds): 16.18
-	System time (seconds): 1.65
-	Percent of CPU this job got: 96%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:18.40
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb"
+	User time (seconds): 22.52
+	System time (seconds): 2.09
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:25.07
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 46088
+	Maximum resident set size (kbytes): 54716
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 10
-	Minor (reclaiming a frame) page faults: 132708
-	Voluntary context switches: 1736
-	Involuntary context switches: 933
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 170466
+	Voluntary context switches: 1756
+	Involuntary context switches: 951
 	Swaps: 0
-	File system inputs: 1024
-	File system outputs: 160
+	File system inputs: 0
+	File system outputs: 176
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0
 '
 }
 

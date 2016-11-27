@@ -20,24 +20,20 @@ class TestMaturity
                              100 => :initialization_fail,
                              10_000 => :syntax_error }.freeze
     Push_branch = { success:             :passed,
-                    single_test_fail:    :testing,
-                    multiple_tests_fail: :testing, # visibility boundary
+                    single_test_fail:    :tested,
+                    multiple_tests_fail: :tested, # visibility boundary
                     initialization_fail: :edited,
                     syntax_error:        :edited
         }.freeze
     Pull_branch = { success:             :passed,
                     single_test_fail:    :passed,
-                    multiple_tests_fail: :testing, # visibility boundary
-                    initialization_fail: :testing,
+                    multiple_tests_fail: :tested, # visibility boundary
+                    initialization_fail: :tested,
                     syntax_error:        :edited
         }.freeze
 		Error_classification_keys = Push_branch.keys
     Error_score_directory = Unit.data_source_directories + 'test_maturity/'
 #		raise RubyLinesStorage.instance_methods(false).inspect unless RubyLinesStorage.instance_methods.include?(:read) 
-#    Example_minitest_log = RubyLinesStorage.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
-#    Example_testunit_log = RubyLinesStorage.read('./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log')
-    Example_minitest_log = IO.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
-    Example_testunit_log = IO.read('./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log')
 		Fixed_regexp = /[0-9]+\.[0-9]+/
 		Finished_regexp = /Finished in / * Fixed_regexp.capture(:test_finished)
     User_time_regexp = /User time \(seconds\): / * Fixed_regexp.capture(:user_time)
@@ -51,6 +47,7 @@ class TestMaturity
     Common_summary_regexp = Tests_pattern * Assertions_pattern * Failures_pattern * Errors_pattern
     end # DefinitionalConstants
   include DefinitionalConstants
+	
   include Virtus.value_object
   values do
     attribute :version, BranchReference, default: nil # working_directory
@@ -207,6 +204,7 @@ class TestMaturity
   def branch_enhancement!
     Branch::Branch_enhancement[deserving_commit_to_branch!]
   end # branch_enhancement!
+	
   module Assertions
     module ClassMethods
     end # ClassMethods
@@ -225,7 +223,7 @@ class TestMaturity
         assert_equal(1, recent_test.process_status.exitstatus, message)
         refute_equal("Syntax OK\n", syntax_test.output, message)
         assert_equal(1, syntax_test.process_status.exitstatus, message)
-      when :testing then
+      when :tested then
         assert_operator(1, :<=, recent_test.process_status.exitstatus, message)
         assert_equal("Syntax OK\n", syntax_test.output, message)
       when :passed then
