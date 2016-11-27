@@ -1,89 +1,310 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 11, 25, 8, 42, Rational(47769181733, 1000000000), "-08:00"),
+:start_time => Time.new(2016, 11, 27, 1, 20, Rational(391052930, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test
 Started
-.[-138, -56, -17, -16, -15, -13, -12, -11, -9, -8, -7, -3, -1, 0]
-min = 168.0max = 9863.0
-.........syntax error, unexpected \',\', expecting \'}\'
-path = ./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log
- in context: 
-}
-,
-}
-syntax error, unexpected \',\', expecting \'}\'
-path = ./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log
- in context: 
-}
-,
-}
-syntax error, unexpected \',\', expecting \'}\'
-path = log/unit/2.2/2.2.3p173/silence/syntax_error.rb.log
- in context: 
-}
-,
-}
-syntax error, unexpected \',\', expecting \'}\'
-path = log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log
- in context: 
-}
-,
-}
-syntax error, unexpected \',\', expecting \'}\'
-path = log/unit/2.2/2.2.3p173/silence/success.rb.log
- in context: 
-}
-,
-}
-syntax error, unexpected \'<\'
-path = log/unit/2.2/2.2.3p173/silence/command_line_sub_executable.log
- in context: 
-:output => \'\',
-:errors => {:rescue_exception => <Timeout::Error
->
-syntax error, unexpected \'<\'
-path = log/unit/2.2/2.2.3p173/silence/command_line.log
- in context: 
-:output => \'\',
-:errors => {:rescue_exception => <Timeout::Error
->
-syntax error, unexpected \'<\'
-path = log/unit/2.2/2.2.3p173/silence/rebuild.log
- in context: 
-:output => \'\',
-:errors => {:rescue_exception => <Timeout::Error
->
-syntax error, unexpected \',\', expecting \'}\'
-path = log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log
- in context: 
-}
-,
-}
-........
+.[-152, -61, -43, -32, -26, -20, -19, -18, -17, -16, -15, -11, -10, -9, -8, -2, -1, 0, 11574]
+min = 0.0max = 11574.0
+........F
+===============================================================================
+Failure: test_Regexp_ruby_lines_storage(RubyLinesStorageTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:68:in `assert_reversible\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:164:in `test_Regexp_ruby_lines_storage\'
+     161: end # String
+     162: 
+     163: 	def test_Regexp_ruby_lines_storage
+  => 164: 		assert_reversible(/a|b/)
+     165: 		assert_reversible(/a|"b/)
+     166: 		assert_reversible(/a|\'b/)
+     167: 		assert_match(/\//, \'/\')
+"/a\\|b/" should eval to /a|b/
+</a|b/> expected but was
+</a\|b/>
 
-Finished in 13.694752781 seconds.
+diff:
+? /a\|b/
+===============================================================================
+F
+===============================================================================
+Failure:
+  {:context => \'
+  path = log/unit/2.2/2.2.3p173/silence/ruby_lines_storage.log
+   in context: 
+      :start_time => Time.new(2016, 9, 23, 1, 20, Rational(58901519416, 1000000000), "-07:00"),
+      :command_string => \\\\\\'/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/syntax_error.rb\\\\\\',
+      :output => \\\\\\'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+  \',
+  :file_contents => \'{:current_branch_name => :passed,
+  :start_time => Time.new(2016, 11, 27, 1, 17, Rational(16953005085, 1000000000), "-08:00"),
+  :command_string => \\'/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb\\',
+  :output => \\'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+  Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test
+  Started
+  .[-139, -61, -42, -19, -18, -17, -16, -15, -11, -10, -9, -8, -2, -1, 0]
+  min = 339.0max = 10102.0
+  ........F
+  ===============================================================================
+  Failure: test_Regexp_ruby_lines_storage(RubyLinesStorageTest)
+  /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:68:in `assert_reversible\\\'
+  /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:164:in `test_Regexp_ruby_lines_storage\\\'
+       161: end # String
+       162: 
+       163: 	def test_Regexp_ruby_lines_storage
+    => 164: 		assert_reversible(/a|b/)
+       165: 		assert_reversible(/a|"b/)
+       166: 		assert_reversible(/a|\\\'b/)
+       167: 		assert_match(/\//, \\\'/\\\')
+  "/a\\|b/" should eval to /a|b/
+  </a|b/> expected but was
+  </a\|b/>
+  
+  diff:
+  ? /a\|b/
+  ===============================================================================
+  F
+  ===============================================================================
+  Failure:
+    {:context => \\\'
+    path = log/unit/2.2/2.2.3p173/silence/ruby_lines_storage.log
+     in context: 
+      :start_time => Time.new(2016, 9, 23, 1, 20, Rational(58901519416, 1000000000), "-07:00"),
+      :command_string => \\\\\\'/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/syntax_error.rb\\\\\\',
+      :output => \\\\\\'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+    \\\',
+    :file_contents => \\\'{:current_branch_name => :passed,
+    :start_time => Time.new(2016, 11, 26, 7, 19, Rational(31166878308, 1000000000), "-08:00"),
+    :command_string => \\\\'/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb\\\\',
+    :output => \\\\'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+    Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test
+    Started
+    .[-136, -64, -44, -17, -15, -14, -13, -12, -10, -8, -7, -6, -1, 0, 11574]
+    min = 0.0max = 11574.0
+    ........F
+    ===============================================================================
+    Failure: test_Regexp_ruby_lines_storage(RubyLinesStorageTest)
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:68:in `assert_reversible\\\\\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:164:in `test_Regexp_ruby_lines_storage\\\\\'
+         161: end # String
+         162: 
+         163: 	def test_Regexp_ruby_lines_storage
+      => 164: 		assert_reversible(/a|b/)
+         165: 		assert_reversible(/a|"b/)
+         166: 		assert_reversible(/a|\\\\\'b/)
+         167: 		assert_match(/\//, \\\\\'/\\\\\')
+    "/a\\|b/" should eval to /a|b/
+    </a|b/> expected but was
+    </a\|b/>
+    
+    diff:
+    ? /a\|b/
+    ===============================================================================
+    F
+    ===============================================================================
+    Failure:
+      {:context => \\\\\'
+      path = log/unit/2.2/2.2.3p173/silence/syntax_error.rb.log
+       in context: 
+      }
+      ,
+      }
+      \\\\\',
+      :file_contents => \\\\\'{:current_branch_name => :passed,
+      :start_time => Time.new(2016, 9, 23, 1, 20, Rational(58901519416, 1000000000), "-07:00"),
+      :command_string => \\\\\\'/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/syntax_error.rb\\\\\\',
+      :output => \\\\\\'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+      \\\\\\',
+      :errors => {:syserr => \\\\\\'/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/syntax_error.rb:1: syntax error, unexpected &
+      Command exited with non-zero status 1
+      	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/syntax_error.rb"
+      	User time (seconds): 0.10
+      	System time (seconds): 0.00
+      	Percent of CPU this job got: 94%
+      	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.11
+      	Average shared text size (kbytes): 0
+      	Average unshared data size (kbytes): 0
+      	Average stack size (kbytes): 0
+      	Average total size (kbytes): 0
+      	Maximum resident set size (kbytes): 8432
+      	Average resident set size (kbytes): 0
+      	Major (requiring I/O) page faults: 0
+      	Minor (reclaiming a frame) page faults: 1178
+      	Voluntary context switches: 2
+      	Involuntary context switches: 16
+      	Swaps: 0
+      	File system inputs: 0
+      	File system outputs: 0
+      	Socket messages sent: 0
+      	Socket messages received: 0
+      	Signals delivered: 0
+      	Page size (bytes): 4096
+      	Exit status: 1
+      \\\\\\',
+      }
+      ,
+      }
+      \\\\\',
+      :exception_hash => {:line => \\\\\'33\\\\\',
+      :message => \\\\\'syntax error, unexpected \\\\\\',\\\\\\', expecting \\\\\\'}\\\\\\'\\\\\'
+      }
+      
+      }
+      .
+      <[:context, :file_contents, :exception_hash]> expected to not include
+      <:exception_hash>.
+    test_RubyLinesStorage_read(RubyLinesStorageTest)
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:51:in `block in test_RubyLinesStorage_read\\\\\'
+         48: 			file_contents = IO.read(path)
+         49: 			hash = RubyLinesStorage.read(path)
+         50: 			assert_instance_of(Hash, hash)
+      => 51: 			refute_includes(hash.keys, :exception_hash, hash.ruby_lines_storage)
+         52: 		end # each
+         53: 		message = file_times.ruby_lines_storage
+         54: #		assert_equal
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:47:in `map\\\\\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:47:in `test_RubyLinesStorage_read\\\\\'
+    ===============================================================================
+    .......
+    
+    Finished in 13.644434298 seconds.
+    ------
+    18 tests, 75 assertions, 2 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+    88.8889% passed
+    ------
+    1.32 tests/s, 5.50 assertions/s
+    \\\\',
+    :errors => {:syserr => \\\\'Command exited with non-zero status 1
+    	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb"
+    	User time (seconds): 13.25
+    	System time (seconds): 1.31
+    	Percent of CPU this job got: 100%
+    	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.54
+    	Average shared text size (kbytes): 0
+    	Average unshared data size (kbytes): 0
+    	Average stack size (kbytes): 0
+    	Average total size (kbytes): 0
+    	Maximum resident set size (kbytes): 50240
+    	Average resident set size (kbytes): 0
+    	Major (requiring I/O) page faults: 0
+    	Minor (reclaiming a frame) page faults: 11203
+    	Voluntary context switches: 3
+    	Involuntary context switches: 36
+    	Swaps: 0
+    	File system inputs: 0
+    	File system outputs: 0
+    	Socket messages sent: 0
+    	Socket messages received: 0
+    	Signals delivered: 0
+    	Page size (bytes): 4096
+    	Exit status: 1
+    \\\\'
+    }
+    
+    }
+    \\\',
+    :exception_hash => {:line => \\\'40\\\',
+    :message => \\\'syntax error, unexpected unary-, expecting keyword_do or \\\\'{\\\\' or \\\\'(\\\\'\\\'
+    }
+    
+    }
+    .
+    <[:context, :file_contents, :exception_hash]> expected to not include
+    <:exception_hash>.
+  test_RubyLinesStorage_read(RubyLinesStorageTest)
+  /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:51:in `block in test_RubyLinesStorage_read\\\'
+       48: 			file_contents = IO.read(path)
+       49: 			hash = RubyLinesStorage.read(path)
+       50: 			assert_instance_of(Hash, hash)
+    => 51: 			refute_includes(hash.keys, :exception_hash, hash.ruby_lines_storage)
+       52: 		end # each
+       53: 		message = file_times.ruby_lines_storage
+       54: #		assert_equal
+  /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:47:in `map\\\'
+  /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:47:in `test_RubyLinesStorage_read\\\'
+  ===============================================================================
+  .......
+  
+  Finished in 13.888130281 seconds.
+  ------
+  18 tests, 159 assertions, 2 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+  88.8889% passed
+  ------
+  1.30 tests/s, 11.45 assertions/s
+  \\',
+  :errors => {:syserr => \\'Command exited with non-zero status 1
+  	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb"
+  	User time (seconds): 13.46
+  	System time (seconds): 1.35
+  	Percent of CPU this job got: 100%
+  	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.79
+  	Average shared text size (kbytes): 0
+  	Average unshared data size (kbytes): 0
+  	Average stack size (kbytes): 0
+  	Average total size (kbytes): 0
+  	Maximum resident set size (kbytes): 50136
+  	Average resident set size (kbytes): 0
+  	Major (requiring I/O) page faults: 0
+  	Minor (reclaiming a frame) page faults: 11204
+  	Voluntary context switches: 2
+  	Involuntary context switches: 92
+  	Swaps: 0
+  	File system inputs: 0
+  	File system outputs: 0
+  	Socket messages sent: 0
+  	Socket messages received: 0
+  	Signals delivered: 0
+  	Page size (bytes): 4096
+  	Exit status: 1
+  \\'
+  }
+  
+  }
+  \',
+  :exception_hash => {:line => \'35\',
+  :message => \'syntax error, unexpected unary-, expecting keyword_do or \\'{\\' or \\'(\\'\'
+  }
+  
+  }
+  .
+  <[:context, :file_contents, :exception_hash]> expected to not include
+  <:exception_hash>.
+test_RubyLinesStorage_read(RubyLinesStorageTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:51:in `block in test_RubyLinesStorage_read\'
+     48: 			file_contents = IO.read(path)
+     49: 			hash = RubyLinesStorage.read(path)
+     50: 			assert_instance_of(Hash, hash)
+  => 51: 			refute_includes(hash.keys, :exception_hash, hash.ruby_lines_storage)
+     52: 		end # each
+     53: 		message = file_times.ruby_lines_storage
+     54: #		assert_equal
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:47:in `map\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb:47:in `test_RubyLinesStorage_read\'
+===============================================================================
+.......
+
+Finished in 13.695896961 seconds.
 ------
-18 tests, 59 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
+18 tests, 159 assertions, 2 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+88.8889% passed
 ------
-1.31 tests/s, 4.31 assertions/s
+1.31 tests/s, 11.61 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb"
-	User time (seconds): 13.25
-	System time (seconds): 1.39
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb"
+	User time (seconds): 13.39
+	System time (seconds): 1.23
 	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.62
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.61
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 93776
+	Maximum resident set size (kbytes): 50352
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 22555
+	Minor (reclaiming a frame) page faults: 11327
 	Voluntary context switches: 3
-	Involuntary context switches: 71
+	Involuntary context switches: 77
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -91,7 +312,7 @@ Finished in 13.694752781 seconds.
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
 '
 }
 

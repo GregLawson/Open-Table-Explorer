@@ -27,7 +27,8 @@ module RubyLinesStorage
 		exception_hash = exception_message.parse(Eval_syntax_error_regexp)
 		line_number = exception_hash[:line].to_i
 		context = read_error_context(path, file_contents, line_number)
-		puts exception_hash[:message] + context
+#		puts exception_hash[:message] + context
+		{context: context, file_contents: file_contents, exception_hash: exception_hash }
 	end # read
 	
 	module Assertions

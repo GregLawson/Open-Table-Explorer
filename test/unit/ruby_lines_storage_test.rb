@@ -47,6 +47,8 @@ class RubyLinesStorageTest < TestCase
 		file_times = log_files.map do |path|
 			file_contents = IO.read(path)
 			hash = RubyLinesStorage.read(path)
+			assert_instance_of(Hash, hash)
+			refute_includes(hash.keys, :exception_hash, hash.ruby_lines_storage)
 		end # each
 		message = file_times.ruby_lines_storage
 #		assert_equal
