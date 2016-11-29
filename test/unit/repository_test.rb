@@ -80,16 +80,22 @@ class FileStatusTest < TestCase
     assert_equal(FileStatus.normal_status_descriptions('AA'), 'unmerged, both added')
     assert_equal(FileStatus.normal_status_descriptions('UU'), 'unmerged, both modified')
   end # unmerged_status_descriptions
+
+  def test_Constructors
+    self_file_status = FileStatus.new_from_status_line('   ' + $PROGRAM_NAME)
+    refute_nil(self_file_status.file)
+    assert(File.exist?(self_file_status.file))
+  end # Constructors
 end # FileStatus
 
 class RepositoryTest < TestCase
   include RubyAssertions
   include Repository::Examples
-	Cleanup_failed_test_paths = Root_directory + '/test/data_sources/repository20*/'
-	Cleanup_failed_test_repositories = Dir[Cleanup_failed_test_paths]
-	Cleanup_failed_test_repositories.each do |temp_git_repository|
-		Repository.delete_even_nonxisting(temp_git_repository, :force)
-	end # each
+  Cleanup_failed_test_paths = Root_directory + '/test/data_sources/repository20*/'
+  Cleanup_failed_test_repositories = Dir[Cleanup_failed_test_paths]
+  Cleanup_failed_test_repositories.each do |temp_git_repository|
+    Repository.delete_even_nonxisting(temp_git_repository, :force)
+  end # each
   def setup
     @temp_repo = Repository.create_test_repository
   end # setup
@@ -99,7 +105,7 @@ class RepositoryTest < TestCase
 
   def teardown
     Repository.delete_even_nonxisting(@temp_repo.path)
-		assert_empty(Dir[Cleanup_failed_test_paths], Cleanup_failed_test_paths)
+    assert_empty(Dir[Cleanup_failed_test_paths], Cleanup_failed_test_paths)
   end # teardown
 
   def test_DefinitionalConstants
@@ -129,7 +135,6 @@ class RepositoryTest < TestCase
     #	git_execution=Repository.git_command('branch --list --contains HEAD', Unique_repository_directory_pathname)
     git_execution.assert_post_conditions
   end # git_command
-
 
   def test_initialize
     assert_pathname_exists(This_code_repository.path)
@@ -240,9 +245,9 @@ class RepositoryTest < TestCase
 
   def test_something_to_commit?
     message = This_code_repository.status.inspect
-		assert(This_code_repository.something_to_commit?, message)
+    assert(This_code_repository.something_to_commit?, message)
     This_code_repository.status.each do |file_stat|
-#			puts file_stat.inspect
+      #			puts file_stat.inspect
       assert(File.exist?(file_stat[:file]) == (file_stat[:work_tree] != :deleted), message)
     end # each
   end # something_to_commit
@@ -257,7 +262,7 @@ class RepositoryTest < TestCase
 
   def test_force_change
     @temp_repo.assert_nothing_to_commit
-		modified_path = @temp_repo.path + '/README'
+    modified_path = @temp_repo.path + '/README'
 
     IO.write(modified_path, README_start_text + Time.now.strftime('%Y-%m-%d %H:%M:%S.%L') + "\n") # timestamp make file unique
     refute_equal(README_start_text, IO.read(modified_path))
@@ -277,8 +282,8 @@ class RepositoryTest < TestCase
   def test_revert_changes
     @temp_repo.revert_changes # .assert_post_conditions
     @temp_repo.assert_nothing_to_commit
-		modified_path = @temp_repo.path + '/README'
-    assert_equal(README_start_text+"\n", IO.read(modified_path), "modified_path=#{modified_path}")
+    modified_path = @temp_repo.path + '/README'
+    assert_equal(README_start_text + "\n", IO.read(modified_path), "modified_path=#{modified_path}")
   end # revert_changes
 
   # add_commits("postgres", :postgres, Temporary+"details")
@@ -310,7 +315,7 @@ class RepositoryTest < TestCase
   end # git_parse
 
   def test_create_empty
-		unique_repository_directory_pathname = Repository.timestamped_repository_name?
+    unique_repository_directory_pathname = Repository.timestamped_repository_name?
     Dir.mkdir(unique_repository_directory_pathname)
     assert_pathname_exists(unique_repository_directory_pathname)
     switch_dir = ShellCommands.new([['cd', unique_repository_directory_pathname], '&&', ['pwd']])
@@ -338,7 +343,7 @@ class RepositoryTest < TestCase
   def test_create_if_missing
     Repository.create_if_missing(@temp_repo.path)
     FileUtils.remove_entry_secure(@temp_repo.path) # , force = false)
-		unique_repository_directory_pathname = Repository.timestamped_repository_name?
+    unique_repository_directory_pathname = Repository.timestamped_repository_name?
     Repository.create_if_missing(unique_repository_directory_pathname)
     FileUtils.remove_entry_secure(unique_repository_directory_pathname) # , force = false)
   end # create_if_missing

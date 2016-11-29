@@ -7,7 +7,7 @@
 ###########################################################################
 require 'dry-types'
 module Types
-	include Dry::Types.module
+  include Dry::Types.module
 end # Types
 
 class FileStatus < Dry::Types::Value
@@ -84,47 +84,47 @@ class FileStatus < Dry::Types::Value
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
-	module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
-		Commitable = [:modified, :added, :deleted, :renamed, :copied]
-	end # DefinitionalConstants
-	include DefinitionalConstants
-	
-    attribute :index, Types::Strict::Symbol
-    attribute :work_tree, Types::Strict::Symbol
-		attribute :file, Types::Strict::String
+  module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
+    Commitable = [:modified, :added, :deleted, :renamed, :copied].freeze
+  end # DefinitionalConstants
+  include DefinitionalConstants
+
+  attribute :index, Types::Strict::Symbol
+  attribute :work_tree, Types::Strict::Symbol
+  attribute :file, Types::Strict::String
 
   module Constructors # such as alternative new methods
-#    include DefinitionalConstants
-		def new_from_status_line(status_line)
-			file = status_line[3..-1]
-			FileStatus.new(index: FileStatus.file_change(status_line[0..0]), work_tree: FileStatus.file_change(status_line[1..1]), file: file)
-		end # new_from_status_line
+    #    include DefinitionalConstants
+    def new_from_status_line(status_line)
+      file = status_line[3..-1]
+      FileStatus.new(index: FileStatus.file_change(status_line[0..0]), work_tree: FileStatus.file_change(status_line[1..1]), file: file)
+    end # new_from_status_line
   end # Constructors
   extend Constructors
 
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
-#    include DefinitionalConstants
+    #    include DefinitionalConstants
   end # ReferenceObjects
   include ReferenceObjects
-	
-	def log_file?
-		@file[-4..-1] == '.log'
-	end # log_file?
-	
-	def description
-		FileStatus.normal_status_descriptions(@index.to_s + @work_tree.to_s)
-	end # description
-	
-	def needs_commit?
-			Commitable.include?(@work_tree) ||
-			Commitable.include?(@index) ||
-			needs_merge?
-	end # needs_commit?
-	
-	def needs_merge?
-			@work_tree == :updated_but_unmerged ||
-			@index == :updated_but_unmerged
-	end # needs_commit?
+
+  def log_file?
+    @file[-4..-1] == '.log'
+  end # log_file?
+
+  def description
+    FileStatus.normal_status_descriptions(@index.to_s + @work_tree.to_s)
+  end # description
+
+  def needs_commit?
+    Commitable.include?(@work_tree) ||
+      Commitable.include?(@index) ||
+      merge_conflict?
+  end # needs_commit?
+
+  def merge_conflict?
+    @work_tree == :updated_but_unmerged ||
+      @index == :updated_but_unmerged
+  end # merge_conflict?
 end # FileStatus
 
 # assert_includes(Module.constants, :ShellCommands)
@@ -156,31 +156,30 @@ require_relative 'parse.rb'
 # assert_includes(Module.constants, :Branch)
 # refute_includes(Module.constants, :Repository)
 class Repository
-	module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
+  module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     Repository_Unit = Unit.new_from_path(__FILE__)
     Root_directory = FilePattern.project_root_dir?(__FILE__)
     Source = File.dirname(Root_directory) + '/'
     README_start_text = 'Minimal repository.'.freeze
-	end # DefinitionalConstants
-	include DefinitionalConstants
-	
+  end # DefinitionalConstants
+  include DefinitionalConstants
+
   module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
     include DefinitionalConstants
     def git_command(git_command, repository_dir)
       ShellCommands.new('git ' + ShellCommands.assemble_command_string(git_command), chdir: repository_dir)
     end # git_command
-
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
-	
+
   attr_reader :path, :grit_repo
   def initialize(path)
     if path.to_s[-1, 1] != '/'
       path = path.to_s + '/'
     end # if
-#    @url = path
+    #    @url = path
     @path = path.to_s
-#    puts '@path=' + @path if $VERBOSE
+    #    puts '@path=' + @path if $VERBOSE
     @grit_repo = Grit::Repo.new(@path)
   end # initialize
 
@@ -318,24 +317,24 @@ class Repository
 
     def delete_existing(path)
       # @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
-      if File.exists?(path) && File.exists?(path + '/.git') # make sure its a repository
-      FileUtils.remove_entry_secure(path, force = false)
-			else
-				raise path + ' does not exist as a git repository.'
-			end # if
+      if File.exist?(path) && File.exist?(path + '/.git') # make sure its a repository
+        FileUtils.remove_entry_secure(path, force = false)
+      else
+        raise path + ' does not exist as a git repository.'
+       end # if
     end # delete_existing
 
     def delete_even_nonxisting(path, force = nil)
       # @see http://www.ruby-doc.org/stdlib-1.9.2/libdoc/fileutils/rdoc/FileUtils.html#method-c-remove
-      if File.exists?(path)
-				if File.exists?(path + '/.git')   # make sure its a repository
-					FileUtils.remove_entry_secure(path, force = false)
-				elsif force
-					FileUtils.remove_entry_secure(path, force = false)
-				else
-					raise path + ' is not a git repository.'
-				end # if
-			end # if
+      if File.exist?(path)
+        if File.exist?(path + '/.git') # make sure its a repository
+          FileUtils.remove_entry_secure(path, force = false)
+        elsif force
+          FileUtils.remove_entry_secure(path, force = false)
+        else
+          raise path + ' is not a git repository.'
+        end # if
+       end # if
     end # delete_existing
 
     def replace_or_create(path)
@@ -370,16 +369,14 @@ class Repository
       end # if
       new_repository
     end # create_test_repository
-
   end # Constructors
   extend Constructors
-	
+
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
     This_code_repository = Repository.new(Root_directory)
   end # ReferenceObjects
   include ReferenceObjects
-	
 end # Repository
 # assert_includes(Module.constants, :ShellCommands)
 # assert_includes(Module.constants, :FilePattern)
