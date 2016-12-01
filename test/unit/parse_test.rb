@@ -584,6 +584,9 @@ class ParsedCaptureTest < TestCase
 		message += "\n" + quantified_parse.inspect
 		assert_equal('a,a,', Parsed_a_capture.string, message)
 		assert_instance_of(MatchCapture, ParsedCapture::Examples::Parsed_a_capture.raw_captures, message)
+
+		assert_instance_of(MatchCapture, ParsedCapture.new('a,a,', /a{2}/.capture(:label)).raw_captures)
+
   end # raw_captures
 	
 	def test_ruby_lines_storage

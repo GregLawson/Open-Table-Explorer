@@ -1,35 +1,35 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 11, 21, 6, 2, Rational(44481843125, 1000000000), "-08:00"),
+:start_time => Time.new(2016, 12, 1, 8, 9, Rational(16969321212, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test
 Started
 ............................................................... matched
-#<MatchCapture:0x00000001ee7310 @string="  ", @regexp=/  /, @raw_captures=#<MatchData "  ">>
+#<MatchCapture:0x00000003155a10 @string="  ", @regexp=/  /, @raw_captures=#<MatchData "  ">>
 .......
 
-Finished in 0.059628165 seconds.
+Finished in 0.058945524 seconds.
 ------
-70 tests, 158 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+70 tests, 159 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-1173.94 tests/s, 2649.75 assertions/s
+1187.54 tests/s, 2697.41 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb"
-	User time (seconds): 0.96
-	System time (seconds): 0.08
+	User time (seconds): 0.90
+	System time (seconds): 0.06
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.04
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.96
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 31692
+	Maximum resident set size (kbytes): 31716
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 6386
+	Minor (reclaiming a frame) page faults: 6389
 	Voluntary context switches: 3
-	Involuntary context switches: 23
+	Involuntary context switches: 12
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

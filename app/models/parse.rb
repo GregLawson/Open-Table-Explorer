@@ -499,10 +499,20 @@ class ParsedCapture < MatchCapture
   end # ParsedCapture_initialize
 
   def raw_captures
-    if @parsed_regexp.instance_variables.include?(:@quantifier) # quantifier
-			SplitCapture.new(@string, @regexp)
+    raise Exception.new('@string is not String but ' + @string.class.name) unless @string.instance_of?(String)
+#    match_extent = @string.match(@regexp)
+    match_extent = MatchCapture.new(@string, @regexp)
+		if match_extent.success?
+			if @parsed_regexp.instance_variables.include?(:@quantifier) # quantifier
+  # limit match to :match length of string
+					string = match_extent[0] # regexp matched string
+#					string.split(@regexp) # after string shortened
+					SplitCapture.new(string, @regexp) # after string shortened
+			else
+				match_extent # not yet recursing into embeded quantifiers
+			end # if
 		else
-			MatchCapture.new(@string, @regexp)
+			match_extent
 		end # if
   end # raw_captures
 
@@ -535,7 +545,7 @@ class LimitCapture < ParsedCapture
       match
     else
       string = match[0] # regexp matched string
-      @string.method(:split).call(@regexp) # after string shortened
+      string.method(:split).call(@regexp) # after string shortened
     end # if
   end # raw_captures
   module Examples
