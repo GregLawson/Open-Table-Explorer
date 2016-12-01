@@ -18,9 +18,7 @@ class InteractiveBottleneck
     def calc_test_maturity!(test_executable)
       if test_executable.testable?
         TestMaturity.new(test_executable: test_executable)
-	else
-			nil
-     end # if
+       end # if
     end # calc_test_maturity!
   end # ClassMethods
   extend ClassMethods
@@ -32,22 +30,25 @@ class InteractiveBottleneck
   values do
     attribute :test_executable, TestExecutable
     attribute :interactive, Symbol, default: :interactive # non-defaults are primarily for non-interactive testing testing
-    attribute :editor, Editor, default: ->(interactive_bottleneck, _attribute) { Editor.new(interactive_bottleneck.test_executable) }
+    attribute :editor, Editor, default: ->(interactive_bottleneck, _attribute) { Default_editor.new(interactive_bottleneck.test_executable) }
     attribute :repository, Repository, default: ->(interactive_bottleneck, _attribute) { interactive_bottleneck.test_executable.repository }
     attribute :unit_maturity, UnitMaturity, default: ->(interactive_bottleneck, _attribute) { UnitMaturity.new(interactive_bottleneck.test_executable.repository, interactive_bottleneck.test_executable.unit) }
     #	attribute :branch_index, Fixnum, :default => lambda { |interactive_bottleneck, attribute| InteractiveBottleneck.index(interactive_bottleneck.test_executable.repository) }
   end # values
   def dirty_test_executables
     @repository.status.map do |file_status|
-      if file_status[:log_file]
+      if file_status.log_file?
         nil
-      elsif file_status[:working_tree] == :ignore
+      elsif file_status.work_tree == :ignore
         nil
       else
-        test_executable = TestExecutable.new_from_path(file_status[:file])
-        testable = test_executable.generatable_unit_file?
-        if testable
-          test_executable # find unique
+        lookup = FilePattern.find_from_path(file_status.file)
+        unless lookup.nil?
+          test_executable = TestExecutable.new_from_path(file_status.file)
+          testable = test_executable.generatable_unit_file?
+          if testable
+            test_executable # find unique
+          end # if
         end # if
       end # if
     end.select { |t| !t.nil? }.uniq # map
@@ -137,7 +138,7 @@ class InteractiveBottleneck
     @repository.status.each do |conflict|
       case @interactive
       when :interactive then
-        @repository.shell_command('diffuse -m ' + conflict[:file])
+        @repository.shell_command('diffuse -m ' + conflict.file)
       end # case
       confirm_commit
     end # each
@@ -220,7 +221,7 @@ class InteractiveBottleneck
   include Constants
   module Examples
     TestTestExecutable = TestExecutable.new(argument_path: File.expand_path($PROGRAM_NAME))
-    TestInteractiveBottleneck = InteractiveBottleneck.new(interactive: :interactive, test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor)
+    TestInteractiveBottleneck = InteractiveBottleneck.new(interactive: :interactive, test_executable: TestTestExecutable) # , editor: Editor::Examples::TestEditor)
     include Constants
   end # Examples
   include Examples
