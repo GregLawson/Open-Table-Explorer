@@ -16,7 +16,16 @@ class BranchTest < TestCase
   # include DefaultTests
   include Repository::Examples
   include Branch::Constants
-  include Branch::Examples
+  include Branch::ReferenceObjects
+  #  include Branch::Examples
+  module Examples
+    #    include Constants
+    # Empty_repo_master_branch=Branch.new( Repository::Examples::Empty_Repo, :master)
+    Executing_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: Repository::Examples::This_code_repository.current_branch_name?)
+    # Executing_master_branch=Branch.new(Repository::Examples::This_code_repository, :master)
+  end # Examples
+  include Examples
+
   def setup
     @temp_repo = Repository.create_test_repository
   end # setup
@@ -33,6 +42,7 @@ class BranchTest < TestCase
   include BranchReference::DefinitionalConstants
 
 	def test_MaturityBranches
+    # explore possible branch name characters
 		branch_characters = Regexp.character_array do |character| 
 			git_run = @temp_repo.git_command('branch ' + character)
 			git_run.success?
@@ -43,6 +53,8 @@ class BranchTest < TestCase
 		literal_characters.each do |character|
 			@temp_repo.git_command('branch ' + character).assert_post_conditions('character = ' + character.inspect)
 		end # each
+
+    assert_match(Name_regexp, 'passed+interactive')
   end # MaturityBranches
 
   def test_branch_symbol?
@@ -278,9 +290,22 @@ class BranchTest < TestCase
 end # Branch
 
 class BranchReferenceTest < TestCase
+  module Examples
+    include BranchReference::DefinitionalConstants
+    include Branch::ReferenceObjects
+    Reflog_line = 'master@{123},refs/heads/master@{123},1234567,Sun, 21 Jun 2015 13:51:50 -0700'.freeze
+    Reflog_capture = Reflog_line.capture?(BranchReference::Reflog_line_regexp)
+    Reflog_run_executable = Repository::This_code_repository.git_command('reflog  --all --pretty=format:%gd,%gD,%h,%aD -- ' + $PROGRAM_NAME)
+    Reflog_lines = Reflog_run_executable.output.split("\n")
+    #    Reflog_reference = BranchReference.new_from_ref(Reflog_line)
+    Last_change_line = Reflog_lines[0]
+    First_change_line = Reflog_lines[-1]
+    No_ref_line = ',,911dea1,Sun, 21 Jun 2015 13:51:50 -0700'.freeze
+  end # Examples
+  include Examples
+
   include Repository::Examples
   include BranchReference::DefinitionalConstants
-  include BranchReference::Examples
 
   def setup
     @temp_repo = Repository.create_test_repository
@@ -345,13 +370,35 @@ class BranchReferenceTest < TestCase
   end # last_change?
 	
 	def test_reflog_to_constructor_hash
+    Reflog_lines.each do |reflog_line|
+      capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
+#      reflog_to_constructor_hash = BranchReference.reflog_to_constructor_hash(reflog_line)
+      #      BranchReference.assert_reflog_line(reflog_line)
+    end # each
 	end # reflog_to_constructor_hash
 
   def test_BranchReference_DefinitionalConstants
+    assert_match(BranchReference::Ambiguous_ref_pattern, Reflog_line)
+    assert_match(/@\{/ * Unambiguous_ref_age_pattern * /}/, Reflog_line)
+    assert_match(/refs\/heads\//, Reflog_line)
+    assert_match(Ambiguous_ref_pattern.capture(:unambiguous_branch), Reflog_line)
+    assert_match(Unambiguous_ref_age_pattern * /}/, Reflog_line)
+#    matches = ParsedCapture.show_matches([Reflog_line], Regexp_array)
+    #		matches = ParsedCapture.priority_match([Reflog_line], Regexp_array)
+#    puts matches.inspect
+#    assert_equal({ age: '123', ambiguous_branch: 'master', maturity: 'master', test_topic: nil }, Reflog_line.capture?(Ambiguous_ref_pattern).output, matches)
+#    assert_equal({ age: '123', ambiguous_branch: 'master', maturity: 'master', test_topic: nil, unambiguous_branch: 'master@{123}' }, Reflog_line.capture?(Ambiguous_ref_pattern.capture(:unambiguous_branch)).output, matches)
+
+#    assert_match(Ambiguous_ref_pattern.capture(:unambiguous_branch), Reflog_line, matches.ruby_lines_storage)
+    assert_match(/refs\/heads\// * Ambiguous_ref_pattern.capture(:unambiguous_branch), Reflog_line)
+    assert_match(BranchReference::Unambiguous_ref_pattern, Reflog_line)
     BranchReference.assert_reflog_line(Reflog_line)
     BranchReference.assert_reflog_line(Last_change_line)
     BranchReference.assert_reflog_line(First_change_line)
     Reflog_lines.each do |reflog_line|
+#      assert_match(BranchReference::Ambiguous_ref_pattern, reflog_line)
+#      assert_match(BranchReference::Unambiguous_ref_pattern, reflog_line)
+#      assert_match(BranchReference::Reflog_line_regexp, reflog_line)
 #      BranchReference.assert_reflog_line(reflog_line)
     end # each
   end # DefinitionalConstants
@@ -406,7 +453,7 @@ class BranchReferenceTest < TestCase
     #	assert_equal(nil, capture.output[:ambiguous_branch].nil?)
     BranchReference.new_from_ref(First_change_line).assert_pre_conditions
     BranchReference.new_from_ref(Last_change_line).assert_pre_conditions
-    Reflog_reference.assert_pre_conditions
+    BranchReference.new_from_ref(Reflog_line).assert_pre_conditions
 		
 		assert_instance_of(Time, br.timestamp, br.inspect)
 
