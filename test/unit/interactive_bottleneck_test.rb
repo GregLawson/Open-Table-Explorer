@@ -79,9 +79,9 @@ class InteractiveBottleneckTest < TestCase
     assert_equal(TestTestExecutable, TestInteractiveBottleneck.test_executable, TestInteractiveBottleneck.inspect)
     assert_equal(Repository::This_code_repository, TestInteractiveBottleneck.repository, TestInteractiveBottleneck.inspect)
     #	assert_equal(, TestInteractiveBottleneck.unit_maturity, TestInteractiveBottleneck.inspect)
-    assert_equal(Editor::Examples::TestEditor, TestInteractiveBottleneck.editor, TestInteractiveBottleneck.inspect)
+    #    assert_equal(Editor::Examples::TestEditor, TestInteractiveBottleneck.editor, TestInteractiveBottleneck.inspect)
 
-    refute_nil(InteractiveBottleneck.new(interactive: :interactive, test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor).interactive)
+    #    refute_nil(InteractiveBottleneck.new(interactive: :interactive, test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor).interactive)
     #	refute_nil(InteractiveBottleneck.new(test_executable: TestTestExecutable, editor: Editor::Examples::TestEditor).interactive)
 
     refute_nil(TestInteractiveBottleneck.interactive, TestInteractiveBottleneck.inspect)
@@ -91,16 +91,27 @@ class InteractiveBottleneckTest < TestCase
 
   def test_dirty_test_executables
     line_by_line = TestInteractiveBottleneck.repository.status.map do |file_status|
-      if file_status[:log_file]
+      if file_status.log_file?
         nil
-      elsif file_status[:working_tree] == :ignore
+      elsif file_status.work_tree == :ignore
         nil
       else
-        test_executable = TestExecutable.new_from_path(file_status[:file])
+        refute_nil(file_status.file)
+        assert(File.exist?(file_status.file))
+
+        argument_path = file_status.file
+        test_type = nil
+        repository = Repository::This_code_repository
+        argument_path = RepositoryPathname.new_from_path(argument_path) if argument_path.instance_of?(String)
+        unit = RailsishRubyUnit.new_from_path(argument_path)
+        lookup = FilePattern.find_from_path(argument_path)
+        unless lookup.nil?
+          test_executable = TestExecutable.new_from_path(file_status.file)
         testable = test_executable.generatable_unit_file?
         if testable
           test_executable # find unique
         end # if
+      end # if
       end # if
     end.select { |t| !t.nil? }.uniq # map
     assert_equal(line_by_line, TestInteractiveBottleneck.dirty_test_executables, 'diff = ' + (line_by_line - TestInteractiveBottleneck.dirty_test_executables).inspect)
@@ -132,7 +143,7 @@ class InteractiveBottleneckTest < TestCase
         puts prospective_unit.inspect + ' does not match a known pattern.'
       else
         refute_nil(prospective_unit[:unit], prospective_unit.inspect)
-        assert_instance_of(Unit, prospective_unit[:unit])
+        #        assert_instance_of(Unit, prospective_unit[:unit])
         refute_nil(prospective_unit[:unit].model_basename, prospective_unit.inspect)
       end # if
       # OK		assert_equal(prospective_unit[:unit], Unit::Executable, prospective_unit.inspect)
