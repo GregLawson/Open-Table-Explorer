@@ -1,5 +1,5 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 11, 17, 12, 20, Rational(42073326045, 1000000000), "-08:00"),
+:start_time => Time.new(2016, 12, 2, 16, 53, Rational(39911441089, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test
@@ -25,33 +25,33 @@ Started
 {:Bool=>"#<Dry::Types::Sum left=#<Dry::Types::Definition primitive=TrueClass options={}> right=#<Dry::Types::Definition primitive=FalseClass options={}> options={}>"}
 {:Form=>[:Nil, :Date, :DateTime, :Time, :True, :False, :Bool, :Int, :Float, :Decimal, :Array, :Hash]}
 {:Json=>[:Nil, :Date, :DateTime, :Time, :Decimal, :Array, :Hash]}
-...
+....
 
-Finished in 0.240596004 seconds.
+Finished in 0.293543489 seconds.
 ------
-5 tests, 5 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+6 tests, 6 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-20.78 tests/s, 20.78 assertions/s
+20.44 tests/s, 20.44 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test.rb"
-	User time (seconds): 2.04
-	System time (seconds): 0.32
-	Percent of CPU this job got: 97%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.42
+	User time (seconds): 2.09
+	System time (seconds): 0.26
+	Percent of CPU this job got: 96%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.45
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 44020
+	Maximum resident set size (kbytes): 42532
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 14236
-	Voluntary context switches: 207
-	Involuntary context switches: 137
+	Minor (reclaiming a frame) page faults: 14736
+	Voluntary context switches: 236
+	Involuntary context switches: 154
 	Swaps: 0
 	File system inputs: 0
-	File system outputs: 1160
+	File system outputs: 1392
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0

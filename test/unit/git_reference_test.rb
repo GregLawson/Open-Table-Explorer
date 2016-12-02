@@ -13,8 +13,8 @@ require_relative '../../app/models/parse.rb'
 class GitReferenceTest < TestCase
   # include DefaultTests
   # include Repository::Examples
-  include GitReference::ReferenceObjects
-#  include GitReference::Examples
+  include Commit::ReferenceObjects
+  include GitReference::DefinitionalConstants
 
   def setup
     @temp_repo = Repository.create_test_repository
@@ -38,10 +38,17 @@ class GitReferenceTest < TestCase
 		assert_equal(:HEAD, Head_at_start.to_sym, Head_at_start.inspect)
 	end # to_s
 	
-	def test_sha1
-		reference = :HEAD
+	def test_show_commit
+		initialization_string = :HEAD
 		repository = Repository::This_code_repository
-			run = repository.git_command('git show ' + reference.to_s + ' --pretty=oneline  --no-abbrev-commit --no-patch')
+		run = repository.git_command('show ' + initialization_string.to_s + ' --pretty=oneline  --no-abbrev-commit --no-patch')
+		run.assert_post_conditions
+		capture = run.output.capture?(Show_commit_regexp)
+		assert(capture.success?, capture.inspect)
+		sha1 = capture.output[:sha1]
+	end # show_commit
+	
+	def test_sha1
 	end # sha1
 	
 	def test_dry
@@ -59,3 +66,6 @@ class GitReferenceTest < TestCase
 		puts type_tree
 	end # dry
 end # GitReference
+
+class GitReferenceTest < TestCase
+end # Commit
