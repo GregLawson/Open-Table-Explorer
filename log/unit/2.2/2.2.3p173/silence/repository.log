@@ -1,35 +1,35 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 11, 30, 6, 25, Rational(30041670535, 1000000000), "-08:00"),
+:start_time => Time.new(2016, 12, 2, 7, 50, Rational(8475234516, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_test
 Started
 ..................................
 
-Finished in 3.89481731 seconds.
+Finished in 3.79199907 seconds.
 ------
-34 tests, 266 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+34 tests, 218 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-8.73 tests/s, 68.30 assertions/s
+8.97 tests/s, 57.49 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_test.rb"
-	User time (seconds): 3.74
-	System time (seconds): 1.01
-	Percent of CPU this job got: 85%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:05.52
+	User time (seconds): 3.56
+	System time (seconds): 1.06
+	Percent of CPU this job got: 84%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:05.45
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 41196
+	Maximum resident set size (kbytes): 48608
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 69554
-	Voluntary context switches: 1460
-	Involuntary context switches: 564
+	Major (requiring I/O) page faults: 11
+	Minor (reclaiming a frame) page faults: 71211
+	Voluntary context switches: 1433
+	Involuntary context switches: 608
 	Swaps: 0
-	File system inputs: 32
+	File system inputs: 208
 	File system outputs: 7264
 	Socket messages sent: 0
 	Socket messages received: 0
