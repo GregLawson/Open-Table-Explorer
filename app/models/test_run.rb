@@ -288,7 +288,7 @@ class TestRun # < ActiveRecord::Base
   end # <=>
 
 	def state
-		{current_branch_name: @test_executable.repository.current_branch_name?,
+		{current_branch_name: Branch.current_branch_name?(@test_executable.repository),
     start_time: Time.now,
     command_string: @cached_recent_test.command_string,
     output: @cached_recent_test.output.to_s,

@@ -1,35 +1,35 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 11, 25, 8, 9, Rational(53058480631, 1000000000), "-08:00"),
+:start_time => Time.new(2016, 12, 3, 10, 40, Rational(33395644976, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test
 Started
-......................not timed out: all tests in  took 0.001686831s unknown with timeout of 30.0s
-not timed out: all tests in minimal2 took 0.000997221s unknown with timeout of 30.0s
+......................not timed out: all tests in  took 0.001466818s unknown with timeout of 30.0s
+not timed out: all tests in minimal2 took 0.001901832s unknown with timeout of 30.0s
 .........
 
-Finished in 4.867211373 seconds.
+Finished in 4.926310727 seconds.
 ------
 31 tests, 82 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-6.37 tests/s, 16.85 assertions/s
+6.29 tests/s, 16.65 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_run_test.rb"
-	User time (seconds): 11.18
-	System time (seconds): 1.10
+	User time (seconds): 11.04
+	System time (seconds): 1.03
 	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.50
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.31
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 54776
+	Maximum resident set size (kbytes): 54528
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 79379
-	Voluntary context switches: 776
-	Involuntary context switches: 480
+	Minor (reclaiming a frame) page faults: 73472
+	Voluntary context switches: 699
+	Involuntary context switches: 602
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 48
