@@ -1,184 +1,81 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 56, Rational(929358715, 1000000000), "-07:00"),
+:start_time => Time.new(2016, 12, 3, 8, 14, Rational(23396909476, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/merge_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/merge_test
 Started
 ....log/unit/2.2/2.2.3p173/silence/.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/EEG.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/arp.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/assertions.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/backup.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/battery.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/battery_measurement.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/battery_type.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/blue_tooth.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/boot.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/branch.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/bug.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/code.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/column_group.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/command.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/command_line.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/command_line_executable.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/command_line_sub_executable.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/default.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/default_test_case.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/dependancy.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/dhcp.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/discrete_dimension.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/edison.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/editor.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/enumerator.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/error_type.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/example_type.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/file_pattern.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/file_tree.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/flora.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/frequency.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/generic_column.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/generic_file.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/generic_grep.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/generic_table.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/generic_table_association.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/generic_table_examples.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/generic_table_html.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/generic_type.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/global.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/gnome.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/grub.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/homerun.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/host.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/huelserie.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/huelshow.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/iwup.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/kernel_module.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/match_data.log is an updated log file.
 log/unit/2.2/2.2.3p173/silence/merge.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/method_model.log is an updated log file.
 log/unit/2.2/2.2.3p173/silence/minimal2.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/minimal3.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/minimal4.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/minimal_no_test_environment.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/nested_array.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/nested_loop.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/network.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/nmap.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/no_db.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/ofx.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/open_tax_form_filler.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/open_tax_solver.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/parse.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/parse_tree.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/partition.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/pathname.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/pcf8591.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/production.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/production_ftp.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/r.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/r_rsruby.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/rebase.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/rebuild.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/regexp.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/regexp_alternative.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/regexp_generalization.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/regexp_match.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/regexp_parse.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/regexp_repetition.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/regexp_sequence.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/regexp_tree.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/repository.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/require.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/router.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/ruby.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/ruby_interpreter.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/samba.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/schedule.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/shell_command.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/sleep_study.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/ssbc.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/stream.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/stream_link.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/stream_method.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/stream_method_argument.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/stream_method_call.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/stream_parameter.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/stream_pattern.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/stream_pattern_argument.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/stream_tree.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/string.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/tax_form.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/tedprimary.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/test_environment.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/test_environment_default_test_case.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/test_environment_minitest.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/test_environment_ruby.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/test_environment_test_unit.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/test_executable.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/test_method.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/test_run.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/to_do_list.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/transfer.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/udev.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/unbounded_fixnum.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/unbounded_range.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/unit.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/unit_maturity.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/url.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/usb.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/usc.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/version.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/visa.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/weather.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/work_flow.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/x.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/xrandr.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/zillow.log is an updated log file.
 ........$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 26932 exit 1>
+@process_status=#<Process::Status: pid 32314 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 26953 exit 128>
+@process_status=#<Process::Status: pid 32335 exit 128>
 $ git checkout master
 @errors="Already on \'master\'\n"
 ...merge_status= Already up-to-date.
 not merge_conflict_recoveryAlready up-to-date.
-.
+F
+===============================================================================
+Failure: test_trial_merge(MergeTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/merge_test.rb:97:in `test_trial_merge\'
+      94:     unmerged_files = @temp_merge.trial_merge
+      95: 		assert_instance_of(Array, unmerged_files, @temp_repo.inspect)
+      96: 		assert_equal(@temp_repo.status, unmerged_files)
+  =>  97: 		assert_equal([{:description=>"not updated", :file=>"README", :index=>:unmodified, :log_file=>false, :work_tree=>:modified}], unmerged_files)
+      98: 	end # trial_merge
+      99: 
+     100:   def test_merge
+<[{:description=>"not updated",
+  :file=>"README",
+  :index=>:unmodified,
+  :log_file=>false,
+  :work_tree=>:modified}]> expected but was
+<[#<FileStatus index=:unmodified work_tree=:modified file="README">]>
 
-Finished in 1.211153466 seconds.
+diff:
+- [{:description=>"not updated",
+-   :file=>"README",
+-   :index=>:unmodified,
+-   :log_file=>false,
+?                     :           work_tree=>:modified}              ]
+? [#<FileStatus index= unmodified                      file="README"> 
+===============================================================================
+
+
+Finished in 1.04606995 seconds.
 ------
-16 tests, 58 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
+16 tests, 58 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+93.75% passed
 ------
-13.21 tests/s, 47.89 assertions/s
+15.30 tests/s, 55.45 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/merge_test.rb"
-	User time (seconds): 12.13
-	System time (seconds): 1.68
-	Percent of CPU this job got: 94%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.57
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/merge_test.rb"
+	User time (seconds): 12.06
+	System time (seconds): 1.42
+	Percent of CPU this job got: 95%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:14.06
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 46288
+	Maximum resident set size (kbytes): 55540
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 41
-	Minor (reclaiming a frame) page faults: 104309
-	Voluntary context switches: 1715
-	Involuntary context switches: 1358
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 98784
+	Voluntary context switches: 1417
+	Involuntary context switches: 868
 	Swaps: 0
-	File system inputs: 3752
-	File system outputs: 4184
+	File system inputs: 0
+	File system outputs: 3872
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
 '
 }
 

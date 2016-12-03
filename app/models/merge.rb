@@ -33,7 +33,7 @@ class Merge
     attribute :source_commit, Branch, default: Branch.new(name: :passed)
     attribute :target_branch_name, Symbol, default: Repository::This_code_repository.current_branch_name?
     attribute :interactive, Symbol, default: :interactive # non-defaults are primarily for non-interactive testing testing
-    attribute :editor, Editor, default: Editor::TestEditor
+    attribute :editor, Editor, default: Default_editor
   end # values
   def standardize_position!
     abort_rebase_and_merge!
