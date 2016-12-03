@@ -33,12 +33,12 @@ module MaturityBranches
       regexp: :unit
     }.freeze
 		# Regexp 
-    Branch_name_regexp = /[-a-zA-Z0-9_\/]+/ # conventional syntax
-		Name_regexp = /[_a-z]+/.capture(:maturity) * (/\+/ * /interactive/).capture(:interactive).optional
-    # Branch_name_regexp = /[-a-zA-Z0-9_]+/ # extended syntax
-		Branch_name_alternative = [Branch_name_regexp.capture(:branch)].freeze
+  Name_regexp = /[_a-z0-9]+/.capture(:maturity) * (/\+/ * /[_a-z]+/).capture(:test_topic).optional # also matches SHA1!
+  Ref_name_regexp = /[-a-zA-Z0-9_\/]+/ # ref/heads/master
+  # Name_regexp = /[-a-zA-Z0-9_]+/ # extended syntax
+  Branch_name_alternative = [Name_regexp.capture(:branch)].freeze
     Pattern = /[* ]/ * /[a-z0-9A-Z_-]+/.capture(:branch) * /\n/
-    Git_branch_line = [/[* ]/, / /, Branch_name_regexp.capture(:branch)].freeze
+  Git_branch_line = [/[* ]/, / /, Name_regexp.capture(:branch)].freeze
     Git_branch_remote_line = [/[* ]/, / /, Branch_name_alternative].freeze
 #    Branch_regexp = /[* ]/ * / / * /[-a-z0-9A-Z_]+/.capture(:branch) * /\n/
 		Branch_regexp = Capture::Examples::Branch_current_regexp
@@ -51,7 +51,6 @@ end # MaturityBranches
 
 class PsuedoBranch < GitReference # can checkout but not commit
   include MaturityBranches
-	
 end # PsuedoBranch
 
 class Branch < GitReference # can commit to
@@ -196,7 +195,7 @@ class Branch < GitReference # can commit to
 		if self == other
 			0
 		else
-	    self_index = Branch.branch_index?(self.name)
+      self_index = Branch.branch_index?(@name)
 	    other_index = Branch.branch_index?(other.name)
 			if self_index.nil? || other_index.nil?
 				nil
@@ -213,7 +212,7 @@ class Branch < GitReference # can commit to
   end # find_origin
 	
 	def interactive?
-			to_s.capture?(Name_regexp).output[:interactive]
+    to_s.capture?(Name_regexp).output[:test_topic]
 	end # interactive?
 	
 	def maturity
@@ -297,10 +296,13 @@ class BranchReference < GitReference
     def reflog_to_constructor_hash(reflog_line)
       capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
       raise Exception.new(capture.inspect) unless capture.success?
+			time_hash = capture.output
+			time_string = time_hash[:weekday] + ', ' + time_hash[:date] + ' ' + time_hash[:time]
+			timestamp = Time.rfc2822(time_string)
       if capture.output[:ambiguous_branch].nil?
-        { initialization_string: capture.output[:sha_hex].to_sym, age: 0, timestamp: capture.output[:timestamp] }
+        { initialization_string: capture.output[:sha_hex].to_sym, age: 0, timestamp:  timestamp}
       else
-        { initialization_string: capture.output[:ambiguous_branch].to_sym, age: capture.output[:age].uniq[0].to_i, timestamp: capture.output[:timestamp] }
+        { initialization_string: capture.output[:ambiguous_branch], age: capture.output[:age].uniq[0].to_i, timestamp: timestamp }
       end # if
 		end # reflog_to_constructor_hash
   end # DefinitionalClassMethods
@@ -311,8 +313,9 @@ class BranchReference < GitReference
     include GitReference::DefinitionalConstants
     include Branch::DefinitionalConstants
     Unambiguous_ref_age_pattern = /[0-9]+/.capture(:age)
-    Ambiguous_ref_pattern = Branch_name_regexp.capture(:ambiguous_branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
-    Unambiguous_ref_pattern = Branch_name_regexp.capture(:unambiguous_branch) * /@\{/ * Unambiguous_ref_age_pattern * /}/
+    Ambiguous_ref_pattern = Name_regexp * /@\{/ * Unambiguous_ref_age_pattern * /}/
+    Refs_prefix_regexp = /refs\// * (/heads/.capture(:ref) * /\//).optional
+		Unambiguous_ref_pattern = (Refs_prefix_regexp * Ambiguous_ref_pattern).optional
     Delimiter = ','.freeze
     Week_day_regexp = /[MTWFS][a-z]{2}/
     Day_regexp = /[0-9]{1,2}/
@@ -325,10 +328,13 @@ class BranchReference < GitReference
     Date_regexp = Day_regexp * ' ' * Month_regexp * ' ' * Year_regexp
     Timezone_number_regexp = /[-+][0-1][0-9][03]0/
     Time_regexp = Hour_regexp * ':' * Minute_regexp * ':' * Second_regexp * ' ' * Timezone_number_regexp
-    Timestamp_regexp = (Week_day_regexp * Delimiter * ' ' * Date_regexp * ' ' * Time_regexp).capture(:timestamp)
+    Timestamp_regexp = Week_day_regexp.capture(:weekday) * Delimiter * ' ' * Date_regexp.capture(:date) * ' ' * Time_regexp.capture(:time)
     # Timestamp_regexp = /([0-9]{1,4}/|[ADFJMNOS][a-z]+ )[0-9][0-9][, /][0-9]{2,4}( [0-9]+:[0-9.]+( ?[PApa][Mm])?)?/
-    Reflog_line_regexp = Regexp::Start_string * Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter *
-                         Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7 * Delimiter * Timestamp_regexp
+    Regexp_array = [Regexp::Start_string * Ambiguous_ref_pattern.optional, Delimiter,
+                         Unambiguous_ref_pattern, Delimiter, SHA_hex_7, Delimiter, Timestamp_regexp].freeze
+#    Reflog_line_regexp = Regexp::Start_string * Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter *
+#                         Unambiguous_ref_pattern.group * Delimiter * SHA_hex_7 * Delimiter * Timestamp_regexp
+		Reflog_line_regexp = Regexp[Regexp_array]
   end # DefinitionalConstants
   include DefinitionalConstants
 	
@@ -337,8 +343,8 @@ class BranchReference < GitReference
 		def stash_wip(repository)
 			command_string = 'git stash list'
 			@cached_run = repository.git_command(command_string)
-			regexp = /stash@{0}: WIP on / * Branch_name_regexp.capture(:parent_branch) * /: / *
-				 SHA_hex_7.capture(:sha7) * / Merge branch '/ * Branch_name_regexp.capture(:merge_from) * /' into / * Branch_name_regexp.capture(:merge_into)
+      regexp = /stash@{0}: WIP on / * Name_regexp.capture(:parent_branch) * /: / *
+               SHA_hex_7.capture(:sha7) * / Merge branch '/ * Name_regexp.capture(:merge_from) * /' into / * Name_regexp.capture(:merge_into)
 			capture = @cached_run.output.capture?(regexp)
 			capture.output
 		end # stash_wip
@@ -348,6 +354,7 @@ class BranchReference < GitReference
   include Virtus.value_object
 
   values do
+		attribute :branch, Branch
     attribute :age, Fixnum, default: 0
     attribute :timestamp, Time, default: Time.now
   end # values
@@ -357,15 +364,14 @@ class BranchReference < GitReference
 		def new_from_ref(reflog_line)
 			new(reflog_to_constructor_hash(reflog_line))
     end # new_from_ref
-
   end # Constructors
   extend Constructors
 	
   def to_s
     if @age.nil? || @age == 0
-      name.to_s
+      branch.to_s
     else
-      name.to_s + '@{' + @age.to_s + '}'
+      branch.to_s + '@{' + @age.to_s + '}'
     end # if
   end # to_s
 	
@@ -380,6 +386,12 @@ class BranchReference < GitReference
         #	assert_match(BranchReference::Unambiguous_ref_pattern, reflog_line)
         #	assert_match(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional, reflog_line, message)
         #	assert_match(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA_hex_7, reflog_line, message)
+
+        show_matches = ParsedCapture.show_matches([reflog_line], Regexp_array)
+        priority_match = ParsedCapture.priority_match([reflog_line], Regexp_array)
+#        refute_equal([], priority_match, show_matches.ruby_lines_storage)
+#        assert_match(BranchReference::Ambiguous_ref_pattern, reflog_line)
+#        assert_match(BranchReference::Unambiguous_ref_pattern, reflog_line)
 				assert_match(BranchReference::Reflog_line_regexp, reflog_line)
         capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
         #	assert_equal(true, reflog_line.capture?(BranchReference::Ambiguous_ref_pattern).success?, capture.inspect)
@@ -391,7 +403,7 @@ class BranchReference < GitReference
         #	assert(capture.success?, capture.inspect)
         #	assert_match(BranchReference::Reflog_line_regexp, reflog_line)
 
-				#	assert_match(Branch_name_regexp, capture.output[:ambiguous_branch])
+        #	assert_match(Name_regexp, capture.output[:ambiguous_branch])
 				# ?	assert_match(BranchReference::Unambiguous_ref_age_pattern, @age.to_s, message)
 				# ?	assert_match(BranchReference::Unambiguous_ref_age_pattern, self.age.to_s, message)
 				# ?	assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, self.age.to_s, message)
