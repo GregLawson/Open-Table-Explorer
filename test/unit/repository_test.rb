@@ -238,8 +238,8 @@ class RepositoryTest < TestCase
 
   def test_status
     This_code_repository.status.each do |status|
-      assert_nil(status[:file].index("\u0000"), status.inspect)
-      assert(File.exist?(status[:file]) == (status[:work_tree] != :deleted), status.inspect)
+      assert_nil(status.file.index("\u0000"), status.inspect)
+      assert(File.exist?(status.file) == (status.work_tree != :deleted), status.inspect)
     end # each
   end # status
 
@@ -248,7 +248,7 @@ class RepositoryTest < TestCase
 #    assert(This_code_repository.something_to_commit?, message)
     This_code_repository.status.each do |file_stat|
       #			puts file_stat.inspect
-      assert(File.exist?(file_stat[:file]) == (file_stat[:work_tree] != :deleted), message)
+      assert(File.exist?(file_stat.file) == (file_stat.work_tree != :deleted), message)
     end # each
   end # something_to_commit
 
