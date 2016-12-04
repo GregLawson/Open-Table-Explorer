@@ -49,10 +49,6 @@ module MaturityBranches
           ].freeze
 end # MaturityBranches
 
-class NamedCommit < Commit # can checkout but not commit
-  include MaturityBranches
-end # PsuedoBranch
-
 class Branch < NamedCommit # can commit to
   include MaturityBranches
 	include Comparable
@@ -257,7 +253,7 @@ class Branch < NamedCommit # can commit to
   end # Examples
 end # Branch
 
-class BranchReference < GitReference
+class BranchReference < Commit
 	include Branch::ReferenceObjects
   module DefinitionalClassMethods # if reference by DefinitionalConstants
     def reflog_command_string(filename, _repository, range = 0..10)

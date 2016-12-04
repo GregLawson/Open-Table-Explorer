@@ -36,10 +36,4 @@ class Branch
   include Assertions
   extend Assertions::ClassMethods
   # self.assert_pre_conditions
-  module Examples
-    include Constants
-    # Empty_repo_master_branch=Branch.new( Repository::Examples::Empty_Repo, :master)
-    Executing_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: Repository::Examples::This_code_repository.current_branch_name?)
-    # Executing_master_branch=Branch.new(Repository::Examples::This_code_repository, :master)
-  end # Examples
 end # Branch
