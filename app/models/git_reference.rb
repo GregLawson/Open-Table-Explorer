@@ -57,6 +57,11 @@ class GitReference # base class for all git references (readable, maybe not writ
 		show_commit[:sha1]
 	end # sha1
   
+  module ReferenceObjects # example constant objects of the type (e.g. default_objects)
+    include DefinitionalConstants
+		Head_at_start = GitReference.new(initialization_string: :HEAD, repository: Repository::This_code_repository)
+  end # ReferenceObjects
+  include ReferenceObjects
 	end # GitReference
 
 class Commit < GitReference
@@ -68,9 +73,4 @@ class Commit < GitReference
 		show_commit[:commit_title]
 	end # commit_title
 	
-  module ReferenceObjects # example constant objects of the type (e.g. default_objects)
-    include DefinitionalConstants
-		Head_at_start = GitReference.new(initialization_string: :HEAD, repository: Repository::This_code_repository)
-  end # ReferenceObjects
-  include ReferenceObjects
 end # Commit
