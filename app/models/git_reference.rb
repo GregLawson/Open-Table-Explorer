@@ -56,12 +56,6 @@ class GitReference # base class for all git references (readable, maybe not writ
 	def sha1
 		show_commit[:sha1]
 	end # sha1
-  
-  module ReferenceObjects # example constant objects of the type (e.g. default_objects)
-    include DefinitionalConstants
-		Head_at_start = GitReference.new(initialization_string: :HEAD, repository: Repository::This_code_repository)
-  end # ReferenceObjects
-  include ReferenceObjects
 	end # GitReference
 
 class Commit < GitReference
@@ -73,4 +67,48 @@ class Commit < GitReference
 		show_commit[:commit_title]
 	end # commit_title
 	
+  def diff_branch_files(other_ref, options = '--summary', file_glob = '*.rb')
+    if self == NamedCommit::Working_tree
+			if other_ref == NamedCommit::Working_tree
+				[]
+			else
+				@repository.git_command('diff -z ' + options + ' ' + other_ref.to_s  + ' -- ' + file_glob)
+			end # if
+		else
+			if other_ref == NamedCommit::Working_tree
+				@repository.git_command('diff -z ' + options + ' ' + to_s  + ' -- ' + file_glob)
+			else
+				@repository.git_command('diff -z ' + options + ' ' + to_s + '..' + other_ref.to_s + ' -- ' + file_glob)
+			end # if
+		end # if
+  end # diff_branch_files
+
+  def pull_differences(more_mature_branch)
+    branch_file_changes = diff_branch_files(more_mature_branch, '--summary').output
+    branch_num_line_changes = diff_branch_files(more_mature_branch, '--numstat').output
+  end # pull_differences
+
+  def merge_up_discard_files(more_mature_branch)
+    merge_up_file_changes = diff_branch_files(more_mature_branch, '--summary').output
+  end # merge_up_discard_files
+
+  def subset_changes(more_mature_branch)
+    subset_change_files = diff_branch_files(more_mature_branch, options = '--numstat').output
+    '|grep -v "^0"'
+    numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/ * /[0-9]+/.capture(:additions) * /\s+/ * FilePattern::Relative_pathname_regexp.capture(:path)
+    subset_change_files.capture_many(numstat_regexp).column_output.select do |_capture|
+      true # capture[:deletions] = '0'
+    end # select
+  end # subset_changes
+
 end # Commit
+class NamedCommit < Commit # can checkout but not commit
+  
+  module ReferenceObjects # example constant objects of the type (e.g. default_objects)
+#    include DefinitionalConstants
+		Head_at_start = NamedCommit.new(initialization_string: :HEAD, repository: Repository::This_code_repository)
+		Working_tree = NamedCommit.new(initialization_string: :Working_tree, repository: Repository::This_code_repository)
+  end # ReferenceObjects
+  include ReferenceObjects
+end # PsuedoBranch
+

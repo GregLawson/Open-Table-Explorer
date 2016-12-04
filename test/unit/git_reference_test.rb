@@ -13,7 +13,7 @@ require_relative '../../app/models/parse.rb'
 class GitReferenceTest < TestCase
   # include DefaultTests
   # include Repository::Examples
-  include Commit::ReferenceObjects
+  include NamedCommit::ReferenceObjects
   include GitReference::DefinitionalConstants
 
   def setup
@@ -68,4 +68,57 @@ class GitReferenceTest < TestCase
 end # GitReference
 
 class GitReferenceTest < TestCase
+  def test_diff_branch_files
+    diff = NamedCommit::Working_tree.diff_branch_files(Head_at_start, '--numstat').output
+#    assert_empty(diff)
+    diff = ShellCommands.new('pwd').output
+    refute_empty(diff)
+    diff = Repository::This_code_repository.git_command('branch').output
+    refute_empty(diff)
+#    refute_empty(ShellCommands.new('git diff').output)
+    refute_empty(ShellCommands.new('git diff -z ').output)
+    refute_empty(ShellCommands.new('git diff -z --numstat master..testing ').output)
+    refute_empty(ShellCommands.new('git diff -z --numstat master..testing -- ').output)
+    refute_empty(ShellCommands.new('git diff -z --numstat master..testing -- *.rb').output)
+    diff = Repository::This_code_repository.git_command('diff -z --numstat master..testing -- *.rb').output
+    refute_empty(diff)
+    diff = NamedCommit::Working_tree.diff_branch_files(:master)
+    refute_empty(diff.output, diff.inspect)
+  end # diff_branch_files
+
+  def test_pull_differences
+    diff = NamedCommit::Working_tree.pull_differences(Head_at_start)
+#    assert_empty(diff)
+    diff = NamedCommit::Working_tree.pull_differences(:master)
+    refute_empty(diff, diff.inspect)
+  end # pull_differences
+
+  def test_merge_up_discard_files
+    diff = NamedCommit::Working_tree.merge_up_discard_files(Head_at_start)
+    assert_empty(diff)
+    diff = NamedCommit::Working_tree.merge_up_discard_files(:master)
+    refute_empty(diff, diff.inspect)
+  end # merge_up_discard_files
+
+  def test_subset_changes
+    subset_change_files_run = NamedCommit::Working_tree.diff_branch_files(:master, '--numstat')
+    assert(subset_change_files_run.success?, subset_change_files_run.inspect)
+    refute_equal('', subset_change_files_run.output)
+    assert_equal('', subset_change_files_run.errors)
+    assert_equal(0, subset_change_files_run.process_status.exitstatus)
+    assert_instance_of(ShellCommands, subset_change_files_run)
+    subset_change_files = subset_change_files_run.output
+
+    refute_empty(subset_change_files, 'subset_change_files_run = ' + subset_change_files_run.inspect(true))
+    numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/ * /[0-9]+/.capture(:additions)
+    numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/
+    numstat_regexp = /[0-9]+/.capture(:deletions)
+    numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/ * /[0-9]+/.capture(:additions) * /\s+/ * FilePattern::Relative_pathname_regexp.capture(:path)
+    numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/ * /[0-9]+/.capture(:additions) * /\s+/
+    capture_many = subset_change_files.capture_many(numstat_regexp)
+    assert(capture_many.success?, capture_many.inspect)
+    assert_instance_of(SplitCapture, capture_many)
+    assert_instance_of(Hash, capture_many.named_hash)
+  end # subset_changes
+
 end # Commit
