@@ -176,66 +176,6 @@ class RepositoryTest < TestCase
     @temp_repo.corruption_gc # .assert_post_conditions
   end # corruption
 
-  # exists @temp_repo.git_command("branch details").assert_post_conditions
-  # exists @temp_repo.git_command("branch summary").assert_post_conditions
-  def test_current_branch_name?
-    #	assert_includes(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
-    #	assert_includes(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
-  end # current_branch_name
-
-  def test_diff_branch_files
-    diff = This_code_repository.diff_branch_files(This_code_repository.current_branch_name?, '--numstat').output
-    assert_empty(diff)
-    diff = ShellCommands.new('pwd').output
-    refute_empty(diff)
-    diff = This_code_repository.git_command('branch').output
-    refute_empty(diff)
-#    refute_empty(ShellCommands.new('git diff').output)
-    refute_empty(ShellCommands.new('git diff -z ').output)
-    refute_empty(ShellCommands.new('git diff -z --numstat master..testing ').output)
-    refute_empty(ShellCommands.new('git diff -z --numstat master..testing -- ').output)
-    refute_empty(ShellCommands.new('git diff -z --numstat master..testing -- *.rb').output)
-    diff = This_code_repository.git_command('diff -z --numstat master..testing -- *.rb').output
-    refute_empty(diff)
-    diff = This_code_repository.diff_branch_files(:master)
-    refute_empty(diff.output, diff.inspect)
-  end # diff_branch_files
-
-  def test_pull_differences
-    diff = This_code_repository.pull_differences(This_code_repository.current_branch_name?)
-    assert_empty(diff)
-    diff = This_code_repository.pull_differences(:master)
-    refute_empty(diff, diff.inspect)
-  end # pull_differences
-
-  def test_merge_up_discard_files
-    diff = This_code_repository.merge_up_discard_files(This_code_repository.current_branch_name?)
-    assert_empty(diff)
-    diff = This_code_repository.merge_up_discard_files(:master)
-    refute_empty(diff, diff.inspect)
-  end # merge_up_discard_files
-
-  def test_subset_changes
-    subset_change_files_run = This_code_repository.diff_branch_files(:master, '--numstat')
-    assert(subset_change_files_run.success?, subset_change_files_run.inspect)
-    refute_equal('', subset_change_files_run.output)
-    assert_equal('', subset_change_files_run.errors)
-    assert_equal(0, subset_change_files_run.process_status.exitstatus)
-    assert_instance_of(ShellCommands, subset_change_files_run)
-    subset_change_files = subset_change_files_run.output
-
-    refute_empty(subset_change_files, 'subset_change_files_run = ' + subset_change_files_run.inspect(true))
-    numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/ * /[0-9]+/.capture(:additions)
-    numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/
-    numstat_regexp = /[0-9]+/.capture(:deletions)
-    numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/ * /[0-9]+/.capture(:additions) * /\s+/ * FilePattern::Relative_pathname_regexp.capture(:path)
-    numstat_regexp = /[0-9]+/.capture(:deletions) * /\s+/ * /[0-9]+/.capture(:additions) * /\s+/
-    capture_many = subset_change_files.capture_many(numstat_regexp)
-    assert(capture_many.success?, capture_many.inspect)
-    assert_instance_of(SplitCapture, capture_many)
-    assert_instance_of(Hash, capture_many.named_hash)
-  end # subset_changes
-
   def test_status
     This_code_repository.status.each do |status|
       assert_nil(status.file.index("\u0000"), status.inspect)
