@@ -49,11 +49,11 @@ module MaturityBranches
           ].freeze
 end # MaturityBranches
 
-class PsuedoBranch < GitReference # can checkout but not commit
+class NamedCommit < Commit # can checkout but not commit
   include MaturityBranches
 end # PsuedoBranch
 
-class Branch < GitReference # can commit to
+class Branch < NamedCommit # can commit to
   include MaturityBranches
 	include Comparable
   # include Repository::Constants

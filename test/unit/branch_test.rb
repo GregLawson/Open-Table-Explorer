@@ -21,7 +21,7 @@ class BranchTest < TestCase
   module Examples
     #    include Constants
     # Empty_repo_master_branch=Branch.new( Repository::Examples::Empty_Repo, :master)
-    Executing_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: Repository::Examples::This_code_repository.current_branch_name?)
+    Executing_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: GitReference.head(Repository::Examples::This_code_repository))
     # Executing_master_branch=Branch.new(Repository::Examples::This_code_repository, :master)
   end # Examples
   include Examples
@@ -107,7 +107,12 @@ class BranchTest < TestCase
     assert_includes(branch_output, {:current=>"*", :branch=>"master"}, branch_capture.inspect)
 		current_branch_name = Branch.current_branch_name?(This_code_repository)
 		assert_instance_of(Symbol, current_branch_name)
+  # exists @temp_repo.git_command("branch details").assert_post_conditions
+  # exists @temp_repo.git_command("branch summary").assert_post_conditions
+    #	assert_includes(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
+    #	assert_includes(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
   end # current_branch_name
+
 
 	def test_current_branch
 		current_branch = Branch.current_branch(This_code_repository)
@@ -126,7 +131,7 @@ class BranchTest < TestCase
       # ?		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches.output, branches.inspect)
     end # each
 
-    assert_includes(Branch.branches?(@temp_repo).map(&:name), @temp_repo.current_branch_name?)
+    assert_includes(Branch.branches?(@temp_repo).map(&:name), Branch.current_branch_name?(@temp_repo))
     #	assert_includes(Branch.branches?(Repository::This_code_repository).map{|b| b.name}, Repository::This_code_repository.current_branch_name?)
     # ?	assert_equal([:master, :passed], Branch.branches?(@temp_repo).map{|b| b.name})
     # ?	assert_includes(Branch.branch_names?(This_code_repository), This_code_repository.current_branch_name?)
@@ -165,7 +170,7 @@ class BranchTest < TestCase
   def test_initialize
     assert_equal(This_code_repository, Branch.new(repository: This_code_repository).repository)
 
-    branch = This_code_repository.current_branch_name?
+    branch = Branch.current_branch_name?(This_code_repository)
     onto = Executing_branch.find_origin
   end # values
 
