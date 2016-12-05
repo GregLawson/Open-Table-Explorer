@@ -11,10 +11,9 @@ require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../test/assertions/shell_command_assertions.rb'
 require_relative '../../app/models/parse.rb'
 class GitReferenceTest < TestCase
+  include NamedCommit::ReferenceObjects
   # include DefaultTests
   # include Repository::Examples
-  include NamedCommit::ReferenceObjects
-  include GitReference::DefinitionalConstants
 
   def setup
     @temp_repo = Repository.create_test_repository
@@ -25,14 +24,34 @@ class GitReferenceTest < TestCase
   end # teardown
 	
 		def test_head
-			assert_kind_of(GitReference, GitReference.head(@temp_repo))
-			assert_kind_of(GitReference, GitReference.head(Repository::This_code_repository))
+			assert_kind_of(GitReference, Commit.head(@temp_repo))
+			assert_kind_of(GitReference, Commit.head(Repository::This_code_repository))
 		end # head
 		
 	
 	def test_GitReference_to_s
 		assert_equal('HEAD', Head_at_start.to_s, Head_at_start.inspect)
 	end # to_s
+	
+	def test_dry
+		top_level_types = [:String,  :Int, :Float, :Decimal, :Array, :Hash, :Nil, :Symbol, :Class, :True,
+			:False, :Date, :DateTime, :Time, :Strict, :Coercible, :Maybe, :Optional, :Bool, :Form, :Json]
+		assert_equal(top_level_types, Types.constants)
+		type_tree = top_level_types.map do |type_name|
+			type = eval('Types::' + type_name.to_s)
+			if type.methods.include?(:constants)
+				{type_name =>  type.constants}
+			else
+					{type_name => type.inspect}
+			end # if
+		end # map
+		puts type_tree
+	end # dry
+end # GitReference
+
+class CommitTest < TestCase
+  include Commit::DefinitionalConstants
+  include NamedCommit::ReferenceObjects
 	
 	def test_GitReference_to_sym
 		assert_equal(:HEAD, Head_at_start.to_sym, Head_at_start.inspect)
@@ -51,25 +70,11 @@ class GitReferenceTest < TestCase
 	def test_sha1
 	end # sha1
 	
-	def test_dry
-		top_level_types = [:String,  :Int, :Float, :Decimal, :Array, :Hash, :Nil, :Symbol, :Class, :True,
-			:False, :Date, :DateTime, :Time, :Strict, :Coercible, :Maybe, :Optional, :Bool, :Form, :Json]
-		assert_equal(top_level_types, Types.constants)
-		type_tree = top_level_types.map do |type_name|
-			type = eval('Types::' + type_name.to_s)
-			if type.methods.include?(:constants)
-				{type_name =>  type.constants}
-			else
-					{type_name => type.inspect}
-			end # if
-		end # map
-		puts type_tree
-	end # dry
-end # GitReference
+	def test_tree
+	end # tree
 
-class GitReferenceTest < TestCase
   def test_diff_branch_files
-    diff = NamedCommit::Working_tree.diff_branch_files(Head_at_start, '--numstat').output
+    diff = Commit::Working_tree.diff_branch_files(Head_at_start, '--numstat').output
 #    assert_empty(diff)
     diff = ShellCommands.new('pwd').output
     refute_empty(diff)
@@ -82,26 +87,26 @@ class GitReferenceTest < TestCase
     refute_empty(ShellCommands.new('git diff -z --numstat master..testing -- *.rb').output)
     diff = Repository::This_code_repository.git_command('diff -z --numstat master..testing -- *.rb').output
     refute_empty(diff)
-    diff = NamedCommit::Working_tree.diff_branch_files(:master)
+    diff = Commit::Working_tree.diff_branch_files(:master)
     refute_empty(diff.output, diff.inspect)
   end # diff_branch_files
 
   def test_pull_differences
-    diff = NamedCommit::Working_tree.pull_differences(Head_at_start)
+    diff = Commit::Working_tree.pull_differences(Head_at_start)
 #    assert_empty(diff)
-    diff = NamedCommit::Working_tree.pull_differences(:master)
+    diff = Commit::Working_tree.pull_differences(:master)
     refute_empty(diff, diff.inspect)
   end # pull_differences
 
   def test_merge_up_discard_files
-    diff = NamedCommit::Working_tree.merge_up_discard_files(Head_at_start)
+    diff = Commit::Working_tree.merge_up_discard_files(Head_at_start)
     assert_empty(diff)
-    diff = NamedCommit::Working_tree.merge_up_discard_files(:master)
+    diff = Commit::Working_tree.merge_up_discard_files(:master)
     refute_empty(diff, diff.inspect)
   end # merge_up_discard_files
 
   def test_subset_changes
-    subset_change_files_run = NamedCommit::Working_tree.diff_branch_files(:master, '--numstat')
+    subset_change_files_run = Commit::Working_tree.diff_branch_files(:master, '--numstat')
     assert(subset_change_files_run.success?, subset_change_files_run.inspect)
     refute_equal('', subset_change_files_run.output)
     assert_equal('', subset_change_files_run.errors)
@@ -120,5 +125,8 @@ class GitReferenceTest < TestCase
     assert_instance_of(SplitCapture, capture_many)
     assert_instance_of(Hash, capture_many.named_hash)
   end # subset_changes
-
 end # Commit
+
+class NamedCommitTest < TestCase
+  include NamedCommit::ReferenceObjects
+end # NamedCommit

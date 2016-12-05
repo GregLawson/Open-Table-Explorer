@@ -17,20 +17,7 @@ require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
 class GitReference # base class for all git references (readable, maybe not writeable)
-	module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-		include Regexp::DefinitionalConstants
-    SHA_hex_7 = /[[:xdigit:]]{7}/.capture(:sha_hex)
-    SHA1_hex_40 = /[[:xdigit:]]{40}/.capture(:sha1)
-		Show_commit_regexp = (SHA1_hex_40 * / / * /[[:print:]]*/.capture(:commit_title) * /\n/).exact
-	end # DefinitionalConstants
-	include DefinitionalConstants
 	
-  module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
-		def head(repository)
-			GitReference.new(initialization_string: :HEAD, repository: repository)
-		end # head
-  end # DefinitionalClassMethods
-  extend DefinitionalClassMethods
 	
   include Virtus.value_object
 
@@ -40,6 +27,14 @@ class GitReference # base class for all git references (readable, maybe not writ
 #		attribute :sha1, String
   end # values
 
+  module ReferenceObjects # example constant objects of the type (e.g. default_objects)
+#    include DefinitionalConstants
+		# Simulate a NamedCommit for working directory not yet in git.
+		Tree = GitReference.new(initialization_string: 'HEAD:' + '^{tree}', repository: Repository::This_code_repository) 
+		File = GitReference.new(initialization_string: 'HEAD:' + $0, repository: Repository::This_code_repository) 
+  end # ReferenceObjects
+  include ReferenceObjects
+
 	def to_s
 		@initialization_string.to_s
 	end # to_s
@@ -48,25 +43,51 @@ class GitReference # base class for all git references (readable, maybe not writ
 		to_s.to_sym
 	end # to_s
 	
-	def show_commit
+	def show_run
 		run = repository.git_command('show ' + initialization_string.to_s + ' --pretty=oneline  --no-abbrev-commit --no-patch')
-		capture = run.output.capture?(Show_commit_regexp)
-		capture.output
-	end # show_commit
-	def sha1
-		show_commit[:sha1]
-	end # sha1
+	end # show_run
 	end # GitReference
 
 class Commit < GitReference
 	module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+		include Regexp::DefinitionalConstants
+    SHA_hex_7 = /[[:xdigit:]]{7}/.capture(:sha_hex)
+    SHA1_hex_40 = /[[:xdigit:]]{40}/.capture(:sha1)
+		Show_commit_regexp = (SHA1_hex_40 * / / * /[[:print:]]*/.capture(:commit_title) * /\n/).exact
 	end # DefinitionalConstants
 	include DefinitionalConstants
+
+  module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
+		def head(repository)
+			Commit.new(initialization_string: :HEAD, repository: repository)
+		end # head
+  end # DefinitionalClassMethods
+  extend DefinitionalClassMethods
 	
+  module ReferenceObjects # example constant objects of the type (e.g. default_objects)
+#    include DefinitionalConstants
+		# Simulate a NamedCommit for working directory not yet in git.
+		Working_tree = Commit.new(initialization_string: :Working_tree, repository: Repository::This_code_repository) 
+  end # ReferenceObjects
+  include ReferenceObjects
+	
+	def show_commit
+		capture = show_run.output.capture?(Show_commit_regexp)
+		capture.output
+	end # show_commit
+	
+	def sha1
+		show_commit[:sha1]
+	end # sha1
+
 	def commit_title
 		show_commit[:commit_title]
 	end # commit_title
 	
+	def tree
+		GitReference.new(initialization_string: @initialization_string + '^{tree}').show_run.output
+	end # tree
+
   def diff_branch_files(other_ref, options = '--summary', file_glob = '*.rb')
     if self == NamedCommit::Working_tree
 			if other_ref == NamedCommit::Working_tree
@@ -102,13 +123,16 @@ class Commit < GitReference
   end # subset_changes
 
 end # Commit
-class NamedCommit < Commit # can checkout but not commit
+class NamedCommit < Commit # tags, symbols, and of course branches (subtype)
   
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
+		include Commit::ReferenceObjects
 #    include DefinitionalConstants
 		Head_at_start = NamedCommit.new(initialization_string: :HEAD, repository: Repository::This_code_repository)
-		Working_tree = NamedCommit.new(initialization_string: :Working_tree, repository: Repository::This_code_repository)
+		Orig_head_at_start = NamedCommit.new(initialization_string: :ORIG_HEAD, repository: Repository::This_code_repository)
+		Fetch_head_at_start = NamedCommit.new(initialization_string: :FETCH_HEAD, repository: Repository::This_code_repository)
+		Merge_head_at_start = NamedCommit.new(initialization_string: :MERGE_HEAD, repository: Repository::This_code_repository)
   end # ReferenceObjects
   include ReferenceObjects
-end # PsuedoBranch
+end # NamedCommit
 
