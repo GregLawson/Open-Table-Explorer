@@ -21,7 +21,7 @@ class BranchTest < TestCase
   module Examples
     #    include Constants
     # Empty_repo_master_branch=Branch.new( Repository::Examples::Empty_Repo, :master)
-    Executing_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: GitReference.head(Repository::Examples::This_code_repository))
+    Executing_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: Commit.head(Repository::Examples::This_code_repository))
     # Executing_master_branch=Branch.new(Repository::Examples::This_code_repository, :master)
   end # Examples
   include Examples
@@ -117,8 +117,10 @@ class BranchTest < TestCase
 	def test_current_branch
 		current_branch = Branch.current_branch(This_code_repository)
 		assert_instance_of(Branch, current_branch)
-		assert_equal(Branch.current_branch(@temp_repo).sha1, GitReference.head(@temp_repo).sha1)
-		assert_equal(Branch.current_branch(This_code_repository).sha1, GitReference.head(This_code_repository).sha1)
+		temp_current_branch = Branch.current_branch(@temp_repo)
+		assert_instance_of(Branch, temp_current_branch)
+		assert_equal(temp_current_branch.sha1, Commit.head(@temp_repo).sha1)
+		assert_equal(Branch.current_branch(This_code_repository).sha1, Commit.head(This_code_repository).sha1)
 	end # current_branch
 		
   def test_branches?

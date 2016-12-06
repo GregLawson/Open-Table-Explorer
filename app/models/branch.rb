@@ -306,7 +306,7 @@ class BranchReference < Commit
 
 	module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     include Repository::DefinitionalConstants
-    include GitReference::DefinitionalConstants
+    include Commit::DefinitionalConstants
     include Branch::DefinitionalConstants
     Unambiguous_ref_age_pattern = /[0-9]+/.capture(:age)
     Ambiguous_ref_pattern = Name_regexp * /@\{/ * Unambiguous_ref_age_pattern * /}/
