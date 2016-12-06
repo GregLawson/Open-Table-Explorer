@@ -29,7 +29,7 @@ class Editor
     @test_executable = test_executable
     @specific_file = @test_executable.argument_path
     @unit_maturity = UnitMaturity.new(@test_executable.repository, test_executable.unit)
-    index = Branch::Branch_enhancement.index(@test_executable.repository.current_branch_name?)
+    index = Branch::Branch_enhancement.index(Branch.current_branch_name?(@test_executable.repository))
     @branch_index = if index.nil?
                       Branch::First_slot_index
                     else
@@ -78,7 +78,7 @@ class Diffuse < Editor
     ret.join(' ')
   end # version_comparison
 
-  def goldilocks(filename, middle_branch = @test_executable.repository.current_branch_name?.to_sym)
+  def goldilocks(filename, middle_branch = Branch.current_branch_name?(@test_executable.repository).to_sym)
     if File.exist?(filename)
       current_index = Branch.branch_index?(middle_branch)
       left_index, right_index = @unit_maturity.bracketing_versions?(filename, current_index)

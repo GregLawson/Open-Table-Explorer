@@ -36,9 +36,9 @@ class EditorTest < TestCase
   end # version_comparison
 
   def test_goldilocks
-    refute_nil(Branch.branch_index?(TestDiffuse.test_executable.repository.current_branch_name?.to_sym))
+    refute_nil(Branch.branch_index?(Branch.current_branch_name?(TestDiffuse.test_executable.repository).to_sym))
     #	assert_includes(Editor::Branch_enhancement, TestDiffuse.repository.current_branch_name?.to_sym)
-    current_index = Branch.branch_index?(TestDiffuse.test_executable.repository.current_branch_name?.to_sym)
+    current_index = Branch.branch_index?(Branch.current_branch_name?(TestDiffuse.test_executable.repository).to_sym)
     filename = Most_stable_file
     left_index, right_index = TestDiffuse.unit_maturity.bracketing_versions?(filename, current_index)
     assert_operator(current_index, :<, right_index)
