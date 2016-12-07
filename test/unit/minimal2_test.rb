@@ -11,6 +11,7 @@ class Minimal2Test < TestCase
   # include DefaultTests
   include RailsishRubyUnit::Executable.model_class?::Examples
 
+  # rubocop:disable Style/MethodName
   def test_Minimal_DefinitionalConstants
   end # DefinitionalConstants
 
@@ -28,4 +29,5 @@ class Minimal2Test < TestCase
 
   def test_Minimal_Examples
   end # Examples
+  # rubocop:enable Style/MethodName
 end # Minimal
