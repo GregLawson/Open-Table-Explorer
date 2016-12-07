@@ -1,130 +1,41 @@
-{ current_branch_name: :passed,
-  start_time: Time.new(2016, 9, 25, 5, 1, Rational(44_976_420_382, 1_000_000_000), '-07:00'),
-  command_string: '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb',
-  output: 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 12, 7, 4, 42, Rational(33747840098, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test
 Started
-...........F
-===============================================================================
-Failure: test_lint_json(RepositoryPathnameTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:143:in `test_lint_json\'
-     140:     assert_equal(0, Not_unit.lint_json[\'summary\'][\'offense_count\'], Not_unit.lint_json)
-     141:     assert_equal(0, Not_unit_executable.lint_json[\'summary\'][\'offense_count\'], Not_unit_executable.lint_command_string)
-     142:     assert_equal(0, Not_unit_executable.lint_json[\'summary\'][\'offense_count\'], Not_unit_executable.lint_json)
-  => 143:     assert_equal(0, TestMinimal.lint_json[\'summary\'][\'offense_count\'], TestMinimal.lint_json)
-     144:     assert_operator(10, :<, Unit_non_executable.lint_json[\'summary\'][\'offense_count\'], Unit_non_executable.lint_json)
-     145:     assert_equal(1, TestSelf.lint_json[\'files\'].size, TestSelf.lint_json[\'files\'])
-     146:     assert_include(TestSelf.lint_json[\'files\'][0].keys, \'offenses\', TestSelf.lint_json[\'files\'])
-{"metadata"=>{"rubocop_version"=>"0.39.0", "ruby_engine"=>"ruby", "ruby_version"=>"2.2.4", "ruby_patchlevel"=>"230", "ruby_platform"=>"x86_64-linux-gnu"}, "files"=>[{"path"=>"test/unit/minimal2_test.rb", "offenses"=>[{"severity"=>"convention", "message"=>"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)", "cop_name"=>"Style/MethodName", "corrected"=>nil, "location"=>{"line"=>14, "column"=>7, "length"=>34}}, {"severity"=>"convention", "message"=>"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)", "cop_name"=>"Style/MethodName", "corrected"=>nil, "location"=>{"line"=>17, "column"=>7, "length"=>34}}, {"severity"=>"convention", "message"=>"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)", "cop_name"=>"Style/MethodName", "corrected"=>nil, "location"=>{"line"=>20, "column"=>7, "length"=>35}}, {"severity"=>"convention", "message"=>"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)", "cop_name"=>"Style/MethodName", "corrected"=>nil, "location"=>{"line"=>29, "column"=>7, "length"=>21}}]}], "summary"=>{"offense_count"=>4, "target_file_count"=>1, "inspected_file_count"=>1}}
-<0> expected but was
-<4>
-===============================================================================
-...F
-===============================================================================
-Failure: test_lint_unconventional(RepositoryPathnameTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:192:in `test_lint_unconventional\'
-     189:     assert_instance_of(Array, TestSelf.lint_unconventional, TestSelf.lint_unconventional)
-     190:     #    assert_include(TestSelf.lint_unconventional, \'Metrics/LineLength\', TestSelf.lint_unconventional)
-     191:     assert_equal([], Not_unit.lint_unconventional)
-  => 192:     assert_equal([], TestMinimal.lint_unconventional)
-     193:     assert_equal([], Unit_non_executable.lint_unconventional.map { |o| o[\'cop_name\'] }.uniq)
-     194:     assert_equal([], Not_unit_executable.lint_unconventional)
-     195:     unexpected_cops = TestSelf.lint_unconventional.map { |o| o[\'cop_name\'] }.uniq - RepositoryPathname::Lint_convention_priorities
-<[]> expected but was
-<[{"cop_name"=>"Style/MethodName",
-  "corrected"=>nil,
-  "location"=>{"column"=>7, "length"=>34, "line"=>14},
-  "message"=>
-   "Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)",
-  "severity"=>"convention"},
- {"cop_name"=>"Style/MethodName",
-  "corrected"=>nil,
-  "location"=>{"column"=>7, "length"=>34, "line"=>17},
-  "message"=>
-   "Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)",
-  "severity"=>"convention"},
- {"cop_name"=>"Style/MethodName",
-  "corrected"=>nil,
-  "location"=>{"column"=>7, "length"=>35, "line"=>20},
-  "message"=>
-   "Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)",
-  "severity"=>"convention"},
- {"cop_name"=>"Style/MethodName",
-  "corrected"=>nil,
-  "location"=>{"column"=>7, "length"=>21, "line"=>29},
-  "message"=>
-   "Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)",
-  "severity"=>"convention"}]>
-===============================================================================
-F
-===============================================================================
-Failure: test_lint_warnings(RepositoryPathnameTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:154:in `test_lint_warnings\'
-     151:   def test_lint_warnings
-     152:     assert_equal([], Not_unit.lint_warnings)
-     153:     assert_equal([], TestMinimal.lint_warnings)
-  => 154:     assert_equal([\'Syntax\'], Unit_non_executable.lint_warnings.map { |o| o[\'cop_name\'] }.uniq, Unit_non_executable.lint_warnings)
-     155:     assert_equal([], Not_unit_executable.lint_warnings)
-     156:     existing_cops = TestSelf.lint_warnings.map { |o| o[\'cop_name\'] }.uniq
-     157:     unexpected_cops = existing_cops - RepositoryPathname::Lint_warning_priorities
-[]
-<["Syntax"]> expected but was
-<[]>
+............
 
-diff:
-? ["Syntax"]
-===============================================================================
-.....F
-===============================================================================
-Failure:
-  <["Minimal_DefinitionalConstants",
-   "Minimal_assert_pre_conditions",
-   "Minimal_assert_post_conditions",
-   "Minimal_Examples"]> expected to include
-  <"Minimal_Virtus">.
-test_all_test_names(TestExecutableTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb:373:in `test_all_test_names\'
-     370:     end # map
-     371:     assert_equal(test_names, TestTestExecutable.all_test_names)
-     372:     assert_include(TestSelf.all_test_names, \'all_test_names\')
-  => 373:     assert_include(TestMinimal.all_test_names, \'Minimal_Virtus\')
-     374:   end # all_test_names
-     375:
-     376:   def test_all_library_method_names
-===============================================================================
-........
-
-Finished in 22.983235415 seconds.
+Finished in 0.142729814 seconds.
 ------
-31 tests, 547 assertions, 4 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-87.0968% passed
+12 tests, 47 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
 ------
-1.35 tests/s, 23.80 assertions/s
+84.07 tests/s, 329.29 assertions/s
 ',
-  errors: { syserr: 'Command exited with non-zero status 1
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb"
-	User time (seconds): 22.52
-	System time (seconds): 1.47
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb"
+	User time (seconds): 1.81
+	System time (seconds): 0.20
 	Percent of CPU this job got: 96%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:24.79
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.08
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 52516
+	Maximum resident set size (kbytes): 38168
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 28
-	Minor (reclaiming a frame) page faults: 167109
-	Voluntary context switches: 461
-	Involuntary context switches: 330
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 11843
+	Voluntary context switches: 159
+	Involuntary context switches: 81
 	Swaps: 0
-	File system inputs: 3872
-	File system outputs: 296
+	File system inputs: 0
+	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0
 '
 }
 
