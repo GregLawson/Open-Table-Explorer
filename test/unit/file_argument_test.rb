@@ -19,29 +19,36 @@ class FileArgumentTest < TestCase
 
   # rubocop:disable Metrics/MethodLength
   def test_lint_output
-    assert_instance_of(String, TestSelf.lint_output)
-    assert_instance_of(String, Not_unit.lint_output)
-    assert_instance_of(String, Not_unit_executable.lint_output)
-    assert_instance_of(String, TestMinimal.lint_output)
-    assert_instance_of(String, Unit_non_executable.lint_output)
+    # precalculate lint output to keep test runtime reasonable
+    testSelf_lint_output = TestSelf.lint_output
+    not_unit_lint_output = Not_unit.lint_output
+    not_unit_executable_lint_output = Not_unit_executable.lint_output
+    testMinimal_lint_output = TestMinimal.lint_output
+    unit_non_executable_lint_output = Unit_non_executable.lint_output
 
-    assert_operator(0, :<, TestSelf.lint_output.size, TestSelf.lint_output.inspect)
-    assert_operator(0, :<, Not_unit.lint_output.size)
-    assert_operator(0, :<, Not_unit_executable.lint_output.size)
-    assert_operator(0, :<, TestMinimal.lint_output.size)
-    assert_operator(0, :<, Unit_non_executable.lint_output.size)
+    assert_instance_of(String, testSelf_lint_output)
+    assert_instance_of(String, not_unit_lint_output)
+    assert_instance_of(String, not_unit_executable_lint_output)
+    assert_instance_of(String, testMinimal_lint_output)
+    assert_instance_of(String, unit_non_executable_lint_output)
 
-    assert_instance_of(Hash, JSON[TestSelf.lint_output])
-    assert_instance_of(Hash, JSON[Not_unit.lint_output])
-    assert_instance_of(Hash, JSON[Not_unit_executable.lint_output])
-    assert_instance_of(Hash, JSON[TestMinimal.lint_output])
-    assert_instance_of(Hash, JSON[Unit_non_executable.lint_output])
+    assert_operator(0, :<, testSelf_lint_output.size, testSelf_lint_output.inspect)
+    assert_operator(0, :<, not_unit_lint_output.size)
+    assert_operator(0, :<, not_unit_executable_lint_output.size)
+    assert_operator(0, :<, testMinimal_lint_output.size)
+    assert_operator(0, :<, unit_non_executable_lint_output.size)
+
+    assert_instance_of(Hash, JSON[testSelf_lint_output])
+    assert_instance_of(Hash, JSON[not_unit_lint_output])
+    assert_instance_of(Hash, JSON[not_unit_executable_lint_output])
+    assert_instance_of(Hash, JSON[testMinimal_lint_output])
+    assert_instance_of(Hash, JSON[unit_non_executable_lint_output])
 
     # assert_equal('', TestSelf.errors)
     # assert_equal('', Not_unit.errors)
     # assert_equal('', TestMinimal.errors)
     # assert_equal('', Unit_non_executable.errors)
-    # assert_equal('', Not_unit_executable.errors)
+    # assert_equal('', not_unit_executable.errors)
   end # lint_output
   # rubocop:enable Metrics/MethodLength
 
