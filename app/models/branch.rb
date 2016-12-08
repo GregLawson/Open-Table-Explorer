@@ -256,15 +256,16 @@ end # Branch
 class BranchReference < Commit
 	include Branch::ReferenceObjects
   module DefinitionalClassMethods # if reference by DefinitionalConstants
-    def reflog_command_string(filename, _repository, range = 0..10)
-      'reflog  --all --skip=' + range.first.to_s + ' --max-count=' + range.last.to_s + ' --pretty=format:%gd,%gD,%h,%aD -- ' + filename.to_s
+    def reflog_command_string(filename, _repository, range = 0..10, options = '')
+			max_count = range.last - range.first + 1 # inclusive
+      'reflog  --all --skip=' + range.first.to_s + ' --max-count=' + max_count.to_s + ' --pretty=format:%gd,%gD,%h,%aD ' + options + '-- ' + filename.to_s
     end # reflog_command_string
 
-    def reflog_command_lines(filename, repository, range = 0..10)
-      repository.git_command(reflog_command_string(filename, repository, range)).output.split("\n")
+    def reflog_command_lines(filename, repository, range = 0..10, options = '')
+      repository.git_command(reflog_command_string(filename, repository, range, options)).output.split("\n")
     end # reflog_command_lines
 
-    def reflog?(filename, repository, range = 0..10)
+    def reflog?(filename, repository, range = 0..10, options = '')
       lines = reflog_command_lines(filename, repository, range)
       lines = lines[0..-2] if lines[-1..-1] == ''
       lines.map do |reflog_line|
@@ -288,6 +289,10 @@ class BranchReference < Commit
         reflog[0]
       end # if
     end # last_change?
+
+	def lost_edit(filename, repository, range = 0..10, lost_code)
+		reflogs = reflog?(filename, repository, range = 0..10, options = '-S "' + lost_code.to_s + '"')
+	end # lost_edit
 
     def reflog_to_constructor_hash(reflog_line)
       capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
@@ -358,7 +363,12 @@ class BranchReference < Commit
   module Constructors # such as alternative new methods
     include DefinitionalConstants
 		def new_from_ref(reflog_line)
-			new(reflog_to_constructor_hash(reflog_line))
+			constructor_hash = reflog_to_constructor_hash(reflog_line)
+			if constructor_hash[:age] == 0
+				Commit.new(initialization_string: constructor_hash[:initialization_string])
+			else
+				new(reflog_to_constructor_hash(reflog_line))
+			end # if
     end # new_from_ref
   end # Constructors
   extend Constructors

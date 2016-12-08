@@ -1,37 +1,59 @@
 {:current_branch_name => :passed,
-:start_time => Time.new(2016, 12, 6, 1, 25, Rational(42313240231, 1000000000), "-08:00"),
+:start_time => Time.new(2016, 12, 8, 5, 58, Rational(37434432879, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test
 Started
-............."\t\n !\#$%&*+,0123456789;=@ABCDEFGHIJKLMNOPQRSTUVWXYZ]_abcdefghijklmnopqrstuvwxyz{}\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8A\x8B\x8C\x8D\x8E\x8F\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9A\x9B\x9C\x9D\x9E\x9F\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF"
+......unmatched in #<Commit initialization_string=:bc2e89e repository=#<Repository:0x0000000218dbf0 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:c2db421 repository=#<Repository:0x0000000214c0b0 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:fd666f9 repository=#<Repository:0x00000002130040 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:"67bb40d" repository=#<Repository:0x00000002115088 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:"1ec36d2" repository=#<Repository:0x000000020f69a8 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:"15a64ff" repository=#<Repository:0x000000020db180 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:"6b1c04d" repository=#<Repository:0x000000020c7428 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:c7d6b09 repository=#<Repository:0x000000020af440 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:"87fa489" repository=#<Repository:0x000000019c49a0 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:"19ff1bd" repository=#<Repository:0x00000001c875e8 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:c948483 repository=#<Repository:0x00000001c590a8 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+..unmatched in #<Commit initialization_string=:bc2e89e repository=#<Repository:0x00000002f0f0a8 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:c2db421 repository=#<Repository:0x00000002ef92f8 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:fd666f9 repository=#<Repository:0x00000002edbb40 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:"67bb40d" repository=#<Repository:0x00000002eb6070 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:"1ec36d2" repository=#<Repository:0x00000002626e00 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:"15a64ff" repository=#<Repository:0x00000002604620 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:"6b1c04d" repository=#<Repository:0x000000025c0358 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:c7d6b09 repository=#<Repository:0x000000025a5c60 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:"87fa489" repository=#<Repository:0x00000002574430 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:"19ff1bd" repository=#<Repository:0x0000000253a8c0 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+unmatched in #<Commit initialization_string=:c948483 repository=#<Repository:0x0000000250cc40 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
+......"\t\n !\#$%&*+,0123456789;=@ABCDEFGHIJKLMNOPQRSTUVWXYZ]_abcdefghijklmnopqrstuvwxyz{}\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8A\x8B\x8C\x8D\x8E\x8F\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9A\x9B\x9C\x9D\x9E\x9F\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF"
 ......................
 
-Finished in 10.765903907 seconds.
+Finished in 10.993461896 seconds.
 ------
-35 tests, 906 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+36 tests, 974 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-3.25 tests/s, 84.15 assertions/s
+3.27 tests/s, 88.60 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb"
-	User time (seconds): 10.21
-	System time (seconds): 1.93
+	User time (seconds): 10.42
+	System time (seconds): 1.98
 	Percent of CPU this job got: 91%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:13.30
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:13.57
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 62496
+	Maximum resident set size (kbytes): 61132
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 116915
-	Voluntary context switches: 3198
-	Involuntary context switches: 1237
+	Minor (reclaiming a frame) page faults: 135200
+	Voluntary context switches: 3935
+	Involuntary context switches: 2194
 	Swaps: 0
 	File system inputs: 0
-	File system outputs: 12440
+	File system outputs: 12672
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
