@@ -15,8 +15,7 @@ class EditorTest < TestCase
   module Examples
     EditorTestExecutable = TestExecutable.new_from_path(File.expand_path($PROGRAM_NAME))
     TestDiffuse = Diffuse.new(EditorTestExecutable)
-    TestEmacs = Emacs.new(EditorTestExecutable)
-    Most_stable_file = 'test/unit/minimal2_test.rb'.freeze
+    # TestEmacs = Emacs.new(EditorTestExecutable)
   end # Examples
   include Examples
 #  include UnitMaturity::Examples
@@ -39,7 +38,8 @@ class EditorTest < TestCase
     refute_nil(Branch.branch_index?(Branch.current_branch_name?(TestDiffuse.test_executable.repository).to_sym))
     #	assert_includes(Editor::Branch_enhancement, TestDiffuse.repository.current_branch_name?.to_sym)
     current_index = Branch.branch_index?(Branch.current_branch_name?(TestDiffuse.test_executable.repository).to_sym)
-    filename = Most_stable_file
+    most_stable_file = 'test/unit/minimal2_test.rb'.freeze
+    filename = most_stable_file
     left_index, right_index = TestDiffuse.unit_maturity.bracketing_versions?(filename, current_index)
     assert_operator(current_index, :<, right_index)
     message = "left_index=#{left_index}, right_index=#{right_index}"
@@ -101,6 +101,23 @@ class EditorTest < TestCase
   def test_minimal_edit
   end # minimal_edit
 
+	def test_lost_edit
+		filename = $0
+		repository = Repository::This_code_repository
+		range = 0..10
+		lost_code = 'def testing_superset_of_passed'
+		lost_edit = TestDiffuse.lost_edit(lost_code, filename = @test_executable.to_s, range = 0..10)
+		assert_instance_of(Array, lost_edit)
+		lost_edit.each do |commit|
+			assert_kind_of(Commit, commit)
+			file = Commit.new(initialization_string: commit.sha1 + ':' + filename).show_run.output
+			if file.match(lost_code)
+				puts 'matched in ' + commit.inspect
+			else
+				puts 'unmatched in ' + commit.inspect
+			end # if
+		end # each
+	end # lost_edit
   def test_emacs
     # (test_executable = @test_executable.unit.model_test_pathname?)
   end # emacs

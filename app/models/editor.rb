@@ -167,8 +167,8 @@ class Diffuse < Editor
     status # .assert_post_conditions
   end # minimal_edit
 
-	def lost_edit(lost_code)
-		reflogs = reflog?(filename, repository, range = 0..10, options = '-S "' + lost_code.to_s + '"')
+	def lost_edit(lost_code, filename = @test_executable.to_s, range = 0..10)
+		BranchReference.lost_edit(filename, @test_executable.repository, range, lost_code.to_s)
 	end # lost_edit
 	end # Diffuse
 	
