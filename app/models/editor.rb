@@ -37,7 +37,6 @@ class Editor
                     end # if
   end # initialize
 
-
   # require_relative '../../app/models/assertions.rb'
   module Assertions
     module ClassMethods
@@ -64,7 +63,6 @@ class Editor
   include Assertions
   extend Assertions::ClassMethods
   # TestEditor.assert_pre_conditions
-	
 end # Editor
 
 class Diffuse < Editor
@@ -168,6 +166,10 @@ class Diffuse < Editor
     puts status.command_string
     status # .assert_post_conditions
   end # minimal_edit
+
+	def lost_edit(lost_code)
+		reflogs = reflog?(filename, repository, range = 0..10, options = '-S "' + lost_code.to_s + '"')
+	end # lost_edit
 	end # Diffuse
 	
 	class Emacs < Editor

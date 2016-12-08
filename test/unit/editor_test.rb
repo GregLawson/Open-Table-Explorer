@@ -51,6 +51,7 @@ class EditorTest < TestCase
     assert_match(/#{filename}/, TestDiffuse.goldilocks(filename))
     assert_data_file(relative_filename)
   end # goldilocks
+
   def test_test_files
     assert_equal('', TestDiffuse.test_files([]))
     refute_empty(TestDiffuse.test_executable.unit.edit_files)
@@ -69,7 +70,6 @@ class EditorTest < TestCase
 				' -t ' + Pathname.new(parallel_file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s +
 					' ' + Pathname.new(file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s
 			end # if
-				
     end.compact # map
     assert_instance_of(Array, pairs, parallel_display.inspect)
     refute_empty(pairs, parallel_display.inspect)
@@ -78,6 +78,11 @@ class EditorTest < TestCase
     assert_equal(TestDiffuse.test_files, pairs.join(' '))
     refute_empty(TestDiffuse.test_files(TestDiffuse.test_executable.unit.edit_files), pairs.inspect)
     assert_equal(' -t app/models/editor.rb test/unit/editor_test.rb  -t app/models/editor.rb script/editor.rb', TestDiffuse.test_files(TestDiffuse.test_executable.unit.edit_files))
+    editor_command_string = 'ruby -W1 script/editor.rb test_files app/models/editor.rb'
+    editor_command_line = ShellCommands.new(editor_command_string)
+		text = editor_command_line.output.lines[-1, 1][0]
+		assert_instance_of(String, text)
+#		assert_match(TestDiffuse.test_files(TestDiffuse.test_executable.unit.edit_files), text)
   end # test_files
 
   def test_minimal_comparison
@@ -87,7 +92,6 @@ class EditorTest < TestCase
   end # minimal_comparison
 
   def test_edit
-    # (context = nil)
   end # edit
 
   def test_split
