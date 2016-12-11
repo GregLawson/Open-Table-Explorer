@@ -10,10 +10,17 @@ require_relative '../../app/models/git_reference.rb'
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../test/assertions/shell_command_assertions.rb'
 require_relative '../../app/models/parse.rb'
-class GitReferenceTest < TestCase
+class TimeTypesTest < TestCase
   include NamedCommit::ReferenceObjects
   # include DefaultTests
   # include Repository::Examples
+	include TimeTypes
+
+	module Examples
+		Reflog_timestamp = 'Sun, 21 Jun 2015 13:51:50 -0700'.freeze
+
+	end # Examples
+	include Examples
 
   def setup
     @temp_repo = Repository.create_test_repository
@@ -23,15 +30,38 @@ class GitReferenceTest < TestCase
     Repository.delete_existing(@temp_repo.path)
   end # teardown
 	
+	def test_TimeTypes
+		assert_includes(Time.instance_methods(false), :iso8601)
+		test_time = Time.new(2016, 12, 13, 0, 41, Rational(10998838165, 1000000000), "-08:00")
+		assert_equal('Tue, 13 Dec 2016 00:41:10 -0800', test_time.rfc2822, test_time.ruby_lines_storage)
+		assert_equal('2016-12-13T00:41:10-08:00', test_time.iso8601)
+		assert_equal('2016-12-13T00:41:10-08:00', test_time.xmlschema)
+		assert_equal('Tue, 13 Dec 2016 00:41:10 -0800', test_time.rfc822)
+		assert_equal('Tue, 13 Dec 2016 08:41:10 GMT', test_time.httpdate)
+		assert_equal('Tue Dec 13 00:41:10 2016', test_time.asctime)
+
+		show_commit_output = Head_at_start.show_run.output
+		show_matches = ParsedCapture.show_matches([show_commit_output], Git_show_medium_timestamp_regexp_array)
+		assert_match(Git_show_medium_timestamp_regexp, show_commit_output, show_matches.ruby_lines_storage)
+		
+		show_matches = ParsedCapture.show_matches([Reflog_timestamp], Git_reflog_timestamp_regexp_array)
+		assert_match(Git_reflog_timestamp_regexp, Reflog_timestamp, show_matches.ruby_lines_storage)
+	end # TimeTypes
+end # TimeTypes
+
+class GitReferenceTest < TestCase
+  include NamedCommit::ReferenceObjects
 		def test_head
 			assert_kind_of(GitReference, Commit.head(@temp_repo))
 			assert_kind_of(GitReference, Commit.head(Repository::This_code_repository))
 		end # head
 		
-	
 	def test_GitReference_to_s
 		assert_equal('HEAD', Head_at_start.to_s, Head_at_start.inspect)
 	end # to_s
+
+	def test_show_run
+	end # show_run
 	
 	def test_dry
 		top_level_types = [:String,  :Int, :Float, :Decimal, :Array, :Hash, :Nil, :Symbol, :Class, :True,
@@ -57,24 +87,63 @@ class CommitTest < TestCase
 		assert_equal(:HEAD, Head_at_start.to_sym, Head_at_start.inspect)
 	end # to_s
 	
+	def test_DefinitionalConstants
+		show_commit_output = Head_at_start.show_run.output
+		show_matches = ParsedCapture.show_matches([show_commit_output], Show_commit_array)
+		assert_match(Email_regexp, show_commit_output, show_matches.ruby_lines_storage)
+		assert_match(Aurthor_regexp, show_commit_output, show_matches.ruby_lines_storage)
+		assert_match(/commit / * SHA1_hex_40 * /\n/ * Aurthor_regexp, show_commit_output, show_matches.ruby_lines_storage)
+		assert_match(Aurthor_regexp * /Date:   / * Git_show_medium_timestamp_regexp, show_commit_output, show_matches.ruby_lines_storage)
+		assert_match(Show_commit_regexp, show_commit_output, show_matches.ruby_lines_storage)
+
+		multi_line = "commit c2db421dba8518e664111b0ba89ee1d70a789fbc\nMerge: 6b1c04d 6ef1536\nAuthor: greg <GregLawson123@gmail.com>\nDate:   Wed Dec 7 10:50:17 2016 -0800\n\n    Merge branch 'tested' into edited\n    \n    Conflicts:\n            app/models/repository.rb\n            test/unit/branch_test.rb\n            test/unit/minimal2_test.rb\n            test/unit/repository_test.rb\n            test/unit/test_executable_test.rb\n"
+		show_commit_output = multi_line
+		show_matches = ParsedCapture.show_matches([show_commit_output], Show_commit_array)
+		assert_match(Email_regexp, show_commit_output, show_matches.ruby_lines_storage)
+		assert_match(Aurthor_regexp, show_commit_output, show_matches.ruby_lines_storage)
+		assert_match(Merge_regexp, show_commit_output, show_matches.ruby_lines_storage)
+		assert_match(/commit / * SHA1_hex_40 * /\n/ * Merge_regexp, show_commit_output, show_matches.ruby_lines_storage)
+		assert_match(Merge_regexp * Aurthor_regexp, show_commit_output, show_matches.ruby_lines_storage)
+		assert_match(/commit / * SHA1_hex_40 * /\n/ * Merge_regexp * Aurthor_regexp, show_commit_output, show_matches.ruby_lines_storage)
+		assert_match(Aurthor_regexp * /Date:   / * Git_show_medium_timestamp_regexp, show_commit_output, show_matches.ruby_lines_storage)
+		assert_match(Show_commit_regexp, show_commit_output, show_matches.ruby_lines_storage)
+	end # DefinitionalConstants
+	
+  def test_DefinitionalClassMethods
+		assert_equal(:HEAD, Head_at_start.initialization_string, Head_at_start.inspect)
+		assert_instance_of(String, Head_at_start.sha1_hex_40, Head_at_start.inspect)
+		assert_instance_of(String, Head_at_start.commit_title, Head_at_start.inspect)
+  end # DefinitionalClassMethods
+	
 	def test_show_commit
 		initialization_string = :HEAD
 		repository = Repository::This_code_repository
-		run = repository.git_command('show ' + initialization_string.to_s + ' --pretty=oneline  --no-abbrev-commit --no-patch')
+		run = repository.git_command('show ' + initialization_string.to_s + ' --pretty=medium  --no-abbrev-commit --no-patch')
 		run.assert_post_conditions
 		capture = run.output.capture?(Show_commit_regexp)
 		assert(capture.success?, capture.inspect)
-		sha1 = capture.output[:sha1]
+		sha1_hex_40 = capture.output[:sha1_hex_40]
+		assert_equal(40, sha1_hex_40.size, capture.inspect)
 	end # show_commit
 	
-	def test_sha1
-	end # sha1
+	def test_sha1_hex_40
+	end # sha1_hex_40
 	
+	def test_commit_title
+	end # commit_title
+
 	def test_tree
+		initialization_string = Head_at_start
+		tree_ref = GitReference.new(initialization_string: initialization_string.to_s + '^{tree}')
+		tree_run = tree_ref.show_run
+		tree_run.assert_post_conditions
+		output = tree_run.output
+		array = output.split("\n")[1..-1] # discard echo of tree
+#		assert_equal(Dir['*'].sort, array.sort, Head_at_start.inspect)
 	end # tree
 
   def test_diff_branch_files
-    diff = Commit::Working_tree.diff_branch_files(Head_at_start, '--numstat').output
+    diff = WorkingTree::Working_tree.diff_branch_files(Head_at_start, '--numstat').output
 #    assert_empty(diff)
     diff = ShellCommands.new('pwd').output
     refute_empty(diff)
@@ -87,26 +156,26 @@ class CommitTest < TestCase
     refute_empty(ShellCommands.new('git diff -z --numstat master..testing -- *.rb').output)
     diff = Repository::This_code_repository.git_command('diff -z --numstat master..testing -- *.rb').output
     refute_empty(diff)
-    diff = Commit::Working_tree.diff_branch_files(:master)
+    diff = WorkingTree::Working_tree.diff_branch_files(:master)
     refute_empty(diff.output, diff.inspect)
   end # diff_branch_files
 
   def test_pull_differences
-    diff = Commit::Working_tree.pull_differences(Head_at_start)
+    diff = WorkingTree::Working_tree.pull_differences(Head_at_start)
 #    assert_empty(diff)
-    diff = Commit::Working_tree.pull_differences(:master)
+    diff = WorkingTree::Working_tree.pull_differences(:master)
     refute_empty(diff, diff.inspect)
   end # pull_differences
 
   def test_merge_up_discard_files
-    diff = Commit::Working_tree.merge_up_discard_files(Head_at_start)
+    diff = WorkingTree::Working_tree.merge_up_discard_files(Head_at_start)
     assert_empty(diff)
-    diff = Commit::Working_tree.merge_up_discard_files(:master)
+    diff = WorkingTree::Working_tree.merge_up_discard_files(:master)
     refute_empty(diff, diff.inspect)
   end # merge_up_discard_files
 
   def test_subset_changes
-    subset_change_files_run = Commit::Working_tree.diff_branch_files(:master, '--numstat')
+    subset_change_files_run = WorkingTree::Working_tree.diff_branch_files(:master, '--numstat')
     assert(subset_change_files_run.success?, subset_change_files_run.inspect)
     refute_equal('', subset_change_files_run.output)
     assert_equal('', subset_change_files_run.errors)
@@ -126,6 +195,16 @@ class CommitTest < TestCase
     assert_instance_of(Hash, capture_many.named_hash)
   end # subset_changes
 end # Commit
+	
+class WorkingTreeTest < TestCase
+	include WorkingTree::ReferenceObjects
+  def test_ReferenceObjects
+		assert_equal(:Working_tree, Working_tree.initialization_string, Working_tree.inspect)
+		assert_equal(nil, Working_tree.sha1_hex_40, Working_tree.inspect)
+		assert_equal('not yet committed', Working_tree.commit_title, Working_tree.inspect)
+  end # ReferenceObjects
+	
+end # WorkingTree
 
 class NamedCommitTest < TestCase
   include NamedCommit::ReferenceObjects
