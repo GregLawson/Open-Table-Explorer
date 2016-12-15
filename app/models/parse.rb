@@ -257,18 +257,18 @@ class MatchCapture < RawCapture
     end # if
   end # success?
 
-  def repetitions?
+  def repetitions
     if @raw_captures.nil?
       0
     else
       1
     end # if
-  end # repetitions?
+  end # repetitions
 
   # Tranform split and MatchData captures into single (split) form
   def to_a(_repetition = 0)
     raise @raw_captures.inspect unless @raw_captures.nil? || @raw_captures.instance_of?(MatchData)
-    @raw_captures[1..-1] # discard $0 = whole string
+    @raw_captures.to_a[1..-1] # discard $0 = whole string
   end # to_a
 
   def to_tree
@@ -356,13 +356,13 @@ class SplitCapture < RawCapture
     end # if
   end # success?
 
-  def repetitions?
+  def repetitions
     if @raw_captures.nil?
       0
     else
       (@raw_captures.size / (num_captures + 1)).ceil
     end # if
-  end # repetitions?
+  end # repetitions
 
   # Tranform split and MatchData captures into single (split) form
   def to_a(repetition)
@@ -373,10 +373,10 @@ class SplitCapture < RawCapture
   def to_tree
     raise @raw_captures.inspect unless @raw_captures.nil? || @raw_captures.instance_of?(Array)
     match_tree =
-      if repetitions? == 1
+      if repetitions == 1
         to_hash(0)
       else
-        (0..repetitions? - 1).map { |i| to_hash(i) }
+        (0..repetitions - 1).map { |i| to_hash(i) }
       end # if
     { pre_match: pre_match,
       named_captures: match_tree,
@@ -385,7 +385,7 @@ class SplitCapture < RawCapture
   end # to_tree
 
   def output
-    (0..(repetitions? - 1)).map do |i|
+    (0..(repetitions - 1)).map do |i|
       to_hash(i)
     end # map
   end # output
@@ -411,10 +411,24 @@ class SplitCapture < RawCapture
   end # number_matched_characters
 
   def column_output
-    (0..repetitions? - 1).map do |i|
+    (0..repetitions - 1).map do |i|
       named_hash(i * (num_captures + 1))
     end # map
   end # column_output
+
+	def raw_capture_size_state
+		{raw_captures: raw_captures,
+		raw_captures_size: raw_captures.size,
+		names: @regexp.names,
+		named_captures: @regexp.named_captures,
+		num_captures: num_captures,
+		repetitions: repetitions,
+		terminations: terminations,
+		num_delimiters: num_delimiters,
+		delimiter_size: delimiters.size,
+		expected_raw_size: 1 + (num_delimiters + repetitions) # prematch, all delimiters, and all captures
+		}
+	end # raw_capture_size_state
 
   # includes pre_match and post_match
   def delimiters
@@ -431,6 +445,57 @@ class SplitCapture < RawCapture
   def internal_delimiters
     delimiters[1..-2]
   end # internal_delimiters
+	
+require_relative '../../app/models/assertions.rb'
+
+	module Assertions
+    module ClassMethods
+			def assert_pre_conditions(message='')
+				message+="In assert_pre_conditions, self=#{inspect}"
+			#	asset_nested_and_included(:ClassMethods, self)
+			#	asset_nested_and_included(:Constants, self)
+			#	asset_nested_and_included(:Assertions, self)
+				self
+			end #assert_pre_conditions
+
+			def assert_post_conditions(message='')
+				message+="In assert_post_conditions, self=#{inspect}"
+				self
+			end #assert_post_conditions
+	end #ClassMethods
+
+	def assert_pre_conditions(message='')
+		message+="In assert_pre_conditions, self=#{inspect}"
+		self
+	end #assert_pre_conditions
+
+	def assert_post_conditions(message='')
+		message+="In assert_post_conditions, self=#{inspect}"
+		
+		assert_equal(raw_capture_size_state[:num_delimiters], raw_capture_size_state[:raw_captures_size] -repetitions + terminations, raw_capture_size_state)
+		self
+	end #assert_post_conditions
+	
+	def assert_terminations(expected_terminations, message='')
+		message+="In assert_terminations, self=#{inspect}"
+		message += "\n" + raw_capture_size_state.inspect
+		assert_equal(expected_terminations, terminations, message)
+	end # assert_terminations
+	
+	def assert_repetitions(expected_repetitions, message='')
+		message+="In assert_repetitions, self=#{inspect}"
+		message += "\n" + raw_capture_size_state.inspect
+		assert_equal(2.0, (3.0 / 2.0).ceil)
+		assert_equal(expected_repetitions, ((@raw_captures.size - 1).to_f / (num_captures + 1).to_f).ceil)
+		assert_equal(expected_repetitions, repetitions, message)
+		
+	end # assert_repetitions
+	
+  end # Assertions
+  include Assertions
+  extend Assertions::ClassMethods
+  # self.assert_pre_conditions
+	
   module Examples
     include Capture::Examples
     Split_capture = SplitCapture.new(Newline_Delimited_String, Branch_line_regexp)
@@ -523,6 +588,124 @@ class ParsedCapture < MatchCapture
   def delimiters
     @raw_captures.reduce('', :+) { |c| c[:raw_capture].delimiters }
   end # delimiters
+
+require_relative '../../app/models/assertions.rb'
+
+	module Assertions
+    module ClassMethods
+			def nested_scope_modules?
+				nested_constants = self.class.constants
+				message = ''
+				assert_includes(included_modules.map{|m| m.name}, :Assertions, message)
+				assert_equal([:Constants, :Assertions, :ClassMethods], Version.nested_scope_modules?)
+			end # nested_scopes
+			def assert_nested_scope_submodule(module_symbol, context = self, message='')
+				message+="\nIn assert_nested_scope_submodule for class #{context.name}, "
+				message += "make sure module Constants is nested in #{context.class.name.downcase} #{context.name}"
+				message += " but not in #{context.nested_scope_modules?.inspect}"
+				assert_includes(constants, :Contants, message)
+			end # assert_included_submodule
+			def assert_included_submodule(module_symbol, context = self, message='')
+				message+="\nIn assert_included_submodule for class #{self.name}, "
+				message += "make sure module Constants is nested in #{self.class.name.downcase} #{self.name}"
+				message += " but not in #{self.nested_scope_modules?.inspect}"
+				assert_includes(included_modules, :Contants, message)
+			end # assert_included_submodule
+			def asset_nested_and_included(module_symbol, context = self, message='')
+				assert_nested_scope_submodule(module_symbol)
+				assert_included_submodule(module_symbol)
+			end # asset_nested_and_included
+			def assert_pre_conditions(message='')
+				message+="In assert_pre_conditions, self=#{inspect}"
+			#	asset_nested_and_included(:ClassMethods, self)
+			#	asset_nested_and_included(:Constants, self)
+			#	asset_nested_and_included(:Assertions, self)
+				self
+			end #assert_pre_conditions
+
+			def assert_post_conditions(message='')
+				message+="In assert_post_conditions, self=#{inspect}"
+				self
+			end #assert_post_conditions
+			
+			def assert_show_matches(unmatches, regexp_array, expectations = {unmatches: []})
+				assert_instance_of(Hash, expectations, 'Expectations should be a Hash.')
+				assert_equal([], expectations.keys - [:captures, :unmatches], 'Not used as an named argument.')
+				show_matches = ParsedCapture.show_matches(unmatches, regexp_array)
+				assert_instance_of(Array, show_matches)
+				matches = show_matches.select{|match| match.instance_of?(Hash)}
+				match_regexps = matches.map{|capture| capture.keys}
+				refute_equal(regexp_array, match_regexps )
+				unmatches = show_matches.select{|match| match.instance_of?(String)}
+				unless expectations[:unmatches].nil?
+					assert_equal(expectations[:unmatches], unmatches, 'Unmatches not expected.')
+				end # unless
+
+				full_hash = []
+#				full_hash = {}
+				show_matches.each do |match|
+					if match.instance_of?(String)
+						puts match + ' did not match anything.'
+					else
+						assert_instance_of(Hash, match, show_matches)
+						assert_instance_of(Array, match.keys)
+						match.keys.each do |key|
+							assert_instance_of(Regexp, key, match)
+						end # each
+#						full_hash = full_hash.merge(match)
+						assert_instance_of(Array, match.values) # SplitCapture
+						match.values.each do |single_SplitCapture|
+								assert_instance_of(Array, single_SplitCapture, match)
+#								full_hash << single_SplitCapture.uniq
+								single_SplitCapture.each do |single_capture|
+#									full_hash = full_hash.merge(single_capture)
+									full_hash << single_capture
+									single_capture.keys.each do |capture_name|
+										assert_instance_of(Symbol, capture_name, single_capture)
+#										full_hash << single_SplitCapture.uniq
+									end # each
+									assert_instance_of(Array, single_capture.values, match)
+									single_capture.values.each do |capture|
+										if capture.instance_of?(String)
+											assert_instance_of(String, capture, match)
+										elsif capture.instance_of?(Array)
+											assert_instance_of(Array, capture, match)
+											capture.each do |capture_string|
+												assert_instance_of(String, capture_string, single_SplitCapture)
+												refute_equal(1, capture_string.size, single_SplitCapture)
+											end # each
+										else
+											assert_instance_of(String, capture, match)
+										end # if
+									end # each
+								end # each
+						end # each
+					end # if
+
+		#			assert(, match.keys, match.inspect)
+				end # each
+				full_hash = full_hash.uniq
+				unless expectations[:captures].nil?
+					assert_equal(expectations[:captures], full_hash, show_matches)
+				end # unless
+			end # assert_show_matches
+			
+	end #ClassMethods
+
+	def assert_pre_conditions(message='')
+		message+="In assert_pre_conditions, self=#{inspect}"
+		self
+	end #assert_pre_conditions
+
+	def assert_post_conditions(message='')
+		message+="In assert_post_conditions, self=#{inspect}"
+		self
+	end #assert_post_conditions
+  end # Assertions
+  include Assertions
+  extend Assertions::ClassMethods
+  # self.assert_pre_conditions
+
   module Examples
     include Capture::Examples
     # Branch_line_capture = ParsedCapture.new(Newline_Delimited_String, Branch_line_regexp)
@@ -690,7 +873,7 @@ class String
       Capture.assert_method(match_capture, limit_capture, :regexp, message)
       Capture.assert_method(match_capture, limit_capture, :num_captures, message)
       #	Capture.assert_method(match_capture, split_capture, :captures, message)
-      Capture.assert_method(match_capture, limit_capture, :repetitions?, message)
+      Capture.assert_method(match_capture, limit_capture, :repetitions, message)
       Capture.assert_method(match_capture, limit_capture, :matched_characters, message)
       Capture.assert_method(match_capture, limit_capture, :pre_match, message)
       #	Capture.assert_method(match_capture, limit_capture, :post_match, message)
@@ -721,7 +904,7 @@ class String
         #		split_capture.assert_left_match
         limit_capture.assert_left_match
         # limit repetitions to pattern, get all captures
-        if split_capture.repetitions? == 1
+        if split_capture.repetitions == 1
           match_capture
         elsif match_capture.output == split_capture.output[-1] # over-written captures
           split_capture
@@ -749,7 +932,7 @@ class String
       split_capture.assert_post_conditions(message)
       limit_capture.assert_post_conditions(message)
       # limit repetitions to pattern, get all captures
-      if split_capture.repetitions? == 1
+      if split_capture.repetitions == 1
         puts message + "\n" + match_capture.inspect
       elsif match_capture.output == split_capture.output[-1] # over-written captures
         puts message + "\n" + split_capture.inspect

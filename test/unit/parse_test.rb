@@ -277,12 +277,13 @@ class MatchCaptureTest < TestCase
     assert_equal(nil, MatchCapture.new('cat', /fish/).success?)
   end # success?
 
-  def test_MatchCapture_repetitions?
+  def test_MatchCapture_repetitions
     parse_string = MatchCapture.new(Newline_Delimited_String, Branch_line_regexp)
-    assert_equal(1, parse_string.repetitions?)
-  end # repetitions?
+    assert_equal(1, parse_string.repetitions)
+  end # repetitions
 
   def test_MatchCapture_to_a
+		assert_equal([], nil.to_a)
   end # to_a
 
   def test_MatchCapture_to_tree
@@ -361,19 +362,19 @@ class SplitCaptureTest < TestCase
     raw_captures = Split_capture.raw_captures
     assert(Split_capture.success?)
     assert(SplitCapture.new('  ', /  /).success?)
-    '  '.assert_parse(/  /)
+#    '  '.assert_parse(/  /)
   end # success?
 
-  def test_SplitCapture_repetitions?
+  def test_SplitCapture_repetitions
     length_hash_captures = Parse_array.num_captures
     assert_equal(1, Parse_array.num_captures, Parse_array.raw_captures.inspect + Parse_array.regexp.named_captures.inspect)
     repetitions = (Parse_array.raw_captures.size / length_hash_captures).ceil
-    #	assert_equal(2, Parse_array.repetitions?)
+    #	assert_equal(2, Parse_array.repetitions)
     parse_delimited_array = SplitCapture.new(Newline_Delimited_String, Branch_line_regexp)
-    #	assert_equal(0, .repetitions?)
-    assert_equal(1, parse_delimited_array.repetitions?)
-    assert_equal(2, SplitCapture.new(Newline_Delimited_String, Branch_regexp).repetitions?)
-  end # repetitions?
+    #	assert_equal(0, .repetitions)
+    assert_equal(1, parse_delimited_array.repetitions)
+    assert_equal(2, SplitCapture.new(Newline_Delimited_String, Branch_regexp).repetitions)
+  end # repetitions
 
   def test_SplitCapture_to_a
     parse_string = MatchCapture.new(Newline_Delimited_String, Branch_line_regexp)
@@ -394,9 +395,9 @@ class SplitCaptureTest < TestCase
 
   def test_SplitCapture_to_tree
     delimited_current = SplitCapture.new(Newline_Delimited_String, Branch_current_regexp * "\n")
-    assert_equal(1..1, 1..delimited_current.repetitions?)
-    assert_equal([0], (0..delimited_current.repetitions? - 1).map { |i| i })
-    #    assert_equal(Branch_hashes[0], (0..delimited_current.repetitions? - 1).map { |i| delimited_current.to_hash(i) })
+    assert_equal(1..1, 1..delimited_current.repetitions)
+    assert_equal([0], (0..delimited_current.repetitions - 1).map { |i| i })
+    #    assert_equal(Branch_hashes[0], (0..delimited_current.repetitions - 1).map { |i| delimited_current.to_hash(i) })
     assert_equal(Branch_answer, SplitCapture.new(Newline_Delimited_String, Branch_line_regexp).to_tree[:named_captures])
     assert_equal(Branch_hashes[0], SplitCapture.new(Newline_Delimited_String, Branch_current_regexp).to_hash)
     assert_equal(Branch_hashes, SplitCapture.new(Newline_Delimited_String, Branch_current_regexp).to_tree[:named_captures])
@@ -567,6 +568,8 @@ class ParsedCaptureTest < TestCase
 		assert_equal(Ordered_matches, ParsedCapture.show_matches(unmatches, regexp_array))
 #		assert_equal(['b'], ParsedCapture.show_matches(['ab'], [/a/]))
 #		assert_equal(['b'], ParsedCapture.show_matches(['ab'], [/a/, /b/]))
+
+
 	end # show_matches
 
   def test_ParsedCapture_initialize
@@ -617,6 +620,15 @@ class ParsedCaptureTest < TestCase
 		message += "\n" + Parsed_a_capture.inspect
 #		assert_equal(',', Parsed_a_capture.delimiters, message)
   end # delimiters
+			
+			def test_assert_show_matches
+		ParsedCapture.assert_show_matches(['ab'], [/a/], unmatches: ['b'])
+		ParsedCapture.assert_show_matches(['aa'], [/a/.capture(:alpha), /b/.capture(:beta)], captures: [alpha: 'a'])
+		ParsedCapture.assert_show_matches(['ab'], [/a/.capture(:alpha), /b/.capture(:beta)], captures: [{:alpha=>"a"}, {:beta=>"b"}])
+		ParsedCapture.assert_show_matches(['ab'], [/a/], unmatches: ['b'], captures: [{}])
+		ParsedCapture.assert_show_matches(['abc'], [/a/.capture(:alpha), /b/.capture(:beta)], unmatches: ['c'], captures: [{:alpha=>"a"}, {:beta=>"b"}])
+			end # assert_show_matches
+			
 end # ParsedCapture
 
 class LimitCaptureTest < TestCase
