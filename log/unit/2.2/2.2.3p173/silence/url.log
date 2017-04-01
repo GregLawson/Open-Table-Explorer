@@ -1,7 +1,46 @@
-passed
-2016-02-01 19:03:29.152
-ruby -v -W0 test/unit/url_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 1, 26, 3, 53, Rational(21735822069, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/url_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/url_test
+Started
+...........................
 
-test/unit/url_test.rb:9:in `require_relative': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case.rb (LoadError)
-	from test/unit/url_test.rb:9:in `<main>'
+Finished in 2.615672614 seconds.
+------
+27 tests, 70 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+------
+10.32 tests/s, 26.76 assertions/s
+',
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/url_test.rb"
+	User time (seconds): 3.59
+	System time (seconds): 0.04
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.67
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 29728
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 7556
+	Voluntary context switches: 3
+	Involuntary context switches: 367
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+'
+}
+
+}

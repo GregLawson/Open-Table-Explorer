@@ -1,0 +1,1 @@
+{"metadata":{"rubocop_version":"0.39.0","ruby_engine":"ruby","ruby_version":"2.2.4","ruby_patchlevel":"230","ruby_platform":"x86_64-linux-gnu"},"files":[{"path":"test/unit/minimal3_test.rb","offenses":[]}],"summary":{"offense_count":0,"target_file_count":1,"inspected_file_count":1}}

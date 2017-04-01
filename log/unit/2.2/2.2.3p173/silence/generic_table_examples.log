@@ -1,9 +1,46 @@
-passed
-2016-02-01 18:31:50.332
-ruby -v -W0 test/unit/generic_table_examples_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 9, 11, Rational(32858242450, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_examples_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_examples_test
+Started
+.
 
-test/unit/generic_table_examples_test.rb:12:in `<class:GenericTableExamplesTest>': uninitialized constant OpenTableExplorer::Tests::GenericTableExamplesTest::DefaultTests2 (NameError)
-	from test/unit/generic_table_examples_test.rb:11:in `<module:Tests>'
-	from test/unit/generic_table_examples_test.rb:9:in `<module:OpenTableExplorer>'
-	from test/unit/generic_table_examples_test.rb:8:in `<main>'
+Finished in 0.001093568 seconds.
+------
+1 tests, 0 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+------
+914.44 tests/s, 0.00 assertions/s
+',
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_examples_test.rb"
+	User time (seconds): 0.54
+	System time (seconds): 0.05
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.60
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 20320
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5204
+	Voluntary context switches: 3
+	Involuntary context switches: 61
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+'
+}
+
+}

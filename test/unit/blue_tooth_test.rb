@@ -6,12 +6,12 @@
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative 'default_test_case.rb'
+require_relative '../../app/models/default_test_case.rb'
 require_relative '../../app/models/blue_tooth.rb'
-class DefinitionsTest < DefaultTestCase2
+class DefinitionsTest < TestCase
 #bluez-test-device list
 
-class BluezTestDeviceListTest < DefaultTestCase2
+class BluezTestDeviceListTest < TestCase
 include BlueTooth::BluezTestDeviceList::Constants
 include BlueTooth::BluezTestDeviceList::Examples
 include BlueTooth
@@ -23,7 +23,7 @@ end #Constants
 def model_class?
 	BlueTooth::BluezTestDeviceList
 end #model_name?
-include DefaultTests2
+#include DefaultTests2
 def test_input_urls
 	file_regexp="#{Open_tax_filler_directory}/field_dump/Federal/f*.pjson"
 	regexp=RegexpParse.new(file_regexp)

@@ -1,0 +1,5 @@
+{"metadata":{"rubocop_version":"0.39.0","ruby_engine":"ruby","ruby_version":"2.2.4","ruby_patchlevel":"230","ruby_platform":"x86_64-linux-gnu"},"files":[{"path":"app/models/assertions.rb","offenses":[
+{"severity":"convention","message":"Line is too long. [143/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":10,"column":81,"length":63}},
+{"severity":"convention","message":"Line is too long. [143/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":14,"column":81,"length":63}},
+{"severity":"convention","message":"Missing top-level module documentation comment.","cop_name":"Style/Documentation","corrected":null,"location":{"line":20,"column":3,"length":6}},
+{"severity":"warning","message":"Useless assignment to variable - `message`. (https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars)","cop_name":"Lint/UselessAssignment","corrected":null,"location":{"line":28,"column":7,"length":7}}]}],"summary":{"offense_count":4,"target_file_count":1,"inspected_file_count":1}}

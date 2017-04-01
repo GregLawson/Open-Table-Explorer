@@ -1,7 +1,39 @@
-passed
-2016-02-01 19:02:36.307
-ruby -v -W0 test/unit/stream_parameter_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 9, 39, Rational(18498610056, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_parameter_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+',
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_parameter_test.rb:9:in `require_relative\': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_parameter.rb (LoadError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_parameter_test.rb:9:in `<main>\'
+Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_parameter_test.rb"
+	User time (seconds): 0.57
+	System time (seconds): 0.04
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.61
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 19672
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5043
+	Voluntary context switches: 3
+	Involuntary context switches: 62
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+'
+}
 
-test/unit/stream_parameter_test.rb:9:in `require_relative': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_parameter.rb (LoadError)
-	from test/unit/stream_parameter_test.rb:9:in `<main>'
+}

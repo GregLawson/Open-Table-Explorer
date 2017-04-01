@@ -1,106 +1,137 @@
-passed
-2016-02-01 19:03:37.146
-ruby -v -W0 test/unit/visa_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 9, 46, Rational(57576122644, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/visa_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-......EE.$ locate libvisa
-@process_status=#<Process::Status: pid 1052 exit 1>
-E..
+......EE.E..
 
-Finished in 0.510067s, 23.5263 runs/s, 0.0000 assertions/s.
+Finished in 0.793799s, 15.1172 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_example:
 Fiddle::DLError: /usr/lib/x86_64-linux-gnu/libvisa.so: cannot open shared object file: No such file or directory
-    /usr/lib/ruby/2.2.0/fiddle.rb:46:in `initialize'
-    /usr/lib/ruby/2.2.0/fiddle.rb:46:in `new'
-    /usr/lib/ruby/2.2.0/fiddle.rb:46:in `dlopen'
-    test/unit/visa_test.rb:19:in `test_example'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+    /usr/lib/ruby/2.3.0/fiddle.rb:47:in `initialize\'
+    /usr/lib/ruby/2.3.0/fiddle.rb:47:in `new\'
+    /usr/lib/ruby/2.3.0/fiddle.rb:47:in `dlopen\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/visa_test.rb:19:in `test_example\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
   2) Error:
 NewTestClass#test_GetPid:
 Fiddle::DLError: /usr/lib/x86_64-linux-gnu/libvisa.so: cannot open shared object file: No such file or directory
-    /usr/lib/ruby/2.2.0/fiddle.rb:46:in `initialize'
-    /usr/lib/ruby/2.2.0/fiddle.rb:46:in `new'
-    /usr/lib/ruby/2.2.0/fiddle.rb:46:in `dlopen'
-    test/unit/visa_test.rb:34:in `test_GetPid'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+    /usr/lib/ruby/2.3.0/fiddle.rb:47:in `initialize\'
+    /usr/lib/ruby/2.3.0/fiddle.rb:47:in `new\'
+    /usr/lib/ruby/2.3.0/fiddle.rb:47:in `dlopen\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/visa_test.rb:36:in `test_GetPid\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
   3) Error:
 NewTestClass#test_script:
-NoMethodError: undefined method `assertions' for #<ShellCommands:0x00000001fc3590>
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:143:in `assert_empty'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:40:in `assert_post_conditions'
-    test/unit/visa_test.rb:31:in `test_script'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+NoMethodError: undefined method `assertions\' for #<ShellCommands:0x000000024eb4a0>
+Did you mean?  assert
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert\'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:340:in `assert_respond_to\'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:153:in `assert_empty\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:44:in `assert_post_conditions\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/visa_test.rb:32:in `test_script\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 12 runs, 0 assertions, 0 failures, 3 errors, 0 skips
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/visa_test.rb"
+	User time (seconds): 2.06
+	System time (seconds): 0.15
+	Percent of CPU this job got: 88%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.51
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 32712
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 3
+	Minor (reclaiming a frame) page faults: 8585
+	Voluntary context switches: 76
+	Involuntary context switches: 358
+	Swaps: 0
+	File system inputs: 30856
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+'
+}
 
+}

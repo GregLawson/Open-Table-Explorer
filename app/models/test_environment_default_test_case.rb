@@ -8,5 +8,5 @@
 # gem install mintest
 require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../../app/models/default_test_case.rb'
-DefaultTests = eval(Unit::Executable.default_tests_module_name?)
-TestCase = eval(Unit::Executable.test_case_class_name?)
+DefaultTests = eval(RailsishRubyUnit::Executable.default_tests_module_name?)
+TestCase = eval(RailsishRubyUnit::Executable.test_case_class_name?)

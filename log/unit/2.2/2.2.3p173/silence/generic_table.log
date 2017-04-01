@@ -1,7 +1,44 @@
-passed
-2016-02-01 18:31:53.179
-ruby -v -W0 test/unit/generic_table_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 9, 11, Rational(35359568964, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+',
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/generic_table_examples.rb:11:in `<module:Examples>\': uninitialized constant OpenTableExplorer::OpenTableBrowser::Examples::ActiveRecord (NameError)
+Did you mean?  ActiveModel
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/generic_table_examples.rb:10:in `<module:OpenTableBrowser>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/generic_table_examples.rb:9:in `<module:OpenTableExplorer>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/generic_table_examples.rb:8:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_test.rb:10:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_test.rb:10:in `<main>\'
+Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_test.rb"
+	User time (seconds): 0.80
+	System time (seconds): 0.09
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.90
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 22956
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5864
+	Voluntary context switches: 3
+	Involuntary context switches: 99
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+'
+}
 
-test/unit/generic_table_test.rb:9:in `require_relative': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case.rb (LoadError)
-	from test/unit/generic_table_test.rb:9:in `<main>'
+}

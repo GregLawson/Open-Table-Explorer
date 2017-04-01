@@ -1,35 +1,13 @@
-passed
-2016-04-14 14:33:59.208
-ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test
-Started
-.......confirm_commit(:echo @repository.something_to_commit?=false
-....log/unit/2.2/2.2.3p173/silence/.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/interactive_bottleneck.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/minimal2.log is an updated log file.
-log/unit/2.2/2.2.3p173/silence/test_executable.log is an updated log file.
-.....confirm_commit(:echo @repository.something_to_commit?=true
-....confirm_commit(:echo @repository.something_to_commit?=true
-confirm_commit(:echo @repository.something_to_commit?=true
-confirm_commit(:echo @repository.something_to_commit?=true
-confirm_commit(:echo @repository.something_to_commit?=true
-confirm_commit(:echo @repository.something_to_commit?=true
-...$ git rebase --abort
-@errors="No rebase in progress?\n"
-@process_status=#<Process::Status: pid 31445 exit 1>
-$ git merge --abort
-@errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status=#<Process::Status: pid 31465 exit 128>
-$ git checkout master
-@errors="Already on 'master'\n"
-....confirm_commit(:echo @repository.something_to_commit?=true
-.
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 9, 12, Rational(21936923935, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb',
+:output => '',
+:errors => {:rescue_exception => Timeout::Error.new()
 
-Finished in 3.898163977 seconds.
-------
-28 tests, 137 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
-------
-7.18 tests/s, 35.14 assertions/s
+}
 
+}

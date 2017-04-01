@@ -1,18 +1,13 @@
-passed
-2016-04-21 04:05:46.721
-ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-Run options: --seed 0
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 9, 8, Rational(10181506133, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb',
+:output => '',
+:errors => {:rescue_exception => Timeout::Error.new()
 
-# Running:
+}
 
-.......F.......
-
-Finished in 1.443365s, 10.3924 runs/s, 27.7130 assertions/s.
-
-  1) Failure:
-NewTestClass#test_test_files [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb:59]:
-Expected [] to not be empty.
-
-15 runs, 40 assertions, 1 failures, 0 errors, 0 skips
-
+}

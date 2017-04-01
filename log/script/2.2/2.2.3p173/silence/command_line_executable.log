@@ -1,0 +1,42 @@
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 4, 1, 12, 9, Rational(24975094178, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/script/command_line_executable.rb',
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+',
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb:102:in `expand_path\': no implicit conversion of nil into String (TypeError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/file_pattern.rb:102:in `project_root_dir?\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb:55:in `new_from_path\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/test_executable.rb:28:in `new_from_path\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/script/command_line_executable.rb:18:in `<main>\'
+Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/script/command_line_executable.rb"
+	User time (seconds): 2.11
+	System time (seconds): 0.18
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.31
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 47872
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 16493
+	Voluntary context switches: 38
+	Involuntary context switches: 241
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+'
+}
+
+}

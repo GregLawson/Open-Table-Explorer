@@ -1,21 +1,23 @@
-passed
-2016-02-01 18:31:25.595
-ruby -v -W0 test/unit/dhcp_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-Run options: --seed 0
-
-# Running:
-
-.....$ /sbin/dhclient -v eth0
-@errors="Internet Systems Consortium DHCP Client 4.3.3\nCopyright 2004-2015 Internet Systems Consortium.\nAll rights reserved.\nFor info, please visit https://www.isc.org/software/dhcp/\n\ncan't create /var/lib/dhcp/dhclient.leases: Permission denied\nRTNETLINK answers: Operation not permitted\nOpen a socket for LPF: Operation not permitted\n\nIf you think you have received this message due to a bug rather\nthan a configuration issue please read the section on submitting\nbugs on either our web page at www.isc.org or in the README file\nbefore submitting a bug.  These pages explain the proper\nprocess and the information we find helpful for debugging..\n\nexiting.\n"
-@process_status=#<Process::Status: pid 25938 exit 1>
-Internet Systems Consortium DHCP Client 4.3.3
-Copyright 2004-2015 Internet Systems Consortium.
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 9, 7, Rational(49277436870, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/dhcp_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/dhcp_test
+Started
+$ /sbin/dhclient -v eth0
+@errors="Internet Systems Consortium DHCP Client 4.3.5b1\nCopyright 2004-2016 Internet Systems Consortium.\nAll rights reserved.\nFor info, please visit https://www.isc.org/software/dhcp/\n\ncan\'t create /var/lib/dhcp/dhclient.leases: Permission denied\nCannot find device \"eth0\"\nOpen a socket for LPF: Operation not permitted\n\nIf you think you have received this message due to a bug rather\nthan a configuration issue please read the section on submitting\nbugs on either our web page at www.isc.org or in the README file\nbefore submitting a bug.  These pages explain the proper\nprocess and the information we find helpful for debugging..\n\nexiting.\n"
+@process_status = #<Process::Status: pid 28315 exit 1>
+Internet Systems Consortium DHCP Client 4.3.5b1
+Copyright 2004-2016 Internet Systems Consortium.
 All rights reserved.
 For info, please visit https://www.isc.org/software/dhcp/
 
-can't create /var/lib/dhcp/dhclient.leases: Permission denied
-RTNETLINK answers: Operation not permitted
+can\'t create /var/lib/dhcp/dhclient.leases: Permission denied
+Cannot find device "eth0"
 Open a socket for LPF: Operation not permitted
 
 If you think you have received this message due to a bug rather
@@ -26,29 +28,71 @@ process and the information we find helpful for debugging..
 
 exiting.
 F
+===============================================================================
+Failure:
+  dhclient.errors=Internet Systems Consortium DHCP Client 4.3.5b1
+  Copyright 2004-2016 Internet Systems Consortium.
+  All rights reserved.
+  For info, please visit https://www.isc.org/software/dhcp/
+  
+  can\'t create /var/lib/dhcp/dhclient.leases: Permission denied
+  Cannot find device "eth0"
+  Open a socket for LPF: Operation not permitted
+  
+  If you think you have received this message due to a bug rather
+  than a configuration issue please read the section on submitting
+  bugs on either our web page at www.isc.org or in the README file
+  before submitting a bug.  These pages explain the proper
+  process and the information we find helpful for debugging..
+  
+  exiting.
+  
+  </DHCPACK/> expected to be =~
+  <"Internet Systems Consortium DHCP Client 4.3.5b1\nCopyright 2004-2016 Internet Systems Consortium.\nAll rights reserved.\nFor info, please visit https://www.isc.org/software/dhcp/\n\ncan\'t create /var/lib/dhcp/dhclient.leases: Permission denied\nCannot find device \"eth0\"\nOpen a socket for LPF: Operation not permitted\n\nIf you think you have received this message due to a bug rather\nthan a configuration issue please read the section on submitting\nbugs on either our web page at www.isc.org or in the README file\nbefore submitting a bug.  These pages explain the proper\nprocess and the information we find helpful for debugging..\n\nexiting.\n">.
+test_dhclient(DHCPTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/dhcp_test.rb:9:in `test_dhclient\'
+      6:     dhclient = ShellCommands.new(command_string)
+      7:     puts dhclient.inspect
+      8:     puts dhclient.errors
+  =>  9:     assert_match(/DHCPACK/, dhclient.errors, "dhclient.errors=#{dhclient.errors}")
+     10:     assert_match(/DHCPACK from /, dhclient.errors)
+     11:     assert_match(/DHCPACK from ([0-9.]+)/, dhclient.errors)
+     12:     assert_match(/DHCPACK from ([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/, dhclient.errors)
+===============================================================================
 
-Finished in 0.078165s, 76.7606 runs/s, 25.5869 assertions/s.
 
-  1) Failure:
-DHCPTest#test_dhclient [test/unit/dhcp_test.rb:9]:
-dhclient.errors=Internet Systems Consortium DHCP Client 4.3.3
-Copyright 2004-2015 Internet Systems Consortium.
-All rights reserved.
-For info, please visit https://www.isc.org/software/dhcp/
+Finished in 0.490027668 seconds.
+------
+1 tests, 1 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+0% passed
+------
+2.04 tests/s, 2.04 assertions/s
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/dhcp_test.rb"
+	User time (seconds): 1.22
+	System time (seconds): 0.09
+	Percent of CPU this job got: 73%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.79
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 32032
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 16
+	Minor (reclaiming a frame) page faults: 9808
+	Voluntary context switches: 58
+	Involuntary context switches: 138
+	Swaps: 0
+	File system inputs: 5488
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+'
+}
 
-can't create /var/lib/dhcp/dhclient.leases: Permission denied
-RTNETLINK answers: Operation not permitted
-Open a socket for LPF: Operation not permitted
-
-If you think you have received this message due to a bug rather
-than a configuration issue please read the section on submitting
-bugs on either our web page at www.isc.org or in the README file
-before submitting a bug.  These pages explain the proper
-process and the information we find helpful for debugging..
-
-exiting.
-.
-Expected /DHCPACK/ to match "Internet Systems Consortium DHCP Client 4.3.3\nCopyright 2004-2015 Internet Systems Consortium.\nAll rights reserved.\nFor info, please visit https://www.isc.org/software/dhcp/\n\ncan't create /var/lib/dhcp/dhclient.leases: Permission denied\nRTNETLINK answers: Operation not permitted\nOpen a socket for LPF: Operation not permitted\n\nIf you think you have received this message due to a bug rather\nthan a configuration issue please read the section on submitting\nbugs on either our web page at www.isc.org or in the README file\nbefore submitting a bug.  These pages explain the proper\nprocess and the information we find helpful for debugging..\n\nexiting.\n".
-
-6 runs, 2 assertions, 1 failures, 0 errors, 0 skips
-
+}

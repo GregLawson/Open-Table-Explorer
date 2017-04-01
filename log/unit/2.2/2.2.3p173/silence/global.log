@@ -1,281 +1,206 @@
-passed
-2016-02-01 18:31:56.214
-ruby -v -W0 test/unit/global_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-Run options: --seed 0
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 9, 11, Rational(50925515333, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test
+Started
+E
+===============================================================================
+Error: test_Acquisition_Interface_modules(GlobalTest): NameError: uninitialized constant GlobalTest::Generic_Table
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:182:in `test_Acquisition_Interface_modules\'
+     179:   end # test
+     180: 
+     181:   def test_Acquisition_Interface_modules
+  => 182:     assert(Generic_Table.module?)
+     183:     assert(AcquisitionInterface.ancestors.map(&:name).include?(\'Generic_Table\'), "Module not included in #{canonicalName} context.")
+     184:     assert_equal([], AcquisitionInterface.noninherited_modules) # because of STI Generic_Table is not directly included
+     185:     assert_includes(\'Generic_Table\', AcquisitionInterface.ancestors.map(&:name))
+===============================================================================
+E
+===============================================================================
+Error: test_Acquisition_Stream_Spec_modules(GlobalTest): NameError: uninitialized constant GlobalTest::Generic_Table
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:172:in `test_Acquisition_Stream_Spec_modules\'
+     169:   end # def
+     170: 
+     171:   def test_Acquisition_Stream_Spec_modules
+  => 172:     assert(Generic_Table.module?)
+     173:     assert(!AcquisitionStreamSpec.module?)
+     174:     assert_equal([Generic_Table], AcquisitionStreamSpec.noninherited_modules)
+     175:     assert(AcquisitionStreamSpec.ancestors.map(&:name).include?(\'Generic_Table\'), "Module not included in #{canonicalName} context.")
+===============================================================================
+.E
+===============================================================================
+Error: test_instance_methods_from_class(GlobalTest): TypeError: no implicit conversion of Array into String
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:54:in `test_instance_methods_from_class\'
+     51:   end # set_inspect
+     52: 
+     53:   def test_instance_methods_from_class
+  => 54:     assert_includes(\'full_associated_models\', [\'full_associated_models\'])
+     55:     assert_includes(\'full_associated_models\', TestTable.instance_methods_from_class)
+     56:   end # instance_methods_from_class
+     57: 
+===============================================================================
+F
+===============================================================================
+Failure:
+  TestClass.instance_methods_from_class=[:publicInstanceMethod, :protectedInstanceMethod].
+  <false> is not true.
+test_instance_respond_to(GlobalTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:60:in `test_instance_respond_to\'
+     57: 
+     58:   def test_instance_respond_to
+     59:     assert(TestClass.respond_to?(:instance_respond_to?))
+  => 60:     assert(TestClass.instance_respond_to?(:instance_respond_to?), "TestClass.instance_methods_from_class=#{TestClass.instance_methods_from_class}")
+     61:   end # instance_respond_to
+     62: 
+     63:   def test_similar_methods
+===============================================================================
+..E
+===============================================================================
+Error: test_matching_methods_in_context(GlobalTest): NameError: uninitialized constant GlobalTest::Acquisition
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:165:in `test_matching_methods_in_context\'
+     162:   end # test
+     163: 
+     164:   def test_matching_methods_in_context
+  => 165:     testClass = Acquisition
+     166:     # error message too long	assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
+     167:     # error message too long		assert_equal([testClass.canonicalName,testClass.matching_instance_methods(//)],testClass.matching_methods_in_context(//)[0])
+     168:     # error message too long			assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
+===============================================================================
+E
+===============================================================================
+Error: test_module(GlobalTest): NameError: uninitialized constant GlobalTest::StreamPattern
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:141:in `test_module\'
+     138:   end # relationship
+     139: 
+     140:   def test_module
+  => 141:     assert(!StreamPattern.module?)
+     142:     assert(Generic_Table.module?)
+     143:   end # module
+     144: 
+===============================================================================
+E
+===============================================================================
+Error: test_module_included(GlobalTest): NameError: uninitialized constant GlobalTest::StreamPattern
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:161:in `test_module_included\'
+     158:   end # noninherited_modules
+     159: 
+     160:   def test_module_included
+  => 161:     assert(StreamPattern.module_included?(:Generic_Table))
+     162:   end # test
+     163: 
+     164:   def test_matching_methods_in_context
+===============================================================================
+E
+===============================================================================
+Error: test_noninherited_modules(GlobalTest): NameError: uninitialized constant GlobalTest::Generic_Table
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:146:in `test_noninherited_modules\'
+     143:   end # module
+     144: 
+     145:   def test_noninherited_modules
+  => 146:     assert(Generic_Table.module?)
+     147:     assert(!AcquisitionStreamSpec.module?)
+     148:     assert_includes(\'Generic_Table\', AcquisitionStreamSpec.ancestors.map(&:name))
+     149:     assert_equal([Generic_Table], Account.noninherited_modules)
+===============================================================================
+.F
+===============================================================================
+Failure: test_noninherited_public_instance_methods(GlobalTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:120:in `test_noninherited_public_instance_methods\'
+     117: 
+     118:   def test_noninherited_public_instance_methods
+     119:     assert_equal([:publicInstanceMethod], TestClass.public_instance_methods(false))
+  => 120:     assert_equal(Set.new(%w(publicInstanceMethod protectedInstanceMethod)), Set.new(TestClass.instance_methods(false)))
+     121:     assert_equal([:publicInstanceMethod], TestClass.new.noninherited_public_instance_methods)
+     122:   end # noninherited_public_instance_methods
+     123: 
+<#<Set: {"publicInstanceMethod", "protectedInstanceMethod"}>> expected but was
+<#<Set: {:publicInstanceMethod, :protectedInstanceMethod}>>
 
-# Running:
-
-.EEE..EE..E.self is Class NewTestClass::TestClass subclass of Object
+diff:
+? #<Set: {"publicInstanceMethod", "protectedInstanceMethod"}>
+?         :                       :                          
+===============================================================================
+E
+===============================================================================
+Error: test_objectClass(GlobalTest): NameError: uninitialized constant GlobalTest::Generic_Table
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:104:in `test_objectClass\'
+     101:   def test_objectClass
+     102:     assert_equal(\'Symbol\', :cat.objectClass)
+     103:     assert_equal(\'NilClass\', nil.objectClass)
+  => 104:     assert_equal(\'Module Generic_Table\', Generic_Table.objectClass)
+     105:     assert_equal(\'Fixnum\', 3.objectClass)
+     106:     assert_equal(\'Regexp\', /3/.objectClass)
+     107:   end # objectClass
+===============================================================================
+..E
+===============================================================================
+Error: test_object_identities(GlobalTest): NameError: uninitialized constant GlobalTest::StreamPattern
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:87:in `test_object_identities\'
+     84:   end # matching_class_methods
+     85: 
+     86:   def test_object_identities
+  => 87:     assert_match(\'<StreamPattern\', StreamPattern.new.object_identities)
+     88:     assert_match(/StreamPattern/, StreamPattern.new.object_identities)
+     89:     assert_match(/StreamPattern id: nil, name: nil, created_at: nil, updated_at: nil>>/, StreamPattern.new.object_identities)
+     90:     assert_match(/StreamPattern:0x[a-f0-9]+>,#<StreamPattern id: nil, name: nil, created_at: nil, updated_at: nil>>/, StreamPattern.new.object_identities)
+===============================================================================
+self is Class GlobalTest::TestClass subclass of Object
 obj is Symbol :cat
-Can't figure out relation between :cat and NewTestClass::TestClass
-.E.F.E.E.FF..
+Can\'t figure out relation between :cat and GlobalTest::TestClass
+.F
+===============================================================================
+Failure:
+  </\{4408\},\(\?-mix:3\),\/3\/>/> expected to be =~
+  <"#<Set: {/1/, /3/}>; <Regexp #13020640{3409401429866023428},(?-mix:1),/1/>, <Regexp #12779380{-3532665122890980477},(?-mix:3),/3/>">.
+test_set_inspect(GlobalTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:44:in `test_set_inspect\'
+     41:     assert_match(/\(\?-mix:3\),\/3\/>/, set.set_inspect)
+     42:     assert_match(/\(\?-mix:3\),\/3\/>/, set.set_inspect)
+     43:     assert_match(/\(?-mix:3\),\/3\/>/, set.set_inspect)
+  => 44:     assert_match(/\{4408\},\(\?-mix:3\),\/3\/>/, set.set_inspect)
+     45:     assert_match(/\{4408\},\(\?-mix:3\),\/3\/>/, set.set_inspect)
+     46:     assert_match(/ #[0-9-]+\{4408\},\(\?-mix:3\),\/3\/>/, set.set_inspect)
+     47:     assert_match(/\{[0-9]+\},\(\?-mix:1\),\/1\/>, <Regexp #[0-9-]+\{4408\},\(\?-mix:3\),\/3\/>/, set.set_inspect)
+===============================================================================
+..
 
-Finished in 0.016506s, 1514.6136 runs/s, 2423.3818 assertions/s.
+Finished in 0.176665367 seconds.
+------
+21 tests, 35 assertions, 3 failures, 9 errors, 0 pendings, 0 omissions, 0 notifications
+42.8571% passed
+------
+118.87 tests/s, 198.11 assertions/s
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb"
+	User time (seconds): 0.78
+	System time (seconds): 0.04
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.82
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 21160
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5416
+	Voluntary context switches: 3
+	Involuntary context switches: 78
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+'
+}
 
-  1) Error:
-NewTestClass#test_module_included:
-NameError: uninitialized constant NewTestClass::StreamPattern
-    test/unit/global_test.rb:139:in `test_module_included'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  2) Error:
-NewTestClass#test_Acquisition_Interface_modules:
-NameError: uninitialized constant NewTestClass::Generic_Table
-    test/unit/global_test.rb:157:in `test_Acquisition_Interface_modules'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  3) Error:
-NewTestClass#test_Acquisition_Stream_Spec_modules:
-NameError: uninitialized constant NewTestClass::Generic_Table
-    test/unit/global_test.rb:148:in `test_Acquisition_Stream_Spec_modules'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  4) Error:
-NewTestClass#test_matching_methods_in_context:
-NameError: uninitialized constant NewTestClass::Acquisition
-    test/unit/global_test.rb:142:in `test_matching_methods_in_context'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  5) Error:
-NewTestClass#test_noninherited_modules:
-NameError: uninitialized constant NewTestClass::Generic_Table
-    test/unit/global_test.rb:125:in `test_noninherited_modules'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  6) Error:
-NewTestClass#test_object_identities:
-NameError: uninitialized constant NewTestClass::StreamPattern
-    test/unit/global_test.rb:75:in `test_object_identities'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  7) Error:
-NewTestClass#test_module:
-NameError: uninitialized constant NewTestClass::StreamPattern
-    test/unit/global_test.rb:121:in `test_module'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
-  8) Failure:
-NewTestClass#test_noninherited_public_instance_methods [test/unit/global_test.rb:103]:
---- expected
-+++ actual
-@@ -1 +1 @@
--#<Set: {"publicInstanceMethod", "protectedInstanceMethod"}>
-+#<Set: {:publicInstanceMethod, :protectedInstanceMethod}>
-
-
-
-  9) Error:
-NewTestClass#test_objectClass:
-NameError: uninitialized constant NewTestClass::Generic_Table
-    test/unit/global_test.rb:90:in `test_objectClass'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
- 10) Error:
-NewTestClass#test_instance_methods_from_class:
-TypeError: no implicit conversion of Array into String
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:196:in `include?'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:196:in `assert_includes'
-    test/unit/global_test.rb:47:in `test_instance_methods_from_class'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-
-
- 11) Failure:
-NewTestClass#test_set_inspect [test/unit/global_test.rb:38]:
-Expected /\{4408\},\(\?-mix:3\),\/3\/>/ to match "#<Set: {/1/, /3/}>; <Regexp #5456160{3331666546887736198},(?-mix:1),/1/>, <Regexp #4407100{-888060733217056140},(?-mix:3),/3/>".
-
-
- 12) Failure:
-NewTestClass#test_instance_respond_to [test/unit/global_test.rb:52]:
-TestClass.instance_methods_from_class=[:publicInstanceMethod, :protectedInstanceMethod]
-
-25 runs, 40 assertions, 3 failures, 9 errors, 0 skips
-
+}

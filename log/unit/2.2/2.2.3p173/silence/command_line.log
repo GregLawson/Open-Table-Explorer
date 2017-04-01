@@ -1,16 +1,13 @@
-passed-interactive
-2016-05-02 04:40:13.564
-ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test
-Started
-No arguments
-..............................
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 8, 58, Rational(11074613828, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/command_line_test.rb',
+:output => '',
+:errors => {:rescue_exception => Timeout::Error.new()
 
-Finished in 88.330370718 seconds.
-------
-30 tests, 76 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
-------
-0.34 tests/s, 0.86 assertions/s
+}
 
+}

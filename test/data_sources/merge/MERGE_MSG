@@ -1,0 +1,6 @@
+Merge branch 'testing' into edited
+
+# Conflicts:
+#	app/models/generic_type.rb
+#	log/unit/2.2/2.2.3p173/silence/generic_type.log
+#	test/unit/generic_type_test.rb

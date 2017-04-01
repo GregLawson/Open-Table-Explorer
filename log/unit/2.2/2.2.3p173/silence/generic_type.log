@@ -1,10 +1,806 @@
-passed
-2016-02-01 18:31:54.657
-ruby -v -W0 test/unit/generic_type_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 9, 11, Rational(39118746952, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test
+Started
+E
+===============================================================================
+Error: test_DefinitionalConstants(GenericTypeRepoTest): Dry::Types::StructError: [GenericType.new] "name" (String) has invalid type for :name
+/var/lib/gems/2.3.0/gems/dry-types-0.8.1/lib/dry/types/struct/class_interface.rb:75:in `rescue in new\'
+/var/lib/gems/2.3.0/gems/dry-types-0.8.1/lib/dry/types/struct/class_interface.rb:69:in `new\'
+/var/lib/gems/2.3.0/gems/dry-types-0.8.1/lib/dry/types/value.rb:9:in `new\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/class.rb:30:in `constructor_inject\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/function.rb:47:in `call\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/function.rb:47:in `call\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/array.rb:50:in `block in map_array!\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/array.rb:50:in `map!\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/array.rb:50:in `map_array!\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/array.rb:41:in `map_array\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/function.rb:47:in `call\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/function.rb:47:in `call\'
+/var/lib/gems/2.3.0/gems/rom-mapper-0.4.0/lib/rom/mapper.rb:93:in `block in call\'
+/var/lib/gems/2.3.0/gems/rom-mapper-0.4.0/lib/rom/mapper.rb:93:in `each\'
+/var/lib/gems/2.3.0/gems/rom-mapper-0.4.0/lib/rom/mapper.rb:93:in `reduce\'
+/var/lib/gems/2.3.0/gems/rom-mapper-0.4.0/lib/rom/mapper.rb:93:in `call\'
+/var/lib/gems/2.3.0/gems/rom-2.0.0/lib/rom/relation/composite.rb:22:in `call\'
+/var/lib/gems/2.3.0/gems/rom-repository-0.3.1/lib/rom/repository/relation_proxy.rb:50:in `call\'
+/var/lib/gems/2.3.0/gems/rom-2.0.0/lib/rom/relation/materializable.rb:20:in `to_a\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:471:in `all\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:703:in `test_DefinitionalConstants\'
+     700: 														rails_type: \'rails_type\',
+     701: 														ruby_conversion: \'ruby_conversion\',
+     702: 													)
+  => 703: 		refute_empty(GenericTypeRepo::Generic_type_repo.all, GenericTypeRepo::Generic_type_repo.inspect)
+     704: 		assert_equal([example], GenericTypeRepo::Generic_type_repo.all, GenericTypeRepo::Generic_type_repo.inspect)
+     705: #		assert_equal([example.as(GenericType)], GenericTypeRepo::Generic_type_repo.all, GenericTypeRepo::Generic_type_repo.inspect)
+     706: 
+===============================================================================
+.......E
+===============================================================================
+Error: test_all(GenericTypeRepoTest): Dry::Types::StructError: [GenericType.new] "name" (String) has invalid type for :name
+/var/lib/gems/2.3.0/gems/dry-types-0.8.1/lib/dry/types/struct/class_interface.rb:75:in `rescue in new\'
+/var/lib/gems/2.3.0/gems/dry-types-0.8.1/lib/dry/types/struct/class_interface.rb:69:in `new\'
+/var/lib/gems/2.3.0/gems/dry-types-0.8.1/lib/dry/types/value.rb:9:in `new\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/class.rb:30:in `constructor_inject\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/function.rb:47:in `call\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/function.rb:47:in `call\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/array.rb:50:in `block in map_array!\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/array.rb:50:in `map!\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/array.rb:50:in `map_array!\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/array.rb:41:in `map_array\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/function.rb:47:in `call\'
+/var/lib/gems/2.3.0/gems/transproc-0.4.0/lib/transproc/function.rb:47:in `call\'
+/var/lib/gems/2.3.0/gems/rom-mapper-0.4.0/lib/rom/mapper.rb:93:in `block in call\'
+/var/lib/gems/2.3.0/gems/rom-mapper-0.4.0/lib/rom/mapper.rb:93:in `each\'
+/var/lib/gems/2.3.0/gems/rom-mapper-0.4.0/lib/rom/mapper.rb:93:in `reduce\'
+/var/lib/gems/2.3.0/gems/rom-mapper-0.4.0/lib/rom/mapper.rb:93:in `call\'
+/var/lib/gems/2.3.0/gems/rom-2.0.0/lib/rom/relation/composite.rb:22:in `call\'
+/var/lib/gems/2.3.0/gems/rom-repository-0.3.1/lib/rom/repository/relation_proxy.rb:50:in `call\'
+/var/lib/gems/2.3.0/gems/rom-2.0.0/lib/rom/relation/materializable.rb:20:in `to_a\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:471:in `all\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:714:in `test_all\'
+     711: 	
+     712: 	def test_all
+     713: 		GenericTypeRepo.assert_post_conditions
+  => 714: 		refute_empty(GenericTypeRepo::Generic_type_repo.all, GenericTypeRepo::Generic_type_repo.inspect)
+     715: 		assert_instance_of(GenericType, GenericTypeRepo::Generic_type_repo.all[0], GenericTypeRepo::Generic_type_repo.inspect)
+     716: #		assert_equal(GenericType.all, GenericTypeRepo::Generic_type_repo.all)
+     717: 	end # all
+===============================================================================
+E
+===============================================================================
+Error: test_assert_no_generalize_cycle(GenericTypeRepoTest): TypeError: #<GenericTypeRepo:0x00000002c7c7a0 @container=#<ROM::Container gateways={:default=>#<ROM::SQL::Gateway:0x00000003680e68 @connection=#<Sequel::SQLite::Database: "sqlite:db/generic_type.sqlite3">, @migrator=#<ROM::SQL::Migration::Migrator:0x00000002c8fe18 @path="db/migrate", @options={:path=>"db/migrate"}, @connection=#<Sequel::SQLite::Database: "sqlite:db/generic_type.sqlite3">>, @options={:migrator=>#<ROM::SQL::Migration::Migrator:0x00000002c8fe18 @path="db/migrate", @options={:path=>"db/migrate"}, @connection=#<Sequel::SQLite::Database: "sqlite:db/generic_type.sqlite3">>}, @schema=[:generic_types]>} relations=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>}> mappers=#<ROM::Registry elements={}> commands=#<ROM::Registry elements={}>>, @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @generic_types=#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 ...>}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 ...>}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>, @relations=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>, @root=#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 ...>}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 ...>}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>, @__commands__=#<Concurrent::Map:0x000000038b11d8 entries=1 default_proc=nil>> is not a class/module
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:763:in `test_assert_no_generalize_cycle\'
+     760:   end # assert_post_conditions
+     761: 
+     762: 	def test_assert_no_generalize_cycle(previous_generalizations = [])
+  => 763: 		assert_equal(GenericTypeRepo::Generic_type_repo::Most_general.generalize.to_sym, GenericTypeRepo::Generic_type_repo::Most_general.name)
+     764: 		assert_equal([], GenericTypeRepo::Generic_type_repo::Most_general.assert_no_generalize_cycle)
+     765: 		assert(GenericTypeRepo::Generic_type_repo.all.any? {|g| g.assert_no_generalize_cycle.empty?})
+     766: 		refute(GenericTypeRepo::Generic_type_repo.all.all? {|g| g.assert_no_generalize_cycle.empty?})
+===============================================================================
+.E
+===============================================================================
+Error: test_by_id(GenericTypeRepoTest):
+  NoMethodError: undefined method `all\' for #<Hash:0x00000003b3c560>
+  Did you mean?  all?
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:721:in `test_by_id\'
+     718: 
+     719: 	def test_by_id
+     720: 		first_generic_type = GenericTypeRepo::Generic_type_repo.by_id(1)
+  => 721: 		message = "first_generic_type(1)=#{first_generic_type.inspect} should be in #{first_generic_type.all.map(&:name).inspect}"
+     722: #		message = "first_generic_type(1)=#{first_generic_type.inspect} should be in #{first_generic_type.all.map(&:name).inspect}"
+     723: 	end # by_id
+     724: 	
+===============================================================================
+F
+===============================================================================
+Failure:
+  #<ROM::Repository::RelationProxy:0x00000003c16f58 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={:model=>GenericType}, @registry=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>, :meta=>{:model=>GenericType}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` WHERE (`name` = \'lower\') ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types)>.
+  <#<ROM::Repository::RelationProxy:0x00000003c16f58
+   @mappers=
+    #<ROM::Repository::MapperBuilder:0x00000002c7c778
+     @header_builder=
+      #<ROM::Repository::HeaderBuilder:0x00000002c7c750
+       @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>,
+   @meta={:model=>GenericType},
+   @name=ROM::Relation::Name(generic_types),
+   @options=
+    {:name=>:generic_types,
+     :mappers=>
+      #<ROM::Repository::MapperBuilder:0x00000002c7c778
+       @header_builder=
+        #<ROM::Repository::HeaderBuilder:0x00000002c7c750
+         @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>,
+     :registry=>
+      #<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>,
+     :meta=>{:model=>GenericType}},
+   @registry=
+    #<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>,
+   @relation=
+    #<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` WHERE (`name` = \'lower\') ORDER BY `generic_types`.`id`">>>> expected to be instance_of?
+  <GenericType> but was
+  <ROM::Repository::RelationProxy>.
+test_by_name(GenericTypeRepoTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:735:in `test_by_name\'
+     732:     refute_nil(macro_generic_type, message)
+     733:     assert_kind_of(ROM::Repository::RelationProxy, macro_generic_type, message)
+     734: 		assert_include(macro_generic_type.methods, :one, message)
+  => 735:     assert_instance_of(GenericType, macro_generic_type, message)
+     736:     assert_equal(macro_name.to_sym, macro_generic_type.one.name, message)
+     737: #    assert_instance_of(GenericType, macro_generic_type, message)
+     738: 
+===============================================================================
+F
+===============================================================================
+Failure: test_dry(GenericTypeRepoTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:675:in `test_dry\'
+     672: 	def test_dry
+     673: 		top_level_types = [:String,  :Int, :Float, :Decimal, :Array, :Hash, :Nil, :Symbol, :Class, :True,
+     674: 			:False, :Date, :DateTime, :Time, :Strict, :Coercible, :Maybe, :Optional, :Bool, :Form, :Json]
+  => 675: 		assert_equal(top_level_types, Types.constants - [GenericType])
+     676: 		type_tree = top_level_types.map do |type_name|
+     677: 			type = eval(\'Types::\' + type_name.to_s)
+     678: 			if type.methods.include?(:constants)
+<[:String,
+ :Int,
+ :Float,
+ :Decimal,
+ :Array,
+ :Hash,
+ :Nil,
+ :Symbol,
+ :Class,
+ :True,
+ :False,
+ :Date,
+ :DateTime,
+ :Time,
+ :Strict,
+ :Coercible,
+ :Maybe,
+ :Optional,
+ :Bool,
+ :Form,
+ :Json]> expected but was
+<[:String,
+ :Int,
+ :Float,
+ :Decimal,
+ :Array,
+ :Hash,
+ :Nil,
+ :Symbol,
+ :Class,
+ :True,
+ :False,
+ :Date,
+ :DateTime,
+ :Time,
+ :Strict,
+ :Coercible,
+ :Maybe,
+ :Optional,
+ :Bool,
+ :Form,
+ :Json,
+ :GenericType]>
 
-/usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- test/test_helper (LoadError)
-	from /usr/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/generic_type_assertions.rb:8:in `<top (required)>'
-	from test/unit/generic_type_test.rb:9:in `require_relative'
-	from test/unit/generic_type_test.rb:9:in `<main>'
+diff:
+  [:String,
+   :Int,
+   :Float,
+   :Decimal,
+   :Array,
+   :Hash,
+   :Nil,
+   :Symbol,
+   :Class,
+   :True,
+   :False,
+   :Date,
+   :DateTime,
+   :Time,
+   :Strict,
+   :Coercible,
+   :Maybe,
+   :Optional,
+   :Bool,
+   :Form,
+?  :Json]
+?       ,
++  :GenericType]
+===============================================================================
+F
+===============================================================================
+Failure:
+  <[:assert_pre_conditions,
+   :assert_post_conditions,
+   :primary_key_index,
+   :inherited,
+   :root,
+   :defines,
+   :[],
+   :commands,
+   :relations,
+   :yaml_tag,
+   :new,
+   :allocate,
+   :superclass,
+   :json_creatable?,
+   :class_attribute,
+   :superclass_delegating_accessor,
+   :superclass_delegating_accessor_with_deprecation,
+   :superclass_delegating_accessor_without_deprecation,
+   :descendants,
+   :subclasses,
+   :module_exec,
+   :class_exec,
+   :module_eval,
+   :class_eval,
+   :included_modules,
+   :include?,
+   :name,
+   :ancestors,
+   :instance_methods,
+   :public_instance_methods,
+   :protected_instance_methods,
+   :private_instance_methods,
+   :constants,
+   :const_get,
+   :const_set,
+   :const_defined?,
+   :class_variables,
+   :remove_class_variable,
+   :class_variable_get,
+   :class_variable_set,
+   :class_variable_defined?,
+   :public_constant,
+   :private_constant,
+   :deprecate_constant,
+   :singleton_class?,
+   :method_defined?,
+   :private_method_defined?,
+   :cattr_accessor,
+   :private_class_method,
+   :cattr_writer,
+   :public_method_defined?,
+   :cattr_reader,
+   :mattr_reader,
+   :public_class_method,
+   :psych_yaml_as,
+   :mattr_accessor,
+   :mattr_writer,
+   :yaml_as,
+   :<,
+   :>,
+   :protected_method_defined?,
+   :delegate,
+   :default_message,
+   :deprecate,
+   :remove_possible_method,
+   :redefine_method,
+   :ruby_lines_storage,
+   :parent_name,
+   :local_constants,
+   :anonymous?,
+   :reachable?,
+   :attr_internal_reader,
+   :<=>,
+   :attr_internal_writer,
+   :<=,
+   :>=,
+   :==,
+   :===,
+   :alias_method_chain,
+   :attr_internal_accessor,
+   :attr_internal,
+   :pretty_print,
+   :alias_attribute,
+   :qualified_const_defined?,
+   :qualified_const_get,
+   :prepend,
+   :qualified_const_set,
+   :instance_methods_from_class,
+   :instance_respond_to?,
+   :similar_methods,
+   :matching_instance_methods,
+   :matching_class_methods,
+   :freeze,
+   :inspect,
+   :const_missing,
+   :to_s,
+   :autoload,
+   :autoload?,
+   :pretty_print_cycle,
+   :parent,
+   :parents,
+   :instance_method,
+   :public_instance_method,
+   :include,
+   :concerning,
+   :concern,
+   :`,
+   :to_yaml,
+   :to_yaml_properties,
+   :blank?,
+   :info,
+   :acts_like?,
+   :as_json,
+   :present?,
+   :presence,
+   :to_param,
+   :to_query,
+   :try,
+   :try!,
+   :duplicable?,
+   :deep_dup,
+   :in?,
+   :presence_in,
+   :instance_values,
+   :instance_variable_names,
+   :to_json_with_active_support_encoder,
+   :to_json_without_active_support_encoder,
+   :to_json,
+   :with_options,
+   :html_safe?,
+   :caller_lines,
+   :canonicalName,
+   :noninherited_public_instance_methods,
+   :module_included?,
+   :object_identities,
+   :objectClass,
+   :objectKind,
+   :objectName,
+   :noninherited_public_class_methods,
+   :whoAmI,
+   :relationship,
+   :module?,
+   :noninherited_modules,
+   :method_contexts,
+   :context_names,
+   :method_context,
+   :matching_methods_in_context,
+   :psych_to_yaml,
+   :enumerate,
+   :enumerate_single,
+   :pretty_print_instance_variables,
+   :pretty_print_inspect,
+   :assert_raise,
+   :flunk,
+   :assert_raises,
+   :assert_equal,
+   :assert_raise_kind_of,
+   :assert_kind_of,
+   :assert_not_instance_of,
+   :refute_instance_of,
+   :assert_nil,
+   :assert_not_kind_of,
+   :assert_includes,
+   :refute_kind_of,
+   :assert_not_respond_to,
+   :refute_respond_to,
+   :assert_same,
+   :assert,
+   :assert_operator,
+   :assert_not_operator,
+   :refute_operator,
+   :assert_nothing_raised,
+   :add_assertion,
+   :assert_not_same,
+   :refute_same,
+   :assert_not_equal,
+   :assert_not_nil,
+   :assert_not_match,
+   :refute_match,
+   :assert_no_match,
+   :assert_throw,
+   :assert_throws,
+   :assert_nothing_thrown,
+   :assert_instance_of,
+   :assert_in_delta,
+   :refute_nil,
+   :assert_not_in_delta,
+   :refute_in_delta,
+   :refute_includes,
+   :assert_in_epsilon,
+   :assert_not_in_epsilon,
+   :refute_in_epsilon,
+   :assert_send,
+   :refute_empty,
+   :assert_not_send,
+   :assert_boolean,
+   :refute,
+   :assert_true,
+   :assert_false,
+   :assert_compare,
+   :assert_fail_assertion,
+   :assert_raise_message,
+   :assert_const_defined,
+   :assert_not_const_defined,
+   :assert_predicate,
+   :assert_not_predicate,
+   :refute_predicate,
+   :assert_alias_method,
+   :assert_include,
+   :assert_path_exist,
+   :assert_path_not_exist,
+   :assert_not_include,
+   :assert_not_includes,
+   :assert_not_empty,
+   :assert_empty,
+   :build_message,
+   :assert_block,
+   :assert_respond_to,
+   :refute_equal,
+   :assert_match,
+   :instance_of?,
+   :public_send,
+   :instance_variable_get,
+   :instance_variable_set,
+   :instance_variable_defined?,
+   :remove_instance_variable,
+   :private_methods,
+   :kind_of?,
+   :instance_variables,
+   :tap,
+   :method,
+   :public_method,
+   :singleton_method,
+   :silence,
+   :is_a?,
+   :add_default_message,
+   :extend,
+   :trace_names?,
+   :newline_if_not_empty,
+   :trace_value,
+   :define_singleton_method,
+   :trace_to_s,
+   :to_enum,
+   :enum_for,
+   :pretty_inspect,
+   :trace,
+   :=~,
+   :!~,
+   :eql?,
+   :respond_to?,
+   :silence_warnings,
+   :display,
+   :object_id,
+   :suppress,
+   :send,
+   :silence_stderr,
+   :silence_stream,
+   :with_warnings,
+   :enable_warnings,
+   :capture,
+   :quietly,
+   :nil?,
+   :hash,
+   :class,
+   :singleton_class,
+   :clone,
+   :dup,
+   :itself,
+   :taint,
+   :tainted?,
+   :untaint,
+   :untrust,
+   :trust,
+   :untrusted?,
+   :methods,
+   :protected_methods,
+   :frozen?,
+   :public_methods,
+   :singleton_methods,
+   :!,
+   :!=,
+   :__send__,
+   :equal?,
+   :instance_eval,
+   :instance_exec,
+   :__id__]> expected to include
+  <:data_source_yaml>.
+test_primary_key_index(GenericTypeRepoTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:570:in `test_primary_key_index\'
+     567: 			assert_includes(NoDB::ClassMethods.instance_methods(true), :data_source_yaml, message)
+     568: #			assert_includes(NoDB.methods(true), :data_source_yaml, message)
+     569: 
+  => 570: 			assert_includes(GenericTypeRepo.methods(true), :data_source_yaml, message)
+     571: #			assert_includes(GenericTypeRepo::Generic_type_repo.methods(true), :data_source_yaml, message)
+     572: 			yaml_table_name = \'generic_types\'
+     573: #			unit_data_source_directory = RailsishRubyUnit::Executable.data_sources_directory?
+===============================================================================
+.......E
+===============================================================================
+Error: test_all(GenericTypeTest): RuntimeError: can\'t modify frozen GenericType
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:326:in `assert_pre_conditions\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:127:in `block in test_all\'
+     124: 		def test_all
+     125: 			refute_includes(GenericType.all.map(&:name), nil, GenericType::DefinitionalConstants::Primary_key_index.inspect)
+     126: 			GenericType.all.each do |generic_type|
+  => 127: 				generic_type.assert_pre_conditions
+     128: 			end # each_pair
+     129: 			assert_includes(GenericType.all, Text, GenericType::DefinitionalConstants::Primary_key_index.inspect)
+     130: 		end # all
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:126:in `each\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:126:in `test_all\'
+===============================================================================
+E
+===============================================================================
+Error: test_assert_no_generalize_cycle(GenericTypeTest): RuntimeError: can\'t modify frozen GenericType
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:326:in `assert_pre_conditions\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:341:in `assert_no_generalize_cycle\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:526:in `test_assert_no_generalize_cycle\'
+     523: 	
+     524: 	def test_assert_no_generalize_cycle
+     525: 		assert_equal(GenericType::Most_general.generalize.to_sym, GenericType::Most_general.name)
+  => 526: 		assert_equal([], GenericType::Most_general.assert_no_generalize_cycle)
+     527: 		assert(GenericType.all.any? {|g| g.assert_no_generalize_cycle.empty?})
+     528: 		refute(GenericType.all.all? {|g| g.assert_no_generalize_cycle.empty?})
+     529: 		assert_instance_of(GenericType, Digit)
+===============================================================================
+F
+===============================================================================
+Failure: test_assert_specialized_examples(GenericTypeTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:498:in `test_assert_specialized_examples\'
+     495: 
+     496:   def test_assert_specialized_examples
+     497:     regexp = GenericType.find_by_name(\'word\')[:data_regexp]
+  => 498:     assert_equal(2, regexp.size)
+     499:     assert_equal(\'\w\', regexp)
+     500:     assert_equal(/\w/, Regexp.new(regexp))
+     501:     #	assert_equal(\'\w\', RegexpTree.string_of_matching_chars(/\w/))
+<2> expected but was
+<18>
+===============================================================================
+F
+===============================================================================
+Failure: test_common_matches(GenericTypeTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:469:in `test_common_matches\'
+     466:                        Text.generalize.common_matches?(string_to_match)
+     467:     end # if
+     468:     assert_instance_of(Array, common_matches)
+  => 469:     assert_equal([VARCHAR, [Integer]], common_matches)
+     470:     assert_instance_of(Array, Text.common_matches?(\'123\'))
+     471: #    assert_equal([Text, [VARCHAR, [Integer]]], Text.common_matches?(\'123\'))
+     472:     mac_example = \'12:34:56:78\'
+<[#<GenericType name=:VARCHAR data_regexp="(?-mix:[\\\\000-\\\\377]{0,255})" generalize=:Text_Column rails_type="string" ruby_conversion="str">,
+ [#<GenericType name=:Integer_Column data_regexp="(?-mix:[[:digit:]]+)" generalize=:VARCHAR rails_type="integer" ruby_conversion="str.to_i">]]> expected but was
+<[[#<GenericType name=:VARCHAR data_regexp="(?-mix:[\\\\000-\\\\377]{0,255})" generalize=:Text_Column rails_type="string" ruby_conversion="str">,
+  [[#<GenericType name=:Byte data_regexp="(?-mix:[\\\\000-\\\\377])" generalize=:VARCHAR rails_type="" ruby_conversion="str">,
+    [[#<GenericType name=:ascii data_regexp="(?-mix:[[:ascii:]])" generalize=:Byte rails_type="" ruby_conversion="str">,
+      [[#<GenericType name=:cntrl data_regexp="(?-mix:[[:cntrl:]])" generalize=:ascii rails_type="" ruby_conversion="str">,
+        #<GenericType name=:print data_regexp="(?-mix:[[:print:]])" generalize=:ascii rails_type="" ruby_conversion="str">,
+        [[#<GenericType name=:graph data_regexp="(?-mix:[[:graph:]])" generalize=:print rails_type="" ruby_conversion="str">,
+          [[#<GenericType name=:punct data_regexp="(?-mix:[[:punct:]])" generalize=:graph rails_type="" ruby_conversion="str">,
+            #<GenericType name=:word data_regexp="(?-mix:[[:word:]])" generalize=:graph rails_type="" ruby_conversion="str">,
+            [[#<GenericType name=:alnum data_regexp="(?-mix:[[:alnum:]])" generalize=:word rails_type="" ruby_conversion="str">,
+              [[#<GenericType name=:xdigit data_regexp="(?-mix:[[:xdigit:]])" generalize=:alnum rails_type="" ruby_conversion="str">,
+                [[#<GenericType name=:digit data_regexp="(?-mix:[[:digit:]])" generalize=:xdigit rails_type="" ruby_conversion="str">]],
+                #<GenericType name=:alpha data_regexp="(?-mix:[[:alpha:]])" generalize=:alnum rails_type="" ruby_conversion="str">,
+                [[#<GenericType name=:lower data_regexp="(?-mix:[[:lower:]])" generalize=:alpha rails_type="" ruby_conversion="str">,
+                  #<GenericType name=:upper data_regexp="(?-mix:[[:upper:]])" generalize=:alpha rails_type="" ruby_conversion="str">]]]]]]]]]],
+        #<GenericType name=:space data_regexp="(?-mix:[[:space:]])" generalize=:ascii rails_type="" ruby_conversion="str">,
+        [[#<GenericType name=:blank data_regexp="(?-mix:[[:blank:]])" generalize=:space rails_type="" ruby_conversion="str">]]]]]],
+    #<GenericType name=:Integer_Column data_regexp="(?-mix:[[:digit:]]+)" generalize=:VARCHAR rails_type="integer" ruby_conversion="str.to_i">,
+    #<GenericType name=:Float_Column data_regexp="(?-mix:[0-9]*\\.[0-9]+)" generalize=:VARCHAR rails_type="float" ruby_conversion="str.to_f">,
+    #<GenericType name=:Macaddr_Column data_regexp="(?-mix:[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){3})" generalize=:VARCHAR rails_type="string" ruby_conversion="str.upcase">,
+    #<GenericType name=:Time_Column data_regexp="(?-mix:[0-9]+:[0-9.]+( ?[PApa][Mm])?)" generalize=:VARCHAR rails_type="time" ruby_conversion="Time.parse(str)">,
+    #<GenericType name=:Timestamp_Column data_regexp="(?-mix:([0-9]{1,4}\\/|[ADFJMNOS][a-z]+ )[0-9][0-9][, \\/][0-9]{2,4}( [0-9]+:[0-9.]+( ?[PApa][Mm])?)?)" generalize=:VARCHAR rails_type="timestamp" ruby_conversion="Time.parse(str)">,
+    #<GenericType name=:NULL_Column data_regexp="(?-mix:\\s*)" generalize=:VARCHAR rails_type="nil" ruby_conversion="nil">,
+    #<GenericType name=:Boolean_Column data_regexp="(?-mix:[Ff][Aa][Ll][Ss][Ee])" generalize=:VARCHAR rails_type="boolean" ruby_conversion="eval(str.downcase)">,
+    #<GenericType name=:Inet_Column data_regexp="(?-mix:[0-9.]{1,3}\\.[0-9.]{1,3}\\.[0-9.]{1,3}\\.[0-9.]{1,3}(\\/[1-3]?[0-9])?)" generalize=:VARCHAR rails_type="inet" ruby_conversion="IPAddr.new(str)">]]]]>
+===============================================================================
+E
+===============================================================================
+Error: test_expand(GenericTypeTest):
+  NameError: uninitialized constant GenericTypeTest::RegexpTree
+  Did you mean?  RegexpParseType
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:327:in `test_expand\'
+     324:   def test_expand
+     325:     regexp = Macaddr[:data_regexp]
+     326:     assert_regexp(regexp)
+  => 327:     parse = RegexpTree.new(regexp)
+     328:     macro_name = RegexpTree.macro_call?(parse)
+     329:     refute_equal(macro_name, Macaddr.name)
+     330:     expansion = parse.map_branches do |branch|
+===============================================================================
+E
+===============================================================================
+Error: test_expansion_termination(GenericTypeTest):
+  NameError: uninitialized constant GenericTypeTest::RegexpTree
+  Did you mean?  RegexpParseType
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:317:in `test_expansion_termination\'
+     314:   def test_expansion_termination
+     315:     regexp = Xdigit[:data_regexp]
+     316:     assert_regexp(regexp)
+  => 317:     parse = RegexpTree.new(regexp)[0]
+     318:     macro_name = RegexpTree.macro_call?(parse)
+     319:     assert_instance_of(String, macro_name)
+     320:     assert_equal(Xdigit.name, macro_name)
+===============================================================================
+...E
+===============================================================================
+Error: test_id_equal(GenericTypeTest): NoMethodError: undefined method `model_class?\' for #<GenericTypeTest:0x00000003804b40>
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:507:in `test_id_equal\'
+     504:   end # assert_specialized_examples
+     505: 
+     506:   def test_id_equal
+  => 507:     assert(!model_class?.sequential_id?, "model_class?=#{model_class?}, should not be a sequential_id.")
+     508:     assert_test_id_equal
+     509:   end # id_equal
+     510: 
+===============================================================================
+.E
+===============================================================================
+Error: test_match(GenericTypeTest):
+  NameError: uninitialized constant GenericType::RegexpTree
+  Did you mean?  RegexpParseType
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:190:in `expand\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:352:in `test_match\'
+     349:   end # expand
+     350: 
+     351:   def test_match
+  => 352:     regexp = Regexp.new(Text.expand.join)
+     353:     assert_regexp(regexp)
+     354:     string_to_match = \'123\'
+     355:     assert_match(regexp, string_to_match)
+===============================================================================
+E
+===============================================================================
+Error: test_match_Start(GenericTypeTest):
+  NameError: uninitialized constant GenericType::RegexpTree
+  Did you mean?  RegexpParseType
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:190:in `expand\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:360:in `test_match_Start\'
+     357:   end # match
+     358: 
+     359:   def test_match_Start
+  => 360:     regexp = Regexp.new(Text.expand.join)
+     361:     assert_regexp(regexp)
+     362:     string_to_match = \'123\'
+     363:     assert_match(regexp, string_to_match)
+===============================================================================
+E
+===============================================================================
+Error: test_match_any(GenericTypeTest):
+  NameError: uninitialized constant GenericType::RegexpTree
+  Did you mean?  RegexpParseType
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:190:in `expand\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:376:in `test_match_any\'
+     373:   end # match_end
+     374: 
+     375:   def test_match_any
+  => 376:     regexp = Regexp.new(Text.expand.join)
+     377:     assert_regexp(regexp)
+     378:     string_to_match = \'123\'
+     379:     assert_match(regexp, string_to_match)
+===============================================================================
+E
+===============================================================================
+Error: test_match_end(GenericTypeTest):
+  NameError: uninitialized constant GenericType::RegexpTree
+  Did you mean?  RegexpParseType
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:190:in `expand\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:368:in `test_match_end\'
+     365:   end # match_start
+     366: 
+     367:   def test_match_end
+  => 368:     regexp = Regexp.new(Text.expand.join)
+     369:     assert_regexp(regexp)
+     370:     string_to_match = \'123\'
+     371:     assert_match(regexp, string_to_match)
+===============================================================================
+.E
+===============================================================================
+Error: test_most_specialized(GenericTypeTest): RuntimeError: can\'t modify frozen GenericType
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/generic_type_assertions.rb:55:in `assert_common_matches\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:435:in `test_most_specialized\'
+     432:   end # possibilities
+     433: 
+     434:   def test_most_specialized
+  => 435:     Lower.assert_common_matches([:lower], \'l\')
+     436:     Lower.assert_most_specialized([:lower], \'l\')
+     437:     Digit.assert_common_matches([:xdigit], \'c\')
+     438:     Digit.assert_most_specialized([:xdigit], \'c\')
+===============================================================================
+.E
+===============================================================================
+Error: test_possibilities(GenericTypeTest): NoMethodError: undefined method `map_recursive\' for #<Array:0x00000003a3c188>
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:422:in `test_possibilities\'
+     419:     assert_equal([:lower, :xdigit], Ascii.possibilities?(fork).map { |s| s.name.to_sym })
+     420:     ambiguity = [Alnum, [Alpha, [Lower], Xdigit]]
+     421:     assert_equal([:lower, :xdigit], Ascii.possibilities?(ambiguity).map { |s| s.name.to_sym })
+  => 422:     assert_equal([:print, [:graph, [:word, [:alnum, [:alpha, [:lower], :xdigit]]]]], Ascii.specializations_that_match?(\'c\').map_recursive { |s| s.name.to_sym }, Ascii.specializations_that_match?(\'c\').map_recursive { |s| s.name.to_sym }.inspect)
+     423:     assert_equal([:alpha, [:lower], :xdigit], Alnum.specializations_that_match?(\'c\').map_recursive { |s| s.name.to_sym }, Alnum.specializations_that_match?(\'c\').map_recursive { |s| s.name.to_sym }.inspect)
+     424:     assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches).map { |p| p.name.to_sym }, message)
+     425:     assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches[1]).map { |p| p.name.to_sym }, message)
+===============================================================================
+E
+===============================================================================
+Error: test_primary_key_index(GenericTypeTest): RuntimeError: can\'t modify frozen GenericType
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:326:in `assert_pre_conditions\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:111:in `block in test_primary_key_index\'
+     108: 														ruby_conversion: value[\'ruby_conversion\'] 
+     109: 													)
+     110: 				refute_nil(ret[name].name, ret[name].inspect)
+  => 111: 				ret[name].assert_pre_conditions
+     112: 			end # each_pair
+     113: 			ret.each_pair do |key, value|
+     114: 				value.assert_pre_conditions
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:91:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:91:in `test_primary_key_index\'
+===============================================================================
+.F
+===============================================================================
+Failure:
+  ROM.
+  <[]> expected to include
+  <:setup>.
+test_rom_yaml(GenericTypeTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:41:in `test_rom_yaml\'
+     38: 			data_source_file = \'test/fixtures/\' + yaml_table_name + \'.yml\'
+     39: 			assert_equal([], ROM.container.methods(false))
+     40: #			assert_equal({}, ROM.env, ROM.inspect)
+  => 41: 			assert_includes(ROM.container.methods(false), :setup, ROM.inspect)
+     42: 			assert_includes(ROM.methods(false), :setup)
+     43: 			ROM.setup(:yaml, data_source_file)
+     44: 			rom = ROM.finalize.env
+===============================================================================
+E
+===============================================================================
+Error: test_specializations_that_match(GenericTypeTest):
+  NameError: uninitialized constant GenericTypeTest::NestedArray
+  Did you mean?  NestedArrayType
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:396:in `test_specializations_that_match\'
+     393:       end # if
+     394:     end.compact.uniq # map
+     395:     assert_equal(ret, ret.compact)
+  => 396:     assert_equal([[VARCHAR, [Integer]]], ret, NestedArray.new(ret).map_recursive(&:name).inspect)
+     397:     assert_instance_of(NestedArray, Text.specializations_that_match?(string_to_match))
+     398:     assert(Lower.unspecialized?)
+     399:     assert(!Alpha.unspecialized?)
+===============================================================================
+..
+
+Finished in 0.705996724 seconds.
+------
+47 tests, 529 assertions, 6 failures, 17 errors, 0 pendings, 0 omissions, 0 notifications
+51.0638% passed
+------
+66.57 tests/s, 749.30 assertions/s
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb"
+	User time (seconds): 2.31
+	System time (seconds): 0.21
+	Percent of CPU this job got: 97%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.58
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 51708
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 2
+	Minor (reclaiming a frame) page faults: 13082
+	Voluntary context switches: 6
+	Involuntary context switches: 250
+	Swaps: 0
+	File system inputs: 440
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+'
+}
+
+}

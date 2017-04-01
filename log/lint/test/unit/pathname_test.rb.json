@@ -1,0 +1,3 @@
+{"metadata":{"rubocop_version":"0.39.0","ruby_engine":"ruby","ruby_version":"2.2.4","ruby_patchlevel":"230","ruby_platform":"x86_64-linux-gnu"},"files":[{"path":"test/unit/pathname_test.rb","offenses":[
+{"severity":"convention","message":"Assignment Branch Condition size for test_Examples is too high. [17.12/15] (http://c2.com/cgi/wiki?AbcMetric)","cop_name":"Metrics/AbcSize","corrected":null,"location":{"line":21,"column":3,"length":3}},
+{"severity":"convention","message":"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)","cop_name":"Style/MethodName","corrected":null,"location":{"line":21,"column":7,"length":13}}]}],"summary":{"offense_count":2,"target_file_count":1,"inspected_file_count":1}}

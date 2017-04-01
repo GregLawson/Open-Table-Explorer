@@ -1,7 +1,177 @@
-passed
-2016-02-01 18:30:32.153
-ruby -v -W0 test/unit/backup_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 8, 47, Rational(35480223965, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test
+Started
+E
+===============================================================================
+Error: test_Constants(BackupTest): NoMethodError: undefined method `output\' for #<Rsync:0x000000030cf690>
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:44:in `block in test_Constants\'
+     41: 		assert_match(FilePattern::Relative_pathname_included_regexp.capture(:path) * /\n/, File_and_stat)
+     42: 		assert_match(Rsync::Examples::Stats_regexp, File_and_stat)
+     43: 		Dry_run.each do |backup_run|
+  => 44: 			assert_match(/skipping directory / * (FilePattern::Relative_pathname_regexp.capture(:skip_path) * /\n/), backup_run.output)
+     45: 			assert_match(FilePattern::Relative_pathname_regexp.capture(:path) * /\n/, backup_run.output)
+     46: 			assert_match(Rsync::Examples::Rsync_regexp, backup_run.output)
+     47: 			assert_match(Rsync::Examples::Stats_regexp, backup_run.output)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:43:in `each\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:43:in `test_Constants\'
+===============================================================================
+F
+===============================================================================
+Failure:
+  /media/greg/Seagate Backup Plus Drive/Backup Drives/.
+  <false> is not true.
+test_config(BackupTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:28:in `block (2 levels) in test_config\'
+     25: 	Backup_directories.each_pair do |directory_map, sub_directory_map|
+     26: 		directory_map.each_pair do |source_dir, backup_dir|
+     27: 			assert_directory_exists(source_dir)
+  => 28: 			assert(File.exist?(backup_dir), backup_dir)
+     29: 			assert_directory_exists(backup_dir)
+     30: 			sub_directory_map.each_pair do |source_sub_directory, backup_sub_directory|
+     31: 				assert_directory_exists(source_dir + source_sub_directory)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:26:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:26:in `block in test_config\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:25:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:25:in `test_config\'
+===============================================================================
+F
+===============================================================================
+Failure:
+  pathname = /home/greg/Desktop/sda16 does not exist
+  parent directory /home/greg/Desktop does exists containing ["Desktop"]
+  Pathname(/home/greg/Desktop/sda16).exist?=false
+  pathname = /home/greg/Desktop/sda16 does not exist
+  parent directory /home/greg/Desktop does exists containing ["Desktop"].
+  <false> is not true.
+test_Rsync_DefinitionalConstants(RsyncTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:526:in `assert_pathname_exists\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:532:in `assert_directory_exists\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:538:in `assert_directory_exists\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/backup.rb:164:in `assert_pre_conditions\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:84:in `block in test_Rsync_DefinitionalConstants\'
+     81: 		assert_match(                                                             Integer_with_commas_regexp * / bytes  / * Float_with_commas_regexp * / bytes\/sec\ntotal size is / * Integer_with_commas_regexp * /  speedup is / * Float_with_commas_regexp * / \(DRY RUN\)\n/, File_and_stat)
+     82: 		assert_match(Stats_regexp, File_and_stat)
+     83: 		Dry_run.each do |backup|
+  => 84: 			backup.assert_pre_conditions
+     85: 			backup.assert_post_conditions
+     86: 			assert_instance_of(ShellCommands, backup.cached_shell_command, backup.inspect) # fail nil
+     87: 			output = backup.cached_shell_command.output
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:83:in `each\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:83:in `test_Rsync_DefinitionalConstants\'
+===============================================================================
+.F
+===============================================================================
+Failure:
+  "/dev/disk/by-uuid/76114a0e-75ca-4841-8af4-a1ba2184ccbf".
+  <false> is not true.
+test_assert_pre_conditions(RsyncTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:151:in `block in test_assert_pre_conditions\'
+     148: 					symlink = File.readlink(pathname)
+     149: 					expanded = File.expand_path(symlink, File.dirname(pathname))
+     150: 					refute_equal(pathname, symlink, \'recursion problem: \' + message)
+  => 151: 					assert(File.exist?(symlink), message)
+     152: 				else
+     153: 					assert_equal(ftype, :directory, message + "File.ftype(#{pathname})=#{File.ftype(pathname).inspect}")
+     154: 				end # if
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:142:in `each\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:142:in `test_assert_pre_conditions\'
+===============================================================================
+.F
+===============================================================================
+Failure:
+  pathname = /home/greg/Desktop/sda16 does not exist
+  parent directory /home/greg/Desktop does exists containing ["Desktop"]
+  Pathname(/home/greg/Desktop/sda16).exist?=false
+  pathname = /home/greg/Desktop/sda16 does not exist
+  parent directory /home/greg/Desktop does exists containing ["Desktop"].
+  <false> is not true.
+test_each(RsyncTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:526:in `assert_pathname_exists\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:532:in `assert_directory_exists\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:538:in `assert_directory_exists\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/backup.rb:164:in `assert_pre_conditions\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:98:in `block in test_each\'
+      95: 	
+      96: 		def test_each
+      97: 			Rsync.each(recursive: false, options: \'\') do |backup|
+  =>  98: 				backup.assert_pre_conditions
+      99: 			end # each
+     100: 		end # each
+     101: 		
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/backup.rb:74:in `block (3 levels) in each\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/backup.rb:71:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/backup.rb:71:in `block (2 levels) in each\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/backup.rb:70:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/backup.rb:70:in `block in each\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/backup.rb:69:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/backup.rb:69:in `each\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:97:in `test_each\'
+===============================================================================
+..F
+===============================================================================
+Failure:
+  #<Rsync source_dir="/dev/disk/by-uuid/976bed30-38d8-43a3-a4d4-6869fb636fcb/" backup_dir="/media/greg/Seagate Backup Plus Drive/Backup Drives/976bed30-38d8-43a3-a4d4-6869fb636fcb/" recursive=false dry_run=false minimize=false options="--archive --verbose --update --links --ignore-existing" cached_shell_command=$ rsync --archive --verbose --update --links --ignore-existing --no-recursive --no-dry-run --recursive  /dev/disk/by-uuid/976bed30-38d8-43a3-a4d4-6869fb636fcb/* /media/greg/Seagate\ Backup\ Plus\ Drive/Backup\ Drives/976bed30-38d8-43a3-a4d4-6869fb636fcb/
+  @errors="rsync: --no-dry-run: unknown option\nrsync error: syntax or usage error (code 1) at main.c(1572) [client=3.1.1]\n"
+  @process_status = #<Process::Status: pid 12118 exit 1>
+  >.
+  <""> expected to not be empty.
+test_planned_backup(RsyncTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:128:in `block (3 levels) in test_planned_backup\'
+     125: 					backup_dir: backup_dir + backup_sub_directory,
+     126: 					recursive: false)
+     127: 				planned_backup = backup.planned_backup
+  => 128: 				refute_empty(planned_backup.output, backup.inspect)
+     129: 				proposed_copies = planned_backup.capture?(Rsync_regexp)
+     130: 				proposed_copies.each do |relative_path|
+     131: 					file_to_copy = source_dir + source_sub_directory + relative_path
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:123:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:123:in `block (2 levels) in test_planned_backup\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:122:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:122:in `block in test_planned_backup\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:121:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:121:in `test_planned_backup\'
+===============================================================================
 
-test/unit/backup_test.rb:11:in `<class:BackupTest>': uninitialized constant NewTestClass::DefaultTests (NameError)
-	from test/unit/backup_test.rb:10:in `<main>'
+
+Finished in 0.506104024 seconds.
+------
+10 tests, 27 assertions, 5 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
+40% passed
+------
+19.76 tests/s, 53.35 assertions/s
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb"
+	User time (seconds): 1.27
+	System time (seconds): 0.10
+	Percent of CPU this job got: 62%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.22
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 32176
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 6
+	Minor (reclaiming a frame) page faults: 12870
+	Voluntary context switches: 216
+	Involuntary context switches: 172
+	Swaps: 0
+	File system inputs: 1568
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+'
+}
+
+}

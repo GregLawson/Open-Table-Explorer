@@ -1,0 +1,5 @@
+{"metadata":{"rubocop_version":"0.39.0","ruby_engine":"ruby","ruby_version":"2.2.4","ruby_patchlevel":"230","ruby_platform":"x86_64-linux-gnu"},"files":[{"path":"test/unit/nil_comparable_test.rb","offenses":[
+{"severity":"convention","message":"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)","cop_name":"Style/MethodName","corrected":null,"location":{"line":11,"column":7,"length":24}},
+{"severity":"warning","message":"Comparison of something with itself detected.","cop_name":"Lint/UselessComparison","corrected":null,"location":{"line":15,"column":25,"length":3}},
+{"severity":"convention","message":"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)","cop_name":"Style/MethodName","corrected":null,"location":{"line":45,"column":7,"length":29}},
+{"severity":"warning","message":"`end` at 52, 4 is not aligned with `def` at 45, 2.","cop_name":"Lint/DefEndAlignment","corrected":false,"location":{"line":52,"column":5,"length":3}}]}],"summary":{"offense_count":4,"target_file_count":1,"inspected_file_count":1}}

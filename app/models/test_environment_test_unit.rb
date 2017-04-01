@@ -6,30 +6,31 @@
 #
 ###########################################################################
 require 'active_support/all'
-require "test/unit"
+require 'test/unit'
 AssertionsModule = Test::Unit::Assertions
 require_relative '../../test/assertions/ruby_assertions.rb'
-#require_relative '../../app/models/unit.rb'
-BaseTestCase = Test::Unit::TestCase 
+# require_relative '../../app/models/unit.rb'
+BaseTestCase = Test::Unit::TestCase
 TestCase = BaseTestCase # allows subclassing BaseTestCase, sets default value
-#AssertionFailedError = RuntimeError
+# AssertionFailedError = RuntimeError
 AssertionFailedError = Test::Unit::AssertionFailedError
-#assert_global_name(:AssertionFailedError)
+# assert_global_name(:AssertionFailedError)
 
 include AssertionsModule
 extend AssertionsModule
 def assert_method(method_name, scope = self)
-	assert_respond_to(scope, method_name, '')
-	assert_kind_of(Module, scope)
-	methods = scope.instance_methods(false)
-	assert(methods.include?(method_name), methods)
+  assert_respond_to(scope, method_name, '')
+  assert_kind_of(Module, scope)
+  methods = scope.instance_methods(false)
+  assert(methods.include?(method_name), methods)
 end # method
+
 def assert_included_modules(module_name, scope = self, message = '')
-	message += 'In assert_included_modules, ' + module_name.to_s + ' is not included in ' + scope.inspect
-	if scope.included_modules.empty? then
-		message += ' which does not include any modules.'
-	else
-		message += ' which includes ' + scope.included_modules.inspect
-	end # if
-	assert(scope.included_modules.include?(module_name), message)
+  message += 'In assert_included_modules, ' + module_name.to_s + ' is not included in ' + scope.inspect
+  message += if scope.included_modules.empty?
+               ' which does not include any modules.'
+             else
+               ' which includes ' + scope.included_modules.inspect
+             end # if
+  assert(scope.included_modules.include?(module_name), message)
 end # assert_included_modules

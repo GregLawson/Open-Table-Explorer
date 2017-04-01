@@ -1,0 +1,3 @@
+{"metadata":{"rubocop_version":"0.39.0","ruby_engine":"ruby","ruby_version":"2.2.4","ruby_patchlevel":"230","ruby_platform":"x86_64-linux-gnu"},"files":[{"path":"test/unit/nested_loop_test.rb","offenses":[
+{"severity":"error","message":"unexpected token kEND\n(Using Ruby 2.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)","cop_name":"Syntax","corrected":false,"location":{"line":18,"column":3,"length":3}},
+{"severity":"error","message":"unexpected token $end\n(Using Ruby 2.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)","cop_name":"Syntax","corrected":false,"location":{"line":30,"column":1,"length":0}}]}],"summary":{"offense_count":2,"target_file_count":1,"inspected_file_count":1}}

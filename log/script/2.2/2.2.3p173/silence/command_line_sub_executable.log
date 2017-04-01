@@ -1,0 +1,40 @@
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 4, 1, 12, 9, Rational(39118193165, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/script/command_line_sub_executable.rb',
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+',
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/script/command_line_sub_executable.rb:25:in `<main>\':  (RuntimeError)
+
+help is not a unit. Please choose one of the following: CiscoCableModem ,DPC2100_modem ,EEG ,R ,account ,acquisition ,adc_loopback ,arp ,assertions ,avr ,backup ,battery ,battery_measurement ,battery_type ,blue_tooth ,boot ,branch ,bug ,code ,column_group ,command ,command_line ,command_line_executable ,command_line_sub_executable ,common_table ,debugging ,default ,default_test_case ,dependancies ,dependancy ,dhcp ,discrete_dimension ,disk ,dpkg ,edison ,editor ,enumerator ,error_type ,evtest ,example_type ,file_argument ,file_pattern ,file_tree ,flora ,frequency ,generic_column ,generic_file ,generic_grep ,generic_row ,generic_table ,generic_table_association ,generic_table_examples ,generic_table_html ,generic_type ,git_reference ,global ,gnome ,gnome_hangs ,grub ,hal ,homerun ,host ,huelserie ,huelshow ,interactive_bottleneck ,iwup ,kernel_module ,log ,match_data ,merge ,messages ,method_model ,minimal ,minimal2 ,minimal3 ,minimal4 ,minimal_no_assertions ,minimal_no_test_environment ,monk ,nested_array ,nested_loop ,network ,nil_comparable ,nmap ,no_db ,object_memory ,ofx ,open_tax_form_filler ,open_tax_solver ,parse ,parse_tree ,partition ,pathname ,pcf8591 ,production ,production_ftp ,r ,r_rsruby ,rebase ,rebuild ,regexp ,regexp_alternative ,regexp_generalization ,regexp_match ,regexp_parse ,regexp_repetition ,regexp_sequence ,regexp_tree ,release ,repository ,repository2017-04-01_12.09.13.260 ,repository_pathname ,require ,requires ,router ,ruby ,ruby_assertions_common ,ruby_assertions_minitest ,ruby_assertions_test_unit ,ruby_interpreter ,ruby_lines_storage ,samba ,schedule ,script_environment_no_assertions ,script_environment_test_unit ,sdr ,shell_command ,sleep_study ,ssbc ,stream ,stream_link ,stream_method ,stream_method_argument ,stream_method_call ,stream_parameter ,stream_pattern ,stream_pattern_argument ,stream_tree ,string ,tax_form ,taxes ,tedprimary ,test_environment ,test_environment_default_test_case ,test_environment_minitest ,test_environment_ruby ,test_environment_test_unit ,test_executable ,test_maturity ,test_method ,test_run ,to_do_list ,transfer ,udev ,unbounded_fixnum ,unbounded_range ,unit ,unit_maturity ,uri ,url ,usb ,usc ,version ,visa ,weather ,work_flow ,x ,xrandr ,yl_40_loopback ,yl_40_onboard ,zillow
+Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/script/command_line_sub_executable.rb"
+	User time (seconds): 3.53
+	System time (seconds): 0.23
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.79
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 65216
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 20838
+	Voluntary context switches: 51
+	Involuntary context switches: 362
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+'
+}
+
+}

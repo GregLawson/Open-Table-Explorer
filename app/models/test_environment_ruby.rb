@@ -5,16 +5,16 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require "minitest/autorun"
+require 'minitest/autorun'
 require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/unit.rb'
-TestClassName = RailsishRubyUnit::Executable.test_class_name
+TestClassName = RubyUnit::Executable.test_class_name
 NewTestClass = Class.new(TestCase) do
-	extend(AssertionsModule)
-	include(AssertionsModule)
-	extend(RubyAssertions)
-	include(RubyAssertions)
+  extend(AssertionsModule)
+  include(AssertionsModule)
+  extend(RubyAssertions)
+  include(RubyAssertions)
 end # NewTestClass
 include AssertionsModule
 extend AssertionsModule
@@ -23,7 +23,7 @@ extend RubyAssertions
 raise Exception.new('') if NewTestClass.class != Class
 TestClass = Object.const_set(TestClassName, NewTestClass)
 class Object
-def test_class_name
-	self.class.name.to_s + 'Test'
-end # test_class
+  def test_class_name
+    self.class.name.to_s + 'Test'
+  end # test_class
 end # Object

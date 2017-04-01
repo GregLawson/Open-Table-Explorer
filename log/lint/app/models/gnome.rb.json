@@ -1,0 +1,2 @@
+{"metadata":{"rubocop_version":"0.39.0","ruby_engine":"ruby","ruby_version":"2.2.4","ruby_patchlevel":"230","ruby_platform":"x86_64-linux-gnu"},"files":[{"path":"app/models/gnome.rb","offenses":[
+{"severity":"error","message":"unexpected token tLABEL\n(Using Ruby 2.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)","cop_name":"Syntax","corrected":false,"location":{"line":12,"column":19,"length":5}}]}],"summary":{"offense_count":1,"target_file_count":1,"inspected_file_count":1}}

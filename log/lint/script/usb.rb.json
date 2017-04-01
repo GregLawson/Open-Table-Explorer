@@ -1,0 +1,3 @@
+{"metadata":{"rubocop_version":"0.39.0","ruby_engine":"ruby","ruby_version":"2.2.4","ruby_patchlevel":"230","ruby_platform":"x86_64-linux-gnu"},"files":[{"path":"script/usb.rb","offenses":[
+{"severity":"convention","message":"Line is too long. [92/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":26,"column":81,"length":12}},
+{"severity":"convention","message":"Line is too long. [94/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":30,"column":81,"length":14}}]}],"summary":{"offense_count":2,"target_file_count":1,"inspected_file_count":1}}

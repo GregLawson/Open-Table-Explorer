@@ -1,322 +1,499 @@
-require_relative 'test_environment'
+###########################################################################
+#    Copyright (C) 2013-2016 by Greg Lawson
+#    <GregLawson123@gmail.com>
+#
+# Copyright: See COPYING file that comes with this distribution
+#
+###########################################################################
+require_relative '../../app/models/test_environment_test_unit.rb'
+# require_relative 'test_environment'
+require_relative '../../app/models/method_model.rb'
+require_relative '../../app/models/merge.rb'
+# require_relative '../../app/models/object_memory.rb'
+class MethodTest < TestCase
+  include Method::Examples
+  def test_arity
+    assert_equal(0, Instance_method_inspect.arity)
+    assert_equal(-2, Class_method_method_names.arity)
+    #    assert_equal(-1, Script_command_line.method(:candidate_commands).arity)
+    #    assert_equal(-1, Script_command_line.method(:initialize).arity)
+    #	assert_equal(-2, No_args.unit_class.method(:initialize).arity)
+    #	assert_equal(-2, Script_command_line.unit_class.method(:initialize).arity)
+    #    refute_nil(Script_command_line.method(:argument_types))
+    #    assert_equal(0, Script_command_line.method(:argument_types).arity, Script_command_line.inspect)
+    #    assert_equal(-1, Script_command_line.method(:executable_object).arity, Script_command_line.inspect)
+    #	assert_equal(1, Script_command_line.method(:executable_method).arity, Script_command_line.inspect)
+    #    assert_equal(0, Script_command_line.method(:number_of_arguments).arity, Script_command_line.inspect)
+    #	assert_equal(-1, Test_unit_commandline.medthod(:error_score?).arity, Test_unit_commandline.to_s)
+
+    assert_equal(-1, Example.method(:all_default).arity)
+    assert_equal(-2, Example.method(:initialize).arity)
+    #	assert_equal(-2, No_args.unit_class.method(:initialize).arity)
+    #	assert_equal(-2, Example.unit_class.method(:initialize).arity)
+    refute_nil(Example.executable_method?(:argument_types))
+    assert_equal(0, Example.arity(:argument_types), Example.inspect)
+    assert_equal(-1, Example.arity(:executable_object), Example.inspect)
+    assert_equal(1, Example.arity(:executable_method), Example.inspect)
+    assert_equal(1, Example.arity(:arity), Example.inspect)
+    #    assert_equal(-1, Test_unit_commandline.arity(:error_score?), Test_unit_commandline.to_s)
+  end # arity
+
+  def test_default_arguments?
+    assert_equal(false, Instance_method_inspect.default_arguments?)
+    assert_equal(true, Class_method_method_names.default_arguments?)
+    #    executable_object = Test_unit_commandline.executable_object
+    #    message = 'Script_command_line = ' + Script_command_line.inspect
+    #    assert_equal(false, Script_command_line.method(:argument_types).default_arguments?, message)
+    #    assert_equal(true, Script_command_line.method(:executable_object).default_arguments?, message)
+    #	assert_equal(true, Script_command_line.method(:executable_method).default_arguments?, message)
+    #    assert_equal(false, Script_command_line.method(:number_of_arguments).default_arguments?, message)
+    #    executable_object = Test_unit_commandline.executable_object
+    message = 'Example = ' + Example.inspect
+    assert_equal(false, Example.default_arguments?(:argument_types), message)
+    assert_equal(true, Example.default_arguments?(:executable_object), message)
+    assert_equal(false, Example.default_arguments?(:executable_method), message)
+    assert_equal(false, Example.default_arguments?(:arity), message)
+  end # default_arguments
+
+  def test_required_arguments
+    assert_equal(0, Instance_method_inspect.required_arguments)
+    assert_equal(1, Class_method_method_names.required_arguments)
+    #    executable_object = Test_unit_commandline.executable_object
+    #    assert_equal(:error_score?, Test_unit_commandline.sub_command)
+    #    assert_respond_to(executable_object, Test_unit_commandline.sub_command)
+    #    method = executable_object.method(Test_unit_commandline.sub_command)
+    #	assert_equal(-1, method.arity)
+    #    assert_equal(0, method.required_arguments, Test_unit_commandline.to_s)
+    #    executable_object = Test_unit_commandline.executable_object
+    #    assert_equal(:error_score?, Test_unit_commandline.sub_command)
+    #    assert_respond_to(executable_object, Test_unit_commandline.sub_command)
+    #    method = executable_object.method(Test_unit_commandline.sub_command)
+    #    assert_equal(-1, method.arity)
+    #    assert_equal(0, method.required_arguments, Test_unit_commandline.to_s)
+  end # required_arguments
+end # MethodTest
+
 class MethodModelTest < TestCase
-def assert_method_model_initialized(m,owner,scope)
-	assert_instance_of(Class, owner)
-	assert_respond_to(owner,:new)
-	theMethod=MethodModel.method_query(m, owner)
-	mr=MethodModel.new(theMethod)
-	assert_instance_of(MethodModel,mr)
-	refute_nil(mr)
-	assert_equal(MethodModel, mr.class)
-	assert_instance_of(MethodModel,mr)
+  include RubyAssertions
+  include MethodModel::Examples
+  def test_superclasses
+    assert_equal([BasicObject], MethodModel.superclasses(BasicObject))
+    assert_equal([Object, BasicObject], MethodModel.superclasses(Object))
+    assert_equal([MethodModel, Object, BasicObject], MethodModel.superclasses(MethodModel))
+  end # superclasses
 
-	assert_equal(mr[:name], m.to_s)
-	assert_includes(mr[:scope], [Class, Module])
-	assert_equal(mr[:instance_variable_defined], false)
-	assert_nil(mr[:private])
-	assert_equal(mr[:singleton], false)
-	refute_nil(mr[:owner],"owner is nil for mr=#{mr.inspect}")
-end #
-def test_method_query
-	owner=ActiveRecord::ConnectionAdapters::ColumnDefinition
-	m=:to_sql
-	objects=0
-	ObjectSpace.each_object(owner) do |object| 
-		objects+=1
-		begin
-			theMethod=object.method(m.to_sym)
-		rescue StandardError => exc
-			puts "exc=#{exc}, object=#{object.inspect}"
-		end #begin
-		refute_nil(theMethod)
-		assert_instance_of(Method, theMethod)
-	end #each_object
-	assert_operator(objects, :>, 0)
-	method=MethodModel.method_query(m, owner)
-#	assert_equal(, )
-	refute_nil(method)
-	assert_instance_of(Method, method)
-end #method_query
-def test_initialize
-	owner=ActiveRecord::ConnectionAdapters::ColumnDefinition
-	scope=:instance
-	m=:to_sql
-	explain_assert_respond_to(owner.new,m)
-#	assert_equal(mr[:protected], false)
-	assert_respond_to(owner.new,m)
-	assert_instance_of(Method,owner.new.method(m.to_sym))
-	assert_instance_of(Method,owner.new.method(m.to_sym))
-	assert_method_model_initialized(m,owner,scope)
-	mr=MethodModel.new(m,owner,scope)
-	assert_equal([:init, :theMethod_not_nil, :not_source_location, :rescue_protected, :alphanumeric], mr.init_path)
+  def test_echo_selection
+    assert_equal({}, MethodModel.echo_selection)
+    assert_equal({ include_inherited: false, instance: false, method_name_selection: /.+/ }, MethodModel.echo_selection(include_inherited: false, instance: false, method_name_selection: /.+/))
+    assert_equal(Default_method_selection, MethodModel.echo_selection(Default_method_selection))
+    refute_equal(Default_method_selection, MethodModel.echo_selection(selection: Default_method_selection))
+    assert_equal(123, MethodModel.echo_selection(123))
+    assert_equal({ selection: 123 }, MethodModel.echo_selection(selection: 123))
+    # wrong # args			assert_equal(123, MethodModel.echo_selection(123, instance: false))
+  end # echo_selection
 
-	owner=MethodModel
-	scope=:class
-	m=:inspect
-	assert_method_model_initialized(m,owner,scope)
-	assert_equal_sets(['init_path'],owner.instance_methods(false),"owner=#{owner.inspect}")
-#?	assert_equal_sets(["inspect", "instantiate_observers", "joins", "instance_method_already_implemented?"],owner.matching_class_methods(/ins/,false))
-#new	assert_instance_of(Method,owner.new.method(m.to_sym))
-#new	assert_instance_of(Method,owner.new.method(m.to_sym))
-#?	assert_nil(MethodModel.new(m,owner,scope)[:exception])
+  def test_apply_selection_defaults
+    assert_equal(Default_method_selection, MethodModel.apply_selection_defaults(Default_method_selection, Default_method_selection))
+    assert_equal([:instance, :method_name_selection, :include_inherited], Default_method_selection.keys)
+    selection = { instance: false }
+    assert_equal(false, selection[:instance])
+    assert_equal(false, selection[:instance].nil?)
+    defaults = Default_method_selection
+    assert_equal([:instance], selection.keys)
+    ret = selection.clone # copy to modify, in case constant passed as selection
+    # OBE    assert_equal([Object], MethodModel.ancestor_method_names(Default_method_selection.class, selection: { method_name_selection: :freeze }).keys)
+    defaults.each_pair do |key, value|
+      assert_instance_of(Symbol, key)
+      assert_include(Default_method_selection.keys, key)
+      if selection[key].nil?
+        ret[key] = value # default
+      end # if
+    end # each_pair
+    assert_equal({ instance: false, method_name_selection: /.+/ }, selection)
+    refute_equal(Default_method_selection, selection)
+    assert_equal({ include_inherited: false, instance: false, method_name_selection: /.+/ }, MethodModel.apply_selection_defaults({ instance: false }, Default_method_selection))
+end # apply_selection_defaults
 
-#?	assert_nil(mr[:exception])
-end #new
-def test_constantized
-	assert_equal(['String'],Module.constants.map { |c| c.objectKind}.uniq)
-	assert_includes('String',MethodModel.constantized.map { |c| c.objectKind}.uniq)
-	assert_operator(1000,:>,Module.constants.size)
-	assert_operator(MethodModel.constantized.size,:<,MethodModel.classes_and_modules.size)
-	assert_operator(100,:<,MethodModel.constantized.size)
-#	puts "Module.constants=#{Module.constants.inspect}"
-	method_list=Module.constants.map do |c|
-		if c.objectKind==:class || c.objectKind==:module then
-			new(c)
-		end #if
-	end #map
-	assert_operator(method_list.size,:<,1000)
-	assert_operator(100,:<,method_list.size)
-	assert_includes( "Class",MethodModel.constantized.map { |c| c.objectKind}.uniq)
-	puts "pretty print"
-	#~ pp MethodModel.all
-	#~ refute_nil(new('object_id',Object,:methods))
-end #constantized
-def test_all_methods
-	assert_kind_of(Enumerable::Enumerator,ObjectSpace.each_object(Module))
-	methods=ObjectSpace.each_object(Method){}
-	assert_operator(methods,:>=,69)
-	assert_instance_of(Array,MethodModel.all_methods)
-	assert_operator(MethodModel.all_methods.size,:>=,69)
-end #methods
-def test_classes
-	assert_kind_of(Enumerable::Enumerator,ObjectSpace.each_object(Module))
-	assert_instance_of(Array,MethodModel.classes)
-	MethodModel.classes.each do |m|
-		assert_instance_of(Class,m)
-	end #each
-	refute_equal('',MethodModel.classes[0])
-	assert_equal(MethodModel.classes.size,MethodModel.classes.uniq.size)
-#	puts MethodModel.classes.inspect
-	assert_empty(MethodModel.classes.map { |c| c.name}.sort-MethodModel.classes.map { |c| c.name}.sort.uniq)
-	classNames=MethodModel.classes.map { |c| c.name}
-	uniqClasses=classNames.sort.uniq
-	duplicates=0 # found so far
-	classNames.each_index do |i|
-		if classNames[i].nil? then
-			puts "class name[#{i}] is nil, class=#{MethodModel.classes[i].inspect}"
-		end #if
-		if classNames[i].empty?
-			puts "class name[#{i}] is empty, class=#{MethodModel.classes[i].inspect}"
-		end #if
-		if classNames[i+duplicates]!=uniqClasses[i] then
-			puts "Duplicate class name[#{i}] = #{classNames[i+duplicates]}"
-			duplicates+=1
-		end # if
-	end #each
-	assert_includes(String,MethodModel.classes)
-	assert_includes(ActiveRecord::Base,MethodModel.classes)
+  def test_method_names
+    assert_include(MethodModel.method_names(Dir, instance: false), :[], MethodModel.apply_selection_defaults({ instance: false }, Default_method_selection))
+    assert_include(MethodModel.method_names(MethodModel), :inspect)
+    assert_equal([:attribute], MethodModel.method_names(MethodModel, instance: false))
+    assert_includes(MethodModel.method_names(BasicObject, method_name_selection: /in/), :instance_eval)
+
+    assert_includes(MethodModel.method_names(MethodModel, method_name_selection: /in/), :inspect)
+    assert_includes(MethodModel.method_names(MethodModel, method_name_selection: [:inspect]), :inspect)
+    assert_includes(MethodModel.method_names(MethodModel, method_name_selection: :inspect), :inspect)
+
+    assert_equal([:inspect], MethodModel.method_names(MethodModel, method_name_selection: /ins/))
+    assert_equal([:inspect], MethodModel.method_names(MethodModel, method_name_selection: [:inspect]))
+    assert_equal([:inspect], MethodModel.method_names(MethodModel, method_name_selection: :inspect))
+
+    assert_equal([:freeze], MethodModel.method_names(Object, include_inherited: true, method_name_selection: /fre/))
+    assert_equal([:freeze], MethodModel.method_names(Default_method_selection.class, include_inherited: true, method_name_selection: /fre/))
+    assert_equal([:freeze], MethodModel.method_names(Object, method_name_selection: [:freeze]))
+    assert_equal([:freeze], MethodModel.method_names(Object, method_name_selection: :freeze))
+
+    assert_includes(MethodModel.method_names(Object, method_name_selection: :inspect), :inspect)
+    assert_includes(MethodModel.method_names(Default_method_selection.class, method_name_selection: :inspect), :inspect)
+    assert_includes(MethodModel.method_names(Default_method_selection.class, method_name_selection: :freeze), :freeze)
+    assert_equal([:freeze], MethodModel.method_names(Default_method_selection.class, method_name_selection: :freeze))
+    refute_includes(MethodModel.method_names(MethodModel, method_name_selection: /catfish/), :inspect)
+    Ancestor_method_selections.each do |selection|
+      assert_instance_of(Array, MethodModel.method_names(BasicObject, selection))
+      MethodModel.assert_ancestor_method_names(BasicObject, selection)
+    end # each
+    Method_selections.each do |selection|
+      assert_instance_of(Array, MethodModel.method_names(BasicObject, selection))
+      MethodModel.assert_ancestor_method_names(BasicObject, selection)
+    end # each
+  end # method_names
+
+  def test_ancestor_method_names
+    #		method_model_ancestor_hash = MethodModel.class.ancestors.map {|a| {ancestor: a, methods: a.methods(false), instance_methods: a.instance_methods(false)} }
+    method_model_ancestor_names = MethodModel.ancestor_method_names(MethodModel)
+    assert_equal(MethodModel.ancestors, method_model_ancestor_names.keys)
+    #		assert_equal(method_model_ancestor_hash, method_model_ancestor_names)
+    assert_operator(0, :<, BasicObject.instance_methods(false).size)
+    assert_equal(BasicObject.instance_methods(false), MethodModel.method_names(BasicObject))
+    assert_equal([BasicObject], BasicObject.ancestors)
+    assert_equal(BasicObject.ancestors, MethodModel.ancestor_method_names(BasicObject).keys)
+    assert_equal([BasicObject.instance_methods(false)], MethodModel.ancestor_method_names(BasicObject).values)
+    assert_equal([BasicObject.methods(false)], MethodModel.ancestor_method_names(BasicObject, instance: false).values)
+    assert_equal([Object, BasicObject], MethodModel.superclasses(Object))
+    assert_equal([Test::Unit::Assertions, JSON::Ext::Generator::GeneratorMethods::Object, Kernel], Object.included_modules)
+    selection = { method_name_selection: /in/ }
+    assert_equal({ BasicObject => [:instance_eval, :instance_exec] }, MethodModel.ancestor_method_names(BasicObject, method_name_selection: /in/))
+    assert_equal({ BasicObject => [:instance_eval, :instance_exec] }, MethodModel.ancestor_method_names(BasicObject, selection))
+    selection = { method_name_selection: /instance_variable_.et/, include_inherited: true }
+    assert_equal(MethodModel.method_names(Object, selection), MethodModel.ancestor_method_names(Object, selection).values.flatten.uniq, MethodModel.ancestor_method_names(Object, selection))
+    selection = { method_name_selection: /.+/, include_inherited: true }
+    assert_equal(MethodModel.method_names(Object, selection), MethodModel.ancestor_method_names(Object, selection).values.flatten.uniq, MethodModel.ancestor_method_names(Object, selection))
+    assert_equal(MethodModel.ancestor_method_names(Object).values.flatten.uniq, MethodModel.method_names(Object, selection), MethodModel.ancestor_method_names(Object))
+    assert_empty(MethodModel.method_names(Object, selection).uniq - MethodModel.method_names(Object).uniq, MethodModel.ancestor_method_names(Object))
+    assert_equal(MethodModel.method_names(Object).uniq, MethodModel.method_names(Object, selection).uniq, MethodModel.ancestor_method_names(Object))
+    assert_equal(MethodModel.method_names(Object), MethodModel.ancestor_method_names(Object).values.flatten.uniq, MethodModel.ancestor_method_names(Object))
+    assert_equal(Object.instance_methods(true), MethodModel.method_names(Object, selection))
+    assert_equal(MethodModel.ancestor_method_names(Object).values.flatten.uniq,
+                 MethodModel.ancestor_method_names(Object, selection).values.flatten.uniq, MethodModel.ancestor_method_names(Object, selection))
+    assert_equal(Object.instance_methods(true), MethodModel.ancestor_method_names(Object).values.flatten.uniq)
+    selection = { method_name_selection: /in/, include_inherited: true }
+    assert_equal(MethodModel.method_names(MethodModel, selection), MethodModel.ancestor_method_names(MethodModel, selection).values.flatten.uniq, MethodModel.ancestor_method_names(MethodModel, selection))
+    selection = { method_name_selection: /=/, include_inherited: true }
+    assert_include(MethodModel.ancestor_method_names(MethodModel, selection).values.flatten.uniq, :attributes=, MethodModel.ancestor_method_names(MethodModel, selection))
+    assert_include(MethodModel.instance_methods(true), :attributes)
+    assert_include(Virtus::InstanceMethods::MassAssignment.instance_methods(true).select { |m| m.to_s.match(/=/) }, :attributes=, MethodModel.ancestor_method_names(MethodModel, selection).inspect)
+    assert_include(Virtus::InstanceMethods::MassAssignment.instance_methods(true), :attributes=, MethodModel.ancestor_method_names(MethodModel, selection).inspect)
+
+    assert_include(MethodModel.instance_methods(true).select { |m| m.to_s.match(/=/) }, :attributes=, MethodModel.ancestor_method_names(MethodModel, selection).inspect)
+    assert(MethodModel.instance_methods(true).include?(:attributes=), MethodModel.ancestor_method_names(MethodModel, selection).inspect)
+    assert_include(MethodModel.method_names(MethodModel, selection), :attributes=, MethodModel.ancestor_method_names(MethodModel, selection))
+    assert_equal(MethodModel.method_names(MethodModel, selection), MethodModel.ancestor_method_names(MethodModel, selection).values.flatten.uniq, MethodModel.ancestor_method_names(MethodModel, selection))
+    selection = { method_name_selection: /.+/, include_inherited: true }
+    assert_equal(MethodModel.method_names(MethodModel, selection), MethodModel.ancestor_method_names(MethodModel, selection).values.flatten.uniq, MethodModel.ancestor_method_names(MethodModel, selection))
+
+    assert_equal(MethodModel.instance_methods(true).uniq, MethodModel.ancestor_method_names(MethodModel).values.flatten.uniq)
+    assert_equal(MethodModel.instance_methods(true), MethodModel.ancestor_method_names(MethodModel).values.flatten.uniq)
+    assert_equal(MethodModel.instance_methods(true), method_model_ancestor_names.values.flatten.uniq)
+  end # ancestor_method_names
 	
-end #classes
-def test_modules
-	assert_kind_of(Enumerable::Enumerator,ObjectSpace.each_object(Module))
-	assert_instance_of(Array,MethodModel.modules)
-	MethodModel.modules.each do |m|
-		if !m.instance_of?(Module) then
-			if MethodModel.classes.include?(m) then
-				puts "#{m} should be Module but is #{m.class}, included in classes."
-			else
-				puts "#{m} should be Module but is #{m.class}"
-			end #if
-		end #if
-#hope		assert_instance_of(Module,m)
-	end #each
-	MethodModel.modules.any? {|m| m.instance_of?(Module)}
-	refute_equal('',MethodModel.modules[0])
-	assert_equal(MethodModel.modules.size,MethodModel.modules.uniq.size)
-	assert_includes(Generic_Table,MethodModel.modules)
-	refute_includes(ActiveRecord::Base,MethodModel.modules)
+	def test_instance_method_models
+      ancestor = Merge
+			MethodModel.method_names(ancestor).map do |method_name|
+				refute_nil(method_name)
+        method_model = MethodModel.new(ancestor: ancestor, method_name: method_name, instance: true)
+				assert_instance_of(MethodModel, method_model)
+				assert_instance_of(Method, method_model.theMethod)
+				method_model
+			end.sort { |x, y| x.theMethod.arity <=> y.theMethod.arity && x.method_name.to_s <=> y.method_name.to_s } # map
+		merge_methods = MethodModel.instance_method_models(Merge)	
+	end # instance_method_models
 
-end #modules
-def test_classes_and_modules
-	assert_operator(MethodModel.classes.size, :>, MethodModel.modules.size)
-	assert_empty((MethodModel.modules-MethodModel.classes)&MethodModel.classes)
-	refute_empty(MethodModel.classes_and_modules)
-	refute_empty(MethodModel.classes_and_modules.find_all{|i| i.to_s=='ActiveRecord::ConnectionAdapters::ColumnDefinition'})
-#	assert_equal([],MethodModel.classes_and_modules.find_all{|i| i.to_s=='ActiveRecord::ConnectionAdapters::ColumnDefinition'})
+  def test_prototype_list
+    prototype_list = MethodModel.method_names(MethodModel).map do |method_name|
+      MethodModel.new(ancestor: MethodModel, method_name: method_name, instance: true)
+                 .prototype(ancestor_qualifier: true, argument_delimeter: ' ')
+    end # map
+    assert_match(/theMethod /, prototype_list.join)
+    assert_match(/theMethod/, MethodModel.prototype_list(MethodModel, ancestor_qualifier: false, argument_delimeter: ' ').join("\n"))
+    #    assert_match(/catfish /, MethodModel.prototype_list(MethodModel).join)
+    
+		merge_methods = MethodModel.prototype_list(Merge, ancestor_qualifier: false, argument_delimeter: ' ').join("\n")
+		
+    assert_match(/merge_down/, merge_methods)
+  end # prototype_list
 
-end #classes_and_modules
-def test_all_instance_methods
-	assert(MethodModel.classes.all? {|mr| mr.instance_of?(Class)})
-	assert(MethodModel.modules.all? {|mr| mr.instance_of?(Module)})
-	assert(MethodModel.all_instance_methods.any? {|mr| mr.instance_of?(MethodModel)})
-	MethodModel.all_instance_methods.each do |mr| 
-		assert_instance_of(MethodModel, mr)
-	end #each
-end #all_instance_methods
-def test_all_class_methods
-	assert(MethodModel.classes.all? {|mr| mr.instance_of?(Class)})
-	assert(MethodModel.modules.all? {|mr| mr.instance_of?(Module)})
-#	assert(MethodModel.classes.map { |c| c.methods(false).map { |m| new(m,c,:class) } }
-	assert(MethodModel.all_class_methods.any? {|mr| mr.instance_of?(MethodModel)})
-	MethodModel.all_class_methods.each do |mr| 
-		assert_instance_of(MethodModel, mr)
-	end #each
-end #all_class_methods
-def test_all_singleton_methods
-	assert(MethodModel.classes.all? {|mr| mr.instance_of?(Class)})
-	assert(MethodModel.modules.all? {|mr| mr.instance_of?(Module)})
-	assert(MethodModel.all_singleton_methods.any? {|mr| mr.instance_of?(MethodModel)})
-	MethodModel.all_singleton_methods.each do |mr| 
-		assert_instance_of(MethodModel, mr)
-	end #each
-end #all_singleton_methods
-def test_all
-	all_records=MethodModel.all
-	assert_instance_of(Array,all_records)
-	assert_operator(69,:<=,all_records.size)
-	all_records.each do |mr| 
-		assert_instance_of(MethodModel, mr)
-		assert_includes(mr[:scope], [Class, Module,:instance,:class, :singleton])
-	end #each
-	assert(all_records.all? {|mr| mr[:name]})
-	assert(all_records.all? {|mr| mr[:scope]})
-	assert(all_records.many? {|mr| mr[:owner]})
-	assert(all_records.all? {|mr| mr.has_key?(:singleton)})
-	assert(all_records.all? {|mr| mr.has_key?(:protected)})
-	assert(all_records.all? {|mr| mr.has_key?(:private)})
-	assert(all_records.any? {|mr| mr[:method]})
-#?	assert(all_records.any? {|mr| mr[:singleton]})
-#?	assert(all_records.any? {|mr| mr[:protected]})
-#?	assert(all_records.any? {|mr| mr[:private]})
-	assert(all_records.any? {|mr| mr[:arity]})
-	assert(all_records.any? {|mr| mr.has_key?(:instance_variable_defined)})
-#?	assert(!all_records.any? {|mr| mr.has_key?(:exception)})
-	assert(!all_records.any? {|mr| mr[:instance_variable_defined]})
-	assert(!all_records.any? {|mr| mr[:source_location]})
-	assert(!all_records.any? {|mr| mr[:parameters]})
-	puts all_records.map { |m| m.keys}.uniq.inspect
-#why?	assert_equal(Set.new([4,6,10]),Set.new(all_records.map { |m| m.keys.size}.uniq))
-	refute_empty(Set.new(all_records.map { |m| m.keys}.uniq))
-end #all
-def test_first
-	all_records=MethodModel.all
-	assert_instance_of(MethodModel,all_records[0])
-	assert_equal(all_records.first,all_records[0])
-	refute_nil(MethodModel.first)
-	refute_nil(all_records[0])
-	assert_equal(MethodModel.first,all_records[0])
-	assert_instance_of(MethodModel,MethodModel.first)
-	assert_instance_of(String,MethodModel.first[:owner].name)
-end #first
-def test_find_by_name
-	to_sqls=MethodModel.all.select {|m|m[:name].to_sym==:to_sql}
-	assert_equal(to_sqls,MethodModel.find_by_name(:to_sql))
-	assert_equal(to_sqls,MethodModel.all.find_all{|i| i[:name].to_sym==:to_sql})
-	assert_operator(0, :<, MethodModel.find_by_name(:to_sql).size)
-	MethodModel.find_by_name(:to_sql).each do |mr|
-		assert_equal(mr[:name], :to_sql)
-		assert_equal(mr[:scope], :instance)
-#		assert_equal(mr[:protected], false)
-		assert_equal(mr[:instance_variable_defined], false)
-#?		assert_equal(mr[:private], false)
-#?		assert_equal(mr[:singleton], false)
-#?		refute_nil(mr[:owner])
-		puts "#{mr[:owner]}:#{mr[:owner].object_id}"
-	end #each
-	to_sql_owners=to_sqls.map {|t|t[:owner]}
-#?	assert_equal(to_sql_owners.uniq,to_sql_owners,"No duplicates, please.")
-end #find_by_name
-def test_owners_of
-	method_name=:to_sql
-	refute_empty(MethodModel.owners_of(method_name), "find_by_name(:#{method_name})=#{MethodModel.find_by_name(method_name)}")
-end #owners_of
-def test_ExclusionValidator
-	ObjectSpace.each_object(Class) do |c| 
-		if c.name.match(/ExclusionValidator/) then
-			p c.inspect
-		end #if
-	end #each_object
-	#~ puts "ExclusionValidator.inspect=#{ExclusionValidator.inspect}"
-	#~ puts " 'ExclusionValidator'.constantized.inspect=#{'ExclusionValidator'.constantized.inspect}"
-end #ExclusionValidator
-def test_matching_methods
-	testClass=Acquisition
-	assert_instance_of(Array,testClass.matching_class_methods(//))
-	assert_instance_of(Array,testClass.matching_instance_methods(//))
-end #test
-test '' do
-	assert(Generic_Table.module?)
-	assert(!AcquisitionStreamSpec.module?)
-	assert_includes('Generic_Table',AcquisitionStreamSpec.ancestors.map{|a| a.name})
-	assert_equal([Generic_Table],Account.noninherited_modules)
-	assert_equal([Generic_Table],AcquisitionStreamSpec.noninherited_modules)
-	assert(AcquisitionStreamSpec.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
-	assert(AcquisitionInterface.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
-	testClass=Acquisition
-	assert_equal([Generic_Table],testClass.ancestors-[testClass]-testClass.superclass.ancestors)
-	assert_includes(Generic_Table,AcquisitionInterface.ancestors-[AcquisitionInterface])
-	assert_equal([Generic_Table],AcquisitionInterface.ancestors-[AcquisitionInterface,RubyInterface]-AcquisitionInterface.superclass.superclass.ancestors)
-	assert_equal([],AcquisitionInterface.noninherited_modules) # stI at work
-end #test
-def test_matching_methods_in_context
-	testClass=Acquisition
-#error message too long	assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
-#error message too long		assert_equal([testClass.canonicalName,testClass.matching_methods(//)],testClass.matching_methods_in_context(//)[0])
-#error message too long			assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
-end #def
-def test_Acquisition_Stream_Spec_modules
-	assert(Generic_Table.module?)
-	assert(!AcquisitionStreamSpec.module?)
-	assert_equal([Generic_Table],AcquisitionStreamSpec.noninherited_modules)
-	assert(AcquisitionStreamSpec.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
-	assert_includes('Generic_Table',AcquisitionStreamSpec.ancestors.map{|a| a.name})
-	assert(AcquisitionStreamSpec.module_included?(:Generic_Table),"Module not included in #{canonicalName} context.")
-	assert_module_included(AcquisitionStreamSpec,:Generic_Table)
-end #test
-def test_Acquisition_Interface_modules
-	assert(Generic_Table.module?)
-	assert(AcquisitionInterface.ancestors.map{|a| a.name}.include?('Generic_Table'),"Module not included in #{canonicalName} context.")
-	assert_equal([],AcquisitionInterface.noninherited_modules) # because of STI Generic_Table is not directly included
-	assert_includes('Generic_Table',AcquisitionInterface.ancestors.map{|a| a.name})
-	assert(AcquisitionInterface.module_included?(:Generic_Table),"Module not included in #{canonicalName} context.")
-	assert_module_included(AcquisitionInterface,:Generic_Table)
-end #test
+  def test_ancestor_method_name
+    Ancestor_method_selections.each do |selection|
+      assert_instance_of(Hash, MethodModel.ancestor_method_name(BasicObject, selection))
+      MethodModel.assert_ancestor_method_names(BasicObject, selection)
+      selection[:method_name_selection] = :ancestor_method_names
+      selection[:method_name_selection] = :inspect
+      assert_instance_of(Hash, MethodModel.ancestor_method_name(BasicObject, selection))
+      MethodModel.assert_ancestor_method_names(BasicObject, selection)
+    end # each
+    method_model_ancestor_names = MethodModel.ancestor_method_names(MethodModel)
+    #    ancestor_method_name = ancestor_method_names(klass, selection)
 
-def test_attribute_ddl
-	assert(@@default_connection.table_exists?(:stream_patterns))
-	assert_equal([], ActiveRecord::ConnectionAdapters::ColumnDefinition.methods(false))
-	assert_equal([], MethodModel.all.select{|m| m.owner==''})
-	assert_equal('integer',@@default_connection.type_to_sql(:integer))
-#private	assert_equal('',@@default_connection.default_primary_key_type)
-#2 arguments	assert_equal([],@@default_connection.index_name)
-#too long	assert_equal([],@@default_connection.methods)
-	assert_instance_of(MethodModel,MethodModel.all.first)
-	assert_instance_of(MethodModel,MethodModel.first)
-	assert_instance_of(Array,MethodModel.first.keys)
-	assert_instance_of(Class,MethodModel.first[:owner])
-	assert_equal([{:scope=>:class, :owner=>ActiveRecord::ConnectionAdapters::ColumnDefinition},
- {:scope=>:class, :owner=>ActiveRecord::ConnectionAdapters::TableDefinition},
- {:scope=>:class, :owner=>ActiveRecord::Relation},
- {:scope=>:class, :owner=>Arel::Nodes::Node},
- {:scope=>:class, :owner=>Arel::TreeManager}],MethodModel.owners_of(:to_sql))
-	table_sql= @@default_connection.to_sql
-	refute_empty(table_sql)
-	attribute_sql=table_sql.grep(attribute_name)
-	refute_empty(attribute_sql)
-end #attribute_ddl
-def test_logical_attributes
-	assert_equal(Set[{:name=>"float"},
- {:name=>"datetime"},
- {:name=>"decimal"},
- "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
- {:name=>"datetime"},
- {:name=>"blob"},
- {:name=>"boolean"},
- {:name=>"date"},
- {:name=>"time"},
- {:name=>"text"},
- {:name=>"integer"},
- {:name=>"varchar", :limit=>255}],Set.new(StreamPattern.connection.native_database_types.values))
-	assert_equal(['name'],StreamPattern.logical_attributes)
-end #logical_attributes
-end #test class
+    ancestor_method_name_call = MethodModel.ancestor_method_name(MethodModel, inspect: true)
+    #    assert_equal(ancestor_method_name, ancestor_method_name_call)
+    assert_include(MethodModel.method_names(Dir, instance: false), :[])
+    assert_equal([Dir], MethodModel.ancestor_method_name(Dir, :[], instance: false), MethodModel.method_names(Dir))
+    assert_equal([Object], MethodModel.ancestor_method_name(Regexp, :superclass, instance: false))
+    assert_equal([Module, Kernel], MethodModel.ancestor_method_name(MethodModel, :[], instance: true))
+    assert_equal([], MethodModel.ancestor_method_name(MethodModel, :ancestor_method_names, instance: false))
+    ancestors = MethodModel.ancestor_method_name(klass, method_name, selection).each do |ancestor|
+      assert_instance_of(Class, ancestor)
+    end # each
+  end # ancestor_method_name
+
+  def assert_method_model_initialized(m, ancestor, _instance)
+    assert_instance_of(Class, ancestor)
+    assert_respond_to(ancestor, :new)
+    theMethod = MethodModel.method_query(m, ancestor)
+    mr = MethodModel.new_from_method(theMethod)
+    assert_instance_of(MethodModel, mr)
+    refute_nil(mr)
+    assert_equal(MethodModel, mr.class)
+    assert_instance_of(MethodModel, mr)
+
+    assert_equal(mr[:name], m.to_s)
+    assert_includes(mr[:scope], [Class, Module])
+    assert_equal(mr[:instance_variable_defined], false)
+    assert_nil(mr[:private])
+    assert_equal(mr[:singleton], false)
+    refute_nil(mr[:owner], "owner is nil for mr=#{mr.inspect}")
+  end # assert_method_model_initialized
+
+  def test_init_path
+  end # init_path
+
+  def test_first_object
+    assert_includes(MethodModel.objects_query(MethodModel), MethodModel.first_object(MethodModel))
+    assert_equal(nil, MethodModel.first_object(Math))
+  end # first_object
+
+  def test_objects_query
+    ancestor = MethodModel
+    ret = []
+    ObjectSpace.each_object(ancestor) do |object|
+      assert_instance_of(ancestor, object)
+      ret << object
+    end # each_object
+    ret.each do |object|
+      assert_instance_of(ancestor, object)
+    end # each
+    assert_equal(ret, MethodModel.objects_query(MethodModel))
+    assert_includes(MethodModel.objects_query(MethodModel), Instance_method_inspect)
+    assert_includes(MethodModel.objects_query(MethodModel), Class_method_method_names)
+    assert_equal([], MethodModel.objects_query(Math))
+  end # objects_query
+
+  def test_method_query
+    ancestor = MethodModel
+    m = :method_name
+    objects = 0
+    ObjectSpace.each_object(ancestor) do |object|
+      assert_respond_to(object, m)
+      objects += 1
+      begin
+        theMethod = object.method(m.to_sym)
+      rescue StandardError => exc
+        puts "exc=#{exc}, object=#{object.inspect}"
+      end # begin
+      refute_nil(theMethod)
+      assert_instance_of(Method, theMethod)
+    end # each_object
+    assert_operator(objects, :>, 0)
+    method = MethodModel.method_query(m, ancestor)
+    #	assert_equal(, )
+    refute_nil(method)
+    assert_instance_of(Method, method)
+  end # method_query
+
+  def test_Virtus_value_object
+    ancestor = MethodModel
+    instance = true
+    m = :method_name
+    explain_assert_respond_to(ancestor.new, m)
+    #	assert_equal(mr[:protected], false)
+    assert_respond_to(ancestor.new, m)
+    assert_instance_of(Method, ancestor.new.method(m.to_sym))
+    assert_instance_of(Method, ancestor.new.method(m.to_sym))
+    assert_method_model_initialized(m, ancestor, instance)
+    mr = MethodModel.new(name: m, ancestor: ancestor, instance: instance)
+    #	assert_equal([:init, :theMethod_not_nil, :not_source_location, :rescue_protected, :alphanumeric], mr.init_path)
+    ancestor = MethodModel
+    instance = :class
+    m = :inspect
+    assert_method_model_initialized(m, owner, scope)
+    assert_equal_sets(['init_path'], owner.instance_methods(false), "owner=#{owner.inspect}")
+    # ?	assert_equal_sets(["inspect", "instantiate_observers", "joins", "instance_method_already_implemented?"],owner.matching_class_methods(/ins/,false))
+    # new	assert_instance_of(Method,owner.new.method(m.to_sym))
+    # new	assert_instance_of(Method,owner.new.method(m.to_sym))
+    # ?	assert_nil(MethodModel.new(m,owner,scope)[:exception])
+
+    # ?	assert_nil(mr[:exception])
+  end # values
+
+  def test_constantized
+    assert_equal(['Symbol'], Module.constants.map(&:objectKind).uniq)
+    #    assert_includes(MethodModel.constantized.map(&:objectKind).uniq, 'Symbol')
+    assert_operator(1000, :>, Module.constants.size)
+    assert_operator(MethodModel.constantized.size, :<, MethodModel.classes_and_modules.size)
+    assert_operator(100, :<, MethodModel.constantized.size)
+    #	puts "Module.constants=#{Module.constants.inspect}"
+    method_list = Module.constants.map do |c|
+      if c.objectKind == :class || c.objectKind == :module
+        new(c)
+      end # if
+    end # map
+    assert_operator(method_list.size, :<, 1000)
+    assert_operator(100, :<, method_list.size)
+    assert_includes(MethodModel.constantized.map(&:objectKind).uniq, 'Class')
+    #    puts 'pretty print'
+    # ~ pp MethodModel.all
+    # ~ refute_nil(new('object_id',Object,:methods))
+  end # constantized
+
+  def test_MethodModel_virtus
+    assert_equal([:@parent, :@attributes, :@index], MethodModel.attributes.instance_variables)
+    assert_equal(Object, MethodModel.attributes.parent)
+    assert_equal([], MethodModel.attributes.methods(false))
+    assert_equal({ ancestor: MethodModel, instance: true, method_name: :inspect, new_from_method: nil }, Instance_method_inspect.attributes)
+    # long    assert_equal({}, Class_method_method_names.attributes)
+    attribute_index = MethodModel.attributes.instance_variable_get(:@index)
+    assert_instance_of(Hash, attribute_index)
+    assert_equal(%w(method_name ancestor instance new_from_method), attribute_index.keys.map(&:to_s).uniq)
+    assert_instance_of(Virtus::Attribute, attribute_index['method_name'])
+    assert_equal([], attribute_index[:method_name].methods(false))
+    assert_equal([:@type, :@primitive, :@options, :@default_value, :@coercer, :@name, :@instance_variable_name], attribute_index[:method_name].instance_variables)
+    assert_equal(Axiom::Types::Symbol, attribute_index[:method_name].type)
+    assert_equal(Symbol, attribute_index[:method_name].primitive)
+    # long    assert_equal({}, attribute_index[:method_name].options)
+    assert_equal(nil, attribute_index[:method_name].default_value.value)
+    # long    assert_equal(nil, attribute_index[:method_name].coercer)
+    assert_equal(:method_name, attribute_index[:method_name].name)
+    assert_equal('@method_name', attribute_index[:method_name].instance_variable_name)
+    assert_equal(attribute_index['method_name'].inspect, attribute_index[:method_name].inspect)
+    assert(attribute_index['method_name'].equal?(attribute_index[:method_name]))
+    #    assert_equal(attribute_index['method_name'], attribute_index[:method_name])
+    # long    assert_equal([], MethodModel.attributes.instance_variable_get(:@attributes))
+  end # values
+
+  def test_new_from_method
+  end # new_from_method
+
+  def test_inspect
+  end # inspect
+
+  def test_prototype
+    assert_equal("MethodModel#inspect()", Instance_method_inspect.prototype)
+    assert_equal("method_names arg ...",
+                 Class_method_method_names.prototype(ancestor_qualifier: false, argument_delimeter: ' '))
+  end # prototype
+
+  def test_theMethod
+    assert_equal(0, Instance_method_inspect.theMethod.arity, Instance_method_inspect)
+    assert_equal(:method_names, Class_method_method_names.theMethod.name, Class_method_method_names)
+  end # theMethod
+
+  def test_matching_methods_in_context
+    #    testClass = Unit
+    # error message too long	assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
+    # error message too long		assert_equal([testClass.canonicalName,testClass.matching_methods(//)],testClass.matching_methods_in_context(//)[0])
+    # error message too long			assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
+  end # def
+
+  def test_assert_MethodModel_pre_conditions
+  end # assert_pre_conditions
+
+  def test_MethodModel_assert_post_conditions
+  end # assert_post_conditions
+
+  def test_assert_method_names
+    assert_operator(0, :<, BasicObject.instance_methods(false).size)
+    assert_equal(BasicObject.instance_methods(false), MethodModel.method_names(BasicObject))
+    assert_equal(BasicObject.instance_methods(false), MethodModel.ancestor_method_names(BasicObject).values.flatten)
+    assert_equal(BasicObject.methods(false), MethodModel.ancestor_method_names(BasicObject, instance: false).values.flatten)
+    assert_equal([:instance_eval, :instance_exec], MethodModel.method_names(BasicObject, method_name_selection: /in/))
+    assert_equal([:instance_values, :instance_variable_names, :noninherited_public_instance_methods], MethodModel.method_names(Object, method_name_selection: /instance/))
+    assert_equal({ BasicObject => [:instance_eval] }, MethodModel.ancestor_method_names(Object, method_name_selection: /instance_eval/))
+  end # method_names
+
+  def test_assert_ancestors
+    assert_equal([BasicObject], BasicObject.ancestors)
+    assert_equal(BasicObject.ancestors, MethodModel.ancestor_method_names(BasicObject).keys)
+  end # ancestors
+
+  def test_assert_ancestor_method_names
+    assert_equal({ BasicObject => [:instance_eval, :instance_exec] }, MethodModel.ancestor_method_names(BasicObject, method_name_selection: /in/))
+    Ancestor_method_selections.each do |selection|
+      MethodModel.assert_ancestor_method_names(BasicObject, selection)
+    end # each
+    MethodModel.assert_ancestor_method_names(BasicObject)
+    Ancestor_method_selections.each do |selection|
+      MethodModel.assert_ancestor_method_names(Object, selection)
+    end # each
+    MethodModel.assert_ancestor_method_names(Object, method_name_selection: /instance_eval/)
+    MethodModel.assert_ancestor_method_names(Object, instance: false)
+    MethodModel.assert_ancestor_method_names(Object, instance: true, method_name_selection: /.+/, ancestor_selection: :ancestors)
+
+    MethodModel.assert_ancestor_method_names(Object)
+    MethodModel.assert_ancestor_method_names(Dir)
+    MethodModel.assert_ancestor_method_names(MethodModel)
+  end # ancestor_method_names
+
+  def test_assert_pre_conditions
+    Instance_method_inspect.assert_pre_conditions
+    #		Class_method_method_names.assert_pre_conditions
+  end # assert_pre_conditions
+
+  def test_assert_post_conditions
+  end # assert_post_conditions
+
+  def test_Examples
+    assert_respond_to(Instance_method_inspect.ancestor, Instance_method_inspect.method_name)
+    assert_include(Instance_method_inspect.ancestor.instance_methods(false), Instance_method_inspect.method_name)
+  end # Examples
+
+  def test_Example_Examples
+    Example::Examples::Method_arity.assert_pre_conditions
+    Example::Examples::Method_require1.assert_pre_conditions
+    Example::Examples::Method_require2.assert_pre_conditions
+    Example::Examples::Method_require3.assert_pre_conditions
+    Example::Examples::Method_all_default.assert_pre_conditions
+  end # Examples
+end # MethodModel
+
+require 'rgl/implicit'
+require 'rgl/adjacency'
+require 'rgl/dot'
+# fom RGL readme
+class BoostGraphTest < TestCase
+    def module_graph
+      RGL::ImplicitGraph.new do |g|
+        g.vertex_iterator do |b|
+          ObjectSpace.each_object(Module, &b)
+        end
+        g.adjacent_iterator do |x, b|
+          x.ancestors.each do |y|
+            b.call(y) unless x == y || y == Kernel || y == Object
+          end
+        end
+        g.directed = true
+      end
+    end
+    # This function creates a directed graph, with vertices being all loaded modules:
+
+	def test_module_graph
+    g = module_graph
+    # We only want to see the ancestors of {RGL::AdjacencyGraph}:
+
+    require 'rgl/traversal'
+    tree = g.bfs_search_tree_from(RGL::AdjacencyGraph)
+    # Now we want to visualize this component of g with DOT. We therefore create a subgraph of the original graph, using a filtered graph:
+
+    g = g.vertices_filtered_by { |v| tree.has_vertex? v }
+    g.write_to_graphic_file('jpg')
+	end # module_graph
+end # BoostGraph

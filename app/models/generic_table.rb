@@ -155,6 +155,5 @@ include GenericGrep
 include ColumnGroup
 include GenericTableAssociation
 end #Generic_Table
-module ActiveRecord
 
 

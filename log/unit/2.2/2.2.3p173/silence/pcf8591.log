@@ -1,7 +1,13 @@
-passed
-2016-02-01 18:58:44.901
-ruby -v -W0 test/unit/pcf8591_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 9, 34, Rational(32336418216, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/pcf8591_test.rb',
+:output => '',
+:errors => {:rescue_exception => Timeout::Error.new()
 
-test/unit/pcf8591_test.rb:9:in `require_relative': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case.rb (LoadError)
-	from test/unit/pcf8591_test.rb:9:in `<main>'
+}
+
+}

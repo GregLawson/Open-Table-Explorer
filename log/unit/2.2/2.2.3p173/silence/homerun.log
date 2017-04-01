@@ -1,116 +1,78 @@
-passed
-2016-02-01 18:32:01.053
-ruby -v -W0 test/unit/homerun_test.rb
-ruby 2.2.4p230 (2015-12-16) [x86_64-linux-gnu]
-rescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - hdhomerun_config>
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:43:in `new'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:43:in `<module:Constants>'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:42:in `<class:HomeRun>'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:10:in `<top (required)>'
-test/unit/homerun_test.rb:9:in `require_relative'
-test/unit/homerun_test.rb:9:in `<main>'
-Run options: --seed 0
-
-# Running:
-
-....E.Erescue exception in Shell#execute#<Errno::ENOENT: No such file or directory - hdhomerun_config>
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:88:in `execute'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:117:in `initialize'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:23:in `new'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:23:in `scan'
-test/unit/homerun_test.rb:16:in `test_scan'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-/usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-/usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-/usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-/usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-/usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-/usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-/usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-/usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
-F
-
-Finished in 0.005189s, 1541.6245 runs/s, 385.4061 assertions/s.
-
-  1) Error:
-HomeRunTest#test_Constants:
-NoMethodError: undefined method `size' for nil:NilClass
-    test/unit/homerun_test.rb:21:in `test_Constants'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 2, 20, 9, 11, Rational(59647027007, 1000000000), "-08:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/homerun_test.rb',
+:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/homerun_test
+Started
+E
+===============================================================================
+Error: test_Constants(HomeRunTest): NoMethodError: undefined method `size\' for nil:NilClass
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/homerun_test.rb:23:in `test_Constants\'
+     20: 
+     21:   def test_Constants
+     22:     #	Discover.execute
+  => 23:     assert_operator(0, :<, Discover.output.size, "Discover=#{Discover.inspect}")
+     24:     assert_match(/^hdhomerun device /, "hdhomerun device 10311E80 found at 172.31.42.101\n")
+     25:     assert_match(/^no devices found\n/ | /^hdhomerun device /, "hdhomerun device 10311E80 found at 172.31.42.101\n")
+     26:     assert_match(Discover_error | /^hdhomerun device /, Discover.output, "Discover=#{Discover.inspect}")
+===============================================================================
+.F
+===============================================================================
+Failure:
+  scan=$ hdhomerun_config 10311E80 scan
+  @errors="#<Errno::ENOENT: No such file or directory - hdhomerun_config>"
+  @process_status = nil
+  .
+  </^unable to connect to device\n|^$/> expected to be =~
+  <"#<Errno::ENOENT: No such file or directory - hdhomerun_config>">.
+test_scan(HomeRunTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/homerun_test.rb:18:in `test_scan\'
+     15: 
+     16:   def test_scan
+     17:     scan = Default_hdhr.scan
+  => 18:     assert_match(Scan_error | Scan_error_pass, scan.errors, "scan=#{scan.inspect}")
+     19:   end
+     20: 
+     21:   def test_Constants
+===============================================================================
 
 
-  2) Error:
-HomeRunTest#test_initialize:
-NoMethodError: undefined method `assertions' for #<HomeRun:0x000000016d11d0 @id="10311E80">
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:125:in `assert'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:327:in `assert_respond_to'
-    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:195:in `assert_includes'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/homerun.rb:36:in `assert_post_conditions'
-    test/unit/homerun_test.rb:13:in `test_initialize'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:108:in `block (3 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:205:in `capture_exceptions'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:256:in `time_it'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:276:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:778:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:305:in `run_one_method'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:293:in `block (2 levels) in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `each'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:292:in `block in run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:331:in `on_signal'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:318:in `with_info_handler'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:291:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `block in __run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `map'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:152:in `__run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:129:in `run'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:56:in `block in autorun'
+Finished in 0.022476548 seconds.
+------
+3 tests, 1 assertions, 1 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
+33.3333% passed
+------
+133.47 tests/s, 44.49 assertions/s
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/homerun_test.rb"
+	User time (seconds): 1.07
+	System time (seconds): 0.12
+	Percent of CPU this job got: 97%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.23
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 31816
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 8077
+	Voluntary context switches: 10
+	Involuntary context switches: 125
+	Swaps: 0
+	File system inputs: 8
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+'
+}
 
-
-  3) Failure:
-HomeRunTest#test_scan [test/unit/homerun_test.rb:17]:
-scan=$ hdhomerun_config 10311E80 scan
-@errors="#<Errno::ENOENT: No such file or directory - hdhomerun_config>"
-@process_status=nil
-.
-Expected /^unable to connect to device\n|^$/ to match "#<Errno::ENOENT: No such file or directory - hdhomerun_config>".
-
-8 runs, 2 assertions, 1 failures, 2 errors, 0 skips
-
+}

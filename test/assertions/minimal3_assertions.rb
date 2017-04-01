@@ -1,11 +1,15 @@
 ###########################################################################
-#    Copyright (C) 2012 by Greg Lawson                                      
+#    Copyright (C) 2012-2016 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../../test/assertions/ruby_assertions.rb'
+require_relative '../../app/models/minimal3.rb'
 class Minimal3
+require_relative '../../test/assertions.rb'
+
 module Assertions
 module ClassMethods
 def nested_scope_modules?
@@ -37,15 +41,18 @@ def assert_pre_conditions(message='')
 #	asset_nested_and_included(:Assertions, self)
 	self
 end #assert_pre_conditions
+
 def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
 	self
 end #assert_post_conditions
 end #ClassMethods
+
 def assert_pre_conditions(message='')
 	message+="In assert_pre_conditions, self=#{inspect}"
 	self
 end #assert_pre_conditions
+
 def assert_post_conditions(message='')
 	message+="In assert_post_conditions, self=#{inspect}"
 	self
@@ -53,10 +60,9 @@ end #assert_post_conditions
 end #Assertions
 include Assertions
 extend Assertions::ClassMethods
-#include DefaultAssertions
-#extend DefaultAssertions::ClassMethods
-module Examples
-include Constants
-	Constant=1
+#self.assert_pre_conditions
+  module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+    include DefinitionalConstants
+    include ReferenceObjects
 end #Examples
 end #Minimal
