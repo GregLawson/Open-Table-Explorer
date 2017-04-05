@@ -142,6 +142,35 @@ class RepositoryTest < TestCase
     This_code_repository # .assert_pre_conditions
   end # initialize
 
+  def test_equal
+  end # equal
+
+  def test_compare
+  end # compare
+
+	def test_git_pathname
+    assert_pathname_exists(@temp_repo.git_pathname('refs'))
+    assert_pathname_exists(@temp_repo.git_pathname('branches'))
+    assert_pathname_exists(@temp_repo.git_pathname('HEAD'))
+    assert_pathname_exists(This_code_repository.git_pathname('refs'))
+	end # git_pathname
+	
+	def test_stash!
+		@temp_repo.stash!
+    assert_equal([:clean], @temp_repo.state?)
+	end # stash!
+	
+  def test_state?
+    assert_equal([:clean], @temp_repo.state?)
+		@temp_repo.force_change
+    assert_equal([:dirty], @temp_repo.state?)
+		@temp_repo.git_command('merge passed --no-commit --no-ff').assert_post_conditions
+#!    assert_equal([:clean, :merge], @temp_repo.state?, @temp_repo.status.inspect)
+		@temp_repo.revert_changes
+    assert_equal([:clean], @temp_repo.state?)
+    assert_equal([:dirty], This_code_repository.state?)
+  end # state?
+
   def test_shell_command
     assert_equal(This_code_repository.path, This_code_repository.shell_command('pwd').output.chomp + '/')
     assert_equal(@temp_repo.path, @temp_repo.shell_command('pwd').output.chomp + '/')
@@ -160,6 +189,20 @@ class RepositoryTest < TestCase
     #	refute_equal("## master\n", @temp_repo.inspect)
     #	assert_equal("## master\n M README\n", @temp_repo.inspect)
   end # inspect
+
+  def test_standardize_position!
+    @temp_repo.git_command('rebase --abort').puts
+    @temp_repo.git_command('merge --abort').puts
+    @temp_repo.git_command('stash save') # .assert_post_conditions
+    @temp_repo.git_command('checkout master').puts
+    @temp_repo.standardize_position!
+  end # standardize_position!
+
+  def abort_merge!
+  end # abort_rebase_and_merge!
+
+  def abort_rebase!
+  end # abort_rebase_and_merge!
 
   def test_corruption_fsck
     @temp_repo.git_command('fsck') # .assert_post_conditions

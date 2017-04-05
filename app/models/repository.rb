@@ -169,6 +169,7 @@ class Repository
     def git_command(git_command, repository_dir)
       ShellCommands.new('git ' + ShellCommands.assemble_command_string(git_command), chdir: repository_dir)
     end # git_command
+
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
@@ -207,6 +208,28 @@ class Repository
     end # if
   end # compare
 
+	def git_pathname(git_relative_path)
+		@path + '.git/' + git_relative_path
+	end # git_pathname
+	
+	def stash!
+		git_command('stash save --include-untracked')
+	end # stash!
+	
+  def state?
+    state = []
+    state << :rebase if File.exist?(git_pathname('rebase-merge/git-rebase-todo'))
+    if File.exist?(git_pathname(@path + 'MERGE_HEAD'))
+      state << :merge
+    end # if
+    state << if something_to_commit?
+               :dirty
+             else
+               :clean
+             end # if
+    state
+  end # state?
+
   def shell_command(command, working_directory = @path)
     ShellCommands.new(command, chdir: working_directory)
   end # shell_command
@@ -218,6 +241,25 @@ class Repository
   # def inspect
   #	git_command('status --short --branch').output
   # end #inspect
+
+  def standardize_position!
+    abort_rebase!
+    abort_merge!
+    git_command('checkout master')
+  end # standardize_position!
+
+  def abort_merge!
+    if state?.include?(:merge)
+      git_command('merge --abort')
+    end # if
+  end # abort_merge!
+
+  def abort_rebase!
+    if state?.include?(:rebase)
+      git_command('rebase --abort')
+    end # if
+  end # abort_rebase!
+
   def corruption_fsck
     git_command('fsck')
   end # corruption

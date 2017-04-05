@@ -28,9 +28,6 @@ class RepositoryTest < TestCase
   end # stage_files
 
   def test_something_to_commit?
-    assert_respond_to(@temp_repo.grit_repo, :status)
-    assert_instance_of(Grit::Status, @temp_repo.grit_repo.status)
-    status = @temp_repo.grit_repo.status
     assert_instance_of(Hash, status.added)
     assert_instance_of(Hash, status.changed)
     assert_instance_of(Hash, status.deleted)
@@ -40,7 +37,6 @@ class RepositoryTest < TestCase
     assert((status.added == {}), status.inspect)
     @temp_repo.assert_nothing_to_commit
     @temp_repo.force_change
-    assert(@temp_repo.something_to_commit?, @temp_repo.grit_repo.status.inspect)
   end # something_to_commit
 
   def setup

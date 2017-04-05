@@ -3,38 +3,46 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 37, Rational(47902181768, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 4, 5, 14, 33, Rational(118473512, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_test
 Started
-.............................
+..............................$ git rebase --abort
+@errors="No rebase in progress?\n"
+@process_status = #<Process::Status: pid 24697 exit 1>
+$ git merge --abort
+@errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
+@process_status = #<Process::Status: pid 24719 exit 128>
+$ git checkout master
+@errors="Already on \'master\'\n"
+.....
 
-Finished in 1.258467174 seconds.
+Finished in 1.809966318 seconds.
 ------
-29 tests, 482 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+35 tests, 239 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-23.04 tests/s, 383.01 assertions/s
+19.34 tests/s, 132.05 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_test.rb"
-	User time (seconds): 1.89
-	System time (seconds): 0.45
-	Percent of CPU this job got: 78%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.98
+	User time (seconds): 1.78
+	System time (seconds): 0.52
+	Percent of CPU this job got: 67%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.42
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 45808
+	Maximum resident set size (kbytes): 46960
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 7
-	Minor (reclaiming a frame) page faults: 92764
-	Voluntary context switches: 1371
-	Involuntary context switches: 503
+	Major (requiring I/O) page faults: 18
+	Minor (reclaiming a frame) page faults: 137995
+	Voluntary context switches: 2323
+	Involuntary context switches: 700
 	Swaps: 0
-	File system inputs: 592
-	File system outputs: 6208
+	File system inputs: 1544
+	File system outputs: 7976
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
