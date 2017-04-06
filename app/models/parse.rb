@@ -90,18 +90,18 @@ class MatchRefinement < Array
 		end.join # map
 	end # join
 	
+	def capture_indices
+		(0..(size - 1)).select do |refinement_index|
+			self[refinement_index].kind_of?(MatchCapture) && self[refinement_index].success?
+		end # each
+	end # capture_indices
+
 	def captures
-		select do |refinement|
-			refinement.kind_of?(MatchCapture) && refinement.success?
+		capture_indices.map do |refinement_index|
+			self[refinement_index]
 		end # each
 	end # captures
 	
-	def capture_indices
-		(0..size).select do |refinement_index|
-			self[refinement_index].kind_of?(MatchCapture) && self[refinement_index].success?
-		end # each
-	end # captures
-
 	def capture_span
 		array = capture_indices
 		if array == []
@@ -116,6 +116,26 @@ class MatchRefinement < Array
 	def all_matches_consecutive?
 		capture_span == capture_indices.size
 	end # all_matches_consecutive?
+	
+	def unmatched_indices
+		(0..(size - 1)).map do |refinement_index|
+			if self[refinement_index].kind_of?(MatchCapture)
+				if self[refinement_index].success?
+					nil
+				else
+				 refinement_index # expected match?
+				end # if
+			else
+				refinement_index # delimiters, pre_match, post_match
+			end # if
+		end.compact # map
+	end # unmatched_indices
+
+	def unmatches
+		unmatched_indices.map do |refinement_index|
+			self[refinement_index]
+		end # each
+	end # unmatches
 
 	def kind
 		if capture_span == 0
@@ -192,8 +212,10 @@ class MatchRefinement < Array
 		
 		def assert_match_kind(desired_kind, message = '')
 			assert_pre_conditions
+			message += "\n"
 			message += error_message(desired_kind) + "\n" + self.inspect
-			message += "\n capture_indices = " + capture_indices.inspect
+			message += "\n capture_indices = " + capture_indices.inspect + ' out of 0..' + (size - 1).to_s
+			message += "\n" + unmatches.ruby_lines_storage
 			assert_equal(desired_kind, kind, message)
 		end # assert_match_kind
 		

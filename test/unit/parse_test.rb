@@ -63,19 +63,19 @@ class MatchRefinementTest < TestCase
 		assert_equal('ab', AB.join)
 	end # join
 	
-	def test_captures
-		assert_equal([B_capture], B_match.captures)
-		assert_equal([], A_mismatch.captures)
-		assert_equal([B_capture], AB.captures)
-	end # captures
-	
 	def test_capture_indices
 		assert_equal([0], B_match.capture_indices)
 		assert_equal([], A_mismatch.capture_indices)
 		assert_equal([1], AB.capture_indices)
 		assert_equal([1], ABC_match_b.capture_indices, ABC_match_b.captures.inspect)
 	end # capture_indices
-	
+		
+	def test_captures
+		assert_equal([B_capture], B_match.captures)
+		assert_equal([], A_mismatch.captures)
+		assert_equal([B_capture], AB.captures)
+	end # captures
+
 	def test_capture_span
 		assert_equal(1, B_match.capture_span, B_match.capture_indices)
 		assert_equal(0, A_mismatch.capture_span, A_mismatch.capture_indices)
@@ -95,6 +95,75 @@ class MatchRefinementTest < TestCase
 		assert_equal(true, ABC_match_b.all_matches_consecutive?, ABC_match_b.capture_indices)
 		assert_equal(false, Scattered_match.all_matches_consecutive?, Scattered_match.capture_indices)
 	end # all_matches_consecutive?
+	
+	def test_unmatched_indices
+		assert_equal([0], A_mismatch.unmatched_indices)
+		assert_equal(1, B_match.size, B_match.captures)
+		assert_equal(true, B_match[0].instance_of?(MatchCapture), B_match.captures)
+		assert_equal(true, B_match[0].success?, B_match.captures)
+		assert_equal(B_capture, B_match[0], B_match.captures)
+
+		[B_match].map do |match_refinement|
+			match_refinement.each do |refinement|
+				if refinement.kind_of?(MatchCapture)
+					assert_instance_of(MatchCapture, refinement)
+					if refinement.success?
+						assert(refinement.success?, refinement.inspect)
+					else
+						refute(refinement.success?, refinement.inspect)
+						assert_instance_of(String, refinement.string)
+					 refinement.string
+					end # if
+				else
+					assert_instance_of(String, refinement)
+					refinement
+				end # if
+			end.compact # each
+		end # each
+
+		assert_equal(0, B_match.unmatched_indices.size, B_match.captures)
+		assert_equal([], B_match.unmatched_indices, B_match.captures)
+		assert_equal([1], BA.unmatched_indices, BA.inspect)
+		assert_equal([0], AB.unmatched_indices, AB.captures)
+		assert_equal([0, 2], ABC_match_b.unmatched_indices, ABC_match_b.capture_indices)
+		assert_equal([], B_match.unmatched_indices)
+		assert_equal([1], Scattered_match.unmatched_indices, Scattered_match.inspect)
+	end # unmatched_indices
+
+	def test_unmatches
+		assert_equal(['a'], A_mismatch.unmatches)
+		assert_equal(1, B_match.size, B_match.captures)
+		assert_equal(true, B_match[0].instance_of?(MatchCapture), B_match.captures)
+		assert_equal(true, B_match[0].success?, B_match.captures)
+		assert_equal(B_capture, B_match[0], B_match.captures)
+
+		[B_match].map do |match_refinement|
+			match_refinement.each do |refinement|
+				if refinement.kind_of?(MatchCapture)
+					assert_instance_of(MatchCapture, refinement)
+					if refinement.success?
+						assert(refinement.success?, refinement.inspect)
+					else
+						refute(refinement.success?, refinement.inspect)
+						assert_instance_of(String, refinement.string)
+					 refinement.string
+					end # if
+				else
+					assert_instance_of(String, refinement)
+					refinement
+				end # if
+			end.compact # each
+		end # each
+
+		assert_equal(AB.unmatches, BA.unmatches, BA.inspect)
+		assert_equal(0, B_match.unmatches.size, B_match.captures)
+		assert_equal([], B_match.unmatches, B_match.captures)
+		assert_equal(['a'], BA.unmatches, BA.inspect)
+		assert_equal(['a'], AB.unmatches, AB.captures)
+		assert_equal(['a', 'c'], ABC_match_b.unmatches, ABC_match_b.inspect)
+		assert_equal([], B_match.unmatches)
+		assert_equal(['c'], Scattered_match.unmatches)
+	end # unmatches
 
 	def test_kind
 		assert_equal(:exact, B_match.kind, B_match.captures)
