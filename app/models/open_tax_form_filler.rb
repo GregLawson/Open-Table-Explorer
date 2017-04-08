@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../app/models/generic_file.rb'
+#require_relative '../../app/models/generic_file.rb'
 require_relative '../../app/models/no_db.rb'
 module OpenTaxFormFiller
   module Constants
