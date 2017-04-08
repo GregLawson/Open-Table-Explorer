@@ -6,8 +6,8 @@
 #
 ###########################################################################
 require_relative '../../app/models/no_db.rb'
-require_relative '../../test/assertions/regexp_parse_assertions.rb'
-require_relative '../../app/models/regexp_match.rb'
+#require_relative '../../test/assertions/regexp_parse_assertions.rb'
+#require_relative '../../app/models/regexp_match.rb'
 module GenericFile
   include NoDB
   extend NoDB::ClassMethods

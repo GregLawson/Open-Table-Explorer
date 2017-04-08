@@ -9,9 +9,9 @@
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/default_test_case.rb'
 require_relative '../../app/models/generic_file.rb'
-require_relative '../../app/models/open_tax_form_filler.rb'
+#require_relative '../../app/models/open_tax_form_filler.rb'
 class GenericJsonsTest < TestCase
-  include DefaultTests
+#  include DefaultTests
   include RailsishRubyUnit::Executable.model_class?::Examples
   def test_raw_acquisitions # acquisition=next
     all_files = Dir[OpenTaxFormFiller::Definitions::Input_filenames]
