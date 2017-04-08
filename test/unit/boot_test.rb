@@ -76,9 +76,9 @@ class BootTest < TestCase
   end # test_remove_matches
 
  def test_reverse_remove_matches
-    unmatches = remove_matches([Grubs_run.output], Boot::Examples::Regexps::Grub.constants.reverse)
+    match = MatchCapture.new(string: Grubs_run.output, regexp: Boot::Examples::Regexps::Full_regexp_array)
 
-    assert_empty(unmatches.sort.uniq)
+    match.assert_refinement(:exact)
   end # test_remove_matches
 
 	def test_state
