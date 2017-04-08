@@ -8,13 +8,13 @@
 # require_relative '../unit/test_environment'
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/open_tax_solver.rb'
-require_relative '../assertions/regexp_parse_assertions.rb'
+#require_relative '../assertions/regexp_parse_assertions.rb'
 class OpenTaxSolverTest < TestCase
-  include DefaultTests
+#  include DefaultTests
   include OpenTaxSolver::Constants
   extend OpenTaxSolver::Constants
   include OpenTaxSolver::Examples
-  extend OpenTableExplorer::Finance::Constants
+#  extend OpenTableExplorer::Finance::Constants
   def test_Constants
     assert_pathname_exists(Data_source_directory)
     assert_pathname_exists(Open_Tax_Filler_Directory)

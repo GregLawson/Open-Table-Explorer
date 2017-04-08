@@ -3,35 +3,215 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 22, Rational(2155343138, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 4, 7, 12, 20, Rational(9606420951, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test
+Started
+F
+===============================================================================
+Failure:
+  </\^\ \?\(\?<name>\[\-A\-Za\-z0\-9\?\]\+\)\(\?<blank_or_outter>\\s\+\|\(\?<outter>\\s\+\(\?<type_chars>\\\?\\\?\)\\s\+\)\|\(\?<outter>\\s\+\(\?<type_chars>0\)\\s\+\)\|\(\?<outter>\\s\+\(\?<type_chars>;\)\\s\+\)\|\(\?<outter>\\s\+\(\?<type_chars>0\\s\+;\)\\s\+\)\|\(\?<outter>\\s\+\(\?<type_chars>Yes\)\\s\+\)\)\\\{\(\?<description>\.\+\)\\\}/> expected to be =~
+  <"L 0 {e}">.
+test_CLASS_constants(OpenTaxSolverTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:100:in `test_CLASS_constants\'
+      97:     assert_match(Symbol_regexp, Simple_acquisition)
+      98:     assert_match(Type_regexp, Simple_acquisition)
+      99:     assert_match(Description_regexp, Simple_acquisition)
+  => 100:     assert_match(Full_regexp_array.join, Simple_acquisition)
+     101:     OpenTaxSolver.assert_post_conditions
+     102:   end # Constants
+     103: 
+===============================================================================
+E
+===============================================================================
+Error: test_Constants(OpenTaxSolverTest): NameError: uninitialized constant OpenTaxSolverTest::Data_source_directory
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:19:in `test_Constants\'
+     16:   include OpenTaxSolver::Examples
+     17: #  extend OpenTableExplorer::Finance::Constants
+     18:   def test_Constants
+  => 19:     assert_pathname_exists(Data_source_directory)
+     20:     assert_pathname_exists(Open_Tax_Filler_Directory)
+     21:     assert_pathname_exists(Open_tax_solver_directory)
+     22:     assert_pathname_exists(Open_tax_solver_data_directory)
+===============================================================================
+E
+===============================================================================
+Error: test_all(OpenTaxSolverTest): NameError: undefined local variable or method `raw_acquisitions\' for OpenTaxSolver:Class
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/open_tax_solver.rb:73:in `coarse_filter\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:154:in `test_all\'
+     151:   end # coarse_rejections
+     152: 
+     153:   def test_all
+  => 154:     ret = OpenTaxSolver.coarse_filter.map do |r| # map
+     155:       matchData = Full_regexp_array.join.match(r)
+     156:       next unless matchData
+     157:       OpenTaxSolver.assert_full_match(r)
+===============================================================================
+E
+===============================================================================
+Error: test_assert_full_match(OpenTaxSolverTest): TypeError: no implicit conversion of String into Integer
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/open_tax_solver.rb:178:in `match\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/open_tax_solver.rb:178:in `assert_full_match\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:191:in `test_assert_full_match\'
+     188:   end # fine_rejections
+     189: 
+     190:   def test_assert_full_match
+  => 191:     OpenTaxSolver.assert_full_match(\'L  {e}\')
+     192:     OpenTaxSolver.assert_full_match(\'{e}\')
+     193:     OpenTaxSolver.assert_full_match(\'L ?? {e}\')
+     194:     OpenTaxSolver.assert_full_match(\'L 0 {e}\')
+===============================================================================
+E
+===============================================================================
+Error: test_coarse_filter(OpenTaxSolverTest): NameError: undefined local variable or method `raw_acquisitions\' for OpenTaxSolver:Class
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/open_tax_solver.rb:73:in `coarse_filter\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:141:in `test_coarse_filter\'
+     138:   end # raw_acquisitions
+     139: 
+     140:   def test_coarse_filter
+  => 141:     refute_empty(OpenTaxSolver.coarse_filter.compact, OpenTaxSolver.coarse_filter.inspect)
+     142:     assert_operator(80, :<=, OpenTaxSolver.coarse_filter.size, OpenTaxSolver.coarse_filter.inspect)
+     143:   end # coarse_filter
+     144: 
+===============================================================================
+E
+===============================================================================
+Error: test_coarse_rejections(OpenTaxSolverTest): NameError: undefined local variable or method `raw_acquisitions\' for OpenTaxSolver:Class
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/open_tax_solver.rb:83:in `coarse_rejections\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:146:in `test_coarse_rejections\'
+     143:   end # coarse_filter
+     144: 
+     145:   def test_coarse_rejections
+  => 146:     OpenTaxSolver.coarse_rejections.each do |acquisition|
+     147:       puts acquisition if Type_regexp.match(acquisition)
+     148:       puts acquisition if Description_regexp.match(acquisition)
+     149:     end # select
+===============================================================================
+E
+===============================================================================
+Error: test_dump_sql_to_file(OpenTaxSolverTest):
+  NoMethodError: undefined method `model_name?\' for #<OpenTaxSolverTest:0x007f586dc8f740>
+  Did you mean?  method_name
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:211:in `test_dump_sql_to_file\'
+     208:   end # assert_full_match
+     209:   include OpenTaxSolver::Constants
+     210:   def test_dump_sql_to_file
+  => 211:     assert_equal(:OpenTaxSolver, model_name?)
+     212:     filename = "db/SQL/Export/#{model_name?}_#{Default_tax_year}.sql"
+     213:     assert_respond_to(model_class?, :dump_sql_to_file)
+     214:     model_class?.dump_sql_to_file(filename)
+===============================================================================
+E
+===============================================================================
+Error: test_fine_rejections(OpenTaxSolverTest): NameError: undefined local variable or method `raw_acquisitions\' for OpenTaxSolver:Class
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/open_tax_solver.rb:73:in `coarse_filter\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/open_tax_solver.rb:107:in `fine_rejections\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:185:in `test_fine_rejections\'
+     182:   end # all
+     183: 
+     184:   def test_fine_rejections
+  => 185:     OpenTaxSolver.fine_rejections.each do |r|
+     186:       OpenTaxSolver.assert_full_match(r)
+     187:     end # each
+     188:   end # fine_rejections
+===============================================================================
+N
+===============================================================================
+OpenTaxSolverTest#test_initialize was redefined [test_initialize(OpenTaxSolverTest)]
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:104:in `<class:OpenTaxSolverTest>\'
+===============================================================================
+.E
+===============================================================================
+Error: test_parse(OpenTaxSolverTest): NoMethodError: undefined method `[]\' for nil:NilClass
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:121:in `test_parse\'
+     118:     assert_equal(\' e\', matchData[-1])
+     119: 
+     120:     matchData = Full_regexp_array.join.match(acquisition)
+  => 121:     assert_equal(\'L\', matchData[1])
+     122:     assert_equal(matchData[2], matchData[3] || matchData[5] || matchData[7], matchData.inspect)
+     123:     assert_equal(\'0\', md = Full_regexp_array.join.match(\'L 0 {e}\')[6], md.inspect)
+     124:     type = matchData[10] || matchData[4] || matchData[6] || matchData[8]
+===============================================================================
+E
+===============================================================================
+Error: test_raw_acquisitions(OpenTaxSolverTest): NoMethodError: undefined method `raw_acquisitions\' for OpenTaxSolver:Class
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:137:in `test_raw_acquisitions\'
+     134:   end # parse
+     135: 
+     136:   def test_raw_acquisitions
+  => 137:     assert_equal(1, OpenTaxSolver.raw_acquisitions.size)
+     138:   end # raw_acquisitions
+     139: 
+     140:   def test_coarse_filter
+===============================================================================
+E
+===============================================================================
+Error: test_run_tax_form_filler(OpenTaxSolverTest): NameError: uninitialized constant OpenTaxSolverTest::Data_source_directory
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:69:in `test_run_tax_form_filler\'
+     66:     form = \'Federal/f1040\'
+     67:     form_filename = form.sub(\'/\', \'_\')
+     68:     year_dir = \'2012\'
+  => 69:     data = "#{Data_source_directory}/US_1040_OTS.json"
+     70:     assert(File.exist?(data))
+     71:     fdf = \'/tmp/output.fdf\'
+     72:     output_pdf = "#{Data_source_directory}/#{form_filename}_otff.pdf"
+===============================================================================
+test_run_tax_solver sysout=
+E
+===============================================================================
+Error: test_run_tax_solver(OpenTaxSolverTest):
+  NameError: uninitialized constant OpenTaxSolverTest::OpenTableExplorer
+  Did you mean?  OpenTaxSolver
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:36:in `test_run_tax_solver\'
+     33:     jurisdiction = :US
+     34:     sysout = `#{Command}`
+     35:     puts "test_run_tax_solver sysout=#{sysout}"
+  => 36:     form = OpenTableExplorer::Finance::TaxForms.new(form, jurisdiction)
+     37:     form.run_open_tax_solver
+     38:     assert_pathname_exists(Open_tax_solver_sysout)
+     39:   end # run_open_tax_solver
+===============================================================================
+E
+===============================================================================
+Error: test_run_tax_solver_to_filler(OpenTaxSolverTest):
+  NameError: uninitialized constant OpenTaxSolverTest::Open_Tax_Filler_Directory
+  Did you mean?  OpenTaxSolverTest::Open_tax_solver_directory
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:42:in `test_run_tax_solver_to_filler\'
+     39:   end # run_open_tax_solver
+     40: 
+     41:   def	test_run_tax_solver_to_filler
+  => 42:     sysout = `nodejs #{Open_Tax_Filler_Directory}/script/json_ots.js #{Open_tax_solver_sysout} > #{Data_source_directory}/US_1040_OTS.json`
+     43:     puts "test_run_tax_solver_to_Form_filler sysout=#{sysout}"
+     44:     OpenTableExplorer::Finance::TaxForms.new(\'1040\', :US).run_open_tax_solver_to_filler
+     45:   end # run_open_tax_solver_to_filler
+===============================================================================
+
+
+Finished in 0.314438363 seconds.
+------
+14 tests, 12 assertions, 1 failures, 12 errors, 0 pendings, 0 omissions, 1 notifications
+7.14286% passed
+------
+44.52 tests/s, 38.16 assertions/s
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb:146:in `<module:Examples>\': undefined method `new\' for RegexpParseType:Module (NoMethodError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb:138:in `<module:RegexpParseType>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb:14:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_file.rb:9:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_file.rb:9:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/open_tax_solver.rb:8:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/open_tax_solver.rb:8:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:10:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:10:in `<main>\'
+:errors => {:syserr => 'sh: 1: cannot create ../OpenTaxSolver2012_10.00/examples_and_templates/US_1040/US_1040_Lawson_sysout.txt: Directory nonexistent
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb"
-	User time (seconds): 0.81
-	System time (seconds): 0.06
+	User time (seconds): 0.86
+	System time (seconds): 0.04
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.87
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.91
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 28436
+	Maximum resident set size (kbytes): 21856
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 7232
-	Voluntary context switches: 3
-	Involuntary context switches: 94
+	Minor (reclaiming a frame) page faults: 5765
+	Voluntary context switches: 6
+	Involuntary context switches: 95
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

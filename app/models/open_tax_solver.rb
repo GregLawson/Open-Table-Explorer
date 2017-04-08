@@ -5,12 +5,12 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../app/models/generic_file.rb'
+#require_relative '../../app/models/generic_file.rb'
 class OpenTaxSolver
-  include GenericFiles
-extend GenericFiles::ClassMethods
-include GenericFiles::Assertions
-extend GenericFiles::Assertions::ClassMethods
+#  include GenericFiles
+#extend GenericFiles::ClassMethods
+#include GenericFiles::Assertions
+#extend GenericFiles::Assertions::ClassMethods
 module Constants
   Default_tax_year = 2012
 Open_tax_solver_directory = "../OpenTaxSolver2012_10.00".freeze
@@ -135,7 +135,7 @@ module ClassMethods
 include OpenTaxSolver::Examples
 
 extend AssertionsModule
-include DefaultAssertions::ClassMethods
+#include DefaultAssertions::ClassMethods
 def assert_pre_conditions
    assert_scope_path(:DefaultAssertions, :ClassMethods)
   assert_includes(included_modules, NoDB, '')
