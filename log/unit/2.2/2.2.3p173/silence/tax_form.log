@@ -3,85 +3,43 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 39, Rational(31104099650, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 4, 11, 21, 27, Rational(39328058179, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test
 Started
-................F
-===============================================================================
-Failure: test_Ots_run_default(OtsRunTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:201:in `test_Ots_run_default\'
-     198:     assert_instance_of(Fixnum, open_tax_solver_errors[:exitstatus])
-     199:     assert_equal(1, US1040_template.open_tax_solver_errors[:exitstatus], open_tax_solver_errors.inspect)
-     200:     ots_run_default = Ots_run_default.call(US1040_example, nil)
-  => 201:     assert_equal(0, Ots_run_default.call(US1040_example, nil).errors[:exitstatus])
-     202:     assert_equal(0, Ots_run_default.call(US1040_user, nil).errors[:exitstatus], US1040_user.open_tax_solver_errors.inspect)
-     203:     assert_equal(0, Ots_run_default.call(CA540_user, nil).errors[:exitstatus], CA540_user.open_tax_solver_errors.inspect)
-     204:     assert_equal(0, Ots_run_default.call(US1040_example, nil).errors[:exitstatus], US1040_example.explain_open_tax_solver)
-<0> expected but was
-<nil>
-===============================================================================
-.....E
-===============================================================================
-Error: test_commit_minor_change!(OtsRunTest): NoMethodError: undefined method `current_branch_name?\' for #<Repository:0x00000002fa86e0>
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:357:in `test_commit_minor_change!\'
-     354: 
-     355:   def test_commit_minor_change!
-     356:     file = \'test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt\'
-  => 357:     current_branch_name = Repository::This_code_repository.current_branch_name?
-     358:     diff_run = Repository::This_code_repository.git_command(\'diff stash -- \' + file).assert_post_conditions
-     359:     diff_run = Repository::This_code_repository.git_command("diff #{current_branch_name} -- " + file).assert_post_conditions
-     360:     assert_operator(diff_run.output.split.size, :<=, 8, diff_run.inspect)
-===============================================================================
-....F
-===============================================================================
-Failure: test_open_tax_solver_errors(OtsRunTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:329:in `test_open_tax_solver_errors\'
-     326:     assert_equal(1, open_tax_solver_run.errors[:exitstatus], open_tax_solver_errors)
-     327:     assert_equal(1, open_tax_solver_run.errors[:exitstatus], open_tax_solver_errors.inspect)
-     328:     assert_equal(1, US1040_template.open_tax_solver_errors[:exitstatus], open_tax_solver_errors.inspect)
-  => 329:     assert_equal(0, US1040_user.open_tax_solver_errors[:exitstatus], US1040_user.open_tax_solver_errors.inspect)
-     330:     assert_equal(0, CA540_user.open_tax_solver_errors[:exitstatus], CA540_user.open_tax_solver_errors.inspect)
-     331:     assert_equal(0, US1040_example.open_tax_solver_errors[:exitstatus], US1040_example.explain_open_tax_solver)
-     332:     assert_equal(0, CA540_example.open_tax_solver_errors[:exitstatus], CA540_example.open_tax_solver_errors.inspect)
-{:sysout=>"US 1040 2014 - v12.01\nWriting results to file:  /home/greg/Desktop/src/Open-Table-Explorer//../OpenTaxSolver2014_12.01-forms//examples_and_template\n... 7587.09\nL55 =   0.00\nL56 = 7587.09\nL63 = 7587.09\t\ttotal tax\nL64 = 10118.47\nL74 = 10118.47\t\ttotal payments\nL75 = 2531.38  REBATE!!!\nL76a = 2531.38 \n", :ots_errors=>[], :output=>"\nTitle:  US Federal 1040 Tax Form - 2014 \tMon Feb 20 09:39:29 2017\n\nStatus = Married/Joint (2)\n (Under65 = 2)\nL6 = 2\nL7 =   0.00\nL8a = 121.26\nL9 = \n... 7587.09\nL55 =   0.00\nL56 = 7587.09\nL63 = 7587.09\t\ttotal tax\nL64 = 10118.47\nL74 = 10118.47\t\ttotal payments\nL75 = 2531.38  REBATE!!!\nL76a = 2531.38 \n", :syserr=>{...}, :exception_string=>"unknown"}
-<0> expected but was
-<nil>
-===============================================================================
-.................
+.........................................................
 
-Finished in 1.269203586 seconds.
+Finished in 0.058440906 seconds.
 ------
-45 tests, 314 assertions, 2 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
-93.3333% passed
+57 tests, 243 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
 ------
-35.46 tests/s, 247.40 assertions/s
+975.34 tests/s, 4158.05 assertions/s
 ',
-:errors => {:syserr => 'Command exited with non-zero status 1
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb"
-	User time (seconds): 2.73
-	System time (seconds): 0.20
-	Percent of CPU this job got: 84%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.47
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb"
+	User time (seconds): 2.09
+	System time (seconds): 0.15
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.26
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 45856
+	Maximum resident set size (kbytes): 45452
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 37
-	Minor (reclaiming a frame) page faults: 19327
-	Voluntary context switches: 234
-	Involuntary context switches: 309
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 13117
+	Voluntary context switches: 32
+	Involuntary context switches: 264
 	Swaps: 0
-	File system inputs: 14976
-	File system outputs: 608
+	File system inputs: 0
+	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0
 '
 }
 
