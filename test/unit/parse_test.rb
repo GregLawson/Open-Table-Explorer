@@ -184,6 +184,9 @@ class MatchRefinementTest < TestCase
 			assert_match(/left and right res/, ABC_match_b.error_message(:inside))
 			assert_match(/right res/, AB.error_message(:right))
 	end # error_message
+	
+	def test_suggest
+	end # suggest
 		
     def test_MatchRefinement_assert_pre_conditions
     end # assert_pre_conditions

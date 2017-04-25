@@ -166,6 +166,22 @@ class MatchRefinement < Array
 				fail explain_kind.inspect + ' unexpected'
 		end # case
 	end # error_message
+	
+	def suggest_name_value(string, name_regexp = /[A-Za-z]+/, delimiter_regexp = /[ =,; \t\n]/ , value_regexp = /[0-9]+/)
+		name_value_pair_regexp = name_regexp.capture(:name) *delimiter_regexp.capture(:delimiter) * value_regexp.capture(:value) */[\ \n]/
+		name_value_pairs = SplitCapture.new(string: string, regexp: name_value_pair_regexp).output
+		message = 'Net_file_tree_hash = ' + Net_file_tree_hash.inspect + "\n"
+		message += 'Lo_hash = ' + Lo_hash.ruby_lines_storage + "\n"
+		
+		message +=  'name_value_pairs = ' + name_value_pairs.inspect
+		puts message
+		assert_instance_of(Array, name_value_pairs)
+		suggestion = name_value_pairs.map do |pair|
+			name = pair[:name]
+			value = pair[:value]
+				value_regexp.inspect + '.capture(:' + name +')'
+		end # map
+	end # suggest
 		
 	module Assertions
     module ClassMethods
