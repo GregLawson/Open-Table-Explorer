@@ -18,4 +18,5 @@ puts Disk.kernels
 Disk.grubs.each do |grub|
   puts grub.inspect
 end # each
+puts 'ret = ' + ret.inspect unless $VERBOSE.nil?
 1 # successfully completed
