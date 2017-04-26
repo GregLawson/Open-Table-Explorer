@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Exec=/home/greg/Desktop/src/OpenTaxSolver2016_14.06_linux64/Run_taxsolve_GUI
+Icon=exec
+Terminal=false
+Type=Application
+Name[en_US]=Open Tax Solver GUI.desktop
+Comment[en_US]=Do taxes
+Path=%k
+X-KeepTerminal=true
