@@ -108,7 +108,7 @@ class InteractiveBottleneck
       #		puts "status.changed=#{status.changed.inspect}"
       #		puts "status.deleted=#{status.deleted.inspect}"
       #		puts "@repository.something_to_commit?=#{@repository.something_to_commit?.inspect}"
-      @repository.git_command('stash save --include-untracked')
+      @repository.stash!.assert_post_conditions
       merge_cleanup
       changes_branch = :stash
     end # if
