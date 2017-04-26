@@ -3,36 +3,43 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 22, Rational(7780214792, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 4, 26, 9, 30, Rational(31888928354, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/partition_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/partition_test
+Started
+.
+
+Finished in 0.004298459 seconds.
+------
+1 tests, 0 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+------
+232.64 tests/s, 0.00 assertions/s
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/partition_test.rb:12:in `<class:PartitionTest>\': uninitialized constant PartitionTest::RailsishRubyUnit (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/partition_test.rb:10:in `<main>\'
-Command exited with non-zero status 1
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/partition_test.rb"
-	User time (seconds): 1.04
-	System time (seconds): 0.11
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/partition_test.rb"
+	User time (seconds): 1.06
+	System time (seconds): 0.12
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.16
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.20
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 30856
+	Maximum resident set size (kbytes): 31668
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 7837
-	Voluntary context switches: 4
-	Involuntary context switches: 123
+	Minor (reclaiming a frame) page faults: 8400
+	Voluntary context switches: 13
+	Involuntary context switches: 127
 	Swaps: 0
-	File system inputs: 8
+	File system inputs: 0
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0
 '
 }
 
