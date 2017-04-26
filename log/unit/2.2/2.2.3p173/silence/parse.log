@@ -3,7 +3,7 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 4, 24, 17, 16, Rational(10284759245, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 4, 26, 10, 47, Rational(11863605175, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test
@@ -16,28 +16,28 @@ c did not match anything.
 #<MatchCapture string="  " regexp=/  />
 ...........
 
-Finished in 0.792604106 seconds.
+Finished in 0.658506869 seconds.
 ------
-107 tests, 367 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+107 tests, 371 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-135.00 tests/s, 463.03 assertions/s
+162.49 tests/s, 563.40 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb"
-	User time (seconds): 1.60
-	System time (seconds): 0.11
+	User time (seconds): 1.50
+	System time (seconds): 0.07
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.72
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.58
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 31404
+	Maximum resident set size (kbytes): 31168
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 7975
+	Minor (reclaiming a frame) page faults: 7917
 	Voluntary context switches: 2
-	Involuntary context switches: 220
+	Involuntary context switches: 169
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

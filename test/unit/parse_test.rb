@@ -29,6 +29,29 @@ class MatchRefinementTest < TestCase
 		assert_equal('"\n"', "\n".to_literal)
 	end # to_literal
 	
+	def test_suggest
+		string = 'a=1'
+		name_regexp = /[A-Za-z]+/
+		delimiter_regexp = /[ =,; \t\n]/
+		value_regexp = /[0-9]+/
+		assert_match(name_regexp, string)
+		assert_match(delimiter_regexp, string)
+		assert_match(value_regexp, string)
+			name_value_pair_regexp = [name_regexp.capture(:name), delimiter_regexp.capture(:delimiter), value_regexp.capture(:value)]
+			MatchCapture.new(string: string, regexp: name_value_pair_regexp).assert_refinement(:exact)
+#			assert(string.match(name_value_pair_regexp))
+#			assert_match(name_value_pair_regexp, string)
+			name_value_pairs = SplitCapture.new(string: string, regexp: name_value_pair_regexp).output
+			assert_equal({:delimiter=>"=", :name=>"a", :value=>"1"}, name_value_pairs[0], name_value_pairs.inspect)
+			suggestion = name_value_pairs.map do |pair|
+				name = pair[:name]
+				value = pair[:value]
+				value_regexp.inspect + '.capture(:' + name +')'
+			end # map
+		suggestion = MatchRefinement.suggest_name_value('a=1', /a/, /=/, /1/)
+#		assert_equal([name: 'a', delimiter: '=', value: '1'], suggestion)
+	end # suggest
+	
 		def test_MatchRefinement_square_brackets
 		assert_instance_of(MatchRefinement, A_mismatch)
 		assert_instance_of(MatchRefinement, MatchRefinement[B_capture])
@@ -184,9 +207,6 @@ class MatchRefinementTest < TestCase
 			assert_match(/left and right res/, ABC_match_b.error_message(:inside))
 			assert_match(/right res/, AB.error_message(:right))
 	end # error_message
-	
-	def test_suggest
-	end # suggest
 		
     def test_MatchRefinement_assert_pre_conditions
     end # assert_pre_conditions
