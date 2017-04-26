@@ -10,10 +10,12 @@ require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../app/models/host.rb'
 require_relative '../../app/models/file_tree.rb'
+
 class Network # < ActiveRecord::Base
   include NoDB
   extend NoDB::ClassMethods
   # include Generic_Table
+	
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
     include FileTree::Examples
     # Hosts = Host.new
@@ -31,14 +33,14 @@ class Network # < ActiveRecord::Base
     Netmask_Pattern = /.*\sMask:/, /[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/.freeze # rubocop:disable Style/RedundantFreeze, Style/MutableConstant
     MyContext = /\s*inet addr:/, /[0-9]*\.[0-9]*\./.capture(:myContext).freeze # rubocop:disable Style/RedundantFreeze, Style/MutableConstant
     MyNetwork = /[0-9]+/.capture(:myNode)
-    MyNetmask = /.*\sMask:/, /[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/.freeze # rubocop:disable Style/RedundantFreeze, Style/MutableConstant
+    MyNetmask = /netmask /, /[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/.freeze # rubocop:disable Style/RedundantFreeze, Style/MutableConstant
     IFCONFIG = ShellCommands.new('/sbin/ifconfig')
     IFCONFIG_output = IFCONFIG.output.split(Device_separator_regexp)
     Leading_whitespace = /^\s+/
     Inet_addr_regexp = Leading_whitespace * /inet / * IP_Pattern.capture(:ipv4) * /  netmask / * IP_Pattern.capture(:netmask) * /  broadcast / * IP_Pattern.capture(:broadcast) * // * /\n/
     Ifconfig_pattern = Inet_addr_regexp
     IFCONFIG_capture = IFCONFIG_output[0].capture?(Ifconfig_pattern)
-		Ifconfig_array = [Leading_whitespace * /inet /, IP_Pattern.capture(:ipv4), /  netmask / * IP_Pattern.capture(:netmask), /  broadcast / * IP_Pattern.capture(:broadcast) * // * /\n/]
+		Ifconfig_array = [Leading_whitespace, /inet /, IP_Pattern.capture(:ipv4), /  netmask /, IP_Pattern.capture(:netmask), /  broadcast /, IP_Pattern.capture(:broadcast),  /\n/]
 		Ifconfig_regexp = Regexp[Ifconfig_array] #.exact
   end # DefinitionalConstants
   include DefinitionalConstants

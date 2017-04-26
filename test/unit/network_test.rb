@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/network.rb'
+
 class NetworkTest < TestCase
   # include DefaultTests
   include Network::DefinitionalConstants
@@ -39,12 +40,12 @@ class NetworkTest < TestCase
     assert_match(Private_C, example_nmap_line)
     ip_regexp = Private_Network_Pattern
     assert_match(ip_regexp, example_nmap_line)
-    assert_equal('../../devices/virtual/net/lo', Net_file_tree_hash[:lo])
-    assert_equal('../../devices/pci0000:00/0000:00:1c.0/0000:01:00.0/net/wlan0', Net_file_tree_hash[:wlan0])
+    assert_equal('/sys/devices/virtual/net/lo', Net_file_tree_hash[:lo])
+    assert_equal('/sys/devices/pci0000:00/0000:00:1c.0/0000:01:00.0/net/wlan0', Net_file_tree_hash[:wlan0])
     assert_match(IP_Pattern, IFCONFIG_capture.output[:ipv4], IFCONFIG_capture.inspect)
     assert_match(IP_Pattern, IFCONFIG_capture.output[:netmask], IFCONFIG_capture.inspect)
     assert_match(IP_Pattern, IFCONFIG_capture.output[:broadcast], IFCONFIG_capture.inspect)
-    assert_equal('../../devices/pci0000:00/0000:00:1c.2/0000:03:00.0/net/eth0', Net_file_tree_hash[:eth0])
+    assert_equal('/sys/devices/pci0000:00/0000:00:1c.2/0000:03:00.0/net/eth0', Net_file_tree_hash[:eth0])
   end # DefinitionalConstants
 
   def test_ifconfig
@@ -75,11 +76,11 @@ class NetworkTest < TestCase
 			lines.map do |line|
 				line += "\n"
 				name_value_pair_regexp = /[a-z]+/.capture(:name) */ / * /[0-9]+/.capture(:value) */[\ \n]/
-				name_value_pairs = line.split(name_value_pair_regexp)
+				name_value_pairs = SplitCapture.new(string: line, regexp: name_value_pair_regexp).output
 			end # map
-		end # map
+		end.flatten # map
 		message = 'Net_file_tree_hash = ' + Net_file_tree_hash.inspect + "\n"
-		message += 'Lo_hash = ' + Lo_hash.inspect + "\n"
+		message += 'Lo_hash = ' + Lo_hash.ruby_lines_storage + "\n"
 		
 		message +=  'name_value_pairs = ' + name_value_pairs.inspect
 		puts message
@@ -109,7 +110,11 @@ class NetworkTest < TestCase
 		lo_lines = lo_line +	lo_inet_line + lo_inet6_line + loop_line + lo_RX_line + 	lo_RX_errors_line  + lo_TX_line+ lo_TX_errors_line
 		wlan0_lines = wlan_line + wlan0_inet  + wlan0_RX_line+ wlan0_RX_errors_line  = + wlan0_TX_line + wlan0_TX_errors_line
 		ifconfig_output = lo_lines + wlan0_lines
+		capture = MatchCapture.new(string: ifconfig_output, regexp: Ifconfig_array)
+		capture.assert_refinement(:exact)
+		refinements = capture.sequential_refinements
 		show_matches = ParsedCapture.show_matches([ifconfig_output], Ifconfig_array)
+		show_matches = refinements
 		assert_match(MyNetmask, ifconfig_output, show_matches.ruby_lines_storage)
 		assert_match(MyContext, ifconfig_output, show_matches.ruby_lines_storage)
 		assert_match(Netmask_Pattern, ifconfig_output, show_matches.ruby_lines_storage)

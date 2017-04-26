@@ -1,4 +1,0 @@
-
-Title:  US Federal 1040 Tax Form - 2014 	Sun Apr 17 07:09:50 2016
-
-Error: unrecognized status '??'. Exiting.

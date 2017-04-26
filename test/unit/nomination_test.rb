@@ -18,7 +18,7 @@ class NominationTest < TestCase
 	end # context
 	
   module Examples
-#		Self = Nomination.stash(TestExecutable::Examples::TestTestExecutable)
+		Self = Nomination.stash(TestExecutable::Examples::TestTestExecutable)
   end #  Examples
   include Examples
 

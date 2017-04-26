@@ -180,6 +180,9 @@ class TestMaturityTest < TestCase
     assert_equal(false, MinimalMaturity.test_executable.recursion_danger?)
     assert_equal(false, MinimalMaturity3.test_executable.recursion_danger?)
   end # recursion_danger?
+	
+	def test_nominate
+	end # nominate
 
   def test_run
     #	assert_equal("test/unit/test_run_test.rb\n", TestRun.new(test_command: 'echo', options: '').run.output)

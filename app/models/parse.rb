@@ -23,6 +23,21 @@ class String
 end # String
 
 class MatchRefinement < Array
+  module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
+	
+		def suggest_name_value(string, name_regexp = /[A-Za-z]+/, delimiter_regexp = /[ =,; \t\n]/ , value_regexp = /[0-9]+/)
+			name_value_pair_regexp = name_regexp.capture(:name) *delimiter_regexp.capture(:delimiter) * value_regexp.capture(:value) */[\ \n]/
+			name_value_pairs = SplitCapture.new(string: string, regexp: name_value_pair_regexp).output
+			suggestion = name_value_pairs.map do |pair|
+				name = pair[:name]
+				value = pair[:value]
+				value_regexp.inspect + '.capture(:' + name +')'
+			end # map
+		end # suggest
+		
+  end # DefinitionalClassMethods
+  extend DefinitionalClassMethods
+
   module Constructors
 		def [](*array)
 				MatchRefinement.new(array.reject {|e| e == '' || e.nil? || (e.instance_of?(MatchCapture) && e.string == '') } ) # remove empty strings as uninteresting
@@ -166,22 +181,6 @@ class MatchRefinement < Array
 				fail explain_kind.inspect + ' unexpected'
 		end # case
 	end # error_message
-	
-	def suggest_name_value(string, name_regexp = /[A-Za-z]+/, delimiter_regexp = /[ =,; \t\n]/ , value_regexp = /[0-9]+/)
-		name_value_pair_regexp = name_regexp.capture(:name) *delimiter_regexp.capture(:delimiter) * value_regexp.capture(:value) */[\ \n]/
-		name_value_pairs = SplitCapture.new(string: string, regexp: name_value_pair_regexp).output
-		message = 'Net_file_tree_hash = ' + Net_file_tree_hash.inspect + "\n"
-		message += 'Lo_hash = ' + Lo_hash.ruby_lines_storage + "\n"
-		
-		message +=  'name_value_pairs = ' + name_value_pairs.inspect
-		puts message
-		assert_instance_of(Array, name_value_pairs)
-		suggestion = name_value_pairs.map do |pair|
-			name = pair[:name]
-			value = pair[:value]
-				value_regexp.inspect + '.capture(:' + name +')'
-		end # map
-	end # suggest
 		
 	module Assertions
     module ClassMethods
@@ -728,16 +727,12 @@ class RawCapture < Capture
 
 		def assert_refinement(desired_kind, message = '')
 			message += self.inspect + "\n"
-#!			assert_equal(priority_refinements, sequential_refinements)
-			priority_refinements.assert_match_kind(desired_kind, message)
-			if @regexp.instance_of?(Array)
-				assert_equal(@regexp.size, priority_refinements.captures.size, priority_refinements.inspect)
-			end # if
 			priority_refinements.assert_match_kind(desired_kind, message)
 			if @regexp.instance_of?(Array)
 				assert_equal(@regexp.size, priority_refinements.captures.size, priority_refinements.inspect)
 			end # if
 			assert_equal(@string, priority_refinements.join, priority_refinements.inspect)
+#!			assert_equal(priority_refinements, sequential_refinements)
 		end # assert_refinement
 
 		def assert_sequential(desired_kind, message = '')

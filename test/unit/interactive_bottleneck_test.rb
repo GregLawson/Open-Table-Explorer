@@ -240,7 +240,7 @@ class InteractiveBottleneckTest < TestCase
     target_branch = :passed
     push = @temp_repo.something_to_commit? # remember
     if push
-      @temp_repo.git_command('stash save') # .assert_post_conditions
+      @temp_repo.stash!.assert_post_conditions # .assert_post_conditions
       changes_branch = :stash
     end # if
 
@@ -283,7 +283,7 @@ class InteractiveBottleneckTest < TestCase
     #	assert(@temp_repo.something_to_commit?)
     #	@temp_repo.assert_something_to_commit
     #	@temp_repo.validate_commit(:master, [@temp_repo.path+'README'])
-    @temp_repo.git_command('stash')
+    @temp_repo.stash!
     @temp_repo.git_command('checkout passed')
     @temp_interactive_bottleneck.validate_commit(:stash, [@temp_repo.path + 'README'])
   end # validate_commit

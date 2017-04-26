@@ -154,6 +154,9 @@ class TestMaturity
 		eval(file_contents)
 	end # read_state
 	
+	def nominate()
+	end # nominate
+	
   def get_error_score!
     if @test_executable.recursion_danger?
       nil # avoid recursion
