@@ -10,6 +10,7 @@ require_relative '../app/models/script_environment_no_assertions.rb'
 require_relative '../app/models/unit.rb' # before command_line
 # require_relative "../app/models/#{RailsishRubyUnit::Executable.model_basename}"
 require_relative '../app/models/command_line_executable.rb'
+
 script_command_line = CommandLineExecutable.new(test_executable: TestExecutable.new_from_path($PROGRAM_NAME), argv: ARGV)
 executable_class = RailsishRubyUnit::Executable.model_class?
 object_arguments = script_command_line.arguments[1]
