@@ -3,8 +3,8 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 4, 26, 10, 18, Rational(31545587329, 1000000000), "-07:00"),
-:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/merge_test.rb',
+:start_time => Time.new(2017, 4, 26, 10, 18, Rational(15977881150, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/app/models/merge.rb',
 :output => '',
 :errors => {:rescue_exception => Timeout::Error.new()
 

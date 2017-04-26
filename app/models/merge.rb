@@ -37,35 +37,6 @@ class Merge
     attribute :interactive, Symbol, default: :interactive # non-defaults are primarily for non-interactive testing testing
     attribute :editor, Editor, default: Default_editor
   end # values
-  def standardize_position!
-    abort_rebase_and_merge!
-    @repository.git_command('checkout master')
-  end # standardize_position!
-
-  def abort_rebase_and_merge!
-    if File.exist?('.git/rebase-merge/git-rebase-todo')
-      @repository.git_command('rebase --abort')
-    end
-    #	@repository.git_command("stash save").assert_post_conditions
-    if File.exist?('.git/MERGE_HEAD')
-      @repository.git_command('merge --abort')
-    end # if
-  end # abort_rebase_and_merge!
-
-  def state?
-    state = []
-    state << :rebase if File.exist?('.git/rebase-merge/git-rebase-todo')
-    if File.exist?('.git/MERGE_HEAD')
-      state << :merge
-    end # if
-    state << if @repository.something_to_commit?
-               :dirty
-             else
-               :clean
-             end # if
-    state
-  end # state?
-
   def discard_log_file_merge
     unmerged_files = @repository.status
     unmerged_files.each do |conflict|
@@ -127,7 +98,7 @@ class Merge
       #		puts "status.changed=#{status.changed.inspect}"
       #		puts "status.deleted=#{status.deleted.inspect}"
       #		puts "@repository.something_to_commit?=#{@repository.something_to_commit?.inspect}"
-      @repository.git_command('stash save --include-untracked')
+      @repository.stash!
       merge_cleanup
       changes_branch = :stash
     end # if

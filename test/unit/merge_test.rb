@@ -71,23 +71,6 @@ class MergeTest < TestCase
     assert_equal(:interactive, TestMerge.interactive, TestMerge.inspect)
   end # values
 
-  def test_standardize_position!
-    @temp_repo.git_command('rebase --abort').puts
-    @temp_repo.git_command('merge --abort').puts
-    @temp_repo.git_command('stash save') # .assert_post_conditions
-    @temp_repo.git_command('checkout master').puts
-    @temp_merge.standardize_position!
-  end # standardize_position!
-
-  def test_abort_rebase_and_merge!
-  end # abort_rebase_and_merge!
-
-  def test_state?
-    state = TestMerge.state?
-    assert_includes([:clean, :dirty, :merge, :rebase], state[0])
-    assert_equal(1, state.size, state)
-  end # state?
-
   def test_discard_log_file_merge
     @temp_repo.force_change
     all_files = Repository::This_code_repository.status
