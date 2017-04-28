@@ -7,23 +7,24 @@
 ###########################################################################
 require_relative 'test_environment'
 require_relative '../../app/models/network.rb'
+
 class NetworkTest < TestCase
   # include DefaultTests
   include Network::DefinitionalConstants
 
   module Examples
     include Network::Constants
-#    My_IP = Network.ifconfig[:eth0][:ipv4]
+    #    My_IP = Network.ifconfig[:eth0][:ipv4]
   end # Examples
-	include Examples
+  include Examples
 
-	def test_FileTree
-		assert_instance_of(Hash, Net_file_tree_hash)
-		assert_includes(Net_file_tree_hash.keys, :lo, Net_file_tree_hash.inspect)
-		assert_includes(Net_file_tree_hash.keys, :wlan0, Net_file_tree_hash.inspect)
-		assert_includes(Net_file_tree_hash.keys, :eth0, Net_file_tree_hash.inspect)
-	end # FileTree
-	
+  def test_FileTree
+    assert_instance_of(Hash, Net_file_tree_hash)
+    assert_includes(Net_file_tree_hash.keys, :lo, Net_file_tree_hash.inspect)
+    assert_includes(Net_file_tree_hash.keys, :wlan0, Net_file_tree_hash.inspect)
+    assert_includes(Net_file_tree_hash.keys, :eth0, Net_file_tree_hash.inspect)
+  end # FileTree
+
   def test_DefinitionalConstants
     example_nmap_line = 'Nmap scan report for 192.168.0.5'
     private_C_network = /192\.168\./.capture(:network)
@@ -39,12 +40,12 @@ class NetworkTest < TestCase
     assert_match(Private_C, example_nmap_line)
     ip_regexp = Private_Network_Pattern
     assert_match(ip_regexp, example_nmap_line)
-    assert_equal('../../devices/virtual/net/lo', Net_file_tree_hash[:lo])
-    assert_equal('../../devices/pci0000:00/0000:00:1c.0/0000:01:00.0/net/wlan0', Net_file_tree_hash[:wlan0])
+    assert_equal('/sys/devices/virtual/net/lo', Net_file_tree_hash[:lo])
+    assert_equal('/sys/devices/pci0000:00/0000:00:1c.0/0000:01:00.0/net/wlan0', Net_file_tree_hash[:wlan0])
     assert_match(IP_Pattern, IFCONFIG_capture.output[:ipv4], IFCONFIG_capture.inspect)
     assert_match(IP_Pattern, IFCONFIG_capture.output[:netmask], IFCONFIG_capture.inspect)
     assert_match(IP_Pattern, IFCONFIG_capture.output[:broadcast], IFCONFIG_capture.inspect)
-    assert_equal('../../devices/pci0000:00/0000:00:1c.2/0000:03:00.0/net/eth0', Net_file_tree_hash[:eth0])
+    assert_equal('/sys/devices/pci0000:00/0000:00:1c.2/0000:03:00.0/net/eth0', Net_file_tree_hash[:eth0])
   end # DefinitionalConstants
 
   def test_ifconfig
@@ -67,66 +68,69 @@ class NetworkTest < TestCase
     assert_match(Leading_whitespace * /inet / * IP_Pattern * /  netmask /, IFCONFIG.output)
     assert_match(Leading_whitespace * /inet / * IP_Pattern * /  netmask / * IP_Pattern, IFCONFIG.output)
 
-		ifconfig_output = IFCONFIG.output
-		devices = ifconfig_output.split("\n")
-		name_value_pairs = devices.map do |device|
-			device += "\n\n"
-			lines = device.split("\n")
-			lines.map do |line|
-				line += "\n"
-				name_value_pair_regexp = /[a-z]+/.capture(:name) */ / * /[0-9]+/.capture(:value) */[\ \n]/
-				name_value_pairs = line.split(name_value_pair_regexp)
-			end # map
-		end # map
-		message = 'Net_file_tree_hash = ' + Net_file_tree_hash.inspect + "\n"
-		message += 'Lo_hash = ' + Lo_hash.inspect + "\n"
-		
-		message +=  'name_value_pairs = ' + name_value_pairs.inspect
-		puts message
-		assert_instance_of(Array, name_value_pairs)
-		show_matches = ParsedCapture.show_matches([ifconfig_output], Ifconfig_array)
-#		assert_match(MyNetmask, ifconfig_output, show_matches.ruby_lines_storage)
-#		assert_match(MyContext, ifconfig_output, show_matches.ruby_lines_storage)
-#		assert_match(Netmask_Pattern, ifconfig_output, show_matches.ruby_lines_storage)
-		assert_match(IP_Pattern, ifconfig_output, show_matches.ruby_lines_storage)
-		assert_match(Private_Network_Pattern, ifconfig_output, show_matches.ruby_lines_storage)
+    ifconfig_output = IFCONFIG.output
+    devices = ifconfig_output.split("\n")
+    name_value_pairs = devices.map do |device|
+      device += "\n\n"
+      lines = device.split("\n")
+      lines.map do |line|
+        line += "\n"
+        name_value_pair_regexp = /[a-z]+/.capture(:name) * / / * /[0-9]+/.capture(:value) * /[\ \n]/
+        name_value_pairs = SplitCapture.new(string: line, regexp: name_value_pair_regexp).output
+      end # map
+    end.flatten # map
+    message = 'Net_file_tree_hash = ' + Net_file_tree_hash.inspect + "\n"
+    message += 'Lo_hash = ' + Lo_hash.ruby_lines_storage + "\n"
 
-		lo_line = "lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 16436\n"
-		lo_inet_line = "        inet 127.0.0.1  netmask 255.0.0.0\n"
-		lo_inet6_line = "        inet6 ::1  prefixlen 128  scopeid 0x10<host>\n"
-		loop_line = "        loop  txqueuelen 0  (Local Loopback)\n"
-		lo_RX_line = "        RX packets 190862  bytes 46069130 (43.9 MiB)\n"
-		lo_RX_errors_line  = "        RX errors 0  dropped 0  overruns 0  frame 0\n"
-		lo_TX_line = "        TX packets 190862  bytes 46069130 (43.9 MiB)\n"
-		lo_TX_errors_line  = "        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\n"
-		wlan_line = "wlan0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n"
-		wlan0_inet  = "        ether 1a:3a:fd:1e:53:9d  txqueuelen 1000  (Ethernet)\n"
-		wlan0_RX_line = "        RX packets 1830620  bytes 1314350901 (1.2 GiB)\n"
-		wlan0_RX_errors_line  = "        RX errors 0  dropped 0  overruns 0  frame 0\n"
-		wlan0_TX_line = "        TX packets 625978  bytes 91631448 (87.3 MiB)\n"
-		wlan0_TX_errors_line  = "        TX errors  dropped 0 overruns 0  carrier 0  collisions 0\n\n"
-		
-		lo_lines = lo_line +	lo_inet_line + lo_inet6_line + loop_line + lo_RX_line + 	lo_RX_errors_line  + lo_TX_line+ lo_TX_errors_line
-		wlan0_lines = wlan_line + wlan0_inet  + wlan0_RX_line+ wlan0_RX_errors_line  = + wlan0_TX_line + wlan0_TX_errors_line
-		ifconfig_output = lo_lines + wlan0_lines
-		show_matches = ParsedCapture.show_matches([ifconfig_output], Ifconfig_array)
-		assert_match(MyNetmask, ifconfig_output, show_matches.ruby_lines_storage)
-		assert_match(MyContext, ifconfig_output, show_matches.ruby_lines_storage)
-		assert_match(Netmask_Pattern, ifconfig_output, show_matches.ruby_lines_storage)
-		assert_match(/commit / * SHA1_hex_40 * /\n/ * Netmask_Pattern, ifconfig_output, show_matches.ruby_lines_storage)
-		assert_match(Netmask_Pattern * MyContext, ifconfig_output, show_matches.ruby_lines_storage)
-		assert_match(/commit / * SHA1_hex_40 * /\n/ * Netmask_Pattern * MyContext, ifconfig_output, show_matches.ruby_lines_storage)
-		assert_match(MyContext * /Date:   / * Git_show_medium_timestamp_regexp, ifconfig_output, show_matches.ruby_lines_storage)
-		assert_match(Private_Network_Pattern, ifconfig_output, show_matches.ruby_lines_storage)
+    message += 'name_value_pairs = ' + name_value_pairs.inspect
+    puts message
+    assert_instance_of(Array, name_value_pairs)
+    show_matches = ParsedCapture.show_matches([ifconfig_output], Ifconfig_array)
+    #		assert_match(MyNetmask, ifconfig_output, show_matches.ruby_lines_storage)
+    #		assert_match(MyContext, ifconfig_output, show_matches.ruby_lines_storage)
+    #		assert_match(Netmask_Pattern, ifconfig_output, show_matches.ruby_lines_storage)
+    assert_match(IP_Pattern, ifconfig_output, show_matches.ruby_lines_storage)
+    assert_match(Private_Network_Pattern, ifconfig_output, show_matches.ruby_lines_storage)
 
-		ParsedCapture.assert_show_matches(["\nMerge: 6b1c04d 6ef1536\n"], [Netmask_Pattern], captures: [sha1_hex_short: ['6b1c04d', '6ef1536']])
-		ParsedCapture.assert_show_matches(["commit c2db421dba8518e664111b0ba89ee1d70a789fbc\nMerge: 6b1c04d 6ef1536\n"], [ Regexp::Start_string * /commit / * SHA1_hex_40 * /\n/, Netmask_Pattern], captures: [sha1_hex_short: ['6b1c04d', '6ef1536']])
+    lo_line = "lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 16436\n"
+    lo_inet_line = "        inet 127.0.0.1  netmask 255.0.0.0\n"
+    lo_inet6_line = "        inet6 ::1  prefixlen 128  scopeid 0x10<host>\n"
+    loop_line = "        loop  txqueuelen 0  (Local Loopback)\n"
+    lo_RX_line = "        RX packets 190862  bytes 46069130 (43.9 MiB)\n"
+    lo_RX_errors_line = "        RX errors 0  dropped 0  overruns 0  frame 0\n"
+    lo_TX_line = "        TX packets 190862  bytes 46069130 (43.9 MiB)\n"
+    lo_TX_errors_line = "        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\n"
+    wlan_line = "wlan0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n"
+    wlan0_inet = "        ether 1a:3a:fd:1e:53:9d  txqueuelen 1000  (Ethernet)\n"
+    wlan0_RX_line = "        RX packets 1830620  bytes 1314350901 (1.2 GiB)\n"
+    wlan0_RX_errors_line = "        RX errors 0  dropped 0  overruns 0  frame 0\n"
+    wlan0_TX_line = "        TX packets 625978  bytes 91631448 (87.3 MiB)\n"
+    wlan0_TX_errors_line = "        TX errors  dropped 0 overruns 0  carrier 0  collisions 0\n\n"
 
-		Ifconfig_array.each do|regexp|
-#			ParsedCapture.assert_show_matches([ifconfig_output], [regexp])
-		end # each
-		ParsedCapture.assert_show_matches([ifconfig_output], Ifconfig_array)
+    lo_lines = lo_line +	lo_inet_line + lo_inet6_line + loop_line + lo_RX_line +	lo_RX_errors_line + lo_TX_line + lo_TX_errors_line
+    wlan0_lines = wlan_line + wlan0_inet + wlan0_RX_line + wlan0_RX_errors_line = + wlan0_TX_line + wlan0_TX_errors_line
+    ifconfig_output = lo_lines + wlan0_lines
+    capture = MatchCapture.new(string: ifconfig_output, regexp: Ifconfig_array)
+    capture.assert_refinement(:exact)
+    refinements = capture.sequential_refinements
+    show_matches = ParsedCapture.show_matches([ifconfig_output], Ifconfig_array)
+    show_matches = refinements
+    assert_match(MyNetmask, ifconfig_output, show_matches.ruby_lines_storage)
+    assert_match(MyContext, ifconfig_output, show_matches.ruby_lines_storage)
+    assert_match(Netmask_Pattern, ifconfig_output, show_matches.ruby_lines_storage)
+    assert_match(/commit / * SHA1_hex_40 * /\n/ * Netmask_Pattern, ifconfig_output, show_matches.ruby_lines_storage)
+    assert_match(Netmask_Pattern * MyContext, ifconfig_output, show_matches.ruby_lines_storage)
+    assert_match(/commit / * SHA1_hex_40 * /\n/ * Netmask_Pattern * MyContext, ifconfig_output, show_matches.ruby_lines_storage)
+    assert_match(MyContext * /Date:   / * Git_show_medium_timestamp_regexp, ifconfig_output, show_matches.ruby_lines_storage)
+    assert_match(Private_Network_Pattern, ifconfig_output, show_matches.ruby_lines_storage)
 
+    ParsedCapture.assert_show_matches(["\nMerge: 6b1c04d 6ef1536\n"], [Netmask_Pattern], captures: [sha1_hex_short: %w(6b1c04d 6ef1536)])
+    ParsedCapture.assert_show_matches(["commit c2db421dba8518e664111b0ba89ee1d70a789fbc\nMerge: 6b1c04d 6ef1536\n"], [Regexp::Start_string * /commit / * SHA1_hex_40 * /\n/, Netmask_Pattern], captures: [sha1_hex_short: %w(6b1c04d 6ef1536)])
+
+    Ifconfig_array.each do |regexp|
+      #			ParsedCapture.assert_show_matches([ifconfig_output], [regexp])
+    end # each
+    ParsedCapture.assert_show_matches([ifconfig_output], Ifconfig_array)
 
     assert_match(Leading_whitespace * /inet / * IP_Pattern * /  netmask / * IP_Pattern * /  broadcast /, IFCONFIG.output)
     assert_match(Leading_whitespace * /inet / * IP_Pattern * /  netmask / * IP_Pattern * /  broadcast / * IP_Pattern * // * /\n/, IFCONFIG.output)
@@ -145,7 +149,7 @@ class NetworkTest < TestCase
       message = 'device_description = ' + device_description.inspect
       message += "\n" + ifconfig_output.inspect
       assert_match(/eth0|lo|wlan0/, device_name.to_s, message)
-			refute_empty(device_description, message)
+      refute_empty(device_description, message)
       ret = ret.merge(device_name.to_sym => device_description.parse(Ifconfig_pattern))
     end # each
     Network.ifconfig.each_pair do |device, _description|

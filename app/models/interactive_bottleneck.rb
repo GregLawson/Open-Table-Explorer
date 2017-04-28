@@ -219,10 +219,4 @@ class InteractiveBottleneck
   extend Assertions::ClassMethods
   # TestWorkFlow.assert_pre_conditions
   include Constants
-  module Examples
-    TestTestExecutable = TestExecutable.new(argument_path: File.expand_path($PROGRAM_NAME))
-    TestInteractiveBottleneck = InteractiveBottleneck.new(interactive: :interactive, test_executable: TestTestExecutable, editor: Default_editor)
-    include Constants
-  end # Examples
-  include Examples
 end # InteractiveBottleneck

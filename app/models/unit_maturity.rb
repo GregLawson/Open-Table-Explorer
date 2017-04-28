@@ -145,6 +145,11 @@ class TestMaturity
       run_time = headerArray[-1].split(' ')[2].to_f
       [sysout, run_time]
     end # parse_header
+	
+	def timed_out
+		ShellCommands.new('grep "Timeout::Error" log/unit/*/*/*/*.log').output.split("\n")
+	end # timed_out
+	
   end # ClassMethods
   extend ClassMethods
 

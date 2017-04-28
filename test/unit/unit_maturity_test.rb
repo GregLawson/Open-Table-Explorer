@@ -16,8 +16,8 @@ class TestMaturityTest < TestCase
     MinimalMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal2_test.rb'))
     MinimalMaturity3 = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal3_test.rb'))
   end # Examples
-	include Examples
-	
+  include Examples
+
   def test_DefinitionalConstants
     Error_classification.each_pair do |expected_error_score, classification|
       assert_instance_of(Fixnum, expected_error_score)
@@ -38,59 +38,59 @@ class TestMaturityTest < TestCase
     assert_match(Fixed_regexp, example_testunit_log)
     assert_match(/Finished in / * Fixed_regexp.capture(:test_finished), example_testunit_log)
     assert_match(/Finished in / * Fixed_regexp.capture(:test_finished), example_testunit_log)
-#    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished) * /s, / * Fixed_regexp, example_testunit_log)
-#    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished) * /s, / * Fixed_regexp * / runs\/s, /, example_testunit_log)
-#    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished) * /s, / * Fixed_regexp * / runs\/s, / * Fixed_regexp, example_testunit_log)
+    #    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished) * /s, / * Fixed_regexp, example_testunit_log)
+    #    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished) * /s, / * Fixed_regexp * / runs\/s, /, example_testunit_log)
+    #    assert_match(/Finished in / * Fixed_regexp.capture(:test_finished) * /s, / * Fixed_regexp * / runs\/s, / * Fixed_regexp, example_testunit_log)
     assert_match(Finished_regexp, example_testunit_log)
     assert_match(User_time_regexp, example_testunit_log)
 
     assert_match(Fixed_regexp, example_minitest_log)
-#    assert_match(Finished_regexp, example_minitest_log)
+    #    assert_match(Finished_regexp, example_minitest_log)
     assert_match(User_time_regexp, example_minitest_log)
 
-#    assert_match(Tests_pattern, example_minitest_log)
-#    assert_match(Assertions_pattern, example_minitest_log)
-#    assert_match(Failures_pattern, example_minitest_log)
-#    assert_match(Errors_pattern, example_minitest_log)
+    #    assert_match(Tests_pattern, example_minitest_log)
+    #    assert_match(Assertions_pattern, example_minitest_log)
+    #    assert_match(Failures_pattern, example_minitest_log)
+    #    assert_match(Errors_pattern, example_minitest_log)
     assert_match(Tests_pattern, example_testunit_log)
     assert_match(Pendings_pattern, example_testunit_log)
     assert_match(Omissions_pattern, example_testunit_log)
     assert_match(Notifications_pattern, example_testunit_log)
     minitest_summary_regexp = Tests_pattern * Assertions_pattern * Failures_pattern * Errors_pattern
-#    assert_match(Common_summary_regexp, example_minitest_log)
+    #    assert_match(Common_summary_regexp, example_minitest_log)
     testunit_summary_regexp = Common_summary_regexp * Pendings_pattern * Omissions_pattern * Notifications_pattern
     assert_match(testunit_summary_regexp, example_testunit_log)
   end # DefinitionalConstants
 
-	def test_times
-		log_files = Dir['log/unit/2.2/2.2.3p173/silence/*.log']
-		file_times = log_files.map do |path|
-			file_contents = IO.read(path)
-			assert_match(Finished_regexp, file_contents, path)
-			assert_match(User_time_regexp, file_contents, path)
-			finished_time = file_contents.parse(Finished_regexp)
-			user_time = file_contents.parse(User_time_regexp)
-			assert_operator(finished_time[:test_finished].to_f, :<, user_time[:user_time].to_f)
-			hash = RubyLinesStorage.read(path)
-			finished_time.merge(user_time)
-		end # each
-		message = ruby_lines_storage(file_times)
-#		assert_equal
-	end # times
+  def test_times
+    log_files = Dir['log/unit/2.2/2.2.3p173/silence/*.log']
+    file_times = log_files.map do |path|
+      file_contents = IO.read(path)
+      assert_match(Finished_regexp, file_contents, path)
+      assert_match(User_time_regexp, file_contents, path)
+      finished_time = file_contents.parse(Finished_regexp)
+      user_time = file_contents.parse(User_time_regexp)
+      assert_operator(finished_time[:test_finished].to_f, :<, user_time[:user_time].to_f)
+      hash = RubyLinesStorage.read(path)
+      finished_time.merge(user_time)
+    end # each
+    message = ruby_lines_storage(file_times)
+    #		assert_equal
+  end # times
 
   def test_example_files
     ret = {} # accumulate a hash
-      Error_classification_keys.each do |classification|
+    Error_classification_keys.each do |classification|
       argument_path = Error_score_directory + classification.to_s + '.rb'
       message = 'argument_path = ' + argument_path
       assert(File.exist?(argument_path), message)
-			ret = ret.merge(classification => argument_path)
+      ret = ret.merge(classification => argument_path)
     end # each_pair
     refute_empty(TestMaturity.example_files)
     assert_equal(5, TestMaturity.example_files.keys.size, TestMaturity.example_files.inspect)
     assert_equal(5, TestMaturity.example_files.values.size, TestMaturity.example_files.inspect)
     assert_equal(ret, TestMaturity.example_files)
-		assert_equal(Dir[Error_score_directory + '*'].sort, TestMaturity.example_files.values.sort)
+    assert_equal(Dir[Error_score_directory + '*'].sort, TestMaturity.example_files.values.sort)
   end # example_files
 
   def test_log_path?
@@ -175,6 +175,18 @@ class TestMaturityTest < TestCase
     assert_operator(run_time, :>=, 0)
   end # parse_header
 
+  def test_timed_out
+		example_line = 'log/unit/2.2/2.2.3p173/silence/.log::errors => {:rescue_exception => Timeout::Error.new()'
+		regexp_array = [/log\//, /unit/.capture(:test_type), 
+			'/2.2/2.2.3p173/silence/command_line'.to_exact_regexp, 
+			/[a-z_]+/.capture(:unit_base_name), 
+			'.log::errors => {:rescue_exception => Timeout::Error.new()'.to_exact_regexp]
+		run = ShellCommands.new('grep "Timeout::Error" log/unit/*/*/*/*.log')
+		lines = run.output.split("\n")
+		assert_equal([], lines)
+		assert_equal([], TestMaturity.timed_out)
+  end # timed_out
+
   def test_recursion_danger?
     assert_equal(true, ExecutableMaturity.test_executable.recursion_danger?)
     assert_equal(false, MinimalMaturity.test_executable.recursion_danger?)
@@ -223,8 +235,8 @@ class TestMaturityTest < TestCase
     branch_compressions = []
     branch_enhancements = []
     TestMaturity.example_files.each_pair do |classification, argument_path|
-			assert_instance_of(Symbol, classification, TestMaturity.example_files.inspect)
-			assert(File.exists?(argument_path.to_s), TestMaturity.example_files.inspect)
+      assert_instance_of(Symbol, classification, TestMaturity.example_files.inspect)
+      assert(File.exist?(argument_path.to_s), TestMaturity.example_files.inspect)
       test_executable = TestExecutable.new(argument_path: argument_path)
       refute_nil(test_executable.unit) # nonstandard unit assignment
       assert_equal(:unit, test_executable.test_type) # nonstandard unit assignment
@@ -237,14 +249,14 @@ class TestMaturityTest < TestCase
       end # if
       #		assert_equal(expected_error_score, error_score, test_run.inspect)
       error_classifications << test_maturity.error_classification!
-			branch_compressions << test_maturity.expected_next_commit_branch!
-#			branch_enhancements << test_maturity.branch_enhancement!
+      branch_compressions << test_maturity.expected_next_commit_branch!
+      #			branch_enhancements << test_maturity.branch_enhancement!
     end # each
     assert_equal(4, error_classifications.uniq.size, error_classifications.inspect)
     assert_equal(3, branch_compressions.uniq.size, branch_compressions.inspect)
-#    assert_equal(3, branch_enhancements.uniq.size, branch_enhancements.inspect)
-#    error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
-#    assert_equal(:passed, Branch_enhancement[Deserving_commit_to_branch[error_classification]])
+    #    assert_equal(3, branch_enhancements.uniq.size, branch_enhancements.inspect)
+    #    error_classification=Error_classification.fetch(error_score, :multiple_tests_fail)
+    #    assert_equal(:passed, Branch_enhancement[Deserving_commit_to_branch[error_classification]])
   end # deserving_branch
 
   def test_compare
@@ -284,18 +296,18 @@ class UnitMaturityTest < TestCase
   def test_DefinitionalConstants
   end # DefinitionalConstants
   module Examples
-#    include Constants
+    #    include Constants
     File_not_in_oldest_branch = 'test/slowest/repository_test.rb'.freeze
     Most_stable_file = 'test/unit/minimal2_test.rb'.freeze
     Formerly_existant_file = 'test/unit/related_file.rb'.freeze
     TestUnitMaturity = UnitMaturity.new(Repository::This_code_repository, Repository::Repository_Unit)
   end # Examples
-	include Examples
-	
+  include Examples
+
   def test_diff_command?
     filename = Most_stable_file
     branch_index = Branch.branch_index?(This_code_repository.current_branch_name?.to_sym)
-		message = Branch::Branch_enhancement.inspect + This_code_repository.current_branch_name?.inspect
+    message = Branch::Branch_enhancement.inspect + This_code_repository.current_branch_name?.inspect
     refute_nil(branch_index, message)
     branch_string = Branch.branch_symbol?(branch_index).to_s
     git_command = "diff --summary --shortstat #{branch_string} -- " + filename.to_s

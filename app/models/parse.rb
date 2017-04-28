@@ -12,6 +12,8 @@ require_relative '../../app/models/regexp_parse.rb'
 require_relative '../../app/models/generic_column.rb'
 # encapsulates the difference between parsing from MatchData and from Array#split
 # regexp are Regexp not Arrays or Strings (see String#parse)
+
+require_relative '../../config/initializers/monkey/String.rb'
 class String
 	def to_literal(quote = "'") # quote as single  or double quote
 		if size == dump.size - 2

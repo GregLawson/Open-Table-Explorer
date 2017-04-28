@@ -497,7 +497,7 @@ end
         'parent directory ' +
         existing_dir.to_s +
         ' does exists containing ' +
-        Dir[existing_dir.to_s + '*'].map { |f| File.basename(f) }.inspect
+        Dir[existing_dir.to_s + '/*'].map { |f| File.basename(f) }.inspect
     end # if
   end # missing_file_message
 

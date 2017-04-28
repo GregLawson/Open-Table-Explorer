@@ -16,7 +16,7 @@ end # Types
 
 require_relative 'test_executable.rb'
 require_relative 'repository.rb'
-require_relative 'interactive_bottleneck.rb'
+#require_relative 'interactive_bottleneck.rb'
 
 class Nomination < Dry::Types::Value
   module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced

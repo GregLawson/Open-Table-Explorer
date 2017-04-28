@@ -18,6 +18,14 @@ class InteractiveBottleneckTest < TestCase
   Dir['test/data_sources/repository20*'].each do |test_repository|
     Repository.delete_existing(test_repository)
   end # each
+
+  module Examples
+    TestTestExecutable = TestExecutable.new(argument_path: File.expand_path($PROGRAM_NAME))
+    TestInteractiveBottleneck = InteractiveBottleneck.new(interactive: :interactive, test_executable: TestTestExecutable, editor: Default_editor)
+    include Constants
+  end # Examples
+  include Examples
+
   def setup
     @temp_repo = Repository.create_test_repository
     refute_equal(Repository::This_code_repository, @temp_repo)

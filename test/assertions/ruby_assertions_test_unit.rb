@@ -34,7 +34,7 @@ module RubyAssertions
         'parent directory ' +
         existing_dir.to_s +
         ' does exists containing ' +
-        Dir[existing_dir.to_s + '*'].map { |f| File.basename(f) }.inspect
+        Dir[existing_dir.to_s + '/*'].map { |f| File.basename(f) }.inspect
     end # if
   end # missing_file_message
 
@@ -43,11 +43,16 @@ module RubyAssertions
     refute_nil(pathname, message)
     refute_empty(pathname.to_s, message + 'Assume pathname to not be empty.')
     pathname = Pathname.new(pathname).expand_path
-    message += "\nPathname(#{pathname}).exist?=" + pathname.exist?.to_s + "\n" + missing_file_message(pathname)
     assert(pathname.exist?, message)
-    assert(File.exist?(pathname), message + "File.exists?(#{pathname})=#{File.exist?(pathname).inspect}")
+    assert(File.exist?(pathname), message)
     pathname # allow chaining
   end # assert_pathname_exists
+
+  def assert_directory_exists(pathname, message = '')
+    pathname = assert_pathname_exists(pathname, message)
+    assert(pathname.directory?, message + "Pathname(#{pathname}).directory?=#{pathname.directory?.inspect}")
+    pathname # allow chaining
+  end # assert_directory_exists
 	
 	def assert_raises(args, &block)
 		assert_raise(args) {block.call}

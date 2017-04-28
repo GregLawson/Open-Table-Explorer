@@ -9,10 +9,9 @@ require_relative '../../app/models/test_environment_test_unit.rb'
 # require_relative 'test_environment'
 require_relative '../../app/models/tax_form.rb'
 require_relative '../../app/models/branch.rb'
-require_relative '../assertions/ruby_assertions_test_unit.rb'
 
-		class TestClass
-		end # TestClass
+class TestClass
+    end # TestClass
 
 class FinanceTest < TestCase
   include RubyAssertions
@@ -23,60 +22,83 @@ class FinanceTest < TestCase
   include OpenTableExplorer::Finance::OtsRun::Examples
   include OpenTableExplorer::Finance::OtsTaxpayerSchedule::Examples
 
-	def test_clone_state
-		hidden_clone_answer = [[{{:dup=>:hash}=>true},
-  {{:dup=>:inspect}=>true},
-  {{:dup=>:object_id}=>false}],
- [{{:clone=>:hash}=>true},
-  {{:clone=>:inspect}=>true},
-  {{:clone=>:object_id}=>false}]]
-		assert_equal(hidden_clone_answer, 'a'.clone_state)
-		assert_equal(hidden_clone_answer, CA_current_year.clone_state)
-#!		assert_equal(hidden_clone_answer, TestClass.new.freeze.clone_state)
-#!		assert_equal(hidden_clone_answer, TestClass.new.clone_state)
-	end # clone_state
-	
-	def test_assert_clone_state
-		'a'.assert_clone_state
-		CA_current_year.assert_clone_state
-		TestClass.new.freeze.assert_clone_state
-		TestClass.new.assert_clone_state
-		US1040_user.assert_clone_state
-	end # assert_clone_state
+  def test_clone_state
+    hidden_clone_answer = [[{ { dup: :hash } => true },
+                            { { dup: :inspect } => true },
+                            { { dup: :object_id } => false }],
+                           [{ { clone: :hash } => true },
+                            { { clone: :inspect } => true },
+                            { { clone: :object_id } => false }]]
+    assert_equal(hidden_clone_answer, 'a'.clone_state)
+    assert_equal(hidden_clone_answer, CA_current_year.clone_state)
+    # !		assert_equal(hidden_clone_answer, TestClass.new.freeze.clone_state)
+    # !		assert_equal(hidden_clone_answer, TestClass.new.clone_state)
+  end # clone_state
 
-	def test_clone_explain
-		assert_equal('', 'a'.clone_explain)
-	end # clone_explain
-	
-	def test_cache
-#		object = TestClass.new.freeze
-		object = CA_current_year
-#!		object = object.clone
-		cache_name = :test
-		assert_raise(RuntimeError) { object.cache(:test)}
-#!		block = 
-		cache_const_name = ('Cached_' + cache_name.to_s).to_sym
-		assert_equal(:Cached_test, cache_const_name)
-		refute(object.class.const_defined?(cache_const_name))
-		ret = 2
-		refute(object.class.const_defined?(cache_const_name))
-		object.class.const_set(cache_const_name, ret)
-		assert(object.class.const_defined?(cache_const_name))
-		assert_equal(2, object.class.const_get(cache_const_name))
-		refute_nil(object.cache(:test){|| 2}, object.inspect)
-		assert_equal(2, object.cache(:test){|| 2})
-		assert_equal(2, object.class.const_get(cache_const_name), object.class.const_get(cache_const_name))
-	end # cache
+  def test_assert_clone_state
+    'a'.assert_clone_state
+    CA_current_year.assert_clone_state
+    TestClass.new.freeze.assert_clone_state
+    TestClass.new.assert_clone_state
+    US1040_user.assert_clone_state
+  end # assert_clone_state
 
+  def test_clone_explain
+    assert_equal('', 'a'.clone_explain)
+  end # clone_explain
 
+  def test_cache
+    #		object = TestClass.new.freeze
+    object = CA_current_year
+    # !		object = object.clone
+    cache_name = :test
+    assert_raise(RuntimeError) { object.cache(:test) }
+    # !		block =
+    cache_const_name = ('Cached_' + cache_name.to_s).to_sym
+    assert_equal(:Cached_test, cache_const_name)
+    refute(object.class.const_defined?(cache_const_name))
+    ret = 2
+    refute(object.class.const_defined?(cache_const_name))
+    object.class.const_set(cache_const_name, ret)
+    assert(object.class.const_defined?(cache_const_name))
+    assert_equal(2, object.class.const_get(cache_const_name))
+    refute_nil(object.cache(:test) { || 2 }, object.inspect)
+    assert_equal(2, object.cache(:test) { || 2 })
+    assert_equal(2, object.class.const_get(cache_const_name), object.class.const_get(cache_const_name))
+  end # cache
 
   def test_Finance_DefinitionalConstants
     refute_empty(OpenTaxSolver_directories, OpenTaxSolver_directories_glob)
     assert_pathname_exists(Open_Tax_Filler_Directory)
     assert_pathname_exists(IRS_pdf_directory)
-#!		assert_equal(This_year - 1, Default_tax_year)
+    # !		assert_equal(This_year - 1, Default_tax_year)
   end # Finance_DefinitionalConstants
 end # Finance
+
+require_relative '../../app/models/assertions.rb'
+class Filing < Dry::Types::Value
+  module Assertions
+    module ClassMethods
+      def assert_pre_conditions(message = '')
+        message += "\nIn assert_pre_conditions, self=#{inspect}"
+        # !          RubyAssertions.assert_directory_exists(open_tax_solver_distribution_directory, message)
+        # !					assert_pathname_exists(open_tax_solver_binary, message)
+        # !					assert(File.exist?(open_tax_solver_distribution_directory), message)
+        assert(File.exist?(open_tax_solver_binary), message)
+      end # assert_pre_conditions
+        end # ClassMethods
+    def assert_pre_conditions(message = '')
+      message += "\nIn assert_pre_conditions, self=#{inspect}"
+      # !          RubyAssertions.assert_directory_exists(open_tax_solver_distribution_directory, message)
+      # !					assert_pathname_exists(open_tax_solver_binary, message)
+      # !					assert(File.exist?(open_tax_solver_distribution_directory), message)
+      assert(File.exist?(open_tax_solver_binary), message)
+    end # assert_pre_conditions
+  end # Assertions
+  end # Filing
+include Assertions
+extend Assertions::ClassMethods
+
 class FilingTest < TestCase
   include OpenTableExplorer::Finance
   include OpenTableExplorer::Finance::DefinitionalConstants
@@ -127,7 +149,7 @@ class FilingTest < TestCase
   def test_Filing_ots_user_all_forms_directory
     assert_equal(Filing::US.ots_user_all_forms_directory, US1040_user.taxpayer.open_tax_solver_all_form_directory)
     assert_equal(Filing::US.ots_user_all_forms_directory, CA540_user.taxpayer.open_tax_solver_all_form_directory)
-    assert_pathname_exists(Filing.ots_user_all_forms_directory(Default_tax_year)+"/#{CA_current_year.jurisdiction.ots_form_filename}/")
+    assert_pathname_exists(Filing.ots_user_all_forms_directory(Default_tax_year) + "/#{CA_current_year.jurisdiction.ots_form_filename}/")
   end # ots_user_all_forms_directory
 
   def test_jurisdiction
@@ -141,10 +163,31 @@ class FilingTest < TestCase
   def test_open_tax_solver_binary
     assert_match(/CA_540_#{Default_tax_year}$/, CA540_example.filing.open_tax_solver_binary)
   end # open_tax_solver_binary
-      def test_Filing_Examples
-				assert_equal('OpenTableExplorer::Finance::Filing::CA', CA_current_year.class.name.to_s)
-				assert_equal(OpenTableExplorer::Finance::Default_tax_year, CA_current_year.tax_year)
-      end # Examples
+
+  def test_assert_pre_conditions
+    us_2016 = Filing::CA.new(tax_year: 2016)
+    assert_include(us_2016.methods, :assert_pre_conditions, us_2016.inspect)
+    assert_include(Filing.instance_methods, :assert_pre_conditions)
+    Filing::CA.new(tax_year: 2016).assert_pre_conditions
+    CA_current_year.assert_pre_conditions
+    NJ_current_year.assert_pre_conditions
+    Filing::NJ.new(tax_year: 2016).assert_pre_conditions
+    NY_current_year.assert_pre_conditions
+    Filing::NY.new(tax_year: 2016).assert_pre_conditions
+    OH_current_year.assert_pre_conditions
+    Filing::OH.new(tax_year: 2016).assert_pre_conditions
+    PA_current_year.assert_pre_conditions
+    Filing::PA.new(tax_year: 2016).assert_pre_conditions
+    US_current_year.assert_pre_conditions
+    Filing::US.new(tax_year: 2016).assert_pre_conditions
+    VA_current_year.assert_pre_conditions
+    Filing::VA.new(tax_year: 2016).assert_pre_conditions
+  end # assert_pre_conditions
+
+  def test_Filing_Examples
+    assert_equal('OpenTableExplorer::Finance::Filing::CA', CA_current_year.class.name.to_s)
+    assert_equal(OpenTableExplorer::Finance::Default_tax_year, CA_current_year.tax_year)
+  end # Examples
 end # Filing
 class TaxPayerTest < TestCase
   include OpenTableExplorer::Finance
@@ -154,23 +197,23 @@ class TaxPayerTest < TestCase
   extend OpenTableExplorer::Finance
   include OpenTableExplorer::Finance::OtsRun::Examples
   include OpenTableExplorer::Finance::OtsTaxpayerSchedule::Examples
-	module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
-  include OpenTableExplorer::Finance
-  extend OpenTableExplorer::Finance
-		Example_taxpayer_name = ENV['USER'].to_sym
-		User = OpenTableExplorer::Finance::OtsTaxpayer.new(name: Example_taxpayer_name, open_tax_solver_all_form_directory: Filing.ots_user_all_forms_directory, state: Filing::CA)
-		Example = OtsTaxpayer.new(name: :example, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory, state: Filing::CA)
-		Template = OtsTaxpayer.new(name: :template, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory, state: Filing::CA)
-	end # Examples
-	include Examples
-	
-	def test_OtsTaxpayer_Examples
-		assert_equal(Example_taxpayer_name, User.name)
-		assert_equal(Filing.ots_user_all_forms_directory, User.open_tax_solver_all_form_directory)
-		assert_equal(Filing::CA, User.state)
-		assert_equal(Filing.ots_user_all_forms_directory, User.open_tax_solver_all_form_directory)
-		assert_equal(Filing.ots_example_all_forms_directory, Example.open_tax_solver_all_form_directory)
-	end # OtsTaxpayer
+  module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+    include OpenTableExplorer::Finance
+    extend OpenTableExplorer::Finance
+    Example_taxpayer_name = ENV['USER'].to_sym
+    User = OpenTableExplorer::Finance::OtsTaxpayer.new(name: Example_taxpayer_name, open_tax_solver_all_form_directory: Filing.ots_user_all_forms_directory, state: Filing::CA)
+    Example = OtsTaxpayer.new(name: :example, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory, state: Filing::CA)
+    Template = OtsTaxpayer.new(name: :template, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory, state: Filing::CA)
+  end # Examples
+  include Examples
+
+  def test_OtsTaxpayer_Examples
+    assert_equal(Example_taxpayer_name, User.name)
+    assert_equal(Filing.ots_user_all_forms_directory, User.open_tax_solver_all_form_directory)
+    assert_equal(Filing::CA, User.state)
+    assert_equal(Filing.ots_user_all_forms_directory, User.open_tax_solver_all_form_directory)
+    assert_equal(Filing.ots_example_all_forms_directory, Example.open_tax_solver_all_form_directory)
+  end # OtsTaxpayer
 end # TaxPayer
 
 class ScheduleTest < TestCase
@@ -188,14 +231,14 @@ class ScheduleTest < TestCase
     assert_equal('1040', US_1040.filing.jurisdiction.base_form)
   end # DefinitionalConstants
 
-	def test_initialize
-		example = Schedule.new({filing: US_current_year, form: '1040', form_prefix: 'f', form_suffix: 'a'})
-		assert_equal('1040', example.form, example.ruby_lines_storage)
-		assert_equal('1040', example.form)
-		assert_equal('f', example.form_prefix)
-		assert_equal('a', example.form_suffix)
-		assert_equal(US_current_year, example.filing)
-	end # initialize
+  def test_initialize
+    example = Schedule.new(filing: US_current_year, form: '1040', form_prefix: 'f', form_suffix: 'a')
+    assert_equal('1040', example.form, example.ruby_lines_storage)
+    assert_equal('1040', example.form)
+    assert_equal('f', example.form_prefix)
+    assert_equal('a', example.form_suffix)
+    assert_equal(US_current_year, example.filing)
+  end # initialize
 
   def test_schedule_name
     assert_equal('f1040', US1040_example_schedule.schedule_name)
@@ -207,21 +250,22 @@ class ScheduleTest < TestCase
     end # each
     #	xfdf_script_filename = @filing.jurisdiction.to_s + '_' + @filing.form + '_' + @filing.tax_year.to_s
   end # download
-	def test_Schedule_Examples
-		example = Schedule.new(filing: US_current_year, form: '1040', form_prefix: 'f', form_suffix: 'a')
-		assert_equal('1040', example.form, example.ruby_lines_storage)
-		assert_equal('f', example.form_prefix)
-		assert_equal('a', example.form_suffix)
-		assert_equal(US_current_year, example.filing)
 
-		example = US_1040
+  def test_Schedule_Examples
+    example = Schedule.new(filing: US_current_year, form: '1040', form_prefix: 'f', form_suffix: 'a')
+    assert_equal('1040', example.form, example.ruby_lines_storage)
+    assert_equal('f', example.form_prefix)
+    assert_equal('a', example.form_suffix)
+    assert_equal(US_current_year, example.filing)
+
+    example = US_1040
     refute_nil(US_current_year)
-		assert_equal('1040', example.form, example.ruby_lines_storage)
-		assert_equal('f', example.form_prefix)
-		assert_equal('', example.form_suffix)
-		assert_equal(US_current_year, example.filing)
-		assert_equal(US_current_year, US_1040.filing, US_1040.ruby_lines_storage)
-	end # Examples
+    assert_equal('1040', example.form, example.ruby_lines_storage)
+    assert_equal('f', example.form_prefix)
+    assert_equal('', example.form_suffix)
+    assert_equal(US_current_year, example.filing)
+    assert_equal(US_current_year, US_1040.filing, US_1040.ruby_lines_storage)
+  end # Examples
 end # Schedule
 
 class TaxPayerScheduleTest < TestCase
@@ -242,24 +286,23 @@ class TaxPayerScheduleTest < TestCase
   end # base_path
 
   def test_xfdf_file
-#!    assert_equal('.xfdf', US1040_example_schedule.xfdf_file[-5..-1])
+    # !    assert_equal('.xfdf', US1040_example_schedule.xfdf_file[-5..-1])
   end # xfdf_file
 
   def test_output_pdf
-#!    assert(File.exist?(US1040_example_schedule.ots.open_tax_solver_form_directory), US1040_example_schedule.ots.open_tax_solver_form_directory)
-#!    assert(File.exist?(US1040_example_schedule.output_pdf), US1040_example_schedule.output_pdf)
+    # !    assert(File.exist?(US1040_example_schedule.ots.open_tax_solver_form_directory), US1040_example_schedule.ots.open_tax_solver_form_directory)
+    # !    assert(File.exist?(US1040_example_schedule.output_pdf), US1040_example_schedule.output_pdf)
   end # output_pdf
 
   def test_fillout_form
-#!    assert(File.exist?(US1040_example_schedule.fillout_form), US1040_example_schedule.fillout_form)
+    # !    assert(File.exist?(US1040_example_schedule.fillout_form), US1040_example_schedule.fillout_form)
   end # fillout_form
-			
-			def test_fdf_to_pdf_run
-			end # fdf_to_pdf_run
-			
-			def test_pdf_to_jpeg_run
-			end # pdf_to_jpeg_run
-			
+
+  def test_fdf_to_pdf_run
+    end # fdf_to_pdf_run
+
+  def test_pdf_to_jpeg_run
+    end # pdf_to_jpeg_run
 end # OtsTaxpayerSchedule
 
 class OtsRunTest < TestCase
@@ -298,20 +341,28 @@ class OtsRunTest < TestCase
     refute_nil(US1040_example.taxpayer.open_tax_solver_all_form_directory)
   end # values
 
-	def test_open_tax_solver_run
-		assert_equal(US_current_year, US1040_user.filing)
-		refute_nil(US1040_user.filing, US1040_user.inspect)
-#!		assert_pathname_exists(US1040_user.filing.open_tax_solver_binary)
-#!		assert_pathname_exists(US1040_user.open_tax_solver_input)
-#!		refute_nil(US1040_user.open_tax_solver_run)
-#!		refute_nil(CA540_user.open_tax_solver_run)
-	end # open_tax_solver_run
+  def test_open_tax_solver_run
+    assert_equal(US_current_year, US1040_user.filing)
+    refute_nil(US1040_user.filing, US1040_user.inspect)
+    # !		refute_nil(US1040_user.open_tax_solver_run)
+    # !		refute_nil(CA540_user.open_tax_solver_run)
+    assert_equal(US_current_year, US1040_user.filing)
+    refute_nil(US1040_user.filing, US1040_user.inspect)
+    US1040_user.assert_pre_conditions
+    refute_nil(US1040_user.open_tax_solver_run)
+    US1040_user.assert_post_conditions
+    refute_nil(CA540_user.open_tax_solver_run)
+    refute_nil(US1040_template.open_tax_solver_run)
+    refute_nil(CA540_template.open_tax_solver_run)
+    refute_nil(US1040_example.open_tax_solver_run)
+    refute_nil(CA540_example.open_tax_solver_run)
+  end # open_tax_solver_run
 
-	def test_schedules
-	end # schedules
+  def test_schedules
+  end # schedules
 
-		def test_errors
-	end # errors
+  def test_errors
+end # errors
 
   def test_open_tax_solver_form_directory
     form = '1040'
@@ -321,14 +372,8 @@ class OtsRunTest < TestCase
     refute_nil(ots_run.filing, ots_run.ruby_lines_storage)
     refute_nil(ots_run.taxpayer, ots_run.ruby_lines_storage)
     refute_nil(ots_run.taxpayer.open_tax_solver_all_form_directory)
-		assert_pathname_exists(ots_run.open_tax_solver_form_directory)
+    assert_pathname_exists(ots_run.open_tax_solver_form_directory)
     assert_pathname_exists(US1040_template.open_tax_solver_form_directory)
-    assert_pathname_exists(Simplified_example.taxpayer.open_tax_solver_all_form_directory)
-    assert_equal(Filing::US, Simplified_example.filing.jurisdiction)
-    assert_equal('US', Simplified_example.filing.jurisdiction.to_s)
-    assert_equal('US_1040', Simplified_example.filing.jurisdiction.ots_form_filename)
-    assert_pathname_exists(Simplified_example.taxpayer.open_tax_solver_all_form_directory + Simplified_example.filing.jurisdiction.ots_form_filename)
-    assert_pathname_exists(Simplified_example.open_tax_solver_form_directory)
   end # open_tax_solver_form_directory
 
   def test_taxpayer_basename
@@ -340,7 +385,7 @@ class OtsRunTest < TestCase
   end # taxpayer_basename
 
   def test_output_xfdf_glob
-#!    refute_empty(Dir[US1040_example.output_xfdf_glob])
+    # !    refute_empty(Dir[US1040_example.output_xfdf_glob])
   end # output_xfdf_glob
 
   def test_generated_xfdf_files_regexp
@@ -369,6 +414,34 @@ class OtsRunTest < TestCase
     #        modified:   test/data_sources/tax_form/US_1040/US_1040_template_out.txt
   end # commit_minor_change!
 
+  def test_OtsRun_assert_pre_conditions
+    OtsRun.assert_pre_conditions
+  end # assert_pre_conditions
+
+  def test_OtsRun_assert_post_conditions
+  end # assert_post_conditions
+
+  def test_assert_pre_conditions
+    us_2016 = OpenTableExplorer::Finance::Filing::US.new(tax_year: 2016)
+    ca_2016 = OpenTableExplorer::Finance::Filing::CA.new(tax_year: 2016)
+    OpenTableExplorer::Finance::OtsRun.new(taxpayer: User, filing: us_2016).assert_pre_conditions
+    OpenTableExplorer::Finance::OtsRun.new(taxpayer: User, filing: CA.new(tax_year: 2016)).assert_pre_conditions
+    OpenTableExplorer::Finance::OtsRun.new(taxpayer: Template, filing: us_2016).assert_pre_conditions
+    OpenTableExplorer::Finance::OtsRun.new(taxpayer: Template, filing: CA.new(tax_year: 2016)).assert_pre_conditions
+    OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example, filing: us_2016).assert_pre_conditions
+    OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example, filing: CA.new(tax_year: 2016)).assert_pre_conditions
+
+    # !        US1040_user.assert_pre_conditions
+    # 1        CA540_user.assert_pre_conditions
+    # !        US1040_template.assert_pre_conditions
+    # !        CA540_template.assert_pre_conditions
+    # !        US1040_example.assert_pre_conditions
+    # !        CA540_example.assert_pre_conditions
+  end # assert_pre_conditions
+
+  def test_assert_post_conditions
+  end # assert_post_conditions
+
   # Assertions custom instance methods
   def test_assert_open_tax_solver
   end # assert_open_tax_solver
@@ -381,9 +454,9 @@ class OtsRunTest < TestCase
 
   def test_assert_fdf_to_pdf
   end # assert_json_to_fdf
-	
-	def test_OtsRun_Examples
-		assert_equal(US_current_year, US1040_user.filing)
+
+  def test_OtsRun_Examples
+    assert_equal(US_current_year, US1040_user.filing)
     OpenTableExplorer::Finance::OtsRun::Examples.constants.each do |e|
       value = eval(e.to_s)
       next unless value.instance_of?(OpenTableExplorer::Finance::OtsRun)
@@ -395,13 +468,13 @@ class OtsRunTest < TestCase
       refute_nil(value.taxpayer.open_tax_solver_all_form_directory, 'constant name=' + e.to_s + "\n" + message)
       assert_pathname_exists(value.taxpayer.open_tax_solver_all_form_directory, 'constant name=' + e.to_s + "\n" + '')
       assert_pathname_exists(value.open_tax_solver_form_directory, 'constant name=' + e.to_s + "\n")
-#!      assert_pathname_exists(value.open_tax_solver_input, 'constant name=' + e.to_s + "\n")
-#!      value.assert_pre_conditions('constant name=' + e.to_s + "\n")
-#!      value.assert_post_conditions('constant name=' + e.to_s + "\n")
+      # !      assert_pathname_exists(value.open_tax_solver_input, 'constant name=' + e.to_s + "\n")
+      # !      value.assert_pre_conditions('constant name=' + e.to_s + "\n")
+      # !      value.assert_post_conditions('constant name=' + e.to_s + "\n")
       # if
     end # each
-#!    assert_pathname_exists(US1040_user.open_tax_solver_input)
-#!    assert_pathname_exists(CA540_user.open_tax_solver_input)
+    # !    assert_pathname_exists(US1040_user.open_tax_solver_input)
+    # !    assert_pathname_exists(CA540_user.open_tax_solver_input)
     us1040_example = OpenTableExplorer::Finance::OtsRun.new(open_tax_solver_run: Pwd, run_ots_to_fdf: Pwd,
                                                             taxpayer: Example, filing: US_current_year)
     #	us1040_example = OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example, filing: US_current_year, tax_year: Default_tax_year, open_tax_solver_all_form_directory: OtsRun.ots_example_all_forms_directory)
@@ -464,7 +537,7 @@ class OtsTaxpayerScheduleTest < TestCase
 
   def test_OtsTaxpayerSchedule_initialize
     assert_equal('', US1040_example_schedule.form_suffix)
-#!    assert_equal('1040', US1040_example_schedule.filing.jurisdiction.base_form)
+    # !    assert_equal('1040', US1040_example_schedule.filing.jurisdiction.base_form)
     assert_equal('f', US1040_example_schedule.form_prefix, US1040_example_schedule.ruby_lines_storage)
   end # initialize
 

@@ -3,16 +3,16 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 1, 15, 0, 55, Rational(50903575054, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 4, 26, 12, 4, Rational(57492993201, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
 E.
 
-Finished in 0.002581s, 774.9862 runs/s, 0.0000 assertions/s.
+Finished in 0.001792s, 1116.2359 runs/s, 0.0000 assertions/s.
 
   1) Error:
 SingleFailTest#test_fail:
@@ -44,20 +44,20 @@ RuntimeError:
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb"
-	User time (seconds): 0.62
-	System time (seconds): 0.06
+	User time (seconds): 0.60
+	System time (seconds): 0.08
 	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.69
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.70
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 21224
+	Maximum resident set size (kbytes): 21388
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5430
-	Voluntary context switches: 23
-	Involuntary context switches: 71
+	Minor (reclaiming a frame) page faults: 5471
+	Voluntary context switches: 11
+	Involuntary context switches: 84
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

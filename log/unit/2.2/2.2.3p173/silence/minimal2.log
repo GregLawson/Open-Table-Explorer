@@ -3,35 +3,35 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 4, 26, 9, 30, Rational(29221491539, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 4, 26, 12, 15, Rational(57289431345, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test
 Started
 ....
 
-Finished in 0.00163487 seconds.
+Finished in 0.001494038 seconds.
 ------
 4 tests, 0 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-2446.68 tests/s, 0.00 assertions/s
+2677.31 tests/s, 0.00 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb"
 	User time (seconds): 1.27
 	System time (seconds): 0.11
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.40
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.39
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 33976
+	Maximum resident set size (kbytes): 33948
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8620
+	Minor (reclaiming a frame) page faults: 8616
 	Voluntary context switches: 2
-	Involuntary context switches: 168
+	Involuntary context switches: 143
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

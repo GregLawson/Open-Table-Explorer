@@ -13,6 +13,7 @@ require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../app/models/network.rb'
 require_relative '../../app/models/host.rb'
+require_relative '../../app/models/unit.rb'
 class Nmap # < ActiveRecord::Base
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
     Library_Unit = Unit.new_from_path(__FILE__)

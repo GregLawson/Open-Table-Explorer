@@ -3,35 +3,312 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 4, 11, 21, 27, Rational(39328058179, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 4, 26, 10, 57, Rational(44186687924, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test
 Started
-.........................................................
+.......F
+===============================================================================
+Failure:
+  #<OpenTableExplorer::Finance::Filing::CA tax_year=2016>.
+  <[:inspect,
+   :hash,
+   :open_tax_solver_binary,
+   :jurisdiction,
+   :open_tax_solver_distribution_directory,
+   :tax_year,
+   :==,
+   :eql?,
+   :[],
+   :to_hash,
+   :to_h,
+   :`,
+   :clone_state,
+   :assert_clone_state,
+   :clone_explain,
+   :cache,
+   :ruby_lines_storage,
+   :blank?,
+   :info,
+   :acts_like?,
+   :as_json,
+   :present?,
+   :presence,
+   :to_param,
+   :to_query,
+   :try,
+   :try!,
+   :duplicable?,
+   :deep_dup,
+   :in?,
+   :presence_in,
+   :instance_values,
+   :instance_variable_names,
+   :to_json_with_active_support_encoder,
+   :to_json_without_active_support_encoder,
+   :to_json,
+   :with_options,
+   :html_safe?,
+   :default_message,
+   :caller_lines,
+   :canonicalName,
+   :noninherited_public_instance_methods,
+   :module_included?,
+   :object_identities,
+   :objectClass,
+   :objectKind,
+   :objectName,
+   :noninherited_public_class_methods,
+   :whoAmI,
+   :relationship,
+   :module?,
+   :noninherited_modules,
+   :method_contexts,
+   :context_names,
+   :method_context,
+   :matching_methods_in_context,
+   :enumerate,
+   :enumerate_single,
+   :warn,
+   :assert_pathname_exists,
+   :assert_raises,
+   :quieter,
+   :assert_call_result,
+   :explain_assert_respond_to,
+   :assert_call,
+   :assert_answer,
+   :explain_assert_equal,
+   :explain_assert,
+   :assert_flat_set,
+   :assert_set_promotable,
+   :assert_subset,
+   :assert_equal_sets,
+   :assert_overlap,
+   :assert_dir_includes,
+   :assert_public_instance_method,
+   :assert_array_of,
+   :assert_no_duplicates,
+   :assert_single_element_array,
+   :assert_regexp,
+   :assert_attribute_of,
+   :assert_has_instance_methods,
+   :assert_module_included,
+   :global_name?,
+   :assert_global_name,
+   :assert_scope_path,
+   :assert_path_to_constant,
+   :assert_constant_path_respond_to,
+   :assert_constant_instance_respond_to,
+   :missing_file_message,
+   :assert_directory_exists,
+   :assert_data_file,
+   :nested_scope_modules?,
+   :assert_nested_scope_submodule,
+   :assert_included_submodule,
+   :asset_nested_and_included,
+   :refute_match,
+   :assert_no_match,
+   :assert_throw,
+   :assert_throws,
+   :assert_nothing_thrown,
+   :assert_in_delta,
+   :build_message,
+   :assert_not_in_delta,
+   :refute_in_delta,
+   :assert_equal,
+   :assert_in_epsilon,
+   :assert_not_in_epsilon,
+   :assert_raise,
+   :refute_in_epsilon,
+   :assert_send,
+   :refute,
+   :assert_not_send,
+   :assert,
+   :refute_nil,
+   :assert_true,
+   :assert_boolean,
+   :assert_operator,
+   :assert_false,
+   :assert_compare,
+   :assert_raise_message,
+   :assert_fail_assertion,
+   :assert_not_const_defined,
+   :assert_const_defined,
+   :assert_predicate,
+   :assert_not_predicate,
+   :refute_predicate,
+   :assert_instance_of,
+   :assert_alias_method,
+   :assert_path_exist,
+   :assert_path_not_exist,
+   :assert_includes,
+   :assert_not_include,
+   :assert_not_includes,
+   :refute_includes,
+   :assert_empty,
+   :assert_not_empty,
+   :refute_empty,
+   :assert_respond_to,
+   :assert_kind_of,
+   :assert_block,
+   :assert_match,
+   :assert_include,
+   :flunk,
+   :assert_raise_kind_of,
+   :assert_not_instance_of,
+   :refute_instance_of,
+   :assert_nil,
+   :assert_not_kind_of,
+   :refute_kind_of,
+   :assert_not_respond_to,
+   :refute_respond_to,
+   :assert_same,
+   :add_assertion,
+   :assert_not_operator,
+   :refute_operator,
+   :assert_nothing_raised,
+   :assert_not_same,
+   :refute_same,
+   :assert_not_equal,
+   :refute_equal,
+   :assert_not_nil,
+   :assert_not_match,
+   :instance_of?,
+   :public_send,
+   :instance_variable_get,
+   :instance_variable_set,
+   :instance_variable_defined?,
+   :remove_instance_variable,
+   :private_methods,
+   :kind_of?,
+   :instance_variables,
+   :tap,
+   :method,
+   :public_method,
+   :singleton_method,
+   :class_eval,
+   :is_a?,
+   :extend,
+   :silence,
+   :trace_to_s,
+   :define_singleton_method,
+   :newline_if_not_empty,
+   :trace_value,
+   :add_default_message,
+   :to_enum,
+   :enum_for,
+   :trace_names?,
+   :trace,
+   :concern,
+   :silence_warnings,
+   :<=>,
+   :with_warnings,
+   :enable_warnings,
+   :===,
+   :silence_stderr,
+   :=~,
+   :!~,
+   :silence_stream,
+   :suppress,
+   :capture,
+   :quietly,
+   :respond_to?,
+   :freeze,
+   :display,
+   :object_id,
+   :send,
+   :to_s,
+   :nil?,
+   :class,
+   :singleton_class,
+   :clone,
+   :dup,
+   :itself,
+   :taint,
+   :tainted?,
+   :untaint,
+   :untrust,
+   :trust,
+   :untrusted?,
+   :methods,
+   :protected_methods,
+   :frozen?,
+   :public_methods,
+   :singleton_methods,
+   :!,
+   :!=,
+   :__send__,
+   :equal?,
+   :instance_eval,
+   :instance_exec,
+   :__id__]> expected to include
+  <:assert_pre_conditions>.
+test_assert_pre_conditions(FilingTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:169:in `test_assert_pre_conditions\'
+     166: 
+     167:   def test_assert_pre_conditions
+     168:     us_2016 = Filing::CA.new(tax_year: 2016)
+  => 169:     assert_include(us_2016.methods, :assert_pre_conditions, us_2016.inspect)
+     170:     assert_include(Filing.instance_methods, :assert_pre_conditions)
+     171:     Filing::CA.new(tax_year: 2016).assert_pre_conditions
+     172:     CA_current_year.assert_pre_conditions
+===============================================================================
+......................E
+===============================================================================
+Error: test_assert_pre_conditions(OtsRunTest):
+  NoMethodError: undefined method `assert_pre_conditions\' for #<OpenTableExplorer::Finance::Filing::US tax_year=2016>
+  Did you mean?  assert_respond_to
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:643:in `assert_pre_conditions\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:427:in `test_assert_pre_conditions\'
+     424:   def test_assert_pre_conditions
+     425:     us_2016 = OpenTableExplorer::Finance::Filing::US.new(tax_year: 2016)
+     426:     ca_2016 = OpenTableExplorer::Finance::Filing::CA.new(tax_year: 2016)
+  => 427:     OpenTableExplorer::Finance::OtsRun.new(taxpayer: User, filing: us_2016).assert_pre_conditions
+     428:     OpenTableExplorer::Finance::OtsRun.new(taxpayer: User, filing: CA.new(tax_year: 2016)).assert_pre_conditions
+     429:     OpenTableExplorer::Finance::OtsRun.new(taxpayer: Template, filing: us_2016).assert_pre_conditions
+     430:     OpenTableExplorer::Finance::OtsRun.new(taxpayer: Template, filing: CA.new(tax_year: 2016)).assert_pre_conditions
+===============================================================================
+........E
+===============================================================================
+Error: test_open_tax_solver_run(OtsRunTest):
+  NoMethodError: undefined method `assert_pre_conditions\' for #<OpenTableExplorer::Finance::Filing::US tax_year=2014>
+  Did you mean?  assert_respond_to
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/tax_form.rb:643:in `assert_pre_conditions\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb:351:in `test_open_tax_solver_run\'
+     348:     # !		refute_nil(CA540_user.open_tax_solver_run)
+     349:     assert_equal(US_current_year, US1040_user.filing)
+     350:     refute_nil(US1040_user.filing, US1040_user.inspect)
+  => 351:     US1040_user.assert_pre_conditions
+     352:     refute_nil(US1040_user.open_tax_solver_run)
+     353:     US1040_user.assert_post_conditions
+     354:     refute_nil(CA540_user.open_tax_solver_run)
+===============================================================================
+......................
 
-Finished in 0.058440906 seconds.
+Finished in 0.234394403 seconds.
 ------
-57 tests, 243 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
+62 tests, 218 assertions, 1 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
+95.1613% passed
 ------
-975.34 tests/s, 4158.05 assertions/s
+264.51 tests/s, 930.06 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb"
-	User time (seconds): 2.09
-	System time (seconds): 0.15
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb"
+	User time (seconds): 2.19
+	System time (seconds): 0.20
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.26
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.41
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 45452
+	Maximum resident set size (kbytes): 46760
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 13117
-	Voluntary context switches: 32
-	Involuntary context switches: 264
+	Minor (reclaiming a frame) page faults: 13454
+	Voluntary context switches: 42
+	Involuntary context switches: 238
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -39,7 +316,7 @@ Finished in 0.058440906 seconds.
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
 '
 }
 
