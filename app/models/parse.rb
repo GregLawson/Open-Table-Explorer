@@ -225,13 +225,24 @@ class MatchRefinement < Array
 				self # return for command chaining
     end # assert_post_conditions
 		
-		def assert_match_kind(desired_kind, message = '')
+		def assert_match_kind(desired_kind, full_string, message = '')
 			assert_pre_conditions
 			message += "\n"
 			message += error_message(desired_kind) + "\n" + self.inspect
 			message += "\n capture_indices = " + capture_indices.inspect + ' out of 0..' + (size - 1).to_s
 			message += "\n" + unmatches.ruby_lines_storage
 			assert_equal(desired_kind, kind, message)
+			assert_equal(full_string, join, inspect)
+#			case kind
+#			when :no_matches then assert_equal('', join, inspect)
+##			when :exact then assert_equal(full_string, join, inspect)
+#			when :left then assert_equal(full_string[0, join.size], join, inspect)
+#			when :right then assert_equal(full_string[-join.size, join.size], join, inspect)
+##			when :inside then assert_match(join, full_string, inspect)
+#			when :scattered then refute(join, full_string, inspect)
+#			else
+#				raise 'unknown match type = ' + kind.inspect
+#			end # case
 		end # assert_match_kind
 		
 		
@@ -666,6 +677,25 @@ class RawCapture < Capture
     named_hash
   end # named_hash
 
+	def narrow_refinement(single_regexp)
+		if @string.empty?
+			MatchRefinement[] # recursive termination condition
+		else
+			capture = MatchCapture.new(string: @string, regexp: single_regexp)
+			if capture.success?
+				MatchRefinement[
+					capture.pre_match,
+					capture, # .matched_characters available for narrow inspect
+					capture.post_match
+				]
+			else
+				MatchRefinement[
+					capture, # .matched_characters available for narrow inspect, may fail
+					@string
+				]
+			end # if
+		end # if
+	end # narrow_refinement
 
 	def priority_refinements
 		if @regexp.instance_of?(Array)
@@ -727,11 +757,13 @@ class RawCapture < Capture
 
 		def assert_refinement(desired_kind, message = '')
 			message += self.inspect + "\n"
-			priority_refinements.assert_match_kind(desired_kind, message)
+			priority_refinements.assert_match_kind(desired_kind, @string, message)
+			message += priority_refinements.inspect + "\n"
+			message += priority_refinements.ruby_lines_storage + "\n"
 			if @regexp.instance_of?(Array)
-				assert_equal(@regexp.size, priority_refinements.captures.size, priority_refinements.inspect)
+				assert_equal(@regexp.size, priority_refinements.captures.size, message)
 			end # if
-			assert_equal(@string, priority_refinements.join, priority_refinements.inspect)
+			assert_equal(@string, priority_refinements.join, message)
 #!			assert_equal(priority_refinements, sequential_refinements)
 		end # assert_refinement
 
@@ -817,6 +849,7 @@ class MatchCapture < RawCapture
     [pre_match, post_match]
   end # delimiters
 
+# first regexp, failed regexps
 	def narrowed_capture(single_regexp = @regexp)
 		if @regexp.instance_of?(Regexp)
 			if success?
@@ -894,7 +927,7 @@ class SplitCapture < RawCapture
 			fail
 		end # if
 	end # narrowed_capture
-
+	
 	def priority_refinements
 		if @regexp.instance_of?(Array)
 			remaining_regexes = @regexp

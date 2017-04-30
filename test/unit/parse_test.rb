@@ -81,9 +81,12 @@ class MatchRefinementTest < TestCase
 	end # inspect
 	
 	def test_join
-		assert_equal('a', A_mismatch.join)
-		assert_equal('b', B_match.join)
-		assert_equal('ab', AB.join)
+		assert_equal('a', A_mismatch.join, A_mismatch.ruby_lines_storage)
+		assert_equal('ab', AB.join, AB.ruby_lines_storage)
+		assert_equal('ba', BA.join, BA.ruby_lines_storage)
+		assert_equal('b', B_match.join, B_match.ruby_lines_storage)
+		assert_equal('abc', ABC_match_b.join, ABC_match_b.ruby_lines_storage)
+		assert_equal('bcb', Scattered_match.join, Scattered_match.ruby_lines_storage)
 	end # join
 	
 	def test_capture_indices
@@ -220,12 +223,12 @@ class MatchRefinementTest < TestCase
 		
 
 		def test_assert_match_kind
-			B_match.assert_match_kind(:exact)
-			A_mismatch.assert_match_kind(:no_matches)
-			B_match.assert_match_kind(:exact)
-			BA.assert_match_kind(:left)
-			ABC_match_b.assert_match_kind(:inside)
-			AB.assert_match_kind(:right)
+			A_mismatch.assert_match_kind(:no_matches, 'a')
+			AB.assert_match_kind(:right, 'ab')
+			BA.assert_match_kind(:left, 'ba')
+			B_match.assert_match_kind(:exact, 'b')
+			ABC_match_b.assert_match_kind(:inside, 'abc')
+			Scattered_match.assert_match_kind(:scattered, 'bcb')
 		end # assert_match_kind
 		
 end # MatchRefinement
@@ -277,6 +280,22 @@ class CaptureTest < TestCase
 		Fail_array_capture = MatchCapture.new(string: Stash_line, regexp: Fail_array)
 	end # Examples
 	include Examples
+
+	def test_ReflogRegexp
+		assert_match(Regexp_array[0], Stash_line)
+		assert_match(Regexp_array[1], Stash_line)
+		assert_match(Regexp_array[2], Stash_line)
+		assert_match(Regexp_array[3], Stash_line)
+		assert_match(Regexp_array[4], Stash_line)
+		assert_match(Regexp_array[5], Stash_line)
+		assert_match(Regexp_array[6], Stash_line)
+		
+		assert_equal(7, Regexp_array_capture.regexp.size,  Regexp_array_capture.inspect)
+		assert_equal(Delimiter, Regexp_array_capture.regexp[1],  Regexp_array_capture.inspect)
+		assert_equal(Delimiter, Regexp_array_capture.regexp[3],  Regexp_array_capture.inspect)
+		assert_equal(Delimiter, Regexp_array_capture.regexp[5],  Regexp_array_capture.inspect)
+#!		assert_equal("{:type=>[nil, nil], :maturity=>[\"stash\", \"stash\"], :test_topic=>[nil, nil], :age=>[\"0\", \"0\"], :ref=>nil, :sha1_hex_short=>\"bec64c4cd\", :weekday=>\"Mon\", :day_of_month=>\"20\", :month=>\"Mar\", :year=>\"2017\", :hour=>\"11\", :minute=>\"55\", :second=>\"03\", :timezone=>\"-0700\"}", Regexp_array_capture.output.inspect)
+	end # ReflogRegexp
 	
   def test_symbolize_keys
     message = ''
@@ -624,11 +643,23 @@ class RawCaptureTest < TestCase
     #    assert_equal(Branch_column_answer, MatchCapture::Examples::Branch_line_capture.named_hash(0), message)
   end # named_hash
 
+	def test_narrow_refinement
+		abc_ordered_exact = MatchCapture.new(string: 'abc', regexp: [/a/, /b/, /c/])
+		assert_equal([MatchCapture.new(string: 'abc', regexp: /a/), 'bc'], abc_ordered_exact.narrow_refinement(/a/))
+		assert_equal(['a', MatchCapture.new(string: 'abc', regexp: /b/), 'c'], abc_ordered_exact.narrow_refinement(/b/))
+		abc_unordered_exact = MatchCapture.new(string: 'abc', regexp: [/c/, /a/, /b/])
+		[abc_ordered_exact, abc_unordered_exact].each do |capture|
+			narrow_refinement = capture.narrow_refinement(/b/)
+			message = narrow_refinement.inspect
+			narrow_refinement.assert_match_kind(:inside, 'abc', message)
+			assert_equal(1, narrow_refinement.captures.size, message)
+			assert_equal('abc', narrow_refinement.join, message)
+		end # each
+	end # narrow_refinement
+
 	def test_MatchCapture_priority_refinements
 
-		remaining_regexes = nil
 		assert_instance_of(Array, Regexp_array_capture.regexp)
-		assert_nil(remaining_regexes)
 			remaining_regexes = Regexp_array_capture.regexp
 		refute_empty(Regexp_array_capture.string)
 		refute_empty(remaining_regexes.to_a)
@@ -636,14 +667,6 @@ class RawCaptureTest < TestCase
 #		assert_equal(Regexp_array_capture.string, Regexp_array_capture.post_match, Regexp_array_capture.inspect)
 #		refute_equal('', Regexp_array_capture.post_match, Regexp_array_capture.inspect)
 
-		assert_match(Regexp_array[0], Stash_line)
-		assert_match(Regexp_array[1], Stash_line)
-		assert_match(Regexp_array[2], Stash_line)
-		assert_match(Regexp_array[3], Stash_line)
-		assert_match(Regexp_array[4], Stash_line)
-		assert_match(Regexp_array[5], Stash_line)
-		assert_match(Regexp_array[6], Stash_line)
-		
 		priority_refinements = Fail_array_capture.priority_refinements
 		assert_equal(:scattered, priority_refinements.kind)
 		Fail_array_capture.assert_refinement(:scattered)
@@ -669,11 +692,8 @@ class RawCaptureTest < TestCase
 		assert_equal(['  2'], SplitCapture::Examples::Split_capture.priority_refinements[1..-1])
 		assert_equal([], Empty_capture.priority_refinements)
 
-		assert_equal(7, Regexp_array_capture.regexp.size,  Regexp_array_capture.inspect)
-		assert_equal(Delimiter, Regexp_array_capture.regexp[1],  Regexp_array_capture.inspect)
-		assert_equal(Delimiter, Regexp_array_capture.regexp[3],  Regexp_array_capture.inspect)
-		assert_equal(Delimiter, Regexp_array_capture.regexp[5],  Regexp_array_capture.inspect)
-#!		assert_equal("{:type=>[nil, nil], :maturity=>[\"stash\", \"stash\"], :test_topic=>[nil, nil], :age=>[\"0\", \"0\"], :ref=>nil, :sha1_hex_short=>\"bec64c4cd\", :weekday=>\"Mon\", :day_of_month=>\"20\", :month=>\"Mar\", :year=>\"2017\", :hour=>\"11\", :minute=>\"55\", :second=>\"03\", :timezone=>\"-0700\"}", Regexp_array_capture.output.inspect)
+#!		assert_equal(['a', 'b', 'c'], MatchCapture.new(string: 'abc', regexp: [/a/, /b/]).priority_refinements )
+#!		assert_equal(['a', 'b'], MatchCapture.new(string: 'abc', regexp: [/b/, /a/]).priority_refinements )
 	end # priority_refinements
 
 	def test_next_refinement
@@ -898,7 +918,7 @@ class SplitCaptureTest < TestCase
   include Capture::Examples
   include String::Examples
 
-  def test_DplitCapture_index
+  def test_SplitCapture_index
   end # []
 
   def test_SplitCapture_raw_captures
