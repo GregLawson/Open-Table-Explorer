@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2013-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -13,7 +13,7 @@ require_relative '../../app/models/test_run.rb'
 require_relative '../../app/models/ruby_lines_storage.rb'
 # abstracts TestRun and git commits for comparison
 class TestMaturity
-  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+	module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     # Error score is a SWAG at order of magnitude of errors
     Error_classification = { 0 => :success,
                              1 => :single_test_fail,
@@ -32,7 +32,9 @@ class TestMaturity
                     syntax_error:        :edited
         }.freeze
 		Error_classification_keys = Push_branch.keys
+		
     Error_score_directory = Unit.data_source_directories + 'test_maturity/'
+		
 #		raise RubyLinesStorage.instance_methods(false).inspect unless RubyLinesStorage.instance_methods.include?(:read) 
 		Fixed_regexp = /[0-9]+\.[0-9]+/
 		Finished_regexp = /Finished in / * Fixed_regexp.capture(:test_finished)
@@ -48,13 +50,6 @@ class TestMaturity
     end # DefinitionalConstants
   include DefinitionalConstants
 	
-  include Virtus.value_object
-  values do
-    attribute :version, BranchReference, default: nil # working_directory
-    attribute :test_executable, TestExecutable
-    #	attribute :age, Fixnum, :default => 789
-    #	attribute :timestamp, Time, :default => Time.now
-  end # values
   module ClassMethods
     include DefinitionalConstants
     def example_files
@@ -148,12 +143,42 @@ class TestMaturity
   end # ClassMethods
   extend ClassMethods
 
+  include Virtus.value_object
+  values do
+    attribute :version, BranchReference, default: nil # working_directory
+    attribute :test_executable, TestExecutable
+    #	attribute :age, Fixnum, :default => 789
+    #	attribute :timestamp, Time, :default => Time.now
+  end # values
+
+  module Constructors # such as alternative new methods
+    include DefinitionalConstants
+		def all
+	    Dir['log/unit/2.2/2.2.3p173/silence/*.log']
+		end # all
+  end # Constructors
+  extend Constructors
+
+  module ReferenceObjects # example constant objects of the type (e.g. default_objects)
+    include DefinitionalConstants
+#    ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
+		Self_test_executable = TestExecutable.new(argument_path: $PROGRAM_NAME)
+		Working_maturity = TestMaturity.new(version: nil, test_executable: Self_test_executable)
+  end # ReferenceObjects
+  include ReferenceObjects
+
 	def read_state(commit, test = nil)
-		git_command = 'git cat-file blob ' + commit.to_s + ':' + @test_executable.log_path?(test)
-    file_contents = @repository.git_command(git_command)
-		eval(file_contents)
+		if commit.nil?
+			file_contents = RubyLinesStorage.read(@test_executable.log_path?(test))
+		else
+			git_command = 'git cat-file blob ' + commit.to_s + ':' + @test_executable.log_path?(test)
+			file_contents = @repository.git_command(git_command)
+			eval(file_contents)
+		end # if
 	end # read_state
 	
+
+
   def get_error_score!
     if @test_executable.recursion_danger?
       nil # avoid recursion
@@ -207,7 +232,34 @@ class TestMaturity
 	
   module Assertions
     module ClassMethods
+			def assert_pre_conditions(message='')
+				message+="In assert_pre_conditions, self=#{inspect}"
+			#	asset_nested_and_included(:ClassMethods, self)
+			#	asset_nested_and_included(:Constants, self)
+			#	asset_nested_and_included(:Assertions, self)
+				self
+			end #assert_pre_conditions
+
+			def assert_post_conditions(message='')
+				message+="In assert_post_conditions, self=#{inspect}"
+				self
+			end #assert_post_conditions
     end # ClassMethods
+
+    def assert_pre_conditions(message = '')
+      message += "In assert_pre_conditions, self=#{inspect}"
+				self # return for command chaining
+    end # assert_pre_conditions
+
+    def assert_post_conditions(message = '')
+      message += "In assert_post_conditions, self=#{inspect}"
+				if hash[:context].keys.include?(:command_string)
+				else
+					# puts hash.ruby_lines_storage
+					puts hash.keys
+				end # if
+				self # return for command chaining
+    end # assert_post_conditions
     def assert_deserving_branch(branch_expected, executable, message = '')
       deserving_branch = TestMaturity.deserving_branch
       recent_test = shell_command('ruby ' + executable)

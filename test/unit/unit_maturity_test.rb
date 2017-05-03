@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2013-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -12,6 +12,7 @@ require_relative '../../app/models/unit_maturity.rb'
 class TestMaturityTest < TestCase
   module Examples
     include TestMaturity::DefinitionalConstants
+    include TestMaturity::ReferenceObjects
     ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
     MinimalMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal2_test.rb'))
     MinimalMaturity3 = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal3_test.rb'))
@@ -61,22 +62,6 @@ class TestMaturityTest < TestCase
     testunit_summary_regexp = Common_summary_regexp * Pendings_pattern * Omissions_pattern * Notifications_pattern
     assert_match(testunit_summary_regexp, example_testunit_log)
   end # DefinitionalConstants
-
-	def test_times
-		log_files = Dir['log/unit/2.2/2.2.3p173/silence/*.log']
-		file_times = log_files.map do |path|
-			file_contents = IO.read(path)
-			assert_match(Finished_regexp, file_contents, path)
-			assert_match(User_time_regexp, file_contents, path)
-			finished_time = file_contents.parse(Finished_regexp)
-			user_time = file_contents.parse(User_time_regexp)
-			assert_operator(finished_time[:test_finished].to_f, :<, user_time[:user_time].to_f)
-			hash = RubyLinesStorage.read(path)
-			finished_time.merge(user_time)
-		end # each
-		message = ruby_lines_storage(file_times)
-#		assert_equal
-	end # times
 
   def test_example_files
     ret = {} # accumulate a hash
@@ -175,8 +160,54 @@ class TestMaturityTest < TestCase
     assert_operator(run_time, :>=, 0)
   end # parse_header
 
+  def test_Constructors # such as alternative new methods
+  end # Constructors
+
+  def test_ReferenceObjects
+		working_log = RubyLinesStorage.read(TestMaturity::Self_test_executable.log_path?(nil))
+		assert_equal(working_log, TestMaturity::Working_maturity.read_state(nil, nil))
+		TestMaturity::Working_maturity.assert_pre_conditions
+		TestMaturity::Working_maturity.assert_post_conditions
+  end # ReferenceObjects
+
+	def test_read_state
+    log_files = TestMaturity.all
+    file_times = log_files.map do |path|
+      file_contents = IO.read(path)
+      hash = RubyLinesStorage.read(path)
+      assert_instance_of(Hash, hash)
+      # refute_includes(hash.keys, :exception_hash, hash.ruby_lines_storage)
+			puts hash.keys
+      if hash.keys.include?(:exception_hash)
+				assert_instance_of(Hash, hash[:exception_hash])
+				puts hash[:exception_hash].ruby_lines_storage
+				assert_instance_of(String, hash[:context])
+				puts hash[:context].ruby_lines_storage
+			end # if
+    end # each
+	end # read_state
+
+	def test_times
+		log_files = TestMaturity.all
+		file_times = log_files.map do |path|
+			file_contents = IO.read(path)
+			assert_match(Finished_regexp, file_contents, path)
+			assert_match(User_time_regexp, file_contents, path)
+			finished_time = file_contents.parse(Finished_regexp)
+			user_time = file_contents.parse(User_time_regexp)
+			assert_operator(finished_time[:test_finished].to_f, :<, user_time[:user_time].to_f)
+			hash = RubyLinesStorage.read(path)
+			finished_time.merge(user_time)
+		end # each
+		message = ruby_lines_storage(file_times)
+#		assert_equal
+	end # times
+	
   def test_recursion_danger?
+	ExecutableMaturity
     assert_equal(true, ExecutableMaturity.test_executable.recursion_danger?)
+    assert_equal(Working_maturity, ExecutableMaturity)
+    assert_equal(true, Working_maturity.test_executable.recursion_danger?)
     assert_equal(false, MinimalMaturity.test_executable.recursion_danger?)
     assert_equal(false, MinimalMaturity3.test_executable.recursion_danger?)
   end # recursion_danger?
