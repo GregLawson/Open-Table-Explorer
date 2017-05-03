@@ -1,40 +1,40 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 11, Rational(15915224225, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 1, 59, Rational(12865762896, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_argument_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_argument_test
 Started
 ......
 
-Finished in 7.017847509 seconds.
+Finished in 7.827703661 seconds.
 ------
 6 tests, 29 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-0.85 tests/s, 4.13 assertions/s
+0.77 tests/s, 3.70 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_argument_test.rb"
-	User time (seconds): 7.09
-	System time (seconds): 0.57
-	Percent of CPU this job got: 81%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:09.40
+	User time (seconds): 8.15
+	System time (seconds): 0.74
+	Percent of CPU this job got: 87%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:10.22
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 51468
+	Maximum resident set size (kbytes): 52892
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 31
-	Minor (reclaiming a frame) page faults: 61338
-	Voluntary context switches: 897
-	Involuntary context switches: 787
+	Major (requiring I/O) page faults: 30
+	Minor (reclaiming a frame) page faults: 71863
+	Voluntary context switches: 850
+	Involuntary context switches: 985
 	Swaps: 0
-	File system inputs: 25672
-	File system outputs: 32
+	File system inputs: 17488
+	File system outputs: 40
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0

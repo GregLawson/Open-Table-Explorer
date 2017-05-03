@@ -1,94 +1,94 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 39, Rational(11431257159, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 2, 24, Rational(12040848699, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_link_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_link_test
 Started
 E
 ===============================================================================
 Error: test_association_names(StreamLinkTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x00000002c12b70>
+  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x007f7c45be6310>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_link_test.rb:75:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_fire(StreamLinkTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x00000002c13958>
+  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x007f7c45be6248>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_link_test.rb:75:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_id_equal(StreamLinkTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x00000002c0ff60>
+  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x007f7c45be6180>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_link_test.rb:75:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_input_stream_method_argument(StreamLinkTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x00000002c0fe98>
+  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x007f7c45be60b8>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_link_test.rb:75:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_logical_primary_key(StreamLinkTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x00000002c0fdd0>
+  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x007f7c45be5ff0>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_link_test.rb:75:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_next_method(StreamLinkTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x00000002c0fd08>
+  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x007f7c45be5f28>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_link_test.rb:75:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_output_stream_method_argument(StreamLinkTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x00000002c0fc18>
+  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x007f7c45be5e60>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_link_test.rb:75:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_store_method(StreamLinkTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x00000002c0fb50>
+  NameError: undefined local variable or method `define_model_of_test\' for #<StreamLinkTest:0x007f7c45be5d98>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_link_test.rb:75:in `setup\'
 ===============================================================================
 
 
-Finished in 0.29901715 seconds.
+Finished in 0.290433001 seconds.
 ------
 8 tests, 0 assertions, 0 failures, 8 errors, 0 pendings, 0 omissions, 0 notifications
 0% passed
 ------
-26.75 tests/s, 0.00 assertions/s
+27.55 tests/s, 0.00 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_link_test.rb"
-	User time (seconds): 0.83
-	System time (seconds): 0.05
+	User time (seconds): 0.84
+	System time (seconds): 0.04
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.89
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.88
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 21760
+	Maximum resident set size (kbytes): 21664
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5565
-	Voluntary context switches: 3
-	Involuntary context switches: 91
+	Minor (reclaiming a frame) page faults: 5542
+	Voluntary context switches: 2
+	Involuntary context switches: 85
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

@@ -1,30 +1,30 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 21, Rational(37905915310, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 2, 8, Rational(55595151940, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal4_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
 :errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal4_test.rb:12:in `<class:Minimal4Test>\': uninitialized constant Minimal4Test::RailsishRubyUnit (NameError)
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal4_test.rb:10:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal4_test.rb"
-	User time (seconds): 1.25
-	System time (seconds): 0.12
+	User time (seconds): 1.22
+	System time (seconds): 0.15
 	Percent of CPU this job got: 99%
 	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.38
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 33368
+	Maximum resident set size (kbytes): 33504
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8465
+	Minor (reclaiming a frame) page faults: 8500
 	Voluntary context switches: 3
-	Involuntary context switches: 137
+	Involuntary context switches: 164
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

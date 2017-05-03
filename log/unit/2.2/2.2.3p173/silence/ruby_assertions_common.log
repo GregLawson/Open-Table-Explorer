@@ -1,17 +1,17 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 38, Rational(3453834574, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 2, 19, Rational(35768756715, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test
 Started
 ...E
 ===============================================================================
 Error: test_assert_array_of(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_array_of\' for #<RubyAssertionsTest:0x0000000186d098>
+  NoMethodError: undefined method `assert_array_of\' for #<RubyAssertionsTest:0x007fcd7ee9c318>
   Did you mean?  assert_kind_of
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:203:in `test_assert_array_of\'
      200:     end # assert_public_instance_method
@@ -25,7 +25,7 @@ Error: test_assert_array_of(RubyAssertionsTest):
 .E
 ===============================================================================
 Error: test_assert_call_result(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_call_result\' for #<RubyAssertionsTest:0x0000000186cf08>
+  NoMethodError: undefined method `assert_call_result\' for #<RubyAssertionsTest:0x007fcd7ee9b6c0>
   Did you mean?  assert_false
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:69:in `test_assert_call_result\'
      66: 
@@ -39,7 +39,7 @@ Error: test_assert_call_result(RubyAssertionsTest):
 E
 ===============================================================================
 Error: test_assert_constant_instance_respond_to(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_constant_path_respond_to\' for #<RubyAssertionsTest:0x0000000186ce40>
+  NoMethodError: undefined method `assert_constant_path_respond_to\' for #<RubyAssertionsTest:0x007fcd7ee9a1a8>
   Did you mean?  assert_not_respond_to
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:278:in `test_assert_constant_instance_respond_to\'
      275:   end # assert_constant_path_respond_to
@@ -53,7 +53,7 @@ Error: test_assert_constant_instance_respond_to(RubyAssertionsTest):
 E
 ===============================================================================
 Error: test_assert_constant_path_respond_to(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_constant_path_respond_to\' for #<RubyAssertionsTest:0x0000000186cd50>
+  NoMethodError: undefined method `assert_constant_path_respond_to\' for #<RubyAssertionsTest:0x007fcd7ee99528>
   Did you mean?  assert_not_respond_to
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:272:in `test_assert_constant_path_respond_to\'
      269:   end # assert_path_to_constant
@@ -67,7 +67,7 @@ Error: test_assert_constant_path_respond_to(RubyAssertionsTest):
 E
 ===============================================================================
 Error: test_assert_data_file(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_pathname_exists\' for #<RubyAssertionsTest:0x0000000186cc88>
+  NoMethodError: undefined method `assert_pathname_exists\' for #<RubyAssertionsTest:0x007fcd7ee980b0>
   Did you mean?  assert_path_exist
                  assert_path_not_exist
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:313:in `test_assert_data_file\'
@@ -82,7 +82,7 @@ Error: test_assert_data_file(RubyAssertionsTest):
 E
 ===============================================================================
 Error: test_assert_dir_include(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_dir_includes\' for #<RubyAssertionsTest:0x0000000186cbc0>
+  NoMethodError: undefined method `assert_dir_includes\' for #<RubyAssertionsTest:0x007fcd7ee93998>
   Did you mean?  assert_not_includes
                  assert_includes
                  assert_not_include
@@ -99,7 +99,7 @@ Error: test_assert_dir_include(RubyAssertionsTest):
 E
 ===============================================================================
 Error: test_assert_directory_exists(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_directory_exists\' for #<RubyAssertionsTest:0x0000000186caf8>
+  NoMethodError: undefined method `assert_directory_exists\' for #<RubyAssertionsTest:0x007fcd7ee92ed0>
   Did you mean?  assert_predicate
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:308:in `test_assert_directory_exists\'
      305:   end # assert_pathname_exists
@@ -113,7 +113,7 @@ Error: test_assert_directory_exists(RubyAssertionsTest):
 .E
 ===============================================================================
 Error: test_assert_flat_set(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_flat_set\' for #<RubyAssertionsTest:0x0000000186c968>
+  NoMethodError: undefined method `assert_flat_set\' for #<RubyAssertionsTest:0x007fcd7ee91d78>
   Did you mean?  assert_false
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:114:in `test_assert_flat_set\'
      111: 
@@ -126,7 +126,7 @@ Error: test_assert_flat_set(RubyAssertionsTest):
 ===============================================================================
 E
 ===============================================================================
-Error: test_assert_include(RubyAssertionsTest): NameError: undefined local variable or method `fixture_names\' for #<RubyAssertionsTest:0x0000000186c8a0>
+Error: test_assert_include(RubyAssertionsTest): NameError: undefined local variable or method `fixture_names\' for #<RubyAssertionsTest:0x007fcd7ee91a80>
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:164:in `test_assert_include\'
      161:     element = :b
      162:     list = [:a, :b, :c]
@@ -139,7 +139,7 @@ Error: test_assert_include(RubyAssertionsTest): NameError: undefined local varia
 .E
 ===============================================================================
 Error: test_assert_module_included(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_module_included\' for #<RubyAssertionsTest:0x0000000186c620>
+  NoMethodError: undefined method `assert_module_included\' for #<RubyAssertionsTest:0x007fcd7ee90a40>
   Did you mean?  assert_included_modules
                  assert_include
                  assert_not_include
@@ -170,7 +170,7 @@ Error: test_assert_nested_scope_submodule(RubyAssertionsTest): NoMethodError: un
 E
 ===============================================================================
 Error: test_assert_no_duplicates(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_no_duplicates\' for #<RubyAssertionsTest:0x0000000186c490>
+  NoMethodError: undefined method `assert_no_duplicates\' for #<RubyAssertionsTest:0x007fcd7ee8a208>
   Did you mean?  assert_not_includes
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:235:in `test_assert_no_duplicates\'
      232:     message = "frequencies.inspect[0..100]=#{frequencies.inspect[0..100]}"
@@ -184,7 +184,7 @@ Error: test_assert_no_duplicates(RubyAssertionsTest):
 E
 ===============================================================================
 Error: test_assert_overlap(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_overlap\' for #<RubyAssertionsTest:0x0000000186c1e8>
+  NoMethodError: undefined method `assert_overlap\' for #<RubyAssertionsTest:0x007fcd7ee894e8>
   Did you mean?  assert_compare
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:154:in `test_assert_overlap\'
      151:   def test_assert_overlap
@@ -198,7 +198,7 @@ Error: test_assert_overlap(RubyAssertionsTest):
 E
 ===============================================================================
 Error: test_assert_path_to_constant(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_path_to_constant\' for #<RubyAssertionsTest:0x0000000186c0f8>
+  NoMethodError: undefined method `assert_path_to_constant\' for #<RubyAssertionsTest:0x007fcd7ee88480>
   Did you mean?  assert_path_not_exist
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:267:in `test_assert_path_to_constant\'
      264:   end # assert_scope_path
@@ -212,7 +212,7 @@ Error: test_assert_path_to_constant(RubyAssertionsTest):
 E
 ===============================================================================
 Error: test_assert_pathname_exists(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_pathname_exists\' for #<RubyAssertionsTest:0x0000000186c030>
+  NoMethodError: undefined method `assert_pathname_exists\' for #<RubyAssertionsTest:0x007fcd7ee880c0>
   Did you mean?  assert_path_exist
                  assert_path_not_exist
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:299:in `test_assert_pathname_exists\'
@@ -239,7 +239,7 @@ Error: test_assert_public_instance_method(RubyAssertionsTest): NameError: uninit
 E
 ===============================================================================
 Error: test_assert_regexp(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_regexp\' for #<RubyAssertionsTest:0x00000001867e68>
+  NoMethodError: undefined method `assert_regexp\' for #<RubyAssertionsTest:0x007fcd7ee876c0>
   Did you mean?  assert_true
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:246:in `test_assert_regexp\'
      243:   end # assert_single_element_array
@@ -253,7 +253,7 @@ Error: test_assert_regexp(RubyAssertionsTest):
 E
 ===============================================================================
 Error: test_assert_scope_path(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_scope_path\' for #<RubyAssertionsTest:0x00000001867da0>
+  NoMethodError: undefined method `assert_scope_path\' for #<RubyAssertionsTest:0x007fcd7ee87378>
   Did you mean?  assert_operator
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:262:in `test_assert_scope_path\'
      259:   end # global_name
@@ -267,7 +267,7 @@ Error: test_assert_scope_path(RubyAssertionsTest):
 E
 ===============================================================================
 Error: test_assert_single_element_array(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_single_element_array\' for #<RubyAssertionsTest:0x00000001867cd8>
+  NoMethodError: undefined method `assert_single_element_array\' for #<RubyAssertionsTest:0x007fcd7ee86e28>
   Did you mean?  assert_in_delta
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:242:in `test_assert_single_element_array\'
      239:   end # assert_no_duplicates
@@ -281,7 +281,7 @@ Error: test_assert_single_element_array(RubyAssertionsTest):
 E
 ===============================================================================
 Error: test_assert_subset(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_flat_set\' for #<RubyAssertionsTest:0x00000001867c10>
+  NoMethodError: undefined method `assert_flat_set\' for #<RubyAssertionsTest:0x007fcd7ee85e88>
   Did you mean?  assert_false
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:129:in `test_assert_subset\'
      126:     subset_enumeration_array = subset_enumeration.to_a.map(&:to_s)
@@ -331,7 +331,7 @@ diff:
 E
 ===============================================================================
 Error: test_equal_sets(RubyAssertionsTest):
-  NoMethodError: undefined method `assert_flat_set\' for #<RubyAssertionsTest:0x000000018679b8>
+  NoMethodError: undefined method `assert_flat_set\' for #<RubyAssertionsTest:0x007fcd7ee83778>
   Did you mean?  assert_false
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:145:in `test_equal_sets\'
      142:     expected_set = Set.new(expected_enumeration.to_a.map(&:to_s))
@@ -344,7 +344,7 @@ Error: test_equal_sets(RubyAssertionsTest):
 ===============================================================================
 ..E
 ===============================================================================
-Error: test_explain_assert_respond_to(RubyAssertionsTest): NoMethodError: undefined method `explain_assert_respond_to\' for #<RubyAssertionsTest:0x00000001867738>
+Error: test_explain_assert_respond_to(RubyAssertionsTest): NoMethodError: undefined method `explain_assert_respond_to\' for #<RubyAssertionsTest:0x007fcd7ee82698>
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:93:in `test_explain_assert_respond_to\'
      90:   end # explain_assert
      91: 
@@ -357,7 +357,7 @@ Error: test_explain_assert_respond_to(RubyAssertionsTest): NoMethodError: undefi
 E
 ===============================================================================
 Error: test_global_name(RubyAssertionsTest):
-  NoMethodError: undefined method `global_name?\' for #<RubyAssertionsTest:0x00000001867648>
+  NoMethodError: undefined method `global_name?\' for #<RubyAssertionsTest:0x007fcd7ee81e50>
   Did you mean?  global_variables
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:256:in `test_global_name\'
      253:   end # assert_module_included
@@ -370,7 +370,7 @@ Error: test_global_name(RubyAssertionsTest):
 ===============================================================================
 .E
 ===============================================================================
-Error: test_missing_file_message(RubyAssertionsTest): NoMethodError: undefined method `missing_file_message\' for #<RubyAssertionsTest:0x00000001867440>
+Error: test_missing_file_message(RubyAssertionsTest): NoMethodError: undefined method `missing_file_message\' for #<RubyAssertionsTest:0x007fcd7ee7c5e0>
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:287:in `test_missing_file_message\'
      284:   def test_missing_file_message
      285:     missing_pathname = \'/root-kit/bad_stuff/exploit.sh\'
@@ -394,29 +394,29 @@ Error: test_requires(RubyAssertionsTest): NameError: uninitialized constant Ruby
 ===============================================================================
 ....
 
-Finished in 1.559881572 seconds.
+Finished in 1.382982492 seconds.
 ------
 44 tests, 37 assertions, 1 failures, 25 errors, 0 pendings, 0 omissions, 0 notifications
 40.9091% passed
 ------
-28.21 tests/s, 23.72 assertions/s
+31.82 tests/s, 26.75 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb"
-	User time (seconds): 2.16
+	User time (seconds): 1.91
 	System time (seconds): 0.06
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.23
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.98
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 24992
+	Maximum resident set size (kbytes): 25040
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 6373
-	Voluntary context switches: 3
-	Involuntary context switches: 198
+	Minor (reclaiming a frame) page faults: 6384
+	Voluntary context switches: 2
+	Involuntary context switches: 183
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

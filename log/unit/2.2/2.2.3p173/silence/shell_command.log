@@ -1,49 +1,49 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 39, Rational(8065590261, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 2, 24, Rational(8716623662, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test
 Started
 .......................Hello World
 .....
 
-Finished in 0.201311039 seconds.
+Finished in 0.105155671 seconds.
 ------
 28 tests, 69 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-139.09 tests/s, 342.75 assertions/s
+266.27 tests/s, 656.17 assertions/s
 Run options: --seed 0
 
 # Running:
 
 .........
 
-Finished in 0.006755s, 1332.4298 runs/s, 0.0000 assertions/s.
+Finished in 0.005916s, 1521.3340 runs/s, 0.0000 assertions/s.
 
 9 runs, 0 assertions, 0 failures, 0 errors, 0 skips
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb"
-	User time (seconds): 1.34
-	System time (seconds): 0.14
-	Percent of CPU this job got: 88%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.68
+	User time (seconds): 1.26
+	System time (seconds): 0.12
+	Percent of CPU this job got: 95%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.44
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 34076
+	Maximum resident set size (kbytes): 34312
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 2
-	Minor (reclaiming a frame) page faults: 14946
-	Voluntary context switches: 279
-	Involuntary context switches: 205
+	Minor (reclaiming a frame) page faults: 15036
+	Voluntary context switches: 258
+	Involuntary context switches: 200
 	Swaps: 0
-	File system inputs: 584
+	File system inputs: 256
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

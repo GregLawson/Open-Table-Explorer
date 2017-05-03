@@ -1,9 +1,9 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 3, 27, 12, 42, Rational(36170632498, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 5, 2, 11, 57, Rational(51715887228, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test
@@ -64,7 +64,7 @@ Failure:
   ]
   }
   ,
-  {/\(\?<sha1_hex_7>\[\[:xdigit:\]\]\{7,9\}\)/ => []
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => []
   }
   ,
   {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'u\',
@@ -188,7 +188,7 @@ Failure:
   {\',\' => []
   }
   ,
-  {/\(\?<sha1_hex_7>\[\[:xdigit:\]\]\{7,9\}\)/ => [{:sha1_hex_7 => \'1234567\'
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => [{:sha1_hex_short => \'1234567\'
   }
   ]
   }
@@ -345,7 +345,7 @@ Failure:
   ]
   }
   ,
-  {/\(\?<sha1_hex_7>\[\[:xdigit:\]\]\{7,9\}\)/ => []
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => []
   }
   ,
   {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'u\',
@@ -448,7 +448,7 @@ Failure:
   {\',\' => []
   }
   ,
-  {/\(\?<sha1_hex_7>\[\[:xdigit:\]\]\{7,9\}\)/ => [{:sha1_hex_7 => \'911dea1\'
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => [{:sha1_hex_short => \'911dea1\'
   }
   ]
   }
@@ -605,7 +605,7 @@ Failure:
   ]
   }
   ,
-  {/\(\?<sha1_hex_7>\[\[:xdigit:\]\]\{7,9\}\)/ => []
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => []
   }
   ,
   {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'u\',
@@ -729,7 +729,7 @@ Failure:
   {\',\' => []
   }
   ,
-  {/\(\?<sha1_hex_7>\[\[:xdigit:\]\]\{7,9\}\)/ => [{:sha1_hex_7 => \'1234567\'
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => [{:sha1_hex_short => \'1234567\'
   }
   ]
   }
@@ -863,39 +863,338 @@ test_assert_reflog_line(BranchReferenceTest)
      591:     BranchReference.assert_reflog_line(First_change_line)
      592:     BranchReference.assert_reflog_line(No_ref_line)
 ===============================================================================
-.unmatched in #<Commit initialization_string=:edited repository=#<Repository:0x007f16dab83510 @path="/home/greg/Desktop/src/Open-Table-Explorer/">>
-unmatched in #<Commit initialization_string=:tested repository=#<Repository:0x007f16dab4e590 @path="/home/greg/Desktop/src/Open-Table-Explorer/">>
-unmatched in #<Commit initialization_string=:passed repository=#<Repository:0x007f16dab02618 @path="/home/greg/Desktop/src/Open-Table-Explorer/">>
-unmatched in #<Commit initialization_string=:stash repository=#<Repository:0x007f16daac1320 @path="/home/greg/Desktop/src/Open-Table-Explorer/">>
-unmatched in #<BranchReference initialization_string=:passed repository=#<Repository:0x007f16daa85870 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=12 timestamp=2017-03-26 07:57:55 -0700>
-unmatched in #<BranchReference initialization_string=:edited repository=#<Repository:0x007f16daa47ef8 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=1 timestamp=2017-03-26 06:46:34 -0700>
-unmatched in #<BranchReference initialization_string=:tested repository=#<Repository:0x007f16da9ff310 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=2 timestamp=2017-03-26 06:44:13 -0700>
-unmatched in #<BranchReference initialization_string=:stash repository=#<Repository:0x007f16da9c0570 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=1 timestamp=2017-03-26 06:35:10 -0700>
-unmatched in #<BranchReference initialization_string=:stash repository=#<Repository:0x007f16da97ecd8 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=4 timestamp=2017-03-20 11:55:03 -0700>
-unmatched in #<BranchReference initialization_string=:tested repository=#<Repository:0x007f16da9379a0 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=9 timestamp=2017-03-15 11:27:28 -0700>
-unmatched in #<BranchReference initialization_string=:edited repository=#<Repository:0x007f16da8eb5f0 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=5 timestamp=2017-03-15 11:09:45 -0700>
-.E
+.unmatched in #<Commit initialization_string=:edited repository=#<Repository:0x007f7012f423b8 @path="/home/greg/Desktop/src/Open-Table-Explorer/">>
+unmatched in #<BranchReference initialization_string=:stash repository=#<Repository:0x007f7012f00490 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=1 timestamp=2017-05-02 06:45:50 -0700>
+unmatched in #<BranchReference initialization_string=:command_fail repository=#<Repository:0x007f7012eb55d0 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=4 timestamp=2017-04-26 11:30:41 -0700>
+unmatched in #<BranchReference initialization_string=:edited repository=#<Repository:0x007f7012e7c370 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=5 timestamp=2017-04-08 18:05:08 -0700>
+unmatched in #<BranchReference initialization_string=:tested repository=#<Repository:0x007f7012e35808 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=6 timestamp=2017-04-08 04:51:49 -0700>
+unmatched in #<BranchReference initialization_string=:stash repository=#<Repository:0x007f7012df7a80 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=12 timestamp=2017-04-07 16:15:58 -0700>
+unmatched in #<BranchReference initialization_string=:passed repository=#<Repository:0x007f7012da5848 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=1 timestamp=2017-04-03 06:46:05 -0700>
+unmatched in #<BranchReference initialization_string=:tested repository=#<Repository:0x007f7012d73488 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=8 timestamp=2017-04-02 09:28:45 -0700>
+unmatched in #<BranchReference initialization_string=:tested repository=#<Repository:0x007f7012d266b0 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=9 timestamp=2017-04-02 09:28:45 -0700>
+unmatched in #<Commit initialization_string=:branch_passes repository=#<Repository:0x007f7012cdf1c0 @path="/home/greg/Desktop/src/Open-Table-Explorer/">>
+unmatched in #<BranchReference initialization_string=:branch_passes repository=#<Repository:0x007f7012ca25e0 @path="/home/greg/Desktop/src/Open-Table-Explorer/"> branch=nil age=1 timestamp=2017-04-01 09:55:12 -0700>
+.F
 ===============================================================================
-Error: test_new_from_ref(BranchReferenceTest):
-  NoMethodError: undefined method `to_sym\' for nil:NilClass
-  Did you mean?  to_s
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:310:in `reflog_to_constructor_hash\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:359:in `new_from_ref\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:535:in `test_new_from_ref\'
-     532:     assert_equal(refs[0], \'\', message)
-     533: 
-     534:     #	Test method
-  => 535:     br = BranchReference.new_from_ref(reflog_line)
-     536:     #    assert_equal(refs[2].to_sym, br.name, br.inspect)
-     537: 
-     538:     # Now test one with refs
+Failure:
+  [{/\\A\(\?:\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:type => \'master\',
+  :maturity => \'123\',
+  :test_topic => \',refs/heads/master@{123},1234567,Sun, 21 Jun 2015 13:51:50 -0700\',
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {\',\' => [{
+  }
+  , {
+  }
+  , {
+  }
+  , {
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+  :type => \'s\',
+  :maturity => \'t\',
+  :test_topic => \'e\',
+  :age => \'r\'
+  }
+  ,
+  {:ref => \'{\',
+  :type => \'1\',
+  :maturity => \'2\',
+  :test_topic => \'3\',
+  :age => \'}\'
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'heads\',
+  :type => \'master\',
+  :maturity => \'123\',
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'2\',
+  :type => \'3\',
+  :maturity => \'4\',
+  :test_topic => \'5\',
+  :age => \'6\'
+  }
+  ]
+  }
+  ,
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => []
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'u\',
+  :type => \'n\',
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'2\',
+  :type => \'1\',
+  :maturity => \' \',
+  :test_topic => \'J\',
+  :age => \'u\'
+  }
+  ,
+  {:ref => \' \',
+  :type => \'2\',
+  :maturity => \'0\',
+  :test_topic => \'1\',
+  :age => \'5\'
+  }
+  ,
+  {:ref => \'1\',
+  :type => \'3\',
+  :maturity => \':\',
+  :test_topic => \'5\',
+  :age => \'1\'
+  }
+  ,
+  {:ref => \'5\',
+  :type => \'0\',
+  :maturity => \' \',
+  :test_topic => \'-\',
+  :age => \'0\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => \'0\',
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+  :type => \'s\',
+  :maturity => \'t\',
+  :test_topic => \'e\',
+  :age => \'r\'
+  }
+  ,
+  {:ref => \'{\',
+  :type => \'1\',
+  :maturity => \'2\',
+  :test_topic => \'3\',
+  :age => \'}\'
+  }
+  ,
+  {:ref => \'heads\',
+  :type => \'master\',
+  :maturity => \'123\',
+  :test_topic => \',\',
+  :age => \'1\'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \'4\',
+  :maturity => \'5\',
+  :test_topic => \'6\',
+  :age => \'7\'
+  }
+  ,
+  {:ref => \'S\',
+  :type => \'u\',
+  :maturity => \'n\',
+  :test_topic => \',\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'1\',
+  :type => \' \',
+  :maturity => \'J\',
+  :test_topic => \'u\',
+  :age => \'n\'
+  }
+  ,
+  {:ref => \'2\',
+  :type => \'0\',
+  :maturity => \'1\',
+  :test_topic => \'5\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \':\',
+  :maturity => \'5\',
+  :test_topic => \'1\',
+  :age => \':\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => \' \',
+  :maturity => \'-\',
+  :test_topic => \'0\',
+  :age => \'7\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => nil,
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {\',\' => []
+  }
+  ,
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => [{:sha1_hex_short => \'1234567\'
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+  :type => \'s\',
+  :maturity => \'t\',
+  :test_topic => \'e\',
+  :age => \'r\'
+  }
+  ,
+  {:ref => \'{\',
+  :type => \'1\',
+  :maturity => \'2\',
+  :test_topic => \'3\',
+  :age => \'}\'
+  }
+  ,
+  {:ref => \'heads\',
+  :type => \'master\',
+  :maturity => \'123\',
+  :test_topic => \',\',
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {\',\' => [{
+  }
+  , {
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'S\',
+  :type => \'u\',
+  :maturity => \'n\',
+  :test_topic => \',\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'1\',
+  :type => \' \',
+  :maturity => \'J\',
+  :test_topic => \'u\',
+  :age => \'n\'
+  }
+  ,
+  {:ref => \'2\',
+  :type => \'0\',
+  :maturity => \'1\',
+  :test_topic => \'5\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \':\',
+  :maturity => \'5\',
+  :test_topic => \'1\',
+  :age => \':\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => \' \',
+  :maturity => \'-\',
+  :test_topic => \'0\',
+  :age => \'7\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => nil,
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?<weekday>\[MTWFS\]\[a\-z\]\{2\}\),\\\ \(\?<day_of_month>\[0\-9\]\{1,2\}\)\\\ \(\?<month>\[ADFJMNOS\]\[a\-z\]\+\)\\\ \(\?<year>\[0\-9\]\{2,4\}\)\\\ \(\?<hour>\[0\-9\]\[0\-9\]\):\(\?<minute>\[0\-9\]\[0\-9\]\):\(\?<second>\[0\-9\]\[0\-9\]\)\\\ \(\?<timezone>\[\-\+\]\[0\-1\]\[0\-9\]\[03\]0\)/ => [{:weekday => \'Sun\',
+  :day_of_month => \'21\',
+  :month => \'Jun\',
+  :year => \'2015\',
+  :hour => \'13\',
+  :minute => \'51\',
+  :second => \'50\',
+  :timezone => \'-0700\'
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+  :type => \'s\',
+  :maturity => \'t\',
+  :test_topic => \'e\',
+  :age => \'r\'
+  }
+  ,
+  {:ref => \'{\',
+  :type => \'1\',
+  :maturity => \'2\',
+  :test_topic => \'3\',
+  :age => \'}\'
+  }
+  ,
+  {:ref => \'heads\',
+  :type => \'master\',
+  :maturity => \'123\',
+  :test_topic => \',\',
+  :age => \'1\'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \'4\',
+  :maturity => \'5\',
+  :test_topic => \'6\',
+  :age => \'7\'
+  }
+  ]
+  }
+  ].
+  <[]> expected to be != to
+  <[]>.
+test_new_from_ref(BranchReferenceTest)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:391:in `assert_reflog_line\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:412:in `assert_output\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:557:in `test_new_from_ref\'
+     554:     #    assert_equal(123, new_from_ref[:age].value, Reflog_capture.inspect)
+     555:     # ?	assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, Reflog_reference.age, message)
+     556:     # ?	assert_match(Regexp::Start_string * \'123\' * Regexp::End_string, Reflog_reference.age, message)
+  => 557:     BranchReference.assert_output(Reflog_line)
+     558:     BranchReference.assert_output(Last_change_line)
+     559:     BranchReference.assert_output(First_change_line)
+     560: #    BranchReference.new_from_ref(No_ref_line).assert_pre_conditions
 ===============================================================================
 F
 ===============================================================================
 Failure:
-  $ git show 5c9d215e5f03042ada6a2f2f2f9fcf22a97d1544:/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb --pretty=medium  --no-abbrev-commit --no-patch
-  @errors="fatal: Path \'/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb\' exists on disk, but not in \'5c9d215e5f03042ada6a2f2f2f9fcf22a97d1544\'.\n"
-  @process_status = #<Process::Status: pid 9698 exit 128>
+  $ git show bb46373dfde303a7e58dd7c2e34ce2af4ed65eb5:/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb --pretty=medium  --no-abbrev-commit --no-patch
+  @errors="fatal: Path \'/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb\' exists on disk, but not in \'bb46373dfde303a7e58dd7c2e34ce2af4ed65eb5\'.\n"
+  @process_status = #<Process::Status: pid 1496 exit 128>
   .
   <false> is not true.
 test_reflog?(BranchReferenceTest)
@@ -910,47 +1209,32 @@ test_reflog?(BranchReferenceTest)
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:394:in `each\'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:394:in `test_reflog?\'
 ===============================================================================
-..F
-===============================================================================
-Failure: test_reflog_to_constructor_hash(BranchReferenceTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:440:in `test_reflog_to_constructor_hash\'
-     437: 		assert_equal([\'master\', \'master\'], capture.output[:maturity], capture.output.inspect)
-     438: 		assert_equal([\'123\', \'123\'], capture.output[:age], capture.output.inspect)
-     439:     assert_equal(\'heads\', capture.output[:ref], capture.output.inspect)
-  => 440:     assert_equal(\'1234567\', capture.output[:sha1_hex_short], capture.output.inspect)
-     441:     Reflog_lines.each do |reflog_line|
-     442:       capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
-     443: 			
-{:type=>[nil, nil], :maturity=>["master", "master"], :test_topic=>[nil, nil], :age=>["123", "123"], :ref=>"heads", :sha1_hex_7=>"1234567", :weekday=>"Sun", :day_of_month=>"21", :month=>"Jun", :year=>"2015", :hour=>"13", :minute=>"51", :second=>"50", :timezone=>"-0700"}
-<"1234567"> expected but was
-<nil>
-===============================================================================
-..."\t\n !\#$%&*+,0123456789;=@ABCDEFGHIJKLMNOPQRSTUVWXYZ]_abcdefghijklmnopqrstuvwxyz{}\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8A\x8B\x8C\x8D\x8E\x8F\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9A\x9B\x9C\x9D\x9E\x9F\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF"
+......"\t\n !\#$%&*+,0123456789;=@ABCDEFGHIJKLMNOPQRSTUVWXYZ]_abcdefghijklmnopqrstuvwxyz{}\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8A\x8B\x8C\x8D\x8E\x8F\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9A\x9B\x9C\x9D\x9E\x9F\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF"
 .....................
 
-Finished in 5.256558282 seconds.
+Finished in 6.241770005 seconds.
 ------
-36 tests, 174 assertions, 5 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
-83.3333% passed
+36 tests, 179 assertions, 5 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+86.1111% passed
 ------
-6.85 tests/s, 33.10 assertions/s
+5.77 tests/s, 28.68 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb"
-	User time (seconds): 5.28
-	System time (seconds): 0.81
-	Percent of CPU this job got: 80%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:07.58
+	User time (seconds): 6.12
+	System time (seconds): 0.77
+	Percent of CPU this job got: 81%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:08.49
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 60908
+	Maximum resident set size (kbytes): 60348
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 316239
-	Voluntary context switches: 5521
-	Involuntary context switches: 1473
+	Minor (reclaiming a frame) page faults: 309151
+	Voluntary context switches: 5784
+	Involuntary context switches: 1619
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 12960

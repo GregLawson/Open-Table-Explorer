@@ -1,9 +1,9 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 40, Rational(26267846293, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 2, 25, Rational(23096748831, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_maturity_test.rb',
 :output => '',
 :errors => {:rescue_exception => Timeout::Error.new()

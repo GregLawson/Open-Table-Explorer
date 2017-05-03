@@ -1,16 +1,16 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 8, 47, Rational(37845269600, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 2, 11, 57, Rational(29522041137, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_measurement_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_measurement_test
 Started
 E
 ===============================================================================
-Error: test_all(BatteryMeasurementTest): NoMethodError: undefined method `model_class?\' for #<BatteryMeasurementTest:0x00000002911728>
+Error: test_all(BatteryMeasurementTest): NoMethodError: undefined method `model_class?\' for #<BatteryMeasurementTest:0x007f86c331e3a8>
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_measurement_test.rb:14:in `test_all\'
      11:   end # initialize
      12: 
@@ -35,12 +35,12 @@ Error: test_dump(BatteryMeasurementTest):
 ===============================================================================
 .
 
-Finished in 0.038673143 seconds.
+Finished in 0.037922497 seconds.
 ------
 3 tests, 0 assertions, 0 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
 33.3333% passed
 ------
-77.57 tests/s, 0.00 assertions/s
+79.11 tests/s, 0.00 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_measurement_test.rb"
@@ -52,12 +52,12 @@ Finished in 0.038673143 seconds.
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 20564
+	Maximum resident set size (kbytes): 20412
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5268
-	Voluntary context switches: 3
-	Involuntary context switches: 64
+	Minor (reclaiming a frame) page faults: 5230
+	Voluntary context switches: 2
+	Involuntary context switches: 69
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

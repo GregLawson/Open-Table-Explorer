@@ -1,9 +1,9 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 3, 27, 13, 39, Rational(29370256266, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 5, 3, 2, 9, Rational(5434288987, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test
@@ -11,22 +11,22 @@ Started
 E
 ===============================================================================
 Error: test_Constants(NetworkTest): NoMethodError: undefined method `[]\' for nil:NilClass
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:582:in `block in to_hash\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:579:in `each_pair\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:579:in `to_hash\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:739:in `output\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:630:in `block in to_hash\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:627:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:627:in `to_hash\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:804:in `output\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `map\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `call\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `enumerate\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:148:in `enumerate_single\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:160:in `enumerate\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1214:in `block in parse\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1280:in `block in parse\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `map\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `call\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `enumerate\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:148:in `enumerate_single\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:160:in `enumerate\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1213:in `parse\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1279:in `parse\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/network.rb:51:in `block in ifconfig\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/network.rb:49:in `each\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/network.rb:49:in `ifconfig\'
@@ -61,8 +61,8 @@ diff:
 ?            S  ASCII
 ===============================================================================
 ...Net_file_tree_hash = {:lo=>"/sys/devices/virtual/net/lo", :eth0=>"/sys/devices/pci0000:00/0000:00:1c.2/0000:03:00.0/net/eth0", :wlan0=>"/sys/devices/pci0000:00/0000:00:1c.0/0000:01:00.0/net/wlan0"}
-Lo_hash = {:uevent=>"INTERFACE=lo\nIFINDEX=1", :subsystem=>"/class/net", :addr_assign_type=>"0", :addr_len=>"6", :dev_id=>"0x0", :ifalias=>"", :iflink=>"1", :ifindex=>"1", :type=>"772", :link_mode=>"0", :address=>"00:00:00:00:00:00", :broadcast=>"00:00:00:00:00:00", :carrier=>"1", :speed=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/speed>, :duplex=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/duplex>, :dormant=>"0", :operstate=>"unknown", :mtu=>"16436", :flags=>"0x9", :tx_queue_len=>"0", :netdev_group=>"0", :statistics=>{:rx_packets=>"667643", :tx_packets=>"667643", :rx_bytes=>"226314279", :tx_bytes=>"226314279", :rx_errors=>"0", :tx_errors=>"0", :rx_dropped=>"0", :tx_dropped=>"0", :multicast=>"0", :collisions=>"0", :rx_length_errors=>"0", :rx_over_errors=>"0", :rx_crc_errors=>"0", :rx_frame_errors=>"0", :rx_fifo_errors=>"0", :rx_missed_errors=>"0", :tx_aborted_errors=>"0", :tx_carrier_errors=>"0", :tx_fifo_errors=>"0", :tx_heartbeat_errors=>"0", :tx_window_errors=>"0", :rx_compressed=>"0", :tx_compressed=>"0"}, :power=>{:async=>"disabled", :runtime_status=>"unsupported", :runtime_usage=>"0", :runtime_active_kids=>"0", :runtime_enabled=>"disabled", :control=>"auto", :runtime_suspended_time=>"0", :runtime_active_time=>"0", :autosuspend_delay_ms=>#<Errno::EIO: Input/output error @ io_fread - /sys/class/net/lo/power/autosuspend_delay_ms>}, :queues=>{:"rx-0"=>{:rps_cpus=>"00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000", :rps_flow_cnt=>"0"}, :"tx-0"=>{:tx_timeout=>"0", :xps_cpus=>"00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000", :byte_queue_limits=>{:limit=>"0", :limit_max=>"1879048192", :limit_min=>"0", :hold_time=>"1000", :inflight=>"0"}}}}
-name_value_pairs = [[["eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  ", "mtu", "1500"]], [["        inet 192.168.1.126  netmask 255.255.255.0  broadcast 192.168.1.255\n"]], [["        inet6 fe80::fa0f:41ff:fed2:26c7  ", "prefixlen", "64", " scopeid 0x20<link>\n"]], [["        ether f8:0f:41:d2:26:c7  ", "txqueuelen", "1000", " (Ethernet)\n"]], [["        RX ", "packets", "2465066", " ", "bytes", "3355335765", "(3.1 GiB)\n"]], [["        RX ", "errors", "0", " ", "dropped", "0", " ", "overruns", "0", " ", "frame", "0"]], [["        TX ", "packets", "1486834", " ", "bytes", "136833031", "(130.4 MiB)\n"]], [["        TX ", "errors", "0", " ", "dropped", "0", "", "overruns", "0", " ", "carrier", "0", " ", "collisions", "0"]], [["        device ", "interrupt", "103", " base 0xa000  \n"]], [], [["lo: flags=73<UP,LOOPBACK,RUNNING>  ", "mtu", "16436"]], [["        inet 127.0.0.1  netmask 255.0.0.0\n"]], [["        inet6 ::1  ", "prefixlen", "128", " scopeid 0x10<host>\n"]], [["        loop  ", "txqueuelen", "0", " (Local Loopback)\n"]], [["        RX ", "packets", "667643", " ", "bytes", "226314279", "(215.8 MiB)\n"]], [["        RX ", "errors", "0", " ", "dropped", "0", " ", "overruns", "0", " ", "frame", "0"]], [["        TX ", "packets", "667643", " ", "bytes", "226314279", "(215.8 MiB)\n"]], [["        TX ", "errors", "0", " ", "dropped", "0", "", "overruns", "0", " ", "carrier", "0", " ", "collisions", "0"]], [], [["wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  ", "mtu", "1500"]], [["        inet 192.168.0.30  netmask 255.255.255.0  broadcast 192.168.0.255\n"]], [["        inet6 fe80::3210:b3ff:fe40:e5  ", "prefixlen", "64", " scopeid 0x20<link>\n"]], [["        ether 30:10:b3:40:00:e5  ", "txqueuelen", "1000", " (Ethernet)\n"]], [["        RX ", "packets", "3395185", " ", "bytes", "650614327", "(620.4 MiB)\n"]], [["        RX ", "errors", "0", " ", "dropped", "0", " ", "overruns", "0", " ", "frame", "0"]], [["        TX ", "packets", "136224", " ", "bytes", "17431734", "(16.6 MiB)\n"]], [["        TX ", "errors", "0", " ", "dropped", "0", "", "overruns", "0", " ", "carrier", "0", " ", "collisions", "0"]]]
+Lo_hash = {:uevent=>"INTERFACE=lo\nIFINDEX=1", :subsystem=>"/class/net", :addr_assign_type=>"0", :addr_len=>"6", :dev_id=>"0x0", :ifalias=>"", :iflink=>"1", :ifindex=>"1", :type=>"772", :link_mode=>"0", :address=>"00:00:00:00:00:00", :broadcast=>"00:00:00:00:00:00", :carrier=>"1", :speed=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/speed>, :duplex=>#<Errno::EINVAL: Invalid argument @ io_fread - /sys/class/net/lo/duplex>, :dormant=>"0", :operstate=>"unknown", :mtu=>"16436", :flags=>"0x9", :tx_queue_len=>"0", :netdev_group=>"0", :statistics=>{:rx_packets=>"1029820", :tx_packets=>"1029820", :rx_bytes=>"330345511", :tx_bytes=>"330345511", :rx_errors=>"0", :tx_errors=>"0", :rx_dropped=>"0", :tx_dropped=>"0", :multicast=>"0", :collisions=>"0", :rx_length_errors=>"0", :rx_over_errors=>"0", :rx_crc_errors=>"0", :rx_frame_errors=>"0", :rx_fifo_errors=>"0", :rx_missed_errors=>"0", :tx_aborted_errors=>"0", :tx_carrier_errors=>"0", :tx_fifo_errors=>"0", :tx_heartbeat_errors=>"0", :tx_window_errors=>"0", :rx_compressed=>"0", :tx_compressed=>"0"}, :power=>{:async=>"disabled", :runtime_status=>"unsupported", :runtime_usage=>"0", :runtime_active_kids=>"0", :runtime_enabled=>"disabled", :control=>"auto", :runtime_suspended_time=>"0", :runtime_active_time=>"0", :autosuspend_delay_ms=>#<Errno::EIO: Input/output error @ io_fread - /sys/class/net/lo/power/autosuspend_delay_ms>}, :queues=>{:"rx-0"=>{:rps_cpus=>"00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000", :rps_flow_cnt=>"0"}, :"tx-0"=>{:tx_timeout=>"0", :xps_cpus=>"00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000", :byte_queue_limits=>{:limit=>"0", :limit_max=>"1879048192", :limit_min=>"0", :hold_time=>"1000", :inflight=>"0"}}}}
+name_value_pairs = [[["eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  ", "mtu", "1500"]], [["        inet 192.168.1.126  netmask 255.255.255.0  broadcast 192.168.1.255\n"]], [["        inet6 fe80::fa0f:41ff:fed2:26c7  ", "prefixlen", "64", " scopeid 0x20<link>\n"]], [["        ether f8:0f:41:d2:26:c7  ", "txqueuelen", "1000", " (Ethernet)\n"]], [["        RX ", "packets", "3279512", " ", "bytes", "3549901539", "(3.3 GiB)\n"]], [["        RX ", "errors", "0", " ", "dropped", "0", " ", "overruns", "0", " ", "frame", "0"]], [["        TX ", "packets", "2505673", " ", "bytes", "371022249", "(353.8 MiB)\n"]], [["        TX ", "errors", "0", " ", "dropped", "0", "", "overruns", "0", " ", "carrier", "0", " ", "collisions", "0"]], [["        device ", "interrupt", "104", " base 0xc000  \n"]], [], [["lo: flags=73<UP,LOOPBACK,RUNNING>  ", "mtu", "16436"]], [["        inet 127.0.0.1  netmask 255.0.0.0\n"]], [["        inet6 ::1  ", "prefixlen", "128", " scopeid 0x10<host>\n"]], [["        loop  ", "txqueuelen", "0", " (Local Loopback)\n"]], [["        RX ", "packets", "1029820", " ", "bytes", "330345511", "(315.0 MiB)\n"]], [["        RX ", "errors", "0", " ", "dropped", "0", " ", "overruns", "0", " ", "frame", "0"]], [["        TX ", "packets", "1029820", " ", "bytes", "330345511", "(315.0 MiB)\n"]], [["        TX ", "errors", "0", " ", "dropped", "0", "", "overruns", "0", " ", "carrier", "0", " ", "collisions", "0"]], [], [["wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  ", "mtu", "1500"]], [["        inet 192.168.0.11  netmask 255.255.255.0  broadcast 192.168.0.255\n"]], [["        inet6 fe80::3210:b3ff:fe40:e5  ", "prefixlen", "64", " scopeid 0x20<link>\n"]], [["        ether 30:10:b3:40:00:e5  ", "txqueuelen", "1000", " (Ethernet)\n"]], [["        RX ", "packets", "4599306", " ", "bytes", "931491125", "(888.3 MiB)\n"]], [["        RX ", "errors", "0", " ", "dropped", "0", " ", "overruns", "0", " ", "frame", "0"]], [["        TX ", "packets", "341397", " ", "bytes", "44974040", "(42.8 MiB)\n"]], [["        TX ", "errors", "0", " ", "dropped", "0", "", "overruns", "0", " ", "carrier", "0", " ", "collisions", "0"]]]
 F
 ===============================================================================
 Failure:
@@ -100,22 +100,22 @@ test_ifconfig(NetworkTest)
 ..E
 ===============================================================================
 Error: test_whereAmI(NetworkTest): NoMethodError: undefined method `[]\' for nil:NilClass
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:582:in `block in to_hash\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:579:in `each_pair\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:579:in `to_hash\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:739:in `output\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:630:in `block in to_hash\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:627:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:627:in `to_hash\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:804:in `output\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `map\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `call\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `enumerate\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:148:in `enumerate_single\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:160:in `enumerate\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1214:in `block in parse\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1280:in `block in parse\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `map\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `call\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `enumerate\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:148:in `enumerate_single\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:160:in `enumerate\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1213:in `parse\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1279:in `parse\'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb:252:in `test_whereAmI\'
      249: 
      250:   def test_whereAmI
@@ -127,31 +127,31 @@ Error: test_whereAmI(NetworkTest): NoMethodError: undefined method `[]\' for nil
 ===============================================================================
 
 
-Finished in 0.176163019 seconds.
+Finished in 0.176012448 seconds.
 ------
 9 tests, 35 assertions, 2 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
 55.5556% passed
 ------
-51.09 tests/s, 198.68 assertions/s
+51.13 tests/s, 198.85 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb"
-	User time (seconds): 1.28
-	System time (seconds): 0.12
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.41
+	User time (seconds): 1.26
+	System time (seconds): 0.14
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.42
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 33444
+	Maximum resident set size (kbytes): 33472
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 9486
-	Voluntary context switches: 29
-	Involuntary context switches: 148
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 9492
+	Voluntary context switches: 26
+	Involuntary context switches: 159
 	Swaps: 0
-	File system inputs: 0
+	File system inputs: 160
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

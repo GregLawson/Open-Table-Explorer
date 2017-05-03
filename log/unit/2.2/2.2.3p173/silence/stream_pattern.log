@@ -1,22 +1,22 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 39, Rational(22775932193, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 2, 24, Rational(22780764741, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_pattern_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
 ......EEEEEE..
 
-Finished in 0.007096s, 1972.8147 runs/s, 0.0000 assertions/s.
+Finished in 0.006361s, 2200.9928 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_general_associations:
-NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x00000001e66b98>
+NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x007f7073e428a8>
 Did you mean?  define_singleton_method
     /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_pattern_test.rb:13:in `setup\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run\'
@@ -44,7 +44,7 @@ Did you mean?  define_singleton_method
 
   2) Error:
 NewTestClass#test_id_equal:
-NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x00000001e65f68>
+NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x007f7073e42448>
 Did you mean?  define_singleton_method
     /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_pattern_test.rb:13:in `setup\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run\'
@@ -72,7 +72,7 @@ Did you mean?  define_singleton_method
 
   3) Error:
 NewTestClass#test_all:
-NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x00000001e657c0>
+NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x007f7073e42150>
 Did you mean?  define_singleton_method
     /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_pattern_test.rb:13:in `setup\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run\'
@@ -100,7 +100,7 @@ Did you mean?  define_singleton_method
 
   4) Error:
 NewTestClass#test_class_name:
-NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x00000001e65180>
+NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x007f7073e41db8>
 Did you mean?  define_singleton_method
     /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_pattern_test.rb:13:in `setup\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run\'
@@ -128,7 +128,7 @@ Did you mean?  define_singleton_method
 
   5) Error:
 NewTestClass#test_specific__stable_and_working:
-NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x00000001e64cd0>
+NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x007f7073e41a98>
 Did you mean?  define_singleton_method
     /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_pattern_test.rb:13:in `setup\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run\'
@@ -156,7 +156,7 @@ Did you mean?  define_singleton_method
 
   6) Error:
 NewTestClass#test_aaa_test_new_assertions_:
-NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x00000001e64820>
+NameError: undefined local variable or method `define_model_of_test\' for #<NewTestClass:0x007f7073e417c8>
 Did you mean?  define_singleton_method
     /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_pattern_test.rb:13:in `setup\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:105:in `block (3 levels) in run\'
@@ -185,20 +185,20 @@ Did you mean?  define_singleton_method
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_pattern_test.rb"
-	User time (seconds): 1.09
-	System time (seconds): 0.05
+	User time (seconds): 1.00
+	System time (seconds): 0.04
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.15
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.04
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23736
+	Maximum resident set size (kbytes): 23768
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 6056
-	Voluntary context switches: 23
-	Involuntary context switches: 112
+	Minor (reclaiming a frame) page faults: 6064
+	Voluntary context switches: 21
+	Involuntary context switches: 108
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

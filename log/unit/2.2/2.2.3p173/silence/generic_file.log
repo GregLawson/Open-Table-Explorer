@@ -1,38 +1,198 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 11, Rational(26388098260, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 1, 59, Rational(23610171884, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_file_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+....EEEEEE......
+
+Finished in 0.006722s, 2380.4140 runs/s, 0.0000 assertions/s.
+
+  1) Error:
+GenericJsonsTest#test_coarse_filter:
+NameError: uninitialized constant GenericJsonsTest::OpenTaxFormFiller
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_file_test.rb:29:in `test_coarse_filter\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  2) Error:
+GenericJsonsTest#test_raw_acquisitions:
+NameError: uninitialized constant GenericJsonsTest::OpenTaxFormFiller
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_file_test.rb:17:in `test_raw_acquisitions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  3) Error:
+GenericJsonsTest#test_fine_rejections:
+NameError: uninitialized constant GenericJsonsTest::OpenTaxFormFiller
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_file_test.rb:66:in `test_fine_rejections\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  4) Error:
+GenericJsonsTest#test_all_initialize:
+NameError: uninitialized constant GenericJsonsTest::OpenTaxFormFiller
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_file_test.rb:47:in `test_all_initialize\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  5) Error:
+GenericJsonsTest#test_coarse_rejections:
+NameError: uninitialized constant GenericJsonsTest::OpenTaxFormFiller
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_file_test.rb:39:in `test_coarse_rejections\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  6) Error:
+GenericJsonsTest#test_assert_json_string:
+NameError: uninitialized constant GenericJsonsTest::OpenTaxFormFiller
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_file_test.rb:71:in `test_assert_json_string\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+16 runs, 0 assertions, 0 failures, 6 errors, 0 skips
 ',
-:errors => {:syserr => '/usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert\': undefined method `assertions\' for RegexpParseType::Examples:Module (NoMethodError)
-Did you mean?  assert
-	from /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:174:in `assert_equal\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb:139:in `<module:Examples>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb:138:in `<module:RegexpParseType>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_parse_assertions.rb:14:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_file.rb:9:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_file.rb:9:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_file_test.rb:11:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_file_test.rb:11:in `<main>\'
-Command exited with non-zero status 1
+:errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_file_test.rb"
-	User time (seconds): 0.97
-	System time (seconds): 0.11
+	User time (seconds): 0.89
+	System time (seconds): 0.03
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.09
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.93
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 27552
+	Maximum resident set size (kbytes): 23476
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 7013
-	Voluntary context switches: 3
-	Involuntary context switches: 106
+	Minor (reclaiming a frame) page faults: 5994
+	Voluntary context switches: 22
+	Involuntary context switches: 94
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

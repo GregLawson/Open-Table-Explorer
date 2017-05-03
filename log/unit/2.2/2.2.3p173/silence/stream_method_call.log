@@ -1,11 +1,11 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 39, Rational(14936773067, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 2, 24, Rational(15514651635, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_method_call_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_method_call_test
 Started
 E
@@ -24,7 +24,7 @@ Error: test_fire(StreamMethodCallTest):
 ===============================================================================
 E
 ===============================================================================
-Error: test_id_equal(StreamMethodCallTest): NoMethodError: undefined method `model_class?\' for #<StreamMethodCallTest:0x0000000171d580>
+Error: test_id_equal(StreamMethodCallTest): NoMethodError: undefined method `model_class?\' for #<StreamMethodCallTest:0x007f7cf18c1160>
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_method_call_test.rb:37:in `test_id_equal\'
      34:   end # fire
      35: 
@@ -64,29 +64,29 @@ Error: test_stream_links(StreamMethodCallTest):
 ===============================================================================
 
 
-Finished in 0.073292283 seconds.
+Finished in 0.072653199 seconds.
 ------
 5 tests, 0 assertions, 0 failures, 4 errors, 0 pendings, 0 omissions, 0 notifications
 20% passed
 ------
-68.22 tests/s, 0.00 assertions/s
+68.82 tests/s, 0.00 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_method_call_test.rb"
-	User time (seconds): 0.62
-	System time (seconds): 0.04
-	Percent of CPU this job got: 99%
+	User time (seconds): 0.63
+	System time (seconds): 0.02
+	Percent of CPU this job got: 98%
 	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.67
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 20696
+	Maximum resident set size (kbytes): 20536
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5299
-	Voluntary context switches: 3
-	Involuntary context switches: 71
+	Minor (reclaiming a frame) page faults: 5258
+	Voluntary context switches: 2
+	Involuntary context switches: 82
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

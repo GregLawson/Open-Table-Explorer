@@ -1,39 +1,39 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 4, 11, 21, 27, Rational(39328058179, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 5, 3, 2, 24, Rational(29838877611, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test
 Started
 .........................................................
 
-Finished in 0.058440906 seconds.
+Finished in 0.207181404 seconds.
 ------
 57 tests, 243 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-975.34 tests/s, 4158.05 assertions/s
+275.12 tests/s, 1172.89 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/tax_form_test.rb"
-	User time (seconds): 2.09
-	System time (seconds): 0.15
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.26
+	User time (seconds): 2.00
+	System time (seconds): 0.22
+	Percent of CPU this job got: 91%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.42
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 45452
+	Maximum resident set size (kbytes): 45568
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 13117
-	Voluntary context switches: 32
-	Involuntary context switches: 264
+	Major (requiring I/O) page faults: 6
+	Minor (reclaiming a frame) page faults: 13146
+	Voluntary context switches: 46
+	Involuntary context switches: 265
 	Swaps: 0
-	File system inputs: 0
+	File system inputs: 496
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

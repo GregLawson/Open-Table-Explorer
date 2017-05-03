@@ -1,11 +1,11 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 11, Rational(39118746952, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 1, 59, Rational(35825389971, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test
 Started
 E
@@ -74,7 +74,7 @@ Error: test_all(GenericTypeRepoTest): Dry::Types::StructError: [GenericType.new]
 ===============================================================================
 E
 ===============================================================================
-Error: test_assert_no_generalize_cycle(GenericTypeRepoTest): TypeError: #<GenericTypeRepo:0x00000002c7c7a0 @container=#<ROM::Container gateways={:default=>#<ROM::SQL::Gateway:0x00000003680e68 @connection=#<Sequel::SQLite::Database: "sqlite:db/generic_type.sqlite3">, @migrator=#<ROM::SQL::Migration::Migrator:0x00000002c8fe18 @path="db/migrate", @options={:path=>"db/migrate"}, @connection=#<Sequel::SQLite::Database: "sqlite:db/generic_type.sqlite3">>, @options={:migrator=>#<ROM::SQL::Migration::Migrator:0x00000002c8fe18 @path="db/migrate", @options={:path=>"db/migrate"}, @connection=#<Sequel::SQLite::Database: "sqlite:db/generic_type.sqlite3">>}, @schema=[:generic_types]>} relations=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>}> mappers=#<ROM::Registry elements={}> commands=#<ROM::Registry elements={}>>, @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @generic_types=#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 ...>}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 ...>}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>, @relations=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>, @root=#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 ...>}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 ...>}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>, @__commands__=#<Concurrent::Map:0x000000038b11d8 entries=1 default_proc=nil>> is not a class/module
+Error: test_assert_no_generalize_cycle(GenericTypeRepoTest): TypeError: #<GenericTypeRepo:0x007f93632a0960 @container=#<ROM::Container gateways={:default=>#<ROM::SQL::Gateway:0x007f93627e13d0 @connection=#<Sequel::SQLite::Database: "sqlite:db/generic_type.sqlite3">, @migrator=#<ROM::SQL::Migration::Migrator:0x007f93632776a0 @path="db/migrate", @options={:path=>"db/migrate"}, @connection=#<Sequel::SQLite::Database: "sqlite:db/generic_type.sqlite3">>, @options={:migrator=>#<ROM::SQL::Migration::Migrator:0x007f93632776a0 @path="db/migrate", @options={:path=>"db/migrate"}, @connection=#<Sequel::SQLite::Database: "sqlite:db/generic_type.sqlite3">>}, @schema=[:generic_types]>} relations=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>}> mappers=#<ROM::Registry elements={}> commands=#<ROM::Registry elements={}>>, @mappers=#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, @generic_types=#<ROM::Repository::RelationProxy:0x007f93632a07f8 @mappers=#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x007f93632a07f8 ...>}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, :registry=>#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x007f93632a07f8 ...>}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>, @relations=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x007f93632a07f8 @mappers=#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>, @root=#<ROM::Repository::RelationProxy:0x007f93632a07f8 @mappers=#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x007f93632a07f8 ...>}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, :registry=>#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x007f93632a07f8 ...>}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>, @__commands__=#<Concurrent::Map:0x007f93634e3308 entries=1 default_proc=nil>> is not a class/module
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:763:in `test_assert_no_generalize_cycle\'
      760:   end # assert_post_conditions
      761: 
@@ -87,7 +87,7 @@ Error: test_assert_no_generalize_cycle(GenericTypeRepoTest): TypeError: #<Generi
 .E
 ===============================================================================
 Error: test_by_id(GenericTypeRepoTest):
-  NoMethodError: undefined method `all\' for #<Hash:0x00000003b3c560>
+  NoMethodError: undefined method `all\' for #<Hash:0x007f93637836a8>
   Did you mean?  all?
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:721:in `test_by_id\'
      718: 
@@ -101,27 +101,27 @@ Error: test_by_id(GenericTypeRepoTest):
 F
 ===============================================================================
 Failure:
-  #<ROM::Repository::RelationProxy:0x00000003c16f58 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={:model=>GenericType}, @registry=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>, :meta=>{:model=>GenericType}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` WHERE (`name` = \'lower\') ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types)>.
-  <#<ROM::Repository::RelationProxy:0x00000003c16f58
+  #<ROM::Repository::RelationProxy:0x007f9363845460 @mappers=#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, @meta={:model=>GenericType}, @registry=#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x007f93632a07f8 @mappers=#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, :registry=>#<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x007f93632a07f8 @mappers=#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>, :meta=>{:model=>GenericType}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` WHERE (`name` = \'lower\') ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types)>.
+  <#<ROM::Repository::RelationProxy:0x007f9363845460
    @mappers=
-    #<ROM::Repository::MapperBuilder:0x00000002c7c778
+    #<ROM::Repository::MapperBuilder:0x007f93632a0938
      @header_builder=
-      #<ROM::Repository::HeaderBuilder:0x00000002c7c750
-       @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>,
+      #<ROM::Repository::HeaderBuilder:0x007f93632a0910
+       @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>,
    @meta={:model=>GenericType},
    @name=ROM::Relation::Name(generic_types),
    @options=
     {:name=>:generic_types,
      :mappers=>
-      #<ROM::Repository::MapperBuilder:0x00000002c7c778
+      #<ROM::Repository::MapperBuilder:0x007f93632a0938
        @header_builder=
-        #<ROM::Repository::HeaderBuilder:0x00000002c7c750
-         @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>,
+        #<ROM::Repository::HeaderBuilder:0x007f93632a0910
+         @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>,
      :registry=>
-      #<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>,
+      #<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x007f93632a07f8 @mappers=#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>,
      :meta=>{:model=>GenericType}},
    @registry=
-    #<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x00000002c7c638 @mappers=#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x00000002c7c778 @header_builder=#<ROM::Repository::HeaderBuilder:0x00000002c7c750 @struct_builder=#<ROM::Repository::StructBuilder:0x00000002c7c728>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>,
+    #<ROM::RelationRegistry elements={:generic_types=>#<ROM::Repository::RelationProxy:0x007f93632a07f8 @mappers=#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, @meta={}, @registry=#<ROM::RelationRegistry elements={...}>, @options={:name=>:generic_types, :mappers=>#<ROM::Repository::MapperBuilder:0x007f93632a0938 @header_builder=#<ROM::Repository::HeaderBuilder:0x007f93632a0910 @struct_builder=#<ROM::Repository::StructBuilder:0x007f93632a08e8>>>, :registry=>#<ROM::RelationRegistry elements={...}>, :meta=>{}}, @relation=#<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` ORDER BY `generic_types`.`id`">>, @name=ROM::Relation::Name(generic_types), @wrap_attributes=[], @nodes_ast=[], @wraps_ast=[], @to_ast=[:relation, [:generic_types, {:dataset=>:generic_types}, [:header, [[:attribute, :id], [:attribute, :name], [:attribute, :data_regexp], [:attribute, :generalize], [:attribute, :rails_type], [:attribute, :ruby_conversion]]]]]>}>,
    @relation=
     #<ROM::Relation[GenericTypes] dataset=#<Sequel::SQLite::Dataset: "SELECT `id`, `name`, `data_regexp`, `generalize`, `rails_type`, `ruby_conversion` FROM `generic_types` WHERE (`name` = \'lower\') ORDER BY `generic_types`.`id`">>>> expected to be instance_of?
   <GenericType> but was
@@ -266,26 +266,26 @@ Failure:
    :singleton_class?,
    :method_defined?,
    :private_method_defined?,
-   :cattr_accessor,
+   :protected_method_defined?,
    :private_class_method,
-   :cattr_writer,
-   :public_method_defined?,
    :cattr_reader,
-   :mattr_reader,
+   :public_method_defined?,
+   :delegate,
+   :cattr_writer,
    :public_class_method,
-   :psych_yaml_as,
    :mattr_accessor,
    :mattr_writer,
-   :yaml_as,
+   :psych_yaml_as,
+   :cattr_accessor,
+   :mattr_reader,
    :<,
    :>,
-   :protected_method_defined?,
-   :delegate,
    :default_message,
+   :yaml_as,
    :deprecate,
+   :ruby_lines_storage,
    :remove_possible_method,
    :redefine_method,
-   :ruby_lines_storage,
    :parent_name,
    :local_constants,
    :anonymous?,
@@ -297,14 +297,14 @@ Failure:
    :>=,
    :==,
    :===,
-   :alias_method_chain,
    :attr_internal_accessor,
+   :alias_method_chain,
    :attr_internal,
    :pretty_print,
    :alias_attribute,
    :qualified_const_defined?,
-   :qualified_const_get,
    :prepend,
+   :qualified_const_get,
    :qualified_const_set,
    :instance_methods_from_class,
    :instance_respond_to?,
@@ -317,9 +317,9 @@ Failure:
    :to_s,
    :autoload,
    :autoload?,
-   :pretty_print_cycle,
-   :parent,
    :parents,
+   :parent,
+   :pretty_print_cycle,
    :instance_method,
    :public_instance_method,
    :include,
@@ -371,51 +371,51 @@ Failure:
    :enumerate_single,
    :pretty_print_instance_variables,
    :pretty_print_inspect,
+   :refute_equal,
    :assert_raise,
+   :assert_match,
    :flunk,
    :assert_raises,
-   :assert_equal,
    :assert_raise_kind_of,
-   :assert_kind_of,
    :assert_not_instance_of,
    :refute_instance_of,
    :assert_nil,
    :assert_not_kind_of,
-   :assert_includes,
    :refute_kind_of,
    :assert_not_respond_to,
    :refute_respond_to,
    :assert_same,
-   :assert,
+   :assert_equal,
    :assert_operator,
+   :assert_kind_of,
    :assert_not_operator,
    :refute_operator,
    :assert_nothing_raised,
+   :assert_includes,
    :add_assertion,
    :assert_not_same,
    :refute_same,
    :assert_not_equal,
    :assert_not_nil,
+   :assert,
    :assert_not_match,
    :refute_match,
    :assert_no_match,
    :assert_throw,
    :assert_throws,
    :assert_nothing_thrown,
-   :assert_instance_of,
    :assert_in_delta,
-   :refute_nil,
    :assert_not_in_delta,
    :refute_in_delta,
-   :refute_includes,
+   :assert_instance_of,
+   :refute_nil,
    :assert_in_epsilon,
    :assert_not_in_epsilon,
    :refute_in_epsilon,
+   :refute_includes,
    :assert_send,
-   :refute_empty,
    :assert_not_send,
    :assert_boolean,
-   :refute,
    :assert_true,
    :assert_false,
    :assert_compare,
@@ -424,21 +424,21 @@ Failure:
    :assert_const_defined,
    :assert_not_const_defined,
    :assert_predicate,
+   :refute_empty,
    :assert_not_predicate,
+   :refute,
    :refute_predicate,
    :assert_alias_method,
-   :assert_include,
    :assert_path_exist,
    :assert_path_not_exist,
    :assert_not_include,
    :assert_not_includes,
    :assert_not_empty,
-   :assert_empty,
    :build_message,
+   :assert_include,
    :assert_block,
+   :assert_empty,
    :assert_respond_to,
-   :refute_equal,
-   :assert_match,
    :instance_of?,
    :public_send,
    :instance_variable_get,
@@ -452,15 +452,15 @@ Failure:
    :method,
    :public_method,
    :singleton_method,
-   :silence,
    :is_a?,
-   :add_default_message,
+   :trace_value,
    :extend,
+   :trace_to_s,
+   :add_default_message,
+   :silence,
    :trace_names?,
    :newline_if_not_empty,
-   :trace_value,
    :define_singleton_method,
-   :trace_to_s,
    :to_enum,
    :enum_for,
    :pretty_inspect,
@@ -472,13 +472,13 @@ Failure:
    :silence_warnings,
    :display,
    :object_id,
-   :suppress,
-   :send,
-   :silence_stderr,
-   :silence_stream,
-   :with_warnings,
    :enable_warnings,
+   :send,
    :capture,
+   :silence_stderr,
+   :with_warnings,
+   :silence_stream,
+   :suppress,
    :quietly,
    :nil?,
    :hash,
@@ -627,7 +627,7 @@ Error: test_expansion_termination(GenericTypeTest):
 ===============================================================================
 ...E
 ===============================================================================
-Error: test_id_equal(GenericTypeTest): NoMethodError: undefined method `model_class?\' for #<GenericTypeTest:0x00000003804b40>
+Error: test_id_equal(GenericTypeTest): NoMethodError: undefined method `model_class?\' for #<GenericTypeTest:0x007f936341bce0>
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:507:in `test_id_equal\'
      504:   end # assert_specialized_examples
      505: 
@@ -712,7 +712,7 @@ Error: test_most_specialized(GenericTypeTest): RuntimeError: can\'t modify froze
 ===============================================================================
 .E
 ===============================================================================
-Error: test_possibilities(GenericTypeTest): NoMethodError: undefined method `map_recursive\' for #<Array:0x00000003a3c188>
+Error: test_possibilities(GenericTypeTest): NoMethodError: undefined method `map_recursive\' for #<Array:0x007f93632ba1a8>
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb:422:in `test_possibilities\'
      419:     assert_equal([:lower, :xdigit], Ascii.possibilities?(fork).map { |s| s.name.to_sym })
      420:     ambiguity = [Alnum, [Alpha, [Lower], Xdigit]]
@@ -769,31 +769,31 @@ Error: test_specializations_that_match(GenericTypeTest):
 ===============================================================================
 ..
 
-Finished in 0.705996724 seconds.
+Finished in 0.734125668 seconds.
 ------
 47 tests, 529 assertions, 6 failures, 17 errors, 0 pendings, 0 omissions, 0 notifications
 51.0638% passed
 ------
-66.57 tests/s, 749.30 assertions/s
+64.02 tests/s, 720.59 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_type_test.rb"
-	User time (seconds): 2.31
-	System time (seconds): 0.21
-	Percent of CPU this job got: 97%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.58
+	User time (seconds): 2.33
+	System time (seconds): 0.19
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.54
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 51708
+	Maximum resident set size (kbytes): 51812
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 2
-	Minor (reclaiming a frame) page faults: 13082
-	Voluntary context switches: 6
-	Involuntary context switches: 250
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 13113
+	Voluntary context switches: 3
+	Involuntary context switches: 283
 	Swaps: 0
-	File system inputs: 440
+	File system inputs: 8
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

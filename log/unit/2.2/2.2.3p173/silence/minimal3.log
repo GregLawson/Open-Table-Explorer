@@ -1,32 +1,32 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 21, Rational(31686739129, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 2, 8, Rational(49474422453, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
 :errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb:12:in `<class:Minimal3Test>\': uninitialized constant Minimal3Test::RailsishRubyUnit (NameError)
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb:10:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal3_test.rb"
-	User time (seconds): 1.30
+	User time (seconds): 1.26
 	System time (seconds): 0.11
-	Percent of CPU this job got: 97%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.44
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.38
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 33356
+	Maximum resident set size (kbytes): 33496
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8464
-	Voluntary context switches: 4
-	Involuntary context switches: 153
+	Minor (reclaiming a frame) page faults: 8497
+	Voluntary context switches: 3
+	Involuntary context switches: 139
 	Swaps: 0
-	File system inputs: 8
+	File system inputs: 0
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

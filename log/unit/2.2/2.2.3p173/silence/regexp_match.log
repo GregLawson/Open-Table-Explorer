@@ -1,11 +1,11 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 37, Rational(14386581450, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 2, 18, Rational(51866536786, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_match_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
 :errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_match.rb:51:in `initialize\': uninitialized constant RegexpMatch::RegexpTree (NameError)
 Did you mean?  Regexp
@@ -19,20 +19,20 @@ Did you mean?  Regexp
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_match_test.rb:9:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_match_test.rb"
-	User time (seconds): 0.59
+	User time (seconds): 0.54
 	System time (seconds): 0.06
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.66
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.60
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 20292
+	Maximum resident set size (kbytes): 20180
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5198
+	Minor (reclaiming a frame) page faults: 5169
 	Voluntary context switches: 3
-	Involuntary context switches: 71
+	Involuntary context switches: 58
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

@@ -1,9 +1,9 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 4, 7, 8, 18, Rational(50970030741, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 5, 2, 11, 57, Rational(40998216730, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test
@@ -28,7 +28,7 @@ diff:
 ===============================================================================
 ....E
 ===============================================================================
-Error: test_remove_matches(BootTest): NoMethodError: undefined method `delimiters\' for #<Array:0x007f5e8a60d598>
+Error: test_remove_matches(BootTest): NoMethodError: undefined method `delimiters\' for #<Array:0x007f47a63958b0>
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:64:in `block (2 levels) in remove_matches\'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:61:in `map\'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:61:in `block in remove_matches\'
@@ -46,8 +46,8 @@ Error: test_remove_matches(BootTest): NoMethodError: undefined method `delimiter
 F
 ===============================================================================
 Failure: test_reverse_remove_matches(BootTest)
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:219:in `assert_match_kind\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:716:in `assert_refinement\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:234:in `assert_match_kind\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:760:in `assert_refinement\'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:81:in `test_reverse_remove_matches\'
      78:  def test_reverse_remove_matches
      79:     match = MatchCapture.new(string: Grubs_run.output, regexp: Boot::Examples::Regexps::Full_regexp_array)
@@ -93,32 +93,32 @@ diff:
 ===============================================================================
 .
 
-Finished in 4.765330813 seconds.
+Finished in 4.894594136 seconds.
 ------
 8 tests, 12 assertions, 2 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
 62.5% passed
 ------
-1.68 tests/s, 2.52 assertions/s
+1.63 tests/s, 2.45 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb"
-	User time (seconds): 6.42
-	System time (seconds): 0.16
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:06.64
+	User time (seconds): 6.56
+	System time (seconds): 0.17
+	Percent of CPU this job got: 92%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:07.25
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 41712
+	Maximum resident set size (kbytes): 41704
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 13332
-	Voluntary context switches: 86
-	Involuntary context switches: 611
+	Minor (reclaiming a frame) page faults: 13338
+	Voluntary context switches: 84
+	Involuntary context switches: 643
 	Swaps: 0
-	File system inputs: 0
-	File system outputs: 0
+	File system inputs: 400
+	File system outputs: 8
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0

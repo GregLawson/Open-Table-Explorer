@@ -1,28 +1,28 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 38, Rational(6349700333, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 3, 2, 19, Rational(38416531129, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
 :errors => {:syserr => 'ruby: No such file or directory -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_test.rb (LoadError)
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_test.rb"
 	User time (seconds): 0.09
 	System time (seconds): 0.00
-	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.10
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.09
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 6752
+	Maximum resident set size (kbytes): 6860
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 1777
-	Voluntary context switches: 3
+	Minor (reclaiming a frame) page faults: 1803
+	Voluntary context switches: 2
 	Involuntary context switches: 11
 	Swaps: 0
 	File system inputs: 0

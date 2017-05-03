@@ -1,9 +1,9 @@
 {:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
 ,
-   name: :passed,
+   name: :command_fail,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 4, 1, 4, 21, Rational(15301731515, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 5, 3, 2, 31, Rational(28433481112, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -12,7 +12,7 @@ Run options: --seed 0
 
 ..E...........EEE....E..................F........E...
 
-Finished in 0.038811s, 1365.5959 runs/s, 6106.5325 assertions/s.
+Finished in 0.038719s, 1368.8298 runs/s, 6120.9934 assertions/s.
 
   1) Error:
 RailsUnitTest#test_RailsUnit_initialize:
@@ -48,7 +48,7 @@ NoMethodError: Expected "code_base" to respond to #to_hash
 
   2) Error:
 RailsishRubyUnitTest#test_Examples:
-NoMethodError: undefined method `assertions\' for #<RailsishRubyUnit:0x007fb74c73fb58>
+NoMethodError: undefined method `assertions\' for #<RailsishRubyUnit:0x007f9a6a3874d8>
 Did you mean?  assert
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert\'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:340:in `assert_respond_to\'
@@ -176,7 +176,7 @@ Expected nil (NilClass) to respond to #empty?.
 
   7) Error:
 ExampleTest#test_fully_qualified_name:
-NoMethodError: undefined method `fully_qualified_name\' for #<Example:0x007fb74c77ba68>
+NoMethodError: undefined method `fully_qualified_name\' for #<Example:0x007f9a6a3a3e08>
 Did you mean?  fully_qualified_name_string
     /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:424:in `test_fully_qualified_name\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
@@ -205,20 +205,20 @@ Did you mean?  fully_qualified_name_string
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb"
-	User time (seconds): 0.92
+	User time (seconds): 0.94
 	System time (seconds): 0.06
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.99
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.00
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23816
+	Maximum resident set size (kbytes): 23812
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 6078
-	Voluntary context switches: 21
-	Involuntary context switches: 101
+	Minor (reclaiming a frame) page faults: 6076
+	Voluntary context switches: 22
+	Involuntary context switches: 94
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
