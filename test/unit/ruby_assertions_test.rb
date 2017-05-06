@@ -8,10 +8,12 @@
 require_relative 'test_environment'
 require_relative '../assertions/ruby_assertions.rb'
 class RubyAssertionsTest < TestCase
+	include RubyAssertions
+	
   def test_caller_lines
-    ignore_lines = 19
+    ignore_lines = 26
     assert_includes(methods, :caller_lines)
-    assert_equal("\ntest/unit/ruby_assertions_test.rb:13:in `test_caller_lines'\n", caller_lines(ignore_lines), caller_lines(ignore_lines))
+    assert_equal("\ntest/unit/ruby_assertions_test.rb:16:in `test_caller_lines'\n", caller_lines(ignore_lines), caller_lines(ignore_lines))
   end # caller_lines
 
   def test_add_default_message
@@ -47,16 +49,6 @@ class RubyAssertionsTest < TestCase
     def self.test_class_method
     end # test_class_method
   end # TestClass
-  def test_requires
-    assert_included_modules(:Fish, MiniTest::Assertions)
-    assert_included_modules(:RubyAssertions, MiniTest::Assertions)
-    assert(MiniTest::Assertions.included_modules.empty?, MiniTest::Assertions.included_modules)
-    assert(MiniTest::Unit.included_modules.include?(:RubyAssertions), MiniTest::Unit.included_modules.inspect)
-    assert_included_modules(MiniTest::Assertions, :RubyAssertions)
-    assert(MiniTest::Assertions.instance_methods.include?(:assert), MiniTest::Assertions.instance_methods.inspect)
-    assert(AssertionsModule.instance_methods.include?(:assert), AssertionsModule.instance_methods.inspect)
-    assert(RubyAssertions.instance_methods.include?(:assert), RubyAssertions.instance_methods.inspect)
-  end # requires
 
   def test_warn
   end # warn
@@ -185,8 +177,8 @@ class RubyAssertionsTest < TestCase
   end # refute_include
 
   def test_assert_public_instance_method
-    obj = StreamPattern.new
-    methodName = :stream_pattern_arguments
+    obj = Unit.new
+    methodName = :base_name
     assert_respond_to(obj, methodName)
     assert_raise(AssertionFailedError) { assert_respond_to(obj, methodName.to_s.singularize) }
     assert_respond_to(obj, methodName.to_s.pluralize)
@@ -235,7 +227,7 @@ class RubyAssertionsTest < TestCase
     assert_no_duplicates(array, columns_to_ignore)
     assert_no_duplicates(array)
     assert_no_duplicates([{ b: 2 }, { a: 1 }], columns_to_ignore)
-    assert_raise(MiniTest::Assertion) { assert_no_duplicates([1, 2, 3, 3]) }
+    assert_raise(AssertionFailedError) { assert_no_duplicates([1, 2, 3, 3]) }
   end # assert_no_duplicates
 
   def test_assert_single_element_array

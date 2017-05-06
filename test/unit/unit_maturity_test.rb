@@ -13,7 +13,7 @@ class TestMaturityTest < TestCase
   module Examples
     include TestMaturity::DefinitionalConstants
     include TestMaturity::ReferenceObjects
-    ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
+#    ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
     MinimalMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal2_test.rb'))
     MinimalMaturity3 = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal3_test.rb'))
   end # Examples
@@ -164,6 +164,9 @@ class TestMaturityTest < TestCase
   end # Constructors
 
   def test_ReferenceObjects
+    assert_equal(true, Working_maturity.test_executable.recursion_danger?)
+#    assert_equal(Working_maturity, ExecutableMaturity)
+
 		working_log = RubyLinesStorage.read(TestMaturity::Self_test_executable.log_path?(nil))
 		assert_equal(working_log, TestMaturity::Working_maturity.read_state(nil, nil))
 		TestMaturity::Working_maturity.assert_pre_conditions
@@ -204,9 +207,6 @@ class TestMaturityTest < TestCase
 	end # times
 	
   def test_recursion_danger?
-	ExecutableMaturity
-    assert_equal(true, ExecutableMaturity.test_executable.recursion_danger?)
-    assert_equal(Working_maturity, ExecutableMaturity)
     assert_equal(true, Working_maturity.test_executable.recursion_danger?)
     assert_equal(false, MinimalMaturity.test_executable.recursion_danger?)
     assert_equal(false, MinimalMaturity3.test_executable.recursion_danger?)
@@ -245,8 +245,8 @@ class TestMaturityTest < TestCase
   def test_get_error_score!
     assert_includes(TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME)).instance_variables, :@test_executable)
     refute_includes(TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME)).instance_variables, :@cached_error_score)
-    assert_includes(ExecutableMaturity.instance_variables, :@test_executable)
-    assert_nil(ExecutableMaturity.get_error_score!)
+    assert_includes(Working_maturity.instance_variables, :@test_executable)
+    assert_nil(Working_maturity.get_error_score!)
   end # error_score
 
   def test_deserving_branch
@@ -288,7 +288,7 @@ class TestMaturityTest < TestCase
     assert_equal(0, MinimalMaturity.get_error_score! <=> MinimalMaturity3.get_error_score!)
     assert_equal(0, MinimalMaturity <=> MinimalMaturity3)
     assert_equal(0, MinimalMaturity3 <=> MinimalMaturity) # symmetric
-    assert_equal(false, ExecutableMaturity.test_executable.testable?)
+    assert_equal(false, Working_maturity.test_executable.testable?)
   end # <=>
 
   def test_error_classification!
@@ -307,6 +307,23 @@ class TestMaturityTest < TestCase
     assert_instance_of(Symbol, MinimalMaturity.deserving_commit_to_branch!)
     #	Branch::Branch_enhancement[MinimalMaturity.deserving_commit_to_branch!]
   end # branch_enhancement!
+	def test_nested_scope_modules?
+		assert_include(TestMaturity::Assertions::ClassMethods.instance_methods(false), :nested_scope_modules?)
+		assert_include(TestMaturity::Assertions::ClassMethods.nested_scope_modules?, :Assertions)
+	end # nested_scopes
+	
+	def test_assert_nested_scope_submodule
+		TestMaturity.assert_nested_scope_submodule(:Assertions)
+	end # assert_included_submodule
+	
+	def test_assert_included_submodule
+		TestMaturity.assert_included_submodule(:Assertions)
+	end # assert_included_submodule
+	
+	def test_asset_nested_and_included
+		TestMaturity.asset_nested_and_included(:Assertions)
+	end # asset_nested_and_included
+			
 end # TestMaturity
 
 class UnitMaturityTest < TestCase
