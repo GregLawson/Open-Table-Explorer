@@ -16,7 +16,23 @@ end # Types
 
 require_relative 'test_executable.rb'
 require_relative 'repository.rb'
-require_relative 'interactive_bottleneck.rb'
+#!log_timeout require_relative 'interactive_bottleneck.rb'
+require_relative 'unit.rb'
+require_relative 'repository.rb'
+#! require_relative 'unit_maturity.rb'
+require_relative '../../app/models/branch.rb'
+#!require_relative '../../app/models/test_run.rb'
+require_relative '../../app/models/no_db.rb'
+require 'virtus'
+require 'fileutils'
+require_relative '../../app/models/repository.rb'
+require_relative '../../app/models/ruby_interpreter.rb'
+require_relative '../../app/models/bug.rb'
+require_relative '../../app/models/shell_command.rb'
+require_relative '../../app/models/branch.rb'
+require_relative '../../app/models/test_executable.rb'
+require_relative '../../app/models/ruby_lines_storage.rb'
+#! require_relative 'editor.rb'
 
 class Nomination < Dry::Types::Value
   module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced

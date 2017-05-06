@@ -21,6 +21,18 @@ class NominationTest < TestCase
 #		Self = Nomination.stash(TestExecutable::Examples::TestTestExecutable)
   end #  Examples
   include Examples
+  
+	def setup
+    @temp_repo = Repository.create_test_repository
+  end # setup
+
+  def test_recursive_delete
+  end # recursive_delete
+
+  def teardown
+    Repository.delete_even_nonxisting(@temp_repo.path)
+#    assert_empty(Dir[Cleanup_failed_test_paths], Cleanup_failed_test_paths)
+  end # teardown
 
   # rubocop:disable Style/MethodName
   def test_Minimal_DefinitionalConstants
