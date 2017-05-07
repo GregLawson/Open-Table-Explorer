@@ -1,0 +1,11 @@
+
+command_line_executable 11.75
+interactive_bottleneck 8.32
+merge 12.77
+method_model 10.19
+requires 17.23
+ruby_lines_storage 13.25
+test_executable 21.78
+test_run 6.99
+unit_maturity 16.49
+work_flow 8.73

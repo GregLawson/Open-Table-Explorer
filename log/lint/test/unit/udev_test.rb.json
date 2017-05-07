@@ -1,0 +1,4 @@
+{"metadata":{"rubocop_version":"0.39.0","ruby_engine":"ruby","ruby_version":"2.2.4","ruby_patchlevel":"230","ruby_platform":"x86_64-linux-gnu"},"files":[{"path":"test/unit/udev_test.rb","offenses":[
+{"severity":"convention","message":"Use snake_case for method names. (https://github.com/bbatsov/ruby-style-guide#snake-case-symbols-methods-vars)","cop_name":"Style/MethodName","corrected":null,"location":{"line":12,"column":7,"length":14}},
+{"severity":"convention","message":"Line is too long. [85/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":14,"column":81,"length":5}},
+{"severity":"convention","message":"Line is too long. [85/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":16,"column":81,"length":5}}]}],"summary":{"offense_count":3,"target_file_count":1,"inspected_file_count":1}}

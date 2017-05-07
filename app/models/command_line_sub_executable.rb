@@ -32,13 +32,62 @@ class CommandLineSubExecutable < CommandLineExecutable
     end # Constants
   include Constants
 
-	def sub_command_commandline
+  def make_executable_object(file_argument)
+    if @test_executable.unit.model_class?.included_modules.include?(Virtus::InstanceMethods)
+      @test_executable.unit.model_class?.new(test_executable: TestExecutable.new(argument_path: file_argument))
+    else
+      @test_executable.unit.model_class?.new(TestExecutable.new_from_path(file_argument))
+    end # if
+  end # make_executable_object
+
+  def executable_object(file_argument = nil)
+    if file_argument.nil?
+      if number_of_arguments == 0
+        make_executable_object($PROGRAM_NAME) # script file
+      else
+        make_executable_object(@argv[1])
+      end # if
+    else
+      make_executable_object(file_argument)
+    end # if
+  end # executable_object
+
+  def dispatch_required_arguments(argument)
+    method = executable_method?(sub_command, argument)
+    if method.nil?
+      message = method_exception_string(sub_command)
+      raise Exception.new(message)
+    else
+      case method.required_arguments
+      when 0 then
+        method.call
+      when 1 then
+        method.call(argument)
+      else
+        message = "\nIn CommandLine#dispatch_required_arguments, "
+        message += "\nargument =  " + argument
+        message += "\nsub_command =  " + sub_command.to_s
+        message += "\nrequired_arguments =  " + method.required_arguments.to_s
+        raise Exception.new(message)
+      end # case
+    end # if nil?
+  end # dispatch_required_arguments
+
+  def sub_command_method
+    ret = find_sub_command_instance_method(method_name = sub_command)
+    if ret.nil? # no sub_command, default to help
+      raise 'method_name not found = ' + method_name.to_s
+    else
+      ret
+    end # if
+  end # sub_command_method
+
+  def sub_command_commandline
     sub_command_unit = RailsishRubyUnit.new(model_basename: sub_command.to_sym)
     required_library_file = sub_command_unit.model_pathname?
-		sub_command_test_executable = TestExecutable.new_from_path(required_library_file)
-		CommandLine.new(test_executable: sub_command_test_executable, argv: @argv[1..-1])
-	end # sub_command_commandline
-
+    sub_command_test_executable = TestExecutable.new_from_path(required_library_file)
+    CommandLine.new(test_executable: sub_command_test_executable, argv: @argv[1..-1])
+  end # sub_command_commandline
 
   def find_examples
     Example.find_by_class(@test_executable.unit.model_class?, @test_executable.unit.model_class?)
@@ -52,26 +101,6 @@ class CommandLineSubExecutable < CommandLineExecutable
       examples.first
     end # if
   end # find_example?
-
-  def make_executable_object(file_argument)
-    if @test_executable.unit.model_class?.included_modules.include?(Virtus::InstanceMethods)
-      @test_executable.unit.model_class?.new(test_executable: TestExecutable.new(argument_path: file_argument))
-    else
-      @test_executable.unit.model_class?.new(TestExecutable.new_from_path(file_argument))
-    end # if
-  end # make_executable_object
-
-  def executable_object(file_argument = nil)
-    if file_argument.nil?
-        if number_of_arguments == 0
-          make_executable_object($PROGRAM_NAME) # script file
-        else
-          make_executable_object(@argv[1])
-        end # if
-    else
-      make_executable_object(file_argument)
-    end # if
-  end # executable_object
 
   def sub_command_instance_methods
 		command_class = @test_executable.unit.model_class?	
@@ -91,21 +120,12 @@ class CommandLineSubExecutable < CommandLineExecutable
     message += candidate_commands_strings.join("\n")
     #		message += "\n\n executable_object.class.instance_methods = " + executable_object.class.instance_methods(false).inspect
   end # method_exception_string
-	
-	def find_sub_command_instance_method(method_name = sub_command)
-      ret = sub_command_instance_methods.find do |method_model|
-        method_model.method_name == sub_command
-      end # find
-	end # find_sub_command_instance_method
-	
-	def sub_command_method
-      ret = find_sub_command_instance_method(method_name = sub_command)
-			if ret.nil? # no sub_command, default to help
-				raise 'method_name not found = ' + method_name.to_s
-			else
-				ret
-			end # if
-	end # sub_command_method
+
+  def find_sub_command_instance_method(_method_name = sub_command)
+    ret = sub_command_instance_methods.find do |method_model|
+      method_model.method_name == sub_command
+    end # find
+  end # find_sub_command_instance_method
 
   def dispatch_required_arguments(argument)
     method = executable_method?(sub_command, argument)
@@ -160,5 +180,4 @@ class CommandLineSubExecutable < CommandLineExecutable
     message += ' run returns ' + ret.inspect + caller.join("\n")
     ret
   end # run
-
 end # CommandLineSubExecutable

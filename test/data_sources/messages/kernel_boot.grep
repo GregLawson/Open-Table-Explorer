@@ -1,0 +1,19 @@
+Sep  1 11:05:31 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init
+Sep  1 11:29:52 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single
+Sep  1 11:51:10 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet
+Sep  1 11:53:52 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init
+Sep  1 11:58:41 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet
+Aug 25 03:50:33 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet
+Aug 25 10:54:33 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init
+Aug 31 11:46:37 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet
+Aug 17 10:18:14 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-3.2.0-4-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet
+Aug 17 11:05:03 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet
+Aug 18 05:43:02 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet
+Aug 18 08:30:26 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.5.0-2-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet
+Aug 18 12:04:51 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init
+Aug 18 13:37:52 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet
+Aug 20 12:57:05 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single
+Aug 24 13:00:22 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single
+Aug 24 13:07:50 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init
+Aug 25 03:21:18 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet
+Aug  6 07:37:54 acer-desktop kernel: [    0.000000] Command line: BOOT_IMAGE=/vmlinuz-3.2.0-4-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet

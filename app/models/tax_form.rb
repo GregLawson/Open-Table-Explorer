@@ -1,11 +1,10 @@
 ###########################################################################
-#    Copyright (C) 2011-2016 by Greg Lawson
+#    Copyright (C) 2011-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'virtus'
 # require 'pathname'
 # need  sudo apt-get install poppler-utils
 # need nodejs
@@ -14,6 +13,66 @@ require 'virtus'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/parse.rb'
+require 'dry-types'
+module Types
+	include Dry::Types.module
+end # Types
+#! require 'virtus'
+
+class Object
+	
+	def clone_state
+#		ret = {}
+		[ :dup, :clone ].map do |copy_method|
+			mutable_object = send(copy_method)
+			[ :hash , :inspect, :object_id].map do |attribute|
+				{ {copy_method => attribute} => send(attribute) == mutable_object.send(attribute) }
+			end # each
+		end # each
+	end # clone_state
+	
+	def assert_clone_state
+		dup_object = dup
+		clone_object = clone
+		# dup copies taint
+		# clone copies internal stste, dup creates new object
+		unless frozen? # test unit modifies object
+			assert_equal(tainted?, clone_object.tainted?, clone_state.inspect)
+			assert_equal(tainted?, dup_object.tainted?, clone_state.inspect)
+			assert_equal(frozen?, dup_object.frozen?, clone_state.inspect)
+			refute_equal(object_id, dup_object.object_id, dup_object.inspect)
+			refute_equal(object_id, clone_object.object_id, clone_state.inspect)
+#!			assert_equal(self, clone_object, clone_object.clone_explain)
+#!			assert_equal(self, dup_object, dup_object.clone_explain)
+		end # unless
+	end # assert_clone_state
+
+	def clone_explain
+		ret = []
+		dup_object = dup
+		clone_object = clone
+		ret << 'clone hash not equal' if hash != clone_object.hash
+		ret << 'dup hash not equal' if hash != dup_object.hash
+		ret << 'dup inspect not equal' if inspect != dup_object.inspect
+		ret << 'clone inspect not equal' if inspect != clone_object.inspect
+		ret.join(', ')
+	end # clone_explain
+	
+	def cache(cache_name = _callee_, &block)
+		cache_const_name = ('Cached_' + cache_name.to_s).to_sym
+		if block_given?
+			if self.class.const_defined?(cache_const_name)
+				self.class.const_get(cache_const_name)
+			else
+				ret = block.call
+				self.class.const_set(cache_const_name, ret)
+			end # if
+		else
+			raise 'caching ' + cache_const_name.to_s + 'requires a block.'
+		end # if
+	end # cache
+end # Object
+
 module OpenTableExplorer
   extend AssertionsModule
 
@@ -22,7 +81,8 @@ module OpenTableExplorer
       Downloaded_src_dir = FilePattern.repository_dir?($PROGRAM_NAME) + '/../'
       IRS_pdf_directory = Pathname.new('../Tax_forms').expand_path.to_s + '/'
       OTS_example_directories = Pathname.new('test/data_sources/tax_form/').expand_path.to_s
-      # Possible_tax_years=[2011, 2012, 2013, 2014].sort
+			This_year = Time.now.year
+      # Possible_tax_years=[2011, 2012, 2013, 2014, 2015, 2016].sort
       Possible_tax_years = [2014].sort
       Default_tax_year = Possible_tax_years[-1]
 
@@ -37,7 +97,7 @@ module OpenTableExplorer
     end # Finance_DefinitionalConstants
     include DefinitionalConstants
 
-    class Filing
+    class Filing < Dry::Types::Value
       module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
         Tax_form_examples = [	# hand parsed from grep of 2014 form filler scripts
           { jurisdiction: :CA, base_form: '540', tax_year: 2014, web_URL_prefix: 'https://www.ftb.ca.gov/forms/', example_path: '2014/14_540.pdf', path_interpolation: "\#{tax_year}/14_\#{base_form}.pdf" },
@@ -56,10 +116,7 @@ module OpenTableExplorer
         ].freeze
       end # DefinitionalConstants
       include DefinitionalConstants
-      include Virtus.value_object
-      values do
-        attribute :tax_year, Fixnum, default: Finance::Default_tax_year
-      end # values
+        attribute :tax_year, Types::Coercible::Int.default(Finance::Default_tax_year)
       module ClassMethods
         include DefinitionalConstants
         def to_s
@@ -126,6 +183,7 @@ module OpenTableExplorer
           "\#{tax_year}/\#{tax_year.mod(100)}_\#{base_form}\#{form_suffix}.pdf"
         end # path_interpolation
       end # CA
+			
       class NJ < Filing
         extend ClassMethods
         def self.web_URL_prefix
@@ -140,6 +198,7 @@ module OpenTableExplorer
           "\#{base_form}\#{form_suffix}.pdf"
         end # path_interpolation
       end # NJ
+			
       class NY < Filing
         extend ClassMethods
         def self.web_URL_prefix
@@ -154,6 +213,7 @@ module OpenTableExplorer
           "\#{@filing.tax_year}/fillin/inc/\#{base_form.downcase}_\#{@filing.tax_year}_fill_in.pdf"
         end # path_interpolation
       end # NY
+			
       class OH < Filing
         extend ClassMethods
         def self.web_URL_prefix
@@ -168,6 +228,7 @@ module OpenTableExplorer
           "\#{@filing.tax_year}/PIT_IT\#{base_form}_FI.pdf"
         end # path_interpolation
       end # OH
+			
       class PA < Filing
         extend ClassMethods
         def self.web_URL_prefix
@@ -182,6 +243,7 @@ module OpenTableExplorer
           "\#{@filing.tax_year}/\#{@filing.tax_year}_\#{form_prefix}40.pdf"
         end # path_interpolation
       end # PA
+			
       class US < Filing
         extend ClassMethods
         def self.web_URL_prefix
@@ -196,6 +258,7 @@ module OpenTableExplorer
           "\#{form_prefix}\#{base_form}\#{form_suffix}--\#{@filing.tax_year}.pdf"
         end # path_interpolation
       end # US
+			
       class VA < Filing
         extend ClassMethods
         def self.web_URL_prefix
@@ -213,7 +276,7 @@ module OpenTableExplorer
       module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
         include DefinitionalConstants
         include Constants
-        CA_current_year = CA.new(tax_year: Finance::Default_tax_year)
+        CA_current_year = CA.new(tax_year: Finance::Default_tax_year).freeze
         NJ_current_year = NJ.new(tax_year: Finance::Default_tax_year)
         NY_current_year = NY.new(tax_year: Finance::Default_tax_year)
         OH_current_year = OH.new(tax_year: Finance::Default_tax_year)
@@ -223,44 +286,40 @@ module OpenTableExplorer
       end # Examples
     end # Filing
 
-    class OtsRun # forward reference definition completed below
-    end #  OtsRun
-
-    class OtsTaxpayer
-      include Virtus.value_object
-      values do
-        attribute :name, String
-        attribute :open_tax_solver_all_form_directory, Pathname
-        attribute :state, Class, default: Filing::CA
-      end # values
+    class OtsTaxpayer < Dry::Types::Value
+        attribute :name, Types::Strict::Symbol
+        attribute :open_tax_solver_all_form_directory, Types::Strict::String
+        attribute :state, Types::Strict::Class #.default(Filing::CA)
       def open_tax_solver_chdir
         (Pathname.new(@open_tax_solver_all_form_directory) + '../').cleanpath
       end # open_tax_solver_chdir
       module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
         Example_taxpayer_name = ENV['USER'].to_sym
-        User = OtsTaxpayer.new(name: Example_taxpayer_name, open_tax_solver_all_form_directory: Filing.ots_user_all_forms_directory)
-        Example = OtsTaxpayer.new(name: :example, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory)
-        Template = OtsTaxpayer.new(name: :template, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory)
+        User = OtsTaxpayer.new(name: Example_taxpayer_name, open_tax_solver_all_form_directory: Filing.ots_user_all_forms_directory, state: Filing::CA)
+        Example = OtsTaxpayer.new(name: :example, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory, state: Filing::CA)
+        Template = OtsTaxpayer.new(name: :template, open_tax_solver_all_form_directory: Filing.ots_example_all_forms_directory, state: Filing::CA)
       end # Examples
     end # OtsTaxpayer
 
-    class OtsRun # forward reference definition completed below
-    end #  OtsRun
-
     class Schedule
       module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-        Form_default = lambda do |schedule, _attribute|
-          schedule.filing.jurisdiction.base_form
-        end # Filing_default
       end # DefinitionalConstants
       include DefinitionalConstants
-      include Virtus.value_object
-      values do
-        attribute :filing, Filing
-        attribute :form, String # , :default => Form_default
-        attribute :form_prefix, String, default: ''
-        attribute :form_suffix, String, default: ''
-      end # values
+#!        attribute :filing, Filing
+ #!       attribute :form, Types::Strict::String
+#!        attribute :form_prefix, Types::Strict::String.default('')
+#!        attribute :form_suffix, Types::Strict::String.default('')
+
+			
+		attr_reader :filing, :form, :form_prefix, :form_suffix
+		def initialize(hash)
+#			@hash = hash
+			@filing = hash[:filing]
+			@form = hash[:form] || ''
+			@form_prefix = hash[:form_prefix] || 'f'
+			@form_suffix = hash[:form_suffix] || ''
+		end # initialize
+				
       def schedule_name
         @form_prefix + @filing.jurisdiction.base_form.to_s + @form_suffix.to_s
       end # schedule_name
@@ -269,10 +328,11 @@ module OpenTableExplorer
         command_string = 'wget ' + @filing.web_URL_prefix + eval(@filing.path_interpolation)
         FileIPO.new(command_string: command_string, chdir: Finance::IRS_pdf_directory).run
       end # download
+			
       module Examples
         include Filing::Examples
-        US_1040 = Schedule.new(filing: US_current_year, prefix: 'f')
-        US_8889 = Schedule.new(filing: US_current_year, form: '8889', prefix: 'f')
+        US_1040 = Schedule.new(filing: US_current_year, form: '1040', form_prefix: 'f', form_suffix: '')
+        US_8889 = Schedule.new(filing: US_current_year, form: '8889',  form_prefix: 'f', form_suffix: '')
       end # Examples
     end # Schedule
 
@@ -298,13 +358,18 @@ module OpenTableExplorer
         end # Run_pdf_to_jpeg_default
       end # DefinitionalConstants
       include DefinitionalConstants
-      include Virtus.value_object
-      values do
-        attribute :ots, OtsRun
+
+		attr_reader :filing, :ots
+		def initialize(hash)
+			super(hash)
+			@ots = hash[:ots]
+			@filing = hash[:filing]
+		end # initialize
+
+#!        attribute :ots, OtsRun
         # 	attribute :filing, Filing, :default => Filing_default
-        attribute :cached_fdf_to_pdf_run, FileIPO # , :default => OtsTaxpayerSchedule::Run_fdf_to_pdf_default
-        attribute :cached_pdf_to_jpeg_run, FileIPO # , :default => OtsTaxpayerSchedule::Run_pdf_to_jpeg_default
-      end # values
+#!        attribute :cached_fdf_to_pdf_run, FileIPO # , :default => OtsTaxpayerSchedule::Run_fdf_to_pdf_default
+#!       attribute :cached_pdf_to_jpeg_run, FileIPO # , :default => OtsTaxpayerSchedule::Run_pdf_to_jpeg_default
       def schedule_name # override
         @form_prefix + @ots.filing.jurisdiction.base_form.to_s + @form_suffix.to_s
       end # schedule_name
@@ -336,6 +401,27 @@ module OpenTableExplorer
       def fillout_form
         Finance::IRS_pdf_directory + '/f' + @filing.jurisdiction.base_form + @form_suffix + '--' + @filing.tax_year.to_s + '.pdf'
       end # fillout_form
+			
+			def fdf_to_pdf_run
+				cache do
+					FileIPO.new(input_paths: [schedule.xfdf_file], command_string: "pdftk fillout_form fill_form #{schedule.xfdf_file} output #{schedule.xfdf_file}.pdf", output_paths: [schedule.xfdf_file + '.pdf']).run
+          #		ShellCommands.new("pdftk fillout_form fill_form #{xfdf_file} output #{xfdf_file}.pdf")
+				end # cache
+			end # fdf_to_pdf_run
+			
+			def pdf_to_jpeg_run
+				cache do
+          output_pdf_pathname = Pathname.new(File.expand_path(schedule.output_pdf))
+          cleanpath_name = output_pdf_pathname.cleanpath
+          clean_directory = Pathname.new(File.expand_path(schedule.ots.open_tax_solver_form_directory)).cleanpath
+          output_pdf = cleanpath_name.relative_path_from(clean_directory)
+          @pdf_to_jpeg_run = FileIPO.new(input_paths: [output_pdf], command_string: "pdftoppm -jpeg  #{output_pdf} #{schedule.ots.taxpayer_basename_with_year}").run
+          @display_jpeg_run = ShellCommands.new('display  ' + output_pdf) if $VERBOSE
+          @display_jpeg_run.assert_post_conditions if $VERBOSE
+          @pdf_to_jpeg_run
+				end # cache
+			end # pdf_to_jpeg_run
+			
     end # OtsTaxpayerSchedule
     # single run of ots can produce multiple OtsTaxpayerSchedules
 
@@ -359,8 +445,8 @@ module OpenTableExplorer
         end # generated_xfdf_files
         Errors_default = lambda do |ots, _attribute|
           errors = {}
-          errors[:open_tax_solver] = ots.open_tax_solver_errors(ots.cached_open_tax_solver_run)
-          #	errors[:schedules] = ots.cached_schedules.map {|schedule| {pdf_to_jpeg_run: schedule.cached_pdf_to_jpeg_run.errors} }
+          errors[:open_tax_solver] = ots.open_tax_solver_errors(ots.open_tax_solver_run)
+          #	errors[:schedules] = ots.schedules.map {|schedule| {pdf_to_jpeg_run: schedule.cached_pdf_to_jpeg_run.errors} }
         end # Errors_default
       end # DefinitionalConstants
       include DefinitionalConstants
@@ -371,21 +457,54 @@ module OpenTableExplorer
         end # logical_primary_key
       end # DefinitionalClassMethods
       extend DefinitionalClassMethods
-      include Virtus.value_object
-      values do
-        attribute :taxpayer, OtsTaxpayer
-        attribute :filing, Filing
-        #	attribute :open_tax_solver_all_form_directory, Pathname
-        attribute :cached_open_tax_solver_run, ShellCommands, default: OtsRun::Ots_run_default
-        attribute :cached_schedules, Array, default: OtsRun::Generated_xfdf_files_default
-        attribute :errors, Hash, default: OtsRun::Errors_default
-      end # values
+			
+		attr_reader :taxpayer, :filing
+		def initialize(hash)
+			@taxpayer = hash[:taxpayer]
+			@filing = hash[:filing]
+		end # initialize
+		
+#        attribute :taxpayer, OtsTaxpayer
+#        attribute :filing, Filing
+        #	attribute :open_tax_solver_all_form_directory, Types::Strict::String
+#        attribute :cached_open_tax_solver_run, ShellCommands, default: OtsRun::Ots_run_default
+#        attribute :cached_schedules, Array, default: OtsRun::Generated_xfdf_files_default
+#        attribute :errors, Hash #, default: OtsRun::Errors_default
+			
+			def open_tax_solver_run
+				cache(:open_tax_solver_run) do
+          command = "#{filing.open_tax_solver_binary} #{open_tax_solver_input}"
+          run = FileIPO.new(input_paths: [filing.open_tax_solver_binary, open_tax_solver_input], chdir: taxpayer.open_tax_solver_chdir, command_string: command, output_paths: [open_tax_solver_output]).run
+          IO.binwrite(open_tax_solver_sysout, run.cached_run.output)
+          run
+				end # cache
+			end # open_tax_solver_run
+
+			def schedules
+				cache(:schedules) do
+          xfdf_file_pattern = generated_xfdf_files_regexp
+          Dir[output_xfdf_glob].map do |xfdf_file|
+            xdf_capture = xfdf_file.capture?(xfdf_file_pattern)
+            OtsTaxpayerSchedule.new(ots: ots, filing: filing, form_prefix: xdf_capture.output[:form_prefix],
+                                    form_suffix: xdf_capture.output[:form_suffix])
+          end # map
+				end # cache
+			end # schedules
+
+				def errors
+					cache(:errors) do
+						errors = {}
+						errors[:open_tax_solver] = open_tax_solver_errors(open_tax_solver_run)
+						#	errors[:schedules] = schedules.map {|schedule| {pdf_to_jpeg_run: schedule.cached_pdf_to_jpeg_run.errors} }
+				end # cache
+			end # errors
+
       def open_tax_solver_form_directory
         @taxpayer.open_tax_solver_all_form_directory + @filing.jurisdiction.ots_form_filename + '/'
       end # open_tax_solver_form_directory
 
       def taxpayer_basename_with_year
-        @filing.jurisdiction.ots_form_filename + '_' + @filing.tax_year.to_s + '_' + @taxpayer.name
+        @filing.jurisdiction.ots_form_filename + '_' + @filing.tax_year.to_s + '_' + @taxpayer.name.to_s
       end # taxpayer_basename_with_year
 
       def taxpayer_basename
@@ -436,7 +555,7 @@ module OpenTableExplorer
           end # if
       end # compact_message
 
-      def open_tax_solver_errors(open_tax_solver_run = @cached_open_tax_solver_run)
+      def open_tax_solver_errors(open_tax_solver_run = @open_tax_solver_run)
         errors = open_tax_solver_run.errors
         #	errors[:success?] = open_tax_solver_run.success?
         #	errors[:process_status] = open_tax_solver_run.process_status
@@ -475,7 +594,7 @@ module OpenTableExplorer
         errors
       end # open_tax_solver_errors
 
-      def explain_open_tax_solver(open_tax_solver_run = @cached_open_tax_solver_run)
+      def explain_open_tax_solver(open_tax_solver_run = @open_tax_solver_run)
         message = ''
         open_tax_solver_errors(open_tax_solver_run).each_pair do |key, value|
           message += if (key.to_s.size + value.to_s.size) > 80
@@ -580,7 +699,6 @@ module OpenTableExplorer
         CA540_example = OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example, filing: CA_current_year)
         Simplified_example = OpenTableExplorer::Finance::OtsRun.new(cached_open_tax_solver_run: Pwd, cached_run_ots_to_fdf: Pwd,
                                                                     taxpayer: Example, filing: US_current_year)
-
         Expect_to_pass = [US1040_user, CA540_user, US1040_example, CA540_example].freeze
         Expect_to_fail = [US1040_template, CA540_template].freeze
         # US1040_example.assert_pre_conditions
@@ -669,7 +787,7 @@ module OpenTableExplorer
       module Examples
         include Filing::Examples
         include OtsTaxpayer::Examples
-        US1040_example_schedule =	OtsTaxpayerSchedule.new(ots: OtsRun::Examples::US1040_example, filing: OtsRun::Examples::US1040_example.filing, form_prefix: 'f', form_suffix: '')
+        US1040_example_schedule =	OtsTaxpayerSchedule.new(ots: OtsRun::Examples::US1040_example, filing: OtsRun::Examples::US1040_example.filing, form_prefix: 'f', form_suffix: '', form: '1040')
       end # Examples
     end # OtsTaxpayerSchedule
   end # Finance

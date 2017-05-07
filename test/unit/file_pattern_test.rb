@@ -5,10 +5,10 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative 'test_environment' # avoid recursive requires
+# require_relative 'test_environment' # avoid recursive requires
 require_relative '../../app/models/test_environment_test_unit.rb'
-#require_relative '../../app/models/default_test_case.rb'
-#require_relative '../../test/assertions/ruby_assertions.rb'
+# require_relative '../../app/models/default_test_case.rb'
+# require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/file_pattern.rb'
 class FilePatternTest  <  TestCase
   include RubyAssertions
@@ -174,118 +174,118 @@ end #find_by_name
 def test_match_path
 	path='test/unit/_assertions_test.rb'
 	p=FilePattern.find_from_path(path)
-	
-	successes=Patterns.map do |pattern|
-		path = Pathname.new(pattern[:example_file])
-		pattern_match = pattern.clone
-		pattern_match[:path] = path
-		prefix = File.dirname(path)
-		expected_prefix= pattern[:prefix][0..-2] # drops trailing /
-		match_length = expected_prefix.size
-		message='pattern='+pattern.inspect
-		message+="\nexpected_prefix="+expected_prefix
-		message+="\nprefix="+prefix
-		assert_operator(match_length, :<=, prefix.size, message)
-		refute_nil(prefix[-match_length,match_length], message)
-		assert_match(pattern[:prefix], path.to_s, message)
-		pattern_match[:prefix_match] = Regexp.new(pattern[:prefix]).match(path.to_s)
-		refute_nil(pattern_match[:prefix_match], message)
-#		assert_equal(prefix[-match_length,match_length], expected_prefix, message)
-#		assert_equal(prefix[-expected_prefix.size,expected_prefix.size], expected_prefix, message)
-		assert(FilePattern.match_path(pattern, path))
-	end #map
-end # match_path
 
-def test_match_all?
-	match_all = FilePattern.match_all?(Path4)
+    successes = Patterns.map do |pattern|
+      path = Pathname.new(pattern[:example_file])
+      pattern_match = pattern.clone
+      pattern_match[:path] = path
+      prefix = File.dirname(path)
+      expected_prefix = pattern[:prefix][0..-2] # drops trailing /
+      match_length = expected_prefix.size
+      message = 'pattern=' + pattern.inspect
+      message += "\nexpected_prefix=" + expected_prefix
+      message += "\nprefix=" + prefix
+      assert_operator(match_length, :<=, prefix.size, message)
+      refute_nil(prefix[-match_length, match_length], message)
+      assert_match(pattern[:prefix], path.to_s, message)
+      pattern_match[:prefix_match] = Regexp.new(pattern[:prefix]).match(path.to_s)
+      refute_nil(pattern_match[:prefix_match], message)
+      #		assert_equal(prefix[-match_length,match_length], expected_prefix, message)
+      #		assert_equal(prefix[-expected_prefix.size,expected_prefix.size], expected_prefix, message)
+      assert(FilePattern.match_path(pattern, path))
+    end # map
+  end # match_path
+
+  def test_match_all?
+    match_all = FilePattern.match_all?(Path4)
     assert_equal(Patterns.size, match_all.size, '')
-end # match_all
+  end # match_all
 
-def test_find_all_from_path
-	find_all_from_path = FilePattern.find_all_from_path(Path4)
-	assert_equal(2, find_all_from_path.size, find_all_from_path)
-end #find_all_from_path
+  def test_find_all_from_path
+    find_all_from_path = FilePattern.find_all_from_path(Path4)
+    assert_equal(2, find_all_from_path.size, find_all_from_path)
+  end # find_all_from_path
 
-def test_find_from_path
-	assert_equal(:model, FilePattern.find_from_path(SELF_Model)[:name], "Patterns[0], 'app/models/'")
-	assert_equal(:unit, FilePattern.find_from_path(SELF_Test)[:name], "Patterns[2], 'test/unit/'")
-	assert_equal(:script, FilePattern.find_from_path(DCT_filename)[:name], "Patterns[1], 'script/'")
-	assert_equal(:assertions, FilePattern.find_from_path('test/assertions/_assertions.rb')[:name], "(Patterns[3], 'test/assertions/'")
-	path='test/unit/_assertions_test.rb'
-	
+  def test_find_from_path
+    assert_equal(:model, FilePattern.find_from_path(SELF_Model)[:name], "Patterns[0], 'app/models/'")
+    assert_equal(:unit, FilePattern.find_from_path(SELF_Test)[:name], "Patterns[2], 'test/unit/'")
+    assert_equal(:script, FilePattern.find_from_path(DCT_filename)[:name], "Patterns[1], 'script/'")
+    assert_equal(:assertions, FilePattern.find_from_path('test/assertions/_assertions.rb')[:name], "(Patterns[3], 'test/assertions/'")
+    path = 'test/unit/_assertions_test.rb'
+
     path = 'test/data_sources/tax_form/CA_540/CA_540_2012_example_out.txt'
-	pattern=FilePattern.find_from_path(path)
-	refute_nil(pattern, path)
-	assert_equal(:data_sources_dir, pattern[:name])
-	match_all = FilePattern.match_all?(Path4)
-	assert_equal(:assertions_test, FilePattern.find_from_path(Path4)[:name], FilePattern.find_from_path(Path4).inspect)
-end #find_from_path
+    pattern = FilePattern.find_from_path(path)
+    refute_nil(pattern, path)
+    assert_equal(:data_sources_dir, pattern[:name])
+    match_all = FilePattern.match_all?(Path4)
+    assert_equal(:assertions_test, FilePattern.find_from_path(Path4)[:name], FilePattern.find_from_path(Path4).inspect)
+  end # find_from_path
 
-def test_path?
-end # path?
+  def test_path?
+  end # path?
 
-def test_pathnames
-	assert_instance_of(Array, FilePattern.pathnames?('test'))
-	assert_equal(Patterns.size, FilePattern.pathnames?('test').size)
-#	assert_array_of(FilePattern.pathnames?('test'), String)
-end #pathnames
+  def test_pathnames
+    assert_instance_of(Array, FilePattern.pathnames?('test'))
+    assert_equal(Patterns.size, FilePattern.pathnames?('test').size)
+    #	assert_array_of(FilePattern.pathnames?('test'), String)
+  end # pathnames
 
-def test_new_from_path
+  def test_new_from_path
     n = FilePattern.new_from_path($PROGRAM_NAME)
-	n.assert_pre_conditions
-#	assert_equal(Executable, n)
-	file_pattern=n
-	assert(!file_pattern.pattern.keys.empty?, "file_pattern=#{file_pattern.inspect}")
-	n.assert_pre_conditions
-	assert_equal(:file_pattern, FilePattern.new_from_path(__FILE__).unit_base_name)
-end # new_from_path
+    n.assert_pre_conditions
+    #	assert_equal(Executable, n)
+    file_pattern = n
+    assert(!file_pattern.pattern.keys.empty?, "file_pattern=#{file_pattern.inspect}")
+    n.assert_pre_conditions
+    assert_equal(:file_pattern, FilePattern.new_from_path(__FILE__).unit_base_name)
+  end # new_from_path
 
-def test_initialize
+  def test_initialize
     file_pattern = FilePattern.new(Patterns[0])
     file_pattern.assert_pre_conditions
-	assert_equal(:file_pattern, Library.unit_base_name)
-	assert_equal(:file_pattern, Executable.unit_base_name)
-	Executable.assert_post_conditions
-	Library.assert_post_conditions
-	Executable.assert_pre_conditions
-	Library.assert_pre_conditions
-end #initialize
-include FilePattern::Assertions
-extend FilePattern::Assertions::ClassMethods
-#def test_class_assert_invariant
-#	FilePattern.assert_invariant
-#end # class_assert_invariant
-def test_path
-end #path
+    assert_equal(:file_pattern, Library.unit_base_name)
+    assert_equal(:file_pattern, Executable.unit_base_name)
+    Executable.assert_post_conditions
+    Library.assert_post_conditions
+    Executable.assert_pre_conditions
+    Library.assert_pre_conditions
+  end # initialize
+  include FilePattern::Assertions
+  extend FilePattern::Assertions::ClassMethods
+  # def test_class_assert_invariant
+  #	FilePattern.assert_invariant
+  # end # class_assert_invariant
+  def test_path
+  end # path
 
-def test_parse_pathname_regexp
-end #parse_pathname_regexp
+  def test_parse_pathname_regexp
+  end # parse_pathname_regexp
 
-def test_pathname_glob
-end #pathname_glob
+  def test_pathname_glob
+  end # pathname_glob
 
-def test_relative_path
-end #relative_path
+  def test_relative_path
+  end # relative_path
 
-def test_class_assert_pre_conditions
-#	FilePattern.assert_pre_conditions
-end #class_assert_pre_conditions
+  def test_class_assert_pre_conditions
+    #	FilePattern.assert_pre_conditions
+  end # class_assert_pre_conditions
 
-def test_class_assert_post_conditions
-	FilePattern.assert_post_conditions
-end #class_assert_post_conditions
+  def test_class_assert_post_conditions
+    FilePattern.assert_post_conditions
+  end # class_assert_post_conditions
 
-def test_assert_pattern_array
-	array=FilePattern::Patterns
-	successes=array.map do |p|
-		p[:example_file].match(p[:prefix])
-		p[:example_file].match(p[:suffix])
-	end #map
-	assert(successes.all?, successes.inspect+"\n"+array.inspect)
-	FilePattern.assert_pattern_array(FilePattern::Patterns)
-end #assert_pattern_array
+  def test_assert_pattern_array
+    array = FilePattern::Patterns
+    successes = array.map do |p|
+      p[:example_file].match(p[:prefix])
+      p[:example_file].match(p[:suffix])
+    end # map
+    assert(successes.all?, successes.inspect + "\n" + array.inspect)
+    FilePattern.assert_pattern_array(FilePattern::Patterns)
+  end # assert_pattern_array
 
-def test_Examples
-	assert_data_file(Data_source_example)
-end #Examples
-end #FilePattern
+  def test_Examples
+    assert_data_file(Data_source_example)
+  end # Examples
+end # FilePattern

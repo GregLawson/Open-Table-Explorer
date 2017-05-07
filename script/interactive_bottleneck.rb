@@ -34,12 +34,6 @@ script.run do
       interactive_bottleneck.merge(:master, :passed)
     end # if
     interactive_bottleneck.merge_down(current_branch)
-  when :merge_down then
-    interactive_bottleneck = InteractiveBottleneck.new($PROGRAM_NAME)
-    interactive_bottleneck.merge_down
-  when :merge_conflict_recovery then
-    interactive_bottleneck = InteractiveBottleneck.new($PROGRAM_NAME)
-    interactive_bottleneck.merge_conflict_recovery(:MERGE_HEAD)
   when :split then
     interactive_bottleneck.split(argv[0], argv[1])
   else CommandLine::Constants::Arguments.each do |f|

@@ -1,0 +1,13 @@
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 4, 1, 12, 10, Rational(37381035711, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/interactive/shell_command_test.rb',
+:output => '',
+:errors => {:rescue_exception => Timeout::Error.new()
+
+}
+
+}

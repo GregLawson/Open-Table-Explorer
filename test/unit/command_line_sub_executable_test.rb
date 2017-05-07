@@ -233,18 +233,22 @@ class CommandLineSubExecutableTest < TestCase
   end # dispatch_required_arguments
 
   def test_run
-    CommandLineSubExecutable #.assert_pre_conditions
+    CommandLineSubExecutable # .assert_pre_conditions
     refute_nil(ARGV)
     #		SELF.run do
     #		end # do run
-#    No_side_effects_sub_command_line.run
-#		No_side_effects_default_line.assert_pre_conditions
-#		No_side_effects_sub_command_line.assert_pre_conditions
-#		No_side_effects_default_line.run
-#		No_side_effects_sub_command_line.run
-		assert_match(/-t /, No_side_effects_default_line.run, No_side_effects_default_line.inspect)
-#		assert_equal(:state?, No_side_effects_sub_command_line.sub_command, No_side_effects_sub_command_line.inspect)
-#		assert_equal([:dirty], No_side_effects_sub_command_line.run, No_side_effects_sub_command_line.inspect)
+    #    No_side_effects_sub_command_line.run
+    #		No_side_effects_default_line.assert_pre_conditions
+    #		No_side_effects_sub_command_line.assert_pre_conditions
+    #		No_side_effects_default_line.run
+    #		No_side_effects_sub_command_line.run
+    assert_match(/-t /, No_side_effects_default_line.run, No_side_effects_default_line.inspect)
+    #		assert_equal(:state?, No_side_effects_sub_command_line.sub_command, No_side_effects_sub_command_line.inspect)
+    #		assert_equal([:dirty], No_side_effects_sub_command_line.run, No_side_effects_sub_command_line.inspect)
+    editor_command_string = 'ruby -W1 script/command_line_sub_executable.rb editor test_files app/models/editor.rb'
+    editor_command_line = ShellCommands.new(editor_command_string)
+    text = editor_command_line.output.lines[-1, 1][0]
+    assert_instance_of(String, text)
+    assert_match(TestDiffuse.test_files(TestDiffuse.test_executable.unit.edit_files), text)
   end # run
-
 end # CommandLineSubExecutable

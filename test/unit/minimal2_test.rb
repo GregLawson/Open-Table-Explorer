@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2016 by Greg Lawson
+#    Copyright (C) 2012-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -9,7 +9,10 @@ require_relative 'test_environment'
 require_relative '../../app/models/minimal2.rb'
 class Minimal2Test < TestCase
   # include DefaultTests
-  include RailsishRubyUnit::Executable.model_class?::Examples
+  #  include RailsishRubyUnit::Executable.model_class?::Examples
+  module Examples
+  end #  Examples
+  include Examples
 
   # rubocop:disable Style/MethodName
   def test_Minimal_DefinitionalConstants

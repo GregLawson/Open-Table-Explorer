@@ -1,6 +1,6 @@
 ###########################################################################
-#    Copyright (C) 2011-2015 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2011-2015 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -9,6 +9,7 @@ require 'virtus'
 require_relative '../../app/models/no_db.rb'
 require 'fileutils'
 require_relative '../../app/models/parse.rb'
+require_relative '../../app/models/generic_type.rb'
 # see http://semver.org/
 class Version # semantic version and base class for incompatible versioning convertions
   # see http://semver.org/
@@ -85,57 +86,7 @@ class Version # semantic version and base class for incompatible versioning conv
   include Assertions
   extend Assertions::ClassMethods
   # self.assert_pre_conditions
-  module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
-    include Version::Constants
-    Consecutive_string = '1.2.3'.freeze
-
-    Sorted_version_names = ['1.9.0', '1.10.0', '1.11.0.'].freeze
-    First_example_version_name = Sorted_version_names[0]
-    First_example_version = Version.new_from_string(First_example_version_name)
-  end # Examples
 end # Version
-
-require_relative '../../app/models/shell_command.rb'
-
-class Acquisition
-  include Virtus.value_object
-  values do
-    attribute :generic_type, Regexp
-  end # values
-
-	def acquisition
-		if @cached_acquisition.nil?
-			@cached_acquisition = acquire!
-		else
-			@cached_acquisition
-		end # if
-	end # acquisition
-	
-	def to_hash
-		if @cached_to_hash.nil?
-			@cached_to_hash = acquisition.capture?(@generic_type).output
-		else
-			@cached_to_hash
-		end # if
-	end # to_hash
-end # Acquisition
-
-class ShellAcquisition < Acquisition
-  include Virtus.value_object
-  values do
-    attribute :acquisition, String
-  end # values
-
-	def acquire!
-    ShellCommands.new(@acquisition_string).output
-	end # acquire
-  module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
-#    include DefinitionalConstants
-    Ruby_version = ShellAcquisition.new(acquisition: 'ruby') # system version
-    Linux_version = ShellAcquisition.new(acquisition: 'uname -a') # system version
-    Ruby_file_version = ShellAcquisition.new(acquisition: 'file /usr/bin/ruby2.2')
-  end # Examples
-end # ShellAcquisition
 
 class ReportedVersion < Version # version can be reported by a command
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
@@ -161,12 +112,4 @@ class ReportedVersion < Version # version can be reported by a command
 
   def versions
   end # versions
-  module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
-    include DefinitionalConstants
-    Ruby_version = ReportedVersion.new(test_command: 'ruby') # system version
-    Ruby_whereis = Ruby_version.whereis
-    Ruby_which = Ruby_version.which
-    Linux_version = ReportedVersion.new(test_command: 'uname', version_reporting_option: '-a') # system version
-    Ruby_file_version = ReportedVersion.new(test_command: 'file /usr/bin/ruby2.2', version_reporting_option: '')
-  end # Examples
 end # ReportedVersion

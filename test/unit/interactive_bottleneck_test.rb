@@ -15,6 +15,9 @@ class InteractiveBottleneckTest < TestCase
   # include InteractiveBottleneck
   # extend InteractiveBottleneck::ClassMethods
   include InteractiveBottleneck::Examples
+  Dir['test/data_sources/repository20*'].each do |test_repository|
+    Repository.delete_existing(test_repository)
+  end # each
   def setup
     @temp_repo = Repository.create_test_repository
     refute_equal(Repository::This_code_repository, @temp_repo)
@@ -176,11 +179,10 @@ class InteractiveBottleneckTest < TestCase
     assert_instance_of(Array, dirty_test_maturities)
     unless dirty_test_maturities.empty?
       refute_empty(dirty_test_maturities)
-      #	.	refute_nil(dirty_test_maturities[0])
       a_dirty_test_maturity = dirty_test_maturities[0]
       start_message = 'a_dirty_test_maturity = ' + a_dirty_test_maturity.inspect + "\n"
       start_message += 'a_dirty_test_maturity.test_executable.testable? = ' + a_dirty_test_maturity.test_executable.testable?.inspect + "\n"
-      #	refute_nil(dirty_test_maturities[0].get_error_score!, message)
+      #		refute_nil(a_dirty_test_maturity.get_error_score!, message)
       dirty_test_maturities.each do |test_maturity|
         refute_nil(test_maturity, test_maturity.inspect)
         assert_instance_of(TestMaturity, test_maturity)
@@ -189,11 +191,17 @@ class InteractiveBottleneckTest < TestCase
         message += "\n"
         assert_includes([1, 0, -1, nil], test_maturity.test_executable <=> a_dirty_test_maturity.test_executable, message)
         #		refute_nil(test_maturity.get_error_score!, message)
-        assert_includes([1, 0, -1, nil], test_maturity.get_error_score! <=> dirty_test_maturities[0].get_error_score!, message)
+        assert_includes([1, 0, -1, nil], test_maturity.get_error_score! <=> a_dirty_test_maturity.get_error_score!, message)
         assert_includes([1, 0, -1, nil], test_maturity <=> a_dirty_test_maturity, message)
       end # each
     end # if
 
+    dirty_test_maturities = dirty_test_maturities.compact.sort do |n1, n2|
+      comparison = n1 <=> n2
+      if comparison.nil?
+
+      end # if
+    end # sort
     dirty_test_maturities.each do |test_maturity|
       refute_nil(test_maturity, test_maturity.inspect)
       assert_instance_of(TestMaturity, test_maturity)
@@ -206,7 +214,7 @@ class InteractiveBottleneckTest < TestCase
     sorted.sort.map do |test_maturity|
       target_branch = test_maturity.deserving_branch
       if test_maturity.nil? # rercursion avoided
-        puts 'rercursion avoided' + test_maturity.inspect
+        puts 'recursion avoided' + test_maturity.inspect
       else
         refute_nil(test_maturity, test_maturity.inspect)
         assert_instance_of(TestMaturity, test_maturity, test_maturity.inspect)
@@ -232,7 +240,7 @@ class InteractiveBottleneckTest < TestCase
     target_branch = :passed
     push = @temp_repo.something_to_commit? # remember
     if push
-      @temp_repo.git_command('stash save') # .assert_post_conditions
+      @temp_repo.stash!.assert_post_conditions # .assert_post_conditions
       changes_branch = :stash
     end # if
 
@@ -244,7 +252,7 @@ class InteractiveBottleneckTest < TestCase
       ret = @temp_repo.validate_commit(changes_branch, [@temp_repo.path + 'README'])
     end # if
     if push
-      @temp_repo.git_command('stash apply --quiet') # .assert_post_conditions
+      @temp_repo.git_command('stash apply --quiet').assert_post_conditions
     end # if
     assert_equal(push_branch, @temp_interactive_bottleneck.safely_visit_branch(push_branch) { push_branch })
     assert_equal(push_branch, @temp_interactive_bottleneck.safely_visit_branch(push_branch) { @temp_repo.current_branch_name? })
@@ -270,12 +278,12 @@ class InteractiveBottleneckTest < TestCase
   end # confirm_commit
 
   def test_validate_commit
-    @temp_repo # .assert_nothing_to_commit
+    @temp_repo.assert_nothing_to_commit
     @temp_repo.force_change
     #	assert(@temp_repo.something_to_commit?)
     #	@temp_repo.assert_something_to_commit
     #	@temp_repo.validate_commit(:master, [@temp_repo.path+'README'])
-    @temp_repo.git_command('stash')
+    @temp_repo.stash!
     @temp_repo.git_command('checkout passed')
     @temp_interactive_bottleneck.validate_commit(:stash, [@temp_repo.path + 'README'])
   end # validate_commit
@@ -301,5 +309,7 @@ class InteractiveBottleneckTest < TestCase
   end # assert_post_conditions
 
   def test_Examples
+    refute_nil(TestInteractiveBottleneck.interactive, TestInteractiveBottleneck.inspect)
+    assert_equal(:interactive, TestInteractiveBottleneck.interactive, TestInteractiveBottleneck.inspect)
   end # Examples
 end # InteractiveBottleneck

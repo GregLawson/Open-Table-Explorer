@@ -212,14 +212,4 @@ class Samba
   include Assertions
   extend Assertions::ClassMethods
   # self.assert_pre_conditions
-  module Examples
-    include Constants
-    Recent_central_ip = '172.31.42.182'.freeze
-    Comment_line = '# /etc/fstab: static file system information.'.freeze
-    Test_line = '//Seagate-414103/Public	/media/central	cifs				auto,rw,ip=172.31.42.182,credentials=/home/greg/.samba/credentials/central,file_mode=0777,dir_mode=0777,serverino,acl	0	0'.freeze
-    Options_string = 'auto,rw,ip=' + Recent_central_ip = ',credentials=/home/greg/.samba/credentials/central,file_mode=0777,dir_mode=0777,serverino,acl'.freeze
-    Default_workgroup = 'WORKGROUP'.freeze
-    Default_server =  `hostname`.freeze
-    Default_share = 'IPC$'.freeze
-  end # Examples
 end # Samba

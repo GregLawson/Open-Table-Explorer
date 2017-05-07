@@ -112,6 +112,8 @@ module Common
         row = find_or_initialize(keys)
         row.process(acquisitionData)
         row.printLog
+    else
+    #			Global::log.info(acquisitionData)
       end
 
       wait
@@ -177,6 +179,8 @@ module Common
         if notModifieds.modulo(10) == 0
           #				Global::log.info("notModifieds=#{notModifieds}")
           #				Global::log.info("@acquisitionData=#{@acquisitionData}")
+      else
+     #				Global::log.info("not updated")
         end
       end
       # sleep self[:interval]

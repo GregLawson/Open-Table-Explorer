@@ -8,18 +8,23 @@
 require_relative '../../app/models/test_environment_test_unit.rb'
 # require_relative '../../app/models/test_environment_minitest.rb'
 require_relative '../assertions/command_line_assertions.rb'
-require_relative '../../app/models/unit_maturity.rb'
+require_relative '../../app/models/editor.rb'
+require_relative '../../app/models/merge.rb'
 class CommandLineTest < TestCase
   include CommandLine::Examples
   module Examples
-  Test_unit = RailsishRubyUnit.new(model_basename: :test_run)
-  require File.expand_path(Test_unit.model_pathname?)
-  Test_unit_commandline = CommandLine.new(test_executable: Test_unit.model_test_pathname?, unit_class: Test_unit.model_class?, argv: ['error_score?', $PROGRAM_NAME])
-  Not_virtus_unit = RailsishRubyUnit.new(model_basename: :unit_maturity)
-  Not_virtus_unit_commandline = CommandLine.new(test_executable: Not_virtus_unit.model_test_pathname?, unit_class: Not_virtus_unit.model_class?, argv: ['help', $PROGRAM_NAME])
-  No_arg_run = CommandLine.new(argv: '')
-#        test_run = ShellCommands.new('ruby -W0 script/command_line.rb ' + args)
-  Help_run = CommandLine.new(argv: '--help')
+    Test_test_executable = TestExecutable.new_from_path('app/models/test_run.rb')
+    require File.expand_path(Test_test_executable.unit.model_pathname?)
+    Test_unit_commandline = CommandLine.new(test_executable: Test_test_executable, argv: ['error_score?', $PROGRAM_NAME])
+    Not_virtus_test_executable = TestExecutable.new_from_path('app/models/editor.rb')
+    Not_virtus_unit_commandline = CommandLine.new(test_executable: Not_virtus_test_executable, argv: ['help', $PROGRAM_NAME])
+    require File.expand_path(Not_virtus_test_executable.unit.model_pathname?)
+    No_side_effects_test_executable = TestExecutable.new_from_path('app/models/merge.rb')
+    No_side_effects_sub_command_line = CommandLine.new(test_executable: No_side_effects_test_executable, argv: ['merge', 'state?'])
+    No_side_effects_default_test_executable = TestExecutable.new_from_path('app/models/editor.rb')
+    No_side_effects_default_line = CommandLine.new(test_executable: No_side_effects_default_test_executable, argv: ['version_comparison'])
+    No_arg_run = CommandLine.new(argv: '')
+    Help_run = CommandLine.new(argv: '--help')
   end # Examples
   include Examples
   def test_ruby_assertions
@@ -41,7 +46,7 @@ class CommandLineTest < TestCase
     end # if
     #	assert_equal(Command, :command_line)
     assert_equal(Script_class, CommandLine)
-    assert_equal(Script_command_line.unit_class, Script_class)
+    assert_equal(Script_command_line.test_executable.unit.model_class?, Script_class)
   end # DefinitionalConstants
 
   def test_argument_type
@@ -54,8 +59,8 @@ class CommandLineTest < TestCase
   end # argument_type
 
   def test_initialize
-    refute_nil(No_args.unit_class)
-    refute_nil(Script_command_line.unit_class)
+    refute_nil(No_args.test_executable.unit.model_class?)
+    refute_nil(Script_command_line.test_executable.unit.model_class?)
   end # values
 
   def test_arguments
@@ -114,11 +119,11 @@ class CommandLineTest < TestCase
   end # find_example?
 
   def test_make_executable_object
-    assert_includes(Test_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
+    assert_includes(Test_unit_commandline.test_executable.unit.model_class?.included_modules, Virtus::InstanceMethods)
   end # make_executable_object
 
   def test_executable_object
-    assert_includes(Test_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
+    assert_includes(Test_unit_commandline.test_executable.unit.model_class?.included_modules, Virtus::InstanceMethods)
     test_run_object = TestRun.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
     assert_equal(test_run_object.methods, Test_unit_commandline.executable_object.methods)
     #	assert_equal(test_run_object, Test_unit_commandline.executable_object)
@@ -128,7 +133,7 @@ class CommandLineTest < TestCase
     assert_equal($PROGRAM_NAME, Test_unit_commandline.executable_object.test_executable.argument_path.relative_pathname.to_s)
 
     assert_includes(CommandLine.included_modules, Virtus::InstanceMethods)
-    refute_includes(Not_virtus_unit_commandline.unit_class.included_modules, Virtus::InstanceMethods)
+    refute_includes(Not_virtus_unit_commandline.test_executable.unit.model_class?.included_modules, Virtus::InstanceMethods)
     test_run_object = CommandLine.new(test_executable: TestExecutable.new_from_path($PROGRAM_NAME))
     #	assert_equal(test_run_object.methods, Test_unit_commandline.executable_object.methods)
     #	assert_equal(test_run_object, Test_unit_commandline.executable_object)
@@ -142,8 +147,8 @@ class CommandLineTest < TestCase
   def test_candidate_commands
     assert_equal(-1, Script_command_line.method(:initialize).arity)
     #	assert_equal(0, Script_command_line.method(:candidate_commands).arity)
-    #	assert_equal(-2, No_args.unit_class.method(:initialize).arity)
-    #	assert_equal(-2, Script_command_line.unit_class.method(:initialize).arity)
+    #	assert_equal(-2, No_args.test_executable.unit.model_class?.method(:initialize).arity)
+    #	assert_equal(-2, Script_command_line.test_executable.unit.model_class?.method(:initialize).arity)
 
     refute_equal([], Script_command_line.executable_object.methods(true))
     refute_equal([], Test_unit_commandline.executable_object.methods(true))

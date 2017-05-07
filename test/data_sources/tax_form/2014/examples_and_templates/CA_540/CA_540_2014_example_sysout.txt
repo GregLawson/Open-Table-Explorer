@@ -1,7 +1,11 @@
 Writing results to file:  /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/tax_form/2014/examples_and_templates/CA_540//CA_540_2014_example_out.txt
 CA-540 2014 - v12.00
 
+<<<<<<< HEAD
 Title:  CA State Tax Form 540 - 2014 -- Example		Sun Sep 25 05:01:08 2016
+=======
+Title:  CA State Tax Form 540 - 2014 -- Example		Mon Feb 20 09:39:33 2017
+>>>>>>> stash
 
 Status = Married/Joint (2)
 

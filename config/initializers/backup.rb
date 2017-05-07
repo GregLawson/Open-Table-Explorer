@@ -1,5 +1,5 @@
-Backup_directories = {{'/media/greg/' => 
+Backup_directories = {{'/dev/disk/by-uuid/' => 
 						'/media/greg/Seagate Backup Plus Drive/Backup Drives/'} =>
-						{'6ebdfdee-acca-425b-b03e-00d60e6d7d09/' => 
-						'6ebdfdee-acca-425b-b03e-00d60e6d7d09/'}
+						{'976bed30-38d8-43a3-a4d4-6869fb636fcb/' => 
+						'976bed30-38d8-43a3-a4d4-6869fb636fcb/'}
 	}

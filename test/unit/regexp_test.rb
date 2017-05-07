@@ -225,6 +225,26 @@ class CharacterClassTest < TestCase
 			assert_equal(Binary_bytes, all.sort)
 
 		end # select_characters
+
+		def test_nonprintable_characters
+			assert_include(CharacterEscape.select_characters(:nonprintable), "\x80")
+			CharacterEscape.select_characters(:nonprintable).each do |character|
+				escape = Regexp.escape(character)
+				assert_equal(1, character.size, CharacterEscape.inspect_character(character) + ' is not a nonprintable character.')
+#				assert_equal('\x' + "%02X" % character.codepoints[0], escape, CharacterEscape.inspect_character(character))
+			end # each
+		end # nonprintable_characters
+
+  def test_regexp_rescued
+    assert_equal(/]/, CharacterEscape.regexp_rescued(']'))
+    assert_equal(nil, CharacterEscape.regexp_rescued('['))
+    assert_equal(/}/, CharacterEscape.regexp_rescued('}'))
+    assert_equal(/{/, CharacterEscape.regexp_rescued('{'))
+    assert_equal(nil, CharacterEscape.regexp_rescued(')'))
+    assert_equal(nil, CharacterEscape.regexp_rescued('('))
+    assert_nothing_raised(RuntimeError) { CharacterEscape.regexp_rescued(']') } # Regexp error rescued
+    assert_raises(RuntimeError) { CharacterEscape.regexp_rescued(/]/) } # Regexp literal syntax error
+  end # regexp_rescued
 end # CharacterEscape
 
 class CharacterClassTest < TestCase
@@ -282,31 +302,19 @@ class CharacterEscapeTest < TestCase
 		assert_raises(RegexpError) {Regexp.promote(5)}
 		assert_raises(RegexpError) {Regexp.promote(2..5)}
 	end #promote
-
-  def test_regexp_rescued
-    assert_equal(/]/, CharacterEscape.regexp_rescued(']'))
-    assert_equal(nil, CharacterEscape.regexp_rescued('['))
-    assert_equal(/}/, CharacterEscape.regexp_rescued('}'))
-    assert_equal(/{/, CharacterEscape.regexp_rescued('{'))
-    assert_equal(nil, CharacterEscape.regexp_rescued(')'))
-    assert_equal(nil, CharacterEscape.regexp_rescued('('))
-    assert_nothing_raised(RuntimeError) { CharacterEscape.regexp_rescued(']') } # Regexp error rescued
-    assert_raises(RuntimeError) { CharacterEscape.regexp_rescued(/]/) } # Regexp literal syntax error
-  end # regexp_rescued
-
-		def test_nonprintable_characters
-			assert_include(CharacterEscape.select_characters(:nonprintable), "\x80")
-			CharacterEscape.select_characters(:nonprintable).each do |character|
-				escape = Regexp.escape(character)
-				assert_equal(1, character.size, CharacterEscape.inspect_character(character) + ' is not a nonprintable character.')
-#				assert_equal('\x' + "%02X" % character.codepoints[0], escape, CharacterEscape.inspect_character(character))
-			end # each
-		end # nonprintable_characters
 		
   def test_terminator_regexp
+		self_test_program = "a\nb\n"
+		lines = self_test_program.split("\n")
+		splits = self_test_program.split(Regexp.terminator_regexp("\n"))[1..-1]
+#		assert_equal(lines, splits)
   end # terminator_regexp
 
   def test_delimiter_regexp
+		self_test_program = "a\nb"
+		lines = self_test_program.split("\n")
+		splits = self_test_program.split(Regexp.delimiter_regexp("\n"))[1..-1]
+		assert_equal(lines, splits)
   end # delimiter_regexp
 
   def test_canonical_repetition_tree

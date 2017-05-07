@@ -12,12 +12,15 @@ require_relative 'repository.rb'
 require_relative 'unit_maturity.rb'
 require_relative 'editor.rb'
 module Types
-	include Dry::Types.module
+  include Dry::Types.module
 end # Types
 class Merge
   module Constants
+    Library_unit = RailsishRubyUnit.new_from_path(__FILE__)
+    Library_class = Library_unit.model_class?
   end # Constants
   include Constants
+
   module ClassMethods
     include Constants
   end # ClassMethods
@@ -29,41 +32,11 @@ class Merge
   include Virtus.value_object
   values do
     attribute :repository, Repository, default: Repository::This_code_repository
-
     attribute :source_commit, Branch, default: Branch.new(name: :passed)
-    attribute :target_branch_name, Symbol, default: Repository::This_code_repository.current_branch_name?
+    attribute :target_branch_name, Symbol, default: Branch.current_branch_name?(Repository::This_code_repository)
     attribute :interactive, Symbol, default: :interactive # non-defaults are primarily for non-interactive testing testing
     attribute :editor, Editor, default: Default_editor
   end # values
-  def standardize_position!
-    abort_rebase_and_merge!
-    @repository.git_command('checkout master')
-  end # standardize_position!
-
-  def abort_rebase_and_merge!
-    if File.exist?('.git/rebase-merge/git-rebase-todo')
-      @repository.git_command('rebase --abort')
-    end
-    #	@repository.git_command("stash save").assert_post_conditions
-    if File.exist?('.git/MERGE_HEAD')
-      @repository.git_command('merge --abort')
-    end # if
-  end # abort_rebase_and_merge!
-
-  def state?
-    state = []
-    state << :rebase if File.exist?('.git/rebase-merge/git-rebase-todo')
-    if File.exist?('.git/MERGE_HEAD')
-      state << :merge
-    end # if
-    state << if @repository.something_to_commit?
-               :dirty
-             else
-               :clean
-             end # if
-    state
-  end # state?
-
   def discard_log_file_merge
     unmerged_files = @repository.status
     unmerged_files.each do |conflict|
@@ -125,7 +98,7 @@ class Merge
       #		puts "status.changed=#{status.changed.inspect}"
       #		puts "status.deleted=#{status.deleted.inspect}"
       #		puts "@repository.something_to_commit?=#{@repository.something_to_commit?.inspect}"
-      @repository.git_command('stash save --include-untracked')
+      @repository.stash!
       merge_cleanup
       changes_branch = :stash
     end # if
@@ -201,10 +174,4 @@ class Merge
   extend Assertions::ClassMethods
   # TestWorkFlow.assert_pre_conditions
   include Constants
-  module Examples
-    TestSelf = TestExecutable.new(argument_path: File.expand_path($PROGRAM_NAME))
-    TestMerge = Merge.new(interactive: :interactive, repository: Repository::This_code_repository)
-    include Constants
-  end # Examples
-  include Examples
 end # Merge

@@ -39,10 +39,10 @@ class TestExecutableTest < TestCase
   def test_regression_unit_test_file
     assert_equal(RepositoryPathname.new_from_path('test/unit/test_executable_test.rb').to_s, TestSelf.regression_unit_test_file.to_s)
     assert_equal(RepositoryPathname.new_from_path($PROGRAM_NAME).expand_path.to_s, TestSelf.regression_unit_test_file.to_s)
-    #	assert_equal(Pathname.new(TestMinimal.argument_path).expand_path.to_s, TestMinimal.regression_unit_test_file.to_s)
-    #	assert_equal(Pathname.new(Not_unit.argument_path).expand_path.to_s, Not_unit.regression_unit_test_file.to_s)
-    #	assert_equal(Pathname.new(Not_unit_executable.argument_path).expand_path.to_s, Not_unit_executable.regression_unit_test_file.to_s)
-    #	assert_equal(Pathname.new(Unit_non_executable.argument_path).expand_path.to_s, Unit_non_executable.regression_unit_test_file.to_s)
+    assert_equal(Pathname.new(TestMinimal.argument_path).expand_path.to_s, TestMinimal.regression_unit_test_file.to_s)
+    assert_equal(Pathname.new(Not_unit.argument_path).expand_path.to_s, Not_unit.regression_unit_test_file.to_s)
+    assert_equal(Pathname.new(Not_unit_executable.argument_path).expand_path.to_s, Not_unit_executable.regression_unit_test_file.to_s)
+    assert_equal(Pathname.new(Unit_non_executable.argument_path).expand_path.to_s, Unit_non_executable.regression_unit_test_file.to_s)
     assert_equal(true, Non_test.generatable_unit_file?)
     assert_equal('test/unit/test_executable_test.rb', Non_test.regression_unit_test_file.relative_pathname.to_s)
   end # regression_unit_test_file
@@ -102,6 +102,8 @@ class TestExecutableTest < TestCase
       line[11..-1]
     end # map
     assert_equal(test_names, TestTestExecutable.all_test_names)
+    refute_empty(test_names.compact, grep_run.output.inspect)
+    refute_empty(test_names.compact, grep_run.inspect)
     assert_include(TestSelf.all_test_names, 'all_test_names')
     assert_include(TestMinimal.all_test_names, 'Minimal_Examples')
   end # all_test_names
@@ -113,6 +115,7 @@ class TestExecutableTest < TestCase
       line[6..-1]
     end # map
     assert_equal(library_method_names, TestTestExecutable.all_library_method_names)
+    assert_include(TestSelf.all_library_method_names, 'all_test_names')
   end # all_library_method_names
 
   def test_Examples

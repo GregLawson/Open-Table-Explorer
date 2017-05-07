@@ -17,7 +17,7 @@ class CommandLine # < Command
         message += "\n AssertionsModule.instance_methods = " + AssertionsModule.instance_methods(false).inspect
         exception = Exception.new(message)
         raise exception unless AssertionsModule.instance_methods(false).include?(:assert_equal)
-#        assert_nested_scope_submodule(:Assertions, CommandLine)
+        assert_nested_scope_submodule(:Assertions, CommandLine)
       end # assert_pre_conditions
 
       def assert_post_conditions
@@ -57,6 +57,7 @@ class CommandLine # < Command
       message += "\n AssertionsModule.instance_methods = " + AssertionsModule.instance_methods(false).inspect
       exception = Exception.new(message)
       raise exception unless AssertionsModule.instance_methods(false).include?(:assert_equal)
+      assert_equal(Unit.new_from_path(@executable).model_class?, @unit_class)
     end # assert_pre_conditions
 
     def assert_post_conditions
@@ -67,7 +68,8 @@ class CommandLine # < Command
   # TestWorkFlow.assert_pre_conditions
   extend RubyAssertions
   module Examples
-    No_args = CommandLine.new(test_executable: TestExecutable.new_from_path($PROGRAM_NAME), unit_class: CommandLine, argv: [])
+    include Constants
+    No_args = CommandLine.new(executable: $PROGRAM_NAME, unit_class: CommandLine, argv: [])
 
     Readme_opts = Trollop.options do
       opt :monkey, 'Use monkey mode' # flag --monkey, default false

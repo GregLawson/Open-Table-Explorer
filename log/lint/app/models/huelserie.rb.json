@@ -1,0 +1,4 @@
+{"metadata":{"rubocop_version":"0.39.0","ruby_engine":"ruby","ruby_version":"2.2.4","ruby_patchlevel":"230","ruby_platform":"x86_64-linux-gnu"},"files":[{"path":"app/models/huelserie.rb","offenses":[
+{"severity":"convention","message":"Missing top-level class documentation comment.","cop_name":"Style/Documentation","corrected":null,"location":{"line":1,"column":1,"length":5}},
+{"severity":"convention","message":"Use 2 (not 0) spaces for indentation. (https://github.com/bbatsov/ruby-style-guide#spaces-indentation)","cop_name":"Style/IndentationWidth","corrected":true,"location":{"line":2,"column":1,"length":0}},
+{"severity":"convention","message":"Inconsistent indentation detected.","cop_name":"Style/IndentationConsistency","corrected":true,"location":{"line":3,"column":1,"length":20}}]}],"summary":{"offense_count":3,"target_file_count":1,"inspected_file_count":1}}

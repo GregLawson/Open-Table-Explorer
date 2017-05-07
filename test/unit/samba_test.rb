@@ -5,11 +5,25 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'test_environment'
+#require_relative 'test_environment'
+require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/samba.rb'
 class SambaTest < TestCase
   # include DefaultTests
-  include RailsishRubyUnit::Executable.model_class?::Examples
+#  include RailsishRubyUnit::Executable.model_class?::Examples
+
+  module Examples
+		include Samba::Constants
+    Recent_central_ip = '172.31.42.182'.freeze
+    Comment_line = '# /etc/fstab: static file system information.'.freeze
+    Test_line = '//Seagate-414103/Public	/media/central	cifs				auto,rw,ip=172.31.42.182,credentials=/home/greg/.samba/credentials/central,file_mode=0777,dir_mode=0777,serverino,acl	0	0'.freeze
+    Options_string = 'auto,rw,ip=' + Recent_central_ip = ',credentials=/home/greg/.samba/credentials/central,file_mode=0777,dir_mode=0777,serverino,acl'.freeze
+    Default_workgroup = 'WORKGROUP'.freeze
+    Default_server =  `hostname`.freeze
+    Default_share = 'IPC$'.freeze
+  end # Examples
+  include Examples
+
   def test_Constants
     line = Samba::Examples::Comment_line
     capture = line.capture?(Comment_regexp)
@@ -30,7 +44,8 @@ class SambaTest < TestCase
     fstab_regexp = File_system_image_regexp.capture(:filesystem_image)
     capture = line.capture?(Comment_regexp | fstab_regexp)
     assert_kind_of(Capture, capture, 'capture should not be nil; raw_captures can be nil')
-    assert_equal(nil, capture[:comment])
+    assert_includes(capture.instance_variables, :@comment, capture.inspect)
+		assert_equal(nil, capture[:comment])
     assert_equal('//Seagate-414103/Public', capture.output[:filesystem_image])
 
     fstab_regexp *= Whitespace_delimiter * Pathname_regexp.capture(:mount_point)
@@ -98,6 +113,7 @@ class SambaTest < TestCase
     assert_equal('0777', options[:dir_mode])
     assert_equal(nil, options[:serverino])
     assert_equal(nil, options[:acl])
+    assert_equal(nil, options[:ip])
     ping = ShellCommands.new('ping -n -q -c 1 ' + options[:ip])
     ping.assert_pre_conditions
     assert_equal(0, ping.process_status.exitstatus, ping.inspect)

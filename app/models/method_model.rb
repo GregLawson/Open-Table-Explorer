@@ -5,7 +5,11 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'virtus'
+require 'dry-types'
+module Types
+	include Dry::Types.module
+end # Types
+
 # require_relative '../../app/models/no_db.rb'
 class Method # monkey patch
   def default_arguments?
@@ -97,8 +101,8 @@ class MethodModel # <ActiveRecord::Base
 
     def instance_method_models(ancestor)
       MethodModel.method_names(ancestor).map do |method_name|
-        MethodModel.new(ancestor: ancestor, method_name: method_name, instance: true)
-      end.sort { |x, y| x.theMethod.arity <=> y.theMethod.arity && x.method_name.to_s <=> y.method_name.to_s } # map
+        method_model = MethodModel.new(ancestor: ancestor, method_name: method_name, instance: true)
+      end.sort { |x, y|  x.method_name.to_s <=> y.method_name.to_s } # map
     end # instance_method_models
 
     def prototype_list(ancestor, _options = { ancestor_qualifier: true, argument_delimeter: '(' })
@@ -271,20 +275,29 @@ class MethodModel # <ActiveRecord::Base
     end # if
     ret += @method_name.to_s
     method = theMethod
-    ret += options[:argument_delimeter]
-    ret += (['arg'] * method.required_arguments).join(' ')
-    ret += (method.default_arguments? ? ' ...' : '')
-    ret += if options[:argument_delimeter] == '('
-             ')'
-           else
-             ''
-            end # if')'
-#    ret += "\n"
+		if method.nil?
+			ret += ' method object not found.'
+		else
+			ret += options[:argument_delimeter]
+			ret += (['arg'] * method.required_arguments).join(' ')
+			ret += (method.default_arguments? ? ' ...' : '')
+			ret += if options[:argument_delimeter] == '('
+							 ')'
+						 else
+							 ''
+							end # if')'
+		end # if
   end # prototype
 
   def theMethod
     if @instance  # look it up! Why? Beause can't create fully? Existence check?
-      MethodModel.method_query(@method_name.to_sym, @ancestor)
+      method_query = MethodModel.method_query(@method_name.to_sym, @ancestor)
+			if method_query.nil?
+				message = 'method_query is nil. method_name = ' + @method_name.to_s + ', ancestor = ' + @ancestor.inspect
+				raise Exception.new(message)
+			else
+				method_query
+			end # if
     else
       @ancestor.method(@method_name.to_sym)
     end # if

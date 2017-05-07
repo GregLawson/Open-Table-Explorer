@@ -1,0 +1,363 @@
+bash --debug ~/.bash-git-prompt/git-prompt-help.sh 
+~/.bash-git-prompt/git-prompt-help.sh 
+~/.bash-git-prompt/gitprompt-help.sh 
+~/.bash-git-prompt/gitprompt.sh 
+~/.bash-git-prompt/gitstatus.py
+~/.bash-git-prompt/gitstatus.sh 
+bash -x ~/.bash-git-prompt/git-prompt-help.sh 
+bash -X ~/.bash-git-prompt/git-prompt-help.sh 
+bash -x ~/.profile
+cat ~/.bash-git-prompt/git-prompt-help.sh 
+cat ./test/unit/x_test.el
+cd ~/Desktop/src/Open-Table-Explorer/
+cd /home/greg
+cp app/models/minimal2.rb app/models/boot.rb
+cp test/unit/minimal2_test.rb test/unit/boot_test.rb
+df -h
+df -h /dev/sda15
+dmesg |less
+echo $PROMPT_COMMAND 
+emacs
+emacs app/models/boot.rb test/unit/boot_test.rb
+emacs app/models/editor.rb test/unit/editor_test.rb 
+emacs  app/models/merge.rb test/unit/merge_test.rb
+emacs  app/models/merge.rb test/unit/merge_test.rb -f "compile"
+emacs  app/models/merge.rb test/unit/merge_test.rb -f "(compile (quote 'ruby test/unit/merge_test.rb'))"
+emacs  app/models/merge.rb test/unit/merge_test.rb -f "compile 'ruby test/unit/merge_test.rb'"
+emacs  app/models/merge.rb test/unit/merge_test.rb -f "compile ruby test/unit/merge_test.rb"
+emacs  app/models/merge.rb test/unit/merge_test.rb -f "princ"
+emacs  app/models/merge.rb test/unit/merge_test.rb -f "(princ "hello world")"
+emacs  app/models/merge.rb test/unit/merge_test.rb -f "princ "hello world""
+emacs ~/.bashrc
+emacs --batch --script="./test/unit/x_test.el"
+emacsclient
+emacsclient  app/models/merge.rb test/unit/merge_test.rb
+emacsclient --help
+emacsclient --tty
+emacsclient --tty  app/models/merge.rb test/unit/merge_test.rb
+emacs --daemon
+emacs -e " (random t)
+emacs --eval="(+ 2 4)"
+emacs --eval="(emerge \"app/models/merge.rb\" \"test/unit/merge_test.rb\")"
+emacs --eval="(exit)"
+emacs --eval="(find-file \"app/models/merge.rb\")"
+emacs --eval="(find-file \"app/models/merge.rb\") (find-file \"test/unit/merge_test.rb\")"
+emacs --eval="(find-file "app/models/x.rb")"
+emacs --eval="(find-file \"app/models/x.rb\")"
+emacs --eval="(find-file app/models/x.rb)"
+emacs --eval="(princ "hellow world\n")"
+emacs --eval="(quit)"
+emacs --eval " (random t)
+emacs  -f "re-builder" &
+emacs `grep "linux .*/vmlinu" /boot/grub/grub.cfg` --eval="re-builder" &
+emacs `grep "linux .*/vmlinu" /boot/grub/grub.cfg` -f "re-builder" &
+emacs -l="./test/unit/x_test.el"
+emacs -L="./test/unit/x_test.el"
+emacs --no-splash app/models/merge.rb test/unit/merge_test.rb
+emacs --no-splash app/models/merge.rb test/unit/merge_test.rb &
+emacs ~/.profile
+emacs `pwd` --eval="re-builder"
+emacs `pwd` --eval="re-builder" &
+emacs 'pwd' --eval="re-builder"
+emacs --script
+emacs --script " (random t)
+emacs --script="./test/unit/x_test.el"
+emacs --script="./test/unit/x_test.el" --batch
+emacs test/data_sources/messages/kernel_boot 
+emacs test/data_sources/messages/messages 
+emacs test/data_sources/messages/messages &
+emacs test/data_sources/messages/messages -f re-builder
+fg
+find ./ -name *.el
+gem help
+gem help commands
+gem help query
+gem help search
+gem install rom
+gem install rom-*
+gem install rom-repository
+gem install rom-support
+gem  search
+gem  search rom
+gem  search rom-
+gem  search rom-*
+gem  search rom-sql
+gem server &
+git checkout edited && git merge testing --no-commit
+git checkout edited test/unit/boot_test.rb
+git checkout edited test/unit/boot-test.rb
+git checkout stash app/models/boot.rb
+git checkout stash test/unit/boot_test.rb
+git checkout testing
+git checkout testing app/models/boot.rb
+git checkout testing app/models/enumerator.rb
+git checkout testing app/models/enurator.rb
+git checkout testing && git merge passed --no-commit
+git checkout testing script/merge.rb
+git checkout testing test/unit/boot_test.rb
+git checkout testing test/unit/enumerator_test.rb
+git-cola &
+git diff app/models/unit_maturity.rb
+git  merge testing --no-commit
+git mergetool
+git reflog --all -- test/data_sources/*/kern*
+git reflog -p --all -- test/data_sources/*/kern*
+git reflog -p -S "when :merge" --all -- {app/models,test/*}/*.rb
+git reflog-p -S "when :merge" --all -- {app/models,test/*}/*.rb
+git reflog -p -S "when :merge" --all -- {script,app/models,test/*}/*.rb
+git reflog -p -S "when :merge" --all -- script/merge.rb
+git reflog -S "when :"--all -- script/*.rb
+git reflog -S "when" --all  script/*.rb
+git reflog -S "when"--all  script/*.rb
+git reflog -S "when"--all -- script/*.rb
+git reflog -S "when :merge"--all
+git reflog -S "when :merge" --all -- {app/models,test/*}/*.rb
+git reflog -S "when :merge"--all -- {app/models,test/*}/*.rb
+git stash
+git stash && git checkout edited && git merge stash --no-commit
+git stash && git checkout testing && git merge stash --no-commit
+git status
+gpm
+gpm --help
+gpm -t help
+grep "assert_.*exist" {app/models,test/*}/*.rb
+grep "assert_path_exist" {app/models,test/*}/*.rb
+grep "assert_path.*exist" {app/models,test/*}/*.rb
+grep "assert_path_exist" {script,app/models,test/*}/*.rb
+grep "assert_path.*_exist" {script,app/models,test/*}/*.rb
+grep "_contain" {app/models,test/*}/*.rb
+grep "def to_hash" {app/models,test/*}/*.rb
+grep "digit]]" {script,app/models,test/*}/*.rb
+grep "hexdigit" {script,app/models,test/*}/*.rb
+grep -i "dry" {app/models,test/*}/*.rb
+grep -i "dry-types" {app/models,test/*}/*.rb
+grep "_include" {app/models,test/*}/*.rb
+grep -i "require.*dry" {app/models,test/*}/*.rb
+grep -i "require.*rom" {app/models,test/*}/*.rb
+grep -i "rom" {app/models,test/*}/*.rb
+grep -i "Version" {app/models,test/*}/*.rb
+grep linux /boot/grub/*
+grep "linux" test/data_sources/messages/messages 
+grep "linux  */vmlinu" /boot/grub/*
+grep "linux /vmlinu" /boot/grub/*
+grep "linux .*/vmlinu" /boot/grub/*
+grep "linux .*/vmlinu" /boot/grub/grub.cfg
+grep "linux .*/vmlinu" /boot/grub/grub.cfg|less
+grep -P "4.6.0.1" test/data_sources/messages/messages |less
+grep -P "linux" test/data_sources/messages/messages |less
+grep -P "Linux version 4.6.0.1-amd64" test/data_sources/messages/messages
+grep -P "Linux version 4.6.0.1-amd64" test/data_sources/messages/messages |less
+grep -P "Linux version " test/data_sources/messages/messages
+grep -P "Linux version " test/data_sources/messages/messages -B2
+grep -P "Linux version " test/data_sources/messages/messages -B3
+grep -P "Linux version " test/data_sources/messages/messages -B5
+grep "-rt" /boot/grub/*
+grep ".*-rt" /boot/grub/*
+grep "start" {script,app/models,test/*}/*.rb
+grep "start" {script,app/models,test/*}/regexp*.rb
+grep system /boot/grub/*
+grep "Version" {app/models,test/*}/*.rb
+grep "when :merge" {app/models,test/*}/*.rb
+grep "xdigit" {script,app/models,test/*}/*.rb
+head  ~/.bash*
+head  ~/.bash-git-prompt/*
+head .bash-git-prompt/*
+head  ~/.bash-git-prompt/*.rb
+head -r ~/.bash*
+head -R ~/.bash*
+head /sys/class/net/*/*/async*
+head /sys/class/net/*/async*
+head /sys/class/net/eth0/statistics/tx_*
+head /sys/class/net/eth0/statistics/*x_dropped 
+head /sys/class/net/*/statistics/*x_dropped 
+head /sys/class/net/*/statistics/*x_err* 
+history
+      (if (> (length command-line-args-left) 0)
+info emacs
+info emacsclient
+info gpm
+jobs
+journalctl -xe
+kill %2
+less  ~/.bash-git-prompt/bash-git-prompt.rb 
+less /var/log/user.log
+locate gpm
+locate kernel_boot
+ls  ~/.bash-git-prompt/*.rb
+ls -l /boot/
+ls -l kernel_boot
+ls -l test/data_sources/
+ls -l test/data_sources/messages/
+ls script/
+ls test/data_sources/*/kern*
+ls test/data_sources/messages/messages -l
+lsusb
+lynx www.google.com
+man bash
+man bash-git-prompt
+man console-kit
+man emacs
+man gem
+man git log
+man git-prompt
+man git reflog
+man gpm
+man gpm-types
+man grep
+man head
+man -k console
+man -k console-kit
+man link
+man lynx
+man systemctl
+man systemd
+man systemd.special
+mv kernel_boot test/data_sources/messages/
+      (princ "\n")"
+        (princ (random))       )
+          (princ (random (string-to-number (nth 0 command-line-args-left))))
+ps
+ps -a
+ps -a -C init
+ps -C gpm
+ps -C gpm -f
+ps -C gpm -f;sudo zgrep --no-filename -P "gpm" /var/log/dmesg
+ps -C gpm -f;sudo zgrep --no-filename -P "gpm" /var/log/messages*
+ps -C init
+pstree
+ps xawf -eo pid,user,cgroup,args
+ps xawf -eo pid,user,cgroup,args|less
+pwd
+ruby -W0 script/command_line.rb editor edit test/unit/boot_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/branch_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/command_line_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/editor_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/enumerator_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/generic_type_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/interactive_bottleneck_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/merge_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/regexp_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/ruby_interpreter_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/schedule_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/stream_tree_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/unit_test.rb &
+ruby -W0 script/command_line.rb editor edit test/unit/version_test.rb &
+ruby -W0 script/command_line.rb editor emacs test/unit/merge_test.rb &
+ruby -W0 script/command_line.rb merge edit trial_merge master &
+ruby -W0 script/command_line.rb merge trial_merge passed
+ruby -W0 script/command_line.rb test_run error_score? test/unit/schedule_test.rb &
+ruby -W0 script/command_line.rb test_run error_score? test/unit/*_test.rb &
+ruby -W0 script/merge.rb trial_merge master
+ruby -W0 script/merge.rb trial_merge passed
+ruby -W0 test/unit/boot_test.rb
+ruby -W0 test/unit/boot_test.rb ;ruby -W0 script/command_line.rb test_run error_score? test/unit/boot_test.rb &
+ruby -W0 test/unit/enumerator_test.rb ;ruby -W0 script/command_line.rb test_run error_score? test/unit/enumerator_test.rb &
+ruby -W0 test/unit/file_tree_test.rb --name test_file_tree
+ruby -W0 test/unit/file_tree_test.rb ;ruby -W0 script/command_line.rb test_run error_score? test/unit/file_tree_test.rb &
+ruby -W0 test/unit/generic_type_test.rb --name test_GenericType_Dry
+ruby -W0 test/unit/generic_type_test.rb --name test_primary_key_index
+ruby -W0 test/unit/generic_type_test.rb --name test_specializations
+ruby -W0 test/unit/generic_type_test.rb ;ruby -W0 script/command_line.rb test_run error_score? test/unit/generic_type_test.rb &
+ruby -W0 test/unit/merge_test.rb ;ruby -W0 script/command_line.rb test_run error_score? test/unit/merge_test.rb &
+ruby -W0 test/unit/ruby_interpreter_test.rb ;ruby -W0 script/command_line.rb test_run error_score? test/unit/ruby_interpreter_test.rb &
+ruby -W0 test/unit/ruby_lines_storage_test.rb ;ruby -W0 script/command_line.rb test_run error_score? test/unit/ruby_lines_storage_test.rb &
+ruby -W0  test/unit/stream_tree_test.rb &
+ruby -W0 test/unit/stream_tree_test.rb ;ruby -W0 script/command_line.rb test_run error_score? test/unit/stream_tree_test.rb &
+ruby -W0 test/unit/unit_maturity_test.rb ;ruby -W0 script/command_line.rb test_run error_score? test/unit/unit_maturity_test.rb &
+ruby -W0 test/unit/version_test.rb --name test_acquisition
+ruby -W0 test/unit/version_test.rb --name test_to_hash
+ruby -W0 test/unit/version_test.rb ;ruby -W0 script/command_line.rb test_run error_score? test/unit/version_test.rb &
+runlevel
+/sbin/gpm
+/sbin/ifconfig 
+/sbin/runlevel
+/sbin/runlevel 
+su
+sudo apt-get install gpm
+sudo apt-get install lynx
+sudo apt-get update
+sudo aptitude
+sudo chown greg -R test/data_sources/messages/
+sudo chown greg test/data_sources/messages/messages
+sudo cp /var/log/messages test/data_sources/messages/messages
+sudo dhclient eth0
+sudo dhclient -v eth0
+sudo gem install rom
+sudo gem install rom-*
+sudo journalctl -xe
+sudo less /var/log/user.log
+sudo mkdir test/data_sources/messages
+sudo nano /etc/inittab 
+sudo reboot
+sudo /sbin/dhclient eth0 -v
+sudo /sbin/dhclient -v
+sudo su
+sudo systemctl isolate runlevel2.target;systemctl is-system-running
+sudo systemctl isolate runlevel3.target
+sudo systemctl isolate runlevel4.target
+sudo systemctl isolate runlevel5.target
+sudo systemctl list-jobs
+sudo systemctl list-machines
+sudo sysv-rc-conf 
+sudo /usr/sbdo /usr/
+sudo /usr/sbin/gpm
+sudo /usr/sbin/gpm &
+sudo /usr/sbin/gpm -m 1 -t bm
+sudo /usr/sbin/gpm -S ""
+sudo /usr/sbin/gpm -t
+sudo /usr/sbin/gpm -t bm
+sudo zgrep --no-filename -P "Command line: " /var/log/messages*
+sudo zgrep --no-filename -P "Command line: " /var/log/messages* >kernel_boot
+sudo zgrep --no-filename -P "Command line: " /var/log/messages*|sort
+
+sudo zgrep --no-filename -P "gpm" /var/log/*
+sudo zgrep --no-filename -P "gpm" /var/log/messages
+sudo zgrep --no-filename -P "gpm" /var/log/messages*
+sudo zgrep -P "0.000000]" /var/log/messages
+sudo zgrep -P "0.000000]" /var/log/messages|less
+sudo zgrep -P "Command line: " /var/log/messages*
+sudo zgrep -P "Command line " /var/log/messages|less
+sudo zgrep -P "Command line: " /var/log/messages|less
+sudo zgrep  -P "gpm" /var/log/*
+sudo zgrep -P "kernel.* single" /var/log/messages*
+sudo zgrep -P "kernel.* single$" /var/log/messages
+sudo zgrep -P "kernel.* single$" /var/log/messages*
+sudo zgrep -P "Linux version" /var/log/messages
+sudo zgrep -P "Linux version" /var/log/messages -B2
+sudo zgrep -P "Linux version" /var/log/messages* -B2
+sudo zgrep -P "Linux version" /var/log/messages* -B5
+sudo zgrep -P "perf: interrupt took too long" /var/log/messages* -A2
+sudo zgrep -P " single" /var/log/messages
+sudo zgrep -P " single" /var/log/messages*
+sudo zgrep -P " single" /var/log/messages* 
+sudo zgrep -P " single$" /var/log/messages
+sudo zgrep -P " single$" /var/log/messages*
+sudo zgrep -P " single" /var/log/messages* -B5
+sudo zgrep -P " single" /var/log/messages*|grep -v 40grub2
+sudo zgrep -P " single$" /var/log/messages*|grep -v 40grub2
+sudo zgrep -P "single" /var/log/messages*|grep -v 40grub2
+systemctl get-default
+systemctl isolate multi-user
+systemctl is-system-running
+systemctl is-system-running;systemctl list-units
+systemctl list-machines
+systemctl show
+systemctl show graphical.target
+systemctl show multi-user.target
+systemctl status
+systemctl status bluetooth.service
+systemctl status graphical.target
+systemctl status multi-user
+systemctl status multi-user.target
+systemctl status rescue.target
+systemctl stop kdm.service
+top
+uname -a
+/usr/sbin/gpm
+/usr/sbin/gpm &
+/usr/sbin/gpm -S ""
+/usr/sbin/gpm -t help
+ whereis gpm
+whereis gpm
+who
+

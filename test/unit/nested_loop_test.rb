@@ -5,7 +5,8 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative 'test_environment'
+#require_relative 'test_environment'
+require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/nested_loop.rb'
 class NestedLoopTest < TestCase
 #include DefaultTests

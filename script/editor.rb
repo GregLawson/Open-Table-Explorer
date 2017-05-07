@@ -1,22 +1,29 @@
 #!/usr/bin/ruby
 ###########################################################################
-#    Copyright (C) 2013-2015 by Greg Lawson
+#    Copyright (C) 2013-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../app/models/script_environment_no_assertions.rb'
 require_relative '../app/models/unit.rb' # before command_line
-require_relative "../app/models/#{Unit::Executable.model_basename}"
-require_relative '../app/models/command_line.rb'
-scripting_executable = TestExecutable.new_from_path($PROGRAM_NAME)
-require_relative "../app/models/#{scripting_executable.unit.model_basename}"
-script_class = RailsishRubyUnit::Executable.model_class?
+require_relative "../app/models/#{RailsishRubyUnit::Executable.model_basename}"
+require_relative '../app/models/command_line_sub_executable.rb'
+require_relative "../app/models/#{RailsishRubyUnit::Executable.model_basename}"
 
-script = CommandLine.new(executable: $PROGRAM_NAME, unit_class: script_class)
-pp ARGV if $VERBOSE
-pp script.options if $VERBOSE
+script_command_line = CommandLineExecutable.new(test_executable: TestExecutable.new_from_path($PROGRAM_NAME), argv: ARGV)
+#executable_class = RailsishRubyUnit::Executable.model_class?
+executable_class = Default_editor
+object_arguments = script_command_line.arguments[1]
+sub_command = CommandLineExecutable::Script_command_line.sub_command
+puts 'sub_command = ' + sub_command.inspect if $VERBOSE
+executable_object = executable_class.new(TestExecutable.new_from_path(object_arguments))
+sub_command_method = executable_object.method(sub_command)
 
-run = CommandLine::Script_command_line.run do
+ret = CommandLineExecutable::Script_command_line.run(sub_command_method) do
 end # do run
+puts '$VERBOSE = ' + $VERBOSE.inspect if $VERBOSE == true
+puts '$VERBOSE == false = ' + ($VERBOSE == false).inspect if $VERBOSE == true
+puts 'ret = ' + ret.inspect unless $VERBOSE.nil?
 1 # successfully completed

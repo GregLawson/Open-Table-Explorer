@@ -31,7 +31,22 @@ class GenericTypeTest < TestCase
 	end # GenericType
 	
 	include RubyAssertions
-	
+		def test_rom_yaml
+			yaml_table_name = 'generic_types'
+#			unit_data_source_directory = RailsishRubyUnit::Executable.data_sources_directory?
+#      unit_data_source_directory + "/#{yaml_table_name}.yml"
+			data_source_file = 'test/fixtures/' + yaml_table_name + '.yml'
+			assert_equal([], ROM.container.methods(false))
+#			assert_equal({}, ROM.env, ROM.inspect)
+			assert_includes(ROM.container.methods(false), :setup, ROM.inspect)
+			assert_includes(ROM.methods(false), :setup)
+			ROM.setup(:yaml, data_source_file)
+			rom = ROM.finalize.env
+			gateway = rom.gateways[:default]
+			assert(gateway.dataset?(:users))
+			assert_equal({}, gateway[:users])
+		end # rom_yaml
+		
 	module Examples
 		Text=GenericType::Text
 		Ascii=GenericType::Ascii
@@ -50,7 +65,7 @@ class GenericTypeTest < TestCase
 		Cntrl = GenericType.find_by_name('cntrl')
 		Macaddr=GenericType.find_by_name('Macaddr_Column')
 		Integer=GenericType.find_by_name('Integer_Column')
-		VARCHAR_Column=GenericType.find_by_name('VARCHAR_Column')
+		VARCHAR=GenericType.find_by_name('VARCHAR')
 	end #  Examples
 	include Examples
 	
@@ -59,7 +74,7 @@ class GenericTypeTest < TestCase
 #			message = MethodModel.ancestor_method_names(NoDB::ClassMethods, instance: false).inspect
 			assert_includes(NoDB::ClassMethods.instance_methods(false), :data_source_yaml, message)
 			assert_includes(NoDB::ClassMethods.instance_methods(true), :data_source_yaml, message)
-#			assert_includes(NoDB.methods(true), :data_source_yaml, message)
+			assert_includes(NoDB.methods(true), :data_source_yaml, message)
 
 			assert_includes(GenericType.methods(true), :data_source_yaml, message)
 			yaml_table_name = 'generic_types'
@@ -114,10 +129,10 @@ class GenericTypeTest < TestCase
 			assert_includes(GenericType.all, Text, GenericType::DefinitionalConstants::Primary_key_index.inspect)
 		end # all
 
-def test_logical_primary_key
-#	first=GenericType.first
-    assert_equal([:name], GenericType.logical_primary_key)
-end #logical_primary_key
+	def test_logical_primary_key
+	#	first=GenericType.first
+			assert_equal([:name], GenericType.logical_primary_key)
+	end #logical_primary_key
 
   def test_find_by_name
     macro_name = :lower
@@ -131,7 +146,7 @@ end #logical_primary_key
     refute_nil(macro_generic_type, message)
     assert_equal(macro_name.to_sym, macro_generic_type.name, message)
 		refute_nil(Text.name, GenericType::DefinitionalConstants::Primary_key_index.inspect)
-end #find_by_name
+	end # find_by_name
 
   def test_GenericType_ReferenceObjects
 
@@ -146,11 +161,11 @@ end #find_by_name
 		assert(GenericType.all.any? {|g| !g.generalizations.empty?})
 		assert_instance_of(GenericType, Digit)
 		assert_equal(false, Digit.most_general?)
-		assert_equal([Text], VARCHAR_Column.generalizations)
-		assert_equal([Text, VARCHAR_Column], Integer.generalizations([Text, VARCHAR_Column]))
-		assert_equal([VARCHAR_Column, Text], Integer.generalizations)
-#    assert_equal(%w(Text_Column VARCHAR_Column ascii print graph word alnum xdigit), digit_generic_type.generalizations.map(&:name))
-    assert_includes(GenericType.find_by_name('Integer_Column').generalizations.map(&:name), :VARCHAR_Column)
+		assert_equal([Text], VARCHAR.generalizations)
+		assert_equal([Text, VARCHAR], Integer.generalizations([Text, VARCHAR]))
+		assert_equal([VARCHAR, Text], Integer.generalizations)
+#    assert_equal(%w(Text_Column VARCHAR ascii print graph word alnum xdigit), digit_generic_type.generalizations.map(&:name))
+    assert_includes(GenericType.find_by_name('Integer_Column').generalizations.map(&:name), :VARCHAR)
     assert_includes(GenericType.find_by_name('Integer_Column').generalizations.map(&:name), :Text_Column)
 		
 		refute_empty(Word.generalizations)
@@ -159,12 +174,12 @@ end #find_by_name
 		refute_empty(Ascii.generalizations)
 		GenericType.all.each do |t|
 			assert_instance_of(GenericType, t)
-#			assert_instance_of(Array, t.generalizations)
-#     unless t.generalizations.empty?
-#        assert_instance_of(GenericType, t.generalizations[0])
-#      end # if
+      assert_instance_of(Array, t.generalizations)
+      unless t.generalizations.empty?
+        assert_instance_of(GenericType, t.generalizations[0])
+      end # if
     end # each
-#    assert_equal_sets(%w(VARCHAR_Column Text_Column), GenericType.find_by_name('Integer_Column').generalizations.map(&:name))
+    assert_equal_sets(%w(VARCHAR Text_Column), GenericType.find_by_name('Integer_Column').generalizations.map(&:name))
   end # generalizations
 
   def test_most_general?
@@ -184,12 +199,12 @@ end #find_by_name
   end # most_general?
 
 	def test_specialize
-		assert_equal([VARCHAR_Column], GenericType::Most_general.specialize)
+		assert_equal([VARCHAR], GenericType::Most_general.specialize)
 		assert(GenericType.all.any? {|g| g.specialize.empty?})
 		assert(GenericType.all.any? {|g| !g.specialize.empty?})
 		assert_instance_of(GenericType, Digit)
 		assert_equal(false, Digit.most_general?)
-		assert_equal_sets([:Integer_Column, :Float_Column, :Macaddr_Column, :Time_Column, :Timestamp_Column, :NULL_Column, :Boolean_Column, :Inet_Column, :Byte], VARCHAR_Column.specialize.map(&:name))
+		assert_equal_sets([:Integer_Column, :Float_Column, :Macaddr_Column, :Time_Column, :Timestamp_Column, :NULL_Column, :Boolean_Column, :Inet_Column, :Byte], VARCHAR.specialize.map(&:name))
 		assert_equal([], Integer.specialize.map(&:name))
 		assert_equal([Digit], Xdigit.specialize)
 		assert_equal([[]], Xdigit.specialize.map{|s| s.specialize})
@@ -223,7 +238,7 @@ end #find_by_name
 				assert_instance_of(GenericType, t.one_level_specializations[0])
 			end #if
 		end #each
-		assert_includes(VARCHAR_Column.one_level_specializations.map(&:name), :Integer_Column)
+		assert_includes(VARCHAR.one_level_specializations.map(&:name), :Integer_Column)
 		refute_includes(Text.one_level_specializations.map(&:name), :Integer_Column)
 		refute_includes(Text.one_level_specializations.map(&:name), :Text_Column)
 		assert_equal([:cntrl, :print, :space], Ascii.one_level_specializations.map(&:name))
@@ -262,7 +277,7 @@ end #find_by_name
 		assert_empty(Cntrl.recursive_specializations)
 		assert_empty(Macaddr.recursive_specializations)
 		assert_empty(Integer.recursive_specializations)
-		refute_empty(VARCHAR_Column.recursive_specializations)
+		refute_empty(VARCHAR.recursive_specializations)
 
 		refute_empty(Word.recursive_specializations)
 		refute_empty(Graph.recursive_specializations)
@@ -299,55 +314,70 @@ end #find_by_name
   def test_expansion_termination
     regexp = Xdigit[:data_regexp]
     assert_regexp(regexp)
-#    parse = RegexpTree.new(regexp)[0]
-#    macro_name = RegexpTree.macro_call?(parse)
-#    assert_instance_of(String, macro_name)
-#    assert_equal(Xdigit.name, macro_name)
-#    assert(Xdigit.expansion_termination?, "Xdigit=#{Xdigit.inspect}.\n regexp=#{regexp}, parse=#{parse.inspect}\n macro_name=#{macro_name}")
+    parse = RegexpTree.new(regexp)[0]
+    macro_name = RegexpTree.macro_call?(parse)
+    assert_instance_of(String, macro_name)
+    assert_equal(Xdigit.name, macro_name)
+    assert(Xdigit.expansion_termination?, "Xdigit=#{Xdigit.inspect}.\n regexp=#{regexp}, parse=#{parse.inspect}\n macro_name=#{macro_name}")
   end # expansion_termination
 
   def test_expand
     regexp = Macaddr[:data_regexp]
     assert_regexp(regexp)
-#    parse = RegexpTree.new(regexp)
-#    macro_name = RegexpTree.macro_call?(parse)
-#    refute_equal(macro_name, Macaddr.name)
-#    expansion = parse.map_branches do |branch|
-#      macro_name = branch.macro_call?
-#      if macro_name
-#			refute_empty(macro_name, "macro_name=#{macro_name} should be in #{GenericType.all.map{|t| t.name}.inspect}")
-			all_macro_names= GenericType.all.map{|t| t.name}
-#        assert_includes(macro_name, all_macro_names)
-#        macro_generic_type = GenericType.find_by_name(macro_name)
-#        refute_nil(macro_generic_type, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{all_macro_names.inspect}")
-#        macro_call = macro_generic_type[:data_regexp]
-#        refute_nil(macro_call, '')
-#        refute_equal(macro_call, regexp)
-#        assert_equal(macro_name, macro_generic_type.name)
-#        assert_equal(branch, macro_generic_type.expand, "macro_name=#{macro_name},\n")
-#        macro_generic_type.expand
-#      else
-#        branch
-#      end # if
-#    end # map_branches
-#    assert_equal(expansion, parse.map_branches { |branch| branch })
+    parse = RegexpTree.new(regexp)
+    macro_name = RegexpTree.macro_call?(parse)
+    refute_equal(macro_name, Macaddr.name)
+    expansion = parse.map_branches do |branch|
+      macro_name = branch.macro_call?
+      if macro_name
+        refute_empty(macro_name, "macro_name=#{macro_name} should be in #{GenericType.all.map(&:name).inspect}")
+        all_macro_names = GenericType.all.map(&:name)
+        assert_includes(macro_name, all_macro_names)
+        macro_generic_type = GenericType.find_by_name(macro_name)
+        refute_nil(macro_generic_type, "GenericType.find_by_name('#{macro_name}')=#{GenericType.find_by_name(macro_name)} should be in #{all_macro_names.inspect}")
+        macro_call = macro_generic_type[:data_regexp]
+        refute_nil(macro_call, '')
+        refute_equal(macro_call, regexp)
+        assert_equal(macro_name, macro_generic_type.name)
+        assert_equal(branch, macro_generic_type.expand, "macro_name=#{macro_name},\n")
+        macro_generic_type.expand
+      else
+        branch
+      end # if
+    end # map_branches
+    assert_equal(expansion, parse.map_branches { |branch| branch })
   end # expand
 
   def test_match
-#    regexp = Regexp.new(Text.expand.join)
-#    assert_regexp(regexp)
-#    string_to_match = '123'
-#    assert_match(regexp, string_to_match)
-#	refute_nil(Text.match_exact?(string_to_match))
+    regexp = Regexp.new(Text.expand.join)
+    assert_regexp(regexp)
+    string_to_match = '123'
+    assert_match(regexp, string_to_match)
+    refute_nil(Text.match_exact?(string_to_match))
   end # match
 
   def test_match_Start
+    regexp = Regexp.new(Text.expand.join)
+    assert_regexp(regexp)
+    string_to_match = '123'
+    assert_match(regexp, string_to_match)
+    refute_nil(Text.match_start?(string_to_match))
   end # match_start
 
   def test_match_end
+    regexp = Regexp.new(Text.expand.join)
+    assert_regexp(regexp)
+    string_to_match = '123'
+    assert_match(regexp, string_to_match)
+    refute_nil(Text.match_end?(string_to_match))
   end # match_end
 
   def test_match_any
+    regexp = Regexp.new(Text.expand.join)
+    assert_regexp(regexp)
+    string_to_match = '123'
+    assert_match(regexp, string_to_match)
+    refute_nil(Text.match_any?(string_to_match))
   end # match_any
 
   def test_specializations_that_match
@@ -363,15 +393,17 @@ end #find_by_name
       end # if
     end.compact.uniq # map
     assert_equal(ret, ret.compact)
+    assert_equal([[VARCHAR, [Integer]]], ret, NestedArray.new(ret).map_recursive(&:name).inspect)
+    assert_instance_of(NestedArray, Text.specializations_that_match?(string_to_match))
     assert(Lower.unspecialized?)
     assert(!Alpha.unspecialized?)
     assert(!Xdigit.unspecialized?)
 #    Ascii.assert_specializations_that_match([[:alpha, [:lower, :xdigit]]], 'c')
     Alnum.assert_specializations_that_match([:alpha, [:lower], :xdigit], 'c')
     Alnum.assert_specializations_that_match([:alpha, [:lower], :xdigit], 'c')
-#    assert_equal([:alpha, [:lower], :xdigit], Alnum.specializations_that_match?('c').map { |s| s.name.to_sym }, Alnum.specializations_that_match?('c').map { |s| s.name.to_sym }.inspect)
-#    assert_equal([:print, [:graph, [:word, [:alnum, [:alpha, [:lower], :xdigit]]]]], Ascii.specializations_that_match?('c').map { |s| s.name.to_sym }, Ascii.specializations_that_match?('c').map { |s| s.name.to_sym }.inspect)
-#    assert_equal([:VARCHAR_Column, [:Integer_Column]], Text.specializations_that_match?(string_to_match).map { |s| s.name.to_sym }, Text.specializations_that_match?(string_to_match).map { |s| s.name.to_sym }.inspect)
+    assert_equal([:alpha, [:lower], :xdigit], Alnum.specializations_that_match?('c').map_recursive { |s| s.name.to_sym }, Alnum.specializations_that_match?('c').map_recursive { |s| s.name.to_sym }.inspect)
+    assert_equal([:print, [:graph, [:word, [:alnum, [:alpha, [:lower], :xdigit]]]]], Ascii.specializations_that_match?('c').map_recursive { |s| s.name.to_sym }, Ascii.specializations_that_match?('c').map_recursive { |s| s.name.to_sym }.inspect)
+    assert_equal([:VARCHAR, [:Integer_Column]], Text.specializations_that_match?(string_to_match).map_recursive { |s| s.name.to_sym }, Text.specializations_that_match?(string_to_match).map_recursive { |s| s.name.to_sym }.inspect)
   end # specializations_that_match
 
   def test_possibilities
@@ -387,11 +419,11 @@ end #find_by_name
     assert_equal([:lower, :xdigit], Ascii.possibilities?(fork).map { |s| s.name.to_sym })
     ambiguity = [Alnum, [Alpha, [Lower], Xdigit]]
     assert_equal([:lower, :xdigit], Ascii.possibilities?(ambiguity).map { |s| s.name.to_sym })
-#    assert_equal([:print, [:graph, [:word, [:alnum, [:alpha, [:lower], :xdigit]]]]], Ascii.specializations_that_match?('c').map { |s| s.name.to_sym }, Ascii.specializations_that_match?('c').map { |s| s.name.to_sym }.inspect)
-#    assert_equal([:alpha, [:lower], :xdigit], Alnum.specializations_that_match?('c').map { |s| s.name.to_sym }, Alnum.specializations_that_match?('c').map { |s| s.name.to_sym }.inspect)
-#    assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches).map { |p| p.name.to_sym }, message)
-#    assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches[1]).map { |p| p.name.to_sym }, message)
-#    assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches).map { |p| p.name.to_sym }, message)
+    assert_equal([:print, [:graph, [:word, [:alnum, [:alpha, [:lower], :xdigit]]]]], Ascii.specializations_that_match?('c').map_recursive { |s| s.name.to_sym }, Ascii.specializations_that_match?('c').map_recursive { |s| s.name.to_sym }.inspect)
+    assert_equal([:alpha, [:lower], :xdigit], Alnum.specializations_that_match?('c').map_recursive { |s| s.name.to_sym }, Alnum.specializations_that_match?('c').map_recursive { |s| s.name.to_sym }.inspect)
+    assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches).map { |p| p.name.to_sym }, message)
+    assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches[1]).map { |p| p.name.to_sym }, message)
+    assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches).map { |p| p.name.to_sym }, message)
     Ascii.assert_possibilities([:lower, :xdigit], 'c')
     Lower.assert_possibilities([:lower], 'c')
     Ascii.assert_possibilities([:digit], '9')
@@ -407,19 +439,19 @@ end #find_by_name
     Ascii.assert_common_matches([:ascii, [:print, [:graph, [:word, [:alnum, [:alpha, [:lower], :xdigit]]]]]], 'c')
     common_matches = Ascii.common_matches?('c')
     assert_kind_of(Array, common_matches)
-#    assert_kind_of(Array, common_matches[1])
-#    assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches).map { |p| p.name.to_sym })
-#    most_specialized = Ascii.most_specialized?('c', common_matches[1])
-#    assert_kind_of(Array, most_specialized)
-#    assert_equal([:lower, :xdigit], most_specialized.map { |p| p.name.to_sym })
-#    assert_equal([:lower, :xdigit], Ascii.possibilities?(most_specialized).map { |p| p.name.to_sym })
+    assert_kind_of(Array, common_matches[1])
+    assert_equal([:lower, :xdigit], Ascii.possibilities?(common_matches).map { |p| p.name.to_sym })
+    most_specialized = Ascii.most_specialized?('c', common_matches[1])
+    assert_kind_of(Array, most_specialized)
+    assert_equal([:lower, :xdigit], most_specialized.map { |p| p.name.to_sym })
+    assert_equal([:lower, :xdigit], Ascii.possibilities?(most_specialized).map { |p| p.name.to_sym })
     Ascii.assert_most_specialized([:lower, :xdigit], 'c')
     Lower.assert_common_matches([:alnum, [:xdigit, [:digit]]], '9')
     Lower.assert_most_specialized([:digit], '9')
-#    assert_equal([Digit], Lower.most_specialized?('9'))
-#    assert_equal([Lower, Xdigit], Text.most_specialized?('c'), Text.most_specialized?('c').map(&:name).inspect) # ambiguous
+    assert_equal([Digit], Lower.most_specialized?('9'))
+    assert_equal([Lower, Xdigit], Text.most_specialized?('c'), Text.most_specialized?('c').map(&:name).inspect) # ambiguous
     refute_empty(Digit.most_specialized?('c'))
-#    assert_equal([Xdigit], Digit.most_specialized?('c'))
+    assert_equal([Xdigit], Digit.most_specialized?('c'))
     Digit.assert_most_specialized([:xdigit], 'c')
   end # most_specialized
 
@@ -434,20 +466,20 @@ end #find_by_name
                        Text.generalize.common_matches?(string_to_match)
     end # if
     assert_instance_of(Array, common_matches)
-#    assert_equal([VARCHAR_Column, [Integer]], common_matches)
+    assert_equal([VARCHAR, [Integer]], common_matches)
     assert_instance_of(Array, Text.common_matches?('123'))
-#    assert_equal([Text, [VARCHAR_Column, [Integer]]], Text.common_matches?('123'))
+#    assert_equal([Text, [VARCHAR, [Integer]]], Text.common_matches?('123'))
     mac_example = '12:34:56:78'
     regexp = Macaddr[:data_regexp]
     mac_match = mac_example.capture?(regexp)
-#    assert_equal([Text, [VARCHAR_Column, [Macaddr]]], Text.common_matches?(mac_example))
+#    assert_equal([Text, [VARCHAR, [Macaddr]]], Text.common_matches?(mac_example))
     Digit.assert_common_matches([:xdigit], 'c')
   end # common_matches
 
   def test_generalize
 		integer = GenericType.find_by_name('Integer_Column')
 		varchar = GenericType.find_by_name(integer.generalize)
-    assert_equal(:VARCHAR_Column, varchar.name)
+    assert_equal(:VARCHAR, varchar.name)
     GenericType.all.each do |t|
 #      refute_equal(t[:generalize_id], 0, "t=#{t.inspect}")
     end # each
@@ -463,17 +495,17 @@ end #find_by_name
 
   def test_assert_specialized_examples
     regexp = GenericType.find_by_name('word')[:data_regexp]
-#    assert_equal(2, regexp.size)
-#    assert_equal('\w', regexp)
-#    assert_equal(/\w/, Regexp.new(regexp))
+    assert_equal(2, regexp.size)
+    assert_equal('\w', regexp)
+    assert_equal(/\w/, Regexp.new(regexp))
     #	assert_equal('\w', RegexpTree.string_of_matching_chars(/\w/))
     assert_match(Regexp.new(regexp), 'd')
     GenericType.all.each(&:assert_specialized_examples) # each
   end # assert_specialized_examples
 
   def test_id_equal
-#    assert(!model_class?.sequential_id?, "model_class?=#{model_class?}, should not be a sequential_id.")
-#    assert_test_id_equal
+    assert(!model_class?.sequential_id?, "model_class?=#{model_class?}, should not be a sequential_id.")
+    assert_test_id_equal
   end # id_equal
 
   def test_GenericType_assert_pre_conditions
@@ -497,11 +529,11 @@ end #find_by_name
 		assert_instance_of(GenericType, Digit)
 		assert_equal(false, Digit.most_general?)
 		assert_equal([], Text.assert_no_generalize_cycle)
-		assert_equal([Text], VARCHAR_Column.assert_no_generalize_cycle)
-		assert_equal([VARCHAR_Column, Text], Integer.assert_no_generalize_cycle)
-#		assert_equal([Text, VARCHAR_Column], Integer.assert_no_generalize_cycle([Text, VARCHAR_Column]))
-#    assert_equal(%w(Text_Column VARCHAR_Column ascii print graph word alnum xdigit), digit_generic_type.assert_no_generalize_cycle.map(&:name))
-    assert_includes(GenericType.find_by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :VARCHAR_Column)
+		assert_equal([Text], VARCHAR.assert_no_generalize_cycle)
+		assert_equal([VARCHAR, Text], Integer.assert_no_generalize_cycle)
+#		assert_equal([Text, VARCHAR], Integer.assert_no_generalize_cycle([Text, VARCHAR]))
+#    assert_equal(%w(Text_Column VARCHAR ascii print graph word alnum xdigit), digit_generic_type.assert_no_generalize_cycle.map(&:name))
+    assert_includes(GenericType.find_by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :VARCHAR)
     assert_includes(GenericType.find_by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :Text_Column)
 		
 		refute_empty(Word.assert_no_generalize_cycle)
@@ -515,7 +547,7 @@ end #find_by_name
 #        assert_instance_of(GenericType, t.assert_no_generalize_cycle[0])
 #      end # if
     end # each
-#    assert_equal_sets(%w(VARCHAR_Column Text_Column), GenericType.find_by_name('Integer_Column').assert_no_generalize_cycle.map(&:name))
+#    assert_equal_sets(%w(VARCHAR Text_Column), GenericType.find_by_name('Integer_Column').assert_no_generalize_cycle.map(&:name))
 		refute_empty(Word.assert_no_generalize_cycle)
 		refute_empty(Graph.assert_no_generalize_cycle)
 		refute_empty(Print.assert_no_generalize_cycle)
@@ -535,6 +567,7 @@ class GenericTypeRepoTest < TestCase
 			assert_includes(NoDB::ClassMethods.instance_methods(true), :data_source_yaml, message)
 #			assert_includes(NoDB.methods(true), :data_source_yaml, message)
 
+			assert_includes(GenericTypeRepo.methods(true), :data_source_yaml, message)
 #			assert_includes(GenericTypeRepo::Generic_type_repo.methods(true), :data_source_yaml, message)
 			yaml_table_name = 'generic_types'
 #			unit_data_source_directory = RailsishRubyUnit::Executable.data_sources_directory?
@@ -568,15 +601,14 @@ class GenericTypeRepoTest < TestCase
 														ruby_conversion: value['ruby_conversion'] 
 													)
 				refute_nil(ret[name].name, ret[name].inspect)
-#				ret[name].assert_pre_conditions
+				ret[name].assert_pre_conditions
 			end # each_pair
 			ret.each_pair do |key, value|
-#				value.assert_pre_conditions
+				value.assert_pre_conditions
 			end # each_pair
-			refute_nil(ret['Text_Column'].name, ret.inspect)
-#			assert_equal(GenericTypeRepo::Generic_type_repo.primary_key_index.keys, ret.keys, yaml.inspect)
-#			assert_equal(GenericTypeRepo::Generic_type_repo.primary_key_index, ret, yaml.inspect)
-#		GenericTypeRepo.assert_post_conditions
+			refute_nil(ret[:Text_Column].name, ret.inspect)
+			assert_equal(GenericTypeRepo.primary_key_index.keys, ret.keys, yaml.inspect)
+			assert_equal(GenericTypeRepo.primary_key_index, ret, yaml.inspect)
 		end # primary_key_index
 
 	
@@ -598,7 +630,7 @@ class GenericTypeRepoTest < TestCase
 		Cntrl = GenericTypeRepo::Generic_type_repo.by_name('cntrl')
 		Macaddr = GenericTypeRepo::Generic_type_repo.by_name('Macaddr_Column')
 		Integer = GenericTypeRepo::Generic_type_repo.by_name('Integer_Column')
-		VARCHAR_Column = GenericTypeRepo::Generic_type_repo.by_name('VARCHAR_Column')
+		VARCHAR = GenericTypeRepo::Generic_type_repo.by_name('VARCHAR')
 	end #  Examples
 	include Examples
 	
@@ -631,12 +663,27 @@ class GenericTypeRepoTest < TestCase
 				column :ruby_conversion, String
 			end # create_table
 		end # container
-#			assert_equal(nil, GenericTypeRepo::Generic_type_repo.name)
+		generic_type_repo = GenericTypeRepo.new(container)
 		first_generic_type = GenericTypeRepo::Generic_type_repo.create(name: 'name')
 		assert_equal('name', first_generic_type.name)
 		assert_equal(first_generic_type.to_hash, GenericTypeRepo::Generic_type_repo.by_id(first_generic_type.id))
 	end # rom_sql
-		
+			
+	def test_dry
+		top_level_types = [:String,  :Int, :Float, :Decimal, :Array, :Hash, :Nil, :Symbol, :Class, :True,
+			:False, :Date, :DateTime, :Time, :Strict, :Coercible, :Maybe, :Optional, :Bool, :Form, :Json]
+		assert_equal(top_level_types, Types.constants - [GenericType])
+		type_tree = top_level_types.map do |type_name|
+			type = eval('Types::' + type_name.to_s)
+			if type.methods.include?(:constants)
+				{type_name =>  type.constants}
+			else
+					{type_name => type.inspect}
+			end # if
+		end # map
+		puts type_tree
+	end # dry
+
 	def test_GenericTypes
 	end # GenericTypes
 
@@ -654,6 +701,7 @@ class GenericTypeRepoTest < TestCase
 														ruby_conversion: 'ruby_conversion',
 													)
 		refute_empty(GenericTypeRepo::Generic_type_repo.all, GenericTypeRepo::Generic_type_repo.inspect)
+		assert_equal([example], GenericTypeRepo::Generic_type_repo.all, GenericTypeRepo::Generic_type_repo.inspect)
 #		assert_equal([example.as(GenericType)], GenericTypeRepo::Generic_type_repo.all, GenericTypeRepo::Generic_type_repo.inspect)
 
 		assert_equal('name', example.name, example.inspect)
@@ -670,6 +718,7 @@ class GenericTypeRepoTest < TestCase
 
 	def test_by_id
 		first_generic_type = GenericTypeRepo::Generic_type_repo.by_id(1)
+		message = "first_generic_type(1)=#{first_generic_type.inspect} should be in #{first_generic_type.all.map(&:name).inspect}"
 #		message = "first_generic_type(1)=#{first_generic_type.inspect} should be in #{first_generic_type.all.map(&:name).inspect}"
 	end # by_id
 	
@@ -683,11 +732,16 @@ class GenericTypeRepoTest < TestCase
     refute_nil(macro_generic_type, message)
     assert_kind_of(ROM::Repository::RelationProxy, macro_generic_type, message)
 		assert_include(macro_generic_type.methods, :one, message)
+    assert_instance_of(GenericType, macro_generic_type, message)
+    assert_equal(macro_name.to_sym, macro_generic_type.one.name, message)
 #    assert_instance_of(GenericType, macro_generic_type, message)
 
 #    assert_equal(macro_name.to_sym, macro_generic_type.one.name, message)
 		refute_nil(Text.name, GenericType::DefinitionalConstants::Primary_key_index.inspect)
 	end # by_name
+
+  def test_ReferenceObjects
+  end # ReferenceObjects
 
   def test_GenericTypeRepo_assert_pre_conditions
 		GenericTypeRepo.assert_pre_conditions
@@ -706,6 +760,36 @@ class GenericTypeRepoTest < TestCase
   end # assert_post_conditions
 
 	def test_assert_no_generalize_cycle(previous_generalizations = [])
+		assert_equal(GenericTypeRepo::Generic_type_repo::Most_general.generalize.to_sym, GenericTypeRepo::Generic_type_repo::Most_general.name)
+		assert_equal([], GenericTypeRepo::Generic_type_repo::Most_general.assert_no_generalize_cycle)
+		assert(GenericTypeRepo::Generic_type_repo.all.any? {|g| g.assert_no_generalize_cycle.empty?})
+		refute(GenericTypeRepo::Generic_type_repo.all.all? {|g| g.assert_no_generalize_cycle.empty?})
+		assert_instance_of(ROM::Repository::RelationProxy, Digit)
+		assert_equal(false, Digit.one!.most_general?)
+		assert_equal([], Text.assert_no_generalize_cycle)
+		assert_equal([Text], VARCHAR.assert_no_generalize_cycle)
+		assert_equal([VARCHAR, Text], Integer.assert_no_generalize_cycle)
+#		assert_equal([Text, VARCHAR], Integer.assert_no_generalize_cycle([Text, VARCHAR]))
+#    assert_equal(%w(Text_Column VARCHAR ascii print graph word alnum xdigit), digit_generic_type.assert_no_generalize_cycle.map(&:name))
+    assert_includes(GenericTypeRepo::Generic_type_repo.by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :VARCHAR)
+    assert_includes(GenericTypeRepo::Generic_type_repo.by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :Text_Column)
+		
+		refute_empty(Word.assert_no_generalize_cycle)
+		refute_empty(Graph.assert_no_generalize_cycle)
+		refute_empty(Print.assert_no_generalize_cycle)
+		refute_empty(Ascii.assert_no_generalize_cycle)
+		GenericTypeRepo::Generic_type_repo.all.each do |t|
+			assert_instance_of(GenericTypeRepo::Generic_type_repo, t)
+#			assert_instance_of(Array, t.assert_no_generalize_cycle)
+#     unless t.assert_no_generalize_cycle.empty?
+#        assert_instance_of(GenericTypeRepo::Generic_type_repo, t.assert_no_generalize_cycle[0])
+#      end # if
+    end # each
+#    assert_equal_sets(%w(VARCHAR Text_Column), GenericTypeRepo::Generic_type_repo.by_name('Integer_Column').assert_no_generalize_cycle.map(&:name))
+		refute_empty(Word.assert_no_generalize_cycle)
+		refute_empty(Graph.assert_no_generalize_cycle)
+		refute_empty(Print.assert_no_generalize_cycle)
+		refute_empty(Ascii.assert_no_generalize_cycle)
 #		assert_equal(GenericTypeRepo::Generic_type_repo::Most_general.generalize.to_sym, GenericTypeRepo::Generic_type_repo::Most_general.name)
 #		assert_equal([], GenericTypeRepo::Generic_type_repo::Most_general.assert_no_generalize_cycle)
 #		assert(GenericTypeRepo::Generic_type_repo.all.any? {|g| g.assert_no_generalize_cycle.empty?})
@@ -713,12 +797,12 @@ class GenericTypeRepoTest < TestCase
 		assert_instance_of(ROM::Repository::RelationProxy, Digit)
 #		assert_equal(false, Digit.one!.most_general?)
 #		assert_equal([], Text.assert_no_generalize_cycle)
-#		assert_equal([Text], VARCHAR_Column.assert_no_generalize_cycle)
-#		assert_equal([VARCHAR_Column, Text], Integer.assert_no_generalize_cycle)
-#		assert_equal([Text, VARCHAR_Column], Integer.assert_no_generalize_cycle([Text, VARCHAR_Column]))
-#    assert_equal(%w(Text_Column VARCHAR_Column ascii print graph word alnum xdigit), digit_generic_type.assert_no_generalize_cycle.map(&:name))
-#    assert_includes(GenericTypeRepo::Generic_type_repo.by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :VARCHAR_Column)
-#    assert_includes(GenericTypeRepo::Generic_type_repo.by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :Text_Column)
+#		assert_equal([Text], VARCHAR.assert_no_generalize_cycle)
+#		assert_equal([VARCHAR, Text], Integer.assert_no_generalize_cycle)
+#		assert_equal([Text, VARCHAR], Integer.assert_no_generalize_cycle([Text, VARCHAR]))
+#    assert_equal(%w(Text_Column VARCHAR ascii print graph word alnum xdigit), digit_generic_type.assert_no_generalize_cycle.map(&:name))
+    assert_includes(GenericType.by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :VARCHAR)
+    assert_includes(GenericType.by_name('Integer_Column').assert_no_generalize_cycle.map(&:name), :Text_Column)
 		
 #		refute_empty(Word.assert_no_generalize_cycle)
 #		refute_empty(Graph.assert_no_generalize_cycle)
@@ -731,7 +815,12 @@ class GenericTypeRepoTest < TestCase
 #        assert_instance_of(GenericType, t.assert_no_generalize_cycle[0])
 #      end # if
     end # each
-#    assert_equal_sets(%w(VARCHAR_Column Text_Column), GenericType.find_by_name('Integer_Column').assert_no_generalize_cycle.map(&:name))
+#    assert_equal_sets(%w(VARCHAR Text_Column), GenericType.by_name('Integer_Column').assert_no_generalize_cycle.map(&:name))
+		refute_empty(Word.assert_no_generalize_cycle)
+		refute_empty(Graph.assert_no_generalize_cycle)
+		refute_empty(Print.assert_no_generalize_cycle)
+		refute_empty(Ascii.assert_no_generalize_cycle)
+#    assert_equal_sets(%w(VARCHAR Text_Column), GenericType.find_by_name('Integer_Column').assert_no_generalize_cycle.map(&:name))
 #		refute_empty(Word.assert_no_generalize_cycle)
 #		refute_empty(Graph.assert_no_generalize_cycle)
 #		refute_empty(Print.assert_no_generalize_cycle)

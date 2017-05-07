@@ -1,0 +1,6 @@
+{"metadata":{"rubocop_version":"0.39.0","ruby_engine":"ruby","ruby_version":"2.2.4","ruby_patchlevel":"230","ruby_platform":"x86_64-linux-gnu"},"files":[{"path":"test/assertions/unit_assertions.rb","offenses":[
+{"severity":"warning","message":"`end` at 13, 6 is not aligned with `module` at 12, 4.","cop_name":"Lint/EndAlignment","corrected":false,"location":{"line":13,"column":7,"length":3}},
+{"severity":"convention","message":"Line is too long. [97/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":53,"column":81,"length":17}},
+{"severity":"convention","message":"Line is too long. [96/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":71,"column":81,"length":16}},
+{"severity":"convention","message":"Line is too long. [100/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":72,"column":81,"length":20}},
+{"severity":"warning","message":"`end` at 77, 6 is not aligned with `module` at 76, 4.","cop_name":"Lint/EndAlignment","corrected":false,"location":{"line":77,"column":7,"length":3}}]}],"summary":{"offense_count":5,"target_file_count":1,"inspected_file_count":1}}

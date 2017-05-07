@@ -16,13 +16,26 @@ require_relative '../../app/models/branch.rb'
 class SingleExecution
   include Virtus.value_object
   values do
-		attribute :executable_method, Method
-	#	attribute :executable_object, Object 
-	#	attribute :method_name, Symbol
-		attribute :method_arguments, Array
+    attribute :executable_method, Method
+    #	attribute :executable_object, Object
+    #	attribute :method_name, Symbol
+    attribute :method_arguments, Array
   end # values
-	def run
-		@executable_method.call(*method_arguments)
+  def run
+    @executable_method.call(*method_arguments)
+  end # run
+end # SingleExecution
+
+class SingleExecution
+  include Virtus.value_object
+  values do
+    attribute :executable_method, Method
+    #	attribute :executable_object, Object
+    #	attribute :method_name, Symbol
+    attribute :method_arguments, Array
+  end # values
+  def run
+    @executable_method.call(*method_arguments)
   end # run
 end # SingleExecution
 
@@ -33,7 +46,7 @@ class CommandLineExecutable
     Executable_default = lambda do |commandline, _attribute|
       TestExecutable.new_from_path(commandline.argv)
     end # Executable_default
-		All_argument_types = [CommandLineExecutable, Branch, File, Dir, Unit]
+    All_argument_types = [CommandLineExecutable, Branch, File, Dir, Unit].freeze
     end # DefinitionalConstants
   include DefinitionalConstants
   module DefinitionalClassMethods # compute sub-objects such as default attribute values
@@ -128,113 +141,75 @@ class CommandLineExecutable
     ret
   end # to_s
 
-  def make_executable_object(file_argument)
-    if @test_executable.unit.model_class?.included_modules.include?(Virtus::InstanceMethods)
-      @test_executable.unit.model_class?.new(test_executable: TestExecutable.new(argument_path: file_argument))
+  def execution_array(executable_method, number_of_execution_arguments = executable_method.required_arguments)
+    if number_of_execution_arguments == 0
+      [SingleExecution.new(
+        executable_method: executable_method,
+        arguments: arguments
+      )]
     else
-      @test_executable.unit.model_class?.new(TestExecutable.new_from_path(file_argument))
-    end # if
-  end # make_executable_object
-
-  def executable_object(file_argument = nil)
-    if file_argument.nil?
-        if number_of_arguments == 0
-          make_executable_object($PROGRAM_NAME) # script file
-        else
-          make_executable_object(@argv[1])
-        end # if
-    else
-      make_executable_object(file_argument)
-    end # if
-  end # executable_object
-
-  def dispatch_required_arguments(argument)
-    method = executable_method?(sub_command, argument)
-    if method.nil?
-      message = method_exception_string(sub_command)
-      raise Exception.new(message)
-    else
-      case method.required_arguments
-      when 0 then
-        method.call
-      when 1 then
-        method.call(argument)
+      remainder = number_of_arguments % number_of_execution_arguments
+      if remainder == 0
+        array_size = number_of_arguments / number_of_execution_arguments
+        array_size.times do
+          i
+          SingleExecution.new(
+            executable_method: executable_method,
+            arguments: arguments[i * number_of_execution_arguments, number_of_execution_arguments]
+          )
+        end # times
       else
-        message = "\nIn CommandLine#dispatch_required_arguments, "
-        message += "\nargument =  " + argument
-        message += "\nsub_command =  " + sub_command.to_s
-        message += "\nrequired_arguments =  " + method.required_arguments.to_s
-        raise Exception.new(message)
-      end # case
-    end # if nil?
-  end # dispatch_required_arguments
+        message = argument_types.map(&:inspect).join(', ') # map
+        raise message
+      end # if
+    end # if
+  end # execution_array
 
-	def sub_command_method
-      ret = find_sub_command_instance_method(method_name = sub_command)
-			if ret.nil? # no sub_command, default to help
-				raise 'method_name not found = ' + method_name.to_s
-			else
-				ret
-			end # if
-	end # sub_command_method
-
-
-	def execution_array(executable_method, number_of_execution_arguments = executable_method.required_arguments)
-		if number_of_execution_arguments == 0
-				[SingleExecution.new(
-					executable_method: executable_method, 
-					arguments: arguments
-					)]
-		else
-			remainder = number_of_arguments % number_of_execution_arguments
-			if remainder == 0
-			array_size = number_of_arguments / number_of_execution_arguments
-			array_size.times do i
-				SingleExecution.new(
-					executable_method: executable_method, 
-					arguments: arguments[i * number_of_execution_arguments, number_of_execution_arguments]
-					)
-				
-			end # times
-			else
-				message = argument_types.map do |argument_type|
-					argument_type.inspect
-				end.join(', ') # map
-				raise message
-			end # if
-		end # if
-	end # execution_array
-
-  def run
+  def run(executable_method)
     done = if block_given?
              yield
            else
              false # non-default commands not done cause they don't exist
     end # if
     ret = unless done
-            method_model = sub_command_method
-            if method_model.nil?
-              message = method_exception_string(sub_command)
-              raise Exception.new(message)
-            elsif number_of_arguments == 0
-              method_model.theMethod.call
-            elsif number_of_arguments == method_model.theMethod.required_arguments
-              dispatch_required_arguments(arguments)
-            elsif number_of_arguments < method_model.theMethod.required_arguments
-              puts 'number_of_arguments == 0 '
-            elsif method_model.theMethod.required_arguments == 0 ||
-                  (number_of_arguments % method_model.theMethod.required_arguments) == 0
-              arguments.each do |argument|
-                dispatch_required_arguments(argument)
-              end # each
-            else
-              raise
-            end # if
-    end # if
+            execution_array = execution_array(executable_method)
+            execution_array.map(&:run) # map
+    end # unless done
     #	cleanup_ARGV
     #		scripting_workflow.script_deserves_commit!(:passed)
     message = 'command_line  (' + inspect + ') '
     message += ' run returns ' + ret.inspect + caller.join("\n")
     ret
   end # run
+
+  require_relative '../../app/models/assertions.rb'
+  module Assertions
+    module ClassMethods
+      def assert_pre_conditions(message = '')
+        message += "In assert_pre_conditions, self=#{inspect}"
+        #	asset_nested_and_included(:ClassMethods, self)
+        #	asset_nested_and_included(:Constants, self)
+        #	asset_nested_and_included(:Assertions, self)
+        self
+      end # assert_pre_conditions
+
+      def assert_post_conditions(message = '')
+        message += "In assert_post_conditions, self=#{inspect}"
+        self
+      end # assert_post_conditions
+    end # ClassMethods
+
+    def assert_pre_conditions(message = '')
+      message += "In assert_pre_conditions, self=#{inspect}"
+      self
+    end # assert_pre_conditions
+
+    def assert_post_conditions(message = '')
+      message += "In assert_post_conditions, self=#{inspect}"
+      self
+    end # assert_post_conditions
+  end # Assertions
+  include Assertions
+  extend Assertions::ClassMethods
+  # self.assert_pre_conditions
 end # CommandLineExecutable

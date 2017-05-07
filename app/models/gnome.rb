@@ -1,17 +1,25 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2016 by Greg Lawson
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require 'virtus'
 require_relative '../../app/models/shell_command.rb'
 class Gnome
-module Constants
-Data_Sources_Dir=TE.data_sources_directory?+'/'+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+'/'
-end #Constants
-include Constants
+module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+Data_Sources_Dir= Unit:Executing.data_sources_directory?+'/'+Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")+'/'
+end # DefinitionalConstants
+include DefinitionalConstants
+  include Virtus.value_object
+  values do
+# 	attribute :branch, Symbol
+#	attribute :age, Fixnum, :default => 789
+#	attribute :timestamp, Time, :default => Time.now
+	end # values
 module ClassMethods
+include DefinitionalConstants
 end #ClassMethods
 extend ClassMethods
 #include DefaultAssertions
@@ -24,6 +32,12 @@ def ps
 	ps=ShellCommands.new('ps -ef')
 	IO.binwrite(Data_Sources_Dir+'test.ps', ps.output)
 end #lsof
+def reboots
+	ShellCommands.new('sudo zgrep  "Linux version" /var/log/kern*')
+end # reboots
+module Constants # constant objects of the type (e.g. default_objects)
+end # Constants
+include Constants
 #require_relative '../../app/models/assertions.rb'
 module Assertions
 
@@ -41,6 +55,7 @@ include Assertions
 extend Assertions::ClassMethods
 #self.assert_pre_conditions
 module Examples
+include DefinitionalConstants
 include Constants
 end #Examples
 #include Examples

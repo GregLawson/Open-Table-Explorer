@@ -1,0 +1,2 @@
+{"metadata":{"rubocop_version":"0.39.0","ruby_engine":"ruby","ruby_version":"2.2.4","ruby_patchlevel":"230","ruby_platform":"x86_64-linux-gnu"},"files":[{"path":"test/unit/partition_test.rb","offenses":[
+{"severity":"convention","message":"Line is too long. [83/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)","cop_name":"Metrics/LineLength","corrected":null,"location":{"line":14,"column":81,"length":3}}]}],"summary":{"offense_count":1,"target_file_count":1,"inspected_file_count":1}}

@@ -31,17 +31,19 @@ include DefinitionalConstants
 				set_instance_variable(index_name, enumerator.next)
 			end # if
 		end # map
-	end # next
+end # next
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
-	
-	def initialize(dimension)
-		@dimension = dimension
-	end # initialize
-	def index_name
-				@dimension.name.model_name?
-	end # index_name
-	def next
+attr_reader :dimension, :enumerator, :next
+def initialize(dimension)
+	@dimension = dimension
+end # initialize
+
+def index_name
+			@dimension.name.model_name?
+end # index_name
+
+def next
 		if @dimension.methods.includes?(:enumerator) then
 			@enumerator = @dimension.enumerator
 			@next = @enumerator.next

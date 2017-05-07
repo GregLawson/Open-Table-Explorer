@@ -141,14 +141,6 @@ class Hash
 		end # each_pair
 		ret.chomp.chomp + "\n" + "}\n" # remove terminating linefeed and comma
 	end # inspect_lines
-	
-	module Examples
-    Flat_hash = { cat: :fish }.freeze
-    Example_hash = { name: 'Fred', salary: 10, department: :Engineering }.freeze
-    Example_tuples = [Example_hash, { name: 'Bob', salary: 11 }].freeze
-    Example_department = { department: :Engineering, manager: 'Bob' }.freeze
-    Example_database = { employees: Example_tuples, departments: Example_department }.freeze
-  end # Examples
 end # Hash
 
 class Object

@@ -8,7 +8,7 @@
 require_relative 'test_environment'
 require 'active_support' # for singularize and pluralize
 require_relative '../../app/models/regexp.rb'
-require_relative '../assertions/shell_command_assertions.rb'
+require_relative '../../app/models/parse.rb'
 require_relative '../../app/models/ruby_interpreter.rb'
 
 class RubyVersionTest < TestCase

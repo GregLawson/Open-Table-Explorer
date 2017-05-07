@@ -100,32 +100,13 @@ module Shell
       attribute :stdout, File, default: nil
       attribute :stderr, File, default: nil
       attribute :wait_thr, Object, default: nil
-      attribute :output_at_close, String, default: nil
+      attribute :output, String, default: nil
     end # values
 
-			def select(timeout = 0.01)
-				all3 = [@stdout, @stderr, @stdin].select {|fd| !fd.closed?}
-				IO.select(all3, all3, all3, timeout)
+			def select
+				IO.select([stdout], [stdin], [stderr], 0.01)
 			end # select
-
-		def io_to_sym(io)
-			case io
-			when @stdin then :stdin
-			when @stdout then :stdout
-			when @stderr then :stderr
-			else raise io.select + ' not recognized in io_to_sym.'
-			end # case
-		end # io_to_sym
-		
-		def select_symbols(timeout = 0.01)
-			selection = select(timeout)
-			if selection.nil? # timedout
-				{}
-			else
-				{readable: selection[0].map {|fd| io_to_sym(fd)}, writeable: selection[1].map {|fd| io_to_sym(fd)}, exceptions: selection[2].map {|fd| io_to_sym(fd)}}
-			end # if
-		end # select_symbols
-								
+						
     def start
       @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(@command_string)
       #      @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(@env, @command_string, @opts)
@@ -135,8 +116,8 @@ module Shell
     def process_status
       raise 'process_status undefined until server started.' if @wait_thr.nil?
       @wait_thr.value
-    end # process_status
-
+	  end # process_status
+		
     def exitstatus
       @wait_thr.value.exitstatus
     end # process_status
@@ -149,8 +130,8 @@ module Shell
 
 		def tee
 			Timeout.timeout(@timeout) do
-				output = @stdout.read
-				puts output
+				@output = @stdout.read
+				puts @output
 			end # Timeout
 		rescue Timeout::Error => exception_object_raised
 			@errors[:rescue_tee] = exception_object_raised
@@ -160,12 +141,12 @@ module Shell
       @stdin.close # stdin, stdout and stderr should be closed explicitly in this form.
       begin
         Timeout.timeout(@timeout) do
-					@process_status = @wait_thr.value # Process::Status object returned.
+          @process_status = @wait_thr.value # Process::Status object returned.
         end # Timeout
       rescue Timeout::Error => exception_object_raised
         @errors[:rescue_close] = exception_object_raised
       end # begin/rescue block
-      @output_at_close = @stdout.read
+      @output = @stdout.read
       @stdout.close
       stderr = @stderr.read
       unless stderr.empty?
@@ -255,7 +236,7 @@ module Shell
         self # return for command chaining
       end # assert_post_conditions
 
-      def assert_started(_message = '')
+			def assert_started(_message = '')
         #        message += "In assert_post_conditions, self=#{inspect}"
         assert_instance_of(Process::Waiter, wait_thr)
         assert_instance_of(Process::Status, process_status)
@@ -312,24 +293,6 @@ module Shell
     include Assertions
     extend Assertions::ClassMethods
     # self.assert_pre_conditions
-
-    module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
-      include Shell::Base::DefinitionalConstants
-      include ReferenceObjects
-      Hello_world = Shell::Server.new(command_string: 'echo "Hello World"')
-      Example_output = "1 2;3 4\n".freeze
-      COMMAND_STRING = 'echo "1 2;3 4"'.freeze
-      EXAMPLE = Shell::Server.new(command_string: COMMAND_STRING)
-      Guaranteed_existing_directory = File.expand_path(File.dirname($PROGRAM_NAME))
-      Cd_command_array = ['cd', Guaranteed_existing_directory].freeze
-      Cd_command_hash = { command: 'cd', in: Guaranteed_existing_directory }.freeze
-      Guaranteed_existing_basename = File.basename($PROGRAM_NAME)
-      Redirect_command = ['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command'].freeze
-      Redirect_command_string = 'ls ' + Shellwords.escape(Guaranteed_existing_basename) + ' > ' + Shellwords.escape('blank in filename.shell_command')
-      Relative_command = ['ls', Guaranteed_existing_basename].freeze
-      Bad_status = Shell::Server.new(command_string: '$?=1')
-      Error_message_run = Shell::Server.new(command_string: 'ls happyHappyFailFail.junk')
-    end # Examples
   end # Server
 
   class Command < Server
@@ -569,14 +532,13 @@ end # FileIPO
 class ShellCommands
   #  include Shell::Base
   extend Shell::Base::ClassMethods
-  attr_reader :command_string, :output, :errors, :process_status
+  attr_reader :command_string, :output, :errors, :process_status, :elapsed_time
   # execute same command again (also called by new).
   def execute
     @start_time = Time.now
     info '@command=' + @command.inspect
     info '@command_string=' + @command_string.inspect
     Open3.popen3(@env, @command_string, @opts) do |stdin, stdout, stderr, wait_thr|
-      @elapsed_time = Time.now - @start_time
 
       stdin.close # stdin, stdout and stderr should be closed explicitly in this form.
       @output = stdout.read
@@ -584,6 +546,7 @@ class ShellCommands
       @errors = stderr.read
       stderr.close
       @process_status = wait_thr.value # Process::Status object returned.
+      @elapsed_time = Time.now - @start_time
     end
     self # allows command chaining
   rescue StandardError => exception_object_raised
@@ -746,20 +709,4 @@ class ShellCommands
     end # assert_post_conditions
   end # Assertions
   include Assertions
-  module Examples
-    Hello_world = ShellCommands.new('echo "Hello World"')
-    Example_output = "1 2;3 4\n".freeze
-    COMMAND_STRING = 'echo "1 2;3 4"'.freeze
-    EXAMPLE = ShellCommands.new(COMMAND_STRING)
-    Guaranteed_existing_directory = File.expand_path(File.dirname($PROGRAM_NAME))
-    Cd_command_array = ['cd', Guaranteed_existing_directory].freeze
-    Cd_command_hash = { command: 'cd', in: Guaranteed_existing_directory }.freeze
-    Guaranteed_existing_basename = File.basename($PROGRAM_NAME)
-    Redirect_command = ['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command'].freeze
-    Redirect_command_string = 'ls ' + Shellwords.escape(Guaranteed_existing_basename) + ' > ' + Shellwords.escape('blank in filename.shell_command')
-    Relative_command = ['ls', Guaranteed_existing_basename].freeze
-    Bad_status = ShellCommands.new('$?=1')
-    Error_message_run = ShellCommands.new('ls happyHappyFailFail.junk')
-  end # Examples
-  include Examples
 end # ShellCommands

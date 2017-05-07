@@ -137,7 +137,7 @@ class Diffuse < Editor
   end # minimal_comparison
 
   def edit
-    @test_executable.repository.recent_test.puts unless @test_executable.repository.recent_test.nil?
+#    @test_executable.repository.recent_test.puts unless @test_executable.repository.recent_test.nil?
     if @test_executable.unit.nil? || @test_executable.unit.edit_files.empty?
       command_string = 'diffuse' + version_comparison([@specific_file])
     else

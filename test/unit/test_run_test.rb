@@ -28,70 +28,73 @@ class RecentRunTest < TestCase
     Relative_command = ['ls', Guaranteed_existing_basename].freeze
     Bad_status = RecentRun.new(command_string: '$?=1')
     Error_message_run = RecentRun.new(command_string: 'ls happyHappyFailFail.junk')
-		Forced_timeout_recent_run = RecentRun.new(command_string: 'sleep 0.01', timeout: Allways_timeout)
-		Soft_timeout_recent_run = RecentRun.new(command_string: 'sleep 0.01', timeout: 0.011)
+    Forced_timeout_recent_run = RecentRun.new(command_string: 'sleep 0.01', timeout: Allways_timeout)
+    Soft_timeout_recent_run = RecentRun.new(command_string: 'sleep 0.01', timeout: 0.011)
   end # Examples
   include Examples
-   def test_Recent_test_default
-    end # Recent_test_default
+  def test_Recent_test_default
+   end # Recent_test_default
 
-	def test_RecentRun_virtus
-		refute_nil(Hello_world.command_string, Hello_world.inspect)
+  def test_RecentRun_virtus
+    refute_nil(Hello_world.command_string, Hello_world.inspect)
     assert_equal(Example_output, EXAMPLE.output)
-		assert_includes(Hello_world.cached_run.instance_variables, :@elapsed_time, Hello_world.inspect)
+    assert_includes(Hello_world.cached_run.instance_variables, :@elapsed_time, Hello_world.inspect)
     end # values
-	def test_timed_out?
+
+  def test_timed_out?
     assert_equal(false, Hello_world.timed_out?, Hello_world.inspect)
     assert_equal(false, EXAMPLE.timed_out?)
     assert_equal(false, Error_message_run.timed_out?)
     assert_kind_of(Exception, Forced_timeout_recent_run.errors[:rescue_exception], Forced_timeout_recent_run.inspect)
     assert_equal(true, Forced_timeout_recent_run.timed_out?, Forced_timeout_recent_run.inspect)
-	end # timed_out?
-	def test_shell_elapsed_time?
+  end # timed_out?
+
+  def test_shell_elapsed_time?
     assert_equal(true, Hello_world.shell_elapsed_time?, Hello_world.inspect)
     assert_equal(false, Forced_timeout_recent_run.shell_elapsed_time?, Forced_timeout_recent_run.inspect)
     assert_equal(true, EXAMPLE.shell_elapsed_time?)
     assert_equal(true, Error_message_run.shell_elapsed_time?)
-	end # shell_elapsed_time?
+  end # shell_elapsed_time?
+
   def test_elapsed_time
     assert_instance_of(Float, Hello_world.elapsed_time, Hello_world.inspect)
     assert_instance_of(Float, Forced_timeout_recent_run.elapsed_time, Forced_timeout_recent_run.inspect)
     assert_instance_of(Float, EXAMPLE.elapsed_time)
     assert_instance_of(Float, Error_message_run.elapsed_time)
   end # elapsed_time
-	def test_success?
-		assert(Hello_world.success?, Hello_world.inspect)
-		assert(EXAMPLE.success?, Hello_world.inspect)
-		refute(Error_message_run.success?, Error_message_run.inspect)
-		refute(Forced_timeout_recent_run.success?, Forced_timeout_recent_run.inspect)
-	end # success?
-	
+
+  def test_success?
+    assert(Hello_world.success?, Hello_world.inspect)
+    assert(EXAMPLE.success?, Hello_world.inspect)
+    refute(Error_message_run.success?, Error_message_run.inspect)
+    refute(Forced_timeout_recent_run.success?, Forced_timeout_recent_run.inspect)
+  end # success?
+
   def test_RecentRun_explain_elapsed_time
     assert_match(/ with no timeout/, Hello_world.explain_elapsed_time, Hello_world.inspect)
     assert_match(/beyond timeout of /, Forced_timeout_recent_run.explain_elapsed_time, Forced_timeout_recent_run.inspect)
-#    assert_match(/within timeout/, Soft_timeout_recent_run.explain_elapsed_time, Forced_timeout_recent_run.inspect)
-#    assert_match(/beyond timeout/, Soft_timeout_recent_run.explain_elapsed_time, Forced_timeout_recent_run.inspect)
+    #    assert_match(/within timeout/, Soft_timeout_recent_run.explain_elapsed_time, Forced_timeout_recent_run.inspect)
   end # explain_elapsed_time
 
-    def test_TestRun_assert_pre_conditions
-      end # assert_pre_conditions
-
-    def test_TestRun_assert_post_conditions
-      end # assert_post_conditions
-
-    def test_assert_pre_conditions
-			Hello_world.assert_pre_conditions
-			EXAMPLE.assert_pre_conditions
-			Error_message_run.assert_pre_conditions
-			Forced_timeout_recent_run.assert_pre_conditions
+  def test_TestRun_assert_pre_conditions
     end # assert_pre_conditions
 
-    def test_assert_post_conditions
-			Hello_world.assert_post_conditions
-			EXAMPLE.assert_post_conditions
-			Error_message_run.assert_post_conditions
-			Forced_timeout_recent_run.assert_post_conditions
+  def test_TestRun_assert_post_conditions
     end # assert_post_conditions
+
+  def test_assert_pre_conditions
+    Hello_world.assert_pre_conditions
+    EXAMPLE.assert_pre_conditions
+    Error_message_run.assert_pre_conditions
+    Forced_timeout_recent_run.assert_pre_conditions
+  end # assert_pre_conditions
+
+  def test_assert_post_conditions
+    Hello_world.assert_post_conditions
+    EXAMPLE.assert_post_conditions
+    Error_message_run.assert_post_conditions
+    Forced_timeout_recent_run.assert_post_conditions
+  end # assert_post_conditions
 end # RecentRun
 
 class TestRunTest < TestCase
@@ -146,7 +149,6 @@ class TestRunTest < TestCase
     assert_instance_of(Float, recent_test_default.elapsed_time)
     assert_instance_of(String, recent_test_default.output)
     assert_includes(Forced_timeout_testRun.cached_recent_test.errors.keys, :rescue_exception, Forced_timeout_testRun.cached_recent_test.inspect)
-#    assert_equal([:test, :recent_test, :rescue_exception], Forced_timeout_testRun.cached_recent_test.instance_variables, Forced_timeout_testRun.cached_recent_test.inspect)
     refute_nil(Default_subtestRun.cached_recent_test)
     refute_nil(Default_testRun.cached_recent_test)
     assert_nil(Forced_timeout_testRun.cached_recent_test.cached_run)
@@ -159,17 +161,18 @@ class TestRunTest < TestCase
     assert_equal(RepositoryPathname.new_from_path($PROGRAM_NAME).relative_pathname.to_s, TestSelf.test_executable.regression_unit_test_file.relative_pathname.to_s)
     assert_equal(TestExecutable::Examples::TestMinimal.unit, Default_testRun.test_executable.unit)
   end # values
+
   def test_all_test_names
   end # all_test_names
 
-	def test_run_style
+  def test_run_style
     assert_equal(:recursion_danger, TestSelf.run_style, TestSelf.inspect)
-		
+
     assert_instance_of(RecentRun, Forced_timeout_testRun.cached_recent_test)
     assert_equal(:timeout_exception, Forced_timeout_testRun.run_style)
-#		assert_includes(Default_testRun.cached_recent_test.instance_variables, :@elapsed_time, Default_testRun.inspect)
-#		assert_includes(Default_subtestRun.cached_recent_test.instance_variables, :@elapsed_time, Default_subtestRun.inspect)
-	end # run_style
+    #		assert_includes(Default_testRun.cached_recent_test.instance_variables, :@elapsed_time, Default_testRun.inspect)
+    #		assert_includes(Default_subtestRun.cached_recent_test.instance_variables, :@elapsed_time, Default_subtestRun.inspect)
+  end # run_style
 
   def test_explain_elapsed_time
     assert_match(/test_compare in minimal2 took /, Default_subtestRun.explain_elapsed_time)
@@ -187,30 +190,28 @@ class TestRunTest < TestCase
     refute_empty(TestRun.shell('pwd', &:inspect))
   end # shell
 
-
-	def state
-		assert_instance_of(String, Default_testRun.state[:current_branch_name])
-		assert_instance_of(String, Default_testRun.state[:start_time])
-		assert_instance_of(String, Default_testRun.state[:command_string])
-		assert_instance_of(String, Default_testRun.state[:output])
-		assert_instance_of(String, Default_testRun.state[:errors])
-	end # state
-
+  def state
+    assert_instance_of(String, Default_testRun.state[:current_branch_name])
+    assert_instance_of(String, Default_testRun.state[:start_time])
+    assert_instance_of(String, Default_testRun.state[:command_string])
+    assert_instance_of(String, Default_testRun.state[:output])
+    assert_instance_of(String, Default_testRun.state[:errors])
+  end # state
 
   def test_write_error_file
-		assert_instance_of(String, Default_testRun.state.ruby_lines_storage)
+    assert_instance_of(String, Default_testRun.state.ruby_lines_storage)
 
-		assert_equal(Default_testRun.state[:current_branch_name].inspect, Default_testRun.state[:current_branch_name].ruby_lines_storage)
-		
-		time = Default_testRun.state[:start_time]
-		eval_time = eval(time.ruby_lines_storage)
-		round_off = time - eval_time
-		assert_equal(time, eval_time, time.strftime('%Y-%m-%d %H:%M:%S.%9N %z') + time.ruby_lines_storage + round_off.to_f.to_s)
-#		assert_equal(Default_testRun.state[:command_string].inspect, Default_testRun.state[:command_string].ruby_lines_storage)
-#		assert_equal(Default_testRun.state[:output].inspect, Default_testRun.state[:output].ruby_lines_storage)
-#		assert_equal(Default_testRun.state[:errors].inspect, Default_testRun.state[:errors].ruby_lines_storage)
+    #		assert_equal(Default_testRun.state[:current_branch_name].inspect, Default_testRun.state[:current_branch_name].ruby_lines_storage)
 
-#		assert_equal(Default_testRun.state.inspect, Default_testRun.state.ruby_lines_storage)
+    time = Default_testRun.state[:start_time]
+    eval_time = eval(time.ruby_lines_storage)
+    round_off = time - eval_time
+    assert_equal(time, eval_time, time.strftime('%Y-%m-%d %H:%M:%S.%9N %z') + time.ruby_lines_storage + round_off.to_f.to_s)
+    #		assert_equal(Default_testRun.state[:command_string].inspect, Default_testRun.state[:command_string].ruby_lines_storage)
+    #		assert_equal(Default_testRun.state[:output].inspect, Default_testRun.state[:output].ruby_lines_storage)
+    #		assert_equal(Default_testRun.state[:errors].inspect, Default_testRun.state[:errors].ruby_lines_storage)
+
+    #		assert_equal(Default_testRun.state.inspect, Default_testRun.state.ruby_lines_storage)
     Default_testRun.write_error_file(nil)
   end # write_error_file
 
@@ -259,30 +260,31 @@ class TestRunTest < TestCase
   def test_run_individual_tests # moved to long_test
   end # run_individual_tests
 
-    def test_TestRun_assert_pre_conditions
-      end # assert_pre_conditions
-
-    def test_TestRun_assert_post_conditions
-      end # assert_post_conditions
-
-    def test_assert_pre_conditions
-			Default_testRun.assert_pre_conditions
-			Default_subtestRun.assert_pre_conditions
-			Forced_timeout_testRun.assert_pre_conditions
-			TestSelf.assert_pre_conditions
+  def test_TestRun_assert_pre_conditions
     end # assert_pre_conditions
 
-    def test_assert_post_conditions
-			Default_testRun.assert_post_conditions
-			Default_subtestRun.assert_post_conditions
-			Forced_timeout_testRun.assert_post_conditions
-			TestSelf.assert_post_conditions
+  def test_TestRun_assert_post_conditions
     end # assert_post_conditions
+
+  def test_assert_pre_conditions
+    Default_testRun.assert_pre_conditions
+    Default_subtestRun.assert_pre_conditions
+    Forced_timeout_testRun.assert_pre_conditions
+    TestSelf.assert_pre_conditions
+  end # assert_pre_conditions
+
+  def test_assert_post_conditions
+    Default_testRun.assert_post_conditions
+    Default_subtestRun.assert_post_conditions
+    Forced_timeout_testRun.assert_post_conditions
+    TestSelf.assert_post_conditions
+  end # assert_post_conditions
+
   def test_TestRun_Examples
     refute_includes(Default_testRun.cached_recent_test.instance_variables, :rescue_exception, Default_testRun.cached_recent_test.inspect)
     refute_includes(Default_subtestRun.cached_recent_test.instance_variables, :rescue_exception, Default_subtestRun.cached_recent_test.inspect)
-		Forced_timeout_testRun.assert_pre_conditions
+    Forced_timeout_testRun.assert_pre_conditions
     assert_includes(Forced_timeout_testRun.cached_recent_test.errors.keys, :rescue_exception, Forced_timeout_testRun.cached_recent_test.inspect)
     assert_nil(TestSelf.cached_recent_test, TestSelf.cached_recent_test.inspect)
-  end # Examples
+end # Examples
 end # TestRun

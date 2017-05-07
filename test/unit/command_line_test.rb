@@ -15,8 +15,8 @@ class CommandLineTest < TestCase
 		Not_virtus_test_executable = TestExecutable.new_from_path('app/models/editor.rb')
 		Not_virtus_unit_commandline = CommandLine.new(test_executable: Not_virtus_test_executable, argv: ['help', $PROGRAM_NAME])
 		require File.expand_path(Not_virtus_test_executable.unit.model_pathname?)
-#		No_side_effects_test_executable = TestExecutable.new_from_path('app/models/merge.rb')
-#		No_side_effects_sub_command_line = CommandLine.new(test_executable: No_side_effects_test_executable, argv: ['state?'])
+		No_side_effects_test_executable = TestExecutable.new_from_path('app/models/merge.rb')
+		No_side_effects_sub_command_line = CommandLine.new(test_executable: No_side_effects_test_executable, argv: ['state?'])
 		No_side_effects_default_test_executable = TestExecutable.new_from_path('app/models/editor.rb')
 		No_side_effects_default_line = CommandLine.new(test_executable: No_side_effects_default_test_executable, argv: ['version_comparison'])
 		No_arg_run = CommandLine.new(argv: '')
@@ -65,12 +65,12 @@ class CommandLineTest < TestCase
   end # arguments
 
   def test_number_of_arguments
-#    assert_equal(0, No_side_effects_sub_command_line.number_of_arguments)
+    assert_equal(0, No_side_effects_sub_command_line.number_of_arguments)
   end # number_of_arguments
 
   def test_sub_command
-#    assert_equal(:state?, No_side_effects_sub_command_line.sub_command)
-#		assert_equal(:help, Not_virtus_unit_commandline.sub_command)
+    assert_equal(:state?, No_side_effects_sub_command_line.sub_command)
+		assert_equal(:help, Not_virtus_unit_commandline.sub_command)
 		assert_equal(:version_comparison, No_side_effects_default_line.sub_command)
 		assert_equal(:help, No_arg_run.sub_command, No_arg_run.inspect)
 		assert_equal(:help, Help_run.command_line_opts[:help], Help_run.inspect)
@@ -101,18 +101,18 @@ class CommandLineTest < TestCase
     end # each
     refute_equal([], Example.find_by_class(CommandLine, CommandLine))
     refute_equal([], Script_command_line.find_examples, Script_command_line.inspect)
-#    refute_equal([], No_side_effects_sub_command_line.find_examples, No_side_effects_sub_command_line.inspect)
+    refute_equal([], No_side_effects_sub_command_line.find_examples, No_side_effects_sub_command_line.inspect)
     #			assert_equal(example_class, RailsishRubyUnit::Executable.model_class?)
-#    refute_equal([], No_side_effects_sub_command_line.find_examples)
+    refute_equal([], No_side_effects_sub_command_line.find_examples)
     refute_equal([], Not_virtus_unit_commandline.find_examples)
     refute_equal([], Script_command_line.find_examples)
   end # find_examples
 
   def test_find_example?
-#    refute_equal([], No_side_effects_sub_command_line.find_examples)
+    refute_equal([], No_side_effects_sub_command_line.find_examples)
     refute_equal([], Not_virtus_unit_commandline.find_examples)
     refute_equal([], Script_command_line.find_examples)
-#    refute_nil(No_side_effects_sub_command_line.find_example?)
+    refute_nil(No_side_effects_sub_command_line.find_example?)
     refute_nil(Not_virtus_unit_commandline.find_example?)
     refute_nil(Script_command_line.find_example?)
     #	assert_equal(TestRun::Examples::Default_testRun, No_side_effects_sub_command_line.find_example?.value)
@@ -121,11 +121,11 @@ class CommandLineTest < TestCase
   end # find_example?
 
   def test_make_executable_object
-#    assert_includes(No_side_effects_sub_command_line.test_executable.unit.model_class?.included_modules, Virtus::InstanceMethods)
+    assert_includes(No_side_effects_sub_command_line.test_executable.unit.model_class?.included_modules, Virtus::InstanceMethods)
   end # make_executable_object
 
   def test_executable_object
-#    assert_includes(No_side_effects_sub_command_line.test_executable.unit.model_class?.included_modules, Virtus::InstanceMethods)
+    assert_includes(No_side_effects_sub_command_line.test_executable.unit.model_class?.included_modules, Virtus::InstanceMethods)
 #    test_run_object = TestRun.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
 #    assert_equal(test_run_object.methods, No_side_effects_sub_command_line.executable_object.methods)
     #	assert_equal(test_run_object, No_side_effects_sub_command_line.executable_object)
@@ -168,32 +168,48 @@ class CommandLineTest < TestCase
 
   def test_sub_command_instance_methods
     assert_equal(-1, Script_command_line.method(:initialize).arity)
-    #	assert_equal(0, Script_command_line.method(:candidate_commands).arity)
+    #	assert_equal(0, Script_command_line.method(:sub_command_instance_methods).arity)
     #	assert_equal(-2, No_args.test_executable.unit.model_class?.method(:initialize).arity)
     #	assert_equal(-2, Script_command_line.test_executable.unit.model_class?.method(:initialize).arity)
 
     refute_equal([], Script_command_line.executable_object.methods(true))
-#    refute_equal([], No_side_effects_sub_command_line.executable_object.methods(true))
+    refute_equal([], No_side_effects_sub_command_line.executable_object.methods(true))
     refute_equal([], Not_virtus_unit_commandline.executable_object.methods(true))
 
     refute_equal([], Script_command_line.executable_object.class.instance_methods(false), Script_command_line.executable_object.methods(true))
-#    refute_equal([], No_side_effects_sub_command_line.executable_object.class.instance_methods(false), No_side_effects_sub_command_line.executable_object.methods(true))
+    refute_equal([], No_side_effects_sub_command_line.executable_object.class.instance_methods(false), No_side_effects_sub_command_line.executable_object.methods(true))
     refute_equal([], Not_virtus_unit_commandline.executable_object.class.instance_methods(false), Not_virtus_unit_commandline.executable_object.methods(true))
     # refute_equal([], Script_command_line.sub_command_instance_methods)
     # refute_equal([], No_side_effects_sub_command_line.sub_command_instance_methods)
     # refute_equal([], Not_virtus_unit_commandline.sub_command_instance_methods)
-#    refute_equal([], No_side_effects_sub_command_line.executable_object.methods(true))
-#    executable_object = No_side_effects_sub_command_line.executable_object
-#    puts executable_object.methods(true).map do |method_name|
-#      ancestors = executable_object.class.ancestors.select do |ancestor|
-#        ancestor.instance_methods(false).include?(method_name)
-#      end # each
-#      { method_name: method_name, ancestors: ancestors }
-#    end.inspect # each
+    refute_equal([], No_side_effects_sub_command_line.executable_object.methods(true))
+    executable_object = No_side_effects_sub_command_line.executable_object
+    puts executable_object.methods(true).map do |method_name|
+      ancestors = executable_object.class.ancestors.select do |ancestor|
+        ancestor.instance_methods(false).include?(method_name)
+      end # each
+      { method_name: method_name, ancestors: ancestors }
+    end.inspect # each
   end # sub_command_instance_methods
 
   def test_candidate_commands_strings
   end # candidate_commands_strings
+	
+	def test_sub_command_method
+    assert_instance_of(Method, Script_command_line.sub_command_method, Script_command_line.sub_command_instance_methods)
+
+    assert_instance_of(Method, Script_command_line.sub_command_method, Script_command_line.sub_command_instance_methods)
+    assert_instance_of(Method, No_side_effects_sub_command_line.sub_command_method, No_side_effects_sub_command_line.sub_command_instance_methods)
+    assert_instance_of(Method, Not_virtus_unit_commandline.sub_command_method, Not_virtus_unit_commandline.sub_command_instance_methods)
+
+    assert_instance_of(Method, No_side_effects_sub_command_line.sub_command_method)
+		assert_instance_of(Method, No_side_effects_default_line.sub_command_method)
+		assert_instance_of(Method, No_arg_run.sub_command_method)
+		assert_instance_of(Method, Help_run.sub_command_method)
+	end # sub_command_method
+	
+  def test_candidate_sub_commands_strings
+  end # candidate_sub_commands_strings
 
   def test_help_banner_string
   end # help_banner_string
@@ -208,8 +224,8 @@ class CommandLineTest < TestCase
   end # ==
 
   def test_to_s
-#    refute_equal('', No_side_effects_sub_command_line.to_s)
-#    assert_match(/argv/, No_side_effects_sub_command_line.to_s)
+    refute_equal('', No_side_effects_sub_command_line.to_s)
+    assert_match(/argv/, No_side_effects_sub_command_line.to_s)
   end # to_s
 
   def test_executable_method?
@@ -230,19 +246,47 @@ class CommandLineTest < TestCase
   end # dispatch_required_arguments
 
   def test_run
-    CommandLine # .assert_pre_conditions
+    CommandLine.assert_pre_conditions
     refute_nil(ARGV)
     #		SELF.run do
     #		end # do run
 #    No_side_effects_sub_command_line.run
-#		No_side_effects_default_line.assert_pre_conditions
-#		No_side_effects_sub_command_line.assert_pre_conditions
+		No_side_effects_default_line.assert_pre_conditions
+		No_side_effects_sub_command_line.assert_pre_conditions
 #		No_side_effects_default_line.run
 #		No_side_effects_sub_command_line.run
 		assert_match(/-t /, No_side_effects_default_line.run, No_side_effects_default_line.inspect)
-#		assert_equal(:state?, No_side_effects_sub_command_line.sub_command, No_side_effects_sub_command_line.inspect)
-#		assert_equal([:dirty], No_side_effects_sub_command_line.run, No_side_effects_sub_command_line.inspect)
+		assert_equal(:state?, No_side_effects_sub_command_line.sub_command, No_side_effects_sub_command_line.inspect)
+		assert_equal([:dirty], No_side_effects_sub_command_line.run, No_side_effects_sub_command_line.inspect)
   end # run
+
+  def test_equal
+  end # ==
+
+  def test_to_s
+#    refute_equal('', No_side_effects_sub_command_line.to_s)
+#    assert_match(/argv/, No_side_effects_sub_command_line.to_s)
+  end # to_s
+end # CommandLineExecutable
+
+class CommandLineTest < TestCase
+  include CommandLine::Examples
+
+  def test_candidate_commands_strings
+  end # candidate_commands_strings
+
+  def test_candidate_sub_commands_strings
+  end # candidate_sub_commands_strings
+
+  def test_help_banner_string
+  end # help_banner_string
+
+  def test_command_line_parser
+  end # command_line_parser
+
+  def test_command_line_opts
+  end # command_line_opts
+
 
   # ruby -W0 script/command_line.rb
   # ruby -W0 script/command_line.rb --help

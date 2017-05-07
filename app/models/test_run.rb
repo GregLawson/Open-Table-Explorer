@@ -37,104 +37,104 @@ class RecentRun
   include DefinitionalConstants
 
   include Virtus.model
-      attribute :command_string, String
-      attribute :env, Hash, default: {}
-      attribute :opts, Hash, default: {}
-      attribute :errors, Hash, default: {}
-      attribute :start_time, Time, default: nil
-      attribute :cached_run, Object, default: Cached_run_default
-      attribute :elapsed_time, Float
-      attribute :timeout, Float, default: 0.0 # no timeout
-      attribute :stdin, File, default: nil
-      attribute :stdout, File, default: nil
-      attribute :stderr, File, default: nil
-      attribute :wait_thr, Object, default: nil
-      attribute :output, String, default: nil
-	def timed_out?
-          @errors[:rescue_exception].kind_of?(Exception)
-	end # timed_out?
-	
-	def shell_elapsed_time?
-		if timed_out?
-			false
-		elsif @cached_run.nil?
-			nil
-		elsif @cached_run.instance_of?(ShellCommands)
-			if @cached_run.instance_variables.include?(:@elapsed_time)
-				if @cached_run.elapsed_time.nil?
-					:timeout_elapsed_time_nil
+  attribute :command_string, String
+  attribute :env, Hash, default: {}
+  attribute :opts, Hash, default: {}
+  attribute :errors, Hash, default: {}
+  attribute :start_time, Time, default: nil
+  attribute :cached_run, Object, default: Cached_run_default
+  attribute :elapsed_time, Float
+  attribute :timeout, Float, default: 0.0 # no timeout
+  attribute :stdin, File, default: nil
+  attribute :stdout, File, default: nil
+  attribute :stderr, File, default: nil
+  attribute :wait_thr, Object, default: nil
+  attribute :output, String, default: nil
+  def timed_out?
+    @errors[:rescue_exception].is_a?(Exception)
+  end # timed_out?
+
+  def shell_elapsed_time?
+    if timed_out?
+      false
+    elsif @cached_run.nil?
+      nil
+    elsif @cached_run.instance_of?(ShellCommands)
+      if @cached_run.instance_variables.include?(:@elapsed_time)
+        if @cached_run.elapsed_time.nil?
+          :timeout_elapsed_time_nil
+        else
+          true
+        end # if
+      elsif @errors[:rescue_exception].instance_of?(ShellCommands)
+        :timeout_exception
       else
-					true
+        :unknown_ShellCommands
       end # if
-			elsif @errors[:rescue_exception].instance_of?(ShellCommands)
-				:timeout_exception
-			else
-				:unknown_ShellCommands
-			end # if
-		else
-			:unknown
-		end # if
-	end # shell_elapsed_time?
-	
+    else
+      :unknown
+    end # if
+  end # shell_elapsed_time?
+
   def elapsed_time
-		if shell_elapsed_time?
-			@cached_run.elapsed_time
-		elsif @cached_run.nil?
-			if @elapsed_time.nil?
-				nil
-			else
-				@elapsed_time # timeout
-			end # if
-		elsif @cached_run.instance_of?(ShellCommands)
-			if @cached_run.instance_variables.include?(:@elapsed_time)
-				if @cached_run.elapsed_time.nil?
-					:timeout_elapsed_time_nil
-				else
-					@cached_run.elapsed_time
-				end # if
-			elsif @errors[:rescue_exception].instance_of?(ShellCommands)
-				:timeout_exception
-			else
-				:unknown_ShellCommands
-			end # if
-		else
-			:unknown
-		end # if
+    if shell_elapsed_time?
+      @cached_run.elapsed_time
+    elsif @cached_run.nil?
+      if @elapsed_time.nil?
+        nil
+      else
+        @elapsed_time # timeout
+      end # if
+    elsif @cached_run.instance_of?(ShellCommands)
+      if @cached_run.instance_variables.include?(:@elapsed_time)
+        if @cached_run.elapsed_time.nil?
+          :timeout_elapsed_time_nil
+        else
+          @cached_run.elapsed_time
+        end # if
+      elsif @errors[:rescue_exception].instance_of?(ShellCommands)
+        :timeout_exception
+      else
+        :unknown_ShellCommands
+      end # if
+    else
+      :unknown
+    end # if
   end # elapsed_time
 
-	def success?
-		if @cached_run.nil?
-			false
-		else
-			@cached_run.success?
-		end # if
-	end # success?
-	
-	def process_status
-		if @cached_run.nil?
-			nil
-		else
-			@cached_run.process_status
-		end # if
-	end # process_status
-	
-	def soft_timeout
-		0.05 + (0.5 *  @timeout)
-	end # soft_timeout
+  def success?
+    if @cached_run.nil?
+      false
+    else
+      @cached_run.success?
+    end # if
+  end # success?
 
-    def explain_elapsed_time
-			ret = 'took ' + elapsed_time.inspect + 's '
-			if @timeout == 0.0
-				ret += 'with no timeout'
-			elsif timed_out?
-				ret += 'beyond timeout of ' + @timeout.to_s + 's'
-			elsif elapsed_time > @timeout
-				ret += 'timedout within timeout of ' + @timeout.to_s + 's'
-			else
-				ret += 'unknown with timeout of ' + @timeout.to_s + 's'
-			end # if
-      ret
-    end # explain_elapsed_time
+  def process_status
+    if @cached_run.nil?
+      nil
+    else
+      @cached_run.process_status
+    end # if
+  end # process_status
+
+  def soft_timeout
+    0.05 + (0.5 * @timeout)
+  end # soft_timeout
+
+  def explain_elapsed_time
+    ret = 'took ' + elapsed_time.inspect + 's '
+    ret += if @timeout == 0.0
+             'with no timeout'
+           elsif timed_out?
+             'beyond timeout of ' + @timeout.to_s + 's'
+           elsif elapsed_time > @timeout
+             'timed-out within timeout of ' + @timeout.to_s + 's'
+           else
+             'unknown with timeout of ' + @timeout.to_s + 's'
+           end # if
+    ret
+  end # explain_elapsed_time
 
   # require_relative '../../app/models/assertions.rb'
   module Assertions
@@ -147,20 +147,20 @@ class RecentRun
         message += "In assert_post_conditions, self=#{inspect}"
       end # assert_post_conditions
     end # ClassMethods
-		
-    def assert_pre_conditions(message = '')
-			assert_includes(instance_variables, :@errors, inspect)
-			self # for command chaining
+
+    def assert_pre_conditions(_message = '')
+      assert_includes(instance_variables, :@errors, inspect)
+      self # for command chaining
     end # assert_pre_conditions
 
-    def assert_post_conditions(message = '')
-			unless @errors.nil?
-				if @errors.keys.include?(:rescue_exception)
-					assert_includes(@errors.keys, :rescue_exception, @cached_run.inspect)
-					assert_instance_of(Timeout::Error, @errors[:rescue_exception], inspect)
-				end # if
-			end # unless
-			self # for command chaining
+    def assert_post_conditions(_message = '')
+      unless @errors.nil?
+        if @errors.keys.include?(:rescue_exception)
+          assert_includes(@errors.keys, :rescue_exception, @cached_run.inspect)
+          assert_instance_of(Timeout::Error, @errors[:rescue_exception], inspect)
+        end # if
+      end # unless
+      self # for command chaining
     end # assert_post_conditions
   end # Assertions
   include Assertions
@@ -169,8 +169,6 @@ end # RecentRun
 
 class TestRun # < ActiveRecord::Base
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-		
-		
     All_test_names_default = lambda do |test_run, _attribute|
       #	if test_run.cached_recent_test[:rescue_exception].nil? then
       #		nil # not needed yet
@@ -178,8 +176,8 @@ class TestRun # < ActiveRecord::Base
       test_run.test_executable.all_test_names
       #	end # if
     end # All_test_names_default
-		
-    Too_long_for_regression_test = 30.0 # zero means infinite timeout
+
+    Too_long_for_regression_test = 15.0 # zero means infinite timeout
     Subtest_timeout_margin = 3.0 # allow some variation in test runtimes
 
     Timeout_default = lambda do |test_run, _attribute|
@@ -190,7 +188,6 @@ class TestRun # < ActiveRecord::Base
       end # if
     end # Timeout_default
 
-		
     Recent_test_default = lambda do |test_run, _attribute|
 			unless test_run.test_executable.test_type == :unit
 				test_run.test_executable.lint_unit
@@ -248,11 +245,11 @@ class TestRun # < ActiveRecord::Base
             @test.to_s
           end # if
     ret += ' in ' + @test_executable.unit.model_basename.to_s
-    if cached_recent_test.nil?
-      ret += 'recursion danger'
-      else
-      ret += ' ' + @cached_recent_test.explain_elapsed_time
-      end # if
+    ret += if cached_recent_test.nil?
+             'recursion danger'
+           else
+             ' ' + @cached_recent_test.explain_elapsed_time
+           end # if
     ret
   end # explain_elapsed_time
   module Constants
@@ -287,13 +284,13 @@ class TestRun # < ActiveRecord::Base
     error_score? <=> other.error_score?
   end # <=>
 
-	def state
-		{current_branch_name: Branch.current_branch_name?(@test_executable.repository),
-    start_time: Time.now,
-    command_string: @cached_recent_test.command_string,
-    output: @cached_recent_test.output.to_s,
-    errors: @cached_recent_test.errors}
-	end # state
+  def state
+    { current_branch_name: Branch.current_branch(@test_executable.repository),
+      start_time: Time.now,
+      command_string: @cached_recent_test.command_string,
+      output: @cached_recent_test.output.to_s,
+      errors: @cached_recent_test.errors }
+  end # state
 
   def write_error_file(test)
     IO.write(@test_executable.log_path?(test), state.ruby_lines_storage)
@@ -400,19 +397,19 @@ class TestRun # < ActiveRecord::Base
         message += "In assert_post_conditions, self=#{inspect}"
       end # assert_post_conditions
     end # ClassMethods
-    def assert_pre_conditions(message = '')
-			unless @cached_recent_test.nil?
-				assert_instance_of(RecentRun, @cached_recent_test, inspect)
-				@cached_recent_test.assert_pre_conditions
-			end # if
-			self # for command chaining
+    def assert_pre_conditions(_message = '')
+      unless @cached_recent_test.nil?
+        assert_instance_of(RecentRun, @cached_recent_test, inspect)
+        @cached_recent_test.assert_pre_conditions
+      end # if
+      self # for command chaining
     end # assert_pre_conditions
 
-    def assert_post_conditions(message = '')
-			unless @recent_test_default.nil? 
-				@cached_recent_test.assert_post_conditions
-			end # if
-			self # for command chaining
+    def assert_post_conditions(_message = '')
+      unless @recent_test_default.nil?
+        @cached_recent_test.assert_post_conditions
+      end # if
+      self # for command chaining
     end # assert_post_conditions
   end # Assertions
   include Assertions

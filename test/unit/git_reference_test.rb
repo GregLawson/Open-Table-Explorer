@@ -16,12 +16,11 @@ class TimeTypesTest < TestCase
   # include Repository::Examples
 	include TimeTypes
 
-	module Examples
-		Reflog_timestamp = 'Sun, 21 Jun 2015 13:51:50 -0700'.freeze
 
-	end # Examples
-	include Examples
+end # GitReference
 
+class CommitTest < TestCase
+  include Commit::ReferenceObjects
   def setup
     @temp_repo = Repository.create_test_repository
   end # setup
@@ -29,25 +28,14 @@ class TimeTypesTest < TestCase
   def teardown
     Repository.delete_existing(@temp_repo.path)
   end # teardown
+end # Commit
 	
 	def test_TimeTypes
-		assert_includes(Time.instance_methods(false), :iso8601)
-		test_time = Time.new(2016, 12, 13, 0, 41, Rational(10998838165, 1000000000), "-08:00")
-		assert_equal('Tue, 13 Dec 2016 00:41:10 -0800', test_time.rfc2822, test_time.ruby_lines_storage)
-		assert_equal('2016-12-13T00:41:10-08:00', test_time.iso8601)
-		assert_equal('2016-12-13T00:41:10-08:00', test_time.xmlschema)
-		assert_equal('Tue, 13 Dec 2016 00:41:10 -0800', test_time.rfc822)
-		assert_equal('Tue, 13 Dec 2016 08:41:10 GMT', test_time.httpdate)
-		assert_equal('Tue Dec 13 00:41:10 2016', test_time.asctime)
-
 		show_commit_output = Head_at_start.show_run.output
 		show_matches = ParsedCapture.show_matches([show_commit_output], Git_show_medium_timestamp_regexp_array)
 		assert_match(Git_show_medium_timestamp_regexp, show_commit_output, show_matches.ruby_lines_storage)
-		
-		show_matches = ParsedCapture.show_matches([Reflog_timestamp], Git_reflog_timestamp_regexp_array)
-		assert_match(Git_reflog_timestamp_regexp, Reflog_timestamp, show_matches.ruby_lines_storage)
 	end # TimeTypes
-end # TimeTypes
+	
 
 class GitReferenceTest < TestCase
   include NamedCommit::ReferenceObjects
@@ -62,21 +50,6 @@ class GitReferenceTest < TestCase
 
 	def test_show_run
 	end # show_run
-	
-	def test_dry
-		top_level_types = [:String,  :Int, :Float, :Decimal, :Array, :Hash, :Nil, :Symbol, :Class, :True,
-			:False, :Date, :DateTime, :Time, :Strict, :Coercible, :Maybe, :Optional, :Bool, :Form, :Json]
-		assert_equal(top_level_types, Types.constants)
-		type_tree = top_level_types.map do |type_name|
-			type = eval('Types::' + type_name.to_s)
-			if type.methods.include?(:constants)
-				{type_name =>  type.constants}
-			else
-					{type_name => type.inspect}
-			end # if
-		end # map
-		puts type_tree
-	end # dry
 end # GitReference
 
 class CommitTest < TestCase
@@ -96,7 +69,13 @@ class CommitTest < TestCase
 		assert_match(Aurthor_regexp * /Date:   / * Git_show_medium_timestamp_regexp, show_commit_output, show_matches.ruby_lines_storage)
 		assert_match(Show_commit_regexp, show_commit_output, show_matches.ruby_lines_storage)
 
-		multi_line = "commit c2db421dba8518e664111b0ba89ee1d70a789fbc\nMerge: 6b1c04d 6ef1536\nAuthor: greg <GregLawson123@gmail.com>\nDate:   Wed Dec 7 10:50:17 2016 -0800\n\n    Merge branch 'tested' into edited\n    \n    Conflicts:\n            app/models/repository.rb\n            test/unit/branch_test.rb\n            test/unit/minimal2_test.rb\n            test/unit/repository_test.rb\n            test/unit/test_executable_test.rb\n"
+		commit_part = "commit c2db421dba8518e664111b0ba89ee1d70a789fbc\n"
+		merge_part = "Merge: 6b1c04d 6ef1536\n"
+		author_part = "Author: greg <GregLawson123@gmail.com>\n"
+		date_part = "Date:   Wed Dec 7 10:50:17 2016 -0800"
+		title_part = "\n\n    Merge branch 'tested' into edited\n"
+		explain_part = "    \n    Conflicts:\n            app/models/repository.rb\n            test/unit/branch_test.rb\n            test/unit/minimal2_test.rb\n            test/unit/repository_test.rb\n            test/unit/test_executable_test.rb\n"
+		multi_line = commit_part + merge_part + author_part + date_part + title_part + explain_part
 		show_commit_output = multi_line
 		show_matches = ParsedCapture.show_matches([show_commit_output], Show_commit_array)
 		assert_match(Email_regexp, show_commit_output, show_matches.ruby_lines_storage)
@@ -107,6 +86,14 @@ class CommitTest < TestCase
 		assert_match(/commit / * SHA1_hex_40 * /\n/ * Merge_regexp * Aurthor_regexp, show_commit_output, show_matches.ruby_lines_storage)
 		assert_match(Aurthor_regexp * /Date:   / * Git_show_medium_timestamp_regexp, show_commit_output, show_matches.ruby_lines_storage)
 		assert_match(Show_commit_regexp, show_commit_output, show_matches.ruby_lines_storage)
+
+#!		ParsedCapture.assert_show_matches(["\nMerge: 6b1c04d 6ef1536\n"], [Merge_regexp], captures: [sha1_hex_short: ['6b1c04d', '6ef1536']])
+#!		ParsedCapture.assert_show_matches(["commit c2db421dba8518e664111b0ba89ee1d70a789fbc\nMerge: 6b1c04d 6ef1536\n"], [ Regexp::Start_string * /commit / * SHA1_hex_40 * /\n/, Merge_regexp], captures: [sha1_hex_short: ['6b1c04d', '6ef1536']])
+
+		Show_commit_array.each do|regexp|
+#			ParsedCapture.assert_show_matches([show_commit_output], [regexp])
+		end # each
+#!		ParsedCapture.assert_show_matches([show_commit_output], Show_commit_array)
 	end # DefinitionalConstants
 	
   def test_DefinitionalClassMethods

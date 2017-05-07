@@ -11,7 +11,7 @@ class RepositoryTest < TestCase
   include DefaultTests
   include Repository::Examples
   def setup
-    @temp_repo = Repository.create_test_repository(Empty_Repo_path)
+    @temp_repo = Repository.create_test_repository
   end # setup
 
   def teardown

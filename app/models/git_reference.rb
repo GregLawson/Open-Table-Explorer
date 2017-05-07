@@ -17,35 +17,8 @@ require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
 
+include TimeTypes
 
-
-
-
-module TimeTypes
-    Week_day_regexp = /[MTWFS][a-z]{2}/.capture(:weekday)
-    Day_regexp = /[0-9]{1,2}/.capture(:day_of_month)
-    Month_regexp = /[ADFJMNOS][a-z]+/.capture(:month)
-    Year_regexp = /[0-9]{2,4}/.capture(:year)
-    Hour_regexp = /[0-9][0-9]/.capture(:hour)
-    Minute_regexp = /[0-9][0-9]/.capture(:minute)
-    Second_regexp = /[0-9][0-9]/.capture(:second)
-    AMPM_regexp = / ?([PApa][Mm])?/.capture(:AMPM)
-    Timezone_number_regexp = /[-+][0-1][0-9][03]0/.capture(:timezone)
-		Day_after_month_regexp = Month_regexp * ' ' * Day_regexp
-    Date_regexp = Day_regexp * ' ' * Month_regexp
-		Space_regexp = /\ /
-    Time_regexp = Hour_regexp * ':' * Minute_regexp * ':' * Second_regexp
-
-    Git_show_medium_timestamp_regexp_array = [Week_day_regexp, 
-			Space_regexp * Month_regexp * Space_regexp * Day_regexp, 
-			Space_regexp * Time_regexp, Space_regexp * Year_regexp, Space_regexp * Timezone_number_regexp]
-		Git_show_medium_timestamp_regexp = Regexp[Git_show_medium_timestamp_regexp_array] 
-
-		Git_reflog_timestamp_regexp_array = [Week_day_regexp,
-			/,/ * Space_regexp * Day_regexp * Space_regexp * Month_regexp * Space_regexp * Year_regexp, 
-			Space_regexp * Hour_regexp * ':' * Minute_regexp * ':' * Second_regexp * Space_regexp * Timezone_number_regexp]
-		Git_reflog_timestamp_regexp = Regexp[Git_reflog_timestamp_regexp_array]
-end # TimeTypes
 
 class GitReference # base class for all git references (readable, maybe not writeable)
 	
@@ -55,7 +28,6 @@ class GitReference # base class for all git references (readable, maybe not writ
   values do
     attribute :initialization_string, Symbol
     attribute :repository, Repository, default: Repository::This_code_repository
-#		attribute :sha1_hex_7, String
   end # values
 
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
@@ -83,9 +55,9 @@ class Commit < GitReference
 	module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
 		include Regexp::DefinitionalConstants
 		include TimeTypes
-    SHA1_hex_7 = /[[:xdigit:]]{7}/.capture(:sha1_hex_7)
+		include ReflogRegexp
     SHA1_hex_40 = /[[:xdigit:]]{40}/.capture(:sha1_hex_40)
-		Merge_regexp = (/Merge: / * SHA1_hex_7 * / / * SHA1_hex_7 * /\n/).optional
+		Merge_regexp = (/Merge: / * SHA1_hex_short * / / * SHA1_hex_short * /\n/).optional
 		Name_regexp = /[\s[:word:]]+/.capture(:name)
 		Email_regexp = /[[:word:]]*@[[:word:]]*\.[[:word:]]*/.capture(:email)
     Aurthor_regexp = /Author: / * Name_regexp * / </ * Email_regexp * />/ */\n/
@@ -106,6 +78,7 @@ class Commit < GitReference
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
 #		include WorkingTree::ReferenceObjects
     include DefinitionalConstants
+		Working_tree = Commit.new(initialization_string: :Working_tree, repository: Repository::This_code_repository) 
   end # ReferenceObjects
   include ReferenceObjects
 	
@@ -177,9 +150,9 @@ class WorkingTree < Commit # extend Commit to include not yet committed
 			end # if
   end # diff_branch_files
 
-	def sha1_hex_7
+	def sha1_hex_short
 		nil
-	end # sha1_hex_7
+	end # sha1_hex_short
 
 	def sha1_hex_40
 		nil

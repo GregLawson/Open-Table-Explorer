@@ -5,11 +5,12 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require_relative '../../app/models/unit.rb'
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/boot.rb'
 class BootTest < TestCase
   # include DefaultTests
-  # include RailsishRubyUnit::Executable.model_class?::Examples
+  # emacserror: include RailsishRubyUnit::Executable.model_class?::Examples
   include Boot::Examples
 
   def assert_repeat_match(regexp, target_matches)
@@ -31,10 +32,17 @@ class BootTest < TestCase
     capture # for further processing
   end # repeat_match
   
-  def test_Minimal_DefinitionalConstants
+  def test_Boot_DefinitionalConstants
     assert_match(/[N1-5] [1-5]\n/, Run_levels.output, Run_levels.inspect)
     assert_include(["degraded\n", "offline\n"], Is_system_running.output, Is_system_running.inspect)
-    assert_equal("Linux acer-desktop 4.6.0-1-rt-amd64 #1 SMP PREEMPT RT Debian 4.6.4-1 (2016-07-18) x86_64 GNU/Linux\n", Uname.output, Uname.inspect)
+    linux_a_regexp = /Linux acer-desktop / * Linux_version_regexp * / #1 SMP / * /PREEMPT RT /.optional * /Debian / * Version::Semantic_version_regexp
+		assert_match(linux_a_regexp, "Linux acer-desktop 4.6.0-1-rt-amd64 #1 SMP PREEMPT RT Debian 4.6.4-1 (2016-07-18) x86_64 GNU/Linux\n")
+		assert_match(/Linux acer-desktop /, Uname.output)
+		assert_match(/Linux acer-desktop / * Linux_version_regexp, Uname.output)
+		assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP /, Uname.output)
+		assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP / * /PREEMPT RT /.optional, Uname.output)
+		assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP / * /PREEMPT RT /.optional * /Debian / * Version::Semantic_version_regexp, Uname.output)
+		assert_match(linux_a_regexp, Uname.output)
     assert_repeat_match(Uuid_regexp, 193)
     assert_match(Classes_regexp, Grubs_run.output, Grubs_run.inspect)
     assert_match(Boot_line_regexp, One_menu_entry, One_menu_entry.inspect)
@@ -48,8 +56,7 @@ class BootTest < TestCase
 #    assert_repeat_match(Menu_title_regexp, 60)
   end # DefinitionalConstants
 
-  def remove_matches(regexp_array)
-    unmatches = [Grubs_run.output]
+  def remove_matches(unmatches, regexp_array)
     regexp_array.each do |regexp_symbol|    
       unmatches = unmatches.map do |unmatched|
         regexp = eval(regexp_symbol.to_s)
@@ -58,6 +65,21 @@ class BootTest < TestCase
       end.flatten # map
     end # each regexp
   end # remove_matches
+
+  def test_remove_matches
+    assert_instance_of(Array, Boot::Examples::Regexps::Grub.constants)
+    assert_instance_of(Symbol, Boot::Examples::Regexps::Grub.constants[0])
+    unmatches = remove_matches([Grubs_run.output], Boot::Examples::Regexps::Grub.constants)
+        unmatches = remove_matches([Grubs_run.output], Boot::Examples::Regexps::Grub.constants)
+
+    assert_empty(unmatches.sort.uniq)
+  end # test_remove_matches
+
+ def test_reverse_remove_matches
+    match = MatchCapture.new(string: Grubs_run.output, regexp: Boot::Examples::Regexps::Full_regexp_array)
+
+    match.assert_refinement(:exact)
+  end # test_remove_matches
 
 	def test_state
 		

@@ -70,53 +70,53 @@ class CommandLineExecutableTest < TestCase
   end # values
 
   def test_arguments
-		assert_equal([], No_arg_run.arguments)
-		assert_equal(['help', $PROGRAM_NAME], Not_virtus_unit_commandline.arguments)
-		assert_equal(['version_comparison'], No_side_effects_default_line.arguments)
-#		assert_equal(['state?'], No_side_effects_sub_command_line.arguments)
+    assert_equal([], No_arg_run.arguments)
+    assert_equal(['help', $PROGRAM_NAME], Not_virtus_unit_commandline.arguments)
+    assert_equal(['version_comparison'], No_side_effects_default_line.arguments)
+    #		assert_equal(['state?'], No_side_effects_sub_command_line.arguments)
   end # arguments
 
   def test_number_of_arguments
-#    assert_equal(0, No_side_effects_sub_command_line.number_of_arguments)
-		assert_equal(2, Not_virtus_unit_commandline.number_of_arguments)
-		assert_equal(1, No_side_effects_default_line.number_of_arguments)
-		assert_equal(0, No_arg_run.number_of_arguments)
-#		assert_equal(1, No_side_effects_sub_command_line.number_of_arguments)
+    #    assert_equal(0, No_side_effects_sub_command_line.number_of_arguments)
+    assert_equal(2, Not_virtus_unit_commandline.number_of_arguments)
+    assert_equal(1, No_side_effects_default_line.number_of_arguments)
+    assert_equal(0, No_arg_run.number_of_arguments)
+    #		assert_equal(1, No_side_effects_sub_command_line.number_of_arguments)
   end # number_of_arguments
 
   def test_sub_command
-#    assert_equal(:state?, No_side_effects_sub_command_line.sub_command)
-#		assert_equal(:help, Not_virtus_unit_commandline.sub_command)
-		assert_equal(:version_comparison, No_side_effects_default_line.sub_command)
-		assert_equal(:help, No_arg_run.sub_command, No_arg_run.inspect)
+    #    assert_equal(:state?, No_side_effects_sub_command_line.sub_command)
+    #		assert_equal(:help, Not_virtus_unit_commandline.sub_command)
+    assert_equal(:version_comparison, No_side_effects_default_line.sub_command)
+    assert_equal(:help, No_arg_run.sub_command, No_arg_run.inspect)
     assert_equal(:help, Script_command_line.sub_command, Script_command_line.inspect)
   end # sub_command
 
-	def test_sub_command_commandline
-	end # sub_command_commandline
-	
+  def test_sub_command_commandline
+  end # sub_command_commandline
+
   def test_argument_types
     Not_virtus_unit_commandline.arguments.map do |argument|
-		assert_includes(All_argument_types, CommandLineExecutable.argument_type(argument), argument.inspect)
+      assert_includes(All_argument_types, CommandLineExecutable.argument_type(argument), argument.inspect)
     end # map
     #	assert_equal([Method], No_side_effects_sub_command_line.argument_types)
-		assert_equal([CommandLineExecutable, File], Not_virtus_unit_commandline.argument_types)
-		assert_equal([], No_arg_run.argument_types)
-#		assert_equal([Method], No_side_effects_sub_command_line.argument_types)
-#		assert_equal([Method], No_side_effects_default_line.argument_types)
+    assert_equal([CommandLineExecutable, File], Not_virtus_unit_commandline.argument_types)
+    assert_equal([], No_arg_run.argument_types)
+    assert_equal([Method], No_side_effects_sub_command_line.argument_types)
+    assert_equal([Method], No_side_effects_default_line.argument_types)
   end # argument_types
 
   def test_make_executable_object
-#    assert_includes(No_side_effects_sub_command_line.test_executable.unit.model_class?.included_modules, Virtus::InstanceMethods)
+    #    assert_includes(No_side_effects_sub_command_line.test_executable.unit.model_class?.included_modules, Virtus::InstanceMethods)
   end # make_executable_object
 
   def test_executable_object
-#    assert_includes(No_side_effects_sub_command_line.test_executable.unit.model_class?.included_modules, Virtus::InstanceMethods)
-#    test_run_object = TestRun.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
-#    assert_equal(test_run_object.methods, No_side_effects_sub_command_line.executable_object.methods)
+    #    assert_includes(No_side_effects_sub_command_line.test_executable.unit.model_class?.included_modules, Virtus::InstanceMethods)
+    #    test_run_object = TestRun.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
+    #    assert_equal(test_run_object.methods, No_side_effects_sub_command_line.executable_object.methods)
     #	assert_equal(test_run_object, No_side_effects_sub_command_line.executable_object)
     #	assert_equal(test_run_object.test_executable, No_side_effects_sub_command_line.executable_object.test_executable)
-#    refute_nil(test_run_object.test_executable)
+    #    refute_nil(test_run_object.test_executable)
     #	assert_equal($0, test_run_object.test_executable.argument_path)
     #	assert_equal($0, No_side_effects_sub_command_line.test_executable_object.test_executable.argument_path.relative_pathname.to_s)
 
@@ -131,6 +131,7 @@ class CommandLineExecutableTest < TestCase
     #	assert_equal($0, test_run_object.test_executable.argument_path.relative_pathname.to_s)
     #	assert_equal($0, No_side_effects_sub_command_line.test_executable_object.test_test_executable.argument_path.relative_pathname.to_s)
   end # executable_object
+
   def test_command_line_parser
   end # command_line_parser
 
@@ -141,25 +142,29 @@ class CommandLineExecutableTest < TestCase
   end # ==
 
   def test_to_s
-#    refute_equal('', No_side_effects_sub_command_line.to_s)
-#    assert_match(/argv/, No_side_effects_sub_command_line.to_s)
+    #    refute_equal('', No_side_effects_sub_command_line.to_s)
+    #    assert_match(/argv/, No_side_effects_sub_command_line.to_s)
   end # to_s
 
-
-	def test_execution_array
-		executable_method = No_arg_run.method(:arguments)
-		execution = SingleExecution.new(executable_method: executable_method, method_arguments: [])
-		execution_array = No_arg_run.execution_array(executable_method)
-		assert_equal([execution], execution_array)
-	end # execution_array
+  def test_execution_array
+    executable_method = No_arg_run.method(:arguments)
+    execution = SingleExecution.new(executable_method: executable_method, method_arguments: [])
+    execution_array = No_arg_run.execution_array(executable_method)
+    assert_equal([execution], execution_array)
+  end # execution_array
 
   def test_run
-		executable_method = No_arg_run.method(:arguments)
-		execution_array = No_arg_run.execution_array(executable_method)
-		returns = execution_array.map do |execution|
-		execution_run = execution.run
-		assert_equal(No_arg_run.arguments, execution_run)
-		assert_equal([], execution_run)
-		end # map
+    executable_method = No_arg_run.method(:arguments)
+    execution_array = No_arg_run.execution_array(executable_method)
+    returns = execution_array.map do |execution|
+      execution_run = execution.run
+      assert_equal(No_arg_run.arguments, execution_run)
+      assert_equal([], execution_run)
+    end # map
+    command_string = 'ruby -W1 script/command_line_executable.rb sub_command  app/models/editor.rb'
+    editor_command_line = ShellCommands.new(command_string)
+    text = editor_command_line.output.lines[-1, 1][0]
+    assert_instance_of(String, text)
+    assert_match(/ret = \[:sub_command\]/, text)
   end # run
 end # CommandLineExecutable

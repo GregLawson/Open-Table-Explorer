@@ -10,8 +10,15 @@ require_relative '../../app/models/schedule.rb'
 class Minimal2Test < TestCase
   # include DefaultTests
   include RailsishRubyUnit::Executable.model_class?::Examples
-	def test_bottlenecked?
-	end # bottlenecked?
+	def test_Resource_DefinitionalConstants
+	end # DefinitionalConstants
+	def test_sample_resources
+		assert_equal(sample_resources, Resource.descendants)
+	end # resources
+	def test_saturated?
+		assert_equal(false, Resource.saturated?)
+
+	end # saturated?
 	
 	def test_cores
 		lines = ShellCommands.new('grep cores /proc/cpuinfo').output.split("\n").uniq
@@ -21,6 +28,41 @@ class Minimal2Test < TestCase
 		assert_equal(4, Schedule.cores)
 	end # cores
 
+	def test_CpuResource_DefinitionalConstants
+	end # DefinitionalConstants
+	
+	def test_CpuResource_metric
+	end # metric
+	
+	def test_CpuResource_saturation
+	end # saturation
+	def test_CpuResource_DefinitionalConstants
+	end # DefinitionalConstants
+	
+	def test_CpuResource_metric
+	end # metric
+	
+	def test_CpuResource_saturation
+	end # saturation
+	
+	def test_LoadAverageResource_DefinitionalConstants
+	end # DefinitionalConstants
+	
+	def test_LoadAverageResource_metric
+	end # metric
+	
+	def test_LoadAverageResource_saturation
+	end # saturation
+	
+	def test_SchedulingResource_DefinitionalConstants
+	end # DefinitionalConstants
+	
+	def test_SchedulingResource_metric
+	end # metric
+	
+	def test_SchedulingResource_saturation
+	end # saturation
+	
 	def test_load_average
 	end # idle_cpus
 

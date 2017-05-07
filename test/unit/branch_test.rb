@@ -34,25 +34,26 @@ class BranchTest < TestCase
     Repository.delete_existing(@temp_repo.path)
   end # teardown
 
-	def reset_temp
+  def reset_temp
     Repository.delete_existing(@temp_repo.path)
     @temp_repo = Repository.create_test_repository
-	end # reset_temp
-	
+  end # reset_temp
+
   include BranchReference::DefinitionalConstants
 
-	def test_MaturityBranches
+  def test_MaturityBranches
     # explore possible branch name characters
-		branch_characters = Regexp.character_array do |character| 
-			git_run = @temp_repo.git_command('branch ' + character)
-			git_run.success?
-		end # character_array
-		puts branch_characters.join.inspect
-		reset_temp
-		literal_characters = CharacterEscape.select_characters(:literal) - [':', '<', '>', '`', '~', '%']
-		literal_characters.each do |character|
-			@temp_repo.git_command('branch ' + character).assert_post_conditions('character = ' + character.inspect)
-		end # each
+		# see man git checkout for why dot should not be used in branch names
+    branch_characters = Regexp.character_array do |character|
+      git_run = @temp_repo.git_command('branch ' + character)
+      git_run.success?
+    end # character_array
+    puts branch_characters.join.inspect
+    reset_temp
+    literal_characters = CharacterEscape.select_characters(:literal) - [':', '<', '>', '`', '~', '%']
+    literal_characters.each do |character|
+      @temp_repo.git_command('branch ' + character).assert_post_conditions('character = ' + character.inspect)
+    end # each
 
     assert_match(Name_regexp, 'passed+interactive')
   end # MaturityBranches

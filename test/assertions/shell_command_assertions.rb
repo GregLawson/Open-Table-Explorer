@@ -8,6 +8,7 @@
 require_relative '../../app/models/shell_command.rb'
 module Shell
   class Ssh
+    require_relative '../../app/models/assertions.rb'
     module Assertions
       module ClassMethods
         def assert_pre_conditions(message = '')
@@ -39,7 +40,7 @@ class ShellCommands
 
     def assert_post_conditions(message = '')
       message += "self=#{inspect(true)}"
-      puts unless success? && @errors.empty?
+      #      puts unless success? && @errors.empty?
       assert_empty(@errors, message + 'expected errors to be empty\n')
       assert_equal(0, @process_status.exitstatus & ~@accumulated_tolerance_bits, message)
       refute_nil(@errors, 'expect @errors to not be nil.')
@@ -51,19 +52,6 @@ class ShellCommands
   end # Assertions
   include Assertions
   module Examples
-    Hello_world = ShellCommands.new('echo "Hello World"')
-    Example_output = "1 2;3 4\n".freeze
-    COMMAND_STRING = 'echo "1 2;3 4"'.freeze
-    EXAMPLE = ShellCommands.new(COMMAND_STRING)
-    Guaranteed_existing_directory = File.expand_path(File.dirname($PROGRAM_NAME))
-    Cd_command_array = ['cd', Guaranteed_existing_directory].freeze
-    Cd_command_hash = { command: 'cd', in: Guaranteed_existing_directory }.freeze
-    Guaranteed_existing_basename = File.basename($PROGRAM_NAME)
-    Redirect_command = ['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command'].freeze
-    Redirect_command_string = 'ls ' + Shellwords.escape(Guaranteed_existing_basename) + ' > ' + Shellwords.escape('blank in filename.shell_command')
-    Relative_command = ['ls', Guaranteed_existing_basename].freeze
-    Bad_status = ShellCommands.new('$?=1')
-    Error_message_run = ShellCommands.new('ls happyHappyFailFail.junk')
   end # Examples
   include Examples
 end # ShellCommands

@@ -8,41 +8,6 @@
 require_relative '../../app/models/no_db.rb'
 require 'virtus'
 require_relative '../../app/models/version.rb'
-require_relative '../../app/models/shell_command.rb'
-class ReportedVersion < Version # version can be reported by a command
-  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
-    Man_regexp = /\/usr\/share\/man\/man1\// * /[a-z]+/ * /.1.gz/.capture(:man_path)
-    Lib_regexp = /\/usr\/lib\// * /[a-z]+/.capture(:lib_path)
-    Bin_regexp = /\/usr\/bin\// * /[a-z0-9.]+/.capture(:bin_path)
-    Whereis_regexp = /ruby: / * Man_regexp
-  end # DefinitionalConstants
-  include DefinitionalConstants
-  include Virtus.value_object
-  values do
-    attribute :test_command, String
-    attribute :version_reporting_option, String, default: '--version'
-    attribute :version_report, String, default: ->(version, _attribute) { ShellCommands.new(version.test_command + ' ' + version.version_reporting_option).output }
-  end # values
-  def which
-    ShellCommands.new('which ' + @test_command).output.chomp
-  end # which
-
-  def whereis
-    ShellCommands.new('whereis ' + @test_command).output
-  end # whereis
-
-  def versions
-  end # versions
-  module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
-    include DefinitionalConstants
-    Ruby_version = ReportedVersion.new(test_command: 'ruby') # system version
-    Ruby_whereis = Ruby_version.whereis
-    Ruby_which = Ruby_version.which
-    Linux_version = ReportedVersion.new(test_command: 'uname', version_reporting_option: '-a') # system version
-    Ruby_file_version = ReportedVersion.new(test_command: 'file /usr/bin/ruby2.2', version_reporting_option: '')
-  end # Examples
-end # ReportedVersion
-
 class RubyVersion < ReportedVersion
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
     Ruby_version_regexp = Version::Semantic_version_regexp
@@ -103,18 +68,39 @@ class RubyInterpreter # < ActiveRecord::Base
   end # ClassMethods
   extend ClassMethods
   # attr_reader
-  def assert_logical_primary_key_defined(message = nil)
-    message = build_message(message, 'self=?', inspect)
-    refute_nil(self, message)
-    assert_instance_of(RubyInterpreter, self, message)
+  require_relative '../../test/assertions.rb'
+  module Assertions
+    module ClassMethods
+      def assert_pre_conditions(message = '')
+        message += "In assert_pre_conditions, self=#{inspect}"
+      end # assert_pre_conditions
 
-    #	puts "self=#{self.inspect}"
-    refute_nil(attributes, message)
-    refute_nil(self[:test_type], message)
-    refute_nil(test_type, message)
-    refute_nil(self['test_type'], message)
-    refute_nil(singular_table, message)
-  end # assert_logical_primary_key_defined
+      def assert_post_conditions(message = '')
+        message += "In assert_post_conditions, self=#{inspect}"
+      end # assert_post_conditions
+    end # ClassMethods
+    def assert_pre_conditions(message = '')
+    end # assert_pre_conditions
+
+    def assert_post_conditions(message = '')
+    end # assert_post_conditions
+
+    def assert_logical_primary_key_defined(message = nil)
+      message = build_message(message, 'self=?', inspect)
+      refute_nil(self, message)
+      assert_instance_of(RubyInterpreter, self, message)
+
+      #	puts "self=#{self.inspect}"
+      refute_nil(attributes, message)
+      refute_nil(self[:test_type], message)
+      refute_nil(test_type, message)
+      refute_nil(self['test_type'], message)
+      refute_nil(singular_table, message)
+    end # assert_logical_primary_key_defined
+  end # Assertions
+  include Assertions
+  extend Assertions::ClassMethods
+  # self.assert_pre_conditions
   module Examples
     include DefinitionalConstants
   end # Examples

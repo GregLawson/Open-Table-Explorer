@@ -56,10 +56,10 @@ class GenericType < Dry::Types::Value
 					raise 'import_class with ' + key.inspect + ' not in ' + value.keys.join(', ')
 				else
 					name = lookup_name.to_sym
-				ret[name] = GenericType.new(name: name,
+					ret[name] = GenericType.new(name: name,
 														data_regexp: Regexp.new(value['data_regexp']),
 														generalize: value['generalize'].to_sym,
-														rails_type: value['rails_type'],
+														rails_type: value['rails_type'].to_s,
 														ruby_conversion: value['ruby_conversion'] 
 													)
 				end # if
@@ -69,9 +69,9 @@ class GenericType < Dry::Types::Value
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
-    attribute :name, Types::Strict::Symbol | Types::Strict::String
+    attribute :name, Types::Strict::Symbol
 		attribute :data_regexp, Types::Coercible::String
-		attribute :generalize, Types::Strict::Symbol | Types::Strict::String
+		attribute :generalize, Types::Strict::Symbol
 #		attribute :generalize, GenericType
 		attribute :rails_type, Types::Strict::String.optional
 		attribute :ruby_conversion, Types::Strict::String.optional
@@ -180,27 +180,27 @@ end #one_level_specializations
 	end # recursive_specializations
 
   def expansion_termination?
-#    regexp = self[:data_regexp]
-#    parse = RegexpTree.new(regexp)
-#    macro_name = parse.macro_call?
-#    name == macro_name
+    regexp = self[:data_regexp]
+    parse = RegexpTree.new(regexp)
+    macro_name = parse.macro_call?
+    name == macro_name
   end # expansion_termination
 
   def expand
-#    parse = RegexpTree.new(self[:data_regexp])
+    parse = RegexpTree.new(self[:data_regexp])
     if expansion_termination?
-#      return parse[0] # terminates recursion
+      return parse[0] # terminates recursion
     else # possible expansions
-#      parse.map_branches do |branch|
-#        macro_name = parse.macro_call?(branch)
-#        if macro_name
-#          macro_generic_type = GenericType.find_by_name(macro_name)
-#          macro_call = macro_generic_type[:data_regexp]
-#          macro_generic_type.expand
-#        else
-#          branch
-#        end # if
-#      end # map_branches
+      parse.map_branches do |branch|
+        macro_name = parse.macro_call?(branch)
+        if macro_name
+          macro_generic_type = GenericType.find_by_name(macro_name)
+          macro_call = macro_generic_type[:data_regexp]
+          macro_generic_type.expand
+        else
+          branch
+        end # if
+      end # map_branches
     end # if possible expansions
   end # expand
 
@@ -323,11 +323,11 @@ end #common_matches
 
     def assert_pre_conditions(message = '')
       message += "In assert_pre_conditions, self=#{inspect}"
-#			refute_nil(@name, 'name expected to not be nil. ' + inspect)
-#			refute_nil(@data_regexp, inspect)
-#			refute_nil(@generalize, inspect)
+			refute_nil(@name, 'name expected to not be nil. ' + inspect)
+			refute_nil(@data_regexp, inspect)
+			refute_nil(@generalize, inspect)
 #			refute_nil(@rails_type, inspect)
-#			refute_nil(@ruby_conversion, inspect)	
+			refute_nil(@ruby_conversion, inspect)	
 				self # return for command chaining
     end # assert_pre_conditions
 
@@ -344,7 +344,7 @@ end #common_matches
 				previous_generalizations
 			else
 				generalized_generic_type = GenericType.find_by_name(@generalize)
-#				assert_instance_of(GenericType, generalized_generic_type, inspect + "\n" + generalize.inspect + ' not in ' + GenericType.all.map(&:name).map(&:to_s).join(', '))
+				assert_instance_of(GenericType, generalized_generic_type, inspect + "\n" + generalize.inspect + ' not in ' + GenericType.all.map(&:name).map(&:to_s).join(', '))
 				one_more_recursion = (previous_generalizations + [generalized_generic_type]).uniq
 				if generalized_generic_type.most_general?
 #					puts "generalized_generic_type.most_general? = "  + generalized_generic_type.most_general?.inspect

@@ -1,7 +1,7 @@
 # encoding: US-ASCII
 ###########################################################################
 #    Copyright (C) 2013-2016 by Greg Lawson
-#    <GregLawson123@gmail.com>                                                             
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -314,7 +314,8 @@ class Regexp
     # A terminator is a delimiter that is at the end (like new line)
     def terminator_regexp(delimiter)
       #	raise "delimiter must be single characters not #{delimiter}." if delimiter.length!=1
-      /([^#{delimiter}]*)(?:#{delimiter}([^#{delimiter}]*))*/
+			terminator_regexp = /#{delimiter}/
+			terminated_regexp = /[^#{delimiter}]*/.capture * terminator_regexp
     end # terminator_regexp
 
     # A delimiter is generally not at the end (like commas)
@@ -394,6 +395,10 @@ class Regexp
       [Regexp::Default_options, Encoding::US_ASCII]
     end # if
   end # propagate_options
+	
+	def to_literal
+		'/' + Regexp.escape(source) + '/'
+	end # to_literal
 
   def unescaped_string
     source.to_s

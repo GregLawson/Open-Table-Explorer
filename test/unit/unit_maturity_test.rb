@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2013-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -12,7 +12,8 @@ require_relative '../../app/models/unit_maturity.rb'
 class TestMaturityTest < TestCase
   module Examples
     include TestMaturity::DefinitionalConstants
-    ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
+    include TestMaturity::ReferenceObjects
+#    ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
     MinimalMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal2_test.rb'))
     MinimalMaturity3 = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal3_test.rb'))
   end # Examples
@@ -76,6 +77,12 @@ class TestMaturityTest < TestCase
     assert_equal(ret, TestMaturity.example_files)
 		assert_equal(Dir[Error_score_directory + '*'].sort, TestMaturity.example_files.values.sort)
   end # example_files
+
+  def test_log_path?
+    argument_path = $PROGRAM_NAME
+    assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', MinimalMaturity.log_path?(executable_file))
+    #	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', MinimalMaturity.log_path?)
+  end # log_path?
 
   def test_file_bug_reports
     header, errors, summary = TestMaturity.parse_log_file(MinimalMaturity.test_executable.log_path?(nil))
@@ -153,8 +160,54 @@ class TestMaturityTest < TestCase
     assert_operator(run_time, :>=, 0)
   end # parse_header
 
+  def test_Constructors # such as alternative new methods
+  end # Constructors
+
+  def test_ReferenceObjects
+    assert_equal(true, Working_maturity.test_executable.recursion_danger?)
+#    assert_equal(Working_maturity, ExecutableMaturity)
+
+		working_log = RubyLinesStorage.read(TestMaturity::Self_test_executable.log_path?(nil))
+		assert_equal(working_log, TestMaturity::Working_maturity.read_state(nil, nil))
+		TestMaturity::Working_maturity.assert_pre_conditions
+		TestMaturity::Working_maturity.assert_post_conditions
+  end # ReferenceObjects
+
+	def test_read_state
+    log_files = TestMaturity.all
+    file_times = log_files.map do |path|
+      file_contents = IO.read(path)
+      hash = RubyLinesStorage.read(path)
+      assert_instance_of(Hash, hash)
+      # refute_includes(hash.keys, :exception_hash, hash.ruby_lines_storage)
+			puts hash.keys
+      if hash.keys.include?(:exception_hash)
+				assert_instance_of(Hash, hash[:exception_hash])
+				puts hash[:exception_hash].ruby_lines_storage
+				assert_instance_of(String, hash[:context])
+				puts hash[:context].ruby_lines_storage
+			end # if
+    end # each
+	end # read_state
+
+	def test_times
+		log_files = TestMaturity.all
+		file_times = log_files.map do |path|
+			file_contents = IO.read(path)
+			assert_match(Finished_regexp, file_contents, path)
+			assert_match(User_time_regexp, file_contents, path)
+			finished_time = file_contents.parse(Finished_regexp)
+			user_time = file_contents.parse(User_time_regexp)
+			assert_operator(finished_time[:test_finished].to_f, :<, user_time[:user_time].to_f)
+			hash = RubyLinesStorage.read(path)
+			finished_time.merge(user_time)
+		end # each
+		message = ruby_lines_storage(file_times)
+#		assert_equal
+	end # times
+	
   def test_recursion_danger?
-    assert_equal(true, ExecutableMaturity.test_executable.recursion_danger?)
+    assert_equal(true, Working_maturity.test_executable.recursion_danger?)
     assert_equal(false, MinimalMaturity.test_executable.recursion_danger?)
     assert_equal(false, MinimalMaturity3.test_executable.recursion_danger?)
   end # recursion_danger?
@@ -192,8 +245,8 @@ class TestMaturityTest < TestCase
   def test_get_error_score!
     assert_includes(TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME)).instance_variables, :@test_executable)
     refute_includes(TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME)).instance_variables, :@cached_error_score)
-    assert_includes(ExecutableMaturity.instance_variables, :@test_executable)
-    assert_nil(ExecutableMaturity.get_error_score!)
+    assert_includes(Working_maturity.instance_variables, :@test_executable)
+    assert_nil(Working_maturity.get_error_score!)
   end # error_score
 
   def test_deserving_branch
@@ -235,7 +288,7 @@ class TestMaturityTest < TestCase
     assert_equal(0, MinimalMaturity.get_error_score! <=> MinimalMaturity3.get_error_score!)
     assert_equal(0, MinimalMaturity <=> MinimalMaturity3)
     assert_equal(0, MinimalMaturity3 <=> MinimalMaturity) # symmetric
-    assert_equal(false, ExecutableMaturity.test_executable.testable?)
+    assert_equal(false, Working_maturity.test_executable.testable?)
   end # <=>
 
   def test_error_classification!
@@ -254,6 +307,23 @@ class TestMaturityTest < TestCase
     assert_instance_of(Symbol, MinimalMaturity.deserving_commit_to_branch!)
     #	Branch::Branch_enhancement[MinimalMaturity.deserving_commit_to_branch!]
   end # branch_enhancement!
+	def test_nested_scope_modules?
+		assert_include(TestMaturity::Assertions::ClassMethods.instance_methods(false), :nested_scope_modules?)
+		assert_include(TestMaturity::Assertions::ClassMethods.nested_scope_modules?, :Assertions)
+	end # nested_scopes
+	
+	def test_assert_nested_scope_submodule
+		TestMaturity.assert_nested_scope_submodule(:Assertions)
+	end # assert_included_submodule
+	
+	def test_assert_included_submodule
+		TestMaturity.assert_included_submodule(:Assertions)
+	end # assert_included_submodule
+	
+	def test_asset_nested_and_included
+		TestMaturity.asset_nested_and_included(:Assertions)
+	end # asset_nested_and_included
+			
 end # TestMaturity
 
 class UnitMaturityTest < TestCase
@@ -273,9 +343,10 @@ class UnitMaturityTest < TestCase
   def test_diff_command?
     filename = Most_stable_file
     branch_index = Branch.branch_index?(This_code_repository.current_branch_name?.to_sym)
-    refute_nil(branch_index)
+		message = Branch::Branch_enhancement.inspect + This_code_repository.current_branch_name?.inspect
+    refute_nil(branch_index, message)
     branch_string = Branch.branch_symbol?(branch_index).to_s
-    git_command = "diff --summary --shortstat #{branch_string} -- " + filename
+    git_command = "diff --summary --shortstat #{branch_string} -- " + filename.to_s
     diff_run = This_code_repository.git_command(git_command)
     #	diff_run.assert_post_conditions
     assert_instance_of(ShellCommands, diff_run)

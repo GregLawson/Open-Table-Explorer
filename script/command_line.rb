@@ -94,4 +94,5 @@ CommandLine::Script_command_line.run do
     end # run
     end # if help
 end # do run
+puts 'ret = ' + ret.inspect if CommandLine::Script_command_line.command_line_opts[:inspect]
 1 # successfully completed

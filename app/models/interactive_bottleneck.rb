@@ -30,7 +30,7 @@ class InteractiveBottleneck
   values do
     attribute :test_executable, TestExecutable
     attribute :interactive, Symbol, default: :interactive # non-defaults are primarily for non-interactive testing testing
-    attribute :editor, Editor, default: ->(interactive_bottleneck, _attribute) { Default_editor.new(interactive_bottleneck.test_executable) }
+    attribute :editor, Editor, default: ->(_interactive_bottleneck, _attribute) { Default_editor }
     attribute :repository, Repository, default: ->(interactive_bottleneck, _attribute) { interactive_bottleneck.test_executable.repository }
     attribute :unit_maturity, UnitMaturity, default: ->(interactive_bottleneck, _attribute) { UnitMaturity.new(interactive_bottleneck.test_executable.repository, interactive_bottleneck.test_executable.unit) }
     #	attribute :branch_index, Fixnum, :default => lambda { |interactive_bottleneck, attribute| InteractiveBottleneck.index(interactive_bottleneck.test_executable.repository) }
@@ -108,7 +108,7 @@ class InteractiveBottleneck
       #		puts "status.changed=#{status.changed.inspect}"
       #		puts "status.deleted=#{status.deleted.inspect}"
       #		puts "@repository.something_to_commit?=#{@repository.something_to_commit?.inspect}"
-      @repository.git_command('stash save --include-untracked')
+      @repository.stash!.assert_post_conditions
       merge_cleanup
       changes_branch = :stash
     end # if
@@ -221,7 +221,7 @@ class InteractiveBottleneck
   include Constants
   module Examples
     TestTestExecutable = TestExecutable.new(argument_path: File.expand_path($PROGRAM_NAME))
-    TestInteractiveBottleneck = InteractiveBottleneck.new(interactive: :interactive, test_executable: TestTestExecutable) # , editor: Editor::Examples::TestEditor)
+    TestInteractiveBottleneck = InteractiveBottleneck.new(interactive: :interactive, test_executable: TestTestExecutable, editor: Default_editor)
     include Constants
   end # Examples
   include Examples

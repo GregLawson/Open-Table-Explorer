@@ -85,10 +85,10 @@ end # not_symbols
   end #==
 
   def test_data_source_directory?
-#    assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/', Unit::Executable.project_root_dir, Unit::Executable.inspect)
-#    assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/', Unit::Executable.project_root_dir + Unit.data_source_directories)
-#    assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit/', Unit::Executable.project_root_dir + Unit.data_source_directories + Unit::Executable.model_basename.to_s + '/')
-#    assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit/', Unit::Executable.data_source_directory?)
+    assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/', Unit::Executable.project_root_dir, Unit::Executable.inspect)
+    assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/', Unit::Executable.project_root_dir + Unit.data_source_directories)
+    assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit/', Unit::Executable.project_root_dir + Unit.data_source_directories + Unit::Executable.model_basename.to_s + '/')
+    assert_equal('/home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/unit/', Unit::Executable.data_source_directory?)
   end # data_source_directory?
 
   def test_pathname_pattern?
@@ -113,9 +113,9 @@ end # not_symbols
     pathnames = FilePattern::Patterns.map do |p|
       UnitWithAssertions.	pathname_pattern?(p[:name])
     end # map
-#    assert_equal(UnitWithAssertions.pathnames?, pathnames)
-#    Executable.assert_pre_conditions
-    Executable.assert_post_conditions
+    assert_equal(UnitWithAssertions.pathnames?, pathnames)
+    Executable # .assert_pre_conditions
+    Executable # .assert_post_conditions
     assert_includes(Executable.pathnames?, File.expand_path($PROGRAM_NAME), Executable)
   end # pathnames
 end # Unit
@@ -123,38 +123,39 @@ end # Unit
 require_relative '../../app/models/default_test_case.rb'
 
 class RubyUnitTest < TestCase
-include RubyAssertions
-include Unit::Examples
-def test_assertions_pathname
-#	assert(File.exists?(Executable.assertions_pathname?))
-	assert_data_file(Executable.assertions_pathname?)
-end #assertions_pathname?
-def test_assertions_test_pathname
-	refute_nil("UnitWithAssertions"+"_assertions_test.rb", UnitWithAssertions.inspect)
-	refute_nil(UnitWithAssertions.assertions_test_pathname?)
-	refute_equal('', "../../test/unit/"+"UnitWithAssertions"+"_assertions_test.rb", UnitWithAssertions.inspect)
-	assert(File.exists?(UnitWithAssertions.assertions_test_pathname?), UnitWithAssertions.inspect)
-	assert_data_file(UnitWithAssertions.assertions_test_pathname?)
-end #assertions_test_pathname?
-def test_default_test_class_id
-	assert_path_to_constant(:DefaultTestCase0)
-	assert_path_to_constant(:DefaultTestCase1)
-	assert_path_to_constant(:DefaultTestCase2)
-	assert_path_to_constant(:DefaultTestCase3)
-	assert_path_to_constant(:DefaultTestCase4)
-	assert_path_to_constant(:DefaultTests0)
-	assert_path_to_constant(:DefaultTests1)
-	assert_path_to_constant(:DefaultTests2)
-	assert_path_to_constant(:DefaultTests3)
-	assert_path_to_constant(:DefaultTests4)
-	assert_equal(4, UnitWithAssertions.default_test_class_id?, UnitWithAssertions.edit_files.inspect)
-	default_test_class_id = Executable.default_test_class_id?
-	test_case=eval("DefaultTestCase"+default_test_class_id.to_s)
-	tests = eval("DefaultTests"+default_test_class_id.to_s)
-#till split	assert_equal(2, default_test_class_id, te.inspect)
-#till split	assert_equal(2, Unit.new(te.model_name?).default_test_class_id?, te.inspect)
-#	assert_equal(1, Unit.new('DefaultTestCase').default_test_class_id?)
-end #default_test_class_id
+  include Unit::Examples
+  def test_assertions_pathname
+    #	assert(File.exists?(Executable.assertions_pathname?))
+    assert_data_file(Executable.assertions_pathname?)
+  end # assertions_pathname?
+
+  def test_assertions_test_pathname
+    refute_nil('UnitWithAssertions' + '_assertions_test.rb', UnitWithAssertions.inspect)
+    refute_nil(UnitWithAssertions.assertions_test_pathname?)
+    refute_equal('', '../../test/unit/' + 'UnitWithAssertions' + '_assertions_test.rb', UnitWithAssertions.inspect)
+    assert(File.exist?(UnitWithAssertions.assertions_test_pathname?), UnitWithAssertions.inspect)
+    assert_data_file(UnitWithAssertions.assertions_test_pathname?)
+  end # assertions_test_pathname?
+
+  def test_default_test_class_id
+    assert_path_to_constant(:DefaultTestCase0)
+    assert_path_to_constant(:DefaultTestCase1)
+    assert_path_to_constant(:DefaultTestCase2)
+    assert_path_to_constant(:DefaultTestCase3)
+    assert_path_to_constant(:DefaultTestCase4)
+    assert_path_to_constant(:DefaultTests0)
+    assert_path_to_constant(:DefaultTests1)
+    assert_path_to_constant(:DefaultTests2)
+    assert_path_to_constant(:DefaultTests3)
+    assert_path_to_constant(:DefaultTests4)
+    assert_equal(4, UnitWithAssertions.default_test_class_id?, UnitWithAssertions.edit_files.inspect)
+    default_test_class_id = Executable.default_test_class_id?
+    test_case = eval('DefaultTestCase' + default_test_class_id.to_s)
+    tests = eval('DefaultTests' + default_test_class_id.to_s)
+    # till split	assert_equal(2, default_test_class_id, te.inspect)
+    # till split	assert_equal(2, Unit.new(te.model_name?).default_test_class_id?, te.inspect)
+    #	assert_equal(1, Unit.new('DefaultTestCase').default_test_class_id?)
+  end # default_test_class_id
 
   def test_parallel_display
     parallel_display = UnitWithAssertions.parallel_display
@@ -183,6 +184,7 @@ end #default_test_class_id
     assert_operator(Executable.parallel_display.size, :>=, 1)
     assert_operator(Executable.parallel_display.size, :<=, 6)
   end # parallel_display
+
   def test_tested_files
     executable = Executable.pathname_pattern?(:unit)
     tested_files = Executable.tested_files(executable)
@@ -232,19 +234,25 @@ end #default_test_class_id
     project_root_dir = FilePattern.project_root_dir?
     assert_equal(:Unit, RubyUnit::Executable.model_class_name)
     assert_equal(:unit, RubyUnit::Executable.model_basename)
-	refute_empty(RubyUnit::Executable.project_root_dir)
-	Executable #.assert_pre_conditions
-end # values
-def test_Examples
-	refute_nil(Executable.model_basename)
-	refute_nil(Executable.project_root_dir)
-	refute_nil(TestMinimal.model_basename)
-	refute_nil(TestMinimal.project_root_dir)
-	assert_nil(Not_unit.model_basename)
-	refute_nil(Not_unit.project_root_dir)
-	assert_nil(Not_rooted.model_basename)
-	assert_nil(Not_rooted.project_root_dir)
-end # Examples
+    refute_empty(RubyUnit::Executable.project_root_dir)
+    Executable # .assert_pre_conditions
+  end # values
+
+  def test_Examples
+    refute_nil(Executable.model_basename)
+    refute_nil(Executable.project_root_dir)
+    refute_nil(TestMinimal.model_basename)
+    refute_nil(TestMinimal.project_root_dir)
+    assert_nil(Not_unit.model_basename)
+    refute_nil(Not_unit.project_root_dir)
+    assert_nil(Not_rooted.model_basename)
+    assert_nil(Not_rooted.project_root_dir)
+    refute_empty(FilePattern.project_root_dir?)
+    refute_empty(Not_rooted.project_root_dir)
+    refute_empty(Executable.project_root_dir)
+    refute_empty(TestMinimal.project_root_dir)
+    refute_empty(Not_unit.project_root_dir)
+  end # Examples
 end # Unit
 
 class RubyUnitTest < TestCase
@@ -258,133 +266,168 @@ class RubyUnitTest < TestCase
 	assert_equal(:RubyUnitTest, RubyUnit::Self.test_class_name)
   end # test_case_class?
 
-def test_test_class_name
+  def test_test_class_name
 	assert_equal(:ruby_unit, RubyUnit::Self.model_basename)
 	assert_equal(:RubyUnit, RubyUnit::Self.model_class_name)
 	assert_equal(:RubyUnitTest, RubyUnit::Self.test_class_name)
-end # test_class_name
-def test_test_class
+  end # test_class_name
 
-end # test_class
-def test_create_test_class
-end # create_test_class
-def test_Constants
-	assert_instance_of(RubyUnit, RubyUnit::Self)
-	assert_respond_to(RubyUnit, :new_from_path)
-	ancestor_classes = RubyUnit::Self.class.ancestors
-	assert_includes(ancestor_classes, RubyUnit)
-	ancestral_methods = ancestor_classes.map do |ancestor|
-		ancestor.instance_methods.map do |ancestral_method|
-		{enumerator: :ancestors, module: ancestor, method: ancestral_method}
-		end # map
-	end # map
-	module_methods = RubyUnit::Self.class.included_modules.map do |ancestor|
-		ancestor.instance_methods.map do |ancestral_method|
-		{enumerator: :included_modules, module: ancestor, method: ancestral_method}
-		end # map
-	end # map
-	message = (ancestral_methods + module_methods).map do |ancestor| 
-		ancestor.map do |ancestral_method| 
-			ancestral_method[:module].to_s + '#' + ancestral_method[:method].to_s
-		end # map
-	end.join("\n") # map
-	assert_includes(RubyUnit::Self.methods, :model_class_name, message)
-#	assert_includes(RubyUnit::Self.methods(false), :model_class_name)
-	assert_equal(:RubyUnit, RubyUnit::Self.model_class_name)
-end #Constants
+  def test_test_class
+  end # test_class
+
+  def test_create_test_class
+  end # create_test_class
+
+  def test_Constants
+    assert_instance_of(RubyUnit, RubyUnit::Executable)
+    assert_respond_to(RubyUnit, :new_from_path)
+    ancestor_classes = RubyUnit::Executable.class.ancestors
+    assert_includes(ancestor_classes, RubyUnit)
+    ancestral_methods = ancestor_classes.map do |ancestor|
+      ancestor.instance_methods.map do |ancestral_method|
+        { enumerator: :ancestors, module: ancestor, method: ancestral_method }
+      end # map
+    end # map
+    module_methods = RubyUnit::Executable.class.included_modules.map do |ancestor|
+      ancestor.instance_methods.map do |ancestral_method|
+        { enumerator: :included_modules, module: ancestor, method: ancestral_method }
+      end # map
+    end # map
+    message = (ancestral_methods + module_methods).map do |ancestor|
+      ancestor.map do |ancestral_method|
+        ancestral_method[:module].to_s + '#' + ancestral_method[:method].to_s
+      end # map
+    end.join("\n") # map
+    assert_includes(RubyUnit::Executable.methods, :model_class_name, message)
+    #	assert_includes(RubyUnit::Executable.methods(false), :model_class_name)
+    assert_equal(:Unit, RubyUnit::Executable.model_class_name)
+  end # Constants
 end # RubyUnit
 
 class RailsishRubyUnitTest < TestCase
-include RailsishRubyUnit::Examples
-include RubyAssertions
-def test_Constants
-	assert_instance_of(RailsishRubyUnit, RailsishRubyUnit::Executable)
-	assert_respond_to(RailsishRubyUnit, :new_from_path)
-	assert_respond_to(RailsishRubyUnit::Executable, :model_class_name)
-	assert_equal(:Unit, RailsishRubyUnit::Executable.model_class_name)
-end #Constants
+  include RailsishRubyUnit::Examples
+  def test_Constants
+    assert_instance_of(RailsishRubyUnit, RailsishRubyUnit::Executable)
+    assert_respond_to(RailsishRubyUnit, :new_from_path)
+    assert_respond_to(RailsishRubyUnit::Executable, :model_class_name)
+    assert_equal(:Unit, RailsishRubyUnit::Executable.model_class_name)
+  end # Constants
 
-def test_model_class
-	assert_equal(Unit, RailsishRubyUnit::Executable.model_class?)
-end #model_class
-def test_model_name
-	assert_equal(:Unit, RailsishRubyUnit::Executable.model_name?)
-end #model_name?
-def test_test_class_name
-end # test_class
-def test_test_class
-end # test_class
-def test_create_test_class
-end # create_test_class
-def test_model_pathname
-	message = 'Executable = ' + RailsishRubyUnitTest::Executable.inspect
-	message += "\n" + 'Executable.model_pathname? = ' + RailsishRubyUnit::Executable.model_pathname?
-	assert(File.exists?(RailsishRubyUnit::Executable.model_pathname?), message)
-	assert_data_file(RailsishRubyUnit::Executable.model_pathname?, message)
-end #model_pathname?
-def test_model_test_pathname
-	assert(File.exists?(RailsishRubyUnit::Executable.model_test_pathname?))
-	assert_data_file(RailsishRubyUnit::Executable.model_test_pathname?)
-end #model_test_pathname?
-def test_Unit_assert_pre_conditions
-	Unit #.assert_pre_conditions
-end #class_assert_pre_conditions
-def test_Unit_assert_post_conditions
-	Unit #.assert_post_conditions
-end #class_assert_post_conditions
-def test_assert_pre_conditions
-end #class_assert_pre_conditions
-def test_assert_post_conditions
-end #assert_post_conditions
-def test_assert_tested_files
-end #assert_tested_files
-def test_assert_default_test_class_id
-#	Unit.assert_constant_path_respond_to(:TestIntrospection, :Unit, :KernelMethods, :assert_default_test_class_id)
-#	assert_respond_to(UnitTest, :assert_default_test_class_id)
-#	explain_assert_respond_to(self, :assert_default_test_class_id)
-	UnitWithAssertions #.assert_default_test_class_id(4,'')
-#til split	Unit.new(:Unit).assert_default_test_class_id(2,'')
-#	Unit.new(:DefaultTestCase) #.assert_default_test_class_id(2,'')
-#	Unit.new(:EmptyDefaultTest) #.assert_default_test_class_id(0,'')
-#	Unit.new(:GenericType) #.assert_default_test_class_id(3,'')
-end #default_test_class_id
-def test_Examples
-	UnitWithAssertions #.assert_pre_conditions
-	UnitWithAssertions #.assert_post_conditions
-end #Examples
+  def test_model_class
+    assert_equal(Unit, RailsishRubyUnit::Executable.model_class?)
+  end # model_class
+
+  def test_model_name
+    assert_equal(:Unit, RailsishRubyUnit::Executable.model_class_name)
+    assert_equal(:Unit, RailsishRubyUnit::Executable.model_name?)
+  end # model_name?
+
+  def test_test_class_name
+  end # test_class
+
+  def test_test_class
+  end # test_class
+
+  def test_create_test_class
+  end # create_test_class
+
+  def test_model_pathname
+    message = 'Executable = ' + RailsishRubyUnitTest::Executable.inspect
+    message += "\n" + 'Executable.model_pathname? = ' + RailsishRubyUnit::Executable.model_pathname?
+    assert(File.exist?(RailsishRubyUnit::Executable.model_pathname?), message)
+    assert_data_file(RailsishRubyUnit::Executable.model_pathname?, message)
+  end # model_pathname?
+
+  def test_model_test_pathname
+    assert(File.exist?(RailsishRubyUnit::Executable.model_test_pathname?))
+    assert_data_file(RailsishRubyUnit::Executable.model_test_pathname?)
+  end # model_test_pathname?
+
+  def test_Unit_assert_pre_conditions
+    Unit.assert_pre_conditions
+  end # class_assert_pre_conditions
+
+  def test_Unit_assert_post_conditions
+    Unit.assert_post_conditions
+  end # class_assert_post_conditions
+
+  def test_assert_pre_conditions
+  end # class_assert_pre_conditions
+
+  def test_assert_post_conditions
+  end # assert_post_conditions
+
+  def test_assert_tested_files
+  end # assert_tested_files
+
+  def test_assert_default_test_class_id
+    #	Unit.assert_constant_path_respond_to(:TestIntrospection, :Unit, :KernelMethods, :assert_default_test_class_id)
+    #	assert_respond_to(UnitTest, :assert_default_test_class_id)
+    #	explain_assert_respond_to(self, :assert_default_test_class_id)
+    Unit.new(:UnitWithAssertions).assert_default_test_class_id(4, '')
+    # til split	Unit.new(:Unit).assert_default_test_class_id(2,'')
+    Unit.new(:DefaultTestCase).assert_default_test_class_id(2, '')
+    Unit.new(:EmptyDefaultTest).assert_default_test_class_id(0, '')
+    Unit.new(:GenericType).assert_default_test_class_id(3, '')
+  end # default_test_class_id
+
+  def test_Examples
+    UnitWithAssertions.assert_pre_conditions
+    UnitWithAssertions.assert_post_conditions
+  end # Examples
 end # UnitTest
 
 class RailsUnitTest < TestCase
-include RailsUnit::Examples
-def test_RailsUnit_initialize
-	assert_equal('code_base', Odd_plural_executable.singular_table)
-	assert_equal('code_bases', Odd_plural_executable.plural_table)
-#	assert_equal(:code_base, Odd_plural_executable.unit?.model_class_name, Odd_plural_executable.inspect)
-#	assert_equal(:code_base, Odd_plural_executable.unit?.model_class_name.to_s.underscore.to_sym, Odd_plural_executable.inspect)
+  include RailsUnit::Examples
+  def test_RailsUnit_initialize
+    assert_equal('code_base', Odd_plural_executable.singular_table)
+    assert_equal('code_bases', Odd_plural_executable.plural_table)
+    assert_equal(:code_base, Odd_plural_executable.unit?.model_class_name, Odd_plural_executable.inspect)
+    assert_equal(:code_base, Odd_plural_executable.unit?.model_class_name.to_s.underscore.to_sym, Odd_plural_executable.inspect)
 
-#	assert_equal(:code_base, Odd_plural_executable.unit?.model_basename, Odd_plural_executable.inspect)
-#	assert_equal(:unit, Odd_plural_executable.test_type)
-end # RailsUnit
-def test_test_file?
-	assert_equal('test/unit/code_base_test.rb',Odd_plural_executable.test_file?)
-end #test_file?
-def test_Examples
-	assert_equal(:unit, Unit_executable.test_type)
-	assert_equal(:unit, Plural_executable.test_type)
-	assert_equal(:unit, Singular_executable.test_type)
-	assert_equal(:unit, Odd_plural_executable.test_type)
-end # Examples
+    assert_equal(:code_base, Odd_plural_executable.unit?.model_basename, Odd_plural_executable.inspect)
+    assert_equal(:unit, Odd_plural_executable.test_type)
+  end # RailsUnit
+
+  def test_test_file?
+    assert_equal('test/unit/code_base_test.rb', Odd_plural_executable.test_file?)
+  end # test_file?
+
+  def test_Examples
+    assert_equal(:unit, Unit_executable.test_type)
+    assert_equal(:unit, Plural_executable.test_type)
+    assert_equal(:unit, Singular_executable.test_type)
+    assert_equal(:unit, Odd_plural_executable.test_type)
+  end # Examples
 end # RailsUnit
 
 class ExampleTest < TestCase
-def test_find_all_in_class
-end # find_all_in_class
-def test_find_by_class
-end # find_by_class
-def test_equal
-end # ==
-def test_fully_qualified_name
-end # fully_qualified_name
-def test_value
-end # value
+  include Example::Examples
+  def test_find_all_in_class
+    assert_includes(Example.find_all_in_class(Unit), TestMinimal_Example)
+  end # find_all_in_class
+
+  def test_find_by_class
+    assert_includes(Example.find_by_class(Unit, Unit), TestMinimal_Example)
+  end # find_by_class
+
+  def test_Example_virtus
+    assert_equal(Unit, TestMinimal_Example.containing_class)
+    assert_equal(:TestMinimal, TestMinimal_Example.example_constant_name)
+  end # values
+
+  def test_equal
+    assert_equal(TestMinimal_Example, TestMinimal_Example)
+  end # ==
+
+  def test_fully_qualified_name
+    assert_equal('Unit::Examples::TestMinimal', TestMinimal_Example.fully_qualified_name)
+  end # fully_qualified_name
+
+  def test_value
+    assert_equal(Unit::TestMinimal, TestMinimal_Example.value)
+  end # value
+
+  def test_Example_Examples
+  end # Examples
 end # Example

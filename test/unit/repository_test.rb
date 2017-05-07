@@ -113,14 +113,14 @@ class RepositoryTest < TestCase
     assert_pathname_exists(Root_directory)
     assert_pathname_exists(Source)
     assert_equal(FilePattern.project_root_dir?(__FILE__), FilePattern.project_root_dir?($PROGRAM_NAME))
-    #	assert_equal(FilePattern.project_root_dir?, Root_directory)
+    assert_equal(FilePattern.project_root_dir?, Root_directory)
     #	message="SELF_code_Repo=#{SELF_code_Repo.inspect}"
     #	message+="\nThis_code_repository=#{This_code_repository.inspect}"
     #	message+="\nThis_code_repository.path=#{This_code_repository.path.inspect}"
     this_code_repository = Repository.new(Root_directory)
     sELF_code_Repo = Repository.new(Root_directory)
     assert_equal(Root_directory, this_code_repository.path)
-    #	SELF_code_Repo.assert_pre_conditions
+    This_code_repository.assert_pre_conditions
     this_code_repository.assert_pre_conditions
     This_code_repository.assert_pre_conditions
     assert_equal(Root_directory, This_code_repository.path)
@@ -142,6 +142,35 @@ class RepositoryTest < TestCase
     This_code_repository # .assert_pre_conditions
   end # initialize
 
+  def test_equal
+  end # equal
+
+  def test_compare
+  end # compare
+
+	def test_git_pathname
+    assert_pathname_exists(@temp_repo.git_pathname('refs'))
+    assert_pathname_exists(@temp_repo.git_pathname('branches'))
+    assert_pathname_exists(@temp_repo.git_pathname('HEAD'))
+    assert_pathname_exists(This_code_repository.git_pathname('refs'))
+	end # git_pathname
+	
+	def test_stash!
+		@temp_repo.stash!
+    assert_equal([:clean], @temp_repo.state?)
+	end # stash!
+	
+  def test_state?
+    assert_equal([:clean], @temp_repo.state?)
+		@temp_repo.force_change
+    assert_equal([:dirty], @temp_repo.state?)
+		@temp_repo.git_command('merge passed --no-commit --no-ff').assert_post_conditions
+#!    assert_equal([:clean, :merge], @temp_repo.state?, @temp_repo.status.inspect)
+		@temp_repo.revert_changes
+    assert_equal([:clean], @temp_repo.state?)
+    assert_equal([:dirty], This_code_repository.state?)
+  end # state?
+
   def test_shell_command
     assert_equal(This_code_repository.path, This_code_repository.shell_command('pwd').output.chomp + '/')
     assert_equal(@temp_repo.path, @temp_repo.shell_command('pwd').output.chomp + '/')
@@ -160,6 +189,20 @@ class RepositoryTest < TestCase
     #	refute_equal("## master\n", @temp_repo.inspect)
     #	assert_equal("## master\n M README\n", @temp_repo.inspect)
   end # inspect
+
+  def test_standardize_position!
+    @temp_repo.git_command('rebase --abort').puts
+    @temp_repo.git_command('merge --abort').puts
+    @temp_repo.git_command('stash save') # .assert_post_conditions
+    @temp_repo.git_command('checkout master').puts
+    @temp_repo.standardize_position!
+  end # standardize_position!
+
+  def abort_merge!
+  end # abort_rebase_and_merge!
+
+  def abort_rebase!
+  end # abort_rebase_and_merge!
 
   def test_corruption_fsck
     @temp_repo.git_command('fsck') # .assert_post_conditions
@@ -185,20 +228,20 @@ class RepositoryTest < TestCase
 
   def test_something_to_commit?
     message = This_code_repository.status.inspect
-#    assert(This_code_repository.something_to_commit?, message)
+    assert(This_code_repository.something_to_commit?, message)
     This_code_repository.status.each do |file_stat|
       #			puts file_stat.inspect
       assert(File.exist?(file_stat.file) == (file_stat.work_tree != :deleted), message)
     end # each
   end # something_to_commit
 
-  def test_testing_superset_of_passed
-    # ?	assert_equal('', This_code_repository.testing_superset_of_passed.assert_post_conditions.output)
-  end # testing_superset_of_passed
+  def test_tested_superset_of_passed
+    # ?	assert_equal('', This_code_repository.tested_superset_of_passed.assert_post_conditions.output)
+  end # tested_superset_of_passed
 
-  def test_edited_superset_of_testing
-    # ?	assert_equal('', This_code_repository.edited_superset_of_testing.assert_post_conditions.output)
-  end # edited_superset_of_testing
+  def test_edited_superset_of_tested
+    # ?	assert_equal('', This_code_repository.edited_superset_of_tested.assert_post_conditions.output)
+  end # edited_superset_of_tested
 
   def test_force_change
     @temp_repo.assert_nothing_to_commit
@@ -208,15 +251,25 @@ class RepositoryTest < TestCase
     refute_equal(README_start_text, IO.read(modified_path))
     @temp_repo.revert_changes
     @temp_repo.force_change
-    refute_equal({}, @temp_repo.grit_repo.status.changed)
+    refute_equal({}, @temp_repo.something_to_commit?)
     @temp_repo.assert_something_to_commit
-    refute_equal({}, @temp_repo.grit_repo.status.changed)
+    refute_equal({}, @temp_repo.something_to_commit?)
     @temp_repo.git_command('add README')
-    refute_equal({}, @temp_repo.grit_repo.status.changed)
+    refute_equal({}, @temp_repo.something_to_commit?)
     assert(@temp_repo.something_to_commit?, @temp_repo.status.inspect)
     #	@temp_repo.git_command('commit -m "timestamped commit of README"')
     @temp_repo.revert_changes # .assert_post_conditions
     @temp_repo.assert_nothing_to_commit
+
+    assert_equal([], @temp_repo.status)
+
+    @temp_repo.force_change
+    assert_equal(1, @temp_repo.status.size)
+    assert_equal('README', @temp_repo.status[0].file)
+    assert_equal(false, @temp_repo.status[0].log_file?)
+    assert_equal(:unmodified, @temp_repo.status[0].index)
+    assert_equal(:modified, @temp_repo.status[0].work_tree)
+    #		assert_equal("not updated", @temp_repo.status[0].description)
   end # force_change
 
   def test_revert_changes

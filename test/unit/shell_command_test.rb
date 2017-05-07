@@ -11,7 +11,22 @@ require_relative '../../app/models/default_test_case.rb'
 require_relative '../../app/models/test_environment_test_unit.rb'
 class ShellTest < TestCase
   # include DefaultTests
-  include Shell::Server::Examples
+#  include Shell::Server::Examples
+    module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+      include Shell::Base::DefinitionalConstants
+#      include ReferenceObjects
+      Example_output = "1 2;3 4\n".freeze
+      COMMAND_STRING = 'echo "1 2;3 4"'.freeze
+      Guaranteed_existing_directory = File.expand_path(File.dirname($PROGRAM_NAME))
+      Cd_command_array = ['cd', Guaranteed_existing_directory].freeze
+      Cd_command_hash = { command: 'cd', in: Guaranteed_existing_directory }.freeze
+      Guaranteed_existing_basename = File.basename($PROGRAM_NAME)
+      Redirect_command = ['ls', Guaranteed_existing_basename, '>', 'blank in filename.shell_command'].freeze
+      Redirect_command_string = 'ls ' + Shellwords.escape(Guaranteed_existing_basename) + ' > ' + Shellwords.escape('blank in filename.shell_command')
+      Relative_command = ['ls', Guaranteed_existing_basename].freeze
+    end # Examples
+		include Examples
+		
   include Shell::Ssh::Examples
   def test_Shell_Base_Default_run
 	end # Default_run
@@ -31,7 +46,6 @@ class ShellTest < TestCase
   end # assemble_array_command
 
   def test_assemble_command_string
-    assert_equal(COMMAND_STRING, EXAMPLE.command_string)
     assert_equal('cd ' + Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_command_string(Cd_command_array))
     assert_equal('cd ' + Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_command_string(Cd_command_hash))
     assert_equal('cd ' + Shellwords.escape(Guaranteed_existing_directory), ShellCommands.assemble_command_string([Cd_command_array]))
@@ -41,7 +55,18 @@ class ShellTest < TestCase
     assert_equal(Redirect_command_string, ShellCommands.assemble_command_string(Redirect_command))
     assert_equal(Redirect_command_string, ShellCommands.assemble_command_string([Redirect_command]))
   end # assemble_command_string
+  end # Shell::Base
+	
+class ServerTest < TestCase
 
+    module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
+			include ShellTest::Examples
+      Hello_world = Shell::Server.new(command_string: 'echo "Hello World"')
+      EXAMPLE = Shell::Server.new(command_string: COMMAND_STRING)
+      Bad_status = Shell::Server.new(command_string: '$?=1')
+      Error_message_run = Shell::Server.new(command_string: 'ls happyHappyFailFail.junk')
+    end # Examples
+		include Examples
   def test_Server_DefinitionalConstants
   end # DefinitionalConstants
 
@@ -57,106 +82,15 @@ class ShellTest < TestCase
 				all3x3 = [all3, all3, all3]
 				assert_equal([Hello_world.stdin], Hello_world.select[1], IO.select(all3, all3, all3, 0.01))
 				stdout_waiting = Hello_world.select[0]
-				assert((Hello_world.stdout == stdout_waiting) || stdout_waiting == [])
+				assert_includes([[], [Hello_world.stdout]], stdout_waiting)
 			end # select						
-		def test_io_to_sym
-    Hello_world.start
-				io = Hello_world.stdout
-			assert_instance_of(IO, io)
-			assert(io === Hello_world.stdout)
-#			assert_equal('', io.to_s)
-#			assert_equal('', io.inspect)
-			symbol = case io
-			when Hello_world.stdin then :stdout
-			when Hello_world.stdout then :stdout
-			when Hello_world.stderr then :stderr
-			else raise io.select + ' not recognized in io_to_sym.'
-			end # case
-			assert_equal(:stdout, symbol)
-		assert_equal(:stdin, Hello_world.io_to_sym(Hello_world.stdin))
-		assert_equal(:stderr, Hello_world.io_to_sym(Hello_world.stderr))
-		assert_equal(:stdout, Hello_world.io_to_sym(Hello_world.stdout))
-		end # io_to_sym
-		def test_select_symbols
-			Hello_world.start
-			selection = Hello_world.select
-			refute_nil(selection)
-			refute_nil(selection[0])
-			refute_nil(selection[1])
-			refute_nil(selection[2])
-			refute_nil(selection[0].map {|fd| Hello_world.io_to_sym(fd)})
-			refute_nil(selection[1].map {|fd| Hello_world.io_to_sym(fd)})
-			refute_nil(selection[2].map {|fd| Hello_world.io_to_sym(fd)})
-			{readable: selection[0].map {|fd| Hello_world.io_to_sym(fd)}, writeable: selection[1].map {|fd| Hello_world.io_to_sym(fd)}, exceptions: selection[2].map {|fd| Hello_world.io_to_sym(fd)}}
 
-    Hello_world.start
-		assert_equal({:exceptions=>[], :readable=>[], :writeable=>[:stdin]}, Hello_world.select_symbols)
-    Hello_world.close
-		assert_equal({}, Hello_world.select_symbols)
-		end # select_symbols
-  def test_start
-    Hello_world.start
-		assert_equal(true, Hello_world.wait_thr.alive?)
-		assert_includes(['sleep', 'run'], Hello_world.wait_thr.status)
-    Hello_world.assert_post_conditions
- 		assert_includes(['sleep', 'run', false], Hello_world.wait_thr.status)
-   Hello_world.assert_started
-		assert_includes(['sleep', 'run', false], Hello_world.wait_thr.status)
-
-		pause_delimiter = Shell::Command.new(command_string: 'echo "Hello World";sleep 10;echo "Bye"')
-		pause_delimiter.start
-		assert_includes(['sleep', 'run'], pause_delimiter.wait_thr.status)
-		begin
-			assert_includes(['sleep', 'run'], pause_delimiter.wait_thr.status)
-			first_output = pause_delimiter.stdout.read_nonblock(13)
-		rescue IO::WaitReadable
-			IO.select([pause_delimiter.stdout])
-			retry
-		rescue StandardError => exception_object_raised
-			puts 'rescue of nonblocking read.'
-			puts exception_object_raised.inspect
-			selection = IO.select([pause_delimiter.stdout], [pause_delimiter.stdin], [pause_delimiter.stderr], 15)
-#			assert_equal([], selection[0])
-			assert_equal([pause_delimiter.stdin], selection[1])
-			assert_equal([], selection[2])
-		end
-    pause_delimiter.assert_started
-		assert_includes([false], pause_delimiter.wait_thr.status)
-    pause_delimiter.assert_post_conditions
-		assert_includes([false], pause_delimiter.wait_thr.status)
-		assert_equal("Hello World\n", first_output)
-		assert_instance_of(Process::Waiter, Hello_world.wait_thr)
-		assert_includes(Hello_world.wait_thr.class.ancestors, Thread)
-		assert_includes(Thread.instance_methods, :status)
-		assert_includes(Hello_world.wait_thr.methods, :status)
-		assert_equal(false, Hello_world.wait_thr.status)
-   end # start
-
-  def test_wait
-  end # wait
 
 		def test_tee
     Hello_world.start
     Hello_world.tee
     Hello_world.close
 		end # tee
-		
-  def test_close
-		pause_delimiter = Shell::Command.new(command_string: 'echo "Hello World";sleep 10;echo "Bye"')
-		pause_delimiter.start
-    pause_delimiter.assert_post_conditions
-    pause_delimiter.assert_started
-			first_output = pause_delimiter.stdout.read_nonblock(11)
-		assert_equal('Hello World', first_output)
-		pause_delimiter.assert_started('during pause presumably.')
-		pause_delimiter.close
-		pause_delimiter.assert_ended('after pause')
-		assert_equal("\nBye\n", pause_delimiter.output_at_close)
-		assert_equal([:pending_interrupt?,  :raise, :join, :value, :kill, :terminate, :exit, :run, :wakeup, :[], :[]=, :key?, :keys, :priority, :priority=, :status, :thread_variable_get, :thread_variable_set, :thread_variables, :thread_variable?, :alive?, :stop?, :abort_on_exception, :abort_on_exception=, :safe_level, :group, :backtrace, :backtrace_locations, :inspect, :set_trace_func, :add_trace_func], Thread.instance_methods(false))
-		assert_includes(pause_delimiter.wait_thr.methods, :status)
-		assert_equal(false, pause_delimiter.wait_thr.status)
-		assert_equal(false, pause_delimiter.wait_thr.alive?)
-  end # close
 
   def test_success?
   end # success
@@ -171,17 +105,6 @@ class ShellTest < TestCase
   def test_Server_assert_post_conditions
   end # assert_post_conditions
 
-	def test_assert_pipe
-    Hello_world.start
-		Shell::Server.assert_pipe(Hello_world.stdin)
-		Shell::Server.assert_pipe(Hello_world.stdout)
-		Shell::Server.assert_pipe(Hello_world.stderr)
-		pause_delimiter = Shell::Command.new(command_string: 'echo "Hello World";sleep 10;echo "Bye"')
-		pause_delimiter.start
-		Shell::Server.assert_pipe(pause_delimiter.stdin)
-		Shell::Server.assert_pipe(pause_delimiter.stdout)
-		Shell::Server.assert_pipe(pause_delimiter.stderr)
-			end # pipe
 
 	def test_assert_readable
     Hello_world.start
@@ -210,7 +133,7 @@ class ShellTest < TestCase
 	def test_assert_ended
       end # assert_started
   def test_Server_Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
-    assert_equal([:@allowed_writer_methods, :@command_string, :@env, :@opts, :@errors, :@cached_run, :@start_time, :@elapsed_time, :@timeout, :@stdin, :@stdout, :@stderr, :@wait_thr, :@output_at_close], EXAMPLE.instance_variables, EXAMPLE.inspect)
+    assert_equal([:@allowed_writer_methods, :@command_string, :@env, :@opts, :@errors, :@cached_run, :@start_time, :@elapsed_time, :@timeout, :@stdin, :@stdout, :@stderr, :@wait_thr, :@output], EXAMPLE.instance_variables, EXAMPLE.inspect)
     assert_equal(COMMAND_STRING, EXAMPLE.command_string, EXAMPLE.inspect)
   end # Examples
   end # Server
@@ -224,10 +147,10 @@ class CommandTest < TestCase
   def test_Command_Examples
     assert_include(EXAMPLE.class.ancestors, Shell::Server)
     assert_equal(COMMAND_STRING, EXAMPLE.command_string, EXAMPLE.inspect)
-    assert_equal("1 2;3 4\n", EXAMPLE.start.close.output_at_close, EXAMPLE.inspect)
+    assert_equal("1 2;3 4\n", EXAMPLE.start.close.output, EXAMPLE.inspect)
     assert_equal({}, EXAMPLE.errors)
     assert_equal(0, EXAMPLE.process_status.exitstatus)
-    assert_equal("Hello World\n", Hello_world.start.close.output_at_close)
+    assert_equal("Hello World\n", Hello_world.start.close.output)
     Hello_world.assert_post_conditions
     shell_execution1 = Shell::Command.new(command_string: 'cd /tmp;pwd')
     shell_execution1 = Shell::Command.new(command_string: 'cd /tmp;')
@@ -321,174 +244,8 @@ class FileIPOTest < TestCase
   end # success?
 end # FileIPO
 
-class ShellCommandsTest < DefaultTestCase2
+class ShellCommandsTest < TestCase
   # include DefaultTests
   include ShellCommands::Examples
   include Shell::Ssh::Examples
-  def test_ShellCommands_execute
-  end # execute
-
-  def test_initialize
-    assert_equal("1 2;3 4\n", EXAMPLE.output)
-    assert_equal('', EXAMPLE.errors)
-    assert_equal(0, EXAMPLE.process_status.exitstatus)
-    assert_equal("Hello World\n", Hello_world.output)
-    Hello_world.assert_post_conditions
-    refute_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
-    shell_execution1 = ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']])
-    shell_execution1 = ShellCommands.new([['cd', '/tmp'], '&&', ['echo', '$SECONDS']])
-    shell_execution1 = ShellCommands.new('cd /tmp;pwd')
-    shell_execution1 = ShellCommands.new('cd /tmp;')
-    relative_command = ['pwd']
-    shell_execution2 = ShellCommands.new([relative_command]).assert_post_conditions(shell_execution2.inspect)
-    relative_command = Redirect_command
-    relative_command = ['ls', Guaranteed_existing_basename]
-    assert_equal(Redirect_command_string, ShellCommands.assemble_array_command(Redirect_command))
-    shell_execution = ShellCommands.new([Cd_command_array, '&&', relative_command])
-    shell_execution.assert_post_conditions
-    assert_equal(Guaranteed_existing_basename + "\n", shell_execution.output, shell_execution.inspect)
-    assert_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS', '>', 'blank in filename.shell_command']]).output)
-    refute_equal('', ShellCommands.new([['cd', '/tmp'], ';', ['echo', '$SECONDS']]).output)
-    switch_dir = ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']])
-    assert_equal(Guaranteed_existing_directory + "\n", switch_dir.output)
-
-    assert_instance_of(Hash, chdir: '/')
-    switch_dir = ShellCommands.new('pwd', chdir: Guaranteed_existing_directory)
-    assert_equal(Guaranteed_existing_directory + "\n", switch_dir.output, switch_dir.inspect(true))
-  end # initialize
-
-  def test_parse_argument_array
-    argument_array = [{ 'G' => 'e' }, 'git rebase']
-    command = ShellCommands.new
-    command.parse_argument_array(argument_array)
-    assert_includes(command.methods(true), :env)
-    assert_equal(argument_array[0], command.env)
-    assert_equal(argument_array[1], command.command)
-    assert_equal({}, command.opts)
-  end # parse_argument_array
-
-  def test_01
-    shell_execution1 = ShellCommands.new('ls /tmp')
-    shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
-    #	shell_execution1=ShellCommands.new('cd')
-    #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
-    #	shell_execution1=ShellCommands.new('pushd /tmp')
-    #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
-    #	shell_execution1=ShellCommands.new('cd /tmp')
-    #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
-  end # 1
-
-  def test_02
-    shell_execution1 = ShellCommands.new([['cd', '/tmp']])
-    #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
-  end # 2
-
-  def test_03
-    shell_execution1 = ShellCommands.new(ShellCommands.assemble_hash_command(Cd_command_hash))
-    #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
-  end # 3
-
-  def test_04
-    shell_execution1 = ShellCommands.new(ShellCommands.assemble_command_string(Cd_command_hash))
-    #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
-  end # 4
-
-  def test_05
-    shell_execution1 = ShellCommands.new(Cd_command_hash)
-    #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
-  end # 5
-
-  def test_06
-    #	shell_execution1=ShellCommands.new([Cd_command_hash])
-    #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
-  end # 6
-
-  def test_07
-    #	shell_execution1=ShellCommands.new([Cd_command_array])
-    #	shell_execution1.assert_post_conditions(shell_execution1.command_string.inspect)
-  end # 7
-
-  def test_08
-  end # 8
-
-  def test_09
-  end # 9
-
-  def test_10
-    switch_dir = ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['pwd']])
-    assert_instance_of(String, switch_dir.output)
-    assert_equal(Guaranteed_existing_directory + "\n", switch_dir.output)
-  end # 10
-
-  def test_11
-    #	assert_equal('shell_command_test.rb', ShellCommands.new([['cd', Guaranteed_existing_directory], '&&', ['ls', Guaranteed_existing_basename]]))
-  end # 11
-
-  def test_success?
-    assert(EXAMPLE.success?)
-    assert(Hello_world.success?)
-    #    assert_equal(127, Bad_status.success?)
-    #    assert_equal(2, Error_message_run.success?)
-  end # success
-
-  def test_clear_error_message
-    #    assert_equal(0, Hello_world.clone.clear_error_message!(0xFF).success?)
-    #    assert_equal(0, Bad_status.clone.clear_error_message!(0xFF).success?)
-    #    assert_equal(0, Error_message_run.clone.clear_error_message!(0xFF).success?)
-    #    assert_equal(0, Hello_world.clone.clear_error_message!(0).success?)
-    #    assert_equal(0, Bad_status.clone.clear_error_message!(127).success?)
-    #    assert_equal(0, Error_message_run.clone.clear_error_message!(2).success?)
-  end # clear_error_message!
-
-  def test_force_success
-    Hello_world.force_success(0).assert_post_conditions
-    Bad_status.force_success(127).assert_post_conditions
-    Error_message_run.force_success(2).assert_post_conditions
-    #    assert_equal(0, Error_message_run.clone.clear_error_message!(0xFF).success?)
-    Error_message_run.force_success(0xFF).assert_post_conditions
-  end # force_success
-
-  def test_tolerate_status(_tolerated_status = 1)
-    Hello_world.tolerate_status.assert_post_conditions
-    Bad_status.tolerate_status(127).assert_post_conditions
-  end # tolerate_status
-
-  def test_tolerate_error_pattern(_tolerated_error_pattern = /^warning/)
-    Hello_world.tolerate_error_pattern.assert_post_conditions
-    Error_message_run.tolerate_error_pattern(/No such file/).assert_post_conditions
-  end # tolerate_error_pattern
-
-  def test_tolerate_status_and_error_message(_tolerated_status = 1, _tolerated_error_pattern = /^warning/)
-    Hello_world.tolerate_status_and_error_pattern.assert_post_conditions
-    assert_equal(Bad_status.process_status.exitstatus, 127, Bad_status.inspect)
-    #    assert_match(/not found/, Bad_status.errors, Bad_status.inspect)
-    #			assert(Bad_status.process_status.exitstatus == 127 && /not found/.match(Bad_status.errors), Bad_status.inspect)
-    Bad_status.tolerate_status_and_error_pattern(127, /not found/).assert_post_conditions
-    # assert_match(/No such file/, Error_message_run.errors, Error_message_run.inspect)
-    assert_equal(2, Error_message_run.process_status.exitstatus, Error_message_run.inspect)
-    Error_message_run.tolerate_status_and_error_pattern(2, /No such file/).assert_post_conditions
-  end # tolerate_status_and_error_message
-
-  def test_tolerate
-  end # tolerate
-
-  def test_inspect
-    Hello_world.assert_post_conditions
-    assert_equal("Hello World\n", Hello_world.output)
-    assert_equal("Hello World\n", Hello_world.inspect)
-    assert_equal("1 2;3 4\n", EXAMPLE.inspect)
-  end # inspect
-
-  def test_puts
-    assert_equal(Example_output, EXAMPLE.output)
-    assert_kind_of(Enumerable, caller)
-    assert_instance_of(Array, caller)
-    explain_assert_respond_to(caller, :grep)
-    shorter_callers = caller.grep(/^[^\/]/)
-    assert_equal(EXAMPLE, EXAMPLE.puts) # allow command chaining
-  end # puts
-
-  def test_assert_post_conditions
-    Hello_world.assert_post_conditions
-  end # assert_post_conditions
 end # ShellCommands

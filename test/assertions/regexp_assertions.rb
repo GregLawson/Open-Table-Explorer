@@ -1,6 +1,6 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
-#    <GregLawson123@gmail.com>                                                             
+#    Copyright (C) 2013 by Greg Lawson
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -15,4 +15,4 @@ class Regexp
     Back_reference = ((/[aeiou]/.capture(:vowel) * /./).back_reference(:vowel) * /./).back_reference(:vowel)
     Regexp_exception = Regexp.regexp_error('[')
   end # Examples
-end #Regexp
+end # Regexp

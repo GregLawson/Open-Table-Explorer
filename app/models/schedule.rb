@@ -130,7 +130,7 @@ class Schedule
   include DefinitionalConstants
   module DefinitionalClassMethods
   include DefinitionalConstants
-	def bottlenecked?
+	def saturated?
 		if idle_cpus == 0
 			true
 		elsif load_average >= cores - 0.5
@@ -140,13 +140,8 @@ class Schedule
 		else
 			false
 		end # if
-	end # bottlenecked?
+	end # saturated?
 	
-	def cores
-		line = ShellCommands.new('grep cores /proc/cpuinfo').output.split("\n").uniq[0]
-		line.capture?(DefinitionalConstants::Cpu_info_regexp).output[:cores].to_i
-	end # cores
-
 	def load_average
 		IO.read('/proc/loadavg').split(" ")
 	end # idle_cpus

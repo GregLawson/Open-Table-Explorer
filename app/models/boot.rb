@@ -27,8 +27,9 @@ class Boot
         Menuentry_id_option_regexp = /\$menuentry_id_option / * /\'osprober-gnulinux-/ * Vmlinuz_regexp * /--/ * Uuid_regexp * /\'/
         Menuentry_regexp = Menuentry_name_regexp * Classes_regexp * Menuentry_id_option_regexp
         Kernel_options_regexp = / ro / * /quiet|single/.capture(:single) * / init=\/lib\/sysvinit\/init/.group * Regexp::Optional
-        Boot_line_regexp = /\t{1,3}/.capture(:indent) * /linux / * Vmlinuz_regexp * / root=UUID=/ * Uuid_regexp * Kernel_options_regexp
-        Full_regexp = Regexp::Start_string * Boot_line_regexp * /\n\t/ * Menuentry_regexp * / / * Terminator
+        Boot_line_regexp_array = [Regexp::Start_string * /\t{1,3}/.capture(:indent) * /linux /, Vmlinuz_regexp, / root=UUID=/,  Uuid_regexp, Kernel_options_regexp]
+        Full_regexp_array =  Boot_line_regexp_array + [ /\n\t/ * Menuentry_regexp * / / * Terminator]
+        Full_regexp = Regexp[Full_regexp_array]
         #	full_regexp = Start_string * /\tlinux / * vmlinuz_regexp * / root=UUID=/ * uuid_regexp * / ro quiet\n\tmenuentry 'Debian GNU\/Linux (on /dev/sda10)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/vmlinuz-4.6.0-1-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac' {\n/
         end # Grub
         include Grub

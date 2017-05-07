@@ -105,36 +105,35 @@ class Require
         self
       end # assert_post_conditions
 
-
-    def assert_requires(code, regexp)
-      assert_match(regexp, code)
-#      assert_equal('_relative', code.capture?(regexp, MatchCapture).output[:relative])
-      split_capture = code.capture?(regexp, SplitCapture)
+      def assert_requires(code, regexp)
+        assert_match(regexp, code)
+        #      assert_equal('_relative', code.capture?(regexp, MatchCapture).output[:relative])
+        split_capture = code.capture?(regexp, SplitCapture)
       assert_include(['require', 'require_relative'], split_capture.raw_captures[1], split_capture.inspect)
-      assert_include(split_capture.regexp.names, :require_command.to_s, split_capture.inspect)
+        assert_include(split_capture.regexp.names, :require_command.to_s, split_capture.inspect)
       assert_include(['require', 'require_relative'], split_capture.to_a(0)[0], split_capture.inspect)
-      #      assert_equal('_relative', split_capture.column_output, split_capture.inspect)
-      assert_operator(1, :<=, split_capture.repetitions?, split_capture.inspect)
-			assert_equal({"require_command"=>[1], "required_path"=>[2]}, split_capture.regexp.named_captures, split_capture.inspect)
-			assert_equal(2, split_capture.regexp.named_captures.values.flatten.size, split_capture.inspect)
+        #      assert_equal('_relative', split_capture.column_output, split_capture.inspect)
+        assert_operator(1, :<=, split_capture.repetitions?, split_capture.inspect)
+        assert_equal({ 'require_command' => [1], 'required_path' => [2] }, split_capture.regexp.named_captures, split_capture.inspect)
+        assert_equal(2, split_capture.regexp.named_captures.values.flatten.size, split_capture.inspect)
 
-      assert_equal(2, split_capture.num_captures, split_capture.inspect)
-      (0..split_capture.repetitions? - 1).map do |i|
+        assert_equal(2, split_capture.num_captures, split_capture.inspect)
+        (0..split_capture.repetitions? - 1).map do |i|
         assert_include(['require', 'require_relative'], split_capture[0, i], split_capture.inspect)
-      end # map
-      #      split_capture.output.each_with_index do |_output, i|
-      #        assert_equal('_relative', split_capture[0, i], split_capture.inspect)
-      #        assert_equal('_relative', Capture.symbolize_keys(split_capture.named_hash(i * (split_capture.num_captures + 1))))
-      #        assert_equal('_relative', output[:relative], output.inspect)
-      #      end # each
-    end # assert_requires
-			
-			def assert_path_requires(path)
-					code = IO.read(path)
-					assert_requires(code, Require::Require_regexp)
-			end # assert_path_requires
+        end # map
+        #      split_capture.output.each_with_index do |_output, i|
+        #        assert_equal('_relative', split_capture[0, i], split_capture.inspect)
+        #        assert_equal('_relative', Capture.symbolize_keys(split_capture.named_hash(i * (split_capture.num_captures + 1))))
+        #        assert_equal('_relative', output[:relative], output.inspect)
+        #      end # each
+      end # assert_requires
+
+      def assert_path_requires(path)
+        code = IO.read(path)
+        assert_requires(code, Require::Require_regexp)
+      end # assert_path_requires
     end # ClassMethods
-		
+
     def assert_pre_conditions(message = '')
       message += "In assert_pre_conditions, self=#{inspect}"
       self
@@ -144,7 +143,6 @@ class Require
       message += "In assert_post_conditions, self=#{inspect}"
       self
     end # assert_post_conditions
-
   end # Assertions
   include Assertions
   extend Assertions::ClassMethods
@@ -153,8 +151,7 @@ class Require
     include DefinitionalConstants
     include Constants
     Require_line = "require_relative '../../app/models/unit.rb'".freeze
-    No_scan = Require.new(path: $0, cached_require_captures: nil)
-		Nonrelative_line = "require 'active_support' # for singularize and pluralize\n"
-
+    No_scan = Require.new(path: $PROGRAM_NAME, cached_require_captures: nil)
+    Nonrelative_line = "require 'active_support' # for singularize and pluralize\n".freeze
   end # Examples
 end # Require

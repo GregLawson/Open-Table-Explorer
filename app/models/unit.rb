@@ -353,7 +353,7 @@ class Example
   extend ClassMethods
   include Virtus.model
   attribute :containing_class, Class
-  attribute :example_constant_name, String
+	attribute :example_constant_name, Symbol
   def containing_class_name_string
     if @containing_class.respond_to?(:name) && !@containing_class.name.nil?
       @containing_class.name.to_s
