@@ -1,32 +1,37 @@
-{ current_branch_name: :passed,
-  start_time: Time.new(2016, 12, 7, 4, 24, Rational(41_589_402_422, 1_000_000_000), '-08:00'),
-  command_string: '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb',
-  output: 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
-Run options: --seed 0
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 7, 5, 50, Rational(6192551836, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb',
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test
+Started
+....
 
-# Running:
-
-........
-
-Finished in 0.004149s, 1928.0559 runs/s, 0.0000 assertions/s.
-
-8 runs, 0 assertions, 0 failures, 0 errors, 0 skips
+Finished in 0.001497552 seconds.
+------
+4 tests, 0 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+------
+2671.03 tests/s, 0.00 assertions/s
 ',
-  errors: { syserr: '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb"
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/minimal2_test.rb"
 	User time (seconds): 1.26
-	System time (seconds): 0.10
-	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.35
+	System time (seconds): 0.12
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.39
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 36048
+	Maximum resident set size (kbytes): 33960
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 7545
-	Voluntary context switches: 17
-	Involuntary context switches: 44
+	Minor (reclaiming a frame) page faults: 8614
+	Voluntary context switches: 2
+	Involuntary context switches: 148
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

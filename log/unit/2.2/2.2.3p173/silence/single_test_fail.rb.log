@@ -1,27 +1,63 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 11, 27, 1, 14, Rational(45172506068, 1000000000), "-08:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 7, 5, 21, Rational(8498571104, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Run options: --seed 0
+
+# Running:
+
+E.
+
+Finished in 0.002103s, 950.8731 runs/s, 0.0000 assertions/s.
+
+  1) Error:
+SingleFailTest#test_fail:
+RuntimeError: 
+    /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb:13:in `test_fail\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+2 runs, 0 assertions, 0 failures, 1 errors, 0 skips
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_environment_minitest.rb:11:in `<top (required)>\': uninitialized constant MiniTest (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb:8:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb:8:in `<main>\'
-Command exited with non-zero status 1
+:errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb"
-	User time (seconds): 0.40
-	System time (seconds): 0.03
+	User time (seconds): 0.62
+	System time (seconds): 0.07
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.44
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.70
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 17984
+	Maximum resident set size (kbytes): 21420
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 3001
-	Voluntary context switches: 3
-	Involuntary context switches: 3
+	Minor (reclaiming a frame) page faults: 5478
+	Voluntary context switches: 14
+	Involuntary context switches: 72
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

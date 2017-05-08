@@ -250,6 +250,7 @@ class TestMaturity
 				end # if
 				self # return for command chaining
     end # assert_post_conditions
+		
     def assert_deserving_branch(branch_expected, executable, message = '')
       deserving_branch = TestMaturity.deserving_branch
       recent_test = shell_command('ruby ' + executable)

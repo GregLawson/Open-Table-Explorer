@@ -1,7 +1,11 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 11, 27, 1, 14, Rational(49397616166, 1000000000), "-08:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 7, 5, 21, Rational(12578921028, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail
 Started
 F
@@ -47,29 +51,29 @@ Error: test_requires(InitializationFailTest): ArgumentError: assertion message m
 ===============================================================================
 
 
-Finished in 0.016623321 seconds.
+Finished in 0.016712073 seconds.
 ------
 8 tests, 10 assertions, 1 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
 62.5% passed
 ------
-481.25 tests/s, 601.56 assertions/s
+478.70 tests/s, 598.37 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/initialization_fail.rb"
-	User time (seconds): 0.57
+	User time (seconds): 0.56
 	System time (seconds): 0.04
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.62
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.61
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23436
+	Maximum resident set size (kbytes): 20512
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4337
+	Minor (reclaiming a frame) page faults: 5253
 	Voluntary context switches: 3
-	Involuntary context switches: 4
+	Involuntary context switches: 76
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
