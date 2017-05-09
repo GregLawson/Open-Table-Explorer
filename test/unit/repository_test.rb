@@ -226,6 +226,7 @@ class RepositoryTest < TestCase
     end # each
   end # status
 
+
   def test_something_to_commit?
     message = This_code_repository.status.inspect
     assert(This_code_repository.something_to_commit?, message)

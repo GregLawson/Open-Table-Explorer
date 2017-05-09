@@ -155,6 +155,7 @@ require_relative 'parse.rb'
 # require_relative 'branch.rb'
 # assert_includes(Module.constants, :Branch)
 # refute_includes(Module.constants, :Repository)
+
 class Repository
   module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     Repository_Unit = Unit.new_from_path(__FILE__)
