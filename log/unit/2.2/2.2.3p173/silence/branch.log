@@ -1,64 +1,1065 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 12, 8, 5, 58, Rational(37434432879, 1000000000), "-08:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 8, 7, 2, Rational(46125212696, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test
 Started
-......unmatched in #<Commit initialization_string=:bc2e89e repository=#<Repository:0x0000000218dbf0 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:c2db421 repository=#<Repository:0x0000000214c0b0 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:fd666f9 repository=#<Repository:0x00000002130040 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"67bb40d" repository=#<Repository:0x00000002115088 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"1ec36d2" repository=#<Repository:0x000000020f69a8 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"15a64ff" repository=#<Repository:0x000000020db180 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"6b1c04d" repository=#<Repository:0x000000020c7428 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:c7d6b09 repository=#<Repository:0x000000020af440 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"87fa489" repository=#<Repository:0x000000019c49a0 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"19ff1bd" repository=#<Repository:0x00000001c875e8 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:c948483 repository=#<Repository:0x00000001c590a8 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-..unmatched in #<Commit initialization_string=:bc2e89e repository=#<Repository:0x00000002f0f0a8 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:c2db421 repository=#<Repository:0x00000002ef92f8 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:fd666f9 repository=#<Repository:0x00000002edbb40 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"67bb40d" repository=#<Repository:0x00000002eb6070 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"1ec36d2" repository=#<Repository:0x00000002626e00 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"15a64ff" repository=#<Repository:0x00000002604620 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"6b1c04d" repository=#<Repository:0x000000025c0358 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:c7d6b09 repository=#<Repository:0x000000025a5c60 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"87fa489" repository=#<Repository:0x00000002574430 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"19ff1bd" repository=#<Repository:0x0000000253a8c0 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:c948483 repository=#<Repository:0x0000000250cc40 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-......"\t\n !\#$%&*+,0123456789;=@ABCDEFGHIJKLMNOPQRSTUVWXYZ]_abcdefghijklmnopqrstuvwxyz{}\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8A\x8B\x8C\x8D\x8E\x8F\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9A\x9B\x9C\x9D\x9E\x9F\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF"
-......................
+.F
+===============================================================================
+Failure: test_BranchReference_DefinitionalConstants(BranchReferenceTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:450:in `test_BranchReference_DefinitionalConstants\'
+     447:     assert_equal(\'123\', Reflog_line.capture?(Ambiguous_ref_pattern).output[:age], matches.ruby_lines_storage)
+     448:     assert_equal(\'master\', Reflog_line.capture?(Ambiguous_ref_pattern).output[:maturity], matches.ruby_lines_storage)
+     449:     assert_equal(nil, Reflog_line.capture?(Ambiguous_ref_pattern).output[:test_topic], matches.ruby_lines_storage)
+  => 450:     assert_equal({ age: \'123\', maturity: \'master\', test_topic: nil }, Reflog_line.capture?(Ambiguous_ref_pattern).output, matches.ruby_lines_storage)
+     451:     unambiguous_branch = Reflog_line.capture?(Refs_prefix_regexp * Ambiguous_ref_pattern)
+     452: 		assert(unambiguous_branch.success?, unambiguous_branch.inspect)
+     453: #    assert_equal([\'123\'], unambiguous_branch.raw_captures[0..-1], unambiguous_branch.regexp.named_captures.inspect)
+[{/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+:type => \'s\',
+:maturity => \'t\',
+:test_topic => \'e\',
+:age => \'r\'
+}
+,
+{:ref => \'{\',
+:type => \'1\',
+:maturity => \'2\',
+:test_topic => \'3\',
+:age => \'}\'
+}
+,
+{:ref => \'heads\',
+:type => \'master\',
+:maturity => \'123\',
+:test_topic => \',\',
+:age => \'1\'
+}
+,
+{:ref => \'3\',
+:type => \'4\',
+:maturity => \'5\',
+:test_topic => \'6\',
+:age => \'7\'
+}
+,
+{:ref => \'S\',
+:type => \'u\',
+:maturity => \'n\',
+:test_topic => \',\',
+:age => \' \'
+}
+,
+{:ref => \'1\',
+:type => \' \',
+:maturity => \'J\',
+:test_topic => \'u\',
+:age => \'n\'
+}
+,
+{:ref => \'2\',
+:type => \'0\',
+:maturity => \'1\',
+:test_topic => \'5\',
+:age => \' \'
+}
+,
+{:ref => \'3\',
+:type => \':\',
+:maturity => \'5\',
+:test_topic => \'1\',
+:age => \':\'
+}
+,
+{:ref => \'0\',
+:type => \' \',
+:maturity => \'-\',
+:test_topic => \'0\',
+:age => \'7\'
+}
+,
+{:ref => \'0\',
+:type => nil,
+:maturity => nil,
+:test_topic => nil,
+:age => nil
+}
+]
+}
+,
+\'m\', \'@\', \',\', \'2\', \' \', \'1\', \'5\', \'0\']
+<{:age=>"123", :maturity=>"master", :test_topic=>nil}> expected but was
+<{:age=>"123", :maturity=>"master", :test_topic=>nil, :type=>nil}>
 
-Finished in 10.993461896 seconds.
+diff:
+? {:age=>"123", :maturity=>"master", :test_topic=>nil, :type=>nil}
+===============================================================================
+.F
+===============================================================================
+Failure:
+  [{\',\' => [{
+  }
+  , {
+  }
+  , {
+  }
+  , {
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'1\',
+  :type => \'1\',
+  :maturity => \'d\',
+  :test_topic => \'e\',
+  :age => \'a\'
+  }
+  ]
+  }
+  ,
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => []
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'u\',
+  :type => \'n\',
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'2\',
+  :type => \'1\',
+  :maturity => \' \',
+  :test_topic => \'J\',
+  :age => \'u\'
+  }
+  ,
+  {:ref => \' \',
+  :type => \'2\',
+  :maturity => \'0\',
+  :test_topic => \'1\',
+  :age => \'5\'
+  }
+  ,
+  {:ref => \'1\',
+  :type => \'3\',
+  :maturity => \':\',
+  :test_topic => \'5\',
+  :age => \'1\'
+  }
+  ,
+  {:ref => \'5\',
+  :type => \'0\',
+  :maturity => \' \',
+  :test_topic => \'-\',
+  :age => \'0\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => \'0\',
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \',\',
+  :type => \'9\',
+  :maturity => \'1\',
+  :test_topic => \'1\',
+  :age => \'d\'
+  }
+  ,
+  {:ref => \'a\',
+  :type => \'1\',
+  :maturity => \',\',
+  :test_topic => \'S\',
+  :age => \'u\'
+  }
+  ,
+  {:ref => \',\',
+  :type => \' \',
+  :maturity => \'2\',
+  :test_topic => \'1\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'u\',
+  :type => \'n\',
+  :maturity => \' \',
+  :test_topic => \'2\',
+  :age => \'0\'
+  }
+  ,
+  {:ref => \'5\',
+  :type => \' \',
+  :maturity => \'1\',
+  :test_topic => \'3\',
+  :age => \':\'
+  }
+  ,
+  {:ref => \'1\',
+  :type => \':\',
+  :maturity => \'5\',
+  :test_topic => \'0\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'0\',
+  :type => \'7\',
+  :maturity => \'0\',
+  :test_topic => \'0\',
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {\',\' => []
+  }
+  ,
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => [{:sha1_hex_short => \'911dea1\'
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => []
+  }
+  ,
+  {\',\' => [{
+  }
+  , {
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'S\',
+  :type => \'u\',
+  :maturity => \'n\',
+  :test_topic => \',\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'1\',
+  :type => \' \',
+  :maturity => \'J\',
+  :test_topic => \'u\',
+  :age => \'n\'
+  }
+  ,
+  {:ref => \'2\',
+  :type => \'0\',
+  :maturity => \'1\',
+  :test_topic => \'5\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \':\',
+  :maturity => \'5\',
+  :test_topic => \'1\',
+  :age => \':\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => \' \',
+  :maturity => \'-\',
+  :test_topic => \'0\',
+  :age => \'7\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => nil,
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?<weekday>\[MTWFS\]\[a\-z\]\{2\}\),\\\ \(\?<day_of_month>\[0\-9\]\{1,2\}\)\\\ \(\?<month>\[ADFJMNOS\]\[a\-z\]\+\)\\\ \(\?<year>\[0\-9\]\{2,4\}\)\\\ \(\?<hour>\[0\-9\]\[0\-9\]\):\(\?<minute>\[0\-9\]\[0\-9\]\):\(\?<second>\[0\-9\]\[0\-9\]\)\\\ \(\?<timezone>\[\-\+\]\[0\-1\]\[0\-9\]\[03\]0\)/ => [{:weekday => \'Sun\',
+  :day_of_month => \'21\',
+  :month => \'Jun\',
+  :year => \'2015\',
+  :hour => \'13\',
+  :minute => \'51\',
+  :second => \'50\',
+  :timezone => \'-0700\'
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \',\',
+  :type => \'9\',
+  :maturity => \'1\',
+  :test_topic => \'1\',
+  :age => \'d\'
+  }
+  ,
+  {:ref => \'a\',
+  :type => \'1\',
+  :maturity => \',\',
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ].
+  <[]> expected to be != to
+  <[]>.
+test_assert_output(BranchReferenceTest)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:391:in `assert_reflog_line\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:412:in `assert_output\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:561:in `test_assert_output\'
+     558:   end # reflog_line
+     559: 
+     560:   def test_assert_output
+  => 561:     BranchReference.assert_output(No_ref_line)
+     562:     BranchReference.assert_output(First_change_line)
+     563:     BranchReference.assert_output(Reflog_line)
+     564:     BranchReference.assert_output(Last_change_line)
+===============================================================================
+F
+===============================================================================
+Failure:
+  [{/\\A\(\?:\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:type => \'master\',
+  :maturity => \'123\',
+  :test_topic => \',refs/heads/master@{123},1234567,Sun, 21 Jun 2015 13:51:50 -0700\',
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {\',\' => [{
+  }
+  , {
+  }
+  , {
+  }
+  , {
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+  :type => \'s\',
+  :maturity => \'t\',
+  :test_topic => \'e\',
+  :age => \'r\'
+  }
+  ,
+  {:ref => \'{\',
+  :type => \'1\',
+  :maturity => \'2\',
+  :test_topic => \'3\',
+  :age => \'}\'
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'heads\',
+  :type => \'master\',
+  :maturity => \'123\',
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'2\',
+  :type => \'3\',
+  :maturity => \'4\',
+  :test_topic => \'5\',
+  :age => \'6\'
+  }
+  ]
+  }
+  ,
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => []
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'u\',
+  :type => \'n\',
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'2\',
+  :type => \'1\',
+  :maturity => \' \',
+  :test_topic => \'J\',
+  :age => \'u\'
+  }
+  ,
+  {:ref => \' \',
+  :type => \'2\',
+  :maturity => \'0\',
+  :test_topic => \'1\',
+  :age => \'5\'
+  }
+  ,
+  {:ref => \'1\',
+  :type => \'3\',
+  :maturity => \':\',
+  :test_topic => \'5\',
+  :age => \'1\'
+  }
+  ,
+  {:ref => \'5\',
+  :type => \'0\',
+  :maturity => \' \',
+  :test_topic => \'-\',
+  :age => \'0\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => \'0\',
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+  :type => \'s\',
+  :maturity => \'t\',
+  :test_topic => \'e\',
+  :age => \'r\'
+  }
+  ,
+  {:ref => \'{\',
+  :type => \'1\',
+  :maturity => \'2\',
+  :test_topic => \'3\',
+  :age => \'}\'
+  }
+  ,
+  {:ref => \'heads\',
+  :type => \'master\',
+  :maturity => \'123\',
+  :test_topic => \',\',
+  :age => \'1\'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \'4\',
+  :maturity => \'5\',
+  :test_topic => \'6\',
+  :age => \'7\'
+  }
+  ,
+  {:ref => \'S\',
+  :type => \'u\',
+  :maturity => \'n\',
+  :test_topic => \',\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'1\',
+  :type => \' \',
+  :maturity => \'J\',
+  :test_topic => \'u\',
+  :age => \'n\'
+  }
+  ,
+  {:ref => \'2\',
+  :type => \'0\',
+  :maturity => \'1\',
+  :test_topic => \'5\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \':\',
+  :maturity => \'5\',
+  :test_topic => \'1\',
+  :age => \':\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => \' \',
+  :maturity => \'-\',
+  :test_topic => \'0\',
+  :age => \'7\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => nil,
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {\',\' => []
+  }
+  ,
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => [{:sha1_hex_short => \'1234567\'
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+  :type => \'s\',
+  :maturity => \'t\',
+  :test_topic => \'e\',
+  :age => \'r\'
+  }
+  ,
+  {:ref => \'{\',
+  :type => \'1\',
+  :maturity => \'2\',
+  :test_topic => \'3\',
+  :age => \'}\'
+  }
+  ,
+  {:ref => \'heads\',
+  :type => \'master\',
+  :maturity => \'123\',
+  :test_topic => \',\',
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {\',\' => [{
+  }
+  , {
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'S\',
+  :type => \'u\',
+  :maturity => \'n\',
+  :test_topic => \',\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'1\',
+  :type => \' \',
+  :maturity => \'J\',
+  :test_topic => \'u\',
+  :age => \'n\'
+  }
+  ,
+  {:ref => \'2\',
+  :type => \'0\',
+  :maturity => \'1\',
+  :test_topic => \'5\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \':\',
+  :maturity => \'5\',
+  :test_topic => \'1\',
+  :age => \':\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => \' \',
+  :maturity => \'-\',
+  :test_topic => \'0\',
+  :age => \'7\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => nil,
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?<weekday>\[MTWFS\]\[a\-z\]\{2\}\),\\\ \(\?<day_of_month>\[0\-9\]\{1,2\}\)\\\ \(\?<month>\[ADFJMNOS\]\[a\-z\]\+\)\\\ \(\?<year>\[0\-9\]\{2,4\}\)\\\ \(\?<hour>\[0\-9\]\[0\-9\]\):\(\?<minute>\[0\-9\]\[0\-9\]\):\(\?<second>\[0\-9\]\[0\-9\]\)\\\ \(\?<timezone>\[\-\+\]\[0\-1\]\[0\-9\]\[03\]0\)/ => [{:weekday => \'Sun\',
+  :day_of_month => \'21\',
+  :month => \'Jun\',
+  :year => \'2015\',
+  :hour => \'13\',
+  :minute => \'51\',
+  :second => \'50\',
+  :timezone => \'-0700\'
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+  :type => \'s\',
+  :maturity => \'t\',
+  :test_topic => \'e\',
+  :age => \'r\'
+  }
+  ,
+  {:ref => \'{\',
+  :type => \'1\',
+  :maturity => \'2\',
+  :test_topic => \'3\',
+  :age => \'}\'
+  }
+  ,
+  {:ref => \'heads\',
+  :type => \'master\',
+  :maturity => \'123\',
+  :test_topic => \',\',
+  :age => \'1\'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \'4\',
+  :maturity => \'5\',
+  :test_topic => \'6\',
+  :age => \'7\'
+  }
+  ]
+  }
+  ].
+  <[]> expected to be != to
+  <[]>.
+test_assert_reflog_line(BranchReferenceTest)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:391:in `assert_reflog_line\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:554:in `test_assert_reflog_line\'
+     551:   end # to_s
+     552: 
+     553:   def test_assert_reflog_line
+  => 554:     BranchReference.assert_reflog_line(Reflog_line)
+     555:     BranchReference.assert_reflog_line(Last_change_line)
+     556:     BranchReference.assert_reflog_line(First_change_line)
+     557:     BranchReference.assert_reflog_line(No_ref_line)
+===============================================================================
+.E
+===============================================================================
+Error: test_lost_edit(BranchReferenceTest): NoMethodError: undefined method `sha1\' for #<BranchReference:0x007fa2c227cc40>
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:420:in `block in test_lost_edit\'
+     417: 		assert_instance_of(Array, reflogs)
+     418: 		reflogs.each do |commit|
+     419: 			assert_kind_of(GitReference, commit)
+  => 420: 			file = GitReference.new(initialization_string: commit.sha1 + \':\' + filename).show_run.output
+     421: 			if file.match(lost_code)
+     422: 				puts \'matched in \' + commit.inspect
+     423: 			else
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:418:in `each\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:418:in `test_lost_edit\'
+===============================================================================
+F
+===============================================================================
+Failure:
+  [{/\\A\(\?:\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:type => \'master\',
+  :maturity => \'123\',
+  :test_topic => \',refs/heads/master@{123},1234567,Sun, 21 Jun 2015 13:51:50 -0700\',
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {\',\' => [{
+  }
+  , {
+  }
+  , {
+  }
+  , {
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+  :type => \'s\',
+  :maturity => \'t\',
+  :test_topic => \'e\',
+  :age => \'r\'
+  }
+  ,
+  {:ref => \'{\',
+  :type => \'1\',
+  :maturity => \'2\',
+  :test_topic => \'3\',
+  :age => \'}\'
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'heads\',
+  :type => \'master\',
+  :maturity => \'123\',
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'2\',
+  :type => \'3\',
+  :maturity => \'4\',
+  :test_topic => \'5\',
+  :age => \'6\'
+  }
+  ]
+  }
+  ,
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => []
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'u\',
+  :type => \'n\',
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'2\',
+  :type => \'1\',
+  :maturity => \' \',
+  :test_topic => \'J\',
+  :age => \'u\'
+  }
+  ,
+  {:ref => \' \',
+  :type => \'2\',
+  :maturity => \'0\',
+  :test_topic => \'1\',
+  :age => \'5\'
+  }
+  ,
+  {:ref => \'1\',
+  :type => \'3\',
+  :maturity => \':\',
+  :test_topic => \'5\',
+  :age => \'1\'
+  }
+  ,
+  {:ref => \'5\',
+  :type => \'0\',
+  :maturity => \' \',
+  :test_topic => \'-\',
+  :age => \'0\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => \'0\',
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+  :type => \'s\',
+  :maturity => \'t\',
+  :test_topic => \'e\',
+  :age => \'r\'
+  }
+  ,
+  {:ref => \'{\',
+  :type => \'1\',
+  :maturity => \'2\',
+  :test_topic => \'3\',
+  :age => \'}\'
+  }
+  ,
+  {:ref => \'heads\',
+  :type => \'master\',
+  :maturity => \'123\',
+  :test_topic => \',\',
+  :age => \'1\'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \'4\',
+  :maturity => \'5\',
+  :test_topic => \'6\',
+  :age => \'7\'
+  }
+  ,
+  {:ref => \'S\',
+  :type => \'u\',
+  :maturity => \'n\',
+  :test_topic => \',\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'1\',
+  :type => \' \',
+  :maturity => \'J\',
+  :test_topic => \'u\',
+  :age => \'n\'
+  }
+  ,
+  {:ref => \'2\',
+  :type => \'0\',
+  :maturity => \'1\',
+  :test_topic => \'5\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \':\',
+  :maturity => \'5\',
+  :test_topic => \'1\',
+  :age => \':\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => \' \',
+  :maturity => \'-\',
+  :test_topic => \'0\',
+  :age => \'7\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => nil,
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {\',\' => []
+  }
+  ,
+  {/\(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)/ => [{:sha1_hex_short => \'1234567\'
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+  :type => \'s\',
+  :maturity => \'t\',
+  :test_topic => \'e\',
+  :age => \'r\'
+  }
+  ,
+  {:ref => \'{\',
+  :type => \'1\',
+  :maturity => \'2\',
+  :test_topic => \'3\',
+  :age => \'}\'
+  }
+  ,
+  {:ref => \'heads\',
+  :type => \'master\',
+  :maturity => \'123\',
+  :test_topic => \',\',
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {\',\' => [{
+  }
+  , {
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'S\',
+  :type => \'u\',
+  :maturity => \'n\',
+  :test_topic => \',\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'1\',
+  :type => \' \',
+  :maturity => \'J\',
+  :test_topic => \'u\',
+  :age => \'n\'
+  }
+  ,
+  {:ref => \'2\',
+  :type => \'0\',
+  :maturity => \'1\',
+  :test_topic => \'5\',
+  :age => \' \'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \':\',
+  :maturity => \'5\',
+  :test_topic => \'1\',
+  :age => \':\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => \' \',
+  :maturity => \'-\',
+  :test_topic => \'0\',
+  :age => \'7\'
+  }
+  ,
+  {:ref => \'0\',
+  :type => nil,
+  :maturity => nil,
+  :test_topic => nil,
+  :age => nil
+  }
+  ]
+  }
+  ,
+  {/\(\?<weekday>\[MTWFS\]\[a\-z\]\{2\}\),\\\ \(\?<day_of_month>\[0\-9\]\{1,2\}\)\\\ \(\?<month>\[ADFJMNOS\]\[a\-z\]\+\)\\\ \(\?<year>\[0\-9\]\{2,4\}\)\\\ \(\?<hour>\[0\-9\]\[0\-9\]\):\(\?<minute>\[0\-9\]\[0\-9\]\):\(\?<second>\[0\-9\]\[0\-9\]\)\\\ \(\?<timezone>\[\-\+\]\[0\-1\]\[0\-9\]\[03\]0\)/ => [{:weekday => \'Sun\',
+  :day_of_month => \'21\',
+  :month => \'Jun\',
+  :year => \'2015\',
+  :hour => \'13\',
+  :minute => \'51\',
+  :second => \'50\',
+  :timezone => \'-0700\'
+  }
+  ]
+  }
+  ,
+  {/\(\?:refs/\(\?:\(\?<ref>heads\|remotes\)/\)\?\(\?:\(\?<type>\[a\-z0\-9\]\+\)/\)\?\(\?<maturity>\[_a\-z0\-9\]\+\)\(\?:\(\?<test_topic>\\\+\[_a\-z\]\+\)\)\?@\\\{\(\?<age>\[0\-9\]\+\)\}\)\?/ => [{:ref => \'a\',
+  :type => \'s\',
+  :maturity => \'t\',
+  :test_topic => \'e\',
+  :age => \'r\'
+  }
+  ,
+  {:ref => \'{\',
+  :type => \'1\',
+  :maturity => \'2\',
+  :test_topic => \'3\',
+  :age => \'}\'
+  }
+  ,
+  {:ref => \'heads\',
+  :type => \'master\',
+  :maturity => \'123\',
+  :test_topic => \',\',
+  :age => \'1\'
+  }
+  ,
+  {:ref => \'3\',
+  :type => \'4\',
+  :maturity => \'5\',
+  :test_topic => \'6\',
+  :age => \'7\'
+  }
+  ]
+  }
+  ].
+  <[]> expected to be != to
+  <[]>.
+test_new_from_ref(BranchReferenceTest)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:391:in `assert_reflog_line\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/branch.rb:412:in `assert_output\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:522:in `test_new_from_ref\'
+     519: #    assert_equal(123, new_from_ref[:age].value, Reflog_capture.inspect)
+     520:     # ?	assert_match(Regexp::Start_string * BranchReference::Unambiguous_ref_age_pattern * Regexp::End_string, Reflog_reference.age, message)
+     521:     # ?	assert_match(Regexp::Start_string * \'123\' * Regexp::End_string, Reflog_reference.age, message)
+  => 522:     BranchReference.assert_output(Reflog_line)
+     523:     BranchReference.assert_output(Last_change_line)
+     524:     BranchReference.assert_output(First_change_line)
+     525: #    BranchReference.new_from_ref(No_ref_line).assert_pre_conditions
+===============================================================================
+E
+===============================================================================
+Error: test_reflog?(BranchReferenceTest): NoMethodError: undefined method `sha1\' for #<BranchReference:0x007fa2c188eb98>
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:394:in `block in test_reflog?\'
+     391: 		assert_instance_of(Array, reflogs)
+     392: 		reflogs.each do |commit|
+     393: 			assert_kind_of(GitReference, commit)
+  => 394: 			file = GitReference.new(initialization_string: commit.sha1 + \':\' + filename).show_run.output
+     395: 			if file.match(lost_code)
+     396: 				puts \'matched in \' + commit.inspect
+     397: 			else
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:392:in `each\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:392:in `test_reflog?\'
+===============================================================================
+...E
+===============================================================================
+Error: test_stash_wip(BranchReferenceTest):
+  NameError: uninitialized constant BranchReferenceTest::SHA_hex_7
+  Did you mean?  BranchReferenceTest::SHA1_hex_40
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:484:in `test_stash_wip\'
+     481: 		command_string = \'show stash\'
+     482: 		cached_run = Repository::This_code_repository.git_command(command_string)
+     483:     regexp = /stash@{0}: WIP on / * Name_regexp.capture(:parent_branch) * /: / *
+  => 484:              SHA_hex_7.capture(:sha7) * / Merge branch \'/ * Name_regexp.capture(:merge_from) * /\' into / * Name_regexp.capture(:merge_into)
+     485: #		assert_match(regexp, cached_run.output, cached_run.inspect)
+     486: #		assert_include([Master_branch, Passed_branch, Tested_branch, Edited_branch], BranchReference.stash_wip(Repository::This_code_repository),cached_run.inspect)
+     487: 	end # stash_wip
+===============================================================================
+."\t\n !\#$%&*+,0123456789;=@ABCDEFGHIJKLMNOPQRSTUVWXYZ]_abcdefghijklmnopqrstuvwxyz{}\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8A\x8B\x8C\x8D\x8E\x8F\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9A\x9B\x9C\x9D\x9E\x9F\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF"
+.......E
+===============================================================================
+Error: test_current_branch(BranchTest): NoMethodError: undefined method `sha1\' for #<Branch:0x007fa2c0da99d0>
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:123:in `test_current_branch\'
+     120: 		assert_instance_of(Branch, current_branch)
+     121: 		temp_current_branch = Branch.current_branch(@temp_repo)
+     122: 		assert_instance_of(Branch, temp_current_branch)
+  => 123: 		assert_equal(temp_current_branch.sha1, Commit.head(@temp_repo).sha1)
+     124: 		assert_equal(Branch.current_branch(This_code_repository).sha1, Commit.head(This_code_repository).sha1)
+     125: 	end # current_branch
+     126: 		
+===============================================================================
+.F
+===============================================================================
+Failure: test_find_origin(BranchTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb:215:in `test_find_origin\'
+     212:   end # compare
+     213: 
+     214: 	def test_find_origin
+  => 215: 		assert_equal(nil, Master_branch.find_origin)
+     216: #		assert_equal(false, Passed_branch.find_origin)
+     217: #		assert_equal(false, Tested_branch.find_origin)
+     218: #		assert_equal(false, Edited_branch.find_origin)
+<nil> expected but was
+<:"origin/master">
+
+diff:
+?        nil      
+? :"origi /master"
+===============================================================================
+............
+
+Finished in 7.157432572 seconds.
 ------
-36 tests, 974 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
+36 tests, 138 assertions, 5 failures, 4 errors, 0 pendings, 0 omissions, 0 notifications
+75% passed
 ------
-3.27 tests/s, 88.60 assertions/s
+5.03 tests/s, 19.28 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb"
-	User time (seconds): 10.42
-	System time (seconds): 1.98
-	Percent of CPU this job got: 91%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:13.57
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/branch_test.rb"
+	User time (seconds): 5.05
+	System time (seconds): 0.81
+	Percent of CPU this job got: 56%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:10.44
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 61132
+	Maximum resident set size (kbytes): 58956
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 135200
-	Voluntary context switches: 3935
-	Involuntary context switches: 2194
+	Major (requiring I/O) page faults: 431
+	Minor (reclaiming a frame) page faults: 287520
+	Voluntary context switches: 6172
+	Involuntary context switches: 1557
 	Swaps: 0
-	File system inputs: 0
-	File system outputs: 12672
+	File system inputs: 31400
+	File system outputs: 12960
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
 '
 }
 

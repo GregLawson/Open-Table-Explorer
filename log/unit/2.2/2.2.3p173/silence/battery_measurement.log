@@ -1,87 +1,63 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 40, Rational(25854520807, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 8, 7, 2, Rational(20197560402, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_measurement_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
-Run options: --seed 0
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_measurement_test
+Started
+E
+===============================================================================
+Error: test_all(BatteryMeasurementTest): NoMethodError: undefined method `model_class?\' for #<BatteryMeasurementTest:0x007f5ba8766258>
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_measurement_test.rb:14:in `test_all\'
+     11:   end # initialize
+     12: 
+     13:   def test_all
+  => 14:     records = model_class?.all
+     15:     refute_empty(records)
+     16:     assert_instance_of(Array, records)
+     17:     assert_kind_of(Hash, records.first)
+===============================================================================
+E
+===============================================================================
+Error: test_dump(BatteryMeasurementTest):
+  NameError: uninitialized constant BatteryMeasurementTest::BatteryMeasurement
+  Did you mean?  BatteryMeasurementTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_measurement_test.rb:24:in `test_dump\'
+     21:   end # all
+     22: 
+     23:   def test_dump
+  => 24:     BatteryMeasurement.dump
+     25:   end # test_dump
+     26: end # BatteryTest
+===============================================================================
+.
 
-# Running:
-
-.E.E...
-
-Finished in 0.003207s, 2182.9608 runs/s, 0.0000 assertions/s.
-
-  1) Error:
-NewTestClass#test_all:
-NoMethodError: undefined method `model_class?\' for #<NewTestClass:0x000000029d5ad8>
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_measurement_test.rb:13:in `test_all\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
-
-
-  2) Error:
-NewTestClass#test_dump:
-NameError: uninitialized constant NewTestClass::BatteryMeasurement
-Did you mean?  BatteryMeasurementTest
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_measurement_test.rb:22:in `test_dump\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
-
-7 runs, 0 assertions, 0 failures, 2 errors, 0 skips
+Finished in 0.038020692 seconds.
+------
+3 tests, 0 assertions, 0 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
+33.3333% passed
+------
+78.90 tests/s, 0.00 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_measurement_test.rb"
-	User time (seconds): 0.70
-	System time (seconds): 0.04
+	User time (seconds): 0.55
+	System time (seconds): 0.08
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.74
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.63
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 24008
+	Maximum resident set size (kbytes): 20412
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4501
-	Voluntary context switches: 15
-	Involuntary context switches: 13
+	Minor (reclaiming a frame) page faults: 5231
+	Voluntary context switches: 3
+	Involuntary context switches: 64
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

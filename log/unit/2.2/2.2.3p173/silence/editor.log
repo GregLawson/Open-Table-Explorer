@@ -1,52 +1,13 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 12, 8, 7, 55, Rational(30024318522, 1000000000), "-08:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 8, 7, 23, Rational(15364671646, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
-Run options: --seed 0
+:output => '',
+:errors => {:rescue_exception => Timeout::Error.new()
 
-# Running:
-
-.unmatched in #<Commit initialization_string=:"356d041" repository=#<Repository:0x00000003290d80 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:bc2e89e repository=#<Repository:0x00000004c88260 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"780fb01" repository=#<Repository:0x00000004c99920 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"12a7d53" repository=#<Repository:0x00000004cae168 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:cdbf9bf repository=#<Repository:0x00000004cb5b70 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"160248b" repository=#<Repository:0x00000004cc5930 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"18dd3d0" repository=#<Repository:0x00000004cd9ae8 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"7d4f590" repository=#<Repository:0x00000004cea2d0 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:c2db421 repository=#<Repository:0x00000004cf6b70 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:"6ef1536" repository=#<Repository:0x00000004d06d68 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-unmatched in #<Commit initialization_string=:a0cb435 repository=#<Repository:0x00000004d13248 @path="/home/greg/Desktop/src/Open-Table-Explorer/", @grit_repo=#<Grit::Repo "/home/greg/Desktop/src/Open-Table-Explorer/.git">>>
-...............
-
-Finished in 12.141224s, 1.3178 runs/s, 8.4835 assertions/s.
-
-16 runs, 103 assertions, 0 failures, 0 errors, 0 skips
-',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/editor_test.rb"
-	User time (seconds): 24.29
-	System time (seconds): 2.48
-	Percent of CPU this job got: 105%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:25.33
-	Average shared text size (kbytes): 0
-	Average unshared data size (kbytes): 0
-	Average stack size (kbytes): 0
-	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 54820
-	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 177957
-	Voluntary context switches: 2110
-	Involuntary context switches: 1229
-	Swaps: 0
-	File system inputs: 0
-	File system outputs: 64
-	Socket messages sent: 0
-	Socket messages received: 0
-	Signals delivered: 0
-	Page size (bytes): 4096
-	Exit status: 0
-'
 }
 
 }

@@ -1,52 +1,37 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 56, Rational(37085715875, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 8, 7, 37, Rational(39778310292, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nmap_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/usr/lib/ruby/2.3.0/psych/class_loader.rb:65:in `[]\': can\'t convert Array to Hash (Array#to_hash gives Array) (TypeError)
-	from /usr/lib/ruby/2.3.0/psych/class_loader.rb:65:in `<class:ClassLoader>\'
-	from /usr/lib/ruby/2.3.0/psych/class_loader.rb:6:in `<module:Psych>\'
-	from /usr/lib/ruby/2.3.0/psych/class_loader.rb:5:in `<top (required)>\'
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
-	from /usr/lib/ruby/2.3.0/psych/nodes/node.rb:3:in `<top (required)>\'
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
-	from /usr/lib/ruby/2.3.0/psych/nodes.rb:2:in `<top (required)>\'
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
-	from /usr/lib/ruby/2.3.0/psych.rb:9:in `<top (required)>\'
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
-	from /usr/lib/ruby/2.3.0/yaml.rb:6:in `<top (required)>\'
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
-	from /usr/lib/ruby/vendor_ruby/multi_xml.rb:6:in `<top (required)>\'
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
-	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/nmap.rb:15:in `<top (required)>\'
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/nmap.rb:18:in `<module:DefinitionalConstants>\': uninitialized constant Nmap::DefinitionalConstants::Unit (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/nmap.rb:17:in `<class:Nmap>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/nmap.rb:16:in `<top (required)>\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/nmap_assertions.rb:8:in `require_relative\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/nmap_assertions.rb:8:in `<top (required)>\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nmap_test.rb:9:in `require_relative\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nmap_test.rb:9:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nmap_test.rb"
-	User time (seconds): 0.92
-	System time (seconds): 0.06
-	Percent of CPU this job got: 96%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.02
+	User time (seconds): 1.15
+	System time (seconds): 0.09
+	Percent of CPU this job got: 97%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.28
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 29824
+	Maximum resident set size (kbytes): 33288
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 6232
-	Voluntary context switches: 39
-	Involuntary context switches: 27
+	Minor (reclaiming a frame) page faults: 8690
+	Voluntary context switches: 15
+	Involuntary context switches: 143
 	Swaps: 0
-	File system inputs: 48
+	File system inputs: 24
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

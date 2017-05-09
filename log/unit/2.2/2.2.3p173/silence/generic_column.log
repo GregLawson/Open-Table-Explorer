@@ -1,32 +1,55 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 54, Rational(35927278197, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 8, 7, 26, Rational(53108417211, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_column_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
-Run options: --seed 0
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_column_test
+Started
+....N
+===============================================================================
+GenericColumnTest#test_equal was redefined [test_equal(GenericColumnTest)]
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_column_test.rb:38:in `<class:GenericColumnTest>\'
+===============================================================================
+..E
+===============================================================================
+Error: test_to_hash(GenericColumnTest): NoMethodError: undefined method `to_regexp_escaped_string\' for Regexp:Class
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_column_test.rb:62:in `test_to_hash\'
+     59:     #	assert_equal(\'\\', Regexp.new(Regexp.to_regexp_escaped_string(\'\\')).source)
+     60:     #	assert_equal(\'\"\', Regexp.new(Regexp.to_regexp_escaped_string(\'\"\')).source)
+     61:     #	assert_equal(\'\"\', /\\"/.source)
+  => 62:     string_quote_inspected_regexp = Regexp.new(Regexp.to_regexp_escaped_string(\'\"\'))
+     63:     name_string_regexp = /:[A-Z][a-z0-9]+/
+     64:     assert_match(name_string_regexp, Col_1.to_hash(\'123\').inspect)
+     65:     ruby_type_regexp = /ruby_type=/ * name_string_regexp
+===============================================================================
 
-# Running:
 
-...........
-
-Finished in 0.017028s, 645.9999 runs/s, 2936.3631 assertions/s.
-
-11 runs, 50 assertions, 0 failures, 0 errors, 0 skips
+Finished in 0.055986932 seconds.
+------
+7 tests, 20 assertions, 0 failures, 1 errors, 0 pendings, 0 omissions, 1 notifications
+85.7143% passed
+------
+125.03 tests/s, 357.23 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_column_test.rb"
-	User time (seconds): 0.88
-	System time (seconds): 0.08
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.97
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_column_test.rb"
+	User time (seconds): 0.86
+	System time (seconds): 0.12
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.00
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 24056
+	Maximum resident set size (kbytes): 22284
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4513
-	Voluntary context switches: 20
-	Involuntary context switches: 52
+	Minor (reclaiming a frame) page faults: 5696
+	Voluntary context switches: 2
+	Involuntary context switches: 141
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -34,7 +57,7 @@ Finished in 0.017028s, 645.9999 runs/s, 2936.3631 assertions/s.
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
 '
 }
 

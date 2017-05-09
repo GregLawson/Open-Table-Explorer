@@ -1,7 +1,7 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 12, 7, 4, 42, Rational(33747840098, 1000000000), "-08:00"),
-:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+{ current_branch_name: :passed,
+  start_time: Time.new(2016, 12, 7, 4, 42, Rational(33_747_840_098, 1_000_000_000), '-08:00'),
+  command_string: '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb',
+  output: 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test
 Started
 ............
@@ -13,7 +13,7 @@ Finished in 0.142729814 seconds.
 ------
 84.07 tests/s, 329.29 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb"
+  errors: { syserr: '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_executable_test.rb"
 	User time (seconds): 1.81
 	System time (seconds): 0.20
 	Percent of CPU this job got: 96%

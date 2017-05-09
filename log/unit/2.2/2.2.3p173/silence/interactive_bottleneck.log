@@ -1,49 +1,13 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 12, 2, 8, 21, Rational(14759635007, 1000000000), "-08:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 8, 7, 27, Rational(58752848377, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
-Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test
-Started
-......confirm_commit(:echo @repository.something_to_commit?=false
-.......confirm_commit(:echo @repository.something_to_commit?=true
-confirm_commit(:echo @repository.something_to_commit?=true
-confirm_commit(:echo @repository.something_to_commit?=true
-confirm_commit(:echo @repository.something_to_commit?=true
-confirm_commit(:echo @repository.something_to_commit?=true
-....confirm_commit(:echo @repository.something_to_commit?=true
-.
+:output => '',
+:errors => {:rescue_exception => Timeout::Error.new()
 
-Finished in 5.044877211 seconds.
-------
-18 tests, 127 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
-------
-3.57 tests/s, 25.17 assertions/s
-',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/interactive_bottleneck_test.rb"
-	User time (seconds): 16.80
-	System time (seconds): 2.19
-	Percent of CPU this job got: 92%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:20.58
-	Average shared text size (kbytes): 0
-	Average unshared data size (kbytes): 0
-	Average stack size (kbytes): 0
-	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 57960
-	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 190999
-	Voluntary context switches: 3350
-	Involuntary context switches: 1499
-	Swaps: 0
-	File system inputs: 0
-	File system outputs: 5224
-	Socket messages sent: 0
-	Socket messages received: 0
-	Signals delivered: 0
-	Page size (bytes): 4096
-	Exit status: 0
-'
 }
 
 }

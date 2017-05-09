@@ -1,31 +1,35 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 54, Rational(56700274353, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 8, 7, 27, Rational(26607161760, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/gnome_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/gnome.rb:11:in `<module:Constants>\': uninitialized constant Gnome::Constants::TE (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/gnome.rb:10:in `<class:Gnome>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/gnome.rb:9:in `<top (required)>\'
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/gnome.rb:12:in `<module:DefinitionalConstants>\': undefined method `data_sources_directory?\' for :Executing:Symbol (NoMethodError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/gnome.rb:11:in `<class:Gnome>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/gnome.rb:10:in `<top (required)>\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/gnome_test.rb:9:in `require_relative\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/gnome_test.rb:9:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/gnome_test.rb"
-	User time (seconds): 0.71
-	System time (seconds): 0.07
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.78
+	User time (seconds): 0.82
+	System time (seconds): 0.09
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.93
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 24280
+	Maximum resident set size (kbytes): 22164
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4819
-	Voluntary context switches: 27
-	Involuntary context switches: 19
+	Minor (reclaiming a frame) page faults: 5664
+	Voluntary context switches: 2
+	Involuntary context switches: 119
 	Swaps: 0
-	File system inputs: 8
+	File system inputs: 0
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

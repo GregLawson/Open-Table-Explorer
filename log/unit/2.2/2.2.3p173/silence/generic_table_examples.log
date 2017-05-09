@@ -1,28 +1,37 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 54, Rational(44889892488, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 8, 7, 27, Rational(2456255422, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_examples_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_examples_test
+Started
+.
+
+Finished in 0.002497569 seconds.
+------
+1 tests, 0 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+------
+400.39 tests/s, 0.00 assertions/s
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_examples_test.rb:12:in `<class:GenericTableExamplesTest>\': uninitialized constant OpenTableExplorer::Tests::GenericTableExamplesTest::DefaultTests2 (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_examples_test.rb:11:in `<module:Tests>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_examples_test.rb:9:in `<module:OpenTableExplorer>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_examples_test.rb:8:in `<main>\'
-Command exited with non-zero status 1
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_examples_test.rb"
-	User time (seconds): 0.66
-	System time (seconds): 0.06
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.72
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_examples_test.rb"
+	User time (seconds): 0.61
+	System time (seconds): 0.05
+	Percent of CPU this job got: 97%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.68
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23732
+	Maximum resident set size (kbytes): 20164
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4443
-	Voluntary context switches: 3
-	Involuntary context switches: 21
+	Minor (reclaiming a frame) page faults: 5166
+	Voluntary context switches: 2
+	Involuntary context switches: 132
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
@@ -30,7 +39,7 @@ Command exited with non-zero status 1
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0
 '
 }
 

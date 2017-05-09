@@ -1,60 +1,52 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 40, Rational(28044587851, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 8, 7, 2, Rational(21707165340, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
-Run options: --seed 0
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_test
+Started
+E
+===============================================================================
+Error: test_Battery(BatteryTest):
+  NameError: uninitialized constant BatteryTest::Url
+  Did you mean?  URI
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_test.rb:24:in `test_Battery\'
+     21:   end # all
+     22: 
+     23:   def test_Battery
+  => 24:     assert_includes(\'href\', Url.column_names)
+     25:     refute_nil(Url.where("href=\'EEG2\'"))
+     26:     refute_nil(Url.where("href=\'EEG2\'").first)
+     27:     file = Url.where("href=\'EEG2\'").first.url
+===============================================================================
+..
 
-# Running:
-
-.E.....
-
-Finished in 0.002591s, 2701.3083 runs/s, 0.0000 assertions/s.
-
-  1) Error:
-NewTestClass#test_Battery:
-NameError: uninitialized constant NewTestClass::Url
-Did you mean?  URI
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_test.rb:22:in `test_Battery\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
-    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
-    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
-
-7 runs, 0 assertions, 0 failures, 1 errors, 0 skips
+Finished in 0.009184877 seconds.
+------
+3 tests, 0 assertions, 0 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
+66.6667% passed
+------
+326.62 tests/s, 0.00 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/battery_test.rb"
-	User time (seconds): 0.69
-	System time (seconds): 0.04
-	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.73
+	User time (seconds): 0.55
+	System time (seconds): 0.06
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.62
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 24008
+	Maximum resident set size (kbytes): 20292
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4485
-	Voluntary context switches: 14
-	Involuntary context switches: 11
+	Minor (reclaiming a frame) page faults: 5200
+	Voluntary context switches: 2
+	Involuntary context switches: 64
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

@@ -1,57 +1,40 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 12, 14, 4, 5, Rational(37337576860, 1000000000), "-08:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 8, 7, 27, Rational(23476899581, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test
 Started
-............{:String=>"#<Dry::Types::Definition primitive=String options={}>"}
-{:Int=>"#<Dry::Types::Definition primitive=Integer options={}>"}
-{:Float=>"#<Dry::Types::Definition primitive=Float options={}>"}
-{:Decimal=>"#<Dry::Types::Definition primitive=BigDecimal options={}>"}
-{:Array=>"#<Dry::Types::Array primitive=Array options={}>"}
-{:Hash=>"#<Dry::Types::Hash primitive=Hash options={}>"}
-{:Nil=>"#<Dry::Types::Definition primitive=NilClass options={}>"}
-{:Symbol=>"#<Dry::Types::Definition primitive=Symbol options={}>"}
-{:Class=>"#<Dry::Types::Definition primitive=Class options={}>"}
-{:True=>"#<Dry::Types::Definition primitive=TrueClass options={}>"}
-{:False=>"#<Dry::Types::Definition primitive=FalseClass options={}>"}
-{:Date=>"#<Dry::Types::Definition primitive=Date options={}>"}
-{:DateTime=>"#<Dry::Types::Definition primitive=DateTime options={}>"}
-{:Time=>"#<Dry::Types::Definition primitive=Time options={}>"}
-{:Strict=>[:String, :Int, :Float, :Decimal, :Array, :Hash, :Nil, :Symbol, :Class, :True, :False, :Date, :DateTime, :Time, :Bool]}
-{:Coercible=>[:String, :Int, :Float, :Decimal, :Array, :Hash]}
-{:Maybe=>[:Strict, :Coercible]}
-{:Optional=>[:Strict, :Coercible]}
-{:Bool=>"#<Dry::Types::Sum left=#<Dry::Types::Definition primitive=TrueClass options={}> right=#<Dry::Types::Definition primitive=FalseClass options={}> options={}>"}
-{:Form=>[:Nil, :Date, :DateTime, :Time, :True, :False, :Bool, :Int, :Float, :Decimal, :Array, :Hash]}
-{:Json=>[:Nil, :Date, :DateTime, :Time, :Decimal, :Array, :Hash]}
-.....
+...............
 
-Finished in 2.433042842 seconds.
+Finished in 8.87139072 seconds.
 ------
-17 tests, 55 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+15 tests, 45 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-6.99 tests/s, 22.61 assertions/s
+1.69 tests/s, 5.07 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test.rb"
-	User time (seconds): 4.01
-	System time (seconds): 0.49
-	Percent of CPU this job got: 97%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:04.60
+	User time (seconds): 6.90
+	System time (seconds): 0.87
+	Percent of CPU this job got: 68%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:11.41
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 68540
+	Maximum resident set size (kbytes): 61004
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 42466
-	Voluntary context switches: 314
-	Involuntary context switches: 178
+	Major (requiring I/O) page faults: 1333
+	Minor (reclaiming a frame) page faults: 110231
+	Voluntary context switches: 2609
+	Involuntary context switches: 1285
 	Swaps: 0
-	File system inputs: 0
-	File system outputs: 232
+	File system inputs: 93472
+	File system outputs: 2640
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0

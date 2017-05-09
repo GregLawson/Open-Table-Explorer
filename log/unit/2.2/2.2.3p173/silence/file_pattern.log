@@ -1,7 +1,11 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 54, Rational(27531138478, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 8, 7, 26, Rational(44652859908, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test
 Started
 
@@ -21,28 +25,28 @@ integration_log file log/integration/2.2/2.2.3p173/silence/repository.log does n
 {:suffix=>".log", :name=>:integration_log, :prefix=>"log/integration/", :example_file=>"log/integration/2.2/2.2.3p173/silence/repository.log", :generate=>false}
 .......................
 
-Finished in 0.056532487 seconds.
+Finished in 0.046347875 seconds.
 ------
 23 tests, 192 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-406.85 tests/s, 3396.28 assertions/s
+496.25 tests/s, 4142.58 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_pattern_test.rb"
-	User time (seconds): 0.81
-	System time (seconds): 0.05
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.86
+	User time (seconds): 0.65
+	System time (seconds): 0.08
+	Percent of CPU this job got: 97%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.75
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 24856
+	Maximum resident set size (kbytes): 22196
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4696
+	Minor (reclaiming a frame) page faults: 5675
 	Voluntary context switches: 2
-	Involuntary context switches: 43
+	Involuntary context switches: 118
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

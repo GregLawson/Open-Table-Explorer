@@ -1,0 +1,224 @@
+{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+,
+   name: :passed,
+   initialization_string: nil)
+,
+:start_time => Time.new(2017, 5, 9, 5, 50, Rational(59618604648, 1000000000), "-07:00"),
+:command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb',
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test
+Started
+......F
+===============================================================================
+Failure:
+  RubyAssertionsTest is not a constant in module RubyAssertionsCommonTest.
+  <[:TestClass,
+   :STARTED,
+   :FINISHED,
+   :STARTED_OBJECT,
+   :FINISHED_OBJECT,
+   :DESCENDANTS,
+   :AVAILABLE_ORDERS,
+   :InternalData,
+   :TESTUNIT_FILE_SEPARATORS,
+   :TESTUNIT_PREFIX,
+   :TESTUNIT_RB_FILE,
+   :POWERASSERT_PREFIX,
+   :NOT_SPECIFIED,
+   :ThrowTagExtractor,
+   :AssertionMessage,
+   :AssertExceptionHelper,
+   :ClassMethods,
+   :Checker,
+   :NOT_PASS_THROUGH_EXCEPTIONS,
+   :NOT_PASS_THROUGH_EXCEPTION_NAMES,
+   :PASS_THROUGH_EXCEPTIONS,
+   :PASS_THROUGH_EXCEPTION_NAMES,
+   :Fixture,
+   :HookPoint,
+   :StringifyKeyHash,
+   :BaseClassMethods]> expected to include
+  <:RubyAssertionsTest>.
+test_assert_constant_instance_respond_to(RubyAssertionsCommonTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions_common.rb:436:in `block in assert_scope_path\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions_common.rb:417:in `each_index\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions_common.rb:417:in `assert_scope_path\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions_common.rb:465:in `assert_constant_path_respond_to\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:270:in `test_assert_constant_instance_respond_to\'
+     267:   end # assert_constant_path_respond_to
+     268: 
+     269:   def test_assert_constant_instance_respond_to
+  => 270:     assert_constant_path_respond_to(:RubyAssertionsTest, :TestClass, :test_class_method)
+     271:     assert_constant_path_respond_to(:TestClass, :test_class_method)
+     272:     assert_scope_path(:DefaultAssertions, :ClassMethods)
+     273:     assert_constant_instance_respond_to(:DefaultAssertions, :ClassMethods, :value_of_example?) # , "In assert_post_conditions calling assert_constant_instance_respond_to"
+===============================================================================
+F
+===============================================================================
+Failure:
+  RubyAssertionsTest is not a constant in module RubyAssertionsCommonTest.
+  <[:TestClass,
+   :STARTED,
+   :FINISHED,
+   :STARTED_OBJECT,
+   :FINISHED_OBJECT,
+   :DESCENDANTS,
+   :AVAILABLE_ORDERS,
+   :InternalData,
+   :TESTUNIT_FILE_SEPARATORS,
+   :TESTUNIT_PREFIX,
+   :TESTUNIT_RB_FILE,
+   :POWERASSERT_PREFIX,
+   :NOT_SPECIFIED,
+   :ThrowTagExtractor,
+   :AssertionMessage,
+   :AssertExceptionHelper,
+   :ClassMethods,
+   :Checker,
+   :NOT_PASS_THROUGH_EXCEPTIONS,
+   :NOT_PASS_THROUGH_EXCEPTION_NAMES,
+   :PASS_THROUGH_EXCEPTIONS,
+   :PASS_THROUGH_EXCEPTION_NAMES,
+   :Fixture,
+   :HookPoint,
+   :StringifyKeyHash,
+   :BaseClassMethods]> expected to include
+  <:RubyAssertionsTest>.
+test_assert_constant_path_respond_to(RubyAssertionsCommonTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions_common.rb:436:in `block in assert_scope_path\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions_common.rb:417:in `each_index\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions_common.rb:417:in `assert_scope_path\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions_common.rb:465:in `assert_constant_path_respond_to\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:264:in `test_assert_constant_path_respond_to\'
+     261:   end # assert_path_to_constant
+     262: 
+     263:   def test_assert_constant_path_respond_to
+  => 264:     assert_constant_path_respond_to(:RubyAssertionsTest, :TestClass, :test_class_method)
+     265:     assert_constant_path_respond_to(:TestClass, :test_class_method)
+     266:     assert_constant_path_respond_to(:RubyAssertionsTest, :assert_path_to_method)
+     267:   end # assert_constant_path_respond_to
+===============================================================================
+F
+===============================================================================
+Failure:
+  File.file?(~/.profile)=false, is it a directory?.
+  <false> is not true.
+test_assert_data_file(RubyAssertionsCommonTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions_common.rb:524:in `assert_data_file\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:307:in `test_assert_data_file\'
+     304:     existing_data_file = \'~/.profile\'
+     305:     assert_pathname_exists(existing_data_file)
+     306:     assert_data_file(File.expand_path(existing_data_file))
+  => 307:     assert_data_file(existing_data_file)
+     308:     bad_pathname = \'/catfish\'
+     309:     assert_raise(AssertionFailedError) { assert_pathname_exists(bad_pathname) }
+     310: 
+===============================================================================
+....E
+===============================================================================
+Error: test_assert_include(RubyAssertionsCommonTest): NameError: undefined local variable or method `fixture_names\' for #<RubyAssertionsCommonTest:0x007f247c08bd60>
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:156:in `test_assert_include\'
+     153:     element = :b
+     154:     list = [:a, :b, :c]
+     155:     assert_includes(list, element, "#{element.inspect} is not in list #{list.inspect}")
+  => 156:     assert_includes(\'table_specs\', fixture_names)
+     157:     assert_includes(\'acquisition_stream_specs\', TableSpec.instance_methods(false))
+     158:     set = Set.new(list)
+     159:     assert(set.include?(element))
+===============================================================================
+.E
+===============================================================================
+Error: test_assert_module_included(RubyAssertionsCommonTest):
+  NameError: uninitialized constant RubyAssertionsCommonTest::RubyAssertionsTest
+  Did you mean?  RubyAssertions
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:244:in `test_assert_module_included\'
+     241:   end # assert_regexp
+     242: 
+     243:   def test_assert_module_included
+  => 244:     assert_module_included(RubyAssertionsTest, Test::Unit::Assertions)
+     245:   end # assert_module_included
+     246: 
+     247:   def test_global_name
+===============================================================================
+E
+===============================================================================
+Error: test_assert_nested_scope_submodule(RubyAssertionsCommonTest): NoMethodError: undefined method `nested_scope_modules?\' for RubyAssertions:Module
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:325:in `test_assert_nested_scope_submodule\'
+     322:     message = \'test\'
+     323:     message += "\nIn assert_nested_scope_submodule for class #{context.name}, "
+     324:     message += "make sure module Constants is nested in #{context.class.name.downcase} #{context.name}"
+  => 325:     message += " but not in #{context.nested_scope_modules?.inspect}"
+     326:     assert_includes(constants, :Contants, message)
+     327:   end # assert_included_submodule
+     328: 
+===============================================================================
+....E
+===============================================================================
+Error: test_assert_public_instance_method(RubyAssertionsCommonTest): NameError: uninitialized constant RubyAssertionsCommonTest::Unit
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:180:in `test_assert_public_instance_method\'
+     177:   end # refute_include
+     178: 
+     179:   def test_assert_public_instance_method
+  => 180:     obj = Unit.new
+     181:     methodName = :base_name
+     182:     assert_respond_to(obj, methodName)
+     183:     assert_raise(AssertionFailedError) { assert_respond_to(obj, methodName.to_s.singularize) }
+===============================================================================
+.....F
+===============================================================================
+Failure: test_caller_lines(RubyAssertionsCommonTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:16:in `test_caller_lines\'
+     13:   def test_caller_lines
+     14:     ignore_lines = 26
+     15:     assert_includes(methods, :caller_lines)
+  => 16:     assert_equal("\ntest/unit/ruby_assertions_common_test.rb:16:in `test_caller_lines\'\n", caller_lines(ignore_lines), caller_lines(ignore_lines))
+     17:   end # caller_lines
+     18: 
+     19:   def test_add_default_message
+
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:16:in `test_caller_lines\'
+
+<"\ntest/unit/ruby_assertions_common_test.rb:16:in `test_caller_lines\'\n"> expected but was
+<"\n/home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:16:in `test_caller_lines\'\n">
+
+diff:
+  
+? /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:16:in `test_caller_lines\'
+===============================================================================
+...............
+
+Finished in 0.170526455 seconds.
+------
+43 tests, 191 assertions, 4 failures, 4 errors, 0 pendings, 0 omissions, 0 notifications
+81.3953% passed
+------
+252.16 tests/s, 1120.06 assertions/s
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb"
+	User time (seconds): 0.72
+	System time (seconds): 0.05
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.78
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 21932
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5607
+	Voluntary context switches: 3
+	Involuntary context switches: 82
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+'
+}
+
+}
