@@ -49,6 +49,7 @@ class GitReference # base class for all git references (readable, maybe not writ
 	def show_run
 		run = repository.git_command('show ' + initialization_string.to_s + ' --pretty=medium  --no-abbrev-commit --no-patch')
 	end # show_run
+	
 	end # GitReference
 	
 class Commit < GitReference
@@ -79,6 +80,7 @@ class Commit < GitReference
 #		include WorkingTree::ReferenceObjects
     include DefinitionalConstants
 		Working_tree = Commit.new(initialization_string: :Working_tree, repository: Repository::This_code_repository) 
+		Code_head = Commit.head(Repository::This_code_repository) 
   end # ReferenceObjects
   include ReferenceObjects
 	
@@ -105,6 +107,11 @@ class Commit < GitReference
 		output = tree_run.output
 		array = output.split("\n")[1..-1] # discard echo of tree
 	end # tree
+
+	def file_contents(path) # nil for working tree
+				git_command = 'git cat-file blob ' + @initialization_string.to_s + ':' + path
+			file_contents = @repository.git_command(git_command).output
+	end # file_contents
 
   def diff_branch_files(other_ref, options = '--summary', file_glob = '*.rb')
 			if other_ref == WorkingTree::Working_tree
@@ -141,6 +148,10 @@ class WorkingTree < Commit # extend Commit to include not yet committed
 		Working_tree = WorkingTree.new(initialization_string: :Working_tree, repository: Repository::This_code_repository) 
   end # ReferenceObjects
   include ReferenceObjects
+
+	def file_contents(path) # nil for working tree
+		IO.read(path)
+	end # file_contents
 
   def diff_branch_files(other_ref, options = '--summary', file_glob = '*.rb')
 			if other_ref == Working_tree

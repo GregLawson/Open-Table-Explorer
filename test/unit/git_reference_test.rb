@@ -104,7 +104,7 @@ class CommitTest < TestCase
 	
 	def test_show_commit
 		initialization_string = :HEAD
-		repository = Repository::This_code_repository
+		repository = Repository::Repository::This_code_repository
 		run = repository.git_command('show ' + initialization_string.to_s + ' --pretty=medium  --no-abbrev-commit --no-patch')
 		run.assert_post_conditions
 		capture = run.output.capture?(Show_commit_regexp)
@@ -128,6 +128,16 @@ class CommitTest < TestCase
 		array = output.split("\n")[1..-1] # discard echo of tree
 #		assert_equal(Dir['*'].sort, array.sort, Head_at_start.inspect)
 	end # tree
+
+	def test_file_contents
+		refute_equal(WorkingTree::Working_tree, Code_head)
+		path = $PROGRAM_NAME
+			git_command = 'git cat-file blob ' + Code_head.initialization_string.to_s + ':' + path
+			git_run = Repository::This_code_repository.git_command(git_command)
+			git_run.assert_pre_conditions
+			head_file_contents = git_run.output
+		assert_equal(head_file_contents, Code_head.file_contents(path))
+	end # file_contents
 
   def test_diff_branch_files
     diff = WorkingTree::Working_tree.diff_branch_files(Head_at_start, '--numstat').output
@@ -189,6 +199,10 @@ class WorkingTreeTest < TestCase
 		assert_equal(:Working_tree, Working_tree.initialization_string, Working_tree.inspect)
 		assert_equal(nil, Working_tree.sha1_hex_40, Working_tree.inspect)
 		assert_equal('not yet committed', Working_tree.commit_title, Working_tree.inspect)
+		assert_equal(Commit::Working_tree, Working_tree)
+		path = $PROGRAM_NAME
+		this_file_contents = IO.read(path)
+		assert_equal(this_file_contents, Working_tree.file_contents(path))
   end # ReferenceObjects
 	
 end # WorkingTree
