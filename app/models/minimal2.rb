@@ -24,6 +24,7 @@ class Minimal2 < Dry::Types::Value
 	include DefinitionalConstants
 	
   module DefinitionalClassMethods # if reference DefinitionalConstants
+    include DefinitionalConstants
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
@@ -38,6 +39,7 @@ class Minimal2 < Dry::Types::Value
 	
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
+		Minimal_object = Minimal2.new
   end # ReferenceObjects
   include ReferenceObjects
 	
@@ -45,25 +47,19 @@ require_relative '../../app/models/assertions.rb'
 
 	module Assertions
     module ClassMethods
-			def nested_scope_modules?
-				nested_constants = self.class.constants
-				message = ''
-				assert_includes(included_modules.map{|m| m.name}, :Assertions, message)
-				assert_equal([:Constants, :Assertions, :ClassMethods], Version.nested_scope_modules?)
-			end # nested_scopes
-			
+
 			def assert_nested_scope_submodule(module_symbol, context = self, message='')
 				message+="\nIn assert_nested_scope_submodule for class #{context.name}, "
 				message += "make sure module Constants is nested in #{context.class.name.downcase} #{context.name}"
-				message += " but not in #{context.nested_scope_modules?.inspect}"
-				assert_includes(constants, :Contants, message)
+				message += " but not in #{context.nested_scope_module_names}"
+				assert_includes(nested_scope_module_names, module_symbol)
 			end # assert_included_submodule
 			
 			def assert_included_submodule(module_symbol, context = self, message='')
 				message+="\nIn assert_included_submodule for class #{self.name}, "
 				message += "make sure module Constants is nested in #{self.class.name.downcase} #{self.name}"
-				message += " but not in #{self.nested_scope_modules?.inspect}"
-				assert_includes(included_modules, :Contants, message)
+				message += " but not in #{self.nested_scope_module_names}"
+				assert_includes(included_modules.map(&:module_name), module_symbol)
 			end # assert_included_submodule
 			
 			def asset_nested_and_included(module_symbol, context = self, message='')
