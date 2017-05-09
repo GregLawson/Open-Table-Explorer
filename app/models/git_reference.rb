@@ -79,8 +79,6 @@ class Commit < GitReference
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
 #		include WorkingTree::ReferenceObjects
     include DefinitionalConstants
-		Working_tree = Commit.new(initialization_string: :Working_tree, repository: Repository::This_code_repository) 
-		Code_head = Commit.head(Repository::This_code_repository) 
   end # ReferenceObjects
   include ReferenceObjects
 	

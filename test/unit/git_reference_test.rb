@@ -130,13 +130,13 @@ class CommitTest < TestCase
 	end # tree
 
 	def test_file_contents
-		refute_equal(WorkingTree::Working_tree, Code_head)
+		refute_equal(WorkingTree::Working_tree, Head_at_start)
 		path = $PROGRAM_NAME
-			git_command = 'git cat-file blob ' + Code_head.initialization_string.to_s + ':' + path
+			git_command = 'git cat-file blob ' + Head_at_start.initialization_string.to_s + ':' + path
 			git_run = Repository::This_code_repository.git_command(git_command)
 			git_run.assert_pre_conditions
 			head_file_contents = git_run.output
-		assert_equal(head_file_contents, Code_head.file_contents(path))
+		assert_equal(head_file_contents, Head_at_start.file_contents(path))
 	end # file_contents
 
   def test_diff_branch_files
@@ -199,7 +199,6 @@ class WorkingTreeTest < TestCase
 		assert_equal(:Working_tree, Working_tree.initialization_string, Working_tree.inspect)
 		assert_equal(nil, Working_tree.sha1_hex_40, Working_tree.inspect)
 		assert_equal('not yet committed', Working_tree.commit_title, Working_tree.inspect)
-		assert_equal(Commit::Working_tree, Working_tree)
 		path = $PROGRAM_NAME
 		this_file_contents = IO.read(path)
 		assert_equal(this_file_contents, Working_tree.file_contents(path))
