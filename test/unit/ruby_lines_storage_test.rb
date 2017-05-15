@@ -197,30 +197,9 @@ end # Regexp
     assert_reversible(time)
   end # Date
 
-  require 'prime'
   def test_DateTime_ruby_lines_storage
-    samples = (1..120_000).map do |_i|
-      time = DateTime.now
-    end # map
-    errors = samples.map do |time|
-      ((time - eval(time.ruby_lines_storage)) * 1_000_000_000).to_i
-    end # map
-    differences = errors.each_cons(2).map do |pair|
-      pair[0] - pair[1]
-    end.sort.uniq # each_cons
-    #		puts 'errors = ' + errors.inspect
-    puts differences.inspect
-    #		message = 'mean = ' + samples.mean.to_f.to_s + 'mode = ' + samples.mode.to_f.to_s
-    #		puts message
-    message = 'min = ' + errors.min.to_f.to_s + 'max = ' + errors.max.to_f.to_s
-    puts message
-    assert_operator(0, :<=, errors.min, errors.inspect)
-    assert_operator(11_574, :>=, errors.max, errors.inspect)
-    assert_equal([[2, 1], [3, 2], [643, 1]], 11_574.prime_division)
-    assert_equal(11_574, '2D36'.to_i(16), '%02X' % 11_574) # not a simple truncation!
     assert_approximate(DateTime.now, Rational(11_574, 1_000_000_000))
   end # DateTime
-
   def test_Time_ruby_lines_storage
     time = Time.now
     seconds = Rational(1_000_000_000 * time.sec + time.nsec, 1_000_000_000)

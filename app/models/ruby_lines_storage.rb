@@ -18,6 +18,17 @@ module RubyLinesStorage
     context
   end # read_error_context
 
+  def self.eval_rls(ruby_lines_storage_string)
+    puts 'In order for RubyLinesStorage.read to succeed, String ' + ruby_lines_storage_string + ' must start with open curly brace.' + read_error_context(path, ruby_lines_storage_string) if ruby_lines_storage_string[0] != '{'
+    eval(ruby_lines_storage_string)
+  rescue SyntaxError => exception_object
+    exception_message = exception_object.message
+    exception_hash = exception_message.parse(Eval_syntax_error_regexp)
+    line_number = exception_hash[:line].to_i
+    context = read_error_context(path, ruby_lines_storage_string, line_number)
+    #		puts exception_hash[:message] + context
+    { context: context, ruby_lines_storage_string: ruby_lines_storage_string, exception_hash: exception_hash }
+	end # eval
   def self.read(path)
     file_contents = IO.read(path)
     puts 'In order for RubyLinesStorage.read to succeed, file ' + path + ' must start with open curly brace.' + read_error_context(path, file_contents) if file_contents[0] != '{'
