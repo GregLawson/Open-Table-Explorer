@@ -11,8 +11,8 @@ class NominationTest < TestCase
   # include DefaultTests
   #  include RailsishRubyUnit::Executable.model_class?::Examples
 	def test_context
-		assert_respond_to(Nomination, :stash, Nomination.methods(false))
-		assert_include(Nomination.methods, :stash)
+		assert_respond_to(Nomination, :nominate, Nomination.methods(false))
+		assert_include(Nomination.methods, :nominate)
 		assert_respond_to(Nomination::Self, :commit, Nomination.instance_methods(false))
 		assert_include(Nomination.instance_methods(false), :commit)
 	end # context

@@ -50,22 +50,30 @@ class Nomination < Dry::Types::Value
     attribute :commit, Types::Strict::Symbol
 		attribute :unit, Types::Strict::Symbol
 		attribute :test_type, Types::Strict::Symbol
-#		attribute :ruby_conversion, Types::Strict::String.optional
 
   module Constructors # such as alternative new methods
     include DefinitionalConstants
-		def stash(test_executable)
-				Nomination.new(commit: :stash, unit: test_executable.unit, test_type: test_executable.test_type)
+		def nominate(test_executable)
+				Nomination.new(commit: nil, unit: test_executable.unit, test_type: test_executable.test_type)
 		end # stash
 		
 		def pending
+			[Self]
 		end # pending
+		
+		def clean_apply
+			pending.each do |nomination|
+				nomination.apply
+			end # each
+		end # clean_apply
 		
 		def apply
 			if test_executable.repository.something_to_commit?
 				test_executable.repository.stash!
+				clean_apply
+				test_executable.repository.pop
 			else
-				nil
+				clean_apply
 			end # if
 		end # apply
   end # Constructors
