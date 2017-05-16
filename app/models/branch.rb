@@ -33,7 +33,7 @@ module MaturityBranches
       regexp: :unit
     }.freeze
 		# Regexp 
-  Name_regexp = (/[a-z0-9]+/.capture(:type) * /\//).optional * /[_a-z0-9]+/.capture(:maturity) * (/\+/ * /[_a-z]+/).capture(:test_topic).optional # also matches SHA1!
+  Name_regexp = (/[a-z0-9]+/.capture(:scope) * /\//).optional * /[_a-z0-9]+/.capture(:maturity) * (/\+/ * /[_a-z]+/).capture(:test_topic).optional # also matches SHA1!
   Ref_name_regexp = /[-a-zA-Z0-9_\/]+/ # ref/heads/master
   # Name_regexp = /[-a-zA-Z0-9_]+/ # extended syntax
   Branch_name_alternative = [Name_regexp.capture(:branch)].freeze
@@ -386,12 +386,14 @@ class BranchReference < Commit
         #	assert_match(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional, reflog_line, message)
         #	assert_match(BranchReference::Ambiguous_ref_pattern.group * Regexp::Optional * Delimiter * Unambiguous_ref_pattern.group * Regexp::Optional * Delimiter * SHA1_hex_7, reflog_line, message)
 
-        show_matches = ParsedCapture.show_matches([reflog_line], Regexp_array)
-        priority_match = ParsedCapture.priority_match([reflog_line], Regexp_array)
-        refute_equal([], priority_match, show_matches.ruby_lines_storage)
-        assert_match(BranchReference::Ambiguous_ref_pattern, reflog_line)
-        assert_match(BranchReference::Unambiguous_ref_pattern, reflog_line)
-				assert_match(BranchReference::Reflog_line_regexp, reflog_line)
+        capture = MatchCapture.new(string: reflog_line, regexp: Regexp_array)
+				capture.assert_refinement(:exact)
+        show_matches = capture.priority_refinements.inspect
+#        priority_match = ParsedCapture.priority_match([reflog_line], Regexp_array)
+#        refute_equal([], priority_match, show_matches.ruby_lines_storage)
+#        assert_match(BranchReference::Ambiguous_ref_pattern, reflog_line, show_matches)
+#        assert_match(BranchReference::Unambiguous_ref_pattern, reflog_line, show_matches)
+				assert_match(BranchReference::Reflog_line_regexp, reflog_line, show_matches)
         capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
         #	assert_equal(true, reflog_line.capture?(BranchReference::Ambiguous_ref_pattern).success?, capture.inspect)
         #	assert_equal(true, reflog_line.capture?(BranchReference::Unambiguous_ref_pattern).success?, capture.inspect)

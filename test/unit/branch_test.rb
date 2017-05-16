@@ -120,8 +120,8 @@ class BranchTest < TestCase
 		assert_instance_of(Branch, current_branch)
 		temp_current_branch = Branch.current_branch(@temp_repo)
 		assert_instance_of(Branch, temp_current_branch)
-		assert_equal(temp_current_branch.sha1, Commit.head(@temp_repo).sha1)
-		assert_equal(Branch.current_branch(This_code_repository).sha1, Commit.head(This_code_repository).sha1)
+		assert_equal(temp_current_branch.sha1_hex_40, Commit.head(@temp_repo).sha1_hex_40)
+		assert_equal(Branch.current_branch(This_code_repository).sha1_hex_40, Commit.head(This_code_repository).sha1_hex_40)
 	end # current_branch
 		
   def test_branches?
@@ -212,10 +212,10 @@ class BranchTest < TestCase
   end # compare
 
 	def test_find_origin
-		assert_equal(nil, Master_branch.find_origin)
-#		assert_equal(false, Passed_branch.find_origin)
-#		assert_equal(false, Tested_branch.find_origin)
-#		assert_equal(false, Edited_branch.find_origin)
+		assert_equal(:'origin/master', Master_branch.find_origin)
+		assert_equal(:'origin/passed', Passed_branch.find_origin)
+#		assert_equal(:'origin/tested', Tested_branch.find_origin)
+		assert_equal(:'origin/edited', Edited_branch.find_origin)
   end # find_origin
 	
 	def test_interactive?
@@ -391,7 +391,7 @@ class BranchReferenceTest < TestCase
 		assert_instance_of(Array, reflogs)
 		reflogs.each do |commit|
 			assert_kind_of(GitReference, commit)
-			file = GitReference.new(initialization_string: commit.sha1 + ':' + filename).show_run.output
+			file = GitReference.new(initialization_string: commit.sha1_hex_40 + ':' + filename).show_run.output
 			if file.match(lost_code)
 				puts 'matched in ' + commit.inspect
 			else
@@ -417,7 +417,7 @@ class BranchReferenceTest < TestCase
 		assert_instance_of(Array, reflogs)
 		reflogs.each do |commit|
 			assert_kind_of(GitReference, commit)
-			file = GitReference.new(initialization_string: commit.sha1 + ':' + filename).show_run.output
+			file = GitReference.new(initialization_string: commit.sha1_hex_40 + ':' + filename).show_run.output
 			if file.match(lost_code)
 				puts 'matched in ' + commit.inspect
 			else
@@ -447,7 +447,7 @@ class BranchReferenceTest < TestCase
     assert_equal('123', Reflog_line.capture?(Ambiguous_ref_pattern).output[:age], matches.ruby_lines_storage)
     assert_equal('master', Reflog_line.capture?(Ambiguous_ref_pattern).output[:maturity], matches.ruby_lines_storage)
     assert_equal(nil, Reflog_line.capture?(Ambiguous_ref_pattern).output[:test_topic], matches.ruby_lines_storage)
-    assert_equal({ age: '123', maturity: 'master', test_topic: nil }, Reflog_line.capture?(Ambiguous_ref_pattern).output, matches.ruby_lines_storage)
+    assert_equal({ age: '123', maturity: 'master', test_topic: nil, scope: nil }, Reflog_line.capture?(Ambiguous_ref_pattern).output, matches.ruby_lines_storage)
     unambiguous_branch = Reflog_line.capture?(Refs_prefix_regexp * Ambiguous_ref_pattern)
 		assert(unambiguous_branch.success?, unambiguous_branch.inspect)
 #    assert_equal(['123'], unambiguous_branch.raw_captures[0..-1], unambiguous_branch.regexp.named_captures.inspect)
@@ -455,9 +455,10 @@ class BranchReferenceTest < TestCase
     assert_equal('master', unambiguous_branch.output[:maturity], unambiguous_branch.inspect)
     assert_equal(nil, unambiguous_branch.output[:test_topic], unambiguous_branch.inspect)
     assert_equal('heads', unambiguous_branch.output[:ref], unambiguous_branch.inspect)
-    assert_equal({ age: '123', ref: "heads", maturity: 'master', test_topic: nil }, unambiguous_branch.output, matches.ruby_lines_storage)
-    timestamp = Reflog_line.capture?(Timestamp_regexp)
-    assert_equal({:date=>"21 Jun 2015", :time=>"13:51:50 -0700", :weekday=>"Sun" }, timestamp.output, timestamp.ruby_lines_storage)
+    assert_equal({ age: '123', ref: "heads", maturity: 'master', test_topic: nil, scope: nil }, unambiguous_branch.output, matches.ruby_lines_storage)
+    timestamp = MatchCapture.new(string: Reflog_line, regexp: Git_reflog_timestamp_regexp_array)
+    assert_equal({:day_of_month=>"21",  :hour=>"13",  :minute=>"51",  :month=>"Jun",  :second=>"50",  :timezone=>"-0700",
+									:weekday=>"Sun",  :year=>"2015" }, timestamp.output, timestamp.ruby_lines_storage)
     assert_match(BranchReference::Unambiguous_ref_pattern, Reflog_line)
     BranchReference.assert_reflog_line(Reflog_line)
     BranchReference.assert_reflog_line(Last_change_line)
@@ -473,6 +474,7 @@ class BranchReferenceTest < TestCase
 #        refute_equal([], priority_match, show_matches.ruby_lines_storage)
 #        assert_match(BranchReference::Ambiguous_ref_pattern, reflog_line)
 #        assert_match(BranchReference::Unambiguous_ref_pattern, reflog_line)
+		fail
     end # each
   end # DefinitionalConstants
 		
@@ -481,7 +483,7 @@ class BranchReferenceTest < TestCase
 		command_string = 'show stash'
 		cached_run = Repository::This_code_repository.git_command(command_string)
     regexp = /stash@{0}: WIP on / * Name_regexp.capture(:parent_branch) * /: / *
-             SHA_hex_7.capture(:sha7) * / Merge branch '/ * Name_regexp.capture(:merge_from) * /' into / * Name_regexp.capture(:merge_into)
+             SHA1_hex_short.capture(:sha7) * / Merge branch '/ * Name_regexp.capture(:merge_from) * /' into / * Name_regexp.capture(:merge_into)
 #		assert_match(regexp, cached_run.output, cached_run.inspect)
 #		assert_include([Master_branch, Passed_branch, Tested_branch, Edited_branch], BranchReference.stash_wip(Repository::This_code_repository),cached_run.inspect)
 	end # stash_wip
