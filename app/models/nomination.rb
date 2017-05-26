@@ -30,7 +30,6 @@ require_relative '../../app/models/ruby_interpreter.rb'
 require_relative '../../app/models/bug.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/branch.rb'
-require_relative '../../app/models/test_executable.rb'
 require_relative '../../app/models/ruby_lines_storage.rb'
 #! require_relative 'editor.rb'
 
@@ -44,6 +43,7 @@ class Nomination < Dry::Types::Value
 	include DefinitionalConstants
 	
   module DefinitionalClassMethods # if reference DefinitionalConstants
+    include DefinitionalConstants
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
@@ -58,7 +58,7 @@ class Nomination < Dry::Types::Value
 		end # stash
 		
 		def pending
-			[Self]
+			[Nomination::Self]
 		end # pending
 		
 		def clean_apply
@@ -82,7 +82,8 @@ class Nomination < Dry::Types::Value
 	
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
-		Self = Nomination.new(commit: :stash, unit: TestExecutable::Examples::TestTestExecutable.unit.model_basename, test_type: TestExecutable::Examples::TestTestExecutable.test_type)
+		TestTestExecutable = Nomination.new(commit: :stash, unit: TestExecutable::Examples::TestTestExecutable.unit.model_basename, test_type: TestExecutable::Examples::TestTestExecutable.test_type)
+		Self = Nomination.new(commit: :stash, unit: RailsishRubyUnit::Executable.model_basename, test_type: :unit)
   end # ReferenceObjects
   include ReferenceObjects
 	
@@ -116,6 +117,7 @@ class Nomination < Dry::Types::Value
 				assert_nested_scope_submodule(module_symbol)
 				assert_included_submodule(module_symbol)
 			end # asset_nested_and_included
+			
 			def assert_pre_conditions(message='')
 				message+="In assert_pre_conditions, self=#{inspect}"
 			#	asset_nested_and_included(:ClassMethods, self)
@@ -132,6 +134,9 @@ class Nomination < Dry::Types::Value
 
     def assert_pre_conditions(message = '')
       message += "In assert_pre_conditions, self=#{inspect}"
+			assert_instance_of(Symbol, @commit)
+			assert_instance_of(Symbol, @unit)
+			assert_instance_of(Symbol, @test_type)
 				self # return for command chaining
     end # assert_pre_conditions
 

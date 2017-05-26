@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2016 by Greg Lawson
+#    Copyright (C) 2012-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -9,7 +9,8 @@ require_relative 'test_environment'
 require_relative '../../app/models/nomination.rb'
 class NominationTest < TestCase
   # include DefaultTests
-  #  include RailsishRubyUnit::Executable.model_class?::Examples
+  include RailsishRubyUnit::Executable.model_class?::DefinitionalConstants
+  include RailsishRubyUnit::Executable.model_class?::ReferenceObjects
 	def test_context
 		assert_respond_to(Nomination, :nominate, Nomination.methods(false))
 		assert_include(Nomination.methods, :nominate)
@@ -42,18 +43,28 @@ class NominationTest < TestCase
 		end # stash
 		
 		def test_pending
+			assert_instance_of(Array, Nomination.pending)
+			Nomination.pending.each do |nomination|
+				assert_instance_of(Nomination, nomination)
+			end # each
 		end # pending
 		
   def test_Minimal_assert_pre_conditions
+#		refute(Self.frozen?, Self.inspect)
   end # assert_pre_conditions
 
   def test_Minimal_assert_post_conditions
   end # assert_post_conditions
 
-  def assert_pre_conditions
+  def test_assert_pre_conditions
+		assert_equal(:stash, Self.commit, Self.inspect)
+		assert_equal(:unit, Self.test_type, Self.inspect)
+		assert_equal(:nomination, Self.unit, Self.inspect)
+#		Self.assert_pre_conditions
+#		TestTestExecutable.assert_pre_conditions
   end # assert_pre_conditions
 
-  def assert_post_conditions
+  def test_assert_post_conditions
   end # assert_post_conditions
 
   def test_Minimal_Examples

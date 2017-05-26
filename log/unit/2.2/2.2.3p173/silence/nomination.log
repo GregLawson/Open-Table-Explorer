@@ -3,38 +3,38 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 5, 15, 11, 9, Rational(30545206127, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 5, 26, 8, 9, Rational(8418126451, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nomination_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nomination_test
 Started
-........
+..........
 
-Finished in 0.189143878 seconds.
+Finished in 0.351324713 seconds.
 ------
-8 tests, 4 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+10 tests, 9 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-42.30 tests/s, 21.15 assertions/s
+28.46 tests/s, 25.62 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nomination_test.rb"
-	User time (seconds): 2.27
-	System time (seconds): 0.29
-	Percent of CPU this job got: 96%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.67
+	User time (seconds): 2.28
+	System time (seconds): 0.32
+	Percent of CPU this job got: 92%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.82
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 52208
+	Maximum resident set size (kbytes): 52192
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 34362
-	Voluntary context switches: 379
-	Involuntary context switches: 344
+	Major (requiring I/O) page faults: 4
+	Minor (reclaiming a frame) page faults: 39197
+	Voluntary context switches: 424
+	Involuntary context switches: 385
 	Swaps: 0
-	File system inputs: 0
-	File system outputs: 1920
+	File system inputs: 256
+	File system outputs: 2400
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
