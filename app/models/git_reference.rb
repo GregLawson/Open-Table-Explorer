@@ -83,7 +83,7 @@ class Commit < GitReference
   include ReferenceObjects
 	
 	def show_commit
-		capture = show_run.output.capture?(Show_commit_regexp)
+		capture = MatchCapture.new(string: show_run.output, regexp: Show_commit_array)
 		if capture.success?
 			capture.output
 		else
@@ -98,6 +98,25 @@ class Commit < GitReference
 	def commit_title
 		show_commit[:commit_title]
 	end # commit_title
+	
+	def commit_explanation
+		show_commit[:commit_explanation]
+	end # commit_explanation
+	
+	def committer
+		show_commit[:name]
+	end # committer
+	
+	def committer_email
+		show_commit[:email]
+	end # committer_email
+	
+	def timestamp
+    Time.new(show_commit[:year].to_i, Month_names.index(show_commit[:month]) + 1, show_commit[:day_of_month].to_i, 
+			show_commit[:hour].to_i, show_commit[:minute].to_i, 
+			show_commit[:second].to_i, show_commit[:timezone].to_i)
+	
+	end # timestamp
 	
 	def tree
 		tree_ref = GitReference.new(initialization_string: initialization_string.to_s + '^{tree}')
