@@ -255,7 +255,8 @@ end # MatchRefinement
 module TimeTypes
     Week_day_regexp = /[MTWFS][a-z]{2}/.capture(:weekday)
     Day_regexp = /[0-9]{1,2}/.capture(:day_of_month)
-    Month_regexp = /[ADFJMNOS][a-z]+/.capture(:month)
+    Month_names =['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+		Month_regexp = Month_names.map{|m| Regexp.new(m)}.reduce(:|).capture(:month)
     Year_regexp = /[0-9]{2,4}/.capture(:year)
     Hour_regexp = /[0-9][0-9]/.capture(:hour)
     Minute_regexp = /[0-9][0-9]/.capture(:minute)
