@@ -28,6 +28,15 @@ class Stash < Commit
 		def pop!(repository = Repository::This_code_repository, pop = :apply)
 			repository.git_command('stash ' + pop.to_s)
 		end # pop!
+
+    def list(repository)
+      command_string = 'stash list'
+      @cached_run = repository.git_command(command_string)
+      regexp = /stash@{0}: WIP on / * Name_regexp.capture(:parent_branch) * /: / *
+               SHA1_hex_short.capture(:sha1_hex_short) * / Merge branch '/ * Name_regexp.capture(:merge_from) * /' into / * Name_regexp.capture(:merge_into)
+			capture = @cached_run.output.capture?(regexp)
+			capture.output
+		end # list
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
@@ -57,15 +66,6 @@ class Stash < Commit
   end # ReferenceObjects
   include ReferenceObjects
 	
-
-    def stash_wip(repository)
-      command_string = 'stash list'
-      @cached_run = repository.git_command(command_string)
-      regexp = /stash@{0}: WIP on / * Name_regexp.capture(:parent_branch) * /: / *
-               SHA1_hex_short.capture(:sha1_hex_short) * / Merge branch '/ * Name_regexp.capture(:merge_from) * /' into / * Name_regexp.capture(:merge_into)
-			capture = @cached_run.output.capture?(regexp)
-			capture.output
-		end # stash_wip
 
   def stash_and_checkout(target_branch)
     stash_branch = @repository.current_branch_name?

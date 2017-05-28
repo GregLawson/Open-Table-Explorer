@@ -3,37 +3,37 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 5, 26, 14, 23, Rational(21790548118, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 5, 27, 19, 3, Rational(36963527319, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stash_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stash_test
 Started
 ...............
 
-Finished in 0.978549485 seconds.
+Finished in 0.890023393 seconds.
 ------
 15 tests, 31 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-15.33 tests/s, 31.68 assertions/s
+16.85 tests/s, 34.83 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stash_test.rb"
-	User time (seconds): 2.22
-	System time (seconds): 0.34
-	Percent of CPU this job got: 81%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.13
+	User time (seconds): 2.14
+	System time (seconds): 0.40
+	Percent of CPU this job got: 84%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.01
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 49780
+	Maximum resident set size (kbytes): 49804
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 10
-	Minor (reclaiming a frame) page faults: 106088
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 106154
 	Voluntary context switches: 1116
-	Involuntary context switches: 597
+	Involuntary context switches: 621
 	Swaps: 0
-	File system inputs: 512
+	File system inputs: 0
 	File system outputs: 3928
 	Socket messages sent: 0
 	Socket messages received: 0

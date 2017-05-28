@@ -40,6 +40,17 @@ class Minimal2Test < TestCase
     refute_equal([:clean], @temp_repo.state?)
 	end # pop!
 	
+	def test_list
+		wip_example = "stash@{0}: WIP on testing: 0eeec72 Merge branch 'passed' into testing"
+		command_string = 'show stash'
+		cached_run = Repository::This_code_repository.git_command(command_string)
+    regexp = /stash@{0}: WIP on / * Name_regexp.capture(:parent_branch) * /: / *
+             SHA1_hex_short.capture(:sha7) * / Merge branch '/ * Name_regexp.capture(:merge_from) * /' into / * Name_regexp.capture(:merge_into)
+#		assert_match(regexp, cached_run.output, cached_run.inspect)
+#		assert_include([Master_branch, Passed_branch, Tested_branch, Edited_branch], BranchReference.list(Repository::This_code_repository),cached_run.inspect)
+	end # list
+
+	
   def test_Stash_DefinitionalConstants
   end # DefinitionalConstants
 
@@ -48,16 +59,6 @@ class Minimal2Test < TestCase
 
 
 	
-	def test_stash_wip
-		wip_example = "stash@{0}: WIP on testing: 0eeec72 Merge branch 'passed' into testing"
-		command_string = 'show stash'
-		cached_run = Repository::This_code_repository.git_command(command_string)
-    regexp = /stash@{0}: WIP on / * Name_regexp.capture(:parent_branch) * /: / *
-             SHA1_hex_short.capture(:sha7) * / Merge branch '/ * Name_regexp.capture(:merge_from) * /' into / * Name_regexp.capture(:merge_into)
-#		assert_match(regexp, cached_run.output, cached_run.inspect)
-#		assert_include([Master_branch, Passed_branch, Tested_branch, Edited_branch], BranchReference.stash_wip(Repository::This_code_repository),cached_run.inspect)
-	end # stash_wip
-
   def test_stash_and_checkout
     @temp_repo.force_change
   end # stash_and_checkout
