@@ -9,9 +9,19 @@ require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/parse.rb'
 require_relative '../../app/models/uri.rb'
 require_relative '../../app/models/generic_type.rb'
+require_relative '../../app/models/cache.rb'
 require 'open-uri'
 class Acquisition #< Dry::Types::Value
   module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
+		def refine(acquisition_string, regexp, capture_class = MatchCapture, &block)
+			if block_given?
+				refine(yield(acquisition_string), regexp, capture_class)
+			else
+				capture = capture_class.new(string: acquisition_string, regexp: regexp)
+				refinement = capture.priority_refinements
+			end # if
+		end # refine
+		
 		def to_hash(acquisition_string, generic_type)
 			acquisition_string.capture?(generic_type.to_regexp).output
 		end # to_hash
@@ -71,6 +81,10 @@ class Acquisition #< Dry::Types::Value
 			@cached_acquisition_state
 		end # if
 	end # acquire!
+
+	def refine(capture_class = MatchCapture, &block)
+		Acquisition.refine(@uri_string, @generic_type, capture_class, block)
+	end # refine
 	
 	def to_hash
 		if @cached_capture.nil?
@@ -117,5 +131,11 @@ class Acquisition #< Dry::Types::Value
     end # if
     ret
   end # display
+
+		def assert_refine(acquisition_string, regexp, capture_class = MatchCapture, &block)
+			capture = capture_class.new(string: acquisition_string, regexp: regexp)
+			capture.assert_refinement(:exact)
+			refinement = capture.priority_refinements
+		end # refine
 end # Acquisition
 
