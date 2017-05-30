@@ -19,8 +19,77 @@ module Types
 end # Types
 #! require 'virtus'
 
-class Object
+module Cache
 	
+	def cache_const_name(cache_name)
+		if self.class == Class
+			('Cached_' + cache_name.to_s).to_sym
+		else
+			('@cached_' + cache_name.to_s).to_sym
+		end # if
+	end # cache_const_name
+	
+	def cached?(cache_name)
+		if self.class == Class
+			self.class.const_defined?(cache_const_name(cache_name))
+		else
+			self.instance_variable_defined?(cache_const_name(cache_name))
+		end # if
+	end # cached?
+	
+	def cache(cache_name = __callee__, &block)
+		unless block_given?
+			raise 'caching ' + cache_name.to_s + 'requires a block.'
+		else
+			if self.class == Class
+				if cached?(cache_name)
+					self.class.const_get(cache_const_name(cache_name))
+				else
+					ret = block.call
+					self.class.const_set(cache_const_name(cache_name), ret)
+				end # if
+			else
+				if cached?(cache_name)
+					self.instance_variable_get(cache_const_name(cache_name))
+				else
+					ret = block.call
+					self.instance_variable_set(cache_const_name(cache_name), ret)
+				end # if
+			end # if 
+		end # unless
+	end # cache
+
+	def explain_cache(cache_name)
+		if cached?(cache_name)
+			if self.class == Class
+				cache_name.inspect + ' is cached as constant ' + self.class.name + '::' + cache_const_name(cache_name).to_s + ' = ' + self.class.const_get(cache_const_name(cache_name)).inspect
+			else
+				cache_name.inspect + ' is cached as instance variable '  + cache_const_name(cache_name).inspect + ' = ' + instance_variable_get(cache_const_name(cache_name)).inspect
+			end # if
+		else
+			cache_name.inspect + ' is not cached in ' + self.class.constants.inspect
+			if self.class == Class
+				cache_name.inspect + ' is not cached as constant ' + self.class.name + '::' + cache_const_name(cache_name).to_s + ' in ' + self.class.constants.inspect
+			else
+				cache_name.inspect + ' is not cached as instance variable '  + cache_const_name(cache_name).inspect + ' in ' + instance_variables.inspect
+			end # if
+		end # if
+	end # explain_cache
+		
+	def clear_cache(cache_name)
+		self.class.const_set(cache_const_name(cache_name), nil)
+	end # clear_cache
+	
+	def assert_cached(cache_name)
+		assert(cached?(cache_name), explain_cache(cache_name))
+	end # assert_cached
+	
+	def refute_cached(cache_name)
+		refute(cached?(cache_name), explain_cache(cache_name))
+	end # refute_cached
+end # Cache
+
+class Object
 	def clone_state
 #		ret = {}
 		[ :dup, :clone ].map do |copy_method|
@@ -57,18 +126,4 @@ class Object
 		ret << 'clone inspect not equal' if inspect != clone_object.inspect
 		ret.join(', ')
 	end # clone_explain
-	
-	def cache(cache_name = _callee_, &block)
-		cache_const_name = ('Cached_' + cache_name.to_s).to_sym
-		if block_given?
-			if self.class.const_defined?(cache_const_name)
-				self.class.const_get(cache_const_name)
-			else
-				ret = block.call
-				self.class.const_set(cache_const_name, ret)
-			end # if
-		else
-			raise 'caching ' + cache_const_name.to_s + 'requires a block.'
-		end # if
-	end # cache
 end # Object
