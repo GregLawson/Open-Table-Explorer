@@ -19,7 +19,7 @@ class NominationTest < TestCase
 	end # context
 	
   module Examples
-#		Self = Nomination.stash(TestExecutable::Examples::TestTestExecutable)
+		Self = Nomination.nominate(TestExecutable.new_from_path($PROGRAM_NAME))
   end #  Examples
   include Examples
   
@@ -27,20 +27,17 @@ class NominationTest < TestCase
     @temp_repo = Repository.create_test_repository
   end # setup
 
-  def test_recursive_delete
-  end # recursive_delete
-
   def teardown
     Repository.delete_even_nonxisting(@temp_repo.path)
 #    assert_empty(Dir[Cleanup_failed_test_paths], Cleanup_failed_test_paths)
   end # teardown
 
   # rubocop:disable Style/MethodName
-  def test_Minimal_DefinitionalConstants
+  def test_Nomination_DefinitionalConstants
   end # DefinitionalConstants
 
-		def test_stash
-		end # stash
+		def test_nominate
+		end # nominate
 		
 		def test_pending
 			assert_instance_of(Array, Nomination.pending)
@@ -48,16 +45,59 @@ class NominationTest < TestCase
 				assert_instance_of(Nomination, nomination)
 			end # each
 		end # pending
+
+		def dirty_test_executables
+		end # dirty_test_executables
+
+	def test_included_module_names
+		this_class = RailsishRubyUnit::Executable.model_class?
+#!		assert_includes(this_class.included_module_names, (this_class.name + '::DefinitionalClassMethods').to_sym)
+		assert_includes(this_class.included_module_names, (this_class.name + '::DefinitionalConstants').to_sym)
+#!		assert_includes(this_class.included_module_names, (this_class.name + '::Constructors').to_sym)
+		assert_includes(this_class.included_module_names, (this_class.name + '::ReferenceObjects').to_sym)
+		assert_includes(this_class.included_module_names, (this_class.name + '::Assertions').to_sym)
+	end # included_module_names
+	
+	def test_nested_scope_modules
+		this_class = RailsishRubyUnit::Executable.model_class?
+		assert_includes(this_class.constants, :DefinitionalClassMethods)
+		assert_includes(this_class.constants, :DefinitionalConstants)
+		assert_includes(this_class.constants, :Constructors)
+		assert_includes(this_class.constants, :ReferenceObjects)
+		assert_includes(this_class.constants, :Assertions)
+				nested_constants = this_class.constants.map do |m|
+					trial_eval = eval(this_class.name.to_s + '::' + m.to_s)
+					if trial_eval.kind_of?(Module)
+						trial_eval
+					else
+						nil
+					end # if
+				end.compact # map
+
+		assert_includes(nested_constants, this_class::DefinitionalClassMethods)
+		assert_includes(nested_constants, this_class::DefinitionalConstants)
+		assert_includes(nested_constants, this_class::Constructors)
+		assert_includes(nested_constants, this_class::ReferenceObjects)
+		assert_includes(nested_constants, this_class::Assertions)
+
+		assert_includes(this_class.nested_scope_modules, this_class::DefinitionalClassMethods)
+		assert_includes(this_class.nested_scope_modules, this_class::DefinitionalConstants)
+		assert_includes(this_class.nested_scope_modules, this_class::Constructors)
+		assert_includes(this_class.nested_scope_modules, this_class::ReferenceObjects)
+		assert_includes(this_class.nested_scope_modules, this_class::Assertions)
+		assert_equal(this_class::ClassInterface, Dry::Types::Struct::ClassInterface)
+#!		refute_includes(this_class.nested_scope_modules, Dry::Types::Struct::ClassInterface)
+	end # nested_scope_modules
 		
-  def test_Minimal_assert_pre_conditions
+  def test_Nomination_assert_pre_conditions
 #		refute(Self.frozen?, Self.inspect)
   end # assert_pre_conditions
 
-  def test_Minimal_assert_post_conditions
+  def test_Nomination_assert_post_conditions
   end # assert_post_conditions
 
   def test_assert_pre_conditions
-		assert_equal(:stash, Self.commit, Self.inspect)
+		assert_equal(nil, Self.commit, Self.inspect) # nil means working directory (to be stash)
 		assert_equal(:unit, Self.test_type, Self.inspect)
 		assert_equal(:nomination, Self.unit, Self.inspect)
 #		Self.assert_pre_conditions
@@ -67,7 +107,7 @@ class NominationTest < TestCase
   def test_assert_post_conditions
   end # assert_post_conditions
 
-  def test_Minimal_Examples
+  def test_Nomination_Examples
   end # Examples
   # rubocop:enable Style/MethodName
 end # Nomination

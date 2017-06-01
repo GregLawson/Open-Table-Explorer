@@ -47,20 +47,39 @@ class Nomination < Dry::Types::Value
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
-    attribute :commit, Types::Strict::Symbol
+    attribute :commit, Types::Strict::Symbol.optional # nil means working directory (to be stash)
 		attribute :unit, Types::Strict::Symbol
 		attribute :test_type, Types::Strict::Symbol
 
   module Constructors # such as alternative new methods
     include DefinitionalConstants
 		def nominate(test_executable)
-				Nomination.new(commit: nil, unit: test_executable.unit, test_type: test_executable.test_type)
-		end # stash
+				Nomination.new(commit: nil, unit: test_executable.unit.model_basename, test_type: test_executable.test_type)
+		end # nominate
 		
 		def pending
 			[Nomination::Self]
 		end # pending
 		
+		def dirty_test_executables
+			@repository.status.map do |file_status|
+				if file_status.log_file?
+					nil
+				elsif file_status.work_tree == :ignore
+					nil
+				else
+					lookup = FilePattern.find_from_path(file_status.file)
+					unless lookup.nil?
+						test_executable = TestExecutable.new_from_path(file_status.file)
+						testable = test_executable.generatable_unit_file?
+						if testable
+							test_executable # find unique
+						end # if
+					end # if
+				end # if
+			end.select { |t| !t.nil? }.uniq # map
+		end # dirty_test_executables
+
 		def clean_apply
 			pending.each do |nomination|
 				nomination.apply
