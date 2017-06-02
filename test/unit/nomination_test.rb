@@ -95,7 +95,7 @@ class NominationTest < TestCase
   end # assert_post_conditions
 
   def test_assert_pre_conditions
-    assert_equal(nil, Self.commit, Self.inspect) # nil means working directory (to be stash)
+    assert_equal(NamedCommit::Working_tree, Self.commit, Self.inspect) # nil means working directory (to be stash)
     assert_equal(:unit, Self.test_type, Self.inspect)
     assert_equal(:nomination, Self.unit, Self.inspect)
     #		Self.assert_pre_conditions

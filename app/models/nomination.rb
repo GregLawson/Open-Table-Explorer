@@ -45,14 +45,15 @@ class Nomination < Dry::Types::Value
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
-  attribute :commit, Types::Strict::Symbol.optional # nil means working directory (to be stash)
+  attribute :commit, NamedCommit # nil means working directory (to be stash)
+  attribute :target_branch, Types::Strict::Symbol.default(:edited) # nil means working directory (to be stash)
   attribute :unit, Types::Strict::Symbol
   attribute :test_type, Types::Strict::Symbol
 
   module Constructors # such as alternative new methods
     include DefinitionalConstants
     def nominate(test_executable)
-      Nomination.new(commit: nil, unit: test_executable.unit.model_basename, test_type: test_executable.test_type)
+      Nomination.new(commit: NamedCommit::Working_tree, target_branch: :edited, unit: test_executable.unit.model_basename, test_type: test_executable.test_type)
     end # nominate
 
     def pending
@@ -97,8 +98,8 @@ class Nomination < Dry::Types::Value
 
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
-    TestTestExecutable = Nomination.new(commit: :stash, unit: TestExecutable::Examples::TestTestExecutable.unit.model_basename, test_type: TestExecutable::Examples::TestTestExecutable.test_type)
-    Self = Nomination.new(commit: :stash, unit: RailsishRubyUnit::Executable.model_basename, test_type: :unit)
+    TestTestExecutable = Nomination.new(commit: NamedCommit::Working_tree, target_branch: :edited, unit: TestExecutable::Examples::TestTestExecutable.unit.model_basename, test_type: TestExecutable::Examples::TestTestExecutable.test_type)
+    Self = Nomination.new(commit: NamedCommit::Working_tree, target_branch: :edited, unit: RailsishRubyUnit::Executable.model_basename, test_type: :unit)
   end # ReferenceObjects
   include ReferenceObjects
 
