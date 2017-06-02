@@ -117,8 +117,8 @@ class RepositoryTest < TestCase
     #	message="SELF_code_Repo=#{SELF_code_Repo.inspect}"
     #	message+="\nThis_code_repository=#{This_code_repository.inspect}"
     #	message+="\nThis_code_repository.path=#{This_code_repository.path.inspect}"
-    this_code_repository = Repository.new(Root_directory)
-    sELF_code_Repo = Repository.new(Root_directory)
+    this_code_repository = Repository.new(path: Root_directory)
+    sELF_code_Repo = Repository.new(path: Root_directory)
     assert_equal(Root_directory, this_code_repository.path)
     This_code_repository.assert_pre_conditions
     this_code_repository.assert_pre_conditions
@@ -148,32 +148,27 @@ class RepositoryTest < TestCase
   def test_compare
   end # compare
 
-	def test_git_pathname
+  def test_git_pathname
     assert_pathname_exists(@temp_repo.git_pathname('refs'))
     assert_pathname_exists(@temp_repo.git_pathname('branches'))
     assert_pathname_exists(@temp_repo.git_pathname('HEAD'))
     assert_pathname_exists(This_code_repository.git_pathname('refs'))
-	end # git_pathname
-	
-	def test_stash!
-		@temp_repo.stash!
-    assert_equal([:clean], @temp_repo.state?)
-	end # stash!
-	
+  end # git_pathname
+
   def test_state?
     assert_equal([:clean], @temp_repo.state?)
-		@temp_repo.force_change
+    @temp_repo.force_change
     assert_equal([:dirty], @temp_repo.state?)
-		@temp_repo.git_command('merge passed --no-commit --no-ff').assert_post_conditions
-#!    assert_equal([:clean, :merge], @temp_repo.state?, @temp_repo.status.inspect)
-		@temp_repo.revert_changes
+    @temp_repo.git_command('merge passed --no-commit --no-ff').assert_post_conditions
+    # !    assert_equal([:clean, :merge], @temp_repo.state?, @temp_repo.status.inspect)
+    @temp_repo.revert_changes
     assert_equal([:clean], @temp_repo.state?)
     assert_equal([:dirty], This_code_repository.state?)
   end # state?
 
   def test_shell_command
     assert_equal(This_code_repository.path, This_code_repository.shell_command('pwd').output.chomp + '/')
-    assert_equal(@temp_repo.path, @temp_repo.shell_command('pwd').output.chomp + '/')
+    assert_equal(@temp_repo.path_with_trailing_slash, @temp_repo.shell_command('pwd').output.chomp + '/')
   end # shell_command
 
   def test_git_command
@@ -225,7 +220,6 @@ class RepositoryTest < TestCase
       assert(File.exist?(status.file) == (status.work_tree != :deleted), status.inspect)
     end # each
   end # status
-
 
   def test_something_to_commit?
     message = This_code_repository.status.inspect
@@ -316,7 +310,7 @@ class RepositoryTest < TestCase
     assert_equal(unique_repository_directory_pathname + "\n", switch_dir.output)
     #	ShellCommands.new('cd "'+unique_repository_directory_pathname+'";git init').assert_post_conditions
     ShellCommands.new([['cd', unique_repository_directory_pathname], '&&', %w(git init)])
-    new_repository = Repository.new(unique_repository_directory_pathname)
+    new_repository = Repository.new(path: unique_repository_directory_pathname)
     IO.write(unique_repository_directory_pathname + '/README', README_start_text + "1\n") # two consecutive slashes = one slash
     new_repository.git_command('add README')
     new_repository.git_command('commit -m "test_create_empty initial commit of README"')

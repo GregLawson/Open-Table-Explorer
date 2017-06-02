@@ -156,7 +156,15 @@ require_relative 'parse.rb'
 # assert_includes(Module.constants, :Branch)
 # refute_includes(Module.constants, :Repository)
 
-class Repository
+class Repository < Dry::Types::Value
+  module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
+#    include DefinitionalConstants
+    def git_command(git_command, repository_dir)
+      ShellCommands.new('git ' + ShellCommands.assemble_command_string(git_command), chdir: repository_dir)
+    end # git_command
+  end # DefinitionalClassMethods
+  extend DefinitionalClassMethods
+
   module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     Repository_Unit = Unit.new_from_path(__FILE__)
     Root_directory = FilePattern.project_root_dir?(__FILE__)
@@ -165,25 +173,21 @@ class Repository
   end # DefinitionalConstants
   include DefinitionalConstants
 
-  module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
-    include DefinitionalConstants
-    def git_command(git_command, repository_dir)
-      ShellCommands.new('git ' + ShellCommands.assemble_command_string(git_command), chdir: repository_dir)
-    end # git_command
-
-  end # DefinitionalClassMethods
-  extend DefinitionalClassMethods
-
-  attr_reader :path
-  def initialize(path)
-    if path.to_s[-1, 1] != '/'
-      path = path.to_s + '/'
-    end # if
+	 attribute :path, Types::Strict::String
+#  attr_reader :path
+#  def initialize(path)
+#    if path.to_s[-1, 1] != '/'
+#      path = path.to_s + '/'
+#    end # if
     #    @url = path
-    @path = path.to_s
+#    @path = path.to_s
     #    puts '@path=' + @path if $VERBOSE
-  end # initialize
+#  end # initialize
 
+	def path_with_trailing_slash
+		@path + (@path[-1, 1] == '/' ? '' : '/' )
+	end # path_with_trailing_slash
+	
   def ==(rhs)
     @path == rhs.path
   end # equal
@@ -209,14 +213,11 @@ class Repository
     end # if
   end # compare
 
-	def git_pathname(git_relative_path)
-		@path + '.git/' + git_relative_path
-	end # git_pathname
-	
-	def stash!
-		git_command('stash save --include-untracked')
-	end # stash!
-	
+  def git_pathname(git_relative_path)
+		
+     path_with_trailing_slash + '.git/' + git_relative_path
+  end # git_pathname
+
   def state?
     state = []
     state << :rebase if File.exist?(git_pathname('rebase-merge/git-rebase-todo'))
@@ -324,7 +325,7 @@ class Repository
       Dir.mkdir(path)
       if File.exist?(path)
         ShellCommands.new([['cd', path], '&&', %w(git init)])
-        new_repository = Repository.new(path)
+        new_repository = Repository.new(path: path)
       else
         raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exist?(path)}"
       end # if
@@ -362,7 +363,7 @@ class Repository
 
     def create_if_missing(path)
       if File.exist?(path)
-        Repository.new(path)
+        Repository.new(path: path)
       else
         create_empty(path)
       end # if
@@ -375,7 +376,7 @@ class Repository
     def create_test_repository(path = timestamped_repository_name?)
       replace_or_create(path)
       if File.exist?(path)
-        new_repository = Repository.new(path)
+        new_repository = Repository.new(path: path)
         IO.write(path + '/README', README_start_text + "\n") # two consecutive slashes = one slash
         new_repository.git_command('add README')
         new_repository.git_command('commit -m "create_empty initial commit of README"')
@@ -390,7 +391,7 @@ class Repository
 
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
-    This_code_repository = Repository.new(Root_directory)
+    This_code_repository = Repository.new(path: Root_directory)
   end # ReferenceObjects
   include ReferenceObjects
 end # Repository
