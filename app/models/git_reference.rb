@@ -20,19 +20,18 @@ require_relative '../../test/assertions/repository_assertions.rb'
 include TimeTypes
 
 
-class GitReference # base class for all git references (readable, maybe not writeable)
+class GitReference  < Dry::Types::Value # base class for all git references (readable, maybe not writeable)
 	
 	
-  include Virtus.value_object
+#  include Virtus.value_object
 
-  values do
-    attribute :initialization_string, Symbol
-    attribute :repository, Repository, default: Repository::This_code_repository
-  end # values
+#  values do
+    attribute :initialization_string, Types::Strict::String | Types::Strict::Symbol
+    attribute :repository, Repository.default(Repository::This_code_repository)
+#  end # values
 
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
 #    include DefinitionalConstants
-		# Simulate a NamedCommit for working directory not yet in git.
 		Tree = GitReference.new(initialization_string: 'HEAD' + '^{tree}', repository: Repository::This_code_repository) 
 		File = GitReference.new(initialization_string: 'HEAD:' + $0, repository: Repository::This_code_repository) 
   end # ReferenceObjects

@@ -177,7 +177,7 @@ class CommitTest < TestCase
 	
 	def test_tree
 		initialization_string = Head_at_start
-		tree_ref = GitReference.new(initialization_string: initialization_string.to_s + '^{tree}')
+		tree_ref = GitReference.new(initialization_string: initialization_string.to_s + '^{tree}', repository: Repository::This_code_repository)
 		tree_run = tree_ref.show_run
 		tree_run.assert_post_conditions
 		output = tree_run.output
