@@ -200,6 +200,8 @@ class NamedCommit < Commit # tags, symbols, and of course branches (subtype)
 		Orig_head_at_start = NamedCommit.new(initialization_string: :ORIG_HEAD, repository: Repository::This_code_repository)
 		Fetch_head_at_start = NamedCommit.new(initialization_string: :FETCH_HEAD, repository: Repository::This_code_repository)
 		Merge_head_at_start = NamedCommit.new(initialization_string: :MERGE_HEAD, repository: Repository::This_code_repository)
+		Working_tree = NamedCommit.new(initialization_string: :Working_tree, repository: Repository::This_code_repository) 
+    Stash_branch = NamedCommit.new(initialization_string: :stash, repository: Repository::Examples::This_code_repository)
   end # ReferenceObjects
   include ReferenceObjects
 end # NamedCommit
