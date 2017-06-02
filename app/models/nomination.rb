@@ -60,8 +60,8 @@ class Nomination < Dry::Types::Value
       [Nomination::Self]
     end # pending
 
-    def dirty_test_executables
-      @repository.status.map do |file_status|
+    def dirty_test_executable
+      @commit.repository.status.map do |file_status|
         if file_status.log_file?
           nil
         elsif file_status.work_tree == :ignore
@@ -77,7 +77,7 @@ class Nomination < Dry::Types::Value
           end # if
         end # if
       end.select { |t| !t.nil? }.uniq # map
-    end # dirty_test_executables
+    end # dirty_test_executable
 
     def clean_apply
       pending.each(&:apply) # each

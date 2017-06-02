@@ -47,6 +47,28 @@ class NominationTest < TestCase
   end # pending
 
   def dirty_test_executables
+    assert_instance_of(Array, Nomination.dirty_test_executables)
+    test_executables = NamedCommit::Working_tree.repository.status.map do |file_status|
+        if file_status.log_file?
+          nil
+        elsif file_status.work_tree == :ignore
+          nil
+        else
+          lookup = FilePattern.find_from_path(file_status.file)
+          unless lookup.nil?
+            test_executable = TestExecutable.new_from_path(file_status.file)
+            testable = test_executable.generatable_unit_file?
+            if testable
+              test_executable # find unique
+            end # if
+          end # unless
+        end # if
+		end.select { |t| !t.nil? }.uniq # map
+		assert_instance_of(Array, test_executables)
+			
+		Nomination.dirty_test_executables.partition do |test_executable|
+			
+		end # partition
   end # dirty_test_executables
 
   def test_included_module_names
