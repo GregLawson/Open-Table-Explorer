@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2013-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -14,17 +14,7 @@ class FileStatus < Dry::Types::Value
   module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
     # The following decoding is from man git status
     def file_change(status_char)
-      case status_char
-      when ' ' then :unmodified
-      when 'M' then :modified
-      when 'A' then :added
-      when 'D' then :deleted
-      when 'R' then :renamed
-      when 'C' then :copied
-      when 'U' then :updated_but_unmerged
-      when '?' then :untracked
-      when '!' then :ignored
-         end # case
+      FileStatus::File_change[status_char]
     end # file_change
 
     def match_possibilities?(one_letter_code, possibilities)
@@ -86,6 +76,17 @@ class FileStatus < Dry::Types::Value
 
   module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     Commitable = [:modified, :added, :deleted, :renamed, :copied].freeze
+		File_change = {
+       ' ' => :unmodified,
+       'M' => :modified,
+       'A' => :added,
+       'D' => :deleted,
+       'R' => :renamed,
+       'C' => :copied,
+       'U' => :updated_but_unmerged,
+       '?' => :untracked,
+       '!' => :ignored
+			}
   end # DefinitionalConstants
   include DefinitionalConstants
 
@@ -106,25 +107,95 @@ class FileStatus < Dry::Types::Value
     #    include DefinitionalConstants
   end # ReferenceObjects
   include ReferenceObjects
-
+	
+  def description
+		two_letter_code = FileStatus::File_change.invert[@index] + FileStatus::File_change.invert[@work_tree]
+    FileStatus.normal_status_descriptions(two_letter_code)
+  end # description
+	
   def log_file?
     @file[-4..-1] == '.log'
   end # log_file?
 
-  def description
-    FileStatus.normal_status_descriptions(@index.to_s + @work_tree.to_s)
-  end # description
+  def rubocop_file?
+    @file[-5..-1] == '.json'
+  end # rubocop_file?
+
+	def branch_specific?
+		log_file? || rubocop_file?
+	end # branch_specific?
+
+  def addable? # stagable
+    ( FileStatus::Commitable.include?(@work_tree) ||
+      FileStatus::Commitable.include?(@index) ||
+      merge_conflict? )
+  end # addable?
+
+  def needs_test?
+    if !addable?
+			false
+		elsif branch_specific?
+			false
+		else
+			true
+		end # if
+  end # needs_test?
 
   def needs_commit?
-    Commitable.include?(@work_tree) ||
-      Commitable.include?(@index) ||
-      merge_conflict?
+    ( FileStatus::Commitable.include?(@work_tree) ||
+      FileStatus::Commitable.include?(@index) ||
+      merge_conflict? )
   end # needs_commit?
 
   def merge_conflict?
     @work_tree == :updated_but_unmerged ||
       @index == :updated_but_unmerged
   end # merge_conflict?
+
+	def untracked?
+		@work_tree == :untracked ||
+      @index == :untracked	
+	end # untracked?
+	
+	def ignored?
+		@work_tree == :ignored ||
+      @index == :ignored
+	end # ignored?
+	
+	def group
+		{work_tree: work_tree, index: index, description: description, needs_test: needs_test?, rubocop_file: rubocop_file?, log_file: log_file?, untracked: untracked?, ignored: ignored?}
+	end # group
+
+	def explain
+		inspect + "\n" + group.inspect
+	end # explain
+	
+require_relative '../../app/models/assertions.rb'
+
+	module Assertions
+    module ClassMethods
+			def assert_pre_conditions(message='')
+				message+="In assert_pre_conditions, self=#{inspect}"
+			#	asset_nested_and_included(:ClassMethods, self)
+			#	asset_nested_and_included(:Constants, self)
+			#	asset_nested_and_included(:Assertions, self)
+				self
+			end #assert_pre_conditions
+
+		def assert_status_character(character)
+			assert_include(FileStatus::File_change.keys, character)
+		end # assert_status_character
+
+		end #ClassMethods
+		
+	def assert_preconditions
+		assert(File.exist?(@file) == (@work_tree != :deleted), explain)
+	end # assert_preconditions
+	
+  end # Assertions
+  include Assertions
+  extend Assertions::ClassMethods
+  # self.assert_pre_conditions
 end # FileStatus
 
 # assert_includes(Module.constants, :ShellCommands)
@@ -174,24 +245,11 @@ class Repository < Dry::Types::Value
   include DefinitionalConstants
 
 	 attribute :path, Types::Strict::String
-#  attr_reader :path
-#  def initialize(path)
-#    if path.to_s[-1, 1] != '/'
-#      path = path.to_s + '/'
-#    end # if
-    #    @url = path
-#    @path = path.to_s
-    #    puts '@path=' + @path if $VERBOSE
-#  end # initialize
 
 	def path_with_trailing_slash
 		@path + (@path[-1, 1] == '/' ? '' : '/' )
 	end # path_with_trailing_slash
 	
-  def ==(rhs)
-    @path == rhs.path
-  end # equal
-
   def <=>(rhs) # allow sort
     repository_compare = @path <=> rhs.path
     if repository_compare.nil?
@@ -289,7 +347,11 @@ class Repository < Dry::Types::Value
     end # if
     ret
   end # status
-
+		
+	def file_status_groups
+		status.group_by{|file_status| file_status.group }
+	end # file_status_groups
+	
   def something_to_commit?
     status.select(&:needs_commit?) != []
   end # something_to_commit

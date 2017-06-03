@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2016 by Greg Lawson
+#    Copyright (C) 2012-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -8,7 +8,13 @@
 # require_relative '../unit/test_environment'
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../test/assertions/repository_assertions.rb'
+
+module Examples
+	Self_file_status = FileStatus.new_from_status_line('   ' + $PROGRAM_NAME)
+end # Examples
+
 class FileStatusTest < TestCase
+	include Examples
   def test_file_change
     assert_equal(:unmodified, FileStatus.file_change(' '))
     assert_equal(:modified, FileStatus.file_change('M'))
@@ -19,6 +25,11 @@ class FileStatusTest < TestCase
     assert_equal(:updated_but_unmerged, FileStatus.file_change('U'))
     assert_equal(:untracked, FileStatus.file_change('?'))
     assert_equal(:ignored, FileStatus.file_change('!'))
+		characters = FileStatus::File_change.keys
+		symbols = FileStatus::File_change.values
+		characters.each do |character|
+			assert_equal(FileStatus::File_change[character], FileStatus.file_change(character), FileStatus::File_change.inspect)
+		end # each
   end # file_change
 
   def test_match_possibilities?
@@ -55,10 +66,10 @@ class FileStatusTest < TestCase
     assert_equal(FileStatus.normal_status_descriptions('R '), 'renamed in index')
     assert_equal(FileStatus.normal_status_descriptions('CD'), 'copied in index')
     assert_equal(true, FileStatus.match_two_possibilities?('A ', '[MARC]', ' '))
-    # ambigujous	assert_equal(FileStatus.normal_status_descriptions('A '), 'index and work tree matches')
+    # ambiguous	assert_equal(FileStatus.normal_status_descriptions('A '), 'index and work tree matches')
     assert_equal(true, FileStatus.match_two_possibilities?(' M', '[ MARC]', 'M'))
-    # ambigujous	assert_equal(FileStatus.normal_status_descriptions(' M'), 'work tree changed since index')
-    # ambigujous	assert_equal(FileStatus.normal_status_descriptions('CD'), 'deleted in work tree')
+    # ambiguous	assert_equal(FileStatus.normal_status_descriptions(' M'), 'work tree changed since index')
+    # ambiguous	assert_equal(FileStatus.normal_status_descriptions('CD'), 'deleted in work tree')
     assert_equal(FileStatus.normal_status_descriptions('??'), 'both untracked')
     assert_equal(FileStatus.normal_status_descriptions('!!'), 'both ignored')
   end # normal_status_descriptions
@@ -81,14 +92,97 @@ class FileStatusTest < TestCase
     assert_equal(FileStatus.normal_status_descriptions('UU'), 'unmerged, both modified')
   end # unmerged_status_descriptions
 
-  def test_Constructors
-    self_file_status = FileStatus.new_from_status_line('   ' + $PROGRAM_NAME)
-    refute_nil(self_file_status.file)
-    assert(File.exist?(self_file_status.file))
-  end # Constructors
+  def test_DefinitionalConstants
+		assert_include(FileStatus::Commitable, :modified)
+#		assert_equal(FileStatus::Commitable, FileStatus::File_change.values)
+		assert_empty(FileStatus::Commitable - FileStatus::File_change.values)
+		refute_empty(FileStatus::File_change.keys - FileStatus::Commitable)
+		assert_equal(FileStatus::File_change.keys.size, FileStatus::File_change.values.size, FileStatus::File_change.inspect)
+		assert_include(FileStatus::File_change.keys, 'D', FileStatus::File_change.inspect)
+		FileStatus::File_change.keys.each do |key|
+			assert_equal(key, FileStatus::File_change.invert[FileStatus::File_change[key]], FileStatus::File_change.inspect)
+		end # each
+  end # DefinitionalConstants
+
+  def test_new_from_status_line
+    refute_nil(Self_file_status.file)
+    assert(File.exist?(Self_file_status.file))
+  end # new_from_status_line
+
+  def test_description
+		two_letter_code = FileStatus::File_change.invert[Self_file_status.index] + FileStatus::File_change.invert[Self_file_status.work_tree]
+    assert_include(['  ', 'MM'], two_letter_code, Self_file_status.explain)
+    assert_include(['both unmodified', 'both unmodified'], Self_file_status.description, Self_file_status.explain)
+  end # description
 end # FileStatus
 
 class RepositoryTest < TestCase
+	include Examples
+
+  def test_log_file?
+    refute_empty(This_code_repository.status.select(&:log_file?))
+    refute_empty(This_code_repository.status - This_code_repository.status.select(&:log_file?))
+  end # log_file?
+
+  def test_rubocop_file?
+    refute_empty(This_code_repository.status.select(&:rubocop_file?))
+    refute_empty(This_code_repository.status - This_code_repository.status.select(&:rubocop_file?))
+  end # rubocop_file?
+
+	def test_branch_specific?
+    refute_empty(This_code_repository.status.select(&:branch_specific?))
+    refute_empty(This_code_repository.status - This_code_repository.status.select(&:branch_specific?))
+	end # branch_specific?
+
+  def test_addable?
+    refute_empty(This_code_repository.status.select(&:addable?))
+  end # needs_commit?
+
+  def test_needs_test?
+    refute_empty(This_code_repository.status.select(&:needs_test?))
+  end # needs_test?
+
+  def test_needs_commit?
+    refute_empty(This_code_repository.status.select(&:needs_commit?))
+  end # needs_commit?
+
+  def test_merge_conflict?
+    This_code_repository.status.each do |file_stat|
+      refute(file_stat.merge_conflict?, file_stat.explain)
+    end # each
+  end # merge_conflict?
+
+	def test_untracked?
+    refute_empty(This_code_repository.status.select(&:untracked?))
+	end # untracked?
+	
+	def test_ignored?
+    refute_empty(This_code_repository.status.select(&:ignored?))
+	end # ignored?
+	
+	def test_group
+		assert_equal(false, Self_file_status.group[:log_file])
+		assert_equal(false, Self_file_status.group[:rubocop_file])
+		assert_include([:unmodified], Self_file_status.group[:index])
+		assert_include([:unmodified], Self_file_status.group[:work_tree])
+		assert_include(['both unmodified'], Self_file_status.group[:description])
+		assert_include([false], Self_file_status.group[:needs_test])
+	end # group
+
+	def test_explain
+    assert_match(/FileStatus/, Self_file_status.explain)
+	
+	end # explain
+		
+	def test_assert_preconditions
+    This_code_repository.status.each do |file_stat|
+#!      file_stat.assert_preconditions
+    end # each
+	end # assert_preconditions
+	def test_assert_status_character
+		FileStatus.assert_status_character('?')
+	end # assert_status_character
+
   include RubyAssertions
   include Repository::Examples
   Cleanup_failed_test_paths = Root_directory + '/test/data_sources/repository20*/'
@@ -141,9 +235,6 @@ class RepositoryTest < TestCase
     assert_pathname_exists(@temp_repo.path)
     This_code_repository # .assert_pre_conditions
   end # initialize
-
-  def test_equal
-  end # equal
 
   def test_compare
   end # compare
@@ -221,6 +312,30 @@ class RepositoryTest < TestCase
     end # each
   end # status
 
+	def test_file_status_groups
+		file_status_groups = This_code_repository.file_status_groups
+		file_status_groups.keys.each do |group|
+			signature =file_status_groups[group].map do |file_status|
+				file_status.group
+			end.uniq # each
+			assert_equal(1, signature.size, signature.inspect)
+			assert_include([true, false], group[:log_file], group.inspect)
+			assert_include([true, false], group[:rubocop_file], group.inspect)
+			assert_include([:unmodified, :modified, :untracked, :ignored], group[:index], group.inspect)
+			assert_include([:unmodified, :modified, :untracked, :ignored], group[:work_tree], group.inspect)
+			assert_include(['both ignored', 'both unmodified', 'not updated', 'both untracked'], group[:description], group.inspect)
+			assert_include([true, false], group[:needs_test], group.inspect)
+			
+			partitions = [:log_file, :rubocop_file, :needs_test, :untracked, :ignored]
+			partitions.each do |partition|
+				assert_include([true, false], group[partition], group.inspect)
+			end # each
+			refute_equal(0, partitions.map{|partition| group[partition] ? 1 : 0}.sum, group.inspect)
+			assert(group[:ignored] || group[:untracked] || (group[:needs_test] || group[:log_file] || group[:rubocop_file]), group.inspect)
+		end # each
+
+	end # file_status_groups
+	
   def test_something_to_commit?
     message = This_code_repository.status.inspect
     assert(This_code_repository.something_to_commit?, message)
