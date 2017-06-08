@@ -1,34 +1,34 @@
 {:current_branch_name => Branch.new(name: nil)
 ,
-:start_time => Time.new(2017, 6, 8, 4, 34, Rational(40591084699, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 6, 9, 6, 20, Rational(37333429260, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/cache_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/cache_test
 Started
-..........
+................
 
-Finished in 0.007136587 seconds.
+Finished in 0.013709984 seconds.
 ------
-10 tests, 21 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+16 tests, 21 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-1401.23 tests/s, 2942.58 assertions/s
+1167.03 tests/s, 1531.73 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/cache_test.rb"
-	User time (seconds): 1.16
-	System time (seconds): 0.11
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.29
+	User time (seconds): 0.94
+	System time (seconds): 0.08
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.04
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 31556
+	Maximum resident set size (kbytes): 24564
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8020
+	Minor (reclaiming a frame) page faults: 6265
 	Voluntary context switches: 3
-	Involuntary context switches: 186
+	Involuntary context switches: 116
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

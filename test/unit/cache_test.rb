@@ -13,6 +13,7 @@ require_relative '../assertions/ruby_assertions_test_unit.rb'
 class TestClass
   include Cache
   extend Cache::ClassMethods
+  extend Cache::Assertions::ClassMethods
   def make_instance_variables
 		cache do
 			2
@@ -26,7 +27,7 @@ class TestClass
 	end # make_class_cache
 end # TestClass
 
-class CacheTest < TestCase
+class CacheClassTest < TestCase
   include RubyAssertions
 
 	def setup
@@ -37,8 +38,64 @@ class CacheTest < TestCase
   end # teardown
 
   def test_cache_const_name
-    assert_equal(:@cached_test, TestClass.new.cache_const_name(:test))
     assert_equal(:Cached_make_class_cache, TestClass.cache_const_name(:make_class_cache))
+  end # cache_const_name
+
+  def test_cache
+    TestClass.refute_cached(:test, TestClass.constants.inspect)
+    TestClass.refute_cached(:cache, TestClass.constants.inspect)
+    TestClass.refute_cached(:test, TestClass.constants.inspect)
+		cache_name = :make_class_cache
+    TestClass.refute_cached(cache_name, TestClass.constants.inspect)
+		TestClass.const_set(TestClass.cache_const_name(cache_name), 'test_cached')
+    TestClass.assert_cached(cache_name, TestClass.constants.inspect)
+    TestClass.refute_cached(:cache, TestClass.constants.inspect)
+		
+		TestClass.clear_cache(cache_name)
+    TestClass.refute_cached(cache_name, TestClass.constants.inspect)
+    TestClass.refute_cached(:cache, TestClass.constants.inspect)
+    TestClass.refute_cached(:test, TestClass.constants.inspect)
+		
+    TestClass.make_class_cache
+    TestClass.refute_cached(:test, TestClass.constants.inspect)
+		TestClass.clear_cache(:cache)
+    TestClass.refute_cached(:cache, TestClass.constants.inspect)
+    TestClass.assert_cached(:make_class_cache, TestClass.constants.inspect)
+  end # cache
+
+  def test_explain_cache
+    object = TestClass
+    cache_name = :make_class_cache
+    TestClass.refute_cached(:cache, TestClass.constants.inspect)
+    TestClass.refute_cached(:test, TestClass.constants.inspect)
+    TestClass.refute_cached(cache_name, TestClass.constants.inspect)
+#!		assert_equal([:ClassMethods, :Assertions], TestClass.constants)
+#!    assert_equal(':make_class_cache is not cached as constant TestClass::Cached_make_class_cache in []', object.explain_cache(cache_name))
+    TestClass.make_class_cache
+    assert_equal(':make_class_cache is cached as constant TestClass::Cached_make_class_cache = "class cache value"', object.explain_cache(cache_name))
+  end # explain_cache
+
+  def test_clear_cache
+  end # clear_cache
+
+  def test_assert_cached
+    TestClass.refute_cached(:cache, TestClass.constants.inspect)
+    TestClass.make_class_cache
+    TestClass.refute_cached(:cache, TestClass.constants.inspect)
+    TestClass.assert_cached(:make_class_cache, TestClass.constants.inspect)
+  end # assert_cached
+
+  def test_refute_cached
+    TestClass.refute_cached(:cache)
+    TestClass.refute_cached(:make_class_cache)
+  end # refute_cached
+end # Cache
+
+class CacheTest < TestCase
+  include RubyAssertions
+
+  def test_cache_const_name
+    assert_equal(:@cached_test, TestClass.new.cache_const_name(:test))
   end # cache_const_name
 
   def test_cached?
@@ -70,24 +127,6 @@ class CacheTest < TestCase
     assert_equal(2, object.cache(:test) { || 3 })
     assert_equal(2, object.cache { || 2 })
 
-    TestClass.refute_cached(:cache, TestClass.constants.inspect)
-    TestClass.refute_cached(:test, TestClass.constants.inspect)
-		cache_name = :make_class_cache
-    TestClass.refute_cached(cache_name, TestClass.constants.inspect)
-		TestClass.const_set(TestClass.cache_const_name(cache_name), 'test_cached')
-    TestClass.assert_cached(cache_name, TestClass.constants.inspect)
-    TestClass.refute_cached(:cache, TestClass.constants.inspect)
-		
-		TestClass.clear_cache(cache_name)
-    TestClass.refute_cached(cache_name, TestClass.constants.inspect)
-    TestClass.refute_cached(:cache, TestClass.constants.inspect)
-    TestClass.refute_cached(:test, TestClass.constants.inspect)
-		
-    TestClass.make_class_cache
-    TestClass.refute_cached(:test, TestClass.constants.inspect)
-		TestClass.clear_cache(:cache)
-    TestClass.refute_cached(:cache, TestClass.constants.inspect)
-    TestClass.assert_cached(:make_class_cache, TestClass.constants.inspect)
   end # cache
 
   def test_explain_cache
@@ -97,16 +136,6 @@ class CacheTest < TestCase
     assert_equal(2, object.cache(cache_name) { || 2 })
     assert_equal(':test is cached as instance variable :@cached_test = 2', object.explain_cache(cache_name))
     assert_equal(':junk is not cached as instance variable :@cached_junk in [:@cached_test]', object.explain_cache(:junk))
-
-    object = TestClass
-    cache_name = :make_class_cache
-    TestClass.refute_cached(:cache, TestClass.constants.inspect)
-    TestClass.refute_cached(:test, TestClass.constants.inspect)
-    TestClass.refute_cached(cache_name, TestClass.constants.inspect)
-#!		assert_equal([:ClassMethods, :Assertions], TestClass.constants)
-#!    assert_equal(':make_class_cache is not cached as constant TestClass::Cached_make_class_cache in []', object.explain_cache(cache_name))
-    TestClass.make_class_cache
-    assert_equal(':make_class_cache is cached as constant TestClass::Cached_make_class_cache = "class cache value"', object.explain_cache(cache_name))
   end # explain_cache
 
   def test_clear_cache
@@ -117,18 +146,12 @@ class CacheTest < TestCase
     cache_name = :test
     assert_equal(2, object.cache(cache_name) { || 2 })
     object.assert_cached(cache_name)
-    TestClass.refute_cached(:cache, TestClass.constants.inspect)
-    TestClass.make_class_cache
-    TestClass.refute_cached(:cache, TestClass.constants.inspect)
-    TestClass.assert_cached(:make_class_cache, TestClass.constants.inspect)
   end # assert_cached
 
   def test_refute_cached
-    TestClass.refute_cached(:cache)
     object = TestClass.new
     cache_name = :test
     object.refute_cached(cache_name)
-    TestClass.refute_cached(:make_class_cache)
   end # refute_cached
 end # Cache
 

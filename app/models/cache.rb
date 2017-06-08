@@ -5,56 +5,60 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-# require 'pathname'
-# need  sudo apt-get install poppler-utils
-# need nodejs
-# need sudo apt-get install pdftk
-# require_relative '../../app/models/no_db.rb'
-require_relative '../../app/models/shell_command.rb'
-require_relative '../../app/models/parse.rb'
-require 'dry-types'
-module Types
-  include Dry::Types.module
-end # Types
-# ! require 'virtus'
-
 module Cache
 	module ClassMethods
-		include Cache
-	end # ClassMethods
-  def cache_const_name(cache_name)
-    if self.class == Class
-      ('Cached_' + cache_name.to_s).to_sym
+		def cache_const_name(cache_name)
+				('Cached_' + cache_name.to_s).to_sym
+		end # cache_const_name
+
+		def cached?(cache_name)
+				self.const_defined?(cache_const_name(cache_name)) && !self.const_get(cache_const_name(cache_name), false).nil?
+		end # cached?
+
+		def cache(cache_name = __callee__)
+			if block_given?
+					if cached?(cache_name)
+						self.const_get(cache_const_name(cache_name), false)
+					else
+						ret = yield
+						self.const_set(cache_const_name(cache_name), ret)
+					end # if
+			else
+				raise 'caching ' + cache_name.to_s + 'requires a block.'
+			end # unless
+		end # cache
+
+  def explain_cache(cache_name)
+    if cached?(cache_name)
+			ret = cache_name.inspect + ' is cached as '
+        ret + 'constant ' + self.name + '::' + cache_const_name(cache_name).to_s + ' = ' + self.const_get(cache_const_name(cache_name)).inspect
     else
-      ('@cached_' + cache_name.to_s).to_sym
+      ret = cache_name.inspect + ' is not cached as '
+        ret + 'constant ' + self.name + '::' + cache_const_name(cache_name).to_s + ' in ' + self.constants.inspect
     end # if
+  end # explain_cache
+
+  def clear_cache(cache_name)
+			self.const_set(cache_const_name(cache_name), nil)
+  end # clear_cache
+	end # ClassMethods
+	
+  def cache_const_name(cache_name)
+      ('@cached_' + cache_name.to_s).to_sym
   end # cache_const_name
 
   def cached?(cache_name)
-    if self.class == Class
-      self.const_defined?(cache_const_name(cache_name)) && !self.const_get(cache_const_name(cache_name), false).nil?
-    else
       instance_variable_defined?(cache_const_name(cache_name))
-    end # if
   end # cached?
 
   def cache(cache_name = __callee__)
     if block_given?
-      if self.class == Class
-        if cached?(cache_name)
-          self.const_get(cache_const_name(cache_name), false)
-        else
-          ret = yield
-          self.const_set(cache_const_name(cache_name), ret)
-        end # if
-      else
         if cached?(cache_name)
           instance_variable_get(cache_const_name(cache_name))
         else
           ret = yield
           instance_variable_set(cache_const_name(cache_name), ret)
         end # if
-      end # if
     else
       raise 'caching ' + cache_name.to_s + 'requires a block.'
     end # unless
@@ -91,6 +95,15 @@ require_relative '../../app/models/assertions.rb'
 	module Assertions
     module ClassMethods
 
+  def assert_cached(cache_name, message='')
+		message+="In assert_cached, self=#{inspect}" + "\n" + explain_cache(cache_name)
+    assert(cached?(cache_name), message)
+  end # assert_cached
+
+  def refute_cached(cache_name, message='')
+		message+="In refute_cached, self=#{inspect}" + "\n" + explain_cache(cache_name)
+    refute(cached?(cache_name), message)
+  end # refute_cached
 		end #ClassMethods
 
   end # Assertions
@@ -124,7 +137,7 @@ class Object
     dup_object = dup
     clone_object = clone
     # dup copies taint
-    # clone copies internal stste, dup creates new object
+    # clone copies internal state, dup creates new object
     unless frozen? # test unit modifies object
       assert_equal(tainted?, clone_object.tainted?, clone_state.inspect)
       assert_equal(tainted?, dup_object.tainted?, clone_state.inspect)
