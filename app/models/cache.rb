@@ -11,7 +11,6 @@
 # need sudo apt-get install pdftk
 # require_relative '../../app/models/no_db.rb'
 require_relative '../../app/models/shell_command.rb'
-require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/parse.rb'
 require 'dry-types'
 module Types
@@ -20,6 +19,9 @@ end # Types
 # ! require 'virtus'
 
 module Cache
+	module ClassMethods
+		include Cache
+	end # ClassMethods
   def cache_const_name(cache_name)
     if self.class == Class
       ('Cached_' + cache_name.to_s).to_sym
@@ -30,7 +32,7 @@ module Cache
 
   def cached?(cache_name)
     if self.class == Class
-      self.class.const_defined?(cache_const_name(cache_name))
+      self.const_defined?(cache_const_name(cache_name)) && !self.const_get(cache_const_name(cache_name), false).nil?
     else
       instance_variable_defined?(cache_const_name(cache_name))
     end # if
@@ -40,10 +42,10 @@ module Cache
     if block_given?
       if self.class == Class
         if cached?(cache_name)
-          self.class.const_get(cache_const_name(cache_name))
+          self.const_get(cache_const_name(cache_name), false)
         else
           ret = yield
-          self.class.const_set(cache_const_name(cache_name), ret)
+          self.const_set(cache_const_name(cache_name), ret)
         end # if
       else
         if cached?(cache_name)
@@ -60,31 +62,50 @@ module Cache
 
   def explain_cache(cache_name)
     if cached?(cache_name)
+			ret = cache_name.inspect + ' is cached as '
       if self.class == Class
-        cache_name.inspect + ' is cached as constant ' + self.class.name + '::' + cache_const_name(cache_name).to_s + ' = ' + self.class.const_get(cache_const_name(cache_name)).inspect
+        ret + 'constant ' + self.name + '::' + cache_const_name(cache_name).to_s + ' = ' + self.const_get(cache_const_name(cache_name)).inspect
       else
-        cache_name.inspect + ' is cached as instance variable ' + cache_const_name(cache_name).inspect + ' = ' + instance_variable_get(cache_const_name(cache_name)).inspect
+        ret + 'instance variable ' + cache_const_name(cache_name).inspect + ' = ' + instance_variable_get(cache_const_name(cache_name)).inspect
       end # if
     else
-      cache_name.inspect + ' is not cached in ' + self.class.constants.inspect
+      ret = cache_name.inspect + ' is not cached as '
       if self.class == Class
-        cache_name.inspect + ' is not cached as constant ' + self.class.name + '::' + cache_const_name(cache_name).to_s + ' in ' + self.class.constants.inspect
+        ret + 'constant ' + self.name + '::' + cache_const_name(cache_name).to_s + ' in ' + self.constants.inspect
       else
-        cache_name.inspect + ' is not cached as instance variable ' + cache_const_name(cache_name).inspect + ' in ' + instance_variables.inspect
+        ret + 'instance variable ' + cache_const_name(cache_name).inspect + ' in ' + instance_variables.inspect
       end # if
     end # if
   end # explain_cache
 
   def clear_cache(cache_name)
-    self.class.const_set(cache_const_name(cache_name), nil)
+		if self.class == Class
+			self.const_set(cache_const_name(cache_name), nil)
+		else
+			instance_variable_set(cache_const_name(cache_name), nil)
+		end # if
   end # clear_cache
+	
+require_relative '../../app/models/assertions.rb'
 
-  def assert_cached(cache_name)
-    assert(cached?(cache_name), explain_cache(cache_name))
+	module Assertions
+    module ClassMethods
+
+		end #ClassMethods
+
+  end # Assertions
+  include Assertions
+  extend Assertions::ClassMethods
+  # self.assert_pre_conditions
+
+  def assert_cached(cache_name, message='')
+		message+="In assert_cached, self=#{inspect}" + "\n" + explain_cache(cache_name)
+    assert(cached?(cache_name), message)
   end # assert_cached
 
-  def refute_cached(cache_name)
-    refute(cached?(cache_name), explain_cache(cache_name) + "\n" + inspect)
+  def refute_cached(cache_name, message='')
+		message+="In refute_cached, self=#{inspect}" + "\n" + explain_cache(cache_name)
+    refute(cached?(cache_name), message)
   end # refute_cached
 end # Cache
 
