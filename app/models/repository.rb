@@ -76,17 +76,17 @@ class FileStatus < Dry::Types::Value
 
   module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     Commitable = [:modified, :added, :deleted, :renamed, :copied].freeze
-		File_change = {
-       ' ' => :unmodified,
-       'M' => :modified,
-       'A' => :added,
-       'D' => :deleted,
-       'R' => :renamed,
-       'C' => :copied,
-       'U' => :updated_but_unmerged,
-       '?' => :untracked,
-       '!' => :ignored
-			}
+    File_change = {
+      ' ' => :unmodified,
+      'M' => :modified,
+      'A' => :added,
+      'D' => :deleted,
+      'R' => :renamed,
+      'C' => :copied,
+      'U' => :updated_but_unmerged,
+      '?' => :untracked,
+      '!' => :ignored
+    }.freeze
   end # DefinitionalConstants
   include DefinitionalConstants
 
@@ -107,12 +107,12 @@ class FileStatus < Dry::Types::Value
     #    include DefinitionalConstants
   end # ReferenceObjects
   include ReferenceObjects
-	
+
   def description
-		two_letter_code = FileStatus::File_change.invert[@index] + FileStatus::File_change.invert[@work_tree]
+    two_letter_code = FileStatus::File_change.invert[@index] + FileStatus::File_change.invert[@work_tree]
     FileStatus.normal_status_descriptions(two_letter_code)
   end # description
-	
+
   def log_file?
     @file[-4..-1] == '.log'
   end # log_file?
@@ -121,30 +121,30 @@ class FileStatus < Dry::Types::Value
     @file[-5..-1] == '.json'
   end # rubocop_file?
 
-	def branch_specific?
-		log_file? || rubocop_file?
-	end # branch_specific?
+  def branch_specific?
+    log_file? || rubocop_file?
+  end # branch_specific?
 
   def addable? # stagable
-    ( FileStatus::Commitable.include?(@work_tree) ||
+    (FileStatus::Commitable.include?(@work_tree) ||
       FileStatus::Commitable.include?(@index) ||
-      merge_conflict? )
+      merge_conflict?)
   end # addable?
 
   def needs_test?
     if !addable?
-			false
-		elsif branch_specific?
-			false
-		else
-			true
-		end # if
+      false
+    elsif branch_specific?
+      false
+    else
+      true
+    end # if
   end # needs_test?
 
   def needs_commit?
-    ( FileStatus::Commitable.include?(@work_tree) ||
+    (FileStatus::Commitable.include?(@work_tree) ||
       FileStatus::Commitable.include?(@index) ||
-      merge_conflict? )
+      merge_conflict?)
   end # needs_commit?
 
   def merge_conflict?
@@ -152,46 +152,44 @@ class FileStatus < Dry::Types::Value
       @index == :updated_but_unmerged
   end # merge_conflict?
 
-	def untracked?
-		@work_tree == :untracked ||
-      @index == :untracked	
-	end # untracked?
-	
-	def ignored?
-		@work_tree == :ignored ||
+  def untracked?
+    @work_tree == :untracked ||
+      @index == :untracked
+  end # untracked?
+
+  def ignored?
+    @work_tree == :ignored ||
       @index == :ignored
-	end # ignored?
-	
-	def group
-		{work_tree: work_tree, index: index, description: description, needs_test: needs_test?, rubocop_file: rubocop_file?, log_file: log_file?, untracked: untracked?, ignored: ignored?}
-	end # group
+  end # ignored?
 
-	def explain
-		inspect + "\n" + group.inspect
-	end # explain
-	
-require_relative '../../app/models/assertions.rb'
+  def group
+    { work_tree: work_tree, index: index, description: description, needs_test: needs_test?, rubocop_file: rubocop_file?, log_file: log_file?, untracked: untracked?, ignored: ignored? }
+  end # group
 
-	module Assertions
+  def explain
+    inspect + "\n" + group.inspect
+  end # explain
+
+  require_relative '../../app/models/assertions.rb'
+
+  module Assertions
     module ClassMethods
-			def assert_pre_conditions(message='')
-				message+="In assert_pre_conditions, self=#{inspect}"
-			#	asset_nested_and_included(:ClassMethods, self)
-			#	asset_nested_and_included(:Constants, self)
-			#	asset_nested_and_included(:Assertions, self)
-				self
-			end #assert_pre_conditions
+      def assert_pre_conditions(message = '')
+        message += "In assert_pre_conditions, self=#{inspect}"
+        #	assert_nested_and_included(:ClassMethods, self)
+        #	assert_nested_and_included(:Constants, self)
+        #	assert_nested_and_included(:Assertions, self)
+        self
+      end # assert_pre_conditions
 
-		def assert_status_character(character)
-			assert_include(FileStatus::File_change.keys, character)
-		end # assert_status_character
+      def assert_status_character(character)
+        assert_include(FileStatus::File_change.keys, character)
+      end # assert_status_character
+     end # ClassMethods
 
-		end #ClassMethods
-		
-	def assert_preconditions
-		assert(File.exist?(@file) == (@work_tree != :deleted), explain)
-	end # assert_preconditions
-	
+    def assert_preconditions
+      assert(File.exist?(@file) == (@work_tree != :deleted), explain)
+    end # assert_preconditions
   end # Assertions
   include Assertions
   extend Assertions::ClassMethods
@@ -229,7 +227,7 @@ require_relative 'parse.rb'
 
 class Repository < Dry::Types::Value
   module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
-#    include DefinitionalConstants
+    #    include DefinitionalConstants
     def git_command(git_command, repository_dir)
       ShellCommands.new('git ' + ShellCommands.assemble_command_string(git_command), chdir: repository_dir)
     end # git_command
@@ -244,12 +242,12 @@ class Repository < Dry::Types::Value
   end # DefinitionalConstants
   include DefinitionalConstants
 
-	 attribute :path, Types::Strict::String
+  attribute :path, Types::Strict::String
 
-	def path_with_trailing_slash
-		@path + (@path[-1, 1] == '/' ? '' : '/' )
-	end # path_with_trailing_slash
-	
+  def path_with_trailing_slash
+    @path + (@path[-1, 1] == '/' ? '' : '/')
+  end # path_with_trailing_slash
+
   def <=>(rhs) # allow sort
     repository_compare = @path <=> rhs.path
     if repository_compare.nil?
@@ -272,8 +270,7 @@ class Repository < Dry::Types::Value
   end # compare
 
   def git_pathname(git_relative_path)
-		
-     path_with_trailing_slash + '.git/' + git_relative_path
+    path_with_trailing_slash + '.git/' + git_relative_path
   end # git_pathname
 
   def state?
@@ -347,11 +344,11 @@ class Repository < Dry::Types::Value
     end # if
     ret
   end # status
-		
-	def file_status_groups
-		status.group_by{|file_status| file_status.group }
-	end # file_status_groups
-	
+
+  def file_status_groups
+    status.group_by(&:group)
+  end # file_status_groups
+
   def something_to_commit?
     status.select(&:needs_commit?) != []
   end # something_to_commit
