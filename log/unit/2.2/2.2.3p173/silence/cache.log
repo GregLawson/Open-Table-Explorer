@@ -1,34 +1,37 @@
 {:current_branch_name => Branch.new(name: nil)
 ,
-:start_time => Time.new(2017, 6, 9, 6, 20, Rational(37333429260, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 6, 10, 4, 0, Rational(22520142412, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/cache_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/cache_test
 Started
-................
+......cache_miss = #<Benchmark::Tms:0x007f999a819260 @label="", @real=0.7754557989537716, @cstime=0.0, @cutime=0.0, @stime=0.03, @utime=0.75, @total=0.78>, cache_hit = #<Benchmark::Tms:0x007f999a80e9f0 @label="", @real=1.685996539890766e-05, @cstime=0.0, @cutime=0.0, @stime=0.0, @utime=0.0, @total=0.0>
+all_basenames = #<Benchmark::Tms:0x007f999a80d938 @label="", @real=1.3680197298526764e-05, @cstime=0.0, @cutime=0.0, @stime=0.0, @utime=0.0, @total=0.0>
+all = #<Benchmark::Tms:0x007f999afd2600 @label="", @real=0.8006228308659047, @cstime=0.0, @cutime=0.0, @stime=0.0, @utime=0.7899999999999998, @total=0.7899999999999998>
+..................
 
-Finished in 0.013709984 seconds.
+Finished in 1.587790295 seconds.
 ------
-16 tests, 21 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+24 tests, 30 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-1167.03 tests/s, 1531.73 assertions/s
+15.12 tests/s, 18.89 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/cache_test.rb"
-	User time (seconds): 0.94
-	System time (seconds): 0.08
+	User time (seconds): 2.58
+	System time (seconds): 0.09
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.04
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.69
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 24564
+	Maximum resident set size (kbytes): 38328
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 6265
+	Minor (reclaiming a frame) page faults: 9708
 	Voluntary context switches: 3
-	Involuntary context switches: 116
+	Involuntary context switches: 265
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
