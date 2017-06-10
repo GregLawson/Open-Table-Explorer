@@ -46,30 +46,73 @@ class NominationTest < TestCase
     end # each
   end # pending
 
+  def test_dirty_unit_chunks
+    pattern = FilePattern.find_from_path($PROGRAM_NAME)
+    lookup = FilePattern.new_from_path($PROGRAM_NAME)
+    assert_equal(:nomination, lookup.unit_base_name, lookup.inspect)
+
+    units = Repository::This_code_repository.status.group_by do |file_status|
+      assert_path_exist(file_status.file)
+      pattern = FilePattern.find_from_path(file_status.file)
+      #			assert_instance_of(Hash, pattern)
+      if pattern.nil? # not a unit file
+        :non_unit
+      else
+        lookup = FilePattern.new_from_path(file_status.file)
+        refute_nil(lookup, file_status.explain)
+        unit_name = lookup.unit_base_name
+        if Unit.all_basenames.include?(unit_name)
+          unit_name
+        else # non-unit files
+          :non_unit
+        end # if
+      end # if
+    end # group_by
+    # !		assert_equal([], units.keys, units.ruby_lines_storage)
+    dirty_unit_chunks = Nomination.dirty_unit_chunks(Repository::This_code_repository)
+
+    dirty_unit_chunks.each_pair do |unit, files|
+      assert_instance_of(Array, files, dirty_unit_chunks.inspect)
+      assert_instance_of(Symbol, unit, dirty_unit_chunks.ruby_lines_storage)
+    end # chunk
+  end # dirty_unit_chunks
+
   def dirty_test_executables
     assert_instance_of(Array, Nomination.dirty_test_executables)
-    test_executables = NamedCommit::Working_tree.repository.status.map do |file_status|
-        if file_status.log_file?
-          nil
-        elsif file_status.work_tree == :ignore
-          nil
-        else
-          lookup = FilePattern.find_from_path(file_status.file)
-          unless lookup.nil?
-            test_executable = TestExecutable.new_from_path(file_status.file)
-            testable = test_executable.generatable_unit_file?
-            if testable
-              test_executable # find unique
-            end # if
-          end # unless
-        end # if
-		end.select { |t| !t.nil? }.uniq # map
-		assert_instance_of(Array, test_executables)
-			
-		Nomination.dirty_test_executables.partition do |test_executable|
-			
-		end # partition
+    test_executable_chunks = Nomination.dirty_unit_chunks(Repository::This_code_repository)
+		test_executable_chunks.keys do |unit_name|
+      test_executable_chunks[unit_name].each do |file_status|
+				if file_status.log_file?
+					nil
+				elsif file_status.work_tree == :ignore
+					nil
+				else
+						test_executable = TestExecutable.new_from_path(file_status.file)
+						testable = test_executable.generatable_unit_file?
+						if testable
+							test_executable # find unique
+						end # if
+				end # map
+      end # if
+    end # chunk
+    assert_instance_of(Array, test_executables)
+    test_executables.map do |test_executable|
+    end # chunk
+    test_executable_chunks.each do |test_executable, dirty_files|
+    end # each
+
+    Nomination.dirty_test_executables.chunk do |test_executable|
+    end # partition
   end # dirty_test_executables
+
+    def test_clean_apply
+    end # clean_apply
+
+
+
+
+    def test_apply
+    end # apply
 
   def test_included_module_names
     this_class = RailsishRubyUnit::Executable.model_class?
