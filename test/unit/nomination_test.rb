@@ -11,17 +11,18 @@ class NominationTest < TestCase
   # include DefaultTests
   include RailsishRubyUnit::Executable.model_class?::DefinitionalConstants
   include RailsishRubyUnit::Executable.model_class?::ReferenceObjects
+
+  module Examples
+    Self = Nomination.nominate(TestExecutable.new_from_path($PROGRAM_NAME))
+  end #  Examples
+  include Examples
+
   def test_context
     assert_respond_to(Nomination, :nominate, Nomination.methods(false))
     assert_include(Nomination.methods, :nominate)
     assert_respond_to(Nomination::Self, :commit, Nomination.instance_methods(false))
     assert_include(Nomination.instance_methods(false), :commit)
   end # context
-
-  module Examples
-    Self = Nomination.nominate(TestExecutable.new_from_path($PROGRAM_NAME))
-  end #  Examples
-  include Examples
 
   def setup
     @temp_repo = Repository.create_test_repository
@@ -36,12 +37,16 @@ class NominationTest < TestCase
   def test_Nomination_DefinitionalConstants
   end # DefinitionalConstants
 
+
+
+
   def test_nominate
+    refute_nil(Nomination::Self.commit, Nomination::Self.inspect)
   end # nominate
 
   def test_pending
-    assert_instance_of(Array, Nomination.pending)
-    Nomination.pending.each do |nomination|
+    assert_instance_of(Array, Nomination.pending(Repository::This_code_repository))
+    Nomination.pending(Repository::This_code_repository).each do |nomination|
       assert_instance_of(Nomination, nomination)
     end # each
   end # pending
@@ -104,15 +109,36 @@ class NominationTest < TestCase
     Nomination.dirty_test_executables.chunk do |test_executable|
     end # partition
   end # dirty_test_executables
+	
+	def test_clean_directory_apply_pending
+		Nomination.clean_directory_apply_pending(@temp_repo)
+	end # clean_directory_apply_pending
+	
+	def test_apply_pending
+		Nomination.apply_pending(@temp_repo)
+		Nomination.apply_pending(Repository::This_code_repository)
+	end # apply_pending
 
-    def test_clean_apply
-    end # clean_apply
 
 
 
+	def test_apply
+	end # apply
 
-    def test_apply
-    end # apply
+
+	def test_repository
+    assert_include(Nomination.instance_methods(false), :commit)
+		refute_nil(Nomination::Self.commit.repository, Nomination::Self.inspect)
+    assert_include(Nomination.instance_methods(false), :repository)
+		refute_nil(Nomination::Self.repository, Nomination::Self.inspect)
+	end # repository
+
+	def test_unit
+	end # unit
+	
+	def test_test_executable_path
+		refute_nil(Nomination::Self.commit, Nomination::Self.inspect)
+	end # test_executable_path
 
   def test_included_module_names
     this_class = RailsishRubyUnit::Executable.model_class?
@@ -162,7 +188,7 @@ class NominationTest < TestCase
   def test_assert_pre_conditions
     assert_equal(NamedCommit::Working_tree, Self.commit, Self.inspect) # nil means working directory (to be stash)
     assert_equal(:unit, Self.test_type, Self.inspect)
-    assert_equal(:nomination, Self.unit, Self.inspect)
+    assert_equal(:nomination, Self.unit_name, Self.inspect)
     #		Self.assert_pre_conditions
     #		TestTestExecutable.assert_pre_conditions
   end # assert_pre_conditions

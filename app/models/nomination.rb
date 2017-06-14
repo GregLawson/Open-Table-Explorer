@@ -29,6 +29,7 @@ require_relative '../../app/models/bug.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/ruby_lines_storage.rb'
+require_relative '../../app/models/stash.rb'
 # ! require_relative 'editor.rb'
 
 class Nomination < Dry::Types::Value
@@ -47,16 +48,17 @@ class Nomination < Dry::Types::Value
 
   attribute :commit, NamedCommit # nil means working directory (to be stash)
   attribute :target_branch, Types::Strict::Symbol.default(:edited) # nil means working directory (to be stash)
-  attribute :unit, Types::Strict::Symbol
+  attribute :unit_name, Types::Strict::Symbol
   attribute :test_type, Types::Strict::Symbol
 
   module Constructors # such as alternative new methods
     include DefinitionalConstants
+		
     def nominate(test_executable)
-      Nomination.new(commit: NamedCommit::Working_tree, target_branch: :edited, unit: test_executable.unit.model_basename, test_type: test_executable.test_type)
+      Nomination.new(commit: NamedCommit::Working_tree, target_branch: :edited, unit_name: test_executable.unit.model_basename, test_type: test_executable.test_type)
     end # nominate
 
-    def pending
+    def pending(repository)
       [Nomination::Self]
     end # pending
 
@@ -91,9 +93,24 @@ class Nomination < Dry::Types::Value
       end # map
     end # dirty_test_executables
 
-    def clean_apply
-      pending.each(&:apply) # each
-    end # clean_apply
+	def clean_directory_apply_pending(repository)
+		pending(repository).each(&:apply) # each
+	end # clean_directory_apply_pending
+	
+	def safely_visit_branch(repository, &block)
+		if repository.something_to_commit?
+			Stash.wip!(repository)
+			block.call(repository)
+			Stash.pop!(repository)
+			
+		else
+			block.call(repository)
+		end # if
+	end # safely_visit_branch
+
+	def apply_pending(repository)
+		safely_visit_branch(repository) {|repository| clean_directory_apply_pending(repository)}
+	end # apply_pending
 
   end # Constructors
 
@@ -101,20 +118,29 @@ class Nomination < Dry::Types::Value
 
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
-    TestTestExecutable = Nomination.new(commit: NamedCommit::Working_tree, target_branch: :edited, unit: TestExecutable::Examples::TestTestExecutable.unit.model_basename, test_type: TestExecutable::Examples::TestTestExecutable.test_type)
-    Self = Nomination.new(commit: NamedCommit::Working_tree, target_branch: :edited, unit: RailsishRubyUnit::Executable.model_basename, test_type: :unit)
+    TestTestExecutable = Nomination.new(commit: NamedCommit::Working_tree, target_branch: :edited, unit_name: TestExecutable::Examples::TestTestExecutable.unit.model_basename, test_type: TestExecutable::Examples::TestTestExecutable.test_type)
+    Self = Nomination.new(commit: NamedCommit::Working_tree, target_branch: :edited, unit_name: RailsishRubyUnit::Executable.model_basename, test_type: :unit)
   end # ReferenceObjects
   include ReferenceObjects
 
     def apply
-      if test_executable.repository.something_to_commit?
-        test_executable.repository.stash!
-        clean_apply
-        test_executable.repository.pop
-      else
-        clean_apply
-      end # if
     end # apply
+
+	def repository
+		@commit.repository
+	end # repository
+
+	def unit
+		Unit.new(model_basename: @unit_name, project_root_dir: repository.path)
+	end # unit
+	
+	def test_executable_path
+		unit.pathname_pattern?(file_spec, test = nil)
+	end # test_executable_path
+
+	def test_executable
+		TestExecutable.new_from_path(test_executable_path, @test_type, repository)
+	end # test_executable
 
   require_relative '../../app/models/assertions.rb'
 
@@ -163,7 +189,7 @@ class Nomination < Dry::Types::Value
     def assert_pre_conditions(message = '')
       message += "In assert_pre_conditions, self=#{inspect}"
       assert_instance_of(Symbol, @commit)
-      assert_instance_of(Symbol, @unit)
+      assert_instance_of(Symbol, @unit_name)
       assert_instance_of(Symbol, @test_type)
       self # return for command chaining
     end # assert_pre_conditions
