@@ -25,8 +25,16 @@ class Stash < NamedCommit
 			refinement = capture.priority_refinements
 		end # refine
 
-    def pop!(repository = Repository::This_code_repository, pop = :apply)
-      repository.git_command('stash ' + pop.to_s)
+    def pop!(repository, pop = :apply)
+      apply_run = repository.git_command('stash ' + pop.to_s + ' --quiet')
+      if apply_run.errors =~ /Could not restore untracked files from stash/
+        puts apply_run.errors
+        puts repository.git_command('status').output
+        puts repository.git_command('stash show').output
+      else
+        apply_run # .assert_post_conditions('unexpected stash apply fail')
+      end # if
+#!      merge_cleanup
     end # pop!
 
   end # DefinitionalClassMethods
@@ -58,80 +66,77 @@ class Stash < NamedCommit
     include DefinitionalConstants
     def wip!(repository)
       command_string = 'stash save --include-untracked'
-      run = repository.git_command(command_string)
+      run = repository.git_command(command_string).assert_post_conditions
       refine(run.output, List_regexp_array, MatchCapture)
 			Stash.new(initialization_string: :stash, repository: Repository::This_code_repository, annotation: run.output)
     end # wip!
 
+		def state
+			capture = MatchCapture.new(string: @annotation, regexp: List_regexp_array)
+			refinement = capture.priority_refinements
+			message = capture.inspect + "\n" + refinement.inspect
+		end # state
+		
     def list(repository)
       command_string = 'stash list'
       run = repository.git_command(command_string)
       refine(run.output, List_regexp_array, MatchCapture)
 		end # list
 
-  def confirm_branch_switch(branch)
-    checkout_branch = @repository.git_command("checkout #{branch}")
-    if checkout_branch.errors != "Already on '#{branch}'\n" && checkout_branch.errors != "Switched to branch '#{branch}'\n"
-      checkout_branch # .assert_post_conditions
+  def confirm_branch_switch(branch, repository)
+    checkout_branch = repository.git_command("checkout #{branch}")
+    if checkout_branch.errors == "Already on '#{branch}'\n" && checkout_branch.errors != "Switched to branch '#{branch}'\n"
+      checkout_branch #.assert_post_conditions
+		elsif checkout_branch.errors == "Switched to branch '#{branch}'\n"
+      checkout_branch #.assert_post_conditions
+		else
+			checkout_branch.assert_post_conditions
     end # if
     checkout_branch # for command chaining
   end # confirm_branch_switch
 
-  # This is safe in the sense that a stash saves all files
+  def need_stash(repository, target_branch)
+		repository.something_to_commit? && start_branch != target_branch
+	end # need_stash
+	
+	# This is safe in the sense that a stash saves all files
   # and a stash apply restores all tracked files
   # safe is meant to mean no files or changes are lost or buried.
-  def safely_visit_branch(target_branch)
-    stash_branch = @repository.current_branch_name?
-    changes_branch = stash_branch #
-    push = @repository.something_to_commit? # remember
-    if push
-      #		status=@grit_repo.status
-      #		puts "status.added=#{status.added.inspect}"
-      #		puts "status.changed=#{status.changed.inspect}"
-      #		puts "status.deleted=#{status.deleted.inspect}"
-      #		puts "@repository.something_to_commit?=#{@repository.something_to_commit?.inspect}"
-      @repository.stash!.assert_post_conditions
-      merge_cleanup
-      changes_branch = :stash
-    end # if
-
-    if stash_branch != target_branch
-      confirm_branch_switch(target_branch)
-      ret = yield(changes_branch)
-      confirm_branch_switch(stash_branch)
-    else
-      ret = yield(changes_branch)
-    end # if
-    if push
-      apply_run = @repository.git_command('stash apply --quiet')
-      if apply_run.errors =~ /Could not restore untracked files from stash/
-        puts apply_run.errors
-        puts @repository.git_command('status').output
-        puts @repository.git_command('stash show').output
-      else
-        apply_run # .assert_post_conditions('unexpected stash apply fail')
-      end # if
-      merge_cleanup
-    end # if
+	def safely_visit_branch(repository, target_branch, &block)
+    start_branch = Branch.current_branch_name?(repository)
+		if repository.something_to_commit?
+			Stash.stash_and_checkout(target_branch, repository)
+      ret = yield(:stash)
+      confirm_branch_switch(start_branch, repository)
+			Stash.pop!(repository)
+		elsif start_branch != target_branch
+      confirm_branch_switch(target_branch, repository)
+      ret = yield(start_branch)
+      confirm_branch_switch(start_branch, repository)
+		else
+      ret = yield(start_branch)
+		end # if
     ret
+	rescue Exception => exception_raised
+			unless repository.something_to_commit?
+				confirm_branch_switch(start_branch, repository)
+				Stash.pop!(repository)
+			else
+				raise exception_raised
+			end # unless
   end # safely_visit_branch
 
   def stash_and_checkout(target_branch, repository)
-    stash_branch = Branch.current_branch_name?(repository)
-    changes_branch = stash_branch #
+    start_branch = Branch.current_branch_name?(repository)
+    commit_with_changes = start_branch #
     push = repository.something_to_commit? # remember
     if push
-      #		status=@grit_repo.status
-      #		puts "status.added=#{status.added.inspect}"
-      #		puts "status.changed=#{status.changed.inspect}"
-      #		puts "status.deleted=#{status.deleted.inspect}"
-      #		puts "repository.something_to_commit?=#{repository.something_to_commit?.inspect}"
       Stash.wip!(repository)
 #!      merge_cleanup
-      changes_branch = :stash
+      commit_with_changes = :stash
     end # if
 
-    if stash_branch != target_branch
+    if start_branch != target_branch
 #!      confirm_branch_switch(target_branch)
     end # if
     push # if switched?
@@ -185,6 +190,13 @@ class Stash < NamedCommit
 				capture.assert_refinement(:exact)
 				refinement = capture.priority_refinements
 			end # refine
+			
+			def assert_safely_visit_branch(repository, target_branch, &block)
+				start_state = repository.status
+				safely_visit_branch(repository, target_branch, &block)
+				assert_equal(start_state, repository.status)
+			end # assert_safely_visit_branch
+
      end # ClassMethods
 
     def assert_pre_conditions(message = '')

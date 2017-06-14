@@ -54,7 +54,11 @@ class StashTest < TestCase
     @temp_repo.force_change
     command_string = 'stash save --include-untracked'
     cached_run = @temp_repo.git_command(command_string)
-    capture = MatchCapture.new(string: cached_run.output, regexp: List_regexp_array)
+		cached_run.assert_post_conditions
+  end # wip!
+
+	def test_state
+    capture = MatchCapture.new(string: Stash_object.annotation, regexp: List_regexp_array)
 		refinement = capture.priority_refinements
 		message = capture.inspect + "\n" + refinement.inspect
 		assert_match(/[[:print:]]{10,200}/, "\ create_empty\ initial\ commit\ of\ README\nHEAD\ is\ now\ at\ 46a2b13\ create_empty\ initial\ commit\ of\ README\n", message)
@@ -67,8 +71,8 @@ class StashTest < TestCase
     assert_equal([:clean], @temp_repo.state?)
     assert_instance_of(Stash, ret)
 #!		assert_equal({}, capture.to_hash, ret.inspect)
-  end # wip!
-
+		end # state
+		
   def test_list
     command_string = 'show list'
     run = Repository::This_code_repository.git_command(command_string)
@@ -78,6 +82,48 @@ class StashTest < TestCase
     #		assert_match(regexp, cached_run.output, cached_run.inspect)
     #		assert_include([Master_branch, Passed_branch, Tested_branch, Edited_branch], BranchReference.list(Repository::This_code_repository),cached_run.inspect)
   end # list
+
+  def test_confirm_branch_switch
+    assert_equal(:master, Branch.current_branch_name?(@temp_repo))
+    @temp_repo.force_change
+		branch = :passed
+		repository = @temp_repo
+    checkout_branch = repository.git_command("checkout #{branch}")
+    if checkout_branch.errors == "Already on '#{branch}'\n" && checkout_branch.errors != "Switched to branch '#{branch}'\n"
+      checkout_branch #.assert_post_conditions
+		elsif checkout_branch.errors == "Switched to branch '#{branch}'\n"
+      checkout_branch #.assert_post_conditions
+		else
+			checkout_branch.assert_post_conditions
+    end # if
+#!		checkout_branch.assert_post_conditions
+    Stash.confirm_branch_switch(:passed, @temp_repo)
+    assert_equal(:passed, Branch.current_branch_name?(@temp_repo))
+    Stash.confirm_branch_switch(:master, @temp_repo)
+    assert_equal(:master, Branch.current_branch_name?(@temp_repo))
+  end # confirm_branch_switch
+
+  def test_safely_visit_branch
+		repository =  @temp_repo
+    start_branch = Branch.current_branch_name?(repository)
+		assert_equal(:master, start_branch)
+		target_branch = :master # no movement yet
+		refute(start_branch != target_branch)
+    @temp_repo.force_change
+		need_stash = repository.something_to_commit? && start_branch != target_branch
+		assert(repository.something_to_commit?)
+    target_branch = :passed
+    assert_equal(start_branch, Stash.safely_visit_branch(repository, start_branch) { start_branch })
+    assert_equal(start_branch, Stash.safely_visit_branch(repository, start_branch) { Branch.current_branch_name?(@temp_repo) })
+    target_branch = :master
+    checkout_target = @temp_repo.git_command("checkout #{target_branch}")
+    #		assert_equal("Switched to branch '#{target_branch}'\n", checkout_target.errors)
+    target_branch = :passed
+#!    assert_equal(target_branch, Stash.safely_visit_branch(repository, target_branch) { Branch.current_branch_name?(@temp_repo) })
+    Stash.safely_visit_branch(repository, target_branch) do
+      Branch.current_branch_name?(@temp_repo)
+    end #
+  end # safely_visit_branch
 
   def test_stash_and_checkout
     @temp_repo.force_change
@@ -192,6 +238,12 @@ class StashTest < TestCase
 		refinement = capture.priority_refinements
 #!		assert_refine(acquisition_string, regexp)
 	end # refine
+			
+	def test_assert_safely_visit_branch
+#!		Stash.assert_safely_visit_branch(@temp_repo, Branch.current_branch_name?(@temp_repo))
+		Stash.assert_safely_visit_branch(@temp_repo, Branch.current_branch_name?(@temp_repo)){|repository, target_branch| repository.force_change}
+		Stash.assert_safely_visit_branch(@temp_repo, :passed){|repository| repository.force_change}
+	end # assert_safely_visit_branch
 
   def test_assert_pre_conditions
     Stash_object.assert_pre_conditions
