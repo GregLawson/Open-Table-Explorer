@@ -9,43 +9,65 @@ require_relative '../../app/models/parse.rb'
 module RubyLinesStorage
   module DefinitionalConstants
     Eval_syntax_error_regexp = /\(eval\):/ * /[0-9]+/.capture(:line) * /: / * /.*/.capture(:message)
+		Read_fail_keys = [:exception_hash, :context_message, :ruby_lines_storage_string, :path]
   end # DefinitionalConstants
   include DefinitionalConstants
 
-  def self.read_error_context(path, file_contents, line_number = 2)
-    context = "\n" + 'path = ' + path.to_s + "\n" + " in context: \n"
-    context += file_contents.lines[(line_number - 2)..line_number].join
-    context
+  def self.read_error_context(ruby_lines_storage_string, exception_object = nil)
+    exception_message = exception_object.message
+    exception_hash = exception_message.parse(Eval_syntax_error_regexp)
+		exception_hash[:exception_class] = exception_object.class.name
+    line_number = exception_hash[:line].to_i
+    context_message = ruby_lines_storage_string.lines[(line_number - 2)..line_number].join
+    { exception_hash: exception_hash, context_message: context_message }
   end # read_error_context
 
   def self.eval_rls(ruby_lines_storage_string)
-    puts 'In order for RubyLinesStorage.read to succeed, String ' + ruby_lines_storage_string + ' must start with open curly brace.' + read_error_context(path, ruby_lines_storage_string) if ruby_lines_storage_string[0] != '{'
     eval(ruby_lines_storage_string)
   rescue SyntaxError => exception_object
-    exception_message = exception_object.message
-    exception_hash = exception_message.parse(Eval_syntax_error_regexp)
-    line_number = exception_hash[:line].to_i
-    context = read_error_context(path, ruby_lines_storage_string, line_number)
+    error_context = read_error_context(ruby_lines_storage_string, exception_object)
     #		puts exception_hash[:message] + context
-    { context: context, ruby_lines_storage_string: ruby_lines_storage_string, exception_hash: exception_hash }
-	end # eval
-  def self.read(path)
-    file_contents = IO.read(path)
-    puts 'In order for RubyLinesStorage.read to succeed, file ' + path + ' must start with open curly brace.' + read_error_context(path, file_contents) if file_contents[0] != '{'
-    eval(file_contents)
-  rescue SyntaxError => exception_object
-    exception_message = exception_object.message
-    exception_hash = exception_message.parse(Eval_syntax_error_regexp)
-    line_number = exception_hash[:line].to_i
-    context = read_error_context(path, file_contents, line_number)
-    #		puts exception_hash[:message] + context
-    { context: context, file_contents: file_contents, exception_hash: exception_hash }
-  end # read
+		error_context[:ruby_lines_storage_string] = ruby_lines_storage_string
+		error_context
+  end # eval_rls
 
+	def self.read_success?(read_return)
+		if (read_return.keys << :path).uniq == RubyLinesStorage::Read_fail_keys
+			false
+		else
+			true
+		end # if
+	end # read_success?
+
+  def self.read(path)
+    ruby_lines_storage_string = IO.read(path)
+    puts 'In order for RubyLinesStorage.eval_rls to succeed, String ' + ruby_lines_storage_string + ' must start with open curly brace.' + read_error_context(path, ruby_lines_storage_string) if ruby_lines_storage_string[0] != '{'
+    read_return = eval_rls(ruby_lines_storage_string)
+		unless read_success?(read_return)
+			read_return[:path] = path
+		else
+		end # if
+		read_return
+  end # read
+	
   module Assertions
     module ClassMethods
+			def assert_readable(path)
+				read_return = RubyLinesStorage.read(path)
+				assert_instance_of(Hash, read_return)
+				if RubyLinesStorage.read_success?(read_return)
+					assert(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+					refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+				else
+					refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+					assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+					assert_equal(RubyLinesStorage::Read_fail_keys, read_return.keys)
+				end # if
+			end # assert_read
     end # ClassMethods
   end # Assertions
+	include Assertions
+	extend Assertions::ClassMethods
 end # RubyLinesStorage
 
 class Array

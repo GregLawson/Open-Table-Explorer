@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2014-2016 by Greg Lawson
+#    Copyright (C) 2014-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -9,9 +9,6 @@
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/ruby_lines_storage.rb'
 
-module RubyLinesStorage
-  require_relative '../assertions/ruby_lines_storage_assertions.rb'
-end # RubyLinesStorage
 
 class RubyLinesStorageTest < TestCase
   module Examples
@@ -28,8 +25,20 @@ class RubyLinesStorageTest < TestCase
     Short_Date = Date.today
     Approximate_DateTime = DateTime.now
     Exception_message = '(eval):17: syntax error, unexpected tSYMBEG, expecting end-of-input'.freeze
+		require_relative '../examples/unit_maturity.rb'
   end # Examples
   include Examples
+	
+  def test_read_error_context
+    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line), Exception_message)
+    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line) * /: / * /.*/, Exception_message)
+    assert_match(Eval_syntax_error_regexp, Exception_message)
+    exception_hash = Exception_message.parse(Eval_syntax_error_regexp)
+    assert_equal('17', exception_hash[:line])
+  end # read_error_context
+
+  def test_eval_rls
+  end # eval_rls
 
   def eval_rescued(example_string)
     eval(example_string)
@@ -37,28 +46,58 @@ class RubyLinesStorageTest < TestCase
     raise 'example_string.inspect = ' + example_string.inspect + "\n" + exception_raised.inspect
   end # eval_example
 
+	def test_read_success?
+    Log_read_returns.each do |read_return|
+      if RubyLinesStorage.read_success?(read_return)
+				assert(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+				refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+			else
+				refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+				assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+			end # if
+    end # each
+	end # read_success?
+
   def test_RubyLinesStorage_read
-    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line), Exception_message)
-    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line) * /: / * /.*/, Exception_message)
-    assert_match(Eval_syntax_error_regexp, Exception_message)
-    exception_hash = Exception_message.parse(Eval_syntax_error_regexp)
-    assert_equal('17', exception_hash[:line])
 
     example_minitest = RubyLinesStorage.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
     example_testunit = RubyLinesStorage.read('./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log')
 
     example_minitest_log = IO.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
-    log_files = Dir['log/unit/2.2/2.2.3p173/silence/*.log']
-    file_times = log_files.map do |path|
+		
+		refute_empty(Log_paths)
+    file_times = Log_paths.map do |path|
       file_contents = IO.read(path)
-      hash = RubyLinesStorage.read(path)
-      assert_instance_of(Hash, hash)
-      #			refute_includes(hash.keys, :exception_hash, hash.ruby_lines_storage)
+      read_return = RubyLinesStorage.read(path)
+      assert_instance_of(Hash, read_return)
+      if RubyLinesStorage.read_success?(read_return)
+				assert(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+				refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+			else
+				refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+				assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+			end # if
     end # each
     message = file_times.ruby_lines_storage
     #		assert_equal
   end # read
-
+	
+	def test_assert_readable
+    file_times = Log_paths.map do |path|
+				read_return = RubyLinesStorage.read(path)
+				assert_instance_of(Hash, read_return)
+				if RubyLinesStorage.read_success?(read_return)
+					assert(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+					refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+				else
+					refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+					assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+					assert_equal(RubyLinesStorage::Read_fail_keys, read_return.keys)
+					refute_equal([:current_branch_name, :start_time, :command_string, :output, :errors], read_return.keys)
+				end # if
+			RubyLinesStorage.assert_readable(path)
+		end # each
+	end # assert_read
   def eval_name(name)
     expression_string = 'Examples::' + name.to_s
     eval_rescued(expression_string)
@@ -200,6 +239,7 @@ end # Regexp
   def test_DateTime_ruby_lines_storage
     assert_approximate(DateTime.now, Rational(11_574, 1_000_000_000))
   end # DateTime
+
   def test_Time_ruby_lines_storage
     time = Time.now
     seconds = Rational(1_000_000_000 * time.sec + time.nsec, 1_000_000_000)

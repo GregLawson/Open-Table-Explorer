@@ -1,37 +1,34 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 15, 10, 8, Rational(36960044411, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 6, 22, 6, 31, Rational(16864219373, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test
 Started
-...................
+.......................
 
-Finished in 0.148524305 seconds.
+Finished in 0.724709391 seconds.
 ------
-19 tests, 220 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+23 tests, 1454 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-127.93 tests/s, 1481.24 assertions/s
+31.74 tests/s, 2006.32 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb"
-	User time (seconds): 1.22
-	System time (seconds): 0.08
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.32
+	User time (seconds): 1.85
+	System time (seconds): 0.19
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.07
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 35456
+	Maximum resident set size (kbytes): 48156
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8989
+	Minor (reclaiming a frame) page faults: 12165
 	Voluntary context switches: 3
-	Involuntary context switches: 158
+	Involuntary context switches: 249
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
