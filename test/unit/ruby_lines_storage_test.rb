@@ -5,14 +5,47 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-# require 'descriptive-statistics'
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/ruby_lines_storage.rb'
 
+class ReconstructionTest < TestCase
+  module Examples
+    include Reconstruction::DefinitionalConstants
+		Exception_constructor_message = 'This is an example error message.'
+		start_exception = Exception.new(Exception_constructor_message)
+    exception_constructor = 'e = Exception.new("' + Exception_constructor_message.to_s + + '");e.set_backtrace(' + start_exception.backtrace.ruby_lines_storage + ');e'
+		Exception_reconstruction = Reconstruction.new(exception_constructor)
+    Exception_message = '(eval):17: syntax error, unexpected tSYMBEG, expecting end-of-input'.freeze
+  end # Examples
+  include Examples
+	
+	def test_initialize
+		message = 'This is an example error message.'
+		start_exception = Exception.new(Exception_constructor_message)
+    exception_constructor = 'e = Exception.new("' + Exception_constructor_message.to_s + + '");e.set_backtrace(' + start_exception.backtrace.ruby_lines_storage + ');e'
+		reconstructed_exception = Reconstruction.new(exception_constructor)
+	end # initialize
+	
+	def test_reconstruction
+		assert_instance_of(Exception, Exception.new(Exception_constructor_message))
+		assert_instance_of(Exception, Exception_reconstruction.reconstruction, Exception_reconstruction.inspect)
+	end # reconstruction
+	
+  def test_read_error_context
+    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line), Exception_message)
+    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line) * /: / * /.*/, Exception_message)
+    assert_match(Reconstruction::Eval_syntax_error_regexp, Exception_message)
+    exception_hash = Exception_message.parse(Reconstruction::Eval_syntax_error_regexp)
+    assert_equal('17', exception_hash[:line])
+  end # read_error_context
+
+	def test_success?
+	end # read_success?
+
+end # Reconstruction
 
 class RubyLinesStorageTest < TestCase
   module Examples
-    include RubyLinesStorage::DefinitionalConstants
     Short_array = [1, 2, 3].freeze
     Long_array = Array.new(50, 1)
     Empty_hash = {}.freeze
@@ -24,17 +57,11 @@ class RubyLinesStorageTest < TestCase
     Approximate_Time = Time.now
     Short_Date = Date.today
     Approximate_DateTime = DateTime.now
-    Exception_message = '(eval):17: syntax error, unexpected tSYMBEG, expecting end-of-input'.freeze
 		require_relative '../examples/unit_maturity.rb'
   end # Examples
   include Examples
 	
   def test_read_error_context
-    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line), Exception_message)
-    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line) * /: / * /.*/, Exception_message)
-    assert_match(Eval_syntax_error_regexp, Exception_message)
-    exception_hash = Exception_message.parse(Eval_syntax_error_regexp)
-    assert_equal('17', exception_hash[:line])
   end # read_error_context
 
   def test_eval_rls
@@ -66,7 +93,7 @@ class RubyLinesStorageTest < TestCase
     example_minitest_log = IO.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
 		
 		refute_empty(Log_paths)
-    file_times = Log_paths.map do |path|
+    errors_seen = file_times = Log_paths.map do |path|
       file_contents = IO.read(path)
       read_return = RubyLinesStorage.read(path)
       assert_instance_of(Hash, read_return)
@@ -77,9 +104,20 @@ class RubyLinesStorageTest < TestCase
 				refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
 				assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
 			end # if
-    end # each
-    message = file_times.ruby_lines_storage
-    #		assert_equal
+			{errors: read_return[:exception_hash], context: read_return[:context_message]}
+    end.uniq # each
+		unique_error_messages = errors_seen.map{|h| h[:errors]}.compact.uniq
+		assert_empty(unique_error_messages.map{|e| e[:exception_class]}.uniq - ['SyntaxError'])
+		expecting_right_paren_not_comma = {:exception_class=>"SyntaxError", :line=>"2", :message=>"syntax error, unexpected ',', expecting ')'"}
+		expecting_right_brace_not_comma = {:exception_class=>"SyntaxError", :line=>"2", :message=>"syntax error, unexpected ',', expecting '}'"}
+		unexpect_less_than = {exception_class: "SyntaxError", line: "5", message: "syntax error, unexpected '<'"}
+		assert_empty(unique_error_messages - [expecting_right_paren_not_comma, 		 expecting_right_brace_not_comma, unexpect_less_than ] )
+		expecting_right_paren_not_comma_contexts = errors_seen.select{|e| e[:errors] == expecting_right_paren_not_comma}.map{|e| e[:context].split(',')}
+		expecting_right_brace_not_comma_contexts = errors_seen.select{|e| e[:errors] == expecting_right_brace_not_comma}.map{|e| e[:context].split(',')}
+		unexpect_less_than_contexts = errors_seen.select{|e| e[:errors] == unexpect_less_than}.map{|e| e[:context].split('<')}
+#!    refute_includes(unique_error_messages, unexpect_less_than, unexpect_less_than_contexts.ruby_lines_storage)
+#!    refute_includes(unique_error_messages, expecting_right_paren_not_comma, expecting_right_paren_not_comma_contexts.ruby_lines_storage)
+#!    refute_includes(unique_error_messages, expecting_right_brace_not_comma, expecting_right_brace_not_comma_contexts.ruby_lines_storage)
   end # read
 	
 	def test_assert_readable
@@ -92,7 +130,7 @@ class RubyLinesStorageTest < TestCase
 				else
 					refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
 					assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
-					assert_equal(RubyLinesStorage::Read_fail_keys, read_return.keys)
+					assert_equal(Reconstruction::Read_fail_keys, read_return.keys)
 					refute_equal([:current_branch_name, :start_time, :command_string, :output, :errors], read_return.keys)
 				end # if
 			RubyLinesStorage.assert_readable(path)
@@ -250,6 +288,18 @@ end # Regexp
     assert_equal(time, eval_time, time.strftime('%Y-%m-%d %H:%M:%S.%9N %z') + time.ruby_lines_storage + round_off.to_f.to_s)
     assert_reversible(time)
   end # Time
+
+	def test_Exception
+		message = 'This is an example error message.'
+		start_exception = Exception.new(message)
+    exception_constructor = 'e = Exception.new("' + message.to_s + + '");e.set_backtrace(' + start_exception.backtrace.ruby_lines_storage + ');e'
+		reconstructed_exception = eval(exception_constructor)
+		assert_instance_of(Exception, Exception.new(message))
+		assert_instance_of(Exception, reconstructed_exception, exception_constructor)
+		assert_equal(start_exception.message, reconstructed_exception.message)
+		assert_equal(start_exception, reconstructed_exception)
+    assert_reversible(Exception.new(message))
+	end # Exception
 
   def test_Object_ruby_lines_storage
     assert_equal('[1, 2, 3]', [1, 2, 3].ruby_lines_storage)
