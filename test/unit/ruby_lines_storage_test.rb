@@ -7,8 +7,36 @@
 ###########################################################################
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/ruby_lines_storage.rb'
+class SyntaxErrorTest < TestCase
+	
+		def test_rescued_eval
+		end # rescued_eval
 
-class ReconstructionTest < TestCase
+	def test_exception_hash
+	end # exception_hash
+	
+	def test_line_number
+	end # line_number
+	
+	def test_unexpected
+	end # unexpected
+	
+	def test_expecting
+	end # expecting
+	
+	def test_error_group
+	end # error_group
+	def test_unseen?
+	end # unseen?
+	
+	def test_source_context
+	end # source_context
+	
+	def test_assert_syntax_OK
+	end # assert_syntax_OK
+end # SyntaxError
+
+class EvalTest < TestCase
   module Examples
     include Reconstruction::DefinitionalConstants
 		Exception_constructor_message = 'This is an example error message.'
@@ -20,27 +48,53 @@ class ReconstructionTest < TestCase
   include Examples
 	
 	def test_initialize
-		message = 'This is an example error message.'
+		start_exception = Exception.new(Exception_constructor_message)
+    exception_constructor = 'e = Exception.new("' + Exception_constructor_message.to_s + + '");e.set_backtrace(' + start_exception.backtrace.ruby_lines_storage + ');e'
+		reconstructed_exception = Eval.new(exception_constructor)
+	end # initialize	
+end # Eval
+
+class ReconstructionTest < TestCase
+  module Examples
+    include Reconstruction::DefinitionalConstants
+		Exception_constructor_message = 'This is an example error message.'
+		start_exception = Exception.new(Exception_constructor_message)
+    exception_constructor = 'e = Exception.new("' + Exception_constructor_message.to_s + + '");e.set_backtrace(' + start_exception.backtrace.ruby_lines_storage + ');e'
+		Exception_reconstruction = Reconstruction.new(exception_constructor)
+  end # Examples
+  include Examples
+	
+	def test_initialize
 		start_exception = Exception.new(Exception_constructor_message)
     exception_constructor = 'e = Exception.new("' + Exception_constructor_message.to_s + + '");e.set_backtrace(' + start_exception.backtrace.ruby_lines_storage + ');e'
 		reconstructed_exception = Reconstruction.new(exception_constructor)
 	end # initialize
 	
+		def test_read_all
+		end # read_all
+		
+		def test_errors_seen
+		end # errors_seen
+
+		def test_unique_error_groups
+		end # unique_error_groups
+		
+		def test_unexpected_errors
+		end # unexpected_errors
+
+		def test_select_error_group
+		end # select_error_group
 	def test_reconstruction
 		assert_instance_of(Exception, Exception.new(Exception_constructor_message))
 		assert_instance_of(Exception, Exception_reconstruction.reconstruction, Exception_reconstruction.inspect)
 	end # reconstruction
 	
-  def test_read_error_context
-    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line), Exception_message)
-    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line) * /: / * /.*/, Exception_message)
-    assert_match(Reconstruction::Eval_syntax_error_regexp, Exception_message)
-    exception_hash = Exception_message.parse(Reconstruction::Eval_syntax_error_regexp)
-    assert_equal('17', exception_hash[:line])
-  end # read_error_context
-
 	def test_success?
 	end # read_success?
+	
+	def test_state
+	end # state
+
 
 end # Reconstruction
 
@@ -57,11 +111,17 @@ class RubyLinesStorageTest < TestCase
     Approximate_Time = Time.now
     Short_Date = Date.today
     Approximate_DateTime = DateTime.now
-		require_relative '../examples/unit_maturity.rb'
+    Exception_message = '(eval):17: syntax error, unexpected tSYMBEG, expecting end-of-input'.freeze
+		require_relative '../examples/ruby_lines_storage.rb'
   end # Examples
   include Examples
 	
   def test_read_error_context
+    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line), Exception_message)
+    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line) * /: / * /.*/, Exception_message)
+    assert_match(Reconstruction::Eval_syntax_error_regexp, Exception_message)
+    exception_hash = Exception_message.parse(Reconstruction::Eval_syntax_error_regexp)
+    assert_equal('17', exception_hash[:line])
   end # read_error_context
 
   def test_eval_rls
@@ -77,10 +137,8 @@ class RubyLinesStorageTest < TestCase
     Log_read_returns.each do |read_return|
       if RubyLinesStorage.read_success?(read_return)
 				assert(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
-				refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
 			else
 				refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
-				assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
 			end # if
     end # each
 	end # read_success?
@@ -99,7 +157,6 @@ class RubyLinesStorageTest < TestCase
       assert_instance_of(Hash, read_return)
       if RubyLinesStorage.read_success?(read_return)
 				assert(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
-				refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
 			else
 				refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
 				assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
@@ -126,14 +183,14 @@ class RubyLinesStorageTest < TestCase
 				assert_instance_of(Hash, read_return)
 				if RubyLinesStorage.read_success?(read_return)
 					assert(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
-					refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+#!					refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
 				else
 					refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
 					assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
 					assert_equal(Reconstruction::Read_fail_keys, read_return.keys)
 					refute_equal([:current_branch_name, :start_time, :command_string, :output, :errors], read_return.keys)
 				end # if
-			RubyLinesStorage.assert_readable(path)
+#!			RubyLinesStorage.assert_readable(path)
 		end # each
 	end # assert_read
   def eval_name(name)

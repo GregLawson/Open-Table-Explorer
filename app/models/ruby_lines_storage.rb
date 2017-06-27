@@ -7,53 +7,154 @@
 ###########################################################################
 require_relative '../../app/models/parse.rb'
 
-class Reconstruction
+class SyntaxError
   module DefinitionalConstants
     Eval_syntax_error_regexp = /\(eval\):/ * /[0-9]+/.capture(:line) * /: / * /.*/.capture(:message)
-		Read_fail_keys = [:exception_hash, :context_message, :ruby_lines_storage_string, :path]
+		Expecting_right_paren_not_comma = {:exception_class=>"SyntaxError", :line=>"2", :message=>"syntax error, unexpected ',', expecting ')'"}
+		Expecting_right_brace_not_comma = {:exception_class=>"SyntaxError", :line=>"2", :message=>"syntax error, unexpected ',', expecting '}'"}
+		Unexpect_less_than = {exception_class: "SyntaxError", line: "5", message: "syntax error, unexpected '<'"}
+		Expected_error_groups = [Expecting_right_paren_not_comma, Expecting_right_brace_not_comma, Unexpect_less_than]
   end # DefinitionalConstants
   include DefinitionalConstants
 
-	attr_reader :constructor_code
-	def initialize(constructor_code, context = nil)
-		@constructor_code = constructor_code
+  module Constructors # such as alternative new methods
+		def rescued_eval(eval_source)
+			eval(eval_source)
+		rescue SyntaxError => exception_object
+			exception_object
+		end # rescued_eval
+  end # Constructors
+  extend Constructors
+
+	def exception_message
+    @exception_object.message
+	end # exception_message
+
+	def exception_hash
+    exception_message.parse(Reconstruction::Eval_syntax_error_regexp)
+	end # exception_hash
+	
+	def line_number
+    exception_hash[:line].to_i
+	end # line_number
+	
+	def unexpected
+    exception_hash[:unexpected]
+	end # unexpected
+	
+	def expecting
+    exception_hash[:expecting]
+	end # expecting
+	
+	def error_group
+		{ exception_class: self.class, unexpected: unexpected, expecting: expecting }
+	end # error_group
+	
+	def unseen?
+		if success?
+			false
+		elsif Expected_error_groups.includes(error_group)
+			false
+		else
+			true
+		end # if
+	end # unseen?
+	
+	def source_context(eval_source)
+    eval_source.lines[(line_number - 2)..line_number].join
+	end # source_context
+	
+	def assert_syntax_OK(eval_source)
+	end # assert_syntax_OK
+end # SyntaxError
+
+# save eval_source in object
+class Eval
+	def initialize(eval_source, context = nil)
+		@eval_source = eval_source
 		if context.nil?
 			@context = {}
 		else
 			@context = context
 		end # if
-	end # initialize
-	
-  module Constructors # such as alternative new methods
-    include DefinitionalConstants
-  end # Constructors
-  extend Constructors
+	end # initialize	
 
 	def reconstruction
-		eval(@constructor_code)
+		eval(@eval_source)
   rescue SyntaxError => exception_object
-    error_context = read_error_context(@constructor_code, exception_object)
+    error_context = read_error_context(@eval_source, exception_object)
     #		puts exception_hash[:message] + context
-		error_context[:constructor_code] = @constructor_code
+		error_context[:eval_source] = @eval_source
 		error_context
 	end # reconstruction
 	
-  def read_error_context(exception_object = nil)
+  def context_message
+    @eval_source.lines[(line_number - 2)..line_number].join
+	end # context_message
+
+	def success?
+		if reconstruction.kind_of?(Eval)
+			true
+		else
+			false
+		end # if
+	end # success?
+end # Eval
+
+class Reconstruction < Eval
+  module DefinitionalConstants
+		include SyntaxError::DefinitionalConstants
+		Read_fail_keys = [:exception_hash, :context_message, :eval_source]
+  end # DefinitionalConstants
+  include DefinitionalConstants
+
+	
+  module Constructors # such as alternative new methods
+    include DefinitionalConstants
+		def read_all(directory_glob)
+			Dir[directory_glob].map do |path|
+			  RubyLinesStorage.read(path) 
+			end # map
+		end # read_all
+		
+		def errors_seen(directory_glob)
+		    read_all(directory_glob).reject {|reconstruction| reconstruction.success? }
+		end # errors_seen
+
+		def unique_error_groups(directory_glob)
+			errors_seen(directory_glob).map{|h| h[:errors]}.compact.uniq
+		end # unique_error_groups
+		
+		def unexpected_errors(directory_glob)
+			unique_error_messages - [Expecting_right_paren_not_comma, Expecting_right_brace_not_comma, Unexpect_less_than ]
+		end # unexpected_errors
+
+		def select_error_group(directory_glob, error_group)
+			read_all(directory_glob).select do |reconstruction|
+				reconstruction.error_group == error_group
+			end # select
+		end # select_error_group
+  end # Constructors
+  extend Constructors
+
+	
+	def read_error_context(exception_object)
+		@exception_object = exception_object
     exception_message = exception_object.message
     exception_hash = exception_message.parse(Reconstruction::Eval_syntax_error_regexp)
 		exception_hash[:exception_class] = exception_object.class.name
     line_number = exception_hash[:line].to_i
-    context_message = @constructor_code.lines[(line_number - 2)..line_number].join
+    context_message = @eval_source.lines[(line_number - 2)..line_number].join
     { exception_hash: exception_hash, context_message: context_message }
   end # read_error_context
-
-	def success?
-		if (reconstruction.keys << :path).uniq == Read_fail_keys
-			false
+	
+	def state
+		if success?
+			reconstruction
 		else
-			true
+			{ exception_hash: exception_hash, context_message: context_message }
 		end # if
-	end # read_success?
+	end # state
 
   module Assertions
     def assert_post_conditions(message = '')
