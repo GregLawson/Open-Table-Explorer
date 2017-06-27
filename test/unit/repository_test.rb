@@ -322,7 +322,7 @@ class RepositoryTest < TestCase
 			assert_include([true, false], group[:log_file], group.inspect)
 			assert_include([true, false], group[:rubocop_file], group.inspect)
 			assert_include([:unmodified, :modified, :untracked, :ignored], group[:index], group.inspect)
-			assert_include([:unmodified, :modified, :untracked, :ignored], group[:work_tree], group.inspect)
+			assert_include([:unmodified, :modified, :untracked, :ignored, :deleted], group[:work_tree], group.inspect)
 			assert_include(['both ignored', 'both unmodified', 'not updated', 'both untracked'], group[:description], group.inspect)
 			assert_include([true, false], group[:needs_test], group.inspect)
 			
