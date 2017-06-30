@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2013-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -131,14 +131,14 @@ class Branch < NamedCommit # can commit to
     end # current_branch_name
 
     def current_branch(repository)
-      Branch.new(repository: repository, name: current_branch_name?(repository))
+      Branch.new(repository: repository, initialization_string: current_branch_name?(repository))
     end # current_branch
 
     def branches?(repository = Repository::This_code_repository)
       branch_capture = branch_capture?(repository, '--list')
       if branch_capture.success?
         branch_capture.output.map do |c|
-          Branch.new(repository: repository, name: c[:branch].to_sym)
+          Branch.new(repository: repository, initialization_string: c[:branch].to_sym)
         end # map
       else
         raise Exception.new('git branch parse failed = ' + branch_capture.inspect)
@@ -160,7 +160,7 @@ class Branch < NamedCommit # can commit to
     end # merged?
 
     def branch_names?(repository = Repository::This_code_repository)
-      branches?(repository).map(&:name).uniq
+      branches?(repository).map(&:initialization_string).uniq
     end # branch_names?
 
     def new_from_git_branch_line(git_branch_line)
@@ -242,11 +242,11 @@ class Branch < NamedCommit # can commit to
 
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
-    Master_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: :master)
-    Passed_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: :passed)
-    Tested_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: :tested)
-    Edited_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: :edited)
-    Stash_branch = Branch.new(repository: Repository::Examples::This_code_repository, name: :stash)
+    Master_branch = Branch.new(repository: Repository::This_code_repository, initialization_string: :master)
+    Passed_branch = Branch.new(repository: Repository::This_code_repository, initialization_string: :passed)
+    Tested_branch = Branch.new(repository: Repository::This_code_repository, initialization_string: :tested)
+    Edited_branch = Branch.new(repository: Repository::This_code_repository, initialization_string: :edited)
+    Stash_branch = Branch.new(repository: Repository::This_code_repository, initialization_string: :stash)
   end # ReferenceObjects
   include ReferenceObjects
 	
@@ -297,21 +297,6 @@ class BranchReference < Commit
 		reflogs = reflog?(filename, repository, range = 0..10, options = '-S "' + lost_code.to_s + '"')
 	end # lost_edit
 
-    def reflog_to_constructor_hash(reflog_line)
-      capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
-			exception = Exception.new(capture.inspect)
-      raise exception unless capture.success?
-			hash = capture.output
-      raise exception unless hash[:maturity][0] == hash[:maturity][1]
-      raise exception unless hash[:age][0] == hash[:age][1]
-			time_string = hash[:weekday] + ', ' + hash[:day_of_month] + ' ' + hash[:month] + ' ' + hash[:year] + ' ' + hash[:hour] + ':' + hash[:minute] + ':' + hash[:second] + ' ' + hash[:timezone]
-			timestamp = Time.rfc2822(time_string)
-      if capture.output[:maturity] == [nil, nil]
-        { initialization_string: hash[:sha1_hex_short].to_sym, age: 0, timestamp:  timestamp}
-      else
-        { initialization_string: hash[:maturity].uniq[0], age: hash[:age].uniq[0].to_i, timestamp: timestamp }
-      end # if
-     end # reflog_to_constructor_hash
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
@@ -334,14 +319,6 @@ class BranchReference < Commit
 
   module DefinitionalClassMethods # if reference DefinitionalConstants
     include BranchReference::DefinitionalConstants
-    def stash_wip(repository)
-      command_string = 'git stash list'
-      @cached_run = repository.git_command(command_string)
-      regexp = /stash@{0}: WIP on / * Name_regexp.capture(:parent_branch) * /: / *
-               SHA1_hex_short.capture(:sha1_hex_short) * / Merge branch '/ * Name_regexp.capture(:merge_from) * /' into / * Name_regexp.capture(:merge_into)
-			capture = @cached_run.output.capture?(regexp)
-			capture.output
-		end # stash_wip
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
@@ -355,12 +332,24 @@ class BranchReference < Commit
 
   module Constructors # such as alternative new methods
     include DefinitionalConstants
-		def new_from_ref(reflog_line)
-			constructor_hash = reflog_to_constructor_hash(reflog_line)
-			if constructor_hash[:age] == 0
-				Commit.new(initialization_string: constructor_hash[:initialization_string])
+    def new_from_ref(reflog_line, repository = Repository::This_code_repository)
+      capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
+      exception = Exception.new(capture.inspect)
+      raise exception unless capture.success?
+      hash = capture.output
+      raise exception unless hash[:maturity][0] == hash[:maturity][1]
+      raise exception unless hash[:age][0] == hash[:age][1]
+      time_string = hash[:weekday] + ', ' + hash[:day_of_month] + ' ' + hash[:month] + ' ' + hash[:year] + ' ' + hash[:hour] + ':' + hash[:minute] + ':' + hash[:second] + ' ' + hash[:timezone]
+      timestamp = Time.rfc2822(time_string)
+      initialization_string, age = if capture.output[:maturity] == [nil, nil]
+        [ hash[:sha1_hex_short].to_sym,  0 ]
 			else
-				new(constructor_hash)
+        [ hash[:maturity].uniq[0], hash[:age].uniq[0].to_i ]
+      end # if
+			if age == 0
+        Commit.new(initialization_string: initialization_string, repository: repository)
+			else
+				new(initialization_string: initialization_string, repository: repository, timestamp:  timestamp)
 			end # if
     end # new_from_ref
   end # Constructors

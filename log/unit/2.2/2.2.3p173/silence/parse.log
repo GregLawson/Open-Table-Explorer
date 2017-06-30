@@ -1,43 +1,40 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 27, 19, 2, Rational(5365894096, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 7, 11, 25, Rational(12950851543, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test
 Started
-........b did not match anything.
+..............b did not match anything.
 b did not match anything.
 c did not match anything.
-.......................................................................
-................... matched
+.................................................................
+........................ matched
 #<MatchCapture string="  " regexp=/  />
-...........
+..........
 
-Finished in 0.734762619 seconds.
+Finished in 0.694150918 seconds.
 ------
-109 tests, 379 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+113 tests, 346 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-148.35 tests/s, 515.81 assertions/s
+162.79 tests/s, 498.45 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/parse_test.rb"
-	User time (seconds): 1.81
-	System time (seconds): 0.12
+	User time (seconds): 1.54
+	System time (seconds): 0.09
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.94
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.65
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 33644
+	Maximum resident set size (kbytes): 31228
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8536
-	Voluntary context switches: 2
-	Involuntary context switches: 210
+	Minor (reclaiming a frame) page faults: 7934
+	Voluntary context switches: 3
+	Involuntary context switches: 179
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0
