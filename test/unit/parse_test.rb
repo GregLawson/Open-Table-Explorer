@@ -223,12 +223,12 @@ class MatchRefinementTest < TestCase
 		
 
 		def test_assert_match_kind
-			A_mismatch.assert_match_kind(:no_matches, 'a')
-			AB.assert_match_kind(:right, 'ab')
-			BA.assert_match_kind(:left, 'ba')
-			B_match.assert_match_kind(:exact, 'b')
-			ABC_match_b.assert_match_kind(:inside, 'abc')
-			Scattered_match.assert_match_kind(:scattered, 'bcb')
+			A_mismatch.assert_match_kind(:no_matches)
+			AB.assert_match_kind(:right)
+			BA.assert_match_kind(:left)
+			B_match.assert_match_kind(:exact)
+			ABC_match_b.assert_match_kind(:inside)
+			Scattered_match.assert_match_kind(:scattered)
 		end # assert_match_kind
 		
 end # MatchRefinement
@@ -651,7 +651,7 @@ class RawCaptureTest < TestCase
 		[abc_ordered_exact, abc_unordered_exact].each do |capture|
 			narrow_refinement = capture.narrow_refinement(/b/)
 			message = narrow_refinement.inspect
-			narrow_refinement.assert_match_kind(:inside, 'abc', message)
+			narrow_refinement.assert_match_kind(:inside, message)
 			assert_equal(1, narrow_refinement.captures.size, message)
 			assert_equal('abc', narrow_refinement.join, message)
 		end # each
@@ -690,42 +690,11 @@ class RawCaptureTest < TestCase
 		assert_equal(['  2'], MatchCapture::Examples::Branch_line_capture.priority_refinements[1..-1])
 		assert_equal(["\n  2"], MatchCapture::Examples::Branch_current_capture.priority_refinements[1..-1])
 		assert_equal(['  2'], SplitCapture::Examples::Split_capture.priority_refinements[1..-1])
-		assert_equal([], Empty_capture.priority_refinements)
+#!		assert_equal([''], Empty_capture.priority_refinements)
 
 #!		assert_equal(['a', 'b', 'c'], MatchCapture.new(string: 'abc', regexp: [/a/, /b/]).priority_refinements )
 #!		assert_equal(['a', 'b'], MatchCapture.new(string: 'abc', regexp: [/b/, /a/]).priority_refinements )
 	end # priority_refinements
-
-	def test_next_refinement
-		assert_equal([], Empty_capture.next_refinement([]))
-		assert_equal(['b'], MatchCapture.new(string: 'ab', regexp: /a/).next_refinement([]))
-		assert_equal([], MatchCapture.new(string: 'ab', regexp: /a/).next_refinement([/b/]))
-		assert_equal([], MatchCapture.new(string: 'ab', regexp: /b/).next_refinement([]))
-		assert_equal([], MatchCapture.new(string: 'ab', regexp: /b/).next_refinement([/a/]))
-		assert_equal([], MatchCapture.new(string: 'ab', regexp: /b/).next_refinement([/a/, /b/]))
-	end # next_refinement
-	
-	def test_MatchCapture_sequential_refinements
-			capture = MatchCapture.new(string: 'a', regexp: /a/)
-			refute_empty(capture.string)
-			assert(capture.success?)
-			assert_equal(MatchRefinement[], MatchRefinement[] + MatchRefinement[])
-			assert_instance_of(MatchRefinement, capture.next_refinement)
-			compose = MatchRefinement[capture.pre_match, capture] + capture.next_refinement
-			assert_instance_of(MatchRefinement, compose)
-			ret = MatchRefinement.new(compose)
-			sequential_refinements = capture.sequential_refinements
-			assert_equal(sequential_refinements, ret)
-			assert_instance_of(MatchRefinement, ret)
-			assert_instance_of(MatchRefinement, sequential_refinements)
-				assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.sequential_refinements([])[1..-1])
-				assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.sequential_refinements()[1..-1])
-				assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.sequential_refinements[1..-1])
-				assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.sequential_refinements([MatchCapture::Examples::Branch_capture.regexp])[1..-1])
-				assert_equal(["\n  2"], MatchCapture::Examples::Parse_string.sequential_refinements[1..-1])
-				assert_equal(['  2'], MatchCapture::Examples::Branch_line_capture.sequential_refinements[1..-1])
-				assert_equal(["\n  2"], MatchCapture::Examples::Branch_current_capture.sequential_refinements[1..-1])
-	end # sequential_refinements
 
   def test_internal_delimiters
     assert_equal([], Split_capture.internal_delimiters)
@@ -773,28 +742,6 @@ class RawCaptureTest < TestCase
 #!		MatchCapture.new(string: No_ref_line, regexp: Regexp_array).assert_refinement(:exact)
 	end # assert_refinement
 
-	def test_assert_sequential
-		assert_equal(Branch_capture.string, Branch_capture.sequential_refinements.join, Branch_capture.inspect)
-		assert_equal("* 1\n  2", Branch_capture.sequential_refinements.join, Branch_capture.sequential_refinements.inspect)
-		assert_equal(Branch_capture.priority_refinements.join, Branch_capture.sequential_refinements.join, Branch_capture.inspect)
-				MatchCapture::Examples::Branch_capture.assert_sequential(:left)
-				MatchCapture::Examples::Parse_string.assert_sequential(:left)
-				MatchCapture::Examples::Branch_line_capture.assert_sequential(:left)
-				MatchCapture::Examples::Branch_current_capture.assert_sequential(:left)
-#!				SplitCapture::Examples::Split_capture.assert_sequential(:left)
-#!				SplitCapture::Examples::Parse_array.assert_sequential(:left)
-#!				SplitCapture::Examples::Branch_line_capture.assert_sequential(:left)
-#!				SplitCapture::Examples::Branch_regexp_capture.assert_sequential(:left)
-#!				SplitCapture::Examples::Failed_capture.assert_sequential(:left)
-#!				SplitCapture::Examples::Syntax_failed_capture.assert_sequential(:left)
-#!				SplitCapture::Examples::Parse_delimited_array.assert_sequential(:left)
-		Empty_capture.assert_sequential(:no_matches)
-		Reflog_capture.assert_sequential(:exact)
-#!		assert_equal('', Regexp_array_capture.priority_refinements[0].inspect)
-#!		Regexp_array_capture.assert_sequential(:exact)
-#!		MatchCapture.new(string: Reflog_line, regexp: Regexp_array).assert_sequential(:exact)
-#!		MatchCapture.new(string: No_ref_line, regexp: Regexp_array).assert_sequential(:exact)
-		end # assert_sequential
 end # RawCapture
 
 class MatchCaptureTest < TestCase
@@ -997,34 +944,33 @@ class SplitCaptureTest < TestCase
 			assert_instance_of(MatchCapture, MatchCapture::Examples::Branch_current_capture.narrowed_capture)
 	end # narrowed_capture
 	
-	def test_SplitCapture_sequential_refinements
+	def test_SplitCapture_priority_refinements
 			capture = MatchCapture.new(string: 'a', regexp: /a/)
 			refute_empty(capture.string)
 			assert(capture.success?)
 			assert_equal(MatchRefinement[], MatchRefinement[] + MatchRefinement[])
-			assert_instance_of(MatchRefinement, capture.next_refinement)
-			compose = MatchRefinement[capture.pre_match, capture] + capture.next_refinement
-			assert_instance_of(MatchRefinement, compose)
-			ret = MatchRefinement.new(compose)
-			sequential_refinements = capture.sequential_refinements
-			assert_equal(sequential_refinements, ret)
-			assert_instance_of(MatchRefinement, ret)
-			assert_instance_of(MatchRefinement, sequential_refinements)
-				assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.sequential_refinements([])[1..-1])
-				assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.sequential_refinements()[1..-1])
-				assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.sequential_refinements[1..-1])
-				assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.sequential_refinements([MatchCapture::Examples::Branch_capture.regexp])[1..-1])
-				assert_equal(["\n  2"], MatchCapture::Examples::Parse_string.sequential_refinements[1..-1])
-				assert_equal(['  2'], MatchCapture::Examples::Branch_line_capture.sequential_refinements[1..-1])
-				assert_equal(["\n  2"], MatchCapture::Examples::Branch_current_capture.sequential_refinements[1..-1])
-				assert_equal(['  2'], SplitCapture::Examples::Split_capture.sequential_refinements[1..-1])
-#!				assert_equal(["\n", "\n"], SplitCapture::Examples::Parse_array.sequential_refinements[1..-1], SplitCapture::Examples::Parse_array.inspect)
-				assert_equal(['  2'], SplitCapture::Examples::Branch_line_capture.sequential_refinements[1..-1])
-#!				assert_equal(["\n"], SplitCapture::Examples::Branch_regexp_capture.sequential_refinements[1..-1])
-#!				assert_equal(['cat'], SplitCapture::Examples::Failed_capture.sequential_refinements[1..-1])
-#!				assert_equal(['cat'], SplitCapture::Examples::Syntax_failed_capture.sequential_refinements[1..-1])
-#!				assert_equal(["\n"], SplitCapture::Examples::Parse_delimited_array.sequential_refinements[1..-1])
-	end # sequential_refinements
+#!			assert_instance_of(MatchRefinement, capture.next_refinement)
+#!			compose = MatchRefinement[capture.pre_match, capture] + capture.next_refinement
+#!			assert_instance_of(MatchRefinement, compose)
+#!			ret = MatchRefinement.new(compose)
+			priority_refinements = capture.priority_refinements
+#!			assert_equal(priority_refinements, ret)
+#!			assert_instance_of(MatchRefinement, ret)
+			assert_instance_of(MatchRefinement, priority_refinements)
+				assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.priority_refinements()[1..-1])
+				assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.priority_refinements[1..-1])
+				assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.priority_refinements[1..-1])
+				assert_equal(["\n  2"], MatchCapture::Examples::Parse_string.priority_refinements[1..-1])
+				assert_equal(['  2'], MatchCapture::Examples::Branch_line_capture.priority_refinements[1..-1])
+				assert_equal(["\n  2"], MatchCapture::Examples::Branch_current_capture.priority_refinements[1..-1])
+				assert_equal(['  2'], SplitCapture::Examples::Split_capture.priority_refinements[1..-1])
+#!				assert_equal(["\n", "\n"], SplitCapture::Examples::Parse_array.priority_refinements[1..-1], SplitCapture::Examples::Parse_array.inspect)
+				assert_equal(['  2'], SplitCapture::Examples::Branch_line_capture.priority_refinements[1..-1])
+#!				assert_equal(["\n"], SplitCapture::Examples::Branch_regexp_capture.priority_refinements[1..-1])
+#!				assert_equal(['cat'], SplitCapture::Examples::Failed_capture.priority_refinements[1..-1])
+#!				assert_equal(['cat'], SplitCapture::Examples::Syntax_failed_capture.priority_refinements[1..-1])
+#!				assert_equal(["\n"], SplitCapture::Examples::Parse_delimited_array.priority_refinements[1..-1])
+	end # priority_refinements
 
   def test_SplitCapture_post_match
     assert_equal('', Branch_regexp_capture.post_match, Branch_regexp_capture.inspect)
