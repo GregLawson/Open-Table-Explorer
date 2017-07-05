@@ -102,10 +102,6 @@ class MergeTest < TestCase
   def test_merge_interactive
   end # merge_interactive
 
-  def test_stash_and_checkout
-    @temp_repo.force_change
-  end # stash_and_checkout
-
   def test_trial_merge
     assert_equal([], @temp_repo.status)
     @temp_repo.force_change

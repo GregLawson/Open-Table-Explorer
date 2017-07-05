@@ -43,7 +43,7 @@ class BranchTest < TestCase
 
   def test_MaturityBranches
     # explore possible branch name characters
-		# see man git checkout for why dot should not be used in branch names
+    # see man git checkout for why dot should not be used in branch names
     branch_characters = Regexp.character_array do |character|
       git_run = @temp_repo.git_command('branch ' + character)
       git_run.success?
@@ -101,36 +101,35 @@ class BranchTest < TestCase
   end # branch_capture?
 
   def test_current_branch_name?
-#    assert_includes(UnitMaturity::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
+    #	assert_includes(UnitMaturity::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
     branch_capture = Branch.branch_capture?(@temp_repo)
-		branch_capture.assert_post_conditions
-		branch_output = branch_capture.output
-    assert_includes(branch_output, {:current=>"*", :branch=>"master"}, branch_capture.inspect)
-		current_branch_name = Branch.current_branch_name?(This_code_repository)
-		assert_instance_of(Symbol, current_branch_name)
-  # exists @temp_repo.git_command("branch details").assert_post_conditions
-  # exists @temp_repo.git_command("branch summary").assert_post_conditions
+    branch_capture.assert_post_conditions
+    branch_output = branch_capture.output
+    assert_includes(branch_output, { current: '*', branch: 'master' }, branch_capture.inspect)
+    current_branch_name = Branch.current_branch_name?(This_code_repository)
+    assert_instance_of(Symbol, current_branch_name)
+    # exists @temp_repo.git_command("branch details").assert_post_conditions
+    # exists @temp_repo.git_command("branch summary").assert_post_conditions
     #	assert_includes(WorkFlow::Branch_enhancement, Repo.head.name.to_sym, Repo.head.inspect)
     #	assert_includes(WorkFlow::Branch_enhancement, WorkFlow.current_branch_name?, Repo.head.inspect)
   end # current_branch_name
 
+  def test_current_branch
+    current_branch = Branch.current_branch(This_code_repository)
+    assert_instance_of(Branch, current_branch)
+    temp_current_branch = Branch.current_branch(@temp_repo)
+    assert_instance_of(Branch, temp_current_branch)
+    assert_equal(temp_current_branch.sha1_hex_40, Commit.head(@temp_repo).sha1_hex_40)
+    assert_equal(Branch.current_branch(This_code_repository).sha1_hex_40, Commit.head(This_code_repository).sha1_hex_40)
+  end # current_branch
 
-	def test_current_branch
-		current_branch = Branch.current_branch(This_code_repository)
-		assert_instance_of(Branch, current_branch)
-		temp_current_branch = Branch.current_branch(@temp_repo)
-		assert_instance_of(Branch, temp_current_branch)
-		assert_equal(temp_current_branch.sha1_hex_40, Commit.head(@temp_repo).sha1_hex_40)
-		assert_equal(Branch.current_branch(This_code_repository).sha1_hex_40, Commit.head(This_code_repository).sha1_hex_40)
-	end # current_branch
-		
   def test_branches?
     # ?	explain_assert_respond_to(Parse, :parse_split)
     branch_output = @temp_repo.git_command('branch --list').output # .assert_post_conditions
     Patterns.each do |p|
       assert_match(p, branch_output)
       branches = branch_output.capture?(p, LimitCapture)
-#      puts branches.inspect if branches.success?
+      #      puts branches.inspect if branches.success?
       # ?		assert_equal([{:branch=>"master"}, {:branch=>"passed"}], branches.output, branches.inspect)
     end # each
 
@@ -177,7 +176,7 @@ class BranchTest < TestCase
     onto = Executing_branch.find_origin
   end # values
 
-  def test_Branch_to_s
+  def test_to_s
   end # to_s
 
   def test_to_sym
@@ -211,13 +210,11 @@ class BranchTest < TestCase
     #    assert_operator(sorted_branches[0], :==, sorted_branches[0])
   end # compare
 
-	def test_find_origin
-    assert_includes(Branch.remotes?(Repository::This_code_repository), :'origin/master')
-		assert_equal(('origin/' + :master.to_s).to_sym, Master_branch.find_origin)
-		assert_equal(:'origin/master', Master_branch.find_origin)
-		assert_equal(:'origin/passed', Passed_branch.find_origin)
-#!		assert_equal(:'origin/tested', Tested_branch.find_origin) # testing exists
-		assert_equal(:'origin/edited', Edited_branch.find_origin)
+  def test_find_origin
+    assert_equal(:'origin/master', Master_branch.find_origin)
+    assert_equal(:'origin/passed', Passed_branch.find_origin)
+    #		assert_equal(:'origin/tested', Tested_branch.find_origin)
+    assert_equal(:'origin/edited', Edited_branch.find_origin)
   end # find_origin
 
   def test_interactive?
@@ -232,54 +229,54 @@ class BranchTest < TestCase
 
   def test_succ
     assert_equal(2, Branch.branch_index?(:edited))
-		assert_equal(3, Edited_branch.succ)
-		assert_equal(nil, Stash_branch.succ)
-		assert_equal(Branch.branch_index?(:passed), Master_branch.succ)
-		assert_equal(Branch.branch_index?(:edited), Tested_branch.succ)
-		assert_equal(nil, Stash_branch.succ)
-		assert_equal(Branch.branch_index?(:tested), Passed_branch.succ)
-	end # succ
-	
-	def test_less_mature
-		assert_equal([], Stash_branch.less_mature)
-#		assert_equal([Stash_branch], Edited_branch.less_mature)
-#		assert_equal([Passed_branch], Master_branch.less_mature)
-#		assert_equal([Edited_branch], Passed_branch.less_mature)
-	end # less_mature
-	
-		def vertex_iterator
-			All_standard_branches
-		end # vertex_iterator
-		
-		def adjacent_iterator(branch, block) # point to less mature (merge down) branch
-			capture = branch.to_s.capture?(Name_regexp)
-			assert_kind_of(Branch, branch)
-			assert_instance_of(Proc, block)
-			ret = branch.less_mature
-			if branch.respond_to?(:expressions)
-				branch.expressions.each do |y|
-					assert_kind_of(Branch, y)
+    assert_equal(3, Edited_branch.succ)
+    assert_equal(nil, Stash_branch.succ)
+    assert_equal(Branch.branch_index?(:passed), Master_branch.succ)
+    assert_equal(Branch.branch_index?(:edited), Tested_branch.succ)
+    assert_equal(nil, Stash_branch.succ)
+    assert_equal(Branch.branch_index?(:tested), Passed_branch.succ)
+  end # succ
+
+  def test_less_mature
+    assert_equal([], Stash_branch.less_mature)
+    #		assert_equal([Stash_branch], Edited_branch.less_mature)
+    #		assert_equal([Passed_branch], Master_branch.less_mature)
+    #		assert_equal([Edited_branch], Passed_branch.less_mature)
+  end # less_mature
+
+  def vertex_iterator
+    All_standard_branches
+  end # vertex_iterator
+
+  def adjacent_iterator(branch, block) # point to less mature (merge down) branch
+    capture = branch.to_s.capture?(Name_regexp)
+    assert_kind_of(Branch, branch)
+    assert_instance_of(Proc, block)
+    ret = branch.less_mature
+    if branch.respond_to?(:expressions)
+      branch.expressions.each do |y|
+        assert_kind_of(Branch, y)
         next if branch == y || y == Kernel || y == Object
-						bcy = block.call(y)
-						assert_instance_of(Array, bcy)
-						assert_kind_of(Branch, bcy[0])
-						bcy 
+        bcy = block.call(y)
+        assert_instance_of(Array, bcy)
+        assert_kind_of(Branch, bcy[0])
+        bcy
         # unless
-				end
-			end # if
-		end # adjacent_iterator
-		
+      end
+    end # if
+  end # adjacent_iterator
+
   def module_graph(_parser)
-      RGL::ImplicitGraph.new do |g|
+    RGL::ImplicitGraph.new do |g|
       g.vertex_iterator do |_b|
-          vertex_iterator
-        end
-        g.adjacent_iterator do |x, b|
-          adjacent_iterator(x, b)
-        end
-        g.directed = true
+        vertex_iterator
+      end
+      g.adjacent_iterator do |x, b|
+        adjacent_iterator(x, b)
+      end
+      g.directed = true
     end
-  end
+    end
 
   def test_module_graph
     g = module_graph(Passed_branch)
@@ -356,53 +353,50 @@ class BranchReferenceTest < TestCase
     manual_reflog = lines.map do |reflog_line|
       refute_equal('', reflog_line, Reflog_lines.inspect)
       #		BranchReference.assert_reflog_line(reflog_line)
-#      BranchReference.new_from_ref(reflog_line)
+      #      BranchReference.new_from_ref(reflog_line)
       #		new(capture.output[:ambiguous_branch].to_sym,capture.output[:age].to_i)
     end # map
-#    reflog = BranchReference.reflog?(filename, This_code_repository)
+    #    reflog = BranchReference.reflog?(filename, This_code_repository)
     #	assert_equal(manual_reflog, reflog, reflog.inspect)
-#    refute_equal([], reflog, BranchReference.reflog_command_string(filename, repository, range = 0..10).inspect)
+    #    refute_equal([], reflog, BranchReference.reflog_command_string(filename, repository, range = 0..10).inspect)
     #	reflog.assert_post_conditions
     #	refute_empty(reflog.output)
     ##	lines = reflog.output.split("\n")
     #	assert_instance_of(Array, reflog)
     #	assert_operator(reflog.size, :>,1, reflog)
     #	assert_equal('', reflog[0], lines)
-#		unique_ambiguous_branches = reflog.map {|br| br[:ambiguous_branch] }.uniq
-#		unique_unambiguous_branches = reflog.map {|br| br[:unambiguous_branch] }.uniq
-#		assert_equal([], unique_ambiguous_branches)
-#		assert_equal([], unique_unambiguous_branches)
+    #		unique_ambiguous_branches = reflog.map {|br| br[:ambiguous_branch] }.uniq
+    #		unique_unambiguous_branches = reflog.map {|br| br[:unambiguous_branch] }.uniq
+    #		assert_equal([], unique_ambiguous_branches)
+    #		assert_equal([], unique_unambiguous_branches)
 
-		filename = $0
-		repository = Repository::This_code_repository
-		range = 0..2
-		lost_code = 'def testing_superset_of_passed'
-		reflogs_0_2 = BranchReference.reflog?(filename, repository, range, options = '-S "' + lost_code.to_s + '"')
-		assert_instance_of(Array, reflogs_0_2)
-		assert_kind_of(GitReference, reflogs_0_2[0], reflogs_0_2.inspect)
-		assert_equal(3, reflogs_0_2.size)
-		
-		range = 1..2
-		reflogs_1_2 = BranchReference.reflog?(filename, repository, range, options = '-S "' + lost_code.to_s + '"')
-		assert_equal(2, reflogs_1_2.size)
-		assert_equal(reflogs_1_2, reflogs_0_2[1..-1])
+    filename = $PROGRAM_NAME
+    repository = Repository::This_code_repository
+    range = 0..2
+    lost_code = 'def testing_superset_of_passed'
+    reflogs_0_2 = BranchReference.reflog?(filename, repository, range, options = '-S "' + lost_code.to_s + '"')
+    assert_instance_of(Array, reflogs_0_2)
+    assert_kind_of(GitReference, reflogs_0_2[0], reflogs_0_2.inspect)
+    assert_equal(3, reflogs_0_2.size)
 
-		range = 0..10
-		lost_code = 'def testing_superset_of_passed'
-		reflogs = BranchReference.reflog?(filename, repository, range, options = '-S "' + lost_code.to_s + '"')
-		assert_instance_of(Array, reflogs)
-		reflogs.each do |commit|
-			assert_kind_of(GitReference, commit)
-			ref = GitReference.new(initialization_string: commit.sha1_hex_40 + ':' + filename)
-			run = ref.show_run
-			assert(run.success?, run.inspect)
-			file = run.output
-			if file.match(lost_code)
-				puts 'matched in ' + commit.inspect
-			else
-				puts 'unmatched in ' + commit.inspect
-			end # if
-		end # each
+    range = 1..2
+    reflogs_1_2 = BranchReference.reflog?(filename, repository, range, options = '-S "' + lost_code.to_s + '"')
+    assert_equal(2, reflogs_1_2.size)
+    assert_equal(reflogs_1_2, reflogs_0_2[1..-1])
+
+    range = 0..10
+    lost_code = 'def testing_superset_of_passed'
+    reflogs = BranchReference.reflog?(filename, repository, range, options = '-S "' + lost_code.to_s + '"')
+    assert_instance_of(Array, reflogs)
+    reflogs.each do |commit|
+      assert_kind_of(GitReference, commit)
+      file = GitReference.new(initialization_string: commit.sha1_hex_40 + ':' + filename).show_run.output
+      if file.match(lost_code)
+        puts 'matched in ' + commit.inspect
+      else
+        puts 'unmatched in ' + commit.inspect
+      end # if
+    end # each
   end # reflog?
 
   def test_last_change?
@@ -412,51 +406,32 @@ class BranchReferenceTest < TestCase
     assert_equal(nil, BranchReference.last_change?(filename, repository))
     #	assert_includes(Branch.branch_names?(This_code_repository), BranchReference.last_change?(filename, This_code_repository).initialization_string)
   end # last_change?
-	
-	def test_lost_edit
-		filename = $0
-		repository = Repository::This_code_repository
-		range = 0..10
-		lost_code = 'def testing_superset_of_passed'
-		reflogs = BranchReference.reflog?(filename, repository, range, options = '-S "' + lost_code.to_s + '"')
-		assert_instance_of(Array, reflogs)
-		reflogs.each do |commit|
-			assert_kind_of(GitReference, commit)
-			file = GitReference.new(initialization_string: commit.sha1_hex_40 + ':' + filename).show_run.output
-			if file.match(lost_code)
-				puts 'matched in ' + commit.inspect
-			else
-				puts 'unmatched in ' + commit.inspect
-			end # if
-		end # each
-	end # lost_edit
 
-	def test_reflog_to_constructor_hash
-		reflog_line = Reflog_line
-    capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
-		assert_equal(['master', 'master'], capture.output[:maturity], capture.output.inspect)
-		assert_equal(['123', '123'], capture.output[:age], capture.output.inspect)
-    assert_equal('heads', capture.output[:ref], capture.output.inspect)
-    assert_equal('1234567', capture.output[:sha1_hex_short], capture.output.inspect)
+  def test_lost_edit
+    filename = $PROGRAM_NAME
+    repository = Repository::This_code_repository
+    range = 0..10
+    lost_code = 'def testing_superset_of_passed'
+    reflogs = BranchReference.reflog?(filename, repository, range, options = '-S "' + lost_code.to_s + '"')
+    assert_instance_of(Array, reflogs)
+    reflogs.each do |commit|
+      assert_kind_of(GitReference, commit)
+      file = GitReference.new(initialization_string: commit.sha1_hex_40 + ':' + filename).show_run.output
+      if file.match(lost_code)
+        puts 'matched in ' + commit.inspect
+      else
+        puts 'unmatched in ' + commit.inspect
+      end # if
+    end # each
+  end # lost_edit
+
+  def test_reflog_to_constructor_hash
     Reflog_lines.each do |reflog_line|
       capture = reflog_line.capture?(BranchReference::Reflog_line_regexp)
-			
-			hash = capture.output
-			time_string = hash[:weekday] + ', ' + hash[:day_of_month] + ' ' + hash[:month] + ' ' + hash[:year] + ' ' + hash[:hour] + ':' + hash[:minute] + ':' + hash[:second] + ' ' + hash[:timezone]
-			timestamp = Time.rfc2822(time_string)
-      if capture.output[:maturity] == [nil, nil]
-        { initialization_string: hash[:sha1_hex_short].to_sym, age: 0, timestamp:  timestamp}
-      else
-        { initialization_string: hash[:maturity], age: hash[:age].uniq[0].to_i, timestamp: timestamp }
-      end # if
-		end # each
-		test_time = Time.new(2015, 6, 21, 13, 51, Rational(50000000000, 1000000000), "-07:00")
-    reflog_to_constructor_hash = BranchReference.reflog_to_constructor_hash(Reflog_line)
-		assert_equal(123, reflog_to_constructor_hash[:age], reflog_to_constructor_hash)
-		assert_equal('master', reflog_to_constructor_hash[:initialization_string], reflog_to_constructor_hash)
-		assert_equal(test_time, reflog_to_constructor_hash[:timestamp], reflog_to_constructor_hash)
+      #      reflog_to_constructor_hash = BranchReference.reflog_to_constructor_hash(reflog_line)
       #      BranchReference.assert_reflog_line(reflog_line)
-	end # reflog_to_constructor_hash
+    end # each
+  end # reflog_to_constructor_hash
 
   def test_BranchReference_DefinitionalConstants
     assert_match(BranchReference::Ambiguous_ref_pattern, Reflog_line)
@@ -464,62 +439,42 @@ class BranchReferenceTest < TestCase
     assert_match(/refs\/heads\//, Reflog_line)
     assert_match(Ambiguous_ref_pattern.capture(:unambiguous_branch), Reflog_line)
     assert_match(Unambiguous_ref_age_pattern * /}/, Reflog_line)
-#    matches = ParsedCapture.show_matches([Reflog_line], Regexp_array)
+    #    matches = ParsedCapture.show_matches([Reflog_line], Regexp_array)
     matches = ParsedCapture.show_matches([Reflog_line], [Unambiguous_ref_pattern])
-#		matches = ParsedCapture.priority_match([Reflog_line], Regexp_array)
-#    puts matches.inspect
+    #		matches = ParsedCapture.priority_match([Reflog_line], Regexp_array)
+    #    puts matches.inspect
     assert_equal('123', Reflog_line.capture?(Ambiguous_ref_pattern).output[:age], matches.ruby_lines_storage)
     assert_equal('master', Reflog_line.capture?(Ambiguous_ref_pattern).output[:maturity], matches.ruby_lines_storage)
     assert_equal(nil, Reflog_line.capture?(Ambiguous_ref_pattern).output[:test_topic], matches.ruby_lines_storage)
-    assert_equal({ age: '123', maturity: 'master', test_topic: nil, type: nil }, Reflog_line.capture?(Ambiguous_ref_pattern).output, matches.ruby_lines_storage)
+    assert_equal({ age: '123', maturity: 'master', test_topic: nil, scope: nil }, Reflog_line.capture?(Ambiguous_ref_pattern).output, matches.ruby_lines_storage)
     unambiguous_branch = Reflog_line.capture?(Refs_prefix_regexp * Ambiguous_ref_pattern)
-		assert(unambiguous_branch.success?, unambiguous_branch.inspect)
-#    assert_equal(['123'], unambiguous_branch.raw_captures[0..-1], unambiguous_branch.regexp.named_captures.inspect)
+    assert(unambiguous_branch.success?, unambiguous_branch.inspect)
+    #    assert_equal(['123'], unambiguous_branch.raw_captures[0..-1], unambiguous_branch.regexp.named_captures.inspect)
     assert_equal('123', unambiguous_branch.output[:age], unambiguous_branch.inspect)
     assert_equal('master', unambiguous_branch.output[:maturity], unambiguous_branch.inspect)
     assert_equal(nil, unambiguous_branch.output[:test_topic], unambiguous_branch.inspect)
     assert_equal('heads', unambiguous_branch.output[:ref], unambiguous_branch.inspect)
-    assert_equal({ age: '123', ref: "heads", maturity: 'master', test_topic: nil, type: nil }, unambiguous_branch.output, matches.ruby_lines_storage)
-    timestamp = Reflog_line.capture?(Git_reflog_timestamp_regexp)
-    matches = ParsedCapture.show_matches([Reflog_line], Git_reflog_timestamp_regexp_array)
-		assert_match(Git_reflog_timestamp_regexp, Reflog_line, matches.inspect)
-		assert(timestamp.success?, matches.inspect)
-    assert_equal("21", timestamp.output[:day_of_month], timestamp.ruby_lines_storage)
-    assert_equal("13", timestamp.output[:hour], timestamp.ruby_lines_storage)
-    assert_equal("51", timestamp.output[:minute], timestamp.ruby_lines_storage)
-    assert_equal("Jun", timestamp.output[:month], timestamp.ruby_lines_storage)
-    assert_equal("50", timestamp.output[:second], timestamp.ruby_lines_storage)
-    assert_equal("-0700", timestamp.output[:timezone], timestamp.ruby_lines_storage)
-    assert_equal("Sun", timestamp.output[:weekday], timestamp.ruby_lines_storage)
-    assert_equal("2015", timestamp.output[:year], timestamp.ruby_lines_storage)
-    
-		assert_match(BranchReference::Unambiguous_ref_pattern, Reflog_line)
+    assert_equal({ age: '123', ref: 'heads', maturity: 'master', test_topic: nil, scope: nil }, unambiguous_branch.output, matches.ruby_lines_storage)
+    timestamp = MatchCapture.new(string: Reflog_line, regexp: Git_reflog_timestamp_regexp_array)
+    assert_equal({ day_of_month: '21', hour: '13', minute: '51', month: 'Jun', second: '50', timezone: '-0700',
+                   weekday: 'Sun', year: '2015' }, timestamp.output, timestamp.ruby_lines_storage)
+    assert_match(BranchReference::Unambiguous_ref_pattern, Reflog_line)
     BranchReference.assert_reflog_line(Reflog_line)
     BranchReference.assert_reflog_line(Last_change_line)
     BranchReference.assert_reflog_line(First_change_line)
-		BranchReference.assert_reflog_line(Stash_line)
-		BranchReference.assert_reflog_line(No_ref_line)
+    BranchReference.assert_reflog_line(Stash_line)
+    BranchReference.assert_reflog_line(No_ref_line)
     Reflog_lines.each do |reflog_line|
       Regexp_array.each do |regexp|
-  			assert_match(regexp, reflog_line)
-			end # each
+        assert_match(regexp, reflog_line)
+      end # each
       assert_match(BranchReference::Reflog_line_regexp, reflog_line)
       BranchReference.assert_reflog_line(reflog_line)
-#        refute_equal([], priority_match, show_matches.ruby_lines_storage)
-#        assert_match(BranchReference::Ambiguous_ref_pattern, reflog_line)
-#        assert_match(BranchReference::Unambiguous_ref_pattern, reflog_line)
+      #        refute_equal([], priority_match, show_matches.ruby_lines_storage)
+      #        assert_match(BranchReference::Ambiguous_ref_pattern, reflog_line)
+      #        assert_match(BranchReference::Unambiguous_ref_pattern, reflog_line)
     end # each
   end # DefinitionalConstants
-		
-	def test_stash_wip
-		wip_example = "stash@{0}: WIP on testing: 0eeec72 Merge branch 'passed' into testing"
-		command_string = 'show stash'
-		cached_run = Repository::This_code_repository.git_command(command_string)
-    regexp = /stash@{0}: WIP on / * Name_regexp.capture(:parent_branch) * /: / *
-             SHA1_hex_short.capture(:sha1_hex_short) * / Merge branch '/ * Name_regexp.capture(:merge_from) * /' into / * Name_regexp.capture(:merge_into)
-#		assert_match(regexp, cached_run.output, cached_run.inspect)
-#		assert_include([Master_branch, Passed_branch, Tested_branch, Edited_branch], BranchReference.stash_wip(Repository::This_code_repository),cached_run.inspect)
-	end # stash_wip
 
   def test_new_from_ref
     reflog_line = No_ref_line
@@ -547,7 +502,7 @@ class BranchReferenceTest < TestCase
     #    assert_equal(refs[0], br.to_s, br.inspect)
     # ?	assert_equal(refs[3] + ',' + refs[4], br.timestamp, br.inspect)
     # ?	assert_equal(refs[3] + ',' + refs[4], br.timestamp, br.inspect)
-#    assert_operator(Time.rfc2822(refs[4]), :==, br.timestamp, br.inspect) #
+    #    assert_operator(Time.rfc2822(refs[4]), :==, br.timestamp, br.inspect) #
 
     new_from_ref = BranchReference.new_from_ref(Reflog_line)
     #    assert_equal(123, new_from_ref.age.value, Reflog_capture.output.inspect)
@@ -557,18 +512,18 @@ class BranchReferenceTest < TestCase
     BranchReference.assert_output(Reflog_line)
     BranchReference.assert_output(Last_change_line)
     BranchReference.assert_output(First_change_line)
-#    BranchReference.new_from_ref(No_ref_line).assert_pre_conditions
+    #    BranchReference.new_from_ref(No_ref_line).assert_pre_conditions
     #	assert_equal(nil, capture.output[:ambiguous_branch].nil?)
-#    BranchReference.new_from_ref(First_change_line).assert_pre_conditions
-#    BranchReference.new_from_ref(Last_change_line).assert_pre_conditions
-#    BranchReference.new_from_ref(Reflog_line).assert_pre_conditions
-		
-#		assert_instance_of(Time, br.timestamp, br.inspect)
+    #    BranchReference.new_from_ref(First_change_line).assert_pre_conditions
+    #    BranchReference.new_from_ref(Last_change_line).assert_pre_conditions
+    #    BranchReference.new_from_ref(Reflog_line).assert_pre_conditions
+
+    #		assert_instance_of(Time, br.timestamp, br.inspect)
 
     branch = :master
     age = 123
     timestamp = Time.now
-    br = BranchReference.new(branch: branch, age: age, timestamp: timestamp.to_s)
+    br = BranchReference.new(name: branch, age: age, timestamp: timestamp.to_s)
     #    assert_equal(br, BranchReference.new_from_ref(Reflog_line))
   end # new_from_ref
 

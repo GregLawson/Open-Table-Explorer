@@ -20,19 +20,18 @@ require_relative '../../test/assertions/repository_assertions.rb'
 include TimeTypes
 
 
-class GitReference # base class for all git references (readable, maybe not writeable)
+class GitReference  < Dry::Types::Value # base class for all git references (readable, maybe not writeable)
 	
 	
-  include Virtus.value_object
+#  include Virtus.value_object
 
-  values do
-    attribute :initialization_string, Symbol
-    attribute :repository, Repository, default: Repository::This_code_repository
-  end # values
+#  values do
+    attribute :initialization_string, Types::Strict::String | Types::Strict::Symbol
+    attribute :repository, Repository.default(Repository::This_code_repository)
+#  end # values
 
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
 #    include DefinitionalConstants
-		# Simulate a NamedCommit for working directory not yet in git.
 		Tree = GitReference.new(initialization_string: 'HEAD' + '^{tree}', repository: Repository::This_code_repository) 
 		File = GitReference.new(initialization_string: 'HEAD:' + $0, repository: Repository::This_code_repository) 
   end # ReferenceObjects
@@ -49,6 +48,7 @@ class GitReference # base class for all git references (readable, maybe not writ
 	def show_run
 		run = repository.git_command('show ' + initialization_string.to_s + ' --pretty=medium  --no-abbrev-commit --no-patch')
 	end # show_run
+	
 	end # GitReference
 	
 class Commit < GitReference
@@ -78,12 +78,11 @@ class Commit < GitReference
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
 #		include WorkingTree::ReferenceObjects
     include DefinitionalConstants
-		Working_tree = Commit.new(initialization_string: :Working_tree, repository: Repository::This_code_repository) 
   end # ReferenceObjects
   include ReferenceObjects
 	
 	def show_commit
-		capture = show_run.output.capture?(Show_commit_regexp)
+		capture = MatchCapture.new(string: show_run.output, regexp: Show_commit_array)
 		if capture.success?
 			capture.output
 		else
@@ -99,12 +98,36 @@ class Commit < GitReference
 		show_commit[:commit_title]
 	end # commit_title
 	
+	def commit_explanation
+		show_commit[:commit_explanation]
+	end # commit_explanation
+	
+	def committer
+		show_commit[:name]
+	end # committer
+	
+	def committer_email
+		show_commit[:email]
+	end # committer_email
+	
+	def timestamp
+    Time.new(show_commit[:year].to_i, Month_names.index(show_commit[:month]) + 1, show_commit[:day_of_month].to_i, 
+			show_commit[:hour].to_i, show_commit[:minute].to_i, 
+			show_commit[:second].to_i, show_commit[:timezone].to_i)
+	
+	end # timestamp
+	
 	def tree
 		tree_ref = GitReference.new(initialization_string: initialization_string.to_s + '^{tree}')
 		tree_run = tree_ref.show_run
 		output = tree_run.output
 		array = output.split("\n")[1..-1] # discard echo of tree
 	end # tree
+
+	def file_contents(path) # nil for working tree
+				git_command = 'git cat-file blob ' + @initialization_string.to_s + ':' + path
+			file_contents = @repository.git_command(git_command).output
+	end # file_contents
 
   def diff_branch_files(other_ref, options = '--summary', file_glob = '*.rb')
 			if other_ref == WorkingTree::Working_tree
@@ -142,6 +165,10 @@ class WorkingTree < Commit # extend Commit to include not yet committed
   end # ReferenceObjects
   include ReferenceObjects
 
+	def file_contents(path) # nil for working tree
+		IO.read(path)
+	end # file_contents
+
   def diff_branch_files(other_ref, options = '--summary', file_glob = '*.rb')
 			if other_ref == Working_tree
 				[]
@@ -173,6 +200,8 @@ class NamedCommit < Commit # tags, symbols, and of course branches (subtype)
 		Orig_head_at_start = NamedCommit.new(initialization_string: :ORIG_HEAD, repository: Repository::This_code_repository)
 		Fetch_head_at_start = NamedCommit.new(initialization_string: :FETCH_HEAD, repository: Repository::This_code_repository)
 		Merge_head_at_start = NamedCommit.new(initialization_string: :MERGE_HEAD, repository: Repository::This_code_repository)
+		Working_tree = NamedCommit.new(initialization_string: :Working_tree, repository: Repository::This_code_repository) 
+    Stash_branch = NamedCommit.new(initialization_string: :stash, repository: Repository::Examples::This_code_repository)
   end # ReferenceObjects
   include ReferenceObjects
 end # NamedCommit

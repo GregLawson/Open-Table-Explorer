@@ -1,55 +1,167 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
-,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 2, 20, 9, 39, Rational(8065590261, 1000000000), "-08:00"),
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 9, 25, 5, 0, Rational(33103130847, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test
 Started
-.......................Hello World
-.....
+..........................F
+===============================================================================
+Failure: test_close(ShellTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb:155:in `test_close\'
+     152: 		pause_delimiter.close
+     153: 		pause_delimiter.assert_ended(\'after pause\')
+     154: 		assert_equal("\nBye\n", pause_delimiter.output_at_close)
+  => 155: 		assert_equal([:pending_interrupt?,  :raise, :join, :value, :kill, :terminate, :exit, :run, :wakeup, :[], :[]=, :key?, :keys, :priority, :priority=, :status, :thread_variable_get, :thread_variable_set, :thread_variables, :thread_variable?, :alive?, :stop?, :abort_on_exception, :abort_on_exception=, :safe_level, :group, :backtrace, :backtrace_locations, :inspect, :set_trace_func, :add_trace_func], Thread.instance_methods(false))
+     156: 		assert_includes(pause_delimiter.wait_thr.methods, :status)
+     157: 		assert_equal(false, pause_delimiter.wait_thr.status)
+     158: 		assert_equal(false, pause_delimiter.wait_thr.alive?)
+<[:pending_interrupt?,
+ :raise,
+ :join,
+ :value,
+ :kill,
+ :terminate,
+ :exit,
+ :run,
+ :wakeup,
+ :[],
+ :[]=,
+ :key?,
+ :keys,
+ :priority,
+ :priority=,
+ :status,
+ :thread_variable_get,
+ :thread_variable_set,
+ :thread_variables,
+ :thread_variable?,
+ :alive?,
+ :stop?,
+ :abort_on_exception,
+ :abort_on_exception=,
+ :safe_level,
+ :group,
+ :backtrace,
+ :backtrace_locations,
+ :inspect,
+ :set_trace_func,
+ :add_trace_func]> expected but was
+<[:[],
+ :[]=,
+ :inspect,
+ :name,
+ :backtrace,
+ :backtrace_locations,
+ :status,
+ :raise,
+ :value,
+ :join,
+ :keys,
+ :key?,
+ :kill,
+ :exit,
+ :abort_on_exception,
+ :abort_on_exception=,
+ :pending_interrupt?,
+ :terminate,
+ :run,
+ :wakeup,
+ :priority,
+ :priority=,
+ :thread_variable_get,
+ :thread_variable_set,
+ :thread_variables,
+ :thread_variable?,
+ :alive?,
+ :stop?,
+ :safe_level,
+ :group,
+ :name=,
+ :set_trace_func,
+ :add_trace_func]>
 
-Finished in 0.201311039 seconds.
+diff:
++ [:[],
++  :[]=,
+? [:   pending_interrupt?,
+?   ins  c                
++  :name,
++  :backtrace,
++  :backtrace_locations,
++  :status,
+   :raise,
++  :value,
+   :join,
+?  :value  ,
+?   k    ys 
++  :key?,
+   :kill,
++  :exit,
++  :abort_on_exception,
++  :abort_on_exception=,
++  :pending_interrupt?,
+   :terminate,
+-  :exit,
+   :run,
+   :wakeup,
+-  :[],
+-  :[]=,
+-  :key?,
+-  :keys,
+   :priority,
+   :priority=,
+-  :status,
+   :thread_variable_get,
+   :thread_variable_set,
+   :thread_variables,
+   :thread_variable?,
+   :alive?,
+   :stop?,
+-  :abort_on_exception,
+-  :abort_on_exception=,
+   :safe_level,
+   :group,
+-  :backtrace,
+-  :backtrace_locations,
+?  :inspect,
+?     am =  
+   :set_trace_func,
+   :add_trace_func]
+===============================================================================
+.....Hello World
+..
+
+Finished in 20.309155868 seconds.
 ------
-28 tests, 69 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
+34 tests, 103 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+97.0588% passed
 ------
-139.09 tests/s, 342.75 assertions/s
-Run options: --seed 0
-
-# Running:
-
-.........
-
-Finished in 0.006755s, 1332.4298 runs/s, 0.0000 assertions/s.
-
-9 runs, 0 assertions, 0 failures, 0 errors, 0 skips
+1.67 tests/s, 5.07 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb"
-	User time (seconds): 1.34
-	System time (seconds): 0.14
-	Percent of CPU this job got: 88%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.68
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/shell_command_test.rb"
+	User time (seconds): 1.31
+	System time (seconds): 0.16
+	Percent of CPU this job got: 6%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:21.86
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 34076
+	Maximum resident set size (kbytes): 30584
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 2
-	Minor (reclaiming a frame) page faults: 14946
-	Voluntary context switches: 279
-	Involuntary context switches: 205
+	Major (requiring I/O) page faults: 4
+	Minor (reclaiming a frame) page faults: 9372
+	Voluntary context switches: 370
+	Involuntary context switches: 464
 	Swaps: 0
-	File system inputs: 584
+	File system inputs: 840
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
 '
 }
 

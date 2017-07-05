@@ -3,64 +3,64 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 12, Rational(3798098675, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 8, 7, 27, Rational(37989135322, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelserie_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelserie_test
 Started
 E
 ===============================================================================
 Error: test_aaa_test_new_assertions_(HuelserieTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<HuelserieTest:0x00000002301040>
+  NameError: undefined local variable or method `define_model_of_test\' for #<HuelserieTest:0x007fc03bb9da68>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelserie_test.rb:8:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_general_associations(HuelserieTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<HuelserieTest:0x00000002300f78>
+  NameError: undefined local variable or method `define_model_of_test\' for #<HuelserieTest:0x007fc03bb9d9a0>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelserie_test.rb:8:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_id_equal(HuelserieTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<HuelserieTest:0x00000002300eb0>
+  NameError: undefined local variable or method `define_model_of_test\' for #<HuelserieTest:0x007fc03bb9d8d8>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelserie_test.rb:8:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_specific__stable_and_working(HuelserieTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<HuelserieTest:0x00000002300de8>
+  NameError: undefined local variable or method `define_model_of_test\' for #<HuelserieTest:0x007fc03bb9d810>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelserie_test.rb:8:in `setup\'
 ===============================================================================
 
 
-Finished in 0.158084638 seconds.
+Finished in 0.145492792 seconds.
 ------
 4 tests, 0 assertions, 0 failures, 4 errors, 0 pendings, 0 omissions, 0 notifications
 0% passed
 ------
-25.30 tests/s, 0.00 assertions/s
+27.49 tests/s, 0.00 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelserie_test.rb"
-	User time (seconds): 0.75
-	System time (seconds): 0.05
-	Percent of CPU this job got: 97%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.82
+	User time (seconds): 0.74
+	System time (seconds): 0.08
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.83
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 20968
+	Maximum resident set size (kbytes): 20820
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5368
-	Voluntary context switches: 3
-	Involuntary context switches: 121
+	Minor (reclaiming a frame) page faults: 5329
+	Voluntary context switches: 2
+	Involuntary context switches: 106
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

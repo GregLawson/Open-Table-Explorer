@@ -1,155 +1,279 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
-,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 2, 20, 9, 38, Rational(31533010656, 1000000000), "-08:00"),
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 9, 25, 4, 59, Rational(42606084091, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
-Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test
-Started
-E
-===============================================================================
-Error: test_Constants(SambaTest): NameError: uninitialized constant Samba::Examples
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:28:in `test_Constants\'
-     25:   include Examples
-     26: 
-     27:   def test_Constants
-  => 28:     line = Samba::Examples::Comment_line
-     29:     capture = line.capture?(Comment_regexp)
-     30:     assert_operator(1, :<=, capture.output[:comment].size)
-     31:     assert_equal(nil, capture.output[:filesystem_image])
-===============================================================================
-.F
-===============================================================================
-Failure:
-  self=$ mount -t cifs \Seagate-414103/Public /media/central -o ip=acer-desktop
-  ,auto
-  @errors="mount: only root can use \"--options\" option\nsh: 2: ,auto: not found\n"
-  @process_status = #<Process::Status: pid 9800 exit 127>
-  expected errors to be empty\n.
-  <"mount: only root can use \"--options\" option\nsh: 2: ,auto: not found\n"> expected to be empty.
-test_mount(SambaTest)
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:703:in `assert_post_conditions\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:158:in `test_mount\'
-     155:   def test_mount
-     156:     mount_point = \'/media/central\'
-     157:     central = Samba.new(Default_server, \'\\Seagate-414103/Public\', mount_point, \'auto\')
-  => 158:     central.mount.assert_post_conditions
-     159:     assert_equal(central.mount_point)
-     160:     puts \'!File.exists?(central.mount_point) = \' + !File.exist?(central.mount_point)
-     161:     puts \'File.exists?(central.mount_point) = \' + File.exist?(central.mount_point)
-===============================================================================
-..E
-===============================================================================
-Error: test_parse_options(SambaTest): NameError: uninitialized constant Samba::Examples
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:107:in `test_parse_options\'
-     104:   def test_parse_options
-     105:     options_string = \'ip=1.2.3.4,unix\'
-     106:     assert_equal({ ip: \'1.2.3.4\', unix: nil }, Samba.parse_options(options_string))
-  => 107:     options = Samba.parse_options(Samba::Examples::Options_string)
-     108:     assert_instance_of(Hash, options)
-     109:     assert_equal(nil, options[:auto])
-     110:     assert_equal(nil, options[:rw])
-===============================================================================
-E
-===============================================================================
-Error: test_servers(SambaTest): TypeError: no implicit conversion of LimitCapture into String
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:93:in `test_servers\'
-     90:   end # workgroups
-     91: 
-     92:   def test_servers
-  => 93:     assert_includes(\'\', Smb_servers.output.capture?(Smb_tree_regexp, LimitCapture))
-     94:     assert_includes(\'\', Samba.servers(Samba::Examples::Default_workgroup))
-     95:   end # servers
-     96: 
-===============================================================================
-E
-===============================================================================
-Error: test_tree(SambaTest): NameError: uninitialized constant Samba::Examples
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:100:in `test_tree\'
-      97:   def test_tree
-      98:     workgroup = Default_workgroup
-      99:     server = \'\'
-  => 100:     assert_instance_of(Hash, Samba.tree(Samba::Examples::Default_workgroup, Samba::Examples::Default_server), Smb_tree.inspect)
-     101:     assert_includes(Default_share, Samba.tree(Samba::Examples::Default_workgroup, Samba::Examples::Default_server).values, Smb_tree.inspect)
-     102:   end # tree
-     103: 
-===============================================================================
-F
-===============================================================================
-Failure: test_umount(SambaTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:170:in `test_umount\'
-     167:     mount_point = \'/media/central\'
-     168:     central = Samba.new(Default_server, \'\\Seagate-414103/Public\', mount_point, \'auto\')
-     169:     central.assert_post_conditions
-  => 170:     assert_equal(false, central.mounted?)
-     171:     central.assert_unmounted
-     172:   end # umount
-     173: 
-<false> expected but was
-<true>
+Run options: --seed 0
 
-diff:
-? false
-? tru  
-===============================================================================
-E
-===============================================================================
-Error: test_workgroups(SambaTest): NoMethodError: undefined method `[]\' for nil:NilClass
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:64:in `block in to_hash\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:61:in `each_pair\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:61:in `to_hash\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:295:in `output\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `map\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `call\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `enumerate\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:148:in `enumerate_single\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:160:in `enumerate\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:891:in `block in parse\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `map\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `call\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `enumerate\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:148:in `enumerate_single\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:160:in `enumerate\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:890:in `parse\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/samba.rb:38:in `workgroups\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:89:in `test_workgroups\'
-     86:   end # Constants
-     87: 
-     88:   def test_workgroups
-  => 89:     assert_includes(Samba.workgroups, Default_workgroup,	Smb_domains.output.capture?(Smb_tree_workgroup_regexp).inspect)
-     90:   end # workgroups
-     91: 
-     92:   def test_servers
-===============================================================================
+# Running:
+
+.EE.EE.F.EEE..
+
+Finished in 0.112192s, 124.7858 runs/s, 1452.8630 assertions/s.
+
+  1) Error:
+NewTestClass#test_parse_options:
+TypeError: no implicit conversion of nil into String
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:101:in `+\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:101:in `test_parse_options\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
-Finished in 0.151534448 seconds.
-------
-10 tests, 143 assertions, 2 failures, 5 errors, 0 pendings, 0 omissions, 0 notifications
-30% passed
-------
-65.99 tests/s, 943.68 assertions/s
+  2) Error:
+NewTestClass#test_Constants:
+TypeError: no implicit conversion of Symbol into Integer
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:56:in `[]\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:56:in `[]\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:33:in `test_Constants\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  3) Error:
+NewTestClass#test_mounted?:
+NoMethodError: undefined method `assertions\' for #<Samba:0x000000033e23c8>
+Did you mean?  assert
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert\'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:174:in `assert_equal\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/samba.rb:202:in `assert_mounted\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:164:in `test_mounted?\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  4) Error:
+NewTestClass#test_servers:
+TypeError: no implicit conversion of LimitCapture into String
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:207:in `include?\'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:207:in `assert_includes\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:78:in `test_servers\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  5) Failure:
+NewTestClass#test_umount [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:154]:
+Expected: false
+  Actual: true
+
+
+  6) Error:
+NewTestClass#test_tree:
+NoMethodError: undefined method `[]\' for nil:NilClass
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:271:in `to_a\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:64:in `block in to_hash\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:61:in `each_pair\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:61:in `to_hash\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:282:in `output\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `map\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `call\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:155:in `enumerate_single\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:167:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:575:in `block in parse\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `map\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `call\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:155:in `enumerate_single\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:167:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:574:in `parse\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/samba.rb:46:in `tree\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:85:in `test_tree\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  7) Error:
+NewTestClass#test_workgroups:
+NoMethodError: undefined method `[]\' for nil:NilClass
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:271:in `to_a\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:64:in `block in to_hash\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:61:in `each_pair\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:61:in `to_hash\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:282:in `output\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `map\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `call\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:155:in `enumerate_single\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:167:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:575:in `block in parse\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `map\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `call\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:165:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:155:in `enumerate_single\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:167:in `enumerate\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:574:in `parse\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/samba.rb:38:in `workgroups\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:74:in `test_workgroups\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  8) Error:
+NewTestClass#test_mount:
+NoMethodError: undefined method `assertions\' for #<ShellCommands:0x00000003599a90>
+Did you mean?  assert
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert\'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:340:in `assert_respond_to\'
+    /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:153:in `assert_empty\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:739:in `assert_post_conditions\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb:142:in `test_mount\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+14 runs, 163 assertions, 1 failures, 7 errors, 0 skips
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/samba_test.rb"
-	User time (seconds): 1.41
-	System time (seconds): 0.22
-	Percent of CPU this job got: 58%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.81
+	User time (seconds): 1.17
+	System time (seconds): 0.14
+	Percent of CPU this job got: 11%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:11.42
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 32104
+	Maximum resident set size (kbytes): 30312
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 134
-	Minor (reclaiming a frame) page faults: 16079
-	Voluntary context switches: 328
-	Involuntary context switches: 201
+	Major (requiring I/O) page faults: 126
+	Minor (reclaiming a frame) page faults: 9976
+	Voluntary context switches: 358
+	Involuntary context switches: 60
 	Swaps: 0
-	File system inputs: 28576
+	File system inputs: 24848
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

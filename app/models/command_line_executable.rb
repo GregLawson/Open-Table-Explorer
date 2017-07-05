@@ -5,6 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+require 'trollop'
 require 'virtus'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/command.rb'
@@ -186,9 +187,9 @@ class CommandLineExecutable
     module ClassMethods
       def assert_pre_conditions(message = '')
         message += "In assert_pre_conditions, self=#{inspect}"
-        #	asset_nested_and_included(:ClassMethods, self)
-        #	asset_nested_and_included(:Constants, self)
-        #	asset_nested_and_included(:Assertions, self)
+        #	assert_nested_and_included(:ClassMethods, self)
+        #	assert_nested_and_included(:Constants, self)
+        #	assert_nested_and_included(:Assertions, self)
         self
       end # assert_pre_conditions
 

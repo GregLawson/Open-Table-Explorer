@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2013-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -12,9 +12,11 @@ require_relative '../../app/models/unit_maturity.rb'
 class TestMaturityTest < TestCase
   module Examples
     include TestMaturity::DefinitionalConstants
-    ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
+    include TestMaturity::ReferenceObjects
+    #    ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
     MinimalMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal2_test.rb'))
     MinimalMaturity3 = TestMaturity.new(test_executable: TestExecutable.new(argument_path: 'test/unit/minimal3_test.rb'))
+		require_relative '../examples/ruby_lines_storage.rb'
   end # Examples
   include Examples
 
@@ -62,22 +64,6 @@ class TestMaturityTest < TestCase
     assert_match(testunit_summary_regexp, example_testunit_log)
   end # DefinitionalConstants
 
-  def test_times
-    log_files = Dir['log/unit/2.2/2.2.3p173/silence/*.log']
-    file_times = log_files.map do |path|
-      file_contents = IO.read(path)
-      assert_match(Finished_regexp, file_contents, path)
-      assert_match(User_time_regexp, file_contents, path)
-      finished_time = file_contents.parse(Finished_regexp)
-      user_time = file_contents.parse(User_time_regexp)
-      assert_operator(finished_time[:test_finished].to_f, :<, user_time[:user_time].to_f)
-      hash = RubyLinesStorage.read(path)
-      finished_time.merge(user_time)
-    end # each
-    message = ruby_lines_storage(file_times)
-    #		assert_equal
-  end # times
-
   def test_example_files
     ret = {} # accumulate a hash
     Error_classification_keys.each do |classification|
@@ -95,7 +81,8 @@ class TestMaturityTest < TestCase
 
   def test_log_path?
     argument_path = $PROGRAM_NAME
-    assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', MinimalMaturity.log_path?(executable_file))
+    assert_equal('log/unit/1.9/1.9.3p194/quiet/argument_path.log', MinimalMaturity.log_path?(executable_file))
+    assert_equal('log/unit/1.9/1.9.3p194/quiet/unit_maturity.log', MinimalMaturity.log_path?(argument_path))
     #	assert_equal('log/unit/1.9/1.9.3p194/quiet/repository.log', MinimalMaturity.log_path?)
   end # log_path?
 
@@ -175,20 +162,66 @@ class TestMaturityTest < TestCase
     assert_operator(run_time, :>=, 0)
   end # parse_header
 
-  def test_timed_out
-		example_line = 'log/unit/2.2/2.2.3p173/silence/.log::errors => {:rescue_exception => Timeout::Error.new()'
-		regexp_array = [/log\//, /unit/.capture(:test_type), 
-			'/2.2/2.2.3p173/silence/command_line'.to_exact_regexp, 
-			/[a-z_]+/.capture(:unit_base_name), 
-			'.log::errors => {:rescue_exception => Timeout::Error.new()'.to_exact_regexp]
-		run = ShellCommands.new('grep "Timeout::Error" log/unit/*/*/*/*.log')
-		lines = run.output.split("\n")
-		assert_equal([], lines)
-		assert_equal([], TestMaturity.timed_out)
-  end # timed_out
+  def test_Constructors # such as alternative new methods
+  end # Constructors
+
+  def test_ReferenceObjects
+    assert_equal(true, Working_maturity.test_executable.recursion_danger?)
+    #    assert_equal(Working_maturity, ExecutableMaturity)
+
+    working_log = RubyLinesStorage.read(TestMaturity::Self_test_executable.log_path?(nil))
+    assert_equal(working_log, TestMaturity::Working_maturity.read_state)
+    TestMaturity::Working_maturity.assert_pre_conditions
+    TestMaturity::Working_maturity.assert_post_conditions
+  end # ReferenceObjects
+
+  def test_read_state
+    log_files = TestMaturity.all
+    file_times = log_files.map do |path|
+      file_contents = IO.read(path)
+      read_return = RubyLinesStorage.read(path)
+      assert_instance_of(Hash, read_return)
+      if RubyLinesStorage.read_success?(read_return)
+				assert(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+				refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+				assert_equal(Read_success_keys, read_return.keys)
+				assert_equal(read_return, eval(file_contents))
+				TestMaturity.assert_log_hash(eval(file_contents))
+				TestMaturity.assert_log_hash(read_return)
+				assert_equal(Branch.current_branch_name?(Repository::This_code_repository), read_return[:current_branch_name], read_return.inspect)
+				um_hash = TestMaturity.new(version: nil, test_executable: TestExecutable.new(argument_path: path)).read_state
+				assert_equal(um_hash, read_return)
+				TestMaturity.assert_log_hash(um_hash)
+			else
+				refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+				assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+				assert_equal(RubyLinesStorage::Read_fail_keys, read_return.keys)
+			end # if
+    end # each
+  end # read_state
+
+  def test_times
+    log_files = TestMaturity.all
+    file_times = log_files.map do |path|
+      file_contents = IO.read(path)
+      read_return = RubyLinesStorage.read(path)
+      if RubyLinesStorage.read_success?(read_return)
+				assert_match(Finished_regexp, file_contents, path)
+				assert_match(User_time_regexp, file_contents, path)
+				finished_time = file_contents.parse(Finished_regexp)
+				user_time = file_contents.parse(User_time_regexp)
+				assert_operator(finished_time[:test_finished].to_f, :<, user_time[:user_time].to_f)
+				read_return = RubyLinesStorage.read(path)
+				finished_time.merge(user_time)
+			else
+			end # if
+    end # each
+    message = ruby_lines_storage(file_times)
+    #		assert_equal
+  end # times
 
   def test_recursion_danger?
-    assert_equal(true, ExecutableMaturity.test_executable.recursion_danger?)
+    assert_equal(true, Working_maturity.test_executable.recursion_danger?)
     assert_equal(false, MinimalMaturity.test_executable.recursion_danger?)
     assert_equal(false, MinimalMaturity3.test_executable.recursion_danger?)
   end # recursion_danger?
@@ -226,8 +259,8 @@ class TestMaturityTest < TestCase
   def test_get_error_score!
     assert_includes(TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME)).instance_variables, :@test_executable)
     refute_includes(TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME)).instance_variables, :@cached_error_score)
-    assert_includes(ExecutableMaturity.instance_variables, :@test_executable)
-    assert_nil(ExecutableMaturity.get_error_score!)
+    assert_includes(Working_maturity.instance_variables, :@test_executable)
+    assert_nil(Working_maturity.get_error_score!)
   end # error_score
 
   def test_deserving_branch
@@ -269,7 +302,7 @@ class TestMaturityTest < TestCase
     assert_equal(0, MinimalMaturity.get_error_score! <=> MinimalMaturity3.get_error_score!)
     assert_equal(0, MinimalMaturity <=> MinimalMaturity3)
     assert_equal(0, MinimalMaturity3 <=> MinimalMaturity) # symmetric
-    assert_equal(false, ExecutableMaturity.test_executable.testable?)
+    assert_equal(false, Working_maturity.test_executable.testable?)
   end # <=>
 
   def test_error_classification!
@@ -288,6 +321,68 @@ class TestMaturityTest < TestCase
     assert_instance_of(Symbol, MinimalMaturity.deserving_commit_to_branch!)
     #	Branch::Branch_enhancement[MinimalMaturity.deserving_commit_to_branch!]
   end # branch_enhancement!
+
+	def test_assert_log_hash
+    log_files = TestMaturity.all
+    file_times = log_files.map do |path|
+      file_contents = IO.read(path)
+      read_return = RubyLinesStorage.read(path)
+			if read_return.keys.include?(:exception_hash)
+				puts read_return.inspect
+			end # if
+#!      um_hash = TestMaturity.new(version: nil, test_maturity: TestExecutable.new(argument_path: path)).read_state
+#!      assert_equal(um_hash, hash)
+#!      TestMaturity.assert_log_hash(eval(file_contents))
+      TestMaturity.assert_log_hash(read_return)
+#!      TestMaturity.assert_log_hash(um_hash)
+    end # each
+	end # assert_log_state
+
+  def test_nested_scope_modules?
+    assert_include(TestMaturity::Assertions::ClassMethods.instance_methods(false), :nested_scope_modules?)
+    assert_include(TestMaturity::Assertions::ClassMethods.nested_scope_modules?, :Assertions)
+  end # nested_scopes
+
+  def test_included_module_names
+    this_class = TestMaturity
+    # !		assert_includes(this_class.included_module_names, (this_class.name + '::DefinitionalClassMethods').to_sym)
+    assert_includes(this_class.included_module_names, (this_class.name + '::DefinitionalConstants').to_sym)
+    # !		assert_includes(this_class.included_module_names, (this_class.name + '::Constructors').to_sym)
+    assert_includes(this_class.included_module_names, (this_class.name + '::ReferenceObjects').to_sym)
+    assert_includes(this_class.included_module_names, (this_class.name + '::Assertions').to_sym)
+  end # included_module_names
+
+  def test_nested_scope_module_names
+    this_class = TestMaturity
+    assert_includes(this_class.nested_scope_module_names, (this_class.name + '::DefinitionalClassMethods').to_sym)
+    assert_includes(this_class.nested_scope_module_names, (this_class.name + '::DefinitionalConstants').to_sym)
+    assert_includes(this_class.nested_scope_module_names, (this_class.name + '::Constructors').to_sym)
+    assert_includes(this_class.nested_scope_module_names, (this_class.name + '::ReferenceObjects').to_sym)
+    assert_includes(this_class.nested_scope_module_names, (this_class.name + '::Assertions').to_sym)
+    assert_includes(this_class.constants, :Working_maturity)
+  end # nested_scope_module_names
+
+  def test_assert_nested_scope_submodule
+    this_class = TestMaturity
+    this_class.assert_nested_scope_submodule((this_class.name + '::DefinitionalClassMethods').to_sym)
+    this_class.assert_nested_scope_submodule((this_class.name + '::DefinitionalConstants').to_sym)
+    this_class.assert_nested_scope_submodule((this_class.name + '::Constructors').to_sym)
+    this_class.assert_nested_scope_submodule((this_class.name + '::ReferenceObjects').to_sym)
+    this_class.assert_nested_scope_submodule((this_class.name + '::Assertions').to_sym)
+  end # assert_included_submodule
+
+  def test_assert_included_submodule
+    this_class = TestMaturity
+    # !class				this_class.assert_included_submodule((this_class.name + '::DefinitionalClassMethods').to_sym)
+    this_class.assert_included_submodule((this_class.name + '::DefinitionalConstants').to_sym)
+    # !class				this_class.assert_included_submodule((this_class.name + '::Constructors').to_sym)
+    this_class.assert_included_submodule((this_class.name + '::ReferenceObjects').to_sym)
+    this_class.assert_included_submodule((this_class.name + '::Assertions').to_sym)
+  end # assert_included_submodule
+
+  def test_assert_nested_and_included
+    TestMaturity.assert_nested_and_included(:Assertions)
+  end # assert_nested_and_included
 end # TestMaturity
 
 class UnitMaturityTest < TestCase
@@ -306,12 +401,12 @@ class UnitMaturityTest < TestCase
 
   def test_diff_command?
     filename = Most_stable_file
-    branch_index = Branch.branch_index?(This_code_repository.current_branch_name?.to_sym)
-    message = Branch::Branch_enhancement.inspect + This_code_repository.current_branch_name?.inspect
+    branch_index = Branch.branch_index?(Branch.current_branch_name?(Repository::This_code_repository).to_sym)
+    message = Branch::Branch_enhancement.inspect + Branch.current_branch_name?(Repository::This_code_repository).inspect
     refute_nil(branch_index, message)
     branch_string = Branch.branch_symbol?(branch_index).to_s
     git_command = "diff --summary --shortstat #{branch_string} -- " + filename.to_s
-    diff_run = This_code_repository.git_command(git_command)
+    diff_run = Repository::This_code_repository.git_command(git_command)
     #	diff_run.assert_post_conditions
     assert_instance_of(ShellCommands, diff_run)
     assert_operator(diff_run.output.size, :==, 0)
@@ -322,7 +417,7 @@ class UnitMaturityTest < TestCase
   end # diff_command?
 
   def test_working_different_from?
-    current_branch_index = Branch.branch_index?(This_code_repository.current_branch_name?.to_sym)
+    current_branch_index = Branch.branch_index?(Branch.current_branch_name?(Repository::This_code_repository).to_sym)
     assert_equal('', TestUnitMaturity.diff_command?(Most_stable_file, current_branch_index).output)
     assert_equal(false, TestUnitMaturity.working_different_from?(Most_stable_file, current_branch_index))
     #	assert(!TestUnitMaturity.working_different_from?(Most_stable_file, current_branch_index + 1))
@@ -330,7 +425,7 @@ class UnitMaturityTest < TestCase
     #	assert(!TestUnitMaturity.working_different_from?(Most_stable_file, current_branch_index + 3))
     #	assert(!TestUnitMaturity.working_different_from?(Most_stable_file, current_branch_index + 4))
     filename = File_not_in_oldest_branch
-    diff_run = This_code_repository.git_command('diff --summary --shortstat origin/master -- ' + filename)
+    diff_run = Repository::This_code_repository.git_command('diff --summary --shortstat origin/master -- ' + filename)
     refute_equal([], diff_run.output.split("\n"), diff_run.inspect)
     assert_equal(2, diff_run.output.split("\n").size, diff_run.inspect)
     #	assert_nil(TestUnitMaturity.working_different_from?(File_not_in_oldest_branch,-2))

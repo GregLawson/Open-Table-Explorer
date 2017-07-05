@@ -548,10 +548,10 @@ end
     assert_includes(included_modules, :Contants, message)
   end # assert_included_submodule
 
-  def asset_nested_and_included(module_symbol, _context = self, _message = '')
+  def assert_nested_and_included(module_symbol, _context = self, _message = '')
     assert_nested_scope_submodule(module_symbol)
     assert_included_submodule(module_symbol)
-  end # asset_nested_and_included
+  end # assert_nested_and_included
 end # RubyAssertions
 # include Test::Unit::Assertions
 # Test::Unit::Assertions.assert_pre_conditions

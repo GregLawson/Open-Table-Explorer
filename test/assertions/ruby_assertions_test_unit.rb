@@ -5,9 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require 'pathname'
-require_relative '../../app/models/global.rb'
-require 'set'
+require_relative 'ruby_assertions_common.rb'
 module RubyAssertions
   include AssertionsModule
   extend AssertionsModule

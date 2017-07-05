@@ -3,28 +3,28 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 7, Rational(51501074287, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 8, 7, 22, Rational(57233289282, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/discrete_dimension_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
 :errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/discrete_dimension_test.rb:12:in `<class:DiscreteDimensionTest>\': uninitialized constant DiscreteDimensionTest::RailsishRubyUnit (NameError)
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/discrete_dimension_test.rb:10:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/discrete_dimension_test.rb"
-	User time (seconds): 0.60
-	System time (seconds): 0.02
-	Percent of CPU this job got: 95%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.66
+	User time (seconds): 0.54
+	System time (seconds): 0.05
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.60
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 19872
+	Maximum resident set size (kbytes): 19692
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5090
+	Minor (reclaiming a frame) page faults: 5049
 	Voluntary context switches: 4
-	Involuntary context switches: 62
+	Involuntary context switches: 91
 	Swaps: 0
 	File system inputs: 8
 	File system outputs: 0

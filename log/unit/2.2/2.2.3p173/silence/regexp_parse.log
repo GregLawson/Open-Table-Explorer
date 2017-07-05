@@ -1,379 +1,586 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
-,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 2, 23, 3, 33, Rational(54243808060, 1000000000), "-08:00"),
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 11, 8, 3, 17, Rational(56899671873, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
-Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test
-Started
-....N
-===============================================================================
-RegexpParseTest#test_Mx_format was redefined [test_Mx_format(RegexpParseTest)]
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:71:in `<class:RegexpParseTest>\'
-===============================================================================
-E
-===============================================================================
-Error: test_Mx_format(RegexpParseTest): NoMethodError: undefined method `ref\' for RegexpParseType:Module
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:72:in `test_Mx_format\'
-     69:   end # inspect_recursive
-     70: 
-     71:   def test_Mx_format
-  => 72:     assert_match(Tree_node_root, Mx_format.call(RegexpParseType.ref(Literal_a), 0, false))
-     73:     assert_equal(Mx_node_root, Mx_format.call(RegexpParseType.ref(Literal_a), depth = 0, false))
-     74:     assert_equal(Mx_node_options, Mx_format.call(RegexpParseType.ref(Son_a), depth = 1, false))
-     75:     assert_equal(Mx_node_a, Mx_format.call(RegexpParseType.ref(Grandson_a), depth = 2, true))
-===============================================================================
-N
-===============================================================================
-RegexpParseTest#test_Node_format was redefined [test_Node_format(RegexpParseTest)]
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:55:in `<class:RegexpParseTest>\'
-===============================================================================
-.E
-===============================================================================
-Error: test_RegexpParse_promotable(RegexpParseTest):
-  NameError: uninitialized constant RegexpParseTest::RegexpParse
-  Did you mean?  RegexpParseTest
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:262:in `test_RegexpParse_promotable\'
-     259:   end # compare
-     260: 
-     261:   def test_RegexpParse_promotable
-  => 262:     assert(RegexpParse.promotable?(/.*/))
-     263:     assert(RegexpParse.promotable?(\'.*\'))
-     264:     assert(RegexpParse.promotable?([\'.\', \'*\']))
-     265:   end # RegexpParse.promotable
-===============================================================================
-E
-===============================================================================
-Error: test_RegexpParse_promote(RegexpParseTest): NameError: uninitialized constant RegexpParseTest::Dot_star_parse
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:268:in `test_RegexpParse_promote\'
-     265:   end # RegexpParse.promotable
-     266: 
-     267:   def test_RegexpParse_promote
-  => 268:     assert_equal(Dot_star_parse, RegexpParse.promote(Dot_star_parse))
-     269:     assert_equal(Dot_star_parse, RegexpParse.promote(\'.*\'))
-     270:     assert_equal(\'@regexp_string=".*", @parse_tree=[".", "*"], @tokenIndex=-1\', RegexpParse.new([\'.\', \'*\']).inspect, "RegexpParse.new([\'.\', \'*\'])=#{RegexpParse.new([\'.\', \'*\']).inspect}")
-     271:     assert_equal(\'@regexp_string=".*", @parse_tree=[".", "*"], @tokenIndex=-1\', RegexpParse.promote([\'.\', \'*\']).inspect, "RegexpParse.promote([\'.\', \'*\'])=#{RegexpParse.promote([\'.\', \'*\']).inspect}")
-===============================================================================
-E
-===============================================================================
-Error: test_RegexpParse_to_s(RegexpParseTest): NameError: uninitialized constant RegexpParseTest::Dot_star_parse
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:290:in `test_RegexpParse_to_s\'
-     287:   end # to_a
-     288: 
-     289:   def test_RegexpParse_to_s
-  => 290:     assert_equal(\'.*\', Dot_star_parse.to_s)
-     291:   end # to_s
-     292: 
-     293:   def test_to_regexp
-===============================================================================
-E
-===============================================================================
-Error: test_Tree_node_format(RegexpParseTest): NoMethodError: undefined method `ref\' for RegexpParseType:Module
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:80:in `test_Tree_node_format\'
-     77:   end # Mx_format
-     78: 
-     79:   def test_Tree_node_format
-  => 80:     node = RegexpParseType.ref(Literal_a)
-     81:     assert_equal(\'nonterminal\', node.graph_type.inspect_nonterminal?(node.node))
-     82:     assert_equal(Inspect_node_root, node.graph_type.inspect_node(node.node))
-     83:     #	assert_equal(Inspect_node_root, RegexpParseType.inspect_node(node, &Node_format))
-===============================================================================
-E
-===============================================================================
-Error: test_compare(RegexpParseTest): NameError: uninitialized constant RegexpParseTest::Dot_star_parse
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:252:in `test_compare\'
-     249:   end # equal
-     250: 
-     251:   def test_compare
-  => 252:     rhs = Dot_star_parse
-     253:     lhs = RegexpParse.new(\'.*\')
-     254:     compare = rhs <=> lhs
-     255:     assert_equal(0, compare)
-===============================================================================
-E
-===============================================================================
-Error: test_equal(RegexpParseTest): NameError: uninitialized constant RegexpParseTest::Dot_star_parse
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:243:in `test_equal\'
-     240:   end # equal_operator
-     241: 
-     242:   def test_equal
-  => 243:     rhs = Dot_star_parse
-     244:     lhs = RegexpParse.new(\'.*\')
-     245:     assert_includes(lhs.methods, :eql?)
-     246: 
-===============================================================================
-E
-===============================================================================
-Error: test_equal_operator(RegexpParseTest): NameError: uninitialized constant RegexpParseTest::Dot_star_parse
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:235:in `test_equal_operator\'
-     232:   end # regexp_error
-     233: 
-     234:   def test_equal_operator
-  => 235:     rhs = Dot_star_parse
-     236:     lhs = RegexpParse.new(\'.*\')
-     237:     assert_includes(lhs.methods, :==)
-     238: 
-===============================================================================
-..E
-===============================================================================
-Error: test_initialize(RegexpParseTest):
-  NameError: uninitialized constant RegexpParseTest::RegexpParse
-  Did you mean?  RegexpParseTest
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:192:in `test_initialize\'
-     189:     regexp_string = [\'.\', \'*\']
-     190:     assert_kind_of(Array, regexp_string)
-     191:     assert_instance_of(Array, regexp_string)
-  => 192:     regexp_parse = RegexpParse.new(regexp_string)
-     193:     assert_equal([\'.\', \'*\'], regexp_string.to_a, "regexp_string=#{regexp_string.inspect}, regexp_string.to_a=#{regexp_string.to_a.inspect}")
-     194:     assert_equal(\'.*\', regexp_string.join, "regexp_string=#{regexp_string.inspect}, regexp_string.join=#{regexp_string.join.inspect}")
-     195:     assert_equal(\'.*\', regexp_parse.regexp_string, "regexp_parse=#{regexp_parse.inspect}")
-===============================================================================
-E
-===============================================================================
-Error: test_inspect(RegexpParseTest):
-  NameError: uninitialized constant RegexpParseTest::RegexpParse
-  Did you mean?  RegexpParseTest
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:226:in `test_inspect\'
-     223: 
-     224:   def test_inspect
-     225:     inspect_string = \'@regexp_string=".*", @parse_tree=[".", "*"], @tokenIndex=-1\'
-  => 226:     assert_equal(inspect_string, RegexpParse.new(\'.*\').inspect)
-     227:     assert_equal(inspect_string, Dot_star_parse.inspect)
-     228:   end # inspect
-     229: 
-===============================================================================
-E
-===============================================================================
-Error: test_inspect_node(RegexpParseTest): NoMethodError: undefined method `ref\' for RegexpParseType:Module
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:51:in `test_inspect_node\'
-     48:     assert_equal(Node_a, RegexpParseType.inspect_node(Grandson_a))
-     49:     assert_match(RegexpParseType.inspect_node(Literal_a), Tree_node_root)
-     50:     #	assert_match(RegexpParseType.inspect_node(Literal_a), &Node_format), Tree_node_root)
-  => 51:     node = RegexpParseType.ref(Literal_a)
-     52:     #	assert_equal(\'nonterminal\', node.graph_type.inspect_nonterminal?(node.node))
-     53:   end # inspect_node
-     54: 
-===============================================================================
-E
-===============================================================================
-Error: test_inspect_recursive(RegexpParseTest): NoMethodError: undefined method `map_recursive\' for RegexpParseType:Module
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:61:in `test_inspect_recursive\'
-     58:   end # Node_format
-     59: 
-     60:   def test_inspect_recursive
-  => 61:     assert_equal(Grandson_a_map, RegexpParseType.map_recursive(Grandson_a, depth = 2, &Tree_node_format))
-     62:     assert_equal(Son_a_map, RegexpParseType.map_recursive(Son_a, depth = 1, &Tree_node_format))
-     63:     assert_equal(Literal_a_map, RegexpParseType.map_recursive(Literal_a, &Tree_node_format))
-     64:     assert_equal((Literal_a_map.flatten.map { |s| s + "\n" }).join, RegexpParseType.inspect_recursive(Literal_a, &Tree_node_format), RegexpParseType.inspect_recursive(Literal_a, &Tree_node_format))
-===============================================================================
-E
-===============================================================================
-Error: test_map_recursive(RegexpParseTest): NoMethodError: undefined method `ref\' for RegexpParseType:Module
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:128:in `test_map_recursive\'
-     125:     depth = 0
-     126:     visit_proc = Tree_node_format
-     127:     assert_respond_to(Literal_a, Children_method_name)
-  => 128:     assert_equal(Tree_node_root, Tree_node_format.call(RegexpParseType.ref(Literal_a), depth = 0, false))
-     129:     assert_equal(Tree_node_root, visit_proc.call(RegexpParseType.ref(Literal_a), depth, false))
-     130:     assert_equal(1, Children_a.size)
-     131:     assert_respond_to(Son_a, Children_method_name)
-===============================================================================
-E
-===============================================================================
-Error: test_nonterminal?(RegexpParseTest): NoMethodError: undefined method `nonterminal?\' for RegexpParseType:Module
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:114:in `test_nonterminal?\'
-     111:     assert_respond_to(Literal_a, Children_method_name)
-     112:     #	assert_equal(Inspect_node_root, Node_format.call(Literal_a))
-     113:     assert_equal(1, Children_a.size)
-  => 114:     assert_equal(true, RegexpParseType.nonterminal?(Literal_a), Literal_a.inspect)
-     115:     assert_respond_to(Son_a, Children_method_name)
-     116:     assert_instance_of(Array, Grandchildren_a)
-     117:     assert_equal(1, Grandchildren_a.size)
-===============================================================================
-E
-===============================================================================
-Error: test_pathnames(RegexpParseTest):
-  NameError: uninitialized constant RegexpParseTest::RegexpParse
-  Did you mean?  RegexpParseTest
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:313:in `test_pathnames\'
-     310:   def test_pathnames
-     311:     open_tax_filler_directory = \'../OpenTaxFormFiller/(?<tax_year>[0-9]{4}}\'
-     312:     file_regexp = "#{open_tax_filler_directory}/field_dump/Federal/f*.pjson"
-  => 313:     regexp = RegexpParse.new(file_regexp)
-     314:     #	regexp.pathnames.compact.map{|matchData| matchData[1]}
-     315:   end # pathnames
-     316: 
-===============================================================================
-E
-===============================================================================
-Error: test_raw_capture?(RegexpParseTest): NoMethodError: undefined method `map_recursive\' for RegexpParseType:Module
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:93:in `test_raw_capture?\'
-     90:   end # Tree_node_format
-     91: 
-     92:   def test_raw_capture?
-  => 93:     assert_equal(Literal_a_map, RegexpParseType.map_recursive(Literal_a, &Tree_node_format))
-     94:     #	assert_equal([], RegexpParseType.map_recursive(Literal_a, :expressions){|e, depth, terminal| [e.quantifier, e.to_s]}, Literal_a_map)
-     95:     assert_equal(\'*\', Grandson_a.quantifier.text)
-     96:     assert_equal(\'*\', Grandson_a.quantifier.to_s)
-===============================================================================
-root=#<Regexp::Expression::Root:0x00000001edfb60 @type=:expression, @token=:root, @text="", @ts=0, @level=nil, @set_level=nil, @conditional_level=nil, @options=nil, @expressions=[#<Regexp::Expression::Group::Options:0x00000001edd9a0 @type=:group, @token=:options, @text="(?m-ix:", @ts=0, @level=0, @set_level=0, @conditional_level=0, @options={:m=>true, :i=>false, :x=>false, :d=>false, :a=>false, :u=>false}, @expressions=[#<Regexp::Expression::Literal:0x00000001edd838 @type=:literal, @token=:literal, @text="a", @ts=7, @level=1, @set_level=0, @conditional_level=0, @options=nil, @quantifier=#<Regexp::Expression::Quantifier:0x00000001edd810 @token=:zero_or_one, @text="?", @mode=:greedy, @min=0, @max=1>>, #<Regexp::Expression::Group::Capture:0x00000001edd7e8 @type=:group, @token=:capture, @text="(", @ts=9, @level=1, @set_level=0, @conditional_level=0, @options=nil, @expressions=[#<Regexp::Expression::Literal:0x00000001edd798 @type=:literal, @token=:literal, @text="b", @ts=10, @level=2, @set_level=0, @conditional_level=0, @options=nil>], @quantifier=#<Regexp::Expression::Quantifier:0x00000001edd770 @token=:zero_or_more, @text="*", @mode=:greedy, @min=0, @max=-1>>, #<Regexp::Expression::CharacterSet:0x00000001edd748 @members=["c"], @negative=false, @closed=true, @type=:set, @token=:character, @text="[", @ts=13, @level=1, @set_level=0, @conditional_level=0, @options=nil, @quantifier=#<Regexp::Expression::Quantifier:0x00000001edd6f8 @token=:one_or_more, @text="+", @mode=:greedy, @min=1, @max=-1>>]>]>
+Run options: --seed 0
+
+# Running:
+
+.E..EEEEEEE.E.EEEEEEE.EEEEroot=#<Regexp::Expression::Root:0x0000000174e4c8 @type=:expression, @token=:root, @text="", @ts=0, @level=nil, @set_level=nil, @conditional_level=nil, @options=nil, @expressions=[#<Regexp::Expression::Group::Options:0x000000017afbb0 @type=:group, @token=:options, @text="(?m-ix:", @ts=0, @level=0, @set_level=0, @conditional_level=0, @options={:m=>true, :i=>false, :x=>false, :d=>false, :a=>false, :u=>false}, @expressions=[#<Regexp::Expression::Literal:0x000000017af7c8 @type=:literal, @token=:literal, @text="a", @ts=7, @level=1, @set_level=0, @conditional_level=0, @options=nil, @quantifier=#<Regexp::Expression::Quantifier:0x000000017af700 @token=:zero_or_one, @text="?", @mode=:greedy, @min=0, @max=1>>, #<Regexp::Expression::Group::Capture:0x000000017af598 @type=:group, @token=:capture, @text="(", @ts=9, @level=1, @set_level=0, @conditional_level=0, @options=nil, @expressions=[#<Regexp::Expression::Literal:0x000000017af520 @type=:literal, @token=:literal, @text="b", @ts=10, @level=2, @set_level=0, @conditional_level=0, @options=nil>], @quantifier=#<Regexp::Expression::Quantifier:0x000000017af408 @token=:zero_or_more, @text="*", @mode=:greedy, @min=0, @max=-1>>, #<Regexp::Expression::CharacterSet:0x000000017af3b8 @members=["c"], @negative=false, @closed=true, @type=:set, @token=:character, @text="[", @ts=13, @level=1, @set_level=0, @conditional_level=0, @options=nil, @quantifier=#<Regexp::Expression::Quantifier:0x000000017af1d8 @token=:one_or_more, @text="+", @mode=:greedy, @min=1, @max=-1>>]>]>
 > Regexp::Expression::Root
   > Regexp::Expression::Group::Options
     > Regexp::Expression::Literal
     > Regexp::Expression::Group::Capture
       > Regexp::Expression::Literal
     > Regexp::Expression::CharacterSet
-.F
-===============================================================================
-Failure:
-  Exception raised:
-  NameError(<uninitialized constant RegexpParseTest::RegexpParse
-  Did you mean?  RegexpParseTest>)
-test_regexp_error(RegexpParseTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:231:in `test_regexp_error\'
-     228:   end # inspect
-     229: 
-     230:   def test_regexp_error
-  => 231:     assert_nothing_raised { RegexpParse.regexp_error(\'(\') }
-     232:   end # regexp_error
-     233: 
-     234:   def test_equal_operator
-===============================================================================
-E
-===============================================================================
-Error: test_to_a(RegexpParseTest): NameError: uninitialized constant RegexpParseTest::CONSTANT_PARSE_TREE
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:277:in `test_to_a\'
-     274:   end # RegexpParse.promote
-     275: 
-     276:   def test_to_a
-  => 277:     CONSTANT_PARSE_TREE.assert_post_conditions
-     278:     assert_equal([\'K\'], CONSTANT_PARSE_TREE.parse_tree, "KC_parse=#{KC_parse.inspect}")
-     279:     assert_equal([\'K\'], CONSTANT_PARSE_TREE.to_a, "KC_parse=#{KC_parse.inspect}")
-     280:     Dot_star_parse.assert_invariant
-===============================================================================
-E
-===============================================================================
-Error: test_to_pathname_glob(RegexpParseTest):
-  NameError: uninitialized constant RegexpParseTest::RegexpParse
-  Did you mean?  RegexpParseTest
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:299:in `test_to_pathname_glob\'
-     296:   end # to_regexp
-     297: 
-     298:   def test_to_pathname_glob
-  => 299:     assert_equal(\'ab\', RegexpParse.new(/ab/).to_pathname_glob)
-     300:     assert_equal(\'[ab]\', RegexpParse.new(/[ab]/).to_pathname_glob)
-     301:     assert_equal(\'ab\', RegexpParse.new(/(ab)/).to_pathname_glob)
-     302:     #	open_tax_filler_directory="../OpenTaxFormFiller/(?<tax_year>[0-9]{4}}"
-===============================================================================
-E
-===============================================================================
-Error: test_to_regexp(RegexpParseTest):
-  NameError: uninitialized constant RegexpParseTest::RegexpParse
-  Did you mean?  RegexpParseTest
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:295:in `test_to_regexp\'
-     292: 
-     293:   def test_to_regexp
-     294:     regexp = /abc/
-  => 295:     assert_equal(RegexpParse.new(regexp).to_regexp, regexp)
-     296:   end # to_regexp
-     297: 
-     298:   def test_to_pathname_glob
-===============================================================================
-E
-===============================================================================
-Error: test_Regexp_Examples(RegexpTest): NoMethodError: undefined method `map_recursive\' for RegexpParseType:Module
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:395:in `test_Regexp_Examples\'
-     392: 			assert_kind_of(Regexp::Expression::Base, Literal_a, Grandson_a.class.ancestors)
-     393: 			assert_kind_of(Regexp::Expression::Base, Son_a, Grandson_a.class.ancestors)
-     394: 			assert_kind_of(Regexp::Expression::Base, Grandson_a, Grandson_a.class.ancestors)
-  => 395: 	    assert_equal(Grandson_a_map, RegexpParseType.map_recursive(Grandson_a, &Tree_node_format))
-     396: 	    assert_equal(Son_a_map, RegexpParseType.map_recursive(Son_a, &Tree_node_format))
-     397: 	    assert_equal(Literal_a_map, RegexpParseType.map_recursive(Literal_a, &Tree_node_format))
-     398:     end # Examples
-===============================================================================
-E
-===============================================================================
-Error: test_Regexp_capture_inspect(RegexpTest): NoMethodError: undefined method `map_recursive\' for RegexpParseType:Module
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:80:in `raw_capture?\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:373:in `test_Regexp_capture_inspect\'
-     370: 		
-     371:     def test_Regexp_capture_inspect
-     372:       string = \'aa\'
-  => 373: 			RegexpParseType.map_recursive(Literal_a.raw_capture?(string)) do |capture, _depth, _terminal|
-     374: 				assert_kind_of(Node, capture)
-     375: 				assert_kind_of(Regexp::Expression::Base, capture[:parse])
-     376: 				assert_kind_of(RawCapture, capture[:raw_capture])
-===============================================================================
-E
-===============================================================================
-Error: test_Regexp_module_graph(RegexpTest):
-  NoMethodError: undefined method `instance_methods\' for #<RGL::ImplicitGraph:0x00000001c21018>
-  Did you mean?  instance_of?
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/method_model.rb:63:in `method_names\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/method_model.rb:103:in `instance_method_models\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/method_model.rb:109:in `prototype_list\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:446:in `test_Regexp_module_graph\'
-     443: 		assert_equal([], g.methods(false), message)
-     444: #		assert_equal([], g.methods(true), message)
-     445:     assert_match(/directed/, MethodModel.prototype_list(RGL::ImplicitGraph, ancestor_qualifier: true, argument_delimeter: \'(\').join("\n"), message)
-  => 446:     assert_match(/directed/, MethodModel.prototype_list(g, ancestor_qualifier: false, argument_delimeter: \' \', instance: false).join("\n"), message)
-     447:     require \'rgl/traversal\'
-     448:     tree = g.bfs_search_tree_from(Literal_a)
-     449:     # Now we want to visualize this component of g with DOT. We therefore create a subgraph of the original graph, using a filtered graph:
-===============================================================================
-E
-===============================================================================
-Error: test_quantifiers(RegexpTest): NoMethodError: undefined method `map_recursive\' for RegexpParseType:Module
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:93:in `quantifiers\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:366:in `test_quantifiers\'
-     363:   end # raw_capture?
-     364: 
-     365:     def test_quantifiers
-  => 366: 			assert_equal([], Sequence_example.quantifiers.flatten.compact)
-     367: 			assert_equal([], Alternative_example.quantifiers.flatten.compact)
-     368: 			assert_equal([true], Literal_a.quantifiers.flatten.compact)
-     369:     end # quantifiers
-===============================================================================
-E
-===============================================================================
-Error: test_raw_capture?(RegexpTest): NoMethodError: undefined method `map_recursive\' for RegexpParseType:Module
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:80:in `raw_capture?\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:337:in `test_raw_capture?\'
-     334:     assert_equal(\'a*\', Grandson_a.to_s)
-     335:     assert_equal(\'a\', Grandson_a.to_s[0..-2])
-     336:     assert_equal(\'a\', Grandson_a.to_s[0..-1 - e.quantifier.to_s.size], Grandson_a.inspect)
-  => 337:     assert_instance_of(Array, Literal_a.raw_capture?(\'a\'))
-     338:     assert_instance_of(Array, Regexp::Parser.parse(/a*b/.to_s, \'ruby/1.8\').raw_capture?(\'aab\'))
-     339:     a_star_parse = Regexp::Parser.parse(/a*/.to_s, \'ruby/1.8\')
-     340: 		message = RegexpParseType.inspect_recursive(a_star_parse)
-===============================================================================
+.....
+
+Finished in 0.009142s, 3391.0634 runs/s, 2515.9503 assertions/s.
+
+  1) Error:
+NewTestClass#test_initialize:
+NameError: uninitialized constant NewTestClass::RegexpParse
+Did you mean?  RegexpParseType
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:164:in `test_initialize\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
 
-Finished in 0.841443644 seconds.
-------
-33 tests, 38 assertions, 1 failures, 24 errors, 0 pendings, 0 omissions, 2 notifications
-24.2424% passed
-------
-39.22 tests/s, 45.16 assertions/s
+  2) Error:
+NewTestClass#test_Tree_node_format:
+NoMethodError: undefined method `ref\' for RegexpParseType:Module
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:60:in `test_Tree_node_format\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  3) Error:
+NewTestClass#test_raw_capture?:
+NoMethodError: undefined method `map_recursive\' for RegexpParseType:Module
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:72:in `test_raw_capture?\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  4) Error:
+NewTestClass#test_compare:
+NameError: uninitialized constant NewTestClass::Dot_star_parse
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:219:in `test_compare\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  5) Error:
+NewTestClass#test_inspect:
+NameError: uninitialized constant NewTestClass::RegexpParse
+Did you mean?  RegexpParseType
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:197:in `test_inspect\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  6) Error:
+NewTestClass#test_Mx_format:
+NoMethodError: undefined method `ref\' for RegexpParseType:Module
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:53:in `test_Mx_format\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  7) Error:
+NewTestClass#test_inspect_node:
+NoMethodError: undefined method `ref\' for RegexpParseType:Module
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:34:in `test_inspect_node\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  8) Error:
+NewTestClass#test_to_a:
+NameError: uninitialized constant NewTestClass::CONSTANT_PARSE_TREE
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:241:in `test_to_a\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+  9) Error:
+NewTestClass#test_to_pathname_glob:
+NameError: uninitialized constant NewTestClass::RegexpParse
+Did you mean?  RegexpParseType
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:260:in `test_to_pathname_glob\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+ 10) Error:
+NewTestClass#test_regexp_error:
+NoMethodError: undefined method `assert_nothing_raised\' for #<NewTestClass:0x0000000175a700>
+Did you mean?  assert_raises
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:201:in `test_regexp_error\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+ 11) Error:
+NewTestClass#test_map_recursive:
+NoMethodError: undefined method `ref\' for RegexpParseType:Module
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:104:in `test_map_recursive\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+ 12) Error:
+NewTestClass#test_pathnames:
+NameError: uninitialized constant NewTestClass::RegexpParse
+Did you mean?  RegexpParseType
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:273:in `test_pathnames\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+ 13) Error:
+NewTestClass#test_RegexpParse_to_s:
+NameError: uninitialized constant NewTestClass::Dot_star_parse
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:253:in `test_RegexpParse_to_s\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+ 14) Error:
+NewTestClass#test_RegexpParse_promotable:
+NameError: uninitialized constant NewTestClass::RegexpParse
+Did you mean?  RegexpParseType
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:228:in `test_RegexpParse_promotable\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+ 15) Error:
+NewTestClass#test_to_regexp:
+NameError: uninitialized constant NewTestClass::RegexpParse
+Did you mean?  RegexpParseType
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:257:in `test_to_regexp\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+ 16) Error:
+NewTestClass#test_RegexpParse_promote:
+NameError: uninitialized constant NewTestClass::Dot_star_parse
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:233:in `test_RegexpParse_promote\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+ 17) Error:
+NewTestClass#test_inspect_recursive:
+NoMethodError: undefined method `map_recursive\' for RegexpParseType:Module
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:42:in `test_inspect_recursive\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+ 18) Error:
+NewTestClass#test_equal:
+NameError: uninitialized constant NewTestClass::Dot_star_parse
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:211:in `test_equal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+ 19) Error:
+NewTestClass#test_equal_operator:
+NameError: uninitialized constant NewTestClass::Dot_star_parse
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:204:in `test_equal_operator\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+
+ 20) Error:
+NewTestClass#test_nonterminal?:
+NoMethodError: undefined method `nonterminal?\' for RegexpParseType:Module
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb:91:in `test_nonterminal?\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:255:in `time_it\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:103:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:275:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest/test.rb:102:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:799:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:322:in `run_one_method\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:310:in `block (2 levels) in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `each\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:309:in `block in run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:348:in `on_signal\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:335:in `with_info_handler\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:308:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `block in __run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `map\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:158:in `__run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
+    /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
+
+31 runs, 23 assertions, 0 failures, 20 errors, 0 skips
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_parse_test.rb"
-	User time (seconds): 2.02
-	System time (seconds): 0.10
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.14
+	User time (seconds): 1.19
+	System time (seconds): 0.08
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.28
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 33892
+	Maximum resident set size (kbytes): 26272
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8598
-	Voluntary context switches: 2
-	Involuntary context switches: 203
+	Minor (reclaiming a frame) page faults: 5120
+	Voluntary context switches: 8
+	Involuntary context switches: 386
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

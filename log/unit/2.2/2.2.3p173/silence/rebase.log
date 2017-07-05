@@ -1,30 +1,26 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
-,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 2, 20, 9, 34, Rational(40633042865, 1000000000), "-08:00"),
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 9, 25, 4, 57, Rational(2077879123, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/rebase_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/rebase_test.rb:11:in `<class:RebaseTest>\': uninitialized constant RebaseTest::DefaultTests (NameError)
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/rebase_test.rb:11:in `<class:RebaseTest>\': uninitialized constant NewTestClass::DefaultTests (NameError)
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/rebase_test.rb:10:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/rebase_test.rb"
-	User time (seconds): 1.31
-	System time (seconds): 0.17
+	User time (seconds): 1.30
+	System time (seconds): 0.12
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.50
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.43
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 33532
+	Maximum resident set size (kbytes): 35772
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 8509
+	Minor (reclaiming a frame) page faults: 7465
 	Voluntary context switches: 3
-	Involuntary context switches: 159
+	Involuntary context switches: 44
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

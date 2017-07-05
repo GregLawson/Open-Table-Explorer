@@ -3,9 +3,9 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 11, Rational(50925515333, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 8, 7, 27, Rational(24642856993, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test
 Started
 E
@@ -156,7 +156,7 @@ Can\'t figure out relation between :cat and GlobalTest::TestClass
 ===============================================================================
 Failure:
   </\{4408\},\(\?-mix:3\),\/3\/>/> expected to be =~
-  <"#<Set: {/1/, /3/}>; <Regexp #13020640{3409401429866023428},(?-mix:1),/1/>, <Regexp #12779380{-3532665122890980477},(?-mix:3),/3/>">.
+  <"#<Set: {/1/, /3/}>; <Regexp #70127104596160{1591608416074021066},(?-mix:1),/1/>, <Regexp #70127104595860{-1219059062931180635},(?-mix:3),/3/>">.
 test_set_inspect(GlobalTest)
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb:44:in `test_set_inspect\'
      41:     assert_match(/\(\?-mix:3\),\/3\/>/, set.set_inspect)
@@ -169,29 +169,29 @@ test_set_inspect(GlobalTest)
 ===============================================================================
 ..
 
-Finished in 0.176665367 seconds.
+Finished in 0.183254071 seconds.
 ------
 21 tests, 35 assertions, 3 failures, 9 errors, 0 pendings, 0 omissions, 0 notifications
 42.8571% passed
 ------
-118.87 tests/s, 198.11 assertions/s
+114.59 tests/s, 190.99 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/global_test.rb"
-	User time (seconds): 0.78
-	System time (seconds): 0.04
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.82
+	User time (seconds): 0.86
+	System time (seconds): 0.06
+	Percent of CPU this job got: 97%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.95
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 21160
+	Maximum resident set size (kbytes): 21072
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5416
-	Voluntary context switches: 3
-	Involuntary context switches: 78
+	Minor (reclaiming a frame) page faults: 5392
+	Voluntary context switches: 2
+	Involuntary context switches: 302
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

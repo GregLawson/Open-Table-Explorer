@@ -3,16 +3,16 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 11, Rational(31131344486, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 8, 7, 27, Rational(513742396, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_association_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/usr/lib/ruby/2.3.0/rubygems/specification.rb:2286:in `raise_if_conflicts\': Unable to activate activesupport-4.2.6, because json-2.0.1 conflicts with json (>= 1.7.7, ~> 1.7) (Gem::ConflictError)
-	from /usr/lib/ruby/2.3.0/rubygems/specification.rb:1407:in `activate\'
-	from /usr/lib/ruby/2.3.0/rubygems/specification.rb:1441:in `block in activate_dependencies\'
-	from /usr/lib/ruby/2.3.0/rubygems/specification.rb:1427:in `each\'
-	from /usr/lib/ruby/2.3.0/rubygems/specification.rb:1427:in `activate_dependencies\'
-	from /usr/lib/ruby/2.3.0/rubygems/specification.rb:1409:in `activate\'
+:errors => {:syserr => '/usr/lib/ruby/2.3.0/rubygems/specification.rb:2287:in `raise_if_conflicts\': Unable to activate activesupport-4.2.6, because json-2.0.1 conflicts with json (>= 1.7.7, ~> 1.7) (Gem::ConflictError)
+	from /usr/lib/ruby/2.3.0/rubygems/specification.rb:1408:in `activate\'
+	from /usr/lib/ruby/2.3.0/rubygems/specification.rb:1442:in `block in activate_dependencies\'
+	from /usr/lib/ruby/2.3.0/rubygems/specification.rb:1428:in `each\'
+	from /usr/lib/ruby/2.3.0/rubygems/specification.rb:1428:in `activate_dependencies\'
+	from /usr/lib/ruby/2.3.0/rubygems/specification.rb:1410:in `activate\'
 	from /usr/lib/ruby/2.3.0/rubygems.rb:196:in `rescue in try_activate\'
 	from /usr/lib/ruby/2.3.0/rubygems.rb:193:in `try_activate\'
 	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:125:in `rescue in require\'
@@ -20,20 +20,20 @@
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_association_test.rb:12:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_association_test.rb"
-	User time (seconds): 0.78
+	User time (seconds): 0.82
 	System time (seconds): 0.08
 	Percent of CPU this job got: 96%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.90
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.94
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23072
+	Maximum resident set size (kbytes): 23076
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
 	Minor (reclaiming a frame) page faults: 5892
 	Voluntary context switches: 4
-	Involuntary context switches: 97
+	Involuntary context switches: 99
 	Swaps: 0
 	File system inputs: 264
 	File system outputs: 0

@@ -88,6 +88,9 @@ class TestExecutableTest < TestCase
     unit = Unit.new_from_path($PROGRAM_NAME)
     refute_nil(unit)
     assert_equal('log/unit/2.2/2.2.3p173/silence/test_executable.log', TestTestExecutable.log_path?(nil))
+    assert_equal('log/unit/2.2/2.2.3p173/silence/test_executable/test_log_path?.log', TestTestExecutable.log_path?('test_log_path?'))
+    assert_equal('log/unit/2.2/2.2.3p173/silence/test_executable/test_log_path?.log', TestTestExecutable.log_path?(:'test_log_path?'))
+    assert_equal('log/unit/2.2/2.2.3p173/silence/test_executable/test_log_path?.log', TestTestExecutable.log_path?(:test_log_path?))
   end # log_path?
 
   def test_ruby_test_string

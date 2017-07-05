@@ -45,50 +45,50 @@ class GraphPath < Array # nested Array
     end # if
   end # initialize
 
-def deeper
-   GraphPath.new(self, 0)
-end # deeper
+  def deeper
+    GraphPath.new(self, 0)
+  end # deeper
 
-def parent_index
-   GraphPath.new(self[0])
-end # parent_index
+  def parent_index
+    GraphPath.new(self[0])
+  end # parent_index
 
-def child_index
-   self[1]
-end # child_index
-module Constants
-  Root_path = GraphPath.new
-end # Constants
-include Constants
-module Assertions
-module ClassMethods
-def assert_pre_conditions(message = '')
-  assert_includes(Array, ancestors)
-  message += "In assert_pre_conditions, self=#{inspect}"
-end # assert_pre_conditions
-
-def assert_post_conditions(message = '')
-  message += "In assert_post_conditions, self=#{inspect}"
-end # assert_post_conditions
-end # ClassMethods
-def assert_pre_conditions(_message = '')
-   assert_nil(self[0])
-  self[1..-1].assert_Array_of_Class(Fixnum) # parent id nil index
-end # assert_pre_conditions
-
-def assert_post_conditions(message = '')
-end # assert_post_conditions
-end # Assertions
-include Assertions
-extend Assertions::ClassMethods
-# self.assert_pre_conditions
-module Examples
+  def child_index
+    self[1]
+  end # child_index
+  module Constants
+    Root_path = GraphPath.new
+  end # Constants
   include Constants
-Redundant_root = [Root_path, nil].freeze
-First_son = [Root_path, 0].freeze
-Seventh_son = [Root_path, 6].freeze
-First_grandson = [First_son, 0].freeze
-end # Examples
+  module Assertions
+    module ClassMethods
+      def assert_pre_conditions(message = '')
+        assert_includes(Array, ancestors)
+        message += "In assert_pre_conditions, self=#{inspect}"
+      end # assert_pre_conditions
+
+      def assert_post_conditions(message = '')
+        message += "In assert_post_conditions, self=#{inspect}"
+      end # assert_post_conditions
+    end # ClassMethods
+    def assert_pre_conditions(_message = '')
+      assert_nil(self[0])
+      self[1..-1].assert_Array_of_Class(Fixnum) # parent id nil index
+    end # assert_pre_conditions
+
+    def assert_post_conditions(message = '')
+    end # assert_post_conditions
+  end # Assertions
+  include Assertions
+  extend Assertions::ClassMethods
+  # self.assert_pre_conditions
+  module Examples
+    include Constants
+    Redundant_root = [Root_path, nil].freeze
+    First_son = [Root_path, 0].freeze
+    Seventh_son = [Root_path, 6].freeze
+    First_grandson = [First_son, 0].freeze
+  end # Examples
 end # GraphPath
 # Connectivity
 
@@ -280,85 +280,85 @@ end # Connectivity
 
 class NestedArrayType < Connectivity
   module ClassMethods
-  def children?(node)
-    children_if_exist?(node, :to_a)
-  end # children
+    def children?(node)
+      children_if_exist?(node, :to_a)
+    end # children
   end # ClassMethods
-extend Connectivity::ClassMethods
-extend ClassMethods
-module Assertions
-module ClassMethods
-def assert_pre_conditions(message = '')
-  message += "In assert_pre_conditions, self=#{inspect}"
-  assert_equal(self, NestedArrayType, message)
-  assert_includes(ancestors, NestedArrayType)
-  assert_equal(ancestors, [NestedArrayType, NestedArrayType::Examples])
-  assert_equal(included_modules, [NestedArrayType::Examples], message)
-  assert_empty(methods(false), message)
-  assert_empty(methods(false), message)
-end # assert_pre_conditions
+  extend Connectivity::ClassMethods
+  extend ClassMethods
+  module Assertions
+    module ClassMethods
+      def assert_pre_conditions(message = '')
+        message += "In assert_pre_conditions, self=#{inspect}"
+        assert_equal(self, NestedArrayType, message)
+        assert_includes(ancestors, NestedArrayType)
+        assert_equal(ancestors, [NestedArrayType, NestedArrayType::Examples])
+        assert_equal(included_modules, [NestedArrayType::Examples], message)
+        assert_empty(methods(false), message)
+        assert_empty(methods(false), message)
+      end # assert_pre_conditions
 
-def assert_post_conditions(message = '')
-  message += "In assert_post_conditions, self=#{inspect}"
-  assert_equal(self, NestedArrayType, message)
-  assert_equal(NestedArrayType.ancestors, [NestedArrayType, NestedArrayType::Examples])
-  assert_equal(NestedArrayType.included_modules, [NestedArrayType::Examples], message)
-  assert_empty(NestedArrayType.methods(false), message)
-  assert_empty(NestedArrayType::ClassMethods.methods(false), message)
-end # assert_post_conditions
-end # ClassMethods
-end # Assertions
-extend Assertions::ClassMethods
-module Examples
-end # Examples
-include Examples
+      def assert_post_conditions(message = '')
+        message += "In assert_post_conditions, self=#{inspect}"
+        assert_equal(self, NestedArrayType, message)
+        assert_equal(NestedArrayType.ancestors, [NestedArrayType, NestedArrayType::Examples])
+        assert_equal(NestedArrayType.included_modules, [NestedArrayType::Examples], message)
+        assert_empty(NestedArrayType.methods(false), message)
+        assert_empty(NestedArrayType::ClassMethods.methods(false), message)
+      end # assert_post_conditions
+    end # ClassMethods
+  end # Assertions
+  extend Assertions::ClassMethods
+  module Examples
+  end # Examples
+  include Examples
 end # NestedArrayType
 class HashConnectivity < Connectivity
 end # HashConnectivity
 
 class Node
   include Virtus.model
-attribute :node, Object # root
-attribute :graph_type, Connectivity
-def parent_at(*params)
-   path = GraphPath.new(*params)
-  if path.parent_index.nil? || path.parent_index == [] || path.parent_index == [nil]
-     parent = @node
-  else
-     parent = at(path.parent_index)
-  end # if
-end # parent_at
+  attribute :node, Object # root
+  attribute :graph_type, Connectivity
+  def parent_at(*params)
+    path = GraphPath.new(*params)
+    if path.parent_index.nil? || path.parent_index == [] || path.parent_index == [nil]
+      parent = @node
+    else
+      parent = at(path.parent_index)
+    end # if
+  end # parent_at
 
-# [] is already taken
-def at(*params)
-   path = GraphPath.new(*params)
-  parent = parent_at(path)
-  if path.child_index.nil?
-     parent
-  else
-     parent[path.child_index]
-  end # if
-end # at
-# Apply block to each node (branch & leaf).
-# Nesting structure remains the same.
-# Array#map will only process the top level Array.
-module Examples
-  Nested_array_root = NestedArrayType.ref(Connectivity::Examples::Nested_array)
-end # Examples
-include Examples
+  # [] is already taken
+  def at(*params)
+    path = GraphPath.new(*params)
+    parent = parent_at(path)
+    if path.child_index.nil?
+      parent
+    else
+      parent[path.child_index]
+    end # if
+  end # at
+  # Apply block to each node (branch & leaf).
+  # Nesting structure remains the same.
+  # Array#map will only process the top level Array.
+  module Examples
+    Nested_array_root = NestedArrayType.ref(Connectivity::Examples::Nested_array)
+  end # Examples
+  include Examples
 end # node
 
 module Graph # see http://rubydoc.info/gems/gratr/0.4.3/file/README
   module Constants
-  Identity_map = proc { |e, _depth, _terminal| e.node }
-  Trace_map = proc { |e, depth, terminal| [e.node, depth, terminal] }
-  Leaf_map = proc { |e, _depth, terminal| (terminal.nil? || terminal ? e : nil) }
+    Identity_map = proc { |e, _depth, _terminal| e.node }
+    Trace_map = proc { |e, depth, terminal| [e.node, depth, terminal] }
+    Leaf_map = proc { |e, _depth, terminal| (terminal.nil? || terminal ? e : nil) }
   end # Constants
-include Constants
+  include Constants
 end # Graph
 module DAG
   include Graph
-include Graph::Constants
+  include Graph::Constants
 end # DAG
 module Forest
   include DAG

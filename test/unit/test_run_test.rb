@@ -13,10 +13,10 @@ require_relative '../../app/models/test_run.rb'
 require_relative '../../test/assertions/shell_command_assertions.rb'
 class RecentRunTest < TestCase
   module Examples
-    #    include Constants
-    Self_executable = TestExecutable.new_from_path(__FILE__, :unit)
-    No_side_effects = TestRun.new(test_executable: Self_executable, cached_recent_test: nil, cached_all_test_names: nil) # avoid recursion
-    #    include RecentRun::Constants
+#    include Constants
+		Self_executable = TestExecutable.new_from_path(__FILE__, :unit)
+		No_side_effects = TestRun.new(test_executable: Self_executable, cached_recent_test: nil, cached_all_test_names: nil) # avoid recursion
+#    include RecentRun::Constants
     Allways_timeout = 0.00001
     Hello_world = RecentRun.new(command_string: 'echo "Hello World"')
     Example_output = "1 2;3 4\n".freeze
@@ -102,7 +102,7 @@ class TestRunTest < TestCase
   include RecentRunTest::Examples
   module Examples
     include TestRun::Constants
-    #    Allways_timeout = 0.00001
+#    Allways_timeout = 0.00001
     Default_testRun = TestRun.new(test_executable: TestExecutable::Examples::TestMinimal)
     Default_subtestRun = TestRun.new(test_executable: TestExecutable::Examples::TestMinimal, test: :test_compare)
     Forced_timeout_testRun = TestRun.new(test_executable: TestExecutable::Examples::TestTestExecutable, test_run_timeout: RecentRunTest::Allways_timeout)
@@ -117,8 +117,8 @@ class TestRunTest < TestCase
     refute_nil(Default_testRun.cached_recent_test)
     refute_nil(All_test_names_default.call(Default_testRun, nil))
     refute_empty(All_test_names_default.call(Default_testRun, nil))
-    assert_includes(TestSelf.test_executable.all_test_names, 'All_test_names_default')
-    assert_includes(All_test_names_default.call(TestSelf, nil), 'All_test_names_default')
+		assert_includes(TestSelf.test_executable.all_test_names, 'All_test_names_default')
+		assert_includes(All_test_names_default.call(TestSelf, nil), 'All_test_names_default')
   end # All_test_names_default
 
   def test_Timeout_default

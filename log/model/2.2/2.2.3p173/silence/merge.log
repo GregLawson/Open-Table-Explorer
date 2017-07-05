@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 4, 26, 10, 18, Rational(15977881150, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 6, 9, 9, 20, Rational(21768149610, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/app/models/merge.rb',
 :output => '',
 :errors => {:rescue_exception => Timeout::Error.new()

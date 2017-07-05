@@ -1,18 +1,16 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
-,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 2, 20, 9, 46, Rational(57576122644, 1000000000), "-08:00"),
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 9, 25, 5, 3, Rational(4480728323, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/visa_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-......EE.E..
+......EE.$ locate libvisa
+@process_status=#<Process::Status: pid 1378 exit 1>
+E..
 
-Finished in 0.793799s, 15.1172 runs/s, 0.0000 assertions/s.
+Finished in 0.745434s, 16.0980 runs/s, 0.0000 assertions/s.
 
   1) Error:
 NewTestClass#test_example:
@@ -50,7 +48,7 @@ Fiddle::DLError: /usr/lib/x86_64-linux-gnu/libvisa.so: cannot open shared object
     /usr/lib/ruby/2.3.0/fiddle.rb:47:in `initialize\'
     /usr/lib/ruby/2.3.0/fiddle.rb:47:in `new\'
     /usr/lib/ruby/2.3.0/fiddle.rb:47:in `dlopen\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/visa_test.rb:36:in `test_GetPid\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/visa_test.rb:34:in `test_GetPid\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -76,13 +74,13 @@ Fiddle::DLError: /usr/lib/x86_64-linux-gnu/libvisa.so: cannot open shared object
 
   3) Error:
 NewTestClass#test_script:
-NoMethodError: undefined method `assertions\' for #<ShellCommands:0x000000024eb4a0>
+NoMethodError: undefined method `assertions\' for #<ShellCommands:0x00000001b71af0>
 Did you mean?  assert
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert\'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:340:in `assert_respond_to\'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:153:in `assert_empty\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:44:in `assert_post_conditions\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/visa_test.rb:32:in `test_script\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/shell_command_assertions.rb:43:in `assert_post_conditions\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/visa_test.rb:31:in `test_script\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -109,22 +107,22 @@ Did you mean?  assert
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/visa_test.rb"
-	User time (seconds): 2.06
-	System time (seconds): 0.15
-	Percent of CPU this job got: 88%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.51
+	User time (seconds): 1.47
+	System time (seconds): 0.10
+	Percent of CPU this job got: 84%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.86
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 32712
+	Maximum resident set size (kbytes): 26880
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 3
-	Minor (reclaiming a frame) page faults: 8585
-	Voluntary context switches: 76
-	Involuntary context switches: 358
+	Major (requiring I/O) page faults: 7
+	Minor (reclaiming a frame) page faults: 5759
+	Voluntary context switches: 124
+	Involuntary context switches: 141
 	Swaps: 0
-	File system inputs: 30856
+	File system inputs: 30168
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

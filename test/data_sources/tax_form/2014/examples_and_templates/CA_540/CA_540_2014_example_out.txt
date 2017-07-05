@@ -1,5 +1,9 @@
 
+<<<<<<< HEAD
+Title:  CA State Tax Form 540 - 2014 -- Example		Sun Sep 25 05:01:08 2016
+=======
 Title:  CA State Tax Form 540 - 2014 -- Example		Mon Feb 20 09:39:33 2017
+>>>>>>> stash
 
 Status = Married/Joint (2)
 

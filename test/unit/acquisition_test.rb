@@ -17,6 +17,16 @@ class AcquisitionTest < TestCase
   end # Examples
 	include Examples
 	
+		def test_Acquisition_refine
+			acquisition_string = 'cat'
+			regexp =  [/c/, /a/, /t/]
+			capture_class = MatchCapture
+			capture = capture_class.new(string: acquisition_string, regexp: regexp)
+			refinement = capture.priority_refinements
+			capture.assert_refinement(:exact)
+			assert_equal(refinement, Acquisition.refine(acquisition_string, regexp))
+		end # refine
+		
 		def test_Acquisition_to_hash
 			
 		end # to_hash
@@ -93,6 +103,9 @@ class AcquisitionTest < TestCase
 		refute_nil(Acquisition_test_file.cached_acquisition_state, Acquisition_test_file.inspect)
 #unnamed_capture?		refute_equal({}, Acquisition_test_file.cached_capture, Acquisition_test_file.inspect)
 	end # acquire!
+
+	def test_refine
+	end # refine
 	
 	def test_to_hash
 		assert_includes(Acquisition_test_file.instance_variables, :@cached_acquisition_state, Acquisition_test_file.inspect)
@@ -105,4 +118,17 @@ class AcquisitionTest < TestCase
 
 	def test_state
 	end # state
+	
+  def test_display
+  end # display
+	
+	def test_assert_refine
+		acquisition_string = 'cat'
+		regexp =  [/c/, /a/, /t/]
+		capture_class = MatchCapture
+		capture = capture_class.new(string: acquisition_string, regexp: regexp)
+		capture.assert_refinement(:exact)
+		refinement = capture.priority_refinements
+#!		assert_refine(acquisition_string, regexp)
+	end # refine
 end # Acquisition

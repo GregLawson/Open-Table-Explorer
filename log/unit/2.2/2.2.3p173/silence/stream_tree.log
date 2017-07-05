@@ -1,182 +1,37 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
-,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 2, 20, 9, 39, Rational(25921307494, 1000000000), "-08:00"),
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 9, 25, 5, 1, Rational(152561577, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
-Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test
-Started
-E
-===============================================================================
-Error: test_Assertions(StreamTreeTest): LocalJumpError: no block given (yield)
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:156:in `inspect_node\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:227:in `assert_pre_conditions\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:198:in `test_Assertions\'
-     195:   end # inspect_recursive
-     196: 
-     197:   def test_Assertions
-  => 198:     Connectivity.assert_pre_conditions
-     199:     Connectivity.assert_post_conditions
-     200:   end # Assertions
-     201: 
-===============================================================================
-...F
-===============================================================================
-Failure:
-  <[:children?]> expected to include
-  <:each_pair>.
-test_NestedArrayType_Assertions(StreamTreeTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:217:in `test_NestedArrayType_Assertions\'
-     214:     assert_includes(NestedArrayType.methods, :children?)
-     215:     assert_empty(NestedArrayType::ClassMethods.methods(false))
-     216:     assert_empty(NestedArrayType::ClassMethods.methods(false))
-  => 217:     assert_includes(NestedArrayType::ClassMethods.instance_methods(false), :each_pair)
-     218:     #	assert_includes(NestedArrayType::ClassMethods.instance_methods, :ref)
-     219:     assert_equal(NestedArrayType.instance_methods, [])
-     220: 
-===============================================================================
-.E
-===============================================================================
-Error: test_Node_format(StreamTreeTest): LocalJumpError: no block given (yield)
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:156:in `inspect_node\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:261:in `test_Node_format\'
-     258:   end # test_node_Examples
-     259: 
-     260:   def test_Node_format
-  => 261:     assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array))
-     262:     assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array, &Node_format))
-     263:     #	assert_match(/cat/, Tree_node_format.call(\'cat\', depth=0, false))
-     264:   end # Node_format
-===============================================================================
-E
-===============================================================================
-Error: test_at(StreamTreeTest): NoMethodError: undefined method `explain_assert_respond_to\' for #<StreamTreeTest:0x00000002514a08>
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:241:in `test_at\'
-     238: 
-     239:   def test_at
-     240:     assert_includes(Node::Examples::Nested_array_root.methods, :at, Node::Examples::Nested_array_root.inspect)
-  => 241:     explain_assert_respond_to(Node::Examples::Nested_array_root, :at, Node::Examples::Nested_array_root.inspect)
-     242:     assert_equal(GraphPath.new(*Root_path), Root_path)
-     243:     path = GraphPath.new(Root_path)
-     244:     assert_empty(Root_path.parent_index)
-===============================================================================
-.F
-===============================================================================
-Failure:
-  The object must respond to :empty?.
-  <nil>.respond_to?(:empty?) expected
-  (Class: <NilClass>)
-test_children?(StreamTreeTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:118:in `test_children?\'
-     115:   end # square_brackets
-     116: 
-     117:   def test_children?
-  => 118:     assert_empty(nil)
-     119:     assert(nil.to_a.empty?) # allows uniform testing of empty Array and nil
-     120:     assert_equal(Nested_array, Connectivity.children?(Nested_array))
-     121:     assert_equal(Son_nested_array, Connectivity.children?(Son_nested_array), \'Son_nested_array = \' + Son_nested_array.inspect)
-===============================================================================
-.E
-===============================================================================
-Error: test_inspect_node(StreamTreeTest): LocalJumpError: no block given (yield)
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:156:in `inspect_node\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:148:in `test_inspect_node\'
-     145:   end # map_pair
-     146: 
-     147:   def test_inspect_node
-  => 148:     assert_equal(Inspect_node_root, NestedArrayType.inspect_node(Nested_array))
-     149:     assert_equal(\'[2, [3], 4]\', NestedArrayType.inspect_node(Son_nested_array))
-     150:     assert_equal(\'3\', NestedArrayType.inspect_node(Grandson_nested_array))
-     151:     assert_match(NestedArrayType.inspect_node(Nested_array), Tree_node_root)
-===============================================================================
-.E
-===============================================================================
-Error: test_inspect_recursive(StreamTreeTest): LocalJumpError: no block given (yield)
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:156:in `inspect_node\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:251:in `block in <module:Examples>\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:175:in `map_recursive\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:187:in `test_inspect_recursive\'
-     184:   end # inspect_nonterminal?
-     185: 
-     186:   def test_inspect_recursive
-  => 187:     assert_equal(Grandson_nested_array_map, NestedArrayType.map_recursive(Grandson_nested_array, depth = 2, &Tree_node_format))
-     188:     assert_equal(Son_nested_array_map, NestedArrayType.map_recursive(Son_nested_array, depth = 1, &Tree_node_format))
-     189:     assert_equal(Nested_array_map, NestedArrayType.map_recursive(Nested_array, &Tree_node_format))
-     190:     assert_equal((Nested_array_map.flatten.map { |s| s + "\n" }).join, NestedArrayType.inspect_recursive(Nested_array, &Tree_node_format), NestedArrayType.inspect_recursive(Nested_array, &Tree_node_format))
-===============================================================================
-..E
-===============================================================================
-Error: test_map_recursive(StreamTreeTest): LocalJumpError: no block given (yield)
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:156:in `inspect_node\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:251:in `block in <module:Examples>\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:161:in `test_map_recursive\'
-     158:     refute_nil(node)
-     159:     refute_nil(node.graph_type, node.inspect)
-     160:     assert_respond_to(node.graph_type, :inspect_node)
-  => 161:     assert_equal(Tree_node_root, visit_proc.call(NestedArrayType.ref(Nested_array), depth, false))
-     162:     assert_equal(1, Children_nested_array.size)
-     163:     assert_respond_to(Son_nested_array, Children_method_name)
-     164:     assert_instance_of(Array, Grandchildren_nested_array)
-===============================================================================
-.....E
-===============================================================================
-Error: test_ref(StreamTreeTest): NameError: undefined local variable or method `ref\' for #<StreamTreeTest:0x0000000250be08>
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:111:in `test_ref\'
-     108: 
-     109:   # Connectivity
-     110:   def test_ref
-  => 111:     assert_instance_of(Node, ref)
-     112:   end # ref
-     113: 
-     114:   def test_square_brackets(*params)
-===============================================================================
-F
-===============================================================================
-Failure: test_rgl_readme(StreamTreeTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:26:in `test_rgl_readme\'
-     23:     assert_equal([5, 6, 1, 2, 3, 4].sort, dg.vertices)
-     24:     assert_equal(true, dg.has_vertex?(4))
-     25:     assert_equal(false, dg.has_vertex?(Object))
-  => 26:     assert_equal(\'(1-2)(1-6)(2-3)(2-4)(4-5)(6-4)\', dg.edges.sort.to_s)
-     27:     assert_equal(\'(1=2)(1=6)(2=3)(2=4)(5=4)(6=4)\', dg.to_undirected.edges.sort.to_s)
-     28: 
-     29:     # Add inverse edge (4-2) to directed graph:
-<"(1-2)(1-6)(2-3)(2-4)(4-5)(6-4)"> expected but was
-<"[(1-2), (1-6), (2-3), (2-4), (4-5), (6-4)]">
-
-diff:
-? [(1-2), (1-6), (2-3), (2-4), (4-5), (6-4)]
-===============================================================================
-.
-
-Finished in 0.146496845 seconds.
-------
-25 tests, 63 assertions, 3 failures, 7 errors, 0 pendings, 0 omissions, 0 notifications
-60% passed
-------
-170.65 tests/s, 430.04 assertions/s
 ',
-:errors => {:syserr => 'Command exited with non-zero status 1
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:13:in `<module:RegexpParseType>\': uninitialized constant RegexpParseType::Connectivity (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:12:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:11:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:11:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_lines_storage.rb:8:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_lines_storage.rb:8:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:8:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:8:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:9:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb:9:in `<main>\'
+Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_tree_test.rb"
-	User time (seconds): 0.99
-	System time (seconds): 0.10
-	Percent of CPU this job got: 97%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.13
+	User time (seconds): 0.70
+	System time (seconds): 0.06
+	Percent of CPU this job got: 70%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.09
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 29160
+	Maximum resident set size (kbytes): 26160
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 1
-	Minor (reclaiming a frame) page faults: 9511
-	Voluntary context switches: 6
-	Involuntary context switches: 125
+	Minor (reclaiming a frame) page faults: 5033
+	Voluntary context switches: 101
+	Involuntary context switches: 15
 	Swaps: 0
-	File system inputs: 40
-	File system outputs: 32
+	File system inputs: 2208
+	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0

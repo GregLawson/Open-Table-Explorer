@@ -22,27 +22,26 @@ class BootTest < TestCase
     assert_include(capture.methods, :success?)
     refute_nil(capture.raw_captures, capture.inspect)
     max_record_length = 300
-    assert_match(regexp, Grubs_run.output[0,max_record_length])
+    assert_match(regexp, Grubs_run.output[0, max_record_length])
     assert_operator(2, :<=, capture.raw_captures.size, capture.inspect)
     message = capture.raw_captures[1][0..100].inspect
     assert_match(regexp, One_menu_entry, message)
-    
-    
+
     assert_equal(target_matches, capture.raw_captures.size, message)
     capture # for further processing
   end # repeat_match
-  
+
   def test_Boot_DefinitionalConstants
     assert_match(/[N1-5] [1-5]\n/, Run_levels.output, Run_levels.inspect)
-    assert_include(["degraded\n", "offline\n"], Is_system_running.output, Is_system_running.inspect)
+    assert_include(%W(degraded\n offline\n), Is_system_running.output, Is_system_running.inspect)
     linux_a_regexp = /Linux acer-desktop / * Linux_version_regexp * / #1 SMP / * /PREEMPT RT /.optional * /Debian / * Version::Semantic_version_regexp
-		assert_match(linux_a_regexp, "Linux acer-desktop 4.6.0-1-rt-amd64 #1 SMP PREEMPT RT Debian 4.6.4-1 (2016-07-18) x86_64 GNU/Linux\n")
-		assert_match(/Linux acer-desktop /, Uname.output)
-		assert_match(/Linux acer-desktop / * Linux_version_regexp, Uname.output)
-		assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP /, Uname.output)
-		assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP / * /PREEMPT RT /.optional, Uname.output)
-		assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP / * /PREEMPT RT /.optional * /Debian / * Version::Semantic_version_regexp, Uname.output)
-		assert_match(linux_a_regexp, Uname.output)
+    assert_match(linux_a_regexp, "Linux acer-desktop 4.6.0-1-rt-amd64 #1 SMP PREEMPT RT Debian 4.6.4-1 (2016-07-18) x86_64 GNU/Linux\n")
+    assert_match(/Linux acer-desktop /, Uname.output)
+    assert_match(/Linux acer-desktop / * Linux_version_regexp, Uname.output)
+    assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP /, Uname.output)
+    assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP / * /PREEMPT RT /.optional, Uname.output)
+    assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP / * /PREEMPT RT /.optional * /Debian / * Version::Semantic_version_regexp, Uname.output)
+    assert_match(linux_a_regexp, Uname.output)
     assert_repeat_match(Uuid_regexp, 193)
     assert_match(Classes_regexp, Grubs_run.output, Grubs_run.inspect)
     assert_match(Boot_line_regexp, One_menu_entry, One_menu_entry.inspect)
@@ -53,11 +52,11 @@ class BootTest < TestCase
     assert_repeat_match(/\tlinux /, 45)
     assert_repeat_match(Regexp::Start_string * Boot_line_regexp, 10)
     assert_repeat_match(/^/ * Boot_line_regexp, 397)
-#    assert_repeat_match(Menu_title_regexp, 60)
+    #    assert_repeat_match(Menu_title_regexp, 60)
   end # DefinitionalConstants
 
   def remove_matches(unmatches, regexp_array)
-    regexp_array.each do |regexp_symbol|    
+    regexp_array.each do |regexp_symbol|
       unmatches = unmatches.map do |unmatched|
         regexp = eval(regexp_symbol.to_s)
         capture = unmatched.capture?(regexp, SplitCapture)
@@ -70,21 +69,20 @@ class BootTest < TestCase
     assert_instance_of(Array, Boot::Examples::Regexps::Grub.constants)
     assert_instance_of(Symbol, Boot::Examples::Regexps::Grub.constants[0])
     unmatches = remove_matches([Grubs_run.output], Boot::Examples::Regexps::Grub.constants)
-        unmatches = remove_matches([Grubs_run.output], Boot::Examples::Regexps::Grub.constants)
+    unmatches = remove_matches([Grubs_run.output], Boot::Examples::Regexps::Grub.constants)
 
     assert_empty(unmatches.sort.uniq)
   end # test_remove_matches
 
- def test_reverse_remove_matches
+  def test_reverse_remove_matches
     match = MatchCapture.new(string: Grubs_run.output, regexp: Boot::Examples::Regexps::Full_regexp_array)
 
     match.assert_refinement(:exact)
-  end # test_remove_matches
+   end # test_remove_matches
 
-	def test_state
-		
-	end # state
-	
+  def test_state
+  end # state
+
   def test_Minimal_Virtus
   end # values
 

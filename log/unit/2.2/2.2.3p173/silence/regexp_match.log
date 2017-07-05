@@ -1,38 +1,46 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
-,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 2, 20, 9, 37, Rational(14386581450, 1000000000), "-08:00"),
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 9, 25, 4, 58, Rational(31950633132, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_match_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_match.rb:51:in `initialize\': uninitialized constant RegexpMatch::RegexpTree (NameError)
-Did you mean?  Regexp
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_match.rb:243:in `new\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_match.rb:243:in `<module:Examples>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_match.rb:237:in `<class:RegexpMatch>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_match.rb:11:in `<top (required)>\'
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:457:in `raw_captures\': undefined method `raw_capture?\' for #<Regexp::Expression::Root:0x00000001014ae0> (NoMethodError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:235:in `initialize\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:245:in `initialize\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:452:in `initialize\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:470:in `new\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:470:in `<module:Examples>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:467:in `<class:ParsedCapture>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:447:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_lines_storage.rb:8:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_lines_storage.rb:8:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:8:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:8:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:9:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:9:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_tree.rb:11:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_tree.rb:11:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_match.rb:8:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_match.rb:8:in `<top (required)>\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_match_assertions.rb:8:in `require_relative\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/regexp_match_assertions.rb:8:in `<top (required)>\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_match_test.rb:9:in `require_relative\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_match_test.rb:9:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_match_test.rb"
-	User time (seconds): 0.59
-	System time (seconds): 0.06
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.66
+	User time (seconds): 0.81
+	System time (seconds): 0.05
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.87
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 20292
+	Maximum resident set size (kbytes): 24820
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5198
+	Minor (reclaiming a frame) page faults: 4741
 	Voluntary context switches: 3
-	Involuntary context switches: 71
+	Involuntary context switches: 11
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

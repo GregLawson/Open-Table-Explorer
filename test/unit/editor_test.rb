@@ -18,7 +18,7 @@ class EditorTest < TestCase
     # TestEmacs = Emacs.new(EditorTestExecutable)
   end # Examples
   include Examples
-  #  include UnitMaturity::Examples
+#  include UnitMaturity::Examples
   def test_initializes
     te = Unit.new_from_path(TestDiffuse.test_executable.argument_path)
     refute_nil(te)
@@ -57,19 +57,19 @@ class EditorTest < TestCase
     refute_empty(TestDiffuse.test_executable.unit.edit_files)
     parallel_display = TestDiffuse.test_executable.unit.parallel_display
     refute_empty(parallel_display, TestDiffuse.test_executable.unit.edit_files.inspect)
-    pairs = TestDiffuse.test_executable.unit.edit_files.map do |file|
-      assert_data_file(file)
-      symbol = FilePattern.find_name_from_path(file)
-      parallel_symbol = TestDiffuse.test_executable.unit.parallel_display[symbol]
-      if parallel_symbol.nil?
-        nil
-      else
-        assert_instance_of(Symbol, parallel_symbol)
-        parallel_file = TestDiffuse.test_executable.unit.pathname_pattern?(parallel_symbol)
-        assert_data_file(parallel_file)
-        ' -t ' + Pathname.new(parallel_file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s +
-          ' ' + Pathname.new(file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s
-      end # if
+    pairs = TestDiffuse.test_executable.unit.edit_files.map do |file| 
+			assert_data_file(file)
+			symbol = FilePattern.find_name_from_path(file)
+			parallel_symbol = TestDiffuse.test_executable.unit.parallel_display[symbol]
+			if parallel_symbol.nil?
+				nil
+			else
+				assert_instance_of(Symbol, parallel_symbol)
+				parallel_file = TestDiffuse.test_executable.unit.pathname_pattern?(parallel_symbol)
+				assert_data_file(parallel_file)
+				' -t ' + Pathname.new(parallel_file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s +
+					' ' + Pathname.new(file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s
+			end # if
     end.compact # map
     assert_instance_of(Array, pairs, parallel_display.inspect)
     refute_empty(pairs, parallel_display.inspect)

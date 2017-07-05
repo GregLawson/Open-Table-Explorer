@@ -5,7 +5,7 @@
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-#require_relative 'test_environment'
+# require_relative 'test_environment'
 require_relative '../../app/models/unit.rb'
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/regexp.rb'
@@ -14,7 +14,7 @@ require_relative '../../app/models/acquisition.rb'
 require_relative '../../app/models/version.rb'
 class VersionTest < TestCase
   module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
-#    include DefinitionalConstants
+    #    include DefinitionalConstants
     include Version::Constants
     Consecutive_string = '1.2.3'.freeze
 
@@ -25,8 +25,8 @@ class VersionTest < TestCase
     Linux_version = Acquisition.new(uri_string: 'shell:uname -a', generic_type: Version::Semantic_version_regexp) # system version
     Ruby_file_version = Acquisition.new(uri_string: 'file /usr/bin/ruby2.2', generic_type: Version::Semantic_version_regexp)
   end # Examples
-	include Examples
-	
+  include Examples
+
   def test_Constants
     assert_match(Version_digits, Consecutive_string)
     assert_match(Version_digits.capture(:major) * '.', Consecutive_string)
@@ -101,16 +101,16 @@ class ReportedVersionTest < TestCase
     Linux_version = ReportedVersion.new(test_command: 'uname', version_reporting_option: '-a') # system version
     Ruby_file_version = ReportedVersion.new(test_command: 'file /usr/bin/ruby2.2', version_reporting_option: '')
   end # Examples
-	include Examples
+  include Examples
 
-		def test_acquisition
-		end # acquisition
-	
-	def test_to_hash
-	end # to_hash
+  def test_acquisition
+  end # acquisition
 
-		def test_acquire!
-		end # acquire
+  def test_to_hash
+  end # to_hash
+
+  def test_acquire!
+  end # acquire
   include ReportedVersion::DefinitionalConstants
   def test_ReportedVersion_DefinitionalConstants
     assert_match(/.1.gz/, Ruby_whereis)
@@ -144,7 +144,7 @@ class ReportedVersionTest < TestCase
     ruby_version = ReportedVersion.new(test_command: 'ruby') # system version
     capture = ruby_version.whereis.capture?(Whereis_regexp)
     #	assert_equal('/usr/lib/ruby', capture.output[:pathname], capture.inspect)
-		whereis_acq = Acquisition.new(uri_string: 'shell:whereis ' + 'ruby', ) # system version
+    whereis_acq = Acquisition.new(uri_string: 'shell:whereis ' + 'ruby') # system version
   end # whereis
 
   def test_versions

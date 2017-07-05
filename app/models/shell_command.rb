@@ -11,7 +11,6 @@ require_relative 'log.rb'
 require 'pathname'
 require 'virtus'
 require 'timeout'
-require_relative 'file_tree.rb'
 module Shell
   class Base
     module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
@@ -104,10 +103,10 @@ module Shell
       attribute :output, String, default: nil
     end # values
 
-			def select
-				IO.select([stdout], [stdin], [stderr], 0.01)
-			end # select
-						
+    def select
+      IO.select([stdout], [stdin], [stderr], 0.01)
+    end # select
+
     def start
       @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(@command_string)
       #      @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(@env, @command_string, @opts)
@@ -117,8 +116,8 @@ module Shell
     def process_status
       raise 'process_status undefined until server started.' if @wait_thr.nil?
       @wait_thr.value
-	  end # process_status
-		
+    end # process_status
+
     def exitstatus
       @wait_thr.value.exitstatus
     end # process_status
@@ -129,15 +128,15 @@ module Shell
       self # allows command chaining
     end # wait
 
-		def tee
-			Timeout.timeout(@timeout) do
-				@output = @stdout.read
-				puts @output
-			end # Timeout
-		rescue Timeout::Error => exception_object_raised
-			@errors[:rescue_tee] = exception_object_raised
-		end # tee
-		
+    def tee
+      Timeout.timeout(@timeout) do
+        @output = @stdout.read
+        puts @output
+      end # Timeout
+    rescue Timeout::Error => exception_object_raised
+      @errors[:rescue_tee] = exception_object_raised
+    end # tee
+
     def close
       @stdin.close # stdin, stdout and stderr should be closed explicitly in this form.
       begin
@@ -178,9 +177,9 @@ module Shell
       module ClassMethods
         def assert_pre_conditions(message = '')
           message += "In assert_pre_conditions, self=#{inspect}"
-          # asset_nested_and_included('Shell::Server::Assertions', self)
-          #	asset_nested_and_included(:Constants, self)
-          #	asset_nested_and_included(:Assertions, self)
+          # assert_nested_and_included('Shell::Server::Assertions', self)
+          #	assert_nested_and_included(:Constants, self)
+          #	assert_nested_and_included(:Assertions, self)
           #          assert_includes(Process.included_modules, :Waiter)
           self
         end # assert_pre_conditions
@@ -189,36 +188,34 @@ module Shell
           message += "In assert_post_conditions, self=#{inspect}"
           self
         end # assert_post_conditions
-      
-			def assert_pipe(stream, message = '')
-        assert_instance_of(IO, stream, message)
-			end # pipe
 
-      def assert_readable(stream)
-				begin
-	        assert_equal(false, stream.closed?, message) # hangs
+        def assert_pipe(stream, message = '')
+          assert_instance_of(IO, stream, message)
+        end # pipe
+
+        def assert_readable(stream)
+          assert_equal(false, stream.closed?, message) # hangs
         rescue StandardError => exception_object_raised
-					assert_equal('', exception_object_raised.class.name)
-				end # begin
-			end # readable
-			
-      def assert_writable(stream)
-				begin
-	        assert_equal(false, stream.eof?, message) # hangs
-        rescue StandardError => exception_object_raised
-					assert_instance_of(IOError, exception_object_raised)
-					assert_include(exception_object_raised.methods, :inspect)
-					assert_include(Exception.instance_methods(false), :message)
-					assert_include(exception_object_raised.methods, :message)
-					assert_equal('not opened for reading', exception_object_raised.message)
-				end # begin
-				begin
-	        assert_equal(false, stream.closed?, message) # hangs
-        rescue StandardError => exception_object_raised
-					assert_equal('', exception_object_raised.class.name)
-				end # begin
-			end # writable
-			
+          assert_equal('', exception_object_raised.class.name)
+          # begin
+        end # readable
+
+        def assert_writable(stream)
+          begin
+            assert_equal(false, stream.eof?, message) # hangs
+          rescue StandardError => exception_object_raised
+            assert_instance_of(IOError, exception_object_raised)
+            assert_include(exception_object_raised.methods, :inspect)
+            assert_include(Exception.instance_methods(false), :message)
+            assert_include(exception_object_raised.methods, :message)
+            assert_equal('not opened for reading', exception_object_raised.message)
+          end # begin
+          begin
+            assert_equal(false, stream.closed?, message) # hangs
+          rescue StandardError => exception_object_raised
+            assert_equal('', exception_object_raised.class.name)
+          end # begin
+        end # writable
       end # ClassMethods
       def assert_pre_conditions(_message = '')
         message += "In assert_pre_conditions, self=#{inspect}"
@@ -231,33 +228,34 @@ module Shell
         assert_empty(@errors, message + 'expected errors to be empty\n')
         #				assert_equal(0, process_status.exitstatus & ~@accumulated_tolerance_bits, message)
         assert_not_nil(@errors, 'expect @errors to not be nil.')
-#        assert_not_nil(process_status)
+        #        assert_not_nil(process_status)
         #				assert_instance_of(Process::Status, process_status)
 
         self # return for command chaining
       end # assert_post_conditions
 
-			def assert_started(_message = '')
+      def assert_started(_message = '')
         #        message += "In assert_post_conditions, self=#{inspect}"
         assert_instance_of(Process::Waiter, wait_thr)
         assert_instance_of(Process::Status, process_status)
-				Shell::Server.assert_pipe(stdin)
-				Shell::Server.assert_pipe(stdout)
-				Shell::Server.assert_pipe(stderr)
+        Shell::Server.assert_pipe(stdin)
+        Shell::Server.assert_pipe(stdout)
+        Shell::Server.assert_pipe(stderr)
         assert_equal(false, stdin.closed?, message)
         assert_equal(false, stdout.closed?, message)
         assert_equal(false, stderr.closed?, message)
-				
-				selection = IO.select([@stdout], [@stdin], [@stderr], 15)
-				assert_equal([@stdout], selection[0])
-				assert_equal([@stdin], selection[1])
-				assert_equal([], selection[2])
-				Shell::Server.assert_writable(@stdin)
-#        assert_equal(false, stdin.eof?, message)
+
+        selection = IO.select([@stdout], [@stdin], [@stderr], 15)
+        assert_equal([@stdout], selection[0])
+        assert_equal([@stdin], selection[1])
+        assert_equal([], selection[2])
+        Shell::Server.assert_writable(@stdin)
+        #        assert_equal(false, stdin.eof?, message)
         assert_equal(false, stdout.eof?, message) # hangs
-#        assert_equal(false, stderr.eof?, message)
+        #        assert_equal(false, stderr.eof?, message)
         self # return for command chaining
       end # assert_started
+
       def assert_ended(_message = '')
         assert_equal([:pid], wait_thr.class.instance_methods(false), wait_thr.inspect)
         assert_instance_of(IO, stdin, message)
@@ -540,7 +538,6 @@ class ShellCommands
     info '@command=' + @command.inspect
     info '@command_string=' + @command_string.inspect
     Open3.popen3(@env, @command_string, @opts) do |stdin, stdout, stderr, wait_thr|
-
       stdin.close # stdin, stdout and stderr should be closed explicitly in this form.
       @output = stdout.read
       stdout.close
@@ -671,7 +668,7 @@ class ShellCommands
       end # if
     end # if
     unless success?
-      ret += "@process_status = #{@process_status.inspect}\n"
+      ret += "@process_status=#{@process_status.inspect}\n"
     end # if
     if @output.nil?
       ret

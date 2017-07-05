@@ -100,16 +100,16 @@ class Diffuse < Editor
   end # goldilocks
 
   def test_files(edit_files = @test_executable.unit.edit_files)
-    pairs = edit_files.map do |file|
-      symbol = FilePattern.find_name_from_path(file)
-      parallel_symbol = @test_executable.unit.parallel_display[symbol]
-      if parallel_symbol.nil?
-        nil
-      else
-        parallel_file = @test_executable.unit.pathname_pattern?(parallel_symbol)
-        ' -t ' + Pathname.new(parallel_file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s +
-          ' ' + Pathname.new(file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s
-      end # if
+    pairs = edit_files.map do |file| 
+			symbol = FilePattern.find_name_from_path(file)
+			parallel_symbol = @test_executable.unit.parallel_display[symbol]
+			if parallel_symbol.nil?
+				nil
+			else
+				parallel_file = @test_executable.unit.pathname_pattern?(parallel_symbol)
+				' -t ' + Pathname.new(parallel_file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s +
+					' ' + Pathname.new(file).expand_path.relative_path_from(Pathname.new(Dir.pwd)).to_s
+			end # if
     end.compact # map
     pairs.join(' ')
   end # test_files

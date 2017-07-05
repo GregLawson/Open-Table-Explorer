@@ -81,14 +81,14 @@ class TestExecutable < FileArgument # executable / testable ruby unit with execu
   end # regression_test
 
   def log_path?(test, extension = '.log')
+		@log_path = 'log/'
+		@log_path += @test_type.to_s
+		@log_path += '/' + @ruby_interpreter.minor_version
+		@log_path += '/' + @ruby_interpreter.patch_version
+		@log_path += '/' + @ruby_interpreter.logging.to_s
     if @unit.nil?
       @log_path = '' # empty file string
     else
-      @log_path = 'log/'
-      @log_path += @test_type.to_s
-      @log_path += '/' + @ruby_interpreter.minor_version
-      @log_path += '/' + @ruby_interpreter.patch_version
-      @log_path += '/' + @ruby_interpreter.logging.to_s
       if test.nil?
         Pathname.new(@log_path).mkpath
         @log_path += '/' + @unit.model_basename.to_s + extension

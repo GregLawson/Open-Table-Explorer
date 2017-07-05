@@ -10,7 +10,7 @@
 # need nodejs
 # need sudo apt-get install pdftk
 # require_relative '../../app/models/no_db.rb'
-require_relative '../../test/assertions/ruby_assertions_test_unit.rb'
+require_relative '../../app/models/cache.rb'
 require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/repository.rb'
 require_relative '../../app/models/parse.rb'
@@ -19,59 +19,6 @@ module Types
   include Dry::Types.module
 end # Types
 # ! require 'virtus'
-
-class Object
-  def clone_state
-    #		ret = {}
-    [:dup, :clone].map do |copy_method|
-      mutable_object = send(copy_method)
-      [:hash, :inspect, :object_id].map do |attribute|
-        { { copy_method => attribute } => send(attribute) == mutable_object.send(attribute) }
-      end # each
-    end # each
-  end # clone_state
-
-  def assert_clone_state
-    dup_object = dup
-    clone_object = clone
-    # dup copies taint
-    # clone copies internal stste, dup creates new object
-    unless frozen? # test unit modifies object
-      assert_equal(tainted?, clone_object.tainted?, clone_state.inspect)
-      assert_equal(tainted?, dup_object.tainted?, clone_state.inspect)
-      assert_equal(frozen?, dup_object.frozen?, clone_state.inspect)
-      refute_equal(object_id, dup_object.object_id, dup_object.inspect)
-      refute_equal(object_id, clone_object.object_id, clone_state.inspect)
-      # !			assert_equal(self, clone_object, clone_object.clone_explain)
-      # !			assert_equal(self, dup_object, dup_object.clone_explain)
-    end # unless
-  end # assert_clone_state
-
-  def clone_explain
-    ret = []
-    dup_object = dup
-    clone_object = clone
-    ret << 'clone hash not equal' if hash != clone_object.hash
-    ret << 'dup hash not equal' if hash != dup_object.hash
-    ret << 'dup inspect not equal' if inspect != dup_object.inspect
-    ret << 'clone inspect not equal' if inspect != clone_object.inspect
-    ret.join(', ')
-  end # clone_explain
-
-  def cache(cache_name = _callee_)
-    cache_const_name = ('Cached_' + cache_name.to_s).to_sym
-    if block_given?
-      if self.class.const_defined?(cache_const_name)
-        self.class.const_get(cache_const_name)
-      else
-        ret = yield
-        self.class.const_set(cache_const_name, ret)
-      end # if
-    else
-      raise 'caching ' + cache_const_name.to_s + 'requires a block.'
-    end # if
-  end # cache
-end # Object
 
 module OpenTableExplorer
   extend AssertionsModule
@@ -98,8 +45,6 @@ module OpenTableExplorer
     include DefinitionalConstants
 
     class Filing < Dry::Types::Value
-      include AssertionsModule
-      extend AssertionsModule
       module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
         Tax_form_examples = [	# hand parsed from grep of 2014 form filler scripts
           { jurisdiction: :CA, base_form: '540', tax_year: 2014, web_URL_prefix: 'https://www.ftb.ca.gov/forms/', example_path: '2014/14_540.pdf', path_interpolation: "\#{tax_year}/14_\#{base_form}.pdf" },
@@ -278,7 +223,7 @@ module OpenTableExplorer
       module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
         include DefinitionalConstants
         include Constants
-        CA_current_year = CA.new(tax_year: Finance::Default_tax_year)
+        CA_current_year = CA.new(tax_year: Finance::Default_tax_year).freeze
         NJ_current_year = NJ.new(tax_year: Finance::Default_tax_year)
         NY_current_year = NY.new(tax_year: Finance::Default_tax_year)
         OH_current_year = OH.new(tax_year: Finance::Default_tax_year)
@@ -312,6 +257,7 @@ module OpenTableExplorer
       # !        attribute :form_prefix, Types::Strict::String.default('')
       # !        attribute :form_suffix, Types::Strict::String.default('')
 
+			
       attr_reader :filing, :form, :form_prefix, :form_suffix
       def initialize(hash)
         #			@hash = hash
@@ -621,17 +567,17 @@ module OpenTableExplorer
           def assert_pre_conditions(message = '')
             message += "In assert_pre_conditions, self=#{inspect}"
             refute_nil(ENV['USER'], "ENV['USER']\n" + "User nil\n" + message) # defined in Xfce & Gnome
-            # !            warn { refute_nil(ENV['USERNAME'], "ENV['USERNAME']\n" + message) } # not defined in Xfce.
-            # !            refute_nil(OpenTableExplorer::Finance::Constants::Downloaded_src_dir, OpenTableExplorer::Finance::Constants::Downloaded_src_dir + message)
-            # !            assert_pathname_exists(OpenTableExplorer::Finance::Constants::Downloaded_src_dir, message)
+            warn { refute_nil(ENV['USERNAME'], "ENV['USERNAME']\n" + message) } # not defined in Xfce.
+            refute_nil(OpenTableExplorer::Finance::Constants::Downloaded_src_dir, OpenTableExplorer::Finance::Constants::Downloaded_src_dir + message)
+            assert_pathname_exists(OpenTableExplorer::Finance::Constants::Downloaded_src_dir, message)
             #	assert_pathname_exists(OpenTableExplorer::Finance::Constants::Open_Tax_Filler_Directory)
             #	assert_directory_exists(OpenTableExplorer::Finance::Constants::Open_Tax_Filler_Directory)
-            # !            OpenTableExplorer::Finance::Constants::Possible_tax_years. each do |tax_year|
-            # !              default_open_tax_solver_glob = OpenTableExplorer::Finance::Constants::Downloaded_src_dir + "OpenTaxSolver#{tax_year}_*"
-            # !              default_open_tax_solver_directories = Dir[default_open_tax_solver_glob]
-            # !              refute_empty(default_open_tax_solver_directories.to_a, 'default_open_tax_solver_glob=' + default_open_tax_solver_glob)
-            # !              assert_pathname_exists(default_open_tax_solver_directories.sort[-1], default_open_tax_solver_directories.inspect)
-            # !            end # each
+            OpenTableExplorer::Finance::Constants::Possible_tax_years. each do |tax_year|
+              default_open_tax_solver_glob = OpenTableExplorer::Finance::Constants::Downloaded_src_dir + "OpenTaxSolver#{tax_year}_*"
+              default_open_tax_solver_directories = Dir[default_open_tax_solver_glob]
+              refute_empty(default_open_tax_solver_directories.to_a, 'default_open_tax_solver_glob=' + default_open_tax_solver_glob)
+              assert_pathname_exists(default_open_tax_solver_directories.sort[-1], default_open_tax_solver_directories.inspect)
+            end # each
           end # assert_pre_conditions
 
           def assert_post_conditions(message = '')
@@ -639,13 +585,10 @@ module OpenTableExplorer
         end # ClassMethods
 
         def assert_pre_conditions(message = '')
-          # !					@taxpayer.assert_pre_conditions
-          @filing.assert_pre_conditions
-          message += "\nIn assert_pre_conditions, self=#{inspect}"
+          message += "In assert_pre_conditions, self=#{inspect}"
           assert_directory_exists(@filing.open_tax_solver_distribution_directory, message)
           assert_directory_exists(open_tax_solver_form_directory, message)
           assert_pathname_exists(@filing.open_tax_solver_binary, message)
-          assert_pathname_exists(open_tax_solver_input)
         end # assert_pre_conditions
 
         def assert_post_conditions(message = '')
@@ -701,6 +644,8 @@ module OpenTableExplorer
         US1040_example = OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example, filing: US_current_year)
         # US1040_example1=OpenTableExplorer::Finance::OtsRun.new(taxpayer: :example1, filing: US_current_year)
         CA540_example = OpenTableExplorer::Finance::OtsRun.new(taxpayer: Example, filing: CA_current_year)
+        Simplified_example = OpenTableExplorer::Finance::OtsRun.new(cached_open_tax_solver_run: Pwd, cached_run_ots_to_fdf: Pwd,
+                                                                    taxpayer: Example, filing: US_current_year)
         Expect_to_pass = [US1040_user, CA540_user, US1040_example, CA540_example].freeze
         Expect_to_fail = [US1040_template, CA540_template].freeze
         # US1040_example.assert_pre_conditions

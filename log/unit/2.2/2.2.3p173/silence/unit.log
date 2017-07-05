@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 4, 1, 4, 21, Rational(15301731515, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 6, 18, 6, 42, Rational(40090266995, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -12,7 +9,7 @@ Run options: --seed 0
 
 ..E...........EEE....E..................F........E...
 
-Finished in 0.038811s, 1365.5959 runs/s, 6106.5325 assertions/s.
+Finished in 0.042610s, 1243.8348 runs/s, 5562.0537 assertions/s.
 
   1) Error:
 RailsUnitTest#test_RailsUnit_initialize:
@@ -20,9 +17,9 @@ NoMethodError: Expected "code_base" to respond to #to_hash
     /var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:196:in `coerce\'
     /var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:170:in `set\'
     /var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:17:in `initialize\'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb:326:in `new\'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb:326:in `unit?\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:385:in `test_RailsUnit_initialize\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb:333:in `new\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb:333:in `unit?\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:386:in `test_RailsUnit_initialize\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -48,13 +45,13 @@ NoMethodError: Expected "code_base" to respond to #to_hash
 
   2) Error:
 RailsishRubyUnitTest#test_Examples:
-NoMethodError: undefined method `assertions\' for #<RailsishRubyUnit:0x007fb74c73fb58>
+NoMethodError: undefined method `assertions\' for #<RailsishRubyUnit:0x007f76588f4730>
 Did you mean?  assert
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert\'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:340:in `assert_respond_to\'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:526:in `refute_empty\'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb:46:in `assert_pre_conditions\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:375:in `test_Examples\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:376:in `test_Examples\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -82,7 +79,7 @@ Did you mean?  assert
 RailsishRubyUnitTest#test_Unit_assert_post_conditions:
 NameError: uninitialized constant FilePattern::Examples::SELF
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb:34:in `assert_post_conditions\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:351:in `test_Unit_assert_post_conditions\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:352:in `test_Unit_assert_post_conditions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -112,8 +109,8 @@ NoMethodError: Expected :UnitWithAssertions to respond to #to_hash
     /var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:196:in `coerce\'
     /var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:170:in `set\'
     /var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:17:in `initialize\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:367:in `new\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:367:in `test_assert_default_test_class_id\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:368:in `new\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:368:in `test_assert_default_test_class_id\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -145,7 +142,7 @@ Did you mean?  assert
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:340:in `assert_respond_to\'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:206:in `assert_includes\'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb:27:in `assert_pre_conditions\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:347:in `test_Unit_assert_pre_conditions\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:348:in `test_Unit_assert_pre_conditions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -176,9 +173,9 @@ Expected nil (NilClass) to respond to #empty?.
 
   7) Error:
 ExampleTest#test_fully_qualified_name:
-NoMethodError: undefined method `fully_qualified_name\' for #<Example:0x007fb74c77ba68>
+NoMethodError: undefined method `fully_qualified_name\' for #<Example:0x007f76588b4900>
 Did you mean?  fully_qualified_name_string
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:424:in `test_fully_qualified_name\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:425:in `test_fully_qualified_name\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -205,20 +202,20 @@ Did you mean?  fully_qualified_name_string
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb"
-	User time (seconds): 0.92
-	System time (seconds): 0.06
+	User time (seconds): 1.20
+	System time (seconds): 0.09
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.99
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.31
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23816
+	Maximum resident set size (kbytes): 28816
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 6078
-	Voluntary context switches: 21
-	Involuntary context switches: 101
+	Minor (reclaiming a frame) page faults: 7326
+	Voluntary context switches: 22
+	Involuntary context switches: 150
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

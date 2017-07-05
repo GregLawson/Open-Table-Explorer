@@ -1,11 +1,12 @@
 ###########################################################################
-#    Copyright (C) 2012-2016 by Greg Lawson                                      
+#    Copyright (C) 2012-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 require_relative '../../app/models/file_pattern.rb'
+require_relative '../../app/models/cache.rb'
 require 'virtus'
 module FileUnit
   def edit_files
@@ -50,6 +51,9 @@ module FileUnit
     end # map
   end # missing_symbols
   module ClassMethods
+    # !		include Cache
+    extend Cache::ClassMethods
+    extend Cache::Assertions::ClassMethods
     def new_from_path(path)
       library_name = FilePattern.unit_base_name?(path)
       new(model_basename: library_name, project_root_dir: FilePattern.project_root_dir?(path))
@@ -62,9 +66,9 @@ module FileUnit
     end # unit_names?
 
     def patterned_files
-      FilePattern.pathnames?('*').map do |globs|
-        Dir[globs]
-      end.flatten # map
+        FilePattern.pathnames?('*').map do |globs|
+          Dir[globs]
+        end.flatten # map
     end # patterned_files
 
     def all
@@ -74,7 +78,9 @@ module FileUnit
     end # all
 
     def all_basenames
-      Unit.all.map(&:model_basename).uniq.sort
+      cache(:all_basenames) do
+				Unit.all.map(&:model_basename).uniq.sort
+      end # cache
     end # all_basenames
 
     def data_source_directories
@@ -152,12 +158,19 @@ module FileUnit
     end # if
   end # default_test_class_id
 
+	def test_types
+		test_directories = Dir['test/*']
+		test_types = test_directories.map {|directory_path| directory_path[5..-1].to_sym}
+		test_types -= [:assertions, :data_sources, :fixtures, :'assertions.rb'] # not tests
+		test_types += [:script] # opportunistic test type
+	end # test_types
+	
   def parallel_display
-    {unit: :model,
-		script: :model,
-    assertions: :unit,
-		integration_test: :unit,
-		assertions_test: :assertions
+    { unit: :model,
+      script: :model,
+      assertions: :unit,
+      integration_test: :model,
+      assertions_test: :assertions
     }
   end # parallel_display
 
@@ -174,6 +187,10 @@ module FileUnit
     end - missing_files # if
   end # tested_files
 
+	def tested_symbols(test_type)
+		[parallel_display[test_type],  test_type, :model].uniq
+	end # tested_symbols
+	
   def <=>(other)
     if model_basename.nil?
       if other.model_basename.nil?
@@ -223,6 +240,8 @@ class Unit # base class
   end # values
   include FileUnit
   extend FileUnit::ClassMethods
+    extend Cache::ClassMethods
+    extend Cache::Assertions::ClassMethods
   # Equality of defining content
   # def ==(other)
   #	if model_class_name==other.model_class_name && project_root_dir==other.project_root_dir then
@@ -248,7 +267,7 @@ class RubyUnit < Unit
     attribute :model_class_name, Symbol, default: ->(unit, _attribute) { unit.model_basename.to_s.classify }
   end # values
   extend FileUnit::ClassMethods
-	
+
   def default_tests_module_name?
     ('DefaultTests' + default_test_class_id?.to_s).to_sym
   end # default_tests_module?
@@ -274,9 +293,8 @@ class RubyUnit < Unit
   end # create_test_class
   module Constants
     Executable = RubyUnit.new_from_path($PROGRAM_NAME)
-		Self = RubyUnit.new(model_basename: :ruby_unit)
-		TestMinimal = RubyUnit.new(model_basename: :minimal)
-
+    Self = RubyUnit.new(model_basename: :ruby_unit)
+    TestMinimal = RubyUnit.new(model_basename: :minimal)
   end # Constants
   include Constants
 end # RubyUnit
@@ -286,8 +304,8 @@ class RailsishRubyUnit < RubyUnit
   extend FileUnit::ClassMethods
   module Constants
     Executable = RailsishRubyUnit.new_from_path($PROGRAM_NAME)
-		Self = RailsishRubyUnit.new(model_basename: :ruby_unit)
-		TestMinimal = RailsishRubyUnit.new(model_basename: :minimal)
+    Self = RailsishRubyUnit.new(model_basename: :ruby_unit)
+    TestMinimal = RailsishRubyUnit.new(model_basename: :minimal)
   end # Constants
   include Constants
   def model_class?
@@ -353,7 +371,7 @@ class Example
   extend ClassMethods
   include Virtus.model
   attribute :containing_class, Class
-	attribute :example_constant_name, Symbol
+  attribute :example_constant_name, Symbol
   def containing_class_name_string
     if @containing_class.respond_to?(:name) && !@containing_class.name.nil?
       @containing_class.name.to_s

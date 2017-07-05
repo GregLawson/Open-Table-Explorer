@@ -8,6 +8,7 @@
 #require_relative 'test_environment'
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/backup.rb'
+require_relative '../../config/initializers/backup.rb'
 class BackupTest < TestCase
 #include DefaultTests
 #include RailsishRubyUnit::Executable.model_class?::Examples

@@ -49,6 +49,7 @@ class GitReferenceTest < TestCase
 	end # to_s
 
 	def test_show_run
+		assert(Head_at_start.show_run.success?, Head_at_start.show_run.inspect)
 	end # show_run
 end # GitReference
 
@@ -104,30 +105,95 @@ class CommitTest < TestCase
 	
 	def test_show_commit
 		initialization_string = :HEAD
-		repository = Repository::This_code_repository
+		repository = Repository::Repository::This_code_repository
 		run = repository.git_command('show ' + initialization_string.to_s + ' --pretty=medium  --no-abbrev-commit --no-patch')
 		run.assert_post_conditions
 		capture = run.output.capture?(Show_commit_regexp)
 		assert(capture.success?, capture.inspect)
 		sha1_hex_40 = capture.output[:sha1_hex_40]
 		assert_equal(40, sha1_hex_40.size, capture.inspect)
+		assert_instance_of(Hash, Head_at_start.show_commit, Head_at_start.show_commit.inspect)
+		assert_include(Head_at_start.show_commit.keys, :sha1_hex_40, Head_at_start.show_commit.inspect)
+		assert_include(Head_at_start.show_commit.keys, :commit_title, Head_at_start.show_commit.inspect)
+		assert_include(Head_at_start.show_commit.keys, :commit_explanation, Head_at_start.show_commit.inspect)
 	end # show_commit
 	
 	def test_sha1_hex_40
+		assert_instance_of(String, Head_at_start.show_commit[:sha1_hex_40], Head_at_start.show_commit.inspect)
+		assert_equal(40, Head_at_start.show_commit[:sha1_hex_40].size, Head_at_start.show_commit.inspect)
+		assert_equal(40, Head_at_start.sha1_hex_40.size, Head_at_start.inspect)
 	end # sha1_hex_40
 	
 	def test_commit_title
+		assert_instance_of(String, Head_at_start.commit_title, Head_at_start.inspect)
 	end # commit_title
 
+	def test_commit_explanation
+		assert_instance_of(String, Head_at_start.commit_explanation, Head_at_start.inspect)
+	end # commit_explanation
+
+	def test_committer
+		assert_instance_of(String, Head_at_start.committer, Head_at_start.inspect)
+	end # committer
+
+	def test_committer_email
+		assert_instance_of(String, Head_at_start.committer_email, Head_at_start.inspect)
+	end # committer_email
+
+	def test_timestamp
+		assert_instance_of(String, Head_at_start.show_commit[:weekday], Head_at_start.inspect)
+		assert_instance_of(String, Head_at_start.show_commit[:month], Head_at_start.inspect)
+		assert_instance_of(String, Head_at_start.show_commit[:day_of_month], Head_at_start.inspect)
+		assert_instance_of(String, Head_at_start.show_commit[:hour], Head_at_start.inspect)
+		assert_instance_of(String, Head_at_start.show_commit[:minute], Head_at_start.inspect)
+		assert_instance_of(String, Head_at_start.show_commit[:second], Head_at_start.inspect)
+		assert_instance_of(String, Head_at_start.show_commit[:year], Head_at_start.inspect)
+		assert_instance_of(String, Head_at_start.show_commit[:timezone], Head_at_start.inspect)
+#		assert_instance_of(Fixnum, Head_at_start.show_commit[:weekday].to_i, Head_at_start.inspect)
+		assert_instance_of(Fixnum, Head_at_start.show_commit[:month].to_i, Head_at_start.inspect)
+		assert_instance_of(Fixnum, Head_at_start.show_commit[:day_of_month].to_i, Head_at_start.inspect)
+		assert_instance_of(Fixnum, Head_at_start.show_commit[:hour].to_i, Head_at_start.inspect)
+		assert_instance_of(Fixnum, Head_at_start.show_commit[:minute].to_i, Head_at_start.inspect)
+		assert_instance_of(Fixnum, Head_at_start.show_commit[:second].to_i, Head_at_start.inspect)
+		assert_instance_of(Fixnum, Head_at_start.show_commit[:year].to_i, Head_at_start.inspect)
+		assert_instance_of(Fixnum, Head_at_start.show_commit[:timezone].to_i, Head_at_start.inspect)
+		assert_operator(12, :>=, Head_at_start.show_commit[:month].to_i, Head_at_start.inspect)
+		assert_operator(31, :>=, Head_at_start.show_commit[:day_of_month].to_i, Head_at_start.inspect)
+		assert_operator(23, :>=, Head_at_start.show_commit[:hour].to_i, Head_at_start.inspect)
+		assert_operator(59, :>=, Head_at_start.show_commit[:minute].to_i, Head_at_start.inspect)
+		assert_operator(59, :>=, Head_at_start.show_commit[:second].to_i, Head_at_start.inspect)
+		assert_operator(2100, :>=, Head_at_start.show_commit[:year].to_i, Head_at_start.inspect)
+		assert_operator(1100, :>=, Head_at_start.show_commit[:timezone].to_i, Head_at_start.inspect)
+		assert_operator(1, :<=, Head_at_start.show_commit[:day_of_month].to_i, Head_at_start.show_commit.inspect)
+		assert_operator(0, :<=, Head_at_start.show_commit[:hour].to_i, Head_at_start.show_commit.inspect)
+		assert_operator(0, :<=, Head_at_start.show_commit[:minute].to_i, Head_at_start.show_commit.inspect)
+		assert_operator(0, :<=, Head_at_start.show_commit[:second].to_i, Head_at_start.show_commit.inspect)
+		assert_operator(2000, :<=, Head_at_start.show_commit[:year].to_i, Head_at_start.show_commit.inspect)
+		assert_operator(-1100, :<=, Head_at_start.show_commit[:timezone].to_i, Head_at_start.show_commit.inspect)
+		assert_include(Month_names, (Head_at_start.show_commit[:month]), Head_at_start.show_commit.inspect)
+		assert_operator(1, :<=, Month_names.index(Head_at_start.show_commit[:month]) + 1, Head_at_start.show_commit.inspect)
+		assert_instance_of(Time, Head_at_start.timestamp, Head_at_start.show_commit.inspect)
+	end # timestamp
+	
 	def test_tree
 		initialization_string = Head_at_start
-		tree_ref = GitReference.new(initialization_string: initialization_string.to_s + '^{tree}')
+		tree_ref = GitReference.new(initialization_string: initialization_string.to_s + '^{tree}', repository: Repository::This_code_repository)
 		tree_run = tree_ref.show_run
 		tree_run.assert_post_conditions
 		output = tree_run.output
 		array = output.split("\n")[1..-1] # discard echo of tree
 #		assert_equal(Dir['*'].sort, array.sort, Head_at_start.inspect)
 	end # tree
+
+	def test_file_contents
+		refute_equal(WorkingTree::Working_tree, Head_at_start)
+		path = $PROGRAM_NAME
+			git_command = 'git cat-file blob ' + Head_at_start.initialization_string.to_s + ':' + path
+			git_run = Repository::This_code_repository.git_command(git_command)
+			git_run.assert_pre_conditions
+			head_file_contents = git_run.output
+		assert_equal(head_file_contents, Head_at_start.file_contents(path))
+	end # file_contents
 
   def test_diff_branch_files
     diff = WorkingTree::Working_tree.diff_branch_files(Head_at_start, '--numstat').output
@@ -189,6 +255,9 @@ class WorkingTreeTest < TestCase
 		assert_equal(:Working_tree, Working_tree.initialization_string, Working_tree.inspect)
 		assert_equal(nil, Working_tree.sha1_hex_40, Working_tree.inspect)
 		assert_equal('not yet committed', Working_tree.commit_title, Working_tree.inspect)
+		path = $PROGRAM_NAME
+		this_file_contents = IO.read(path)
+		assert_equal(this_file_contents, Working_tree.file_contents(path))
   end # ReferenceObjects
 	
 end # WorkingTree

@@ -31,5 +31,5 @@ class GrubTest < TestCase
     assert_equal(36, linux[0][:uuid].size)
 
     assert_instance_of(Array, search, search.inspect)
-    end # Constants
+  end # Constants
 end # Grub

@@ -1,63 +1,41 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
-,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 2, 20, 9, 37, Rational(42126114152, 1000000000), "-08:00"),
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 12, 8, 3, 5, Rational(14950462589, 1000000000), "-08:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_pathname_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_pathname_test
 Started
-.....F
-===============================================================================
-Failure:
-  {"metadata"=>{"rubocop_version"=>"0.39.0", "ruby_engine"=>"ruby", "ruby_version"=>"2.2.4", "ruby_patchlevel"=>"230", "ruby_platform"=>"x86_64-linux-gnu"}, "files"=>[{"path"=>"log/unit/2.2/2.2.3p173/silence/minimal2.log", "offenses"=>[{"severity"=>"error", "message"=>"unexpected token tCOMMA\n(Using Ruby 2.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)", "cop_name"=>"Syntax", "corrected"=>false, "location"=>{"line"=>2, "column"=>1, "length"=>1}}, {"severity"=>"error", "message"=>"unexpected token tCOMMA\n(Using Ruby 2.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)", "cop_name"=>"Syntax", "corrected"=>false, "location"=>{"line"=>6, "column"=>89, "length"=>1}}, {"severity"=>"error", "message"=>"unexpected token tCOMMA\n(Using Ruby 2.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)", "cop_name"=>"Syntax", "corrected"=>false, "location"=>{"line"=>19, "column"=>2, "length"=>1}}, {"severity"=>"error", "message"=>"unexpected token tRCURLY\n(Using Ruby 2.0 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)", "cop_name"=>"Syntax", "corrected"=>false, "location"=>{"line"=>46, "column"=>1, "length"=>1}}]}], "summary"=>{"offense_count"=>4, "target_file_count"=>1, "inspected_file_count"=>1}}.
-  <10> expected to be
-  <
-  <4>.
-test_lint_json(RepositoryPathnameTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_pathname_test.rb:144:in `test_lint_json\'
-     141:     assert_equal(0, Not_unit_executable.lint_json[\'summary\'][\'offense_count\'], Not_unit_executable.lint_command_string)
-     142:     assert_equal(0, Not_unit_executable.lint_json[\'summary\'][\'offense_count\'], Not_unit_executable.lint_json)
-     143:     assert_equal(0, TestMinimal.lint_json[\'summary\'][\'offense_count\'], TestMinimal.lint_json.ruby_lines_storage)
-  => 144:     assert_operator(10, :<, Unit_non_executable.lint_json[\'summary\'][\'offense_count\'], Unit_non_executable.lint_json)
-     145:     assert_equal(1, TestSelf.lint_json[\'files\'].size, TestSelf.lint_json[\'files\'])
-     146:     assert_include(TestSelf.lint_json[\'files\'][0].keys, \'offenses\', TestSelf.lint_json[\'files\'])
-     147:     assert_equal(%w(convention warning), TestSelf.lint_json[\'files\'][0][\'offenses\'].map { |o| o[\'severity\'] }.uniq, TestSelf.lint_json[\'files\'])
-===============================================================================
-.......
+.............
 
-Finished in 4.986845652 seconds.
+Finished in 1.65789881 seconds.
 ------
-13 tests, 292 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-92.3077% passed
+13 tests, 296 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
 ------
-2.61 tests/s, 58.55 assertions/s
+7.84 tests/s, 178.54 assertions/s
 ',
-:errors => {:syserr => 'Command exited with non-zero status 1
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_pathname_test.rb"
-	User time (seconds): 5.54
-	System time (seconds): 0.48
-	Percent of CPU this job got: 72%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:08.33
+:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_pathname_test.rb"
+	User time (seconds): 3.35
+	System time (seconds): 0.26
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.65
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 51888
+	Maximum resident set size (kbytes): 52332
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 73
-	Minor (reclaiming a frame) page faults: 38832
-	Voluntary context switches: 1130
-	Involuntary context switches: 823
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 23016
+	Voluntary context switches: 116
+	Involuntary context switches: 119
 	Swaps: 0
-	File system inputs: 26848
-	File system outputs: 40
+	File system inputs: 0
+	File system outputs: 32
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 1
+	Exit status: 0
 '
 }
 

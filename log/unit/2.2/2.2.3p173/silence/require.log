@@ -1,11 +1,8 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 2, 20, 9, 37, Rational(51769777127, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 6, 9, 9, 41, Rational(22561473569, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test
 Started
 ....F
@@ -14,83 +11,79 @@ Failure:
   <[0, 1]> expected to include
   <"active_support/all">.
 test_Require_attributes(RequireTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:132:in `test_Require_attributes\'
-     129:   def test_Require_attributes
-     130:     executing_requires = Require.new(path: $0)
-     131:     assert_instance_of(Hash, executing_requires.cached_require_captures)
-  => 132:     assert_includes(executing_requires.cached_require_captures.keys, \'active_support/all\')
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:134:in `test_Require_attributes\'
+     131:   def test_Require_attributes
+     132:     executing_requires = Require.new(path: $PROGRAM_NAME)
      133:     assert_instance_of(Hash, executing_requires.cached_require_captures)
-     134:   end # values
-     135: 	
+  => 134:     assert_includes(executing_requires.cached_require_captures.keys, \'active_support/all\')
+     135:     assert_instance_of(Hash, executing_requires.cached_require_captures)
+     136:   end # values
+     137: 
 ===============================================================================
 .E
 ===============================================================================
 Error: test_assert_path_requires(RequireTest):
-  NoMethodError: undefined method `repetitions?\' for #<SplitCapture:0x00000002478950>
+  NoMethodError: undefined method `repetitions?\' for #<SplitCapture:0x007f567c9047f8>
   Did you mean?  repetitions
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:116:in `assert_requires\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:133:in `assert_path_requires\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:163:in `test_assert_path_requires\'
-     160: 		
-     161: 	def test_assert_path_requires
-     162: #		Require.assert_path_requires(File_with_no_requires)
-  => 163: 		Require.assert_path_requires(File_with_minimum_requires)
-     164: 	end # assert_path_requires
-     165: 		
-     166:     def test_assert_pre_conditions(message = \'\')
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:165:in `test_assert_path_requires\'
+     162: 
+     163:   def test_assert_path_requires
+     164:     #		Require.assert_path_requires(File_with_no_requires)
+  => 165:     Require.assert_path_requires(File_with_minimum_requires)
+     166:   end # assert_path_requires
+     167: 
+     168:   def test_assert_pre_conditions(message = \'\')
 ===============================================================================
 ..E
 ===============================================================================
 Error: test_assert_requires(RequireTest):
-  NoMethodError: undefined method `repetitions?\' for #<SplitCapture:0x000000024bf6c0>
+  NoMethodError: undefined method `repetitions?\' for #<SplitCapture:0x007f567c8ac530>
   Did you mean?  repetitions
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:116:in `assert_requires\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:158:in `test_assert_requires\'
-     155:       end # assert_post_conditions
-     156: 
-     157:     def test_assert_requires
-  => 158: 			Require.assert_requires(Require_line, Require_regexp)
-     159:     end # assert_requires
-     160: 		
-     161: 	def test_assert_path_requires
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:160:in `test_assert_requires\'
+     157:   end # assert_post_conditions
+     158: 
+     159:   def test_assert_requires
+  => 160:     Require.assert_requires(Require_line, Require_regexp)
+     161:   end # assert_requires
+     162: 
+     163:   def test_assert_path_requires
 ===============================================================================
 ...F
 ===============================================================================
 Failure: test_scan_path(RequireTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:105:in `test_scan_path\'
-     102: #		File_with_no_requires = \'app/models/minimal2.rb\'
-     103: #		File_with_one_require = \'test/unit/minimal2_test.rb\'
-     104: 		assert_equal([], Require.scan_path(File_with_no_requires))
-  => 105: 		assert_equal(["rom", "rom-sql", "rom-repository", "dry-types"], Require.scan_path(File_with_minimum_requires))
-     106: 	end # scan_path
-     107: 
-     108:   def test_scan_unit
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:106:in `test_scan_path\'
+     103:     #		File_with_no_requires = \'app/models/minimal2.rb\'
+     104:     #		File_with_one_require = \'test/unit/minimal2_test.rb\'
+     105:     assert_equal([], Require.scan_path(File_with_no_requires))
+  => 106:     assert_equal([\'rom\', \'rom-sql\', \'rom-repository\', \'dry-types\'], Require.scan_path(File_with_minimum_requires))
+     107:   end # scan_path
+     108: 
+     109:   def test_scan_unit
 <["rom", "rom-sql", "rom-repository", "dry-types"]> expected but was
 <[[["active_support/all", "active_model/naming", "active_model/errors"],
   ["regexp_parser", [[nil], ["virtus"], "virtus"], nil, nil],
-  ["virtus"],
-  [["pathname", [], "set"]],
-  nil]]>
+  ["virtus"]]]>
 
 diff:
-+ [[["active_support/all", "active_model/naming", "active_model/errors"],
+?   ["            rom", "rom-sql", "                                      rom-repository", "dry-types"] 
+? [[  active_suppo t/al             active_model/naming", "active_model/er                             ,
 +   ["regexp_parser", [[nil], ["virtus"], "virtus"], nil, nil],
-+   ["virtus"],
-?    ["ro    m ",     "rom-sql", "rom-repository", "dry-types"]  
-?   [  pathna e   [],                                          ],
-+   nil]]
++   ["virtus"]]]
 ===============================================================================
 F
 ===============================================================================
 Failure: test_scan_unit(RequireTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:125:in `test_scan_unit\'
-     122: 		assert_equal([:model, :unit, :slower_test], ret.keys, ret[0].inspect)
-     123: 		assert_equal([:require_command, :required_path], ret[:unit][0].keys, ret.inspect)
-     124:     assert_equal(ret, Require.scan_unit(Unit::Executable))
-  => 125:     assert_equal({ model: { require_command: \'require_relative\', required_path: \'../../app/models/no_db.rb\' },
-     126:                    unit: { require_command: \'require_relative\', required_path: \'test_environment\' } },
-     127:                  ret)
-     128:   end # scan_unit
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:126:in `test_scan_unit\'
+     123:     assert_equal([:model, :unit, :slower_test], ret.keys, ret[0].inspect)
+     124:     assert_equal([:require_command, :required_path], ret[:unit][0].keys, ret.inspect)
+     125:     assert_equal(ret, Require.scan_unit(Unit::Executable))
+  => 126:     assert_equal({ model: { require_command: \'require_relative\', required_path: \'../../app/models/no_db.rb\' },
+     127:                    unit: { require_command: \'require_relative\', required_path: \'test_environment\' } },
+     128:                  ret)
+     129:   end # scan_unit
 <{:model=>
   {:require_command=>"require_relative",
    :required_path=>"../../app/models/no_db.rb"},
@@ -124,31 +117,31 @@ Failure: test_scan_unit(RequireTest)
 ===============================================================================
 
 
-Finished in 1.282661258 seconds.
+Finished in 0.579666196 seconds.
 ------
 15 tests, 86 assertions, 3 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
 66.6667% passed
 ------
-11.69 tests/s, 67.05 assertions/s
+25.88 tests/s, 148.36 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb"
-	User time (seconds): 2.46
-	System time (seconds): 0.20
-	Percent of CPU this job got: 72%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.70
+	User time (seconds): 2.60
+	System time (seconds): 0.28
+	Percent of CPU this job got: 91%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.14
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 52456
+	Maximum resident set size (kbytes): 53912
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 88
-	Minor (reclaiming a frame) page faults: 17785
-	Voluntary context switches: 221
-	Involuntary context switches: 293
+	Major (requiring I/O) page faults: 20
+	Minor (reclaiming a frame) page faults: 18299
+	Voluntary context switches: 67
+	Involuntary context switches: 307
 	Swaps: 0
-	File system inputs: 16040
+	File system inputs: 3928
 	File system outputs: 104
 	Socket messages sent: 0
 	Socket messages received: 0

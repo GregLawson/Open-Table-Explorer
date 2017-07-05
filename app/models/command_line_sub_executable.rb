@@ -22,7 +22,7 @@ class CommandLineSubExecutable < CommandLineExecutable
     end # Executable_default
     end # DefinitionalConstants
   include DefinitionalConstants
-
+	
   module Constants # constant objects of the type
     include DefinitionalConstants
     # Command = RailsishRubyUnit::Executable.model_basename
@@ -103,8 +103,8 @@ class CommandLineSubExecutable < CommandLineExecutable
   end # find_example?
 
   def sub_command_instance_methods
-    command_class = @test_executable.unit.model_class?
-    MethodModel.instance_method_models(command_class)
+		command_class = @test_executable.unit.model_class?	
+		MethodModel.instance_method_models(command_class)	
   end # sub_command_instance_methods
 
   def executable_method?(method_name, argument = nil)

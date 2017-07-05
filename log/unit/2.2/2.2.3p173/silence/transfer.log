@@ -1,9 +1,5 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
-,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 2, 20, 9, 40, Rational(4704137373, 1000000000), "-08:00"),
+{:current_branch_name => :passed,
+:start_time => Time.new(2016, 9, 25, 5, 2, Rational(8378013133, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/transfer_test.rb',
 :output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
 ',
@@ -24,20 +20,20 @@ G=G.group(T[:account_id])
   ^
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/transfer_test.rb"
-	User time (seconds): 0.08
-	System time (seconds): 0.01
-	Percent of CPU this job got: 96%
+	User time (seconds): 0.09
+	System time (seconds): 0.00
+	Percent of CPU this job got: 97%
 	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.09
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 6768
+	Maximum resident set size (kbytes): 8496
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 1780
+	Minor (reclaiming a frame) page faults: 1179
 	Voluntary context switches: 3
-	Involuntary context switches: 9
+	Involuntary context switches: 1
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

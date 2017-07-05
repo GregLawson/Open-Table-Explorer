@@ -87,7 +87,7 @@ CommandLine::Script_command_line.run do
       end # if
     puts 'sub_command = ' + sub_command.inspect + sub_command_unit.inspect if $VERBOSE
     sub_command_test_executable = TestExecutable.new_from_path(required_library_file)
-    sub_command_commandline = CommandLine.new(test_executable: sub_command_test_executable, argv: ARGV[1..-1])
+		sub_command_commandline = CommandLine.new(test_executable: sub_command_test_executable, argv: ARGV[1..-1])
     sub_command_commandline.run do
       puts 'run in command_line script.' + CommandLine::Script_command_line.command_line_parser.inspect if $VERBOSE
       false # not done

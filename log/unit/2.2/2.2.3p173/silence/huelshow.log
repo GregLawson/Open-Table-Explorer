@@ -3,42 +3,42 @@
    name: :passed,
    initialization_string: nil)
 ,
-:start_time => Time.new(2017, 2, 20, 9, 12, Rational(5392892345, 1000000000), "-08:00"),
+:start_time => Time.new(2017, 5, 8, 7, 27, Rational(39802359343, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelshow_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelshow_test
 Started
 E
 ===============================================================================
 Error: test_aaa_test_new_assertions_(HuelshowTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<HuelshowTest:0x00000003035450>
+  NameError: undefined local variable or method `define_model_of_test\' for #<HuelshowTest:0x007fee57469b08>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelshow_test.rb:8:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_general_associations(HuelshowTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<HuelshowTest:0x00000003035388>
+  NameError: undefined local variable or method `define_model_of_test\' for #<HuelshowTest:0x007fee57469a40>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelshow_test.rb:8:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_id_equal(HuelshowTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<HuelshowTest:0x00000003035298>
+  NameError: undefined local variable or method `define_model_of_test\' for #<HuelshowTest:0x007fee57469978>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelshow_test.rb:8:in `setup\'
 ===============================================================================
 E
 ===============================================================================
 Error: test_specific__stable_and_working(HuelshowTest):
-  NameError: undefined local variable or method `define_model_of_test\' for #<HuelshowTest:0x000000030351d0>
+  NameError: undefined local variable or method `define_model_of_test\' for #<HuelshowTest:0x007fee574698b0>
   Did you mean?  define_singleton_method
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelshow_test.rb:8:in `setup\'
 ===============================================================================
 
 
-Finished in 0.143888673 seconds.
+Finished in 0.143859243 seconds.
 ------
 4 tests, 0 assertions, 0 failures, 4 errors, 0 pendings, 0 omissions, 0 notifications
 0% passed
@@ -47,20 +47,20 @@ Finished in 0.143888673 seconds.
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/huelshow_test.rb"
-	User time (seconds): 0.70
-	System time (seconds): 0.04
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.75
+	User time (seconds): 0.79
+	System time (seconds): 0.07
+	Percent of CPU this job got: 97%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.88
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 20980
+	Maximum resident set size (kbytes): 20828
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5372
-	Voluntary context switches: 3
-	Involuntary context switches: 77
+	Minor (reclaiming a frame) page faults: 5334
+	Voluntary context switches: 2
+	Involuntary context switches: 119
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

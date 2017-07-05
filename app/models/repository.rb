@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2013-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -14,17 +14,7 @@ class FileStatus < Dry::Types::Value
   module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
     # The following decoding is from man git status
     def file_change(status_char)
-      case status_char
-      when ' ' then :unmodified
-      when 'M' then :modified
-      when 'A' then :added
-      when 'D' then :deleted
-      when 'R' then :renamed
-      when 'C' then :copied
-      when 'U' then :updated_but_unmerged
-      when '?' then :untracked
-      when '!' then :ignored
-         end # case
+      FileStatus::File_change[status_char]
     end # file_change
 
     def match_possibilities?(one_letter_code, possibilities)
@@ -86,6 +76,17 @@ class FileStatus < Dry::Types::Value
 
   module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     Commitable = [:modified, :added, :deleted, :renamed, :copied].freeze
+    File_change = {
+      ' ' => :unmodified,
+      'M' => :modified,
+      'A' => :added,
+      'D' => :deleted,
+      'R' => :renamed,
+      'C' => :copied,
+      'U' => :updated_but_unmerged,
+      '?' => :untracked,
+      '!' => :ignored
+    }.freeze
   end # DefinitionalConstants
   include DefinitionalConstants
 
@@ -107,24 +108,92 @@ class FileStatus < Dry::Types::Value
   end # ReferenceObjects
   include ReferenceObjects
 
+  def description
+    two_letter_code = FileStatus::File_change.invert[@index] + FileStatus::File_change.invert[@work_tree]
+    FileStatus.normal_status_descriptions(two_letter_code)
+  end # description
+
   def log_file?
     @file[-4..-1] == '.log'
   end # log_file?
 
-  def description
-    FileStatus.normal_status_descriptions(@index.to_s + @work_tree.to_s)
-  end # description
+  def rubocop_file?
+    @file[-5..-1] == '.json'
+  end # rubocop_file?
+
+  def branch_specific?
+    log_file? || rubocop_file?
+  end # branch_specific?
+
+  def addable? # stagable
+    (FileStatus::Commitable.include?(@work_tree) ||
+      FileStatus::Commitable.include?(@index) ||
+      merge_conflict?)
+  end # addable?
+
+  def needs_test?
+    if !addable?
+      false
+    elsif branch_specific?
+      false
+    else
+      true
+    end # if
+  end # needs_test?
 
   def needs_commit?
-    Commitable.include?(@work_tree) ||
-      Commitable.include?(@index) ||
-      merge_conflict?
+    (FileStatus::Commitable.include?(@work_tree) ||
+      FileStatus::Commitable.include?(@index) ||
+      merge_conflict?)
   end # needs_commit?
 
   def merge_conflict?
     @work_tree == :updated_but_unmerged ||
       @index == :updated_but_unmerged
   end # merge_conflict?
+
+  def untracked?
+    @work_tree == :untracked ||
+      @index == :untracked
+  end # untracked?
+
+  def ignored?
+    @work_tree == :ignored ||
+      @index == :ignored
+  end # ignored?
+
+  def group
+    { work_tree: work_tree, index: index, description: description, needs_test: needs_test?, rubocop_file: rubocop_file?, log_file: log_file?, untracked: untracked?, ignored: ignored? }
+  end # group
+
+  def explain
+    inspect + "\n" + group.inspect
+  end # explain
+
+  require_relative '../../app/models/assertions.rb'
+
+  module Assertions
+    module ClassMethods
+      def assert_pre_conditions(message = '')
+        message += "In assert_pre_conditions, self=#{inspect}"
+        #	assert_nested_and_included(:ClassMethods, self)
+        #	assert_nested_and_included(:Constants, self)
+        #	assert_nested_and_included(:Assertions, self)
+        self
+      end # assert_pre_conditions
+
+      def assert_status_character(character)
+        assert_include(FileStatus::File_change.keys, character)
+      end # assert_status_character
+     end # ClassMethods
+
+    def assert_preconditions
+      assert(File.exist?(@file) == (@work_tree != :deleted), explain)
+    end # assert_preconditions
+  end # Assertions
+  include Assertions
+  extend Assertions::ClassMethods
+  # self.assert_pre_conditions
 end # FileStatus
 
 # assert_includes(Module.constants, :ShellCommands)
@@ -155,7 +224,16 @@ require_relative 'parse.rb'
 # require_relative 'branch.rb'
 # assert_includes(Module.constants, :Branch)
 # refute_includes(Module.constants, :Repository)
-class Repository
+
+class Repository < Dry::Types::Value
+  module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
+    #    include DefinitionalConstants
+    def git_command(git_command, repository_dir)
+      ShellCommands.new('git ' + ShellCommands.assemble_command_string(git_command), chdir: repository_dir)
+    end # git_command
+  end # DefinitionalClassMethods
+  extend DefinitionalClassMethods
+
   module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     Repository_Unit = Unit.new_from_path(__FILE__)
     Root_directory = FilePattern.project_root_dir?(__FILE__)
@@ -164,28 +242,11 @@ class Repository
   end # DefinitionalConstants
   include DefinitionalConstants
 
-  module DefinitionalClassMethods # if reference by DefinitionalConstants or not referenced
-    include DefinitionalConstants
-    def git_command(git_command, repository_dir)
-      ShellCommands.new('git ' + ShellCommands.assemble_command_string(git_command), chdir: repository_dir)
-    end # git_command
+  attribute :path, Types::Strict::String
 
-  end # DefinitionalClassMethods
-  extend DefinitionalClassMethods
-
-  attr_reader :path
-  def initialize(path)
-    if path.to_s[-1, 1] != '/'
-      path = path.to_s + '/'
-    end # if
-    #    @url = path
-    @path = path.to_s
-    #    puts '@path=' + @path if $VERBOSE
-  end # initialize
-
-  def ==(rhs)
-    @path == rhs.path
-  end # equal
+  def path_with_trailing_slash
+    @path + (@path[-1, 1] == '/' ? '' : '/')
+  end # path_with_trailing_slash
 
   def <=>(rhs) # allow sort
     repository_compare = @path <=> rhs.path
@@ -208,14 +269,10 @@ class Repository
     end # if
   end # compare
 
-	def git_pathname(git_relative_path)
-		@path + '.git/' + git_relative_path
-	end # git_pathname
-	
-	def stash!
-		git_command('stash save --include-untracked')
-	end # stash!
-	
+  def git_pathname(git_relative_path)
+    path_with_trailing_slash + '.git/' + git_relative_path
+  end # git_pathname
+
   def state?
     state = []
     state << :rebase if File.exist?(git_pathname('rebase-merge/git-rebase-todo'))
@@ -288,6 +345,10 @@ class Repository
     ret
   end # status
 
+  def file_status_groups
+    status.group_by(&:group)
+  end # file_status_groups
+
   def something_to_commit?
     status.select(&:needs_commit?) != []
   end # something_to_commit
@@ -323,7 +384,7 @@ class Repository
       Dir.mkdir(path)
       if File.exist?(path)
         ShellCommands.new([['cd', path], '&&', %w(git init)])
-        new_repository = Repository.new(path)
+        new_repository = Repository.new(path: path)
       else
         raise "Repository.create_empty failed: File.exists?(#{path})=#{File.exist?(path)}"
       end # if
@@ -361,7 +422,7 @@ class Repository
 
     def create_if_missing(path)
       if File.exist?(path)
-        Repository.new(path)
+        Repository.new(path: path)
       else
         create_empty(path)
       end # if
@@ -374,7 +435,7 @@ class Repository
     def create_test_repository(path = timestamped_repository_name?)
       replace_or_create(path)
       if File.exist?(path)
-        new_repository = Repository.new(path)
+        new_repository = Repository.new(path: path)
         IO.write(path + '/README', README_start_text + "\n") # two consecutive slashes = one slash
         new_repository.git_command('add README')
         new_repository.git_command('commit -m "create_empty initial commit of README"')
@@ -389,7 +450,7 @@ class Repository
 
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
-    This_code_repository = Repository.new(Root_directory)
+    This_code_repository = Repository.new(path: Root_directory)
   end # ReferenceObjects
   include ReferenceObjects
 end # Repository

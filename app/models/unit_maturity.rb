@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2013-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -12,8 +12,9 @@ require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/test_run.rb'
 require_relative '../../app/models/ruby_lines_storage.rb'
 # abstracts TestRun and git commits for comparison
+
 class TestMaturity
-  module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
+  module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     # Error score is a SWAG at order of magnitude of errors
     Error_classification = { 0 => :success,
                              1 => :single_test_fail,
@@ -31,13 +32,15 @@ class TestMaturity
                     initialization_fail: :tested,
                     syntax_error:        :edited
         }.freeze
-		Error_classification_keys = Push_branch.keys
+    Error_classification_keys = Push_branch.keys
+
     Error_score_directory = Unit.data_source_directories + 'test_maturity/'
-#		raise RubyLinesStorage.instance_methods(false).inspect unless RubyLinesStorage.instance_methods.include?(:read) 
-		Fixed_regexp = /[0-9]+\.[0-9]+/
-		Finished_regexp = /Finished in / * Fixed_regexp.capture(:test_finished)
+
+    #		raise RubyLinesStorage.instance_methods(false).inspect unless RubyLinesStorage.instance_methods.include?(:read)
+    Fixed_regexp = /[0-9]+\.[0-9]+/
+    Finished_regexp = /Finished in / * Fixed_regexp.capture(:test_finished)
     User_time_regexp = /User time \(seconds\): / * Fixed_regexp.capture(:user_time)
-		Tests_pattern = /[0-9]+/.capture(:tests) * / / * (/tests/ | /runs/) * /, /
+    Tests_pattern = /[0-9]+/.capture(:tests) * / / * (/tests/ | /runs/) * /, /
     Assertions_pattern = /[0-9]+/.capture(:assertions) * / / * /assertions/ * /, /
     Failures_pattern = /[0-9]+/.capture(:failures) * / / * /failures/ * /, /
     Errors_pattern = /[0-9]+/.capture(:errors) * / / * /errors/ * /, /
@@ -45,17 +48,11 @@ class TestMaturity
     Omissions_pattern = /[0-9]+/.capture(:omissions) * / / * /omissions/ * /, /
     Notifications_pattern = /[0-9]+/.capture(:notifications) * / / * /notifications/ * /\n/
     Common_summary_regexp = Tests_pattern * Assertions_pattern * Failures_pattern * Errors_pattern
+		Read_success_keys = [:current_branch_name, :start_time, :command_string, :output, :errors]
     end # DefinitionalConstants
   include DefinitionalConstants
-	
-  include Virtus.value_object
-  values do
-    attribute :version, BranchReference, default: nil # working_directory
-    attribute :test_executable, TestExecutable
-    #	attribute :age, Fixnum, :default => 789
-    #	attribute :timestamp, Time, :default => Time.now
-  end # values
-  module ClassMethods
+
+  module DefinitionalClassMethods # if reference DefinitionalConstants
     include DefinitionalConstants
     def example_files
       ret = {} # accumulate a hash
@@ -145,20 +142,43 @@ class TestMaturity
       run_time = headerArray[-1].split(' ')[2].to_f
       [sysout, run_time]
     end # parse_header
-	
-	def timed_out
-		ShellCommands.new('grep "Timeout::Error" log/unit/*/*/*/*.log').output.split("\n")
-	end # timed_out
-	
-  end # ClassMethods
-  extend ClassMethods
+  end # DefinitionalClassMethods
+  extend DefinitionalClassMethods
 
-	def read_state(commit, test = nil)
-		git_command = 'git cat-file blob ' + commit.to_s + ':' + @test_executable.log_path?(test)
-    file_contents = @repository.git_command(git_command)
-		eval(file_contents)
-	end # read_state
-	
+  include Virtus.value_object
+  values do
+    attribute :version, BranchReference, default: nil # working_directory
+    attribute :test_executable, TestExecutable
+    #	attribute :age, Fixnum, :default => 789
+    #	attribute :timestamp, Time, :default => Time.now
+  end # values
+
+  module Constructors # such as alternative new methods
+    include DefinitionalConstants
+    def all
+      Dir['log/unit/2.2/2.2.3p173/silence/*.log']
+    end # all
+  end # Constructors
+  extend Constructors
+
+  module ReferenceObjects # example constant objects of the type (e.g. default_objects)
+    include DefinitionalConstants
+    #    ExecutableMaturity = TestMaturity.new(test_executable: TestExecutable.new(argument_path: $PROGRAM_NAME))
+    Self_test_executable = TestExecutable.new(argument_path: $PROGRAM_NAME)
+    Working_maturity = TestMaturity.new(version: nil, test_executable: Self_test_executable)
+  end # ReferenceObjects
+  include ReferenceObjects
+
+  def read_state
+    if @version.nil?
+      RubyLinesStorage.read(@test_executable.log_path?(@test_executable.test_type))
+    else
+      git_command = 'git cat-file blob ' + @version.to_s + ':' + @test_executable.log_path?(@test_executable.test)
+      file_contents = @repository.git_command(git_command)
+      eval(file_contents)
+    end # if
+  end # read_state
+
   def get_error_score!
     if @test_executable.recursion_danger?
       nil # avoid recursion
@@ -209,10 +229,70 @@ class TestMaturity
   def branch_enhancement!
     Branch::Branch_enhancement[deserving_commit_to_branch!]
   end # branch_enhancement!
-	
+
+  require_relative '../../app/models/assertions.rb'
+
   module Assertions
     module ClassMethods
+      def assert_log_hash(read_return)
+        message = read_return.ruby_lines_storage
+        assert_instance_of(Hash, read_return)
+				if RubyLinesStorage.read_success?(read_return)
+					assert(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+					refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+					assert_equal(TestMaturity::Read_success_keys, read_return.keys)
+# [:current_branch_name, :start_time, :command_string, :output, :errors]
+					assert_instance_of(Class, Branch, message)
+					assert_instance_of(Symbol, read_return[:current_branch_name], message)
+					assert_instance_of(Time, read_return[:start_time], message)
+					assert_instance_of(String, read_return[:command_string], message)
+					assert_instance_of(String, read_return[:output], message)
+					assert_instance_of(Hash, read_return[:errors], message)
+					assert_includes(read_return.keys, :errors, message)
+					errors = read_return[:errors]
+					assert_instance_of(Hash, errors, message)
+
+					assert_includes(read_return.keys, :errors, message)
+					errors = read_return[:errors]
+					assert_instance_of(Hash, errors, message)
+				else
+					refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+					assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+					assert_equal(RubyLinesStorage::Read_fail_keys, read_return.keys)
+# [:exception_hash, :context_message, :ruby_lines_storage_string, :path]
+          assert_instance_of(Hash, read_return[:exception_hash])
+          puts read_return[:exception_hash].ruby_lines_storage
+					context_message = read_return[:context_message]
+					assert_instance_of(String, context_message, message)
+					ruby_lines_storage_string = read_return[:ruby_lines_storage_string]
+					assert_instance_of(String, ruby_lines_storage_string, message)
+				end # if
+        # refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+				
+
+
+
+        puts read_return.keys
+      end # assert_log_state
     end # ClassMethods
+
+    def assert_pre_conditions(message = '')
+      message += "In assert_pre_conditions, self=#{inspect}"
+      read_return = read_state
+      assert_log_state(read_return)
+      self # return for command chaining
+    end # assert_pre_conditions
+
+    def assert_post_conditions(message = '')
+      message += "In assert_post_conditions, self=#{inspect}"
+      if hash[:context].keys.include?(:command_string)
+      else
+        # puts hash.ruby_lines_storage
+        puts hash.keys
+      end # if
+      self # return for command chaining
+    end # assert_post_conditions
+
     def assert_deserving_branch(branch_expected, executable, message = '')
       deserving_branch = TestMaturity.deserving_branch
       recent_test = shell_command('ruby ' + executable)
@@ -238,6 +318,9 @@ class TestMaturity
       assert_equal(deserving_branch, branch_expected, message)
     end # deserving_branch
   end # Assertions
+  include Assertions
+  extend Assertions::ClassMethods
+  # self.assert_pre_conditions
 end # TestMaturity
 
 class UnitMaturity

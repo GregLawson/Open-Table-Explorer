@@ -1,7 +1,7 @@
 # encoding: US-ASCII
 ###########################################################################
 #    Copyright (C) 2013-2016 by Greg Lawson
-#    <GregLawson123@gmail.com>
+#    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -555,4 +555,4 @@ class CharacterEscapeTest < TestCase
     message = regexp.inspect
     assert_raises(AssertionFailedError) { regexp.assert_named_captures }
   end # assert_named_captures
-end # Regexp
+end #Regexp

@@ -1,48 +1,45 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 4, 5, 14, 33, Rational(118473512, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 6, 27, 6, 3, Rational(35511269232, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_test
 Started
-..............................$ git rebase --abort
+............................................$ git rebase --abort
 @errors="No rebase in progress?\n"
-@process_status = #<Process::Status: pid 24697 exit 1>
+@process_status=#<Process::Status: pid 31622 exit 1>
 $ git merge --abort
 @errors="fatal: There is no merge to abort (MERGE_HEAD missing).\n"
-@process_status = #<Process::Status: pid 24719 exit 128>
+@process_status=#<Process::Status: pid 31644 exit 128>
 $ git checkout master
 @errors="Already on \'master\'\n"
 .....
 
-Finished in 1.809966318 seconds.
+Finished in 9.191094219 seconds.
 ------
-35 tests, 239 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+49 tests, 974 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-19.34 tests/s, 132.05 assertions/s
+5.33 tests/s, 105.97 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_test.rb"
-	User time (seconds): 1.78
-	System time (seconds): 0.52
-	Percent of CPU this job got: 67%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.42
+	User time (seconds): 2.58
+	System time (seconds): 0.98
+	Percent of CPU this job got: 32%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:10.81
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 46960
+	Maximum resident set size (kbytes): 37456
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 18
-	Minor (reclaiming a frame) page faults: 137995
-	Voluntary context switches: 2323
-	Involuntary context switches: 700
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 171555
+	Voluntary context switches: 2699
+	Involuntary context switches: 1136
 	Swaps: 0
-	File system inputs: 1544
-	File system outputs: 7976
+	File system inputs: 72
+	File system outputs: 10848
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
