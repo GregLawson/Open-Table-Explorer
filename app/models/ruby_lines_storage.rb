@@ -9,7 +9,14 @@ require_relative '../../app/models/parse.rb'
 
 class SyntaxError
   module DefinitionalConstants
-    Eval_syntax_error_regexp = /\(eval\):/ * /[0-9]+/.capture(:line) * /: / * /.*/.capture(:message)
+		Eval_error_regexp = /\(eval\):/ * /[0-9]+/.capture(:line)
+		Syntax_error_regexp = /: / * /[ a-z]+/.capture(:class_words) * /, /
+    Unexpected_regexp = /unexpected / * /[^,\Z]+/.capture(:unexpected)
+		Context_regexp = Regexp[/\n/, /[^\n]*/.capture(:context), /[^\n]*/.capture(:position)]
+    Expecting_regexp = /, expecting / * /[[:graph:]]+/.capture(:expecting)
+		Eval_syntax_error_array = [ Eval_error_regexp, Syntax_error_regexp, 
+			 Unexpected_regexp, Expecting_regexp.optional,  Context_regexp.optional]
+		Eval_syntax_error_regexp = Regexp[Eval_syntax_error_array]
 		Expecting_right_paren_not_comma = {:exception_class=>"SyntaxError", :line=>"2", :message=>"syntax error, unexpected ',', expecting ')'"}
 		Expecting_right_brace_not_comma = {:exception_class=>"SyntaxError", :line=>"2", :message=>"syntax error, unexpected ',', expecting '}'"}
 		Unexpect_less_than = {exception_class: "SyntaxError", line: "5", message: "syntax error, unexpected '<'"}
@@ -26,12 +33,16 @@ class SyntaxError
   end # Constructors
   extend Constructors
 
-	def exception_message
-    @exception_object.message
-	end # exception_message
-
+	def capture
+    MatchCapture.new(string: message, regexp: Eval_syntax_error_array)
+	end # capture
+	
+	def message_refinement
+    capture.priority_refinements
+	end # message_refinement
+	
 	def exception_hash
-    exception_message.parse(Reconstruction::Eval_syntax_error_regexp)
+    message.parse(Eval_syntax_error_regexp)
 	end # exception_hash
 	
 	def line_number
@@ -61,7 +72,7 @@ class SyntaxError
 	end # unseen?
 	
 	def source_context(eval_source)
-    eval_source.lines[(line_number - 2)..line_number].join
+    @eval_source.lines[(line_number - 2)..line_number].join
 	end # source_context
 	
 	def assert_syntax_OK(eval_source)
@@ -70,6 +81,42 @@ end # SyntaxError
 
 # save eval_source in object
 class Eval
+  module Constructors # such as alternative new methods
+#!    include DefinitionalConstants
+
+		def read(path)
+			ruby_lines_storage_string = IO.read(path)
+			raise 'In order for Eval.read to succeed, String ' + ruby_lines_storage_string + ' must start with open curly brace.' + read_error_context(path, ruby_lines_storage_string) if ruby_lines_storage_string[0] != '{'
+			Eval.new(ruby_lines_storage_string)
+		end # read
+
+		def read_all(directory_glob)
+			Dir[directory_glob].map do |path|
+			  read(path) 
+			end # map
+		end # read_all
+		
+		def errors_seen(directory_glob)
+		    read_all(directory_glob).reject {|eval| eval.success? }
+		end # errors_seen
+
+		def unique_error_groups(directory_glob)
+			errors_seen(directory_glob).map {|eval| eval.rescued_eval}.map(&:error_group).compact.uniq
+		end # unique_error_groups
+		
+		def unexpected_errors(directory_glob)
+			unique_error_groups(directory_glob) - [Expecting_right_paren_not_comma, Expecting_right_brace_not_comma, Unexpect_less_than ]
+		end # unexpected_errors
+
+		def select_error_group(directory_glob, error_group)
+			read_all(directory_glob).select do |eval|
+				eval.rescued_eval.error_group == error_group
+			end # select
+		end # select_error_group
+  end # Constructors
+  extend Constructors
+
+	attr_reader :eval_source
 	def initialize(eval_source, context = nil)
 		@eval_source = eval_source
 		if context.nil?
@@ -79,152 +126,52 @@ class Eval
 		end # if
 	end # initialize	
 
-	def reconstruction
-		eval(@eval_source)
-  rescue SyntaxError => exception_object
-    error_context = read_error_context(@eval_source, exception_object)
-    #		puts exception_hash[:message] + context
-		error_context[:eval_source] = @eval_source
-		error_context
-	end # reconstruction
-	
-  def context_message
-    @eval_source.lines[(line_number - 2)..line_number].join
-	end # context_message
+	def ==(other)
+		@eval_source == other.eval_source # no side effects, pure functions
+	end # equals
 
-	def success?
-		if reconstruction.kind_of?(Eval)
-			true
+	def <=>
+		if self == other
+			0
+		elsif @eval_source > other.eval_source
+			+1
 		else
+			-1
+		end # if
+	end # compare
+	
+	def rescued_eval
+		SyntaxError.rescued_eval(@eval_source)
+	end # rescued_eval
+	
+	def success?
+		if rescued_eval.kind_of?(SyntaxError)
 			false
+		else
+			true
 		end # if
 	end # success?
-end # Eval
 
-class Reconstruction < Eval
-  module DefinitionalConstants
-		include SyntaxError::DefinitionalConstants
-		Read_fail_keys = [:exception_hash, :context_message, :eval_source]
-  end # DefinitionalConstants
-  include DefinitionalConstants
-
-	
-  module Constructors # such as alternative new methods
-    include DefinitionalConstants
-		def read_all(directory_glob)
-			Dir[directory_glob].map do |path|
-			  RubyLinesStorage.read(path) 
-			end # map
-		end # read_all
-		
-		def errors_seen(directory_glob)
-		    read_all(directory_glob).reject {|reconstruction| reconstruction.success? }
-		end # errors_seen
-
-		def unique_error_groups(directory_glob)
-			errors_seen(directory_glob).map{|h| h[:errors]}.compact.uniq
-		end # unique_error_groups
-		
-		def unexpected_errors(directory_glob)
-			unique_error_messages - [Expecting_right_paren_not_comma, Expecting_right_brace_not_comma, Unexpect_less_than ]
-		end # unexpected_errors
-
-		def select_error_group(directory_glob, error_group)
-			read_all(directory_glob).select do |reconstruction|
-				reconstruction.error_group == error_group
-			end # select
-		end # select_error_group
-  end # Constructors
-  extend Constructors
-
-	
-	def read_error_context(exception_object)
-		@exception_object = exception_object
-    exception_message = exception_object.message
-    exception_hash = exception_message.parse(Reconstruction::Eval_syntax_error_regexp)
-		exception_hash[:exception_class] = exception_object.class.name
-    line_number = exception_hash[:line].to_i
-    context_message = @eval_source.lines[(line_number - 2)..line_number].join
-    { exception_hash: exception_hash, context_message: context_message }
-  end # read_error_context
-	
-	def state
-		if success?
-			reconstruction
-		else
-			{ exception_hash: exception_hash, context_message: context_message }
-		end # if
-	end # state
-
-  module Assertions
-    def assert_post_conditions(message = '')
-      message += "In assert_post_conditions, self=#{inspect}"
-      self # return for command chaining
-    end # assert_post_conditions
-  end # Assertions
-  include Assertions
-end # Reconstruction
-
-module RubyLinesStorage
-  def self.read_error_context(ruby_lines_storage_string, exception_object = nil)
-    exception_message = exception_object.message
-    exception_hash = exception_message.parse(Reconstruction::Eval_syntax_error_regexp)
-		exception_hash[:exception_class] = exception_object.class.name
-    line_number = exception_hash[:line].to_i
-    context_message = ruby_lines_storage_string.lines[(line_number - 2)..line_number].join
-    { exception_hash: exception_hash, context_message: context_message }
-  end # read_error_context
-
-  def self.eval_rls(ruby_lines_storage_string)
-    eval(ruby_lines_storage_string)
-  rescue SyntaxError => exception_object
-    error_context = read_error_context(ruby_lines_storage_string, exception_object)
-    #		puts exception_hash[:message] + context
-		error_context[:ruby_lines_storage_string] = ruby_lines_storage_string
-		error_context
-  end # eval_rls
-
-	def self.read_success?(read_return)
-		if (read_return.keys << :path).uniq == Reconstruction::Read_fail_keys
-			false
-		else
-			true
-		end # if
-	end # read_success?
-
-  def self.read(path)
-    ruby_lines_storage_string = IO.read(path)
-    raise 'In order for RubyLinesStorage.eval_rls to succeed, String ' + ruby_lines_storage_string + ' must start with open curly brace.' + read_error_context(path, ruby_lines_storage_string) if ruby_lines_storage_string[0] != '{'
-    read_return = eval_rls(ruby_lines_storage_string)
-		unless read_success?(read_return)
-			read_return[:path] = path
-		else
-		end # if
-		read_return
-  end # read
-	
   module Assertions
     module ClassMethods
 			def assert_readable(path)
-				read_return = RubyLinesStorage.read(path)
-				assert_instance_of(Hash, read_return)
-        message = read_return.ruby_lines_storage
-				if RubyLinesStorage.read_success?(read_return)
-					assert(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
-					refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+				read = RubyLinesStorage.read(path)
+				assert_instance_of(Hash, read)
+        message = read.ruby_lines_storage
+				if RubyLinesStorage.read_success?(read)
+					assert(RubyLinesStorage.read_success?(read), read.ruby_lines_storage)
+					refute_includes(read.keys, :exception_hash, read.ruby_lines_storage)
 				else
-					refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
-					assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
-					assert_equal(Reconstruction::Read_fail_keys, read_return.keys)
-					refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
-					assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
-					assert_equal(Reconstruction::Read_fail_keys, read_return.keys)
-# [:exception_hash, :context_message, :ruby_lines_storage_string, :path]
-          assert_instance_of(Hash, read_return[:exception_hash])
-#!          puts read_return[:exception_hash].ruby_lines_storage
-					context_message = read_return[:context_message]
+					refute(RubyLinesStorage.read_success?(read), read.ruby_lines_storage)
+					assert_includes(read.keys, :exception_hash, read.ruby_lines_storage)
+					assert_equal(Eval::Read_fail_keys, read.keys)
+					refute(RubyLinesStorage.read_success?(read), read.ruby_lines_storage)
+					assert_includes(read.keys, :exception_hash, read.ruby_lines_storage)
+					assert_equal(Eval::Read_fail_keys, read.keys)
+          assert_instance_of(Hash, read[:exception_hash])
+					context_message = read[:context_message]
 					assert_instance_of(String, context_message, message)
-					ruby_lines_storage_string = read_return[:ruby_lines_storage_string]
+					ruby_lines_storage_string = read[:ruby_lines_storage_string]
 					assert_instance_of(String, ruby_lines_storage_string, message)
 				end # if
 			end # assert_read
@@ -232,6 +179,9 @@ module RubyLinesStorage
   end # Assertions
 	include Assertions
 	extend Assertions::ClassMethods
+end # Eval
+
+module RubyLinesStorage
 end # RubyLinesStorage
 
 class Array

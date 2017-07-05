@@ -8,8 +8,8 @@
 require_relative 'test_environment'
 require_relative '../assertions/ruby_assertions.rb'
 class RubyAssertionsTest < TestCase
-	include RubyAssertions
-	
+  include RubyAssertions
+
   def test_caller_lines
     ignore_lines = 26
     assert_includes(methods, :caller_lines)
@@ -329,6 +329,6 @@ class RubyAssertionsTest < TestCase
   def test_assert_included_submodule
   end # assert_included_submodule
 
-  def test_asset_nested_and_included
-  end # asset_nested_and_included
+  def test_assert_nested_and_included
+  end # assert_nested_and_included
 end # RubyAssertions

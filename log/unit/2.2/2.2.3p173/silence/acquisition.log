@@ -1,37 +1,120 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 30, 10, 2, Rational(32486688260, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 6, 9, 9, 22, Rational(19764675193, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/acquisition_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/acquisition_test
 Started
-..............
+.E
+===============================================================================
+Error: test_Acquisition_refine(AcquisitionTest):
+  NameError: undefined local variable or method `open_uri_acquisition\' for #<AcquisitionTest:0x007feda28e9828>
+  Did you mean?  open_uri_original_open
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/acquisition_test.rb:26:in `test_Acquisition_refine\'
+     23:     regexp = [/c/, /a/, /t/]
+     24:     acquisition_parameters = \'file://\' + File.expand_path($PROGRAM_NAME)
+     25:     capture_class = MatchCapture
+  => 26:     assert_equal(IO.read($PROGRAM_NAME), open_uri_acquisition.call(acquisition_parameters))
+     27:     capture = capture_class.new(string: acquisition_string, regexp: regexp)
+     28:     refinement = capture.priority_refinements
+     29:     capture.assert_refinement(:exact)
+===============================================================================
+..E
+===============================================================================
+Error: test_Acquisition_virtus(AcquisitionTest):
+  NoMethodError: undefined method `cached_acquisition_state\' for #<Acquisition:0x007feda29ec900>
+  Did you mean?  cache_const_name
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/acquisition_test.rb:86:in `test_Acquisition_virtus\'
+     83:   def test_Acquisition_virtus
+     84:     assert_instance_of(String, Acquisition_test_file.acquisition_parameters, Acquisition_test_file.inspect)
+     85:     assert_instance_of(Regexp, Acquisition_test_file.generic_type, Acquisition_test_file.inspect)
+  => 86:     assert_nil(Acquisition_test_file.cached_acquisition_state, Acquisition_test_file.inspect)
+     87:     assert_equal(nil, Acquisition_test_file.cached_capture, Acquisition_test_file.inspect)
+     88:   end # values
+     89: 
+===============================================================================
+.E
+===============================================================================
+Error: test_acquire!(AcquisitionTest):
+  NoMethodError: undefined method `cached_acquisition_state\' for #<Acquisition:0x007feda29ec900>
+  Did you mean?  cache_const_name
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/acquisition_test.rb:101:in `test_acquire!\'
+      98: 
+      99:   def test_acquire!
+     100:     assert_instance_of(String, Acquisition_test_file.acquire!, Acquisition_test_file.inspect)
+  => 101:     refute_nil(Acquisition_test_file.cached_acquisition_state[:acquisition_string], Acquisition_test_file.inspect)
+     102:     assert_instance_of(String, Acquisition_test_file.cached_acquisition_state[:acquisition_string], Acquisition_test_file.inspect)
+     103:     refute_nil(Acquisition_test_file.cached_acquisition_state, Acquisition_test_file.inspect)
+     104:     # unnamed_capture?		refute_equal({}, Acquisition_test_file.cached_capture, Acquisition_test_file.inspect)
+===============================================================================
+E
+===============================================================================
+Error: test_acquisition_state(AcquisitionTest): NoMethodError: undefined method `keys\' for nil:NilClass
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/acquisition.rb:93:in `block in acquisition_state\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/cache.rb:59:in `cache\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/acquisition.rb:92:in `acquisition_state\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/acquisition_test.rb:111:in `test_acquisition_state\'
+     108:     cache_name = :acquisition_state
+     109:     explanation = Cat_acquisition.explain_cache(cache_name)
+     110:     Cat_acquisition.refute_cached(cache_name)
+  => 111:     refute_nil(Cat_acquisition.acquisition_state)
+     112:     Cat_acquisition.assert_cached(cache_name)
+     113:     refute_nil(Cat_acquisition.cached_acquisition_state[:acquisition_string].capture?(Cat_acquisition.generic_type), Cat_acquisition.inspect)
+     114: 
+===============================================================================
+.E
+===============================================================================
+Error: test_capture(AcquisitionTest):
+  NoMethodError: undefined method `cached_acquisition_state\' for #<Acquisition:0x007feda29ec900>
+  Did you mean?  cache_const_name
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/acquisition_test.rb:129:in `test_capture\'
+     126:     Acquisition_test_file.refute_cached(cache_name)
+     127:     refute_nil(Acquisition_test_file.capture)
+     128:     Acquisition_test_file.assert_cached(cache_name)
+  => 129:     refute_nil(Acquisition_test_file.cached_acquisition_state[:acquisition_string].capture?(Acquisition_test_file.generic_type), Acquisition_test_file.inspect)
+     130: 
+     131:     assert_instance_of(MatchCapture, Cat_acquisition.capture, Cat_acquisition.inspect)
+     132:     assert_equal({}, Cat_acquisition.capture.output, Cat_acquisition.inspect)
+===============================================================================
+...E
+===============================================================================
+Error: test_to_hash(AcquisitionTest):
+  NoMethodError: undefined method `cached_capture\' for #<Acquisition:0x007feda29ec900>
+  Did you mean?  cache_const_name
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/acquisition_test.rb:140:in `test_to_hash\'
+     137:     assert_includes(Acquisition_test_file.instance_variables, :@cached_acquisition_state, Acquisition_test_file.inspect)
+     138:     refute_nil(Acquisition_test_file.uri, Acquisition_test_file.inspect)
+     139:     refute_nil(Acquisition_test_file.generic_type, Acquisition_test_file.inspect)
+  => 140:     assert_equal(nil, Acquisition_test_file.cached_capture, Acquisition_test_file.inspect)
+     141:     capture = Acquisition_test_file.state[:acquisition_string].capture?(Acquisition_test_file.generic_type)
+     142:     assert_equal({ code: \'\', comment: \'\', indent: nil }, Acquisition_test_file.to_hash, Acquisition_test_file.inspect)
+     143:   end # to_hash
+===============================================================================
+..
 
-Finished in 0.279990242 seconds.
+Finished in 0.362118599 seconds.
 ------
-14 tests, 24 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
+16 tests, 17 assertions, 0 failures, 6 errors, 0 pendings, 0 omissions, 0 notifications
+62.5% passed
 ------
-50.00 tests/s, 85.72 assertions/s
+44.18 tests/s, 46.95 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/acquisition_test.rb"
-	User time (seconds): 2.17
-	System time (seconds): 0.20
-	Percent of CPU this job got: 93%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.53
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/acquisition_test.rb"
+	User time (seconds): 1.92
+	System time (seconds): 0.17
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.21
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 53480
+	Maximum resident set size (kbytes): 42932
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 13582
-	Voluntary context switches: 9
-	Involuntary context switches: 280
+	Minor (reclaiming a frame) page faults: 10945
+	Voluntary context switches: 11
+	Involuntary context switches: 214
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 24
@@ -39,7 +122,7 @@ Finished in 0.279990242 seconds.
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
 '
 }
 

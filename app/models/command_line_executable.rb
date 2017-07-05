@@ -66,11 +66,11 @@ class CommandLineExecutable
     end # argument_type
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
-	
+
   include Virtus.value_object
   values do
-    attribute :test_executable, TestExecutable 
-#    attribute :unit_class, Class, default: ->(command_line, _attribute) { command_line.test_executable.unit.model_class? }
+    attribute :test_executable, TestExecutable
+    #    attribute :unit_class, Class, default: ->(command_line, _attribute) { command_line.test_executable.unit.model_class? }
     attribute :argv, Array, default: ARGV
   end # values
 
@@ -187,9 +187,9 @@ class CommandLineExecutable
     module ClassMethods
       def assert_pre_conditions(message = '')
         message += "In assert_pre_conditions, self=#{inspect}"
-        #	asset_nested_and_included(:ClassMethods, self)
-        #	asset_nested_and_included(:Constants, self)
-        #	asset_nested_and_included(:Assertions, self)
+        #	assert_nested_and_included(:ClassMethods, self)
+        #	assert_nested_and_included(:Constants, self)
+        #	assert_nested_and_included(:Assertions, self)
         self
       end # assert_pre_conditions
 

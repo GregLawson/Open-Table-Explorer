@@ -22,7 +22,7 @@ class RequireTest < TestCase
     assert_match(FilePattern::Relative_pathname_included_regexp.capture(:required_path), Require_line)
     assert_match(/require/ * /_relative/.capture(:require_command) * /\s+/ * /['"]/ * FilePattern::Relative_pathname_included_regexp.capture(:required_path), Require_line)
     assert_match(Require_regexp, Require_line)
-		
+
     assert_match(/^require/ * /_relative/.capture(:require_command).group * Regexp::Optional * /\s+/, Nonrelative_line)
     assert_match(Relative_regexp, Nonrelative_line)
     assert_match(FilePattern::Relative_pathname_included_regexp.capture(:required_path), Nonrelative_line)
@@ -198,5 +198,5 @@ class BoostGraphTest < TestCase
 
     g = g.vertices_filtered_by { |v| tree.has_vertex? v }
     g.write_to_graphic_file('jpg')
-	end # module_graph
+  end # module_graph
 end # BoostGraph

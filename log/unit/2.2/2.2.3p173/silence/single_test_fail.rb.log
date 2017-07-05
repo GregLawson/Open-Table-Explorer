@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 7, 5, 21, Rational(8498571104, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 6, 22, 12, 17, Rational(55071556101, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -12,7 +9,7 @@ Run options: --seed 0
 
 E.
 
-Finished in 0.002103s, 950.8731 runs/s, 0.0000 assertions/s.
+Finished in 0.002016s, 992.1437 runs/s, 0.0000 assertions/s.
 
   1) Error:
 SingleFailTest#test_fail:
@@ -44,20 +41,20 @@ RuntimeError:
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/data_sources/test_maturity/single_test_fail.rb"
-	User time (seconds): 0.62
-	System time (seconds): 0.07
+	User time (seconds): 0.66
+	System time (seconds): 0.04
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.70
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.71
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 21420
+	Maximum resident set size (kbytes): 21400
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5478
-	Voluntary context switches: 14
-	Involuntary context switches: 72
+	Minor (reclaiming a frame) page faults: 5473
+	Voluntary context switches: 15
+	Involuntary context switches: 86
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

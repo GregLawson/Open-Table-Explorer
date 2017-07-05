@@ -7,20 +7,20 @@
 ###########################################################################
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../assertions/command_line_assertions.rb'
-#require_relative '../../app/models/merge.rb'
+# require_relative '../../app/models/merge.rb'
 
 class CommandLineExecutableTest < TestCase
   include CommandLineExecutable::Constants
   module Examples
-		Not_virtus_test_executable = TestExecutable.new_from_path('app/models/editor.rb')
-		Not_virtus_unit_commandline = CommandLineExecutable.new(test_executable: Not_virtus_test_executable, argv: ['help', $PROGRAM_NAME])
-		require File.expand_path(Not_virtus_test_executable.unit.model_pathname?)
-#		No_side_effects_test_executable = TestExecutable.new_from_path('app/models/merge.rb')
-#		No_side_effects_sub_command_line = CommandLineExecutable.new(test_executable: No_side_effects_test_executable, argv: ['state?'])
-		No_side_effects_default_test_executable = TestExecutable.new_from_path('app/models/editor.rb')
-		No_side_effects_default_line = CommandLineExecutable.new(test_executable: No_side_effects_default_test_executable, argv: ['version_comparison'])
-		No_arg_run = CommandLineExecutable.new(argv: [])
-	#        test_run = ShellCommands.new('ruby -W0 script/command_line.rb ' + args)
+    Not_virtus_test_executable = TestExecutable.new_from_path('app/models/editor.rb')
+    Not_virtus_unit_commandline = CommandLineExecutable.new(test_executable: Not_virtus_test_executable, argv: ['help', $PROGRAM_NAME])
+    require File.expand_path(Not_virtus_test_executable.unit.model_pathname?)
+    #		No_side_effects_test_executable = TestExecutable.new_from_path('app/models/merge.rb')
+    #		No_side_effects_sub_command_line = CommandLineExecutable.new(test_executable: No_side_effects_test_executable, argv: ['state?'])
+    No_side_effects_default_test_executable = TestExecutable.new_from_path('app/models/editor.rb')
+    No_side_effects_default_line = CommandLineExecutable.new(test_executable: No_side_effects_default_test_executable, argv: ['version_comparison'])
+    No_arg_run = CommandLineExecutable.new(argv: [])
+    #        test_run = ShellCommands.new('ruby -W0 script/command_line.rb ' + args)
   end # Examples
   include Examples
   def test_ruby_assertions
@@ -28,13 +28,13 @@ class CommandLineExecutableTest < TestCase
     refute_empty([1])
   end # ruby_assertions
 
-	def test_SingleExecution
-		executable_method = No_arg_run.method(:arguments)
-		execution = SingleExecution.new(executable_method: executable_method, method_arguments: [])
-		assert_equal(No_arg_run.arguments, execution.run)
-		assert_equal([], execution.run)
-	end # SingleExecution
-	
+  def test_SingleExecution
+    executable_method = No_arg_run.method(:arguments)
+    execution = SingleExecution.new(executable_method: executable_method, method_arguments: [])
+    assert_equal(No_arg_run.arguments, execution.run)
+    assert_equal([], execution.run)
+  end # SingleExecution
+
   def test_DefinitionalConstants
     CommandLineExecutable # .assert_pre_conditions
     #	Test_unit_commandline.assert_pre_conditions
@@ -59,13 +59,13 @@ class CommandLineExecutableTest < TestCase
     #	assert_equal(Branch, CommandLineExecutable.argument_type('master'))
     assert_equal(Unit, CommandLineExecutable.argument_type('command_line'))
     #	assert_equal(Method, CommandLineExecutable.argument_type('error_score?'))
-		assert_includes(All_argument_types, CommandLineExecutable.argument_type('error_score?'))
+    assert_includes(All_argument_types, CommandLineExecutable.argument_type('error_score?'))
   end # argument_type
 
   def test_initialize
-#    refute_nil(No_arg_run.test_executable)
-#    refute_nil(No_arg_run.test_executable.unit)
-#    refute_nil(No_arg_run.test_executable.unit.model_class?)
+    #    refute_nil(No_arg_run.test_executable)
+    #    refute_nil(No_arg_run.test_executable.unit)
+    #    refute_nil(No_arg_run.test_executable.unit.model_class?)
     refute_nil(Script_command_line.test_executable.unit.model_class?)
   end # values
 

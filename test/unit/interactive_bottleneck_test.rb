@@ -226,67 +226,12 @@ class InteractiveBottleneckTest < TestCase
     TestInteractiveBottleneck.clean_directory
   end # clean_directory
 
-  def test_confirm_branch_switch
-    assert_equal(:master, @temp_repo.current_branch_name?)
-    @temp_interactive_bottleneck.confirm_branch_switch(:passed)
-    assert_equal(:passed, @temp_repo.current_branch_name?)
-    @temp_interactive_bottleneck.confirm_branch_switch(:master)
-    assert_equal(:master, @temp_repo.current_branch_name?)
-  end # confirm_branch_switch
-
-  def test_safely_visit_branch
-    @temp_repo.force_change
-    push_branch = @temp_repo.current_branch_name?
-    target_branch = :passed
-    push = @temp_repo.something_to_commit? # remember
-    if push
-      @temp_repo.stash!.assert_post_conditions # .assert_post_conditions
-      changes_branch = :stash
-    end # if
-
-    if push_branch != target_branch
-      @temp_interactive_bottleneck.confirm_branch_switch(target_branch)
-      ret = @temp_interactive_bottleneck.validate_commit(changes_branch, [@temp_repo.path + 'README'])
-      @temp_interactive_bottleneck.confirm_branch_switch(push_branch)
-    else
-      ret = @temp_repo.validate_commit(changes_branch, [@temp_repo.path + 'README'])
-    end # if
-    if push
-      @temp_repo.git_command('stash apply --quiet').assert_post_conditions
-    end # if
-    assert_equal(push_branch, @temp_interactive_bottleneck.safely_visit_branch(push_branch) { push_branch })
-    assert_equal(push_branch, @temp_interactive_bottleneck.safely_visit_branch(push_branch) { @temp_repo.current_branch_name? })
-    target_branch = :master
-    checkout_target = @temp_repo.git_command("checkout #{target_branch}")
-    #		assert_equal("Switched to branch '#{target_branch}'\n", checkout_target.errors)
-    target_branch = :passed
-    assert_equal(target_branch, @temp_interactive_bottleneck.safely_visit_branch(target_branch) { @temp_repo.current_branch_name? })
-    @temp_interactive_bottleneck.safely_visit_branch(target_branch) do
-      @temp_repo.current_branch_name?
-    end #
-  end # safely_visit_branch
-
   def test_switch_branch
   end # switch_branch
 
   def test_stage_files
   end # stage_files
 
-  def test_confirm_commit
-    assert_equal(:echo, @temp_interactive_bottleneck.interactive)
-    @temp_interactive_bottleneck.confirm_commit
-  end # confirm_commit
-
-  def test_validate_commit
-    @temp_repo.assert_nothing_to_commit
-    @temp_repo.force_change
-    #	assert(@temp_repo.something_to_commit?)
-    #	@temp_repo.assert_something_to_commit
-    #	@temp_repo.validate_commit(:master, [@temp_repo.path+'README'])
-    @temp_repo.stash!
-    @temp_repo.git_command('checkout passed')
-    @temp_interactive_bottleneck.validate_commit(:stash, [@temp_repo.path + 'README'])
-  end # validate_commit
 
   def test_script_deserves_commit!
     # (deserving_branch)

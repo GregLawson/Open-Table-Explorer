@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 8, 7, 2, Rational(33480620094, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 6, 9, 9, 22, Rational(11057116915, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test
@@ -12,14 +9,14 @@ F
 ===============================================================================
 Failure: test_Boot_DefinitionalConstants(BootTest)
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:19:in `assert_repeat_match\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:46:in `test_Boot_DefinitionalConstants\'
-     43: 		assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP / * /PREEMPT RT /.optional, Uname.output)
-     44: 		assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP / * /PREEMPT RT /.optional * /Debian / * Version::Semantic_version_regexp, Uname.output)
-     45: 		assert_match(linux_a_regexp, Uname.output)
-  => 46:     assert_repeat_match(Uuid_regexp, 193)
-     47:     assert_match(Classes_regexp, Grubs_run.output, Grubs_run.inspect)
-     48:     assert_match(Boot_line_regexp, One_menu_entry, One_menu_entry.inspect)
-     49:     assert_match(Boot_line_regexp, Grubs_run.output, Grubs_run.inspect)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:45:in `test_Boot_DefinitionalConstants\'
+     42:     assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP / * /PREEMPT RT /.optional, Uname.output)
+     43:     assert_match(/Linux acer-desktop / * Linux_version_regexp * / #1 SMP / * /PREEMPT RT /.optional * /Debian / * Version::Semantic_version_regexp, Uname.output)
+     44:     assert_match(linux_a_regexp, Uname.output)
+  => 45:     assert_repeat_match(Uuid_regexp, 193)
+     46:     assert_match(Classes_regexp, Grubs_run.output, Grubs_run.inspect)
+     47:     assert_match(Boot_line_regexp, One_menu_entry, One_menu_entry.inspect)
+     48:     assert_match(Boot_line_regexp, Grubs_run.output, Grubs_run.inspect)
 <[:@string, :@regexp, :@raw_captures]> expected but was
 <[:@allowed_writer_methods, :@string, :@regexp]>
 
@@ -28,34 +25,34 @@ diff:
 ===============================================================================
 ....E
 ===============================================================================
-Error: test_remove_matches(BootTest): NoMethodError: undefined method `delimiters\' for #<Array:0x007fd9015747e8>
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:64:in `block (2 levels) in remove_matches\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:61:in `map\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:61:in `block in remove_matches\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:60:in `each\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:60:in `remove_matches\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:72:in `test_remove_matches\'
-     69:   def test_remove_matches
-     70:     assert_instance_of(Array, Boot::Examples::Regexps::Grub.constants)
-     71:     assert_instance_of(Symbol, Boot::Examples::Regexps::Grub.constants[0])
-  => 72:     unmatches = remove_matches([Grubs_run.output], Boot::Examples::Regexps::Grub.constants)
-     73:         unmatches = remove_matches([Grubs_run.output], Boot::Examples::Regexps::Grub.constants)
-     74: 
-     75:     assert_empty(unmatches.sort.uniq)
+Error: test_remove_matches(BootTest): NoMethodError: undefined method `delimiters\' for #<Array:0x007f3504267df8>
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:63:in `block (2 levels) in remove_matches\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:60:in `map\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:60:in `block in remove_matches\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:59:in `each\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:59:in `remove_matches\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:71:in `test_remove_matches\'
+     68:   def test_remove_matches
+     69:     assert_instance_of(Array, Boot::Examples::Regexps::Grub.constants)
+     70:     assert_instance_of(Symbol, Boot::Examples::Regexps::Grub.constants[0])
+  => 71:     unmatches = remove_matches([Grubs_run.output], Boot::Examples::Regexps::Grub.constants)
+     72:     unmatches = remove_matches([Grubs_run.output], Boot::Examples::Regexps::Grub.constants)
+     73: 
+     74:     assert_empty(unmatches.sort.uniq)
 ===============================================================================
 F
 ===============================================================================
 Failure: test_reverse_remove_matches(BootTest)
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:234:in `assert_match_kind\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:760:in `assert_refinement\'
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:81:in `test_reverse_remove_matches\'
-     78:  def test_reverse_remove_matches
-     79:     match = MatchCapture.new(string: Grubs_run.output, regexp: Boot::Examples::Regexps::Full_regexp_array)
-     80: 
-  => 81:     match.assert_refinement(:exact)
-     82:   end # test_remove_matches
-     83: 
-     84: 	def test_state
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:232:in `assert_match_kind\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:751:in `assert_refinement\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb:80:in `test_reverse_remove_matches\'
+     77:   def test_reverse_remove_matches
+     78:     match = MatchCapture.new(string: Grubs_run.output, regexp: Boot::Examples::Regexps::Full_regexp_array)
+     79: 
+  => 80:     match.assert_refinement(:exact)
+     81:    end # test_remove_matches
+     82: 
+     83:   def test_state
 #<MatchCapture string="\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro quiet\n\tmenuentry \'Debian GNU/Linux (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.9.0-2-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 4.9.0-2-amd64 (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.9.0-2-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 4.9.0-2-amd64 (sysvinit) (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.9.0-2-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro quiet init=/lib/sysvinit/init\n\tmenuentry \'Debian GNU/Linux, with Linux 4.9.0-2-amd64 (recovery mode) (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.9.0-2-amd64-root=/dev/sda16 ro single-51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro single\n\tmenuentry \'Debian GNU/Linux, with Linux 4.7.0-1-amd64 (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.7.0-1-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-4.7.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 4.7.0-1-amd64 (sysvinit) (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.7.0-1-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-4.7.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init\n\tmenuentry \'Debian GNU/Linux, with Linux 4.7.0-1-amd64 (recovery mode) (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.7.0-1-amd64-root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single-51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-4.7.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single\n\tmenuentry \'Debian GNU/Linux, with Linux 4.6.0-1-rt-amd64 (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.6.0-1-rt-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 4.6.0-1-rt-amd64 (sysvinit) (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.6.0-1-rt-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init\n\tmenuentry \'Debian GNU/Linux, with Linux 4.6.0-1-rt-amd64 (recovery mode) (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.6.0-1-rt-amd64-root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single-51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single\n\tmenuentry \'Debian GNU/Linux, with Linux 3.2.0-4-amd64 (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-3.2.0-4-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-3.2.0-4-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 3.2.0-4-amd64 (sysvinit) (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-3.2.0-4-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-3.2.0-4-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init\n\tmenuentry \'Debian GNU/Linux, with Linux 3.2.0-4-amd64 (recovery mode) (on /dev/sda10)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-3.2.0-4-amd64-root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single-51e0851a-6300-4d9a-b27e-e4a5b5db7bac\' {\n\t\tlinux /vmlinuz-3.2.0-4-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single\n\tlinux /vmlinuz-3.16.0-4-amd64 root=/dev/sda11\n\tmenuentry \'Debian GNU/Linux jessie/sid (on /dev/sda11)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-3.16.0-4-amd64--53bd311e-5b17-4ad0-b90f-793d79caf70e\' {\n\t\tlinux /vmlinuz-3.16.0-4-amd64 root=/dev/sda11\n\tmenuentry \'Debian GNU/Linux jessie/sid (on /dev/sda11)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-3.16-3-amd64--53bd311e-5b17-4ad0-b90f-793d79caf70e\' {\n\t\tlinux /vmlinuz-3.16-3-amd64 root=/dev/sda11\n\tmenuentry \'Debian GNU/Linux jessie/sid (on /dev/sda11)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-3.2.0-4-amd64--53bd311e-5b17-4ad0-b90f-793d79caf70e\' {\n\t\tlinux /vmlinuz-3.2.0-4-amd64 root=/dev/sda11\n\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro quiet\n\tmenuentry \'Debian GNU/Linux (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.9.0-2-amd64--cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 4.9.0-2-amd64 (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.9.0-2-amd64--cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 4.9.0-2-amd64 (sysvinit) (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.9.0-2-amd64--cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro quiet init=/lib/sysvinit/init\n\tmenuentry \'Debian GNU/Linux, with Linux 4.9.0-2-amd64 (recovery mode) (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.9.0-2-amd64-root=/dev/sda16 ro single-cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro single\n\tmenuentry \'Debian GNU/Linux, with Linux 4.7.0-1-amd64 (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.7.0-1-amd64--cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-4.7.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 4.7.0-1-amd64 (sysvinit) (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.7.0-1-amd64--cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-4.7.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init\n\tmenuentry \'Debian GNU/Linux, with Linux 4.7.0-1-amd64 (recovery mode) (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.7.0-1-amd64-root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single-cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-4.7.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single\n\tmenuentry \'Debian GNU/Linux, with Linux 4.6.0-1-rt-amd64 (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.6.0-1-rt-amd64--cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 4.6.0-1-rt-amd64 (sysvinit) (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.6.0-1-rt-amd64--cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init\n\tmenuentry \'Debian GNU/Linux, with Linux 4.6.0-1-rt-amd64 (recovery mode) (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.6.0-1-rt-amd64-root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single-cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single\n\tmenuentry \'Debian GNU/Linux, with Linux 3.2.0-4-amd64 (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-3.2.0-4-amd64--cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-3.2.0-4-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 3.2.0-4-amd64 (sysvinit) (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-3.2.0-4-amd64--cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-3.2.0-4-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init\n\tmenuentry \'Debian GNU/Linux, with Linux 3.2.0-4-amd64 (recovery mode) (on /dev/sda5)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-3.2.0-4-amd64-root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single-cb8f00cf-ade4-4a46-b804-baad41865395\' {\n\t\tlinux /vmlinuz-3.2.0-4-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single\n\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro quiet\n\tmenuentry \'Debian GNU/Linux (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.9.0-2-amd64--85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 4.9.0-2-amd64 (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.9.0-2-amd64--85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 4.9.0-2-amd64 (sysvinit) (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.9.0-2-amd64--85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro quiet init=/lib/sysvinit/init\n\tmenuentry \'Debian GNU/Linux, with Linux 4.9.0-2-amd64 (recovery mode) (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.9.0-2-amd64-root=/dev/sda16 ro single-85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-4.9.0-2-amd64 root=/dev/sda16 ro single\n\tmenuentry \'Debian GNU/Linux, with Linux 4.7.0-1-amd64 (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.7.0-1-amd64--85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-4.7.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 4.7.0-1-amd64 (sysvinit) (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.7.0-1-amd64--85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-4.7.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init\n\tmenuentry \'Debian GNU/Linux, with Linux 4.7.0-1-amd64 (recovery mode) (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.7.0-1-amd64-root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single-85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-4.7.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single\n\tmenuentry \'Debian GNU/Linux, with Linux 4.6.0-1-rt-amd64 (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.6.0-1-rt-amd64--85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 4.6.0-1-rt-amd64 (sysvinit) (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.6.0-1-rt-amd64--85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init\n\tmenuentry \'Debian GNU/Linux, with Linux 4.6.0-1-rt-amd64 (recovery mode) (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-4.6.0-1-rt-amd64-root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single-85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-4.6.0-1-rt-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single\n\tmenuentry \'Debian GNU/Linux, with Linux 3.2.0-4-amd64 (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-3.2.0-4-amd64--85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-3.2.0-4-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet\n\tmenuentry \'Debian GNU/Linux, with Linux 3.2.0-4-amd64 (sysvinit) (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-3.2.0-4-amd64--85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-3.2.0-4-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet init=/lib/sysvinit/init\n\tmenuentry \'Debian GNU/Linux, with Linux 3.2.0-4-amd64 (recovery mode) (on /dev/sda9)\' --class gnu-linux --class gnu --class os $menuentry_id_option \'osprober-gnulinux-/vmlinuz-3.2.0-4-amd64-root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single-85de39fd-aa56-4d6e-adc4-5b24a71de245\' {\n\t\tlinux /vmlinuz-3.2.0-4-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro single\n" regexp=[/\A(?<indent>\t{1,3})linux /, /\/vmlinuz-(?<major>[1-9]?[0-9]{1,3})\.(?<minor>[1-9]?[0-9]{1,3})\.(?<patch>[1-9]?[0-9]{1,3})(?:[-+.](?<pre_release>[-.a-zA-Z0-9]*))?(?<architecture>-amd64)/, / root=UUID=/, /(?<uuid>[[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12})/, / ro (?<single>quiet|single)(?: init=\/lib\/sysvinit\/init)?/, /\n\tmenuentry \\'Debian GNU\/Linux, with Linux ?(?<major>[1-9]?[0-9]{1,3})\.(?<minor>[1-9]?[0-9]{1,3})\.(?<patch>[1-9]?[0-9]{1,3})(?:[-+.](?<pre_release>[-.a-zA-Z0-9]*))?(?<architecture>-amd64) \((?<menu_title>on \/dev\/sda[0-9]+)\)(?: \((?<menu_title>sysvinit|recovery mode)\))?\\' --class gnu-linux --class gnu --class os \$menuentry_id_option \\'osprober-gnulinux-\/vmlinuz-(?<major>[1-9]?[0-9]{1,3})\.(?<minor>[1-9]?[0-9]{1,3})\.(?<patch>[1-9]?[0-9]{1,3})(?:[-+.](?<pre_release>[-.a-zA-Z0-9]*))?(?<architecture>-amd64)--(?<uuid>[[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12})\\' \{\n/]>
 
 An exact refinement requires all regexp to succeed with no residual.
@@ -93,31 +90,31 @@ diff:
 ===============================================================================
 .
 
-Finished in 4.048371291 seconds.
+Finished in 4.041244922 seconds.
 ------
 8 tests, 12 assertions, 2 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
 62.5% passed
 ------
-1.98 tests/s, 2.96 assertions/s
+1.98 tests/s, 2.97 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/boot_test.rb"
-	User time (seconds): 5.70
-	System time (seconds): 0.19
-	Percent of CPU this job got: 68%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:08.58
+	User time (seconds): 5.73
+	System time (seconds): 0.16
+	Percent of CPU this job got: 95%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:06.14
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 41812
+	Maximum resident set size (kbytes): 41880
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 24
-	Minor (reclaiming a frame) page faults: 13341
-	Voluntary context switches: 117
-	Involuntary context switches: 704
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 13384
+	Voluntary context switches: 76
+	Involuntary context switches: 576
 	Swaps: 0
-	File system inputs: 4744
+	File system inputs: 400
 	File system outputs: 8
 	Socket messages sent: 0
 	Socket messages received: 0

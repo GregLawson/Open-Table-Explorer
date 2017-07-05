@@ -59,5 +59,4 @@ class RubyLinesStorageTest < TestCase
     assert_equal([[2, 1], [3, 2], [643, 1]], 11_574.prime_division)
     assert_equal(11_574, '2D36'.to_i(16), '%02X' % 11_574) # not a simple truncation!
   end # DateTime
-
 end # RubyLinesStorage

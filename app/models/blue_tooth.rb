@@ -1,26 +1,27 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson
+#    Copyright (C) 2013-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
-require_relative '../../test/assertions/open_tax_form_filler_assertions.rb'
+#!require_relative '../../test/assertions/open_tax_form_filler_assertions.rb'
 require_relative '../../app/models/shell_command.rb'
 module BlueTooth
   module Constants
   end # Constants
 
   class BluezTestDeviceList
-    include NoDB
-    extend NoDB::ClassMethods
-    include GenericFiles
-    extend GenericFiles::ClassMethods
+#!    include NoDB
+#!    extend NoDB::ClassMethods
+#!    include GenericFiles
+#!    extend GenericFiles::ClassMethods
     module Constants
       include BlueTooth::Constants
-      Full_regexp_array = [Field_name_regexp, Start_regexp, Path_regexp, Last_field_regexp, End_regexp].freeze
+#!      Full_regexp_array = [Field_name_regexp, Start_regexp, Path_regexp, Last_field_regexp, End_regexp].freeze
     end # Constants
     include Constants
+		
     def self.input_urls
       'shell:bluez-test-device list'
     end # input_input_urls
@@ -104,13 +105,13 @@ module BlueTooth
       end # select
     end # coarse_filter
 
-    include Assertions
-    extend Assertions::ClassMethods
-    BluezTestDeviceList.assert_pre_conditions
+#!    include Assertions
+#!   extend Assertions::ClassMethods
+#!    BluezTestDeviceList.assert_pre_conditions
     module Examples
-      Devices = ShellCommand.new('')
+#!      Devices = ShellCommand.new('')
 
-      All = BluezTestDeviceList.all_initialize
+#!      All = BluezTestDeviceList.all_initialize
     end # Examples
     include Examples
   end # BluezTestDeviceList

@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2013-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -8,8 +8,18 @@
 require_relative '../../app/models/test_environment_test_unit.rb'
 # require_relative 'test_environment'
 require_relative '../../app/models/method_model.rb'
-require_relative '../../app/models/merge.rb'
+#!require_relative '../../app/models/merge.rb'
 # require_relative '../../app/models/object_memory.rb'
+
+def test_name_to_module
+  end # name_to_module
+
+class ModuleTest < TestCase
+  def test_module_name
+    assert_equal(:Module, Module.module_name)
+  end # module_name
+end # Module
+
 class MethodTest < TestCase
   include Method::Examples
   def test_arity
@@ -195,18 +205,18 @@ end # apply_selection_defaults
     assert_equal(MethodModel.instance_methods(true), MethodModel.ancestor_method_names(MethodModel).values.flatten.uniq)
     assert_equal(MethodModel.instance_methods(true), method_model_ancestor_names.values.flatten.uniq)
   end # ancestor_method_names
-	
-	def test_instance_method_models
-      ancestor = Merge
-			MethodModel.method_names(ancestor).map do |method_name|
-				refute_nil(method_name)
-        method_model = MethodModel.new(ancestor: ancestor, method_name: method_name, instance: true)
-				assert_instance_of(MethodModel, method_model)
-				assert_instance_of(Method, method_model.theMethod)
-				method_model
-			end.sort { |x, y| x.theMethod.arity <=> y.theMethod.arity && x.method_name.to_s <=> y.method_name.to_s } # map
-		merge_methods = MethodModel.instance_method_models(Merge)	
-	end # instance_method_models
+
+  def test_instance_method_models
+    ancestor = Merge
+    MethodModel.method_names(ancestor).map do |method_name|
+      refute_nil(method_name)
+      method_model = MethodModel.new(ancestor: ancestor, method_name: method_name, instance: true)
+      assert_instance_of(MethodModel, method_model)
+      assert_instance_of(Method, method_model.theMethod)
+      method_model
+    end.sort { |x, y| x.theMethod.arity <=> y.theMethod.arity && x.method_name.to_s <=> y.method_name.to_s } # map
+    merge_methods = MethodModel.instance_method_models(Merge)
+  end # instance_method_models
 
   def test_prototype_list
     prototype_list = MethodModel.method_names(MethodModel).map do |method_name|
@@ -216,9 +226,9 @@ end # apply_selection_defaults
     assert_match(/theMethod /, prototype_list.join)
     assert_match(/theMethod/, MethodModel.prototype_list(MethodModel, ancestor_qualifier: false, argument_delimeter: ' ').join("\n"))
     #    assert_match(/catfish /, MethodModel.prototype_list(MethodModel).join)
-    
-		merge_methods = MethodModel.prototype_list(Merge, ancestor_qualifier: false, argument_delimeter: ' ').join("\n")
-		
+
+    merge_methods = MethodModel.prototype_list(Merge, ancestor_qualifier: false, argument_delimeter: ' ').join("\n")
+
     assert_match(/merge_down/, merge_methods)
   end # prototype_list
 
@@ -387,8 +397,8 @@ end # apply_selection_defaults
   end # inspect
 
   def test_prototype
-    assert_equal("MethodModel#inspect()", Instance_method_inspect.prototype)
-    assert_equal("method_names arg ...",
+    assert_equal('MethodModel#inspect()', Instance_method_inspect.prototype)
+    assert_equal('method_names arg ...',
                  Class_method_method_names.prototype(ancestor_qualifier: false, argument_delimeter: ' '))
   end # prototype
 
@@ -470,22 +480,22 @@ require 'rgl/adjacency'
 require 'rgl/dot'
 # fom RGL readme
 class BoostGraphTest < TestCase
-    def module_graph
-      RGL::ImplicitGraph.new do |g|
-        g.vertex_iterator do |b|
-          ObjectSpace.each_object(Module, &b)
-        end
-        g.adjacent_iterator do |x, b|
-          x.ancestors.each do |y|
-            b.call(y) unless x == y || y == Kernel || y == Object
-          end
-        end
-        g.directed = true
+  def module_graph
+    RGL::ImplicitGraph.new do |g|
+      g.vertex_iterator do |b|
+        ObjectSpace.each_object(Module, &b)
       end
+      g.adjacent_iterator do |x, b|
+        x.ancestors.each do |y|
+          b.call(y) unless x == y || y == Kernel || y == Object
+        end
+      end
+      g.directed = true
     end
-    # This function creates a directed graph, with vertices being all loaded modules:
+  end
+  # This function creates a directed graph, with vertices being all loaded modules:
 
-	def test_module_graph
+  def test_module_graph
     g = module_graph
     # We only want to see the ancestors of {RGL::AdjacencyGraph}:
 
@@ -495,5 +505,5 @@ class BoostGraphTest < TestCase
 
     g = g.vertices_filtered_by { |v| tree.has_vertex? v }
     g.write_to_graphic_file('jpg')
-	end # module_graph
+  end # module_graph
 end # BoostGraph

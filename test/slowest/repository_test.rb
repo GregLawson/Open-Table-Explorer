@@ -8,7 +8,7 @@
 require_relative '../unit/test_environment'
 require_relative '../../test/assertions/repository_assertions.rb'
 class RepositoryTest < TestCase
-#  include DefaultTests
+  #  include DefaultTests
   include Repository::Examples
   def test_stage_file
     @temp_repo.force_change
@@ -18,13 +18,13 @@ class RepositoryTest < TestCase
     #	assert_pathname_exists(@temp_repo.path+'.git/logs/refs/')
     assert_pathname_exists(@temp_repo.path + 'README')
 
-#    @temp_repo.safely_visit_branch(:passed) do |changes_branch|
-#      @temp_repo.validate_commit(changes_branch, [@temp_repo.path + 'README'], :echo)
-#    end # safely_visit_branch
+    #    @temp_repo.safely_visit_branch(:passed) do |changes_branch|
+    #      @temp_repo.validate_commit(changes_branch, [@temp_repo.path + 'README'], :echo)
+    #    end # safely_visit_branch
 
-#    @temp_repo.stage_files(:passed, [@temp_repo.path + 'README'])
+    #    @temp_repo.stage_files(:passed, [@temp_repo.path + 'README'])
     @temp_repo.git_command('checkout passed') # .assert_post_conditions
-#    refute_equal(README_start_text + "\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
+    #    refute_equal(README_start_text + "\n", IO.read(Modified_path), "Modified_path=#{Modified_path}")
   end # stage_files
 
   def test_something_to_commit?

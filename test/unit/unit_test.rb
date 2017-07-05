@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2012-2016 by Greg Lawson                                      
+#    Copyright (C) 2012-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -7,11 +7,11 @@
 ###########################################################################
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../test/assertions/unit_assertions.rb'
-#DefaultTests=eval(RailsishRubyUnit::Executable.default_tests_module_name?)
-#TestCase=eval(RailsishRubyUnit::Executable.test_case_class_name?)
+# DefaultTests=eval(RailsishRubyUnit::Executable.default_tests_module_name?)
+# TestCase=eval(RailsishRubyUnit::Executable.test_case_class_name?)
 class UnitTest < TestCase
-#include DefaultTests
-include Unit::Examples
+  # include DefaultTests
+  include Unit::Examples
   def test_edit_files
     assert_instance_of(Array, Executable.edit_files)
     assert_kind_of(Pathname, Executable.edit_files[0])
@@ -39,9 +39,9 @@ include Unit::Examples
     assert_equal([:model, :unit, :assertions], Executable.edit_symbols)
   end # edit_symbols
 
-def test_not_symbols
+  def test_not_symbols
     assert_equal([:model, :unit, :script, :integration_test, :slowest_test, :slower_test, :interactive_test, :assertions, :assertions_test, :unit_log, :assertions_test_log, :long_log, :data_sources_dir, :integration_log], Executable.not_symbols)
-end # not_symbols
+  end # not_symbols
 
   def test_missing_symbols
     assert_equal([:script, :integration_test, :slowest_test, :slower_test, :interactive_test, :assertions_test, :unit_log, :assertions_test_log, :long_log, :data_sources_dir, :integration_log], Executable.missing_symbols)
@@ -74,6 +74,7 @@ end # not_symbols
   end # all
 
   def test_all_basenames
+    assert_include(FileUnit.all_basenames, :unit)
   end # all_basenames
 
   def test_data_source_directories
@@ -157,29 +158,37 @@ class RubyUnitTest < TestCase
     #	assert_equal(1, Unit.new('DefaultTestCase').default_test_class_id?)
   end # default_test_class_id
 
+	def test_test_types
+		test_directories = Dir['test/*']
+		test_types = test_directories.map {|directory_path| directory_path[5..-1].to_sym}
+		test_types -= [:assertions, :data_sources, :fixtures, :'assertions.rb'] # not tests
+		test_types += [:script]
+		assert_equal([:slowest, :slower, :interactive, :unit, :integration, :assertions, :script], test_types)
+		assert_equal(test_types, Unit.test_types)
+	end # test_types
+	
   def test_parallel_display
     parallel_display = UnitWithAssertions.parallel_display
     assert_instance_of(Hash, parallel_display)
     parallel_display.each_pair do |symbol, parallel_symbol|
-			assert_includes(FilePattern::Patterns.map { |pattern| pattern[:name] }, symbol)
-			assert_includes(FilePattern::Patterns.map { |pattern| pattern[:name] }, parallel_symbol)
+      assert_includes(FilePattern::Patterns.map { |pattern| pattern[:name] }, symbol)
+      assert_includes(FilePattern::Patterns.map { |pattern| pattern[:name] }, parallel_symbol)
     end # map
 
-		edit_files = UnitWithAssertions.edit_files
+    edit_files = UnitWithAssertions.edit_files
     refute_empty(edit_files, UnitWithAssertions.inspect)
-    edit_files.map do |file| 
-			assert_data_file(file)
-			symbol = FilePattern.find_name_from_path(file)
-			parallel_symbol = UnitWithAssertions.parallel_display[symbol]
-			if parallel_symbol.nil?
-				nil
-			else
-				assert_instance_of(Symbol, parallel_symbol)
-				assert_includes(FilePattern::Patterns.map { |pattern| pattern[:name] }, parallel_symbol, symbol)
-				parallel_file = UnitWithAssertions.pathname_pattern?(parallel_symbol)
-				assert_data_file(parallel_file)
-			end # if
-				
+    edit_files.map do |file|
+      assert_data_file(file)
+      symbol = FilePattern.find_name_from_path(file)
+      parallel_symbol = UnitWithAssertions.parallel_display[symbol]
+      if parallel_symbol.nil?
+        nil
+      else
+        assert_instance_of(Symbol, parallel_symbol)
+        assert_includes(FilePattern::Patterns.map { |pattern| pattern[:name] }, parallel_symbol, symbol)
+        parallel_file = UnitWithAssertions.pathname_pattern?(parallel_symbol)
+        assert_data_file(parallel_file)
+      end # if
     end.compact # map
     assert_operator(Executable.parallel_display.size, :>=, 1)
     assert_operator(Executable.parallel_display.size, :<=, 6)
@@ -191,6 +200,14 @@ class RubyUnitTest < TestCase
     assert_operator(Executable.default_test_class_id?, :<=, tested_files.size)
   end # tested_files
 
+	def test_tested_symbols
+    assert_equal([:model, :unit], Executable.tested_symbols(:unit))
+    assert_equal([:model, :script], Executable.tested_symbols(:script))
+#!    assert_equal([:model, :assertions], Executable.tested_symbols(:assertions))
+    assert_equal([:model, :integration_test], Executable.tested_symbols(:integration_test))
+    assert_equal([:assertions, :assertions_test, :model], Executable.tested_symbols(:assertions_test))
+	end # tested_symbols
+	
   def test_compare
     assert_equal(0, Not_unit <=> Not_unit)
     assert_equal(nil, Not_rooted <=> Not_rooted) # never happen in real life?
@@ -256,20 +273,21 @@ class RubyUnitTest < TestCase
 end # Unit
 
 class RubyUnitTest < TestCase
-	def test_RubyUnit_virtus_values
+  def test_RubyUnit_virtus_values
   end # values
+
   def test_default_tests_module_name?
-		assert_equal(:DefaultTests0, RubyUnit::Self.default_tests_module_name?)
+    assert_equal(:DefaultTests0, RubyUnit::Self.default_tests_module_name?)
   end # default_tests_module?
 
   def test_case_class_name?
-	assert_equal(:RubyUnitTest, RubyUnit::Self.test_class_name)
+    assert_equal(:RubyUnitTest, RubyUnit::Self.test_class_name)
   end # test_case_class?
 
   def test_test_class_name
-	assert_equal(:ruby_unit, RubyUnit::Self.model_basename)
-	assert_equal(:RubyUnit, RubyUnit::Self.model_class_name)
-	assert_equal(:RubyUnitTest, RubyUnit::Self.test_class_name)
+    assert_equal(:ruby_unit, RubyUnit::Self.model_basename)
+    assert_equal(:RubyUnit, RubyUnit::Self.model_class_name)
+    assert_equal(:RubyUnitTest, RubyUnit::Self.test_class_name)
   end # test_class_name
 
   def test_test_class

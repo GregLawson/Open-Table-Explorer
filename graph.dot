@@ -1,55 +1,126 @@
-digraph RGL__DirectedAdjacencyGraph {
-    1 [
+digraph RGL__ImplicitGraph {
+    Enumerable [
         fontsize = 8,
-        label = 1
+        label = Enumerable
     ]
 
-    2 [
+    BasicObject [
         fontsize = 8,
-        label = 2
+        label = BasicObject
     ]
 
-    3 [
+    "JSON::Ext::Generator::GeneratorMethods::Object" [
         fontsize = 8,
-        label = 3
+        label = "JSON::Ext::Generator::GeneratorMethods::Object"
     ]
 
-    4 [
+    "Test::Unit::Assertions" [
         fontsize = 8,
-        label = 4
+        label = "Test::Unit::Assertions"
     ]
 
-    5 [
+    "RGL::AdjacencyGraph" [
         fontsize = 8,
-        label = 5
+        label = "RGL::AdjacencyGraph"
     ]
 
-    6 [
+    "RGL::DirectedAdjacencyGraph" [
         fontsize = 8,
-        label = 6
+        label = "RGL::DirectedAdjacencyGraph"
     ]
 
-    1 -> 2 [
+    "RGL::MutableGraph" [
+        fontsize = 8,
+        label = "RGL::MutableGraph"
+    ]
+
+    "RGL::Graph" [
+        fontsize = 8,
+        label = "RGL::Graph"
+    ]
+
+    "RGL::Edge" [
+        fontsize = 8,
+        label = "RGL::Edge"
+    ]
+
+    "RGL::AdjacencyGraph" -> "RGL::DirectedAdjacencyGraph" [
         fontsize = 8
     ]
 
-    1 -> 6 [
+    "RGL::AdjacencyGraph" -> "RGL::MutableGraph" [
         fontsize = 8
     ]
 
-    2 -> 3 [
+    "RGL::AdjacencyGraph" -> "RGL::Graph" [
         fontsize = 8
     ]
 
-    2 -> 4 [
+    "RGL::AdjacencyGraph" -> "RGL::Edge" [
         fontsize = 8
     ]
 
-    4 -> 5 [
+    "RGL::AdjacencyGraph" -> Enumerable [
         fontsize = 8
     ]
 
-    6 -> 4 [
+    "RGL::AdjacencyGraph" -> "Test::Unit::Assertions" [
+        fontsize = 8
+    ]
+
+    "RGL::AdjacencyGraph" -> "JSON::Ext::Generator::GeneratorMethods::Object" [
+        fontsize = 8
+    ]
+
+    "RGL::AdjacencyGraph" -> BasicObject [
+        fontsize = 8
+    ]
+
+    "RGL::DirectedAdjacencyGraph" -> "RGL::MutableGraph" [
+        fontsize = 8
+    ]
+
+    "RGL::DirectedAdjacencyGraph" -> "RGL::Graph" [
+        fontsize = 8
+    ]
+
+    "RGL::DirectedAdjacencyGraph" -> "RGL::Edge" [
+        fontsize = 8
+    ]
+
+    "RGL::DirectedAdjacencyGraph" -> Enumerable [
+        fontsize = 8
+    ]
+
+    "RGL::DirectedAdjacencyGraph" -> "Test::Unit::Assertions" [
+        fontsize = 8
+    ]
+
+    "RGL::DirectedAdjacencyGraph" -> "JSON::Ext::Generator::GeneratorMethods::Object" [
+        fontsize = 8
+    ]
+
+    "RGL::DirectedAdjacencyGraph" -> BasicObject [
+        fontsize = 8
+    ]
+
+    "RGL::MutableGraph" -> "RGL::Graph" [
+        fontsize = 8
+    ]
+
+    "RGL::MutableGraph" -> "RGL::Edge" [
+        fontsize = 8
+    ]
+
+    "RGL::MutableGraph" -> Enumerable [
+        fontsize = 8
+    ]
+
+    "RGL::Graph" -> "RGL::Edge" [
+        fontsize = 8
+    ]
+
+    "RGL::Graph" -> Enumerable [
         fontsize = 8
     ]
 }

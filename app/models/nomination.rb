@@ -30,6 +30,7 @@ require_relative '../../app/models/shell_command.rb'
 require_relative '../../app/models/branch.rb'
 require_relative '../../app/models/ruby_lines_storage.rb'
 require_relative '../../app/models/stash.rb'
+require_relative '../../app/models/unit_maturity.rb'
 # ! require_relative 'editor.rb'
 
 class Nomination < Dry::Types::Value
@@ -46,21 +47,19 @@ class Nomination < Dry::Types::Value
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
-  attribute :commit, NamedCommit # nil means working directory (to be stash)
+  attribute :changes_commit, NamedCommit # nil means working directory (to be stash)
   attribute :target_branch, Types::Strict::Symbol.default(:edited) # nil means working directory (to be stash)
   attribute :unit_name, Types::Strict::Symbol
   attribute :test_type, Types::Strict::Symbol
+	attribute :interactive, Types::Strict::Symbol.default(:interactive) # non-defaults are primarily for non-interactive testing
+
 
   module Constructors # such as alternative new methods
     include DefinitionalConstants
 		
     def nominate(test_executable)
-      Nomination.new(commit: NamedCommit::Working_tree, target_branch: :edited, unit_name: test_executable.unit.model_basename, test_type: test_executable.test_type)
+      Nomination.new(changes_commit: NamedCommit::Working_tree, target_branch: :edited, unit_name: test_executable.unit.model_basename, test_type: test_executable.test_type, interactive: :interactive)
     end # nominate
-
-    def pending(repository)
-      [Nomination::Self]
-    end # pending
 
     def dirty_unit_chunks(repository)
       units = repository.status.group_by do |file_status|
@@ -81,53 +80,64 @@ class Nomination < Dry::Types::Value
       end # group_by
     end # dirty_unit_chunks
 
-    def dirty_test_executables
-      dirty_unit_chunks.map do |lookup|
-        next if lookup.nil?
-        test_executable = TestExecutable.new_from_path(file_status.file)
-        testable = test_executable.generatable_unit_file?
-        if testable
-          test_executable # find unique
-        end # if
-        # unless
-      end # map
+    def dirty_test_executables(repository)
+    dirty_unit_chunks = Nomination.dirty_unit_chunks(repository)
+		test_executables = dirty_unit_chunks.keys.map do |unit_name|
+      dirty_unit_chunks[unit_name].map do |file_status|
+				if file_status.log_file? 
+					if dirty_unit_chunks[unit_name].size == 1
+					end # if
+				elsif file_status.work_tree == :ignore
+				elsif unit_name == :non_unit
+				else
+						test_executable = TestExecutable.new_from_path(file_status.file)
+						testable = test_executable.generatable_unit_file?
+						if testable
+							test_executable # find unique
+						end # if
+				end # if
+			end.compact # map
+    end.flatten # chunk
     end # dirty_test_executables
 
+		def dirty_test_maturities(repository)
+			Nomination.dirty_test_executables(repository).map do |test_executable|
+				dirty_test_maturity = TestMaturity.new(version: NamedCommit::Working_tree, test_executable: test_executable)
+				state = dirty_test_maturity.read_state
+			end # map
+		end # dirty_test_maturities
+		
+    def pending(repository)
+#!			dirty_test_maturities(repository).each do |test_executable|
+#!				nominate(test_executable)
+#!			end # each
+      [Nomination::Self]
+    end # pending
+
 	def clean_directory_apply_pending(repository)
-		pending(repository).each(&:apply) # each
+		nominations = pending(repository)[0,1] # only one until reliably debugged
+		nominations.each(&:apply) # each only one for now
 	end # clean_directory_apply_pending
 	
-	def safely_visit_branch(repository, &block)
-		if repository.something_to_commit?
-			Stash.wip!(repository)
-			block.call(repository)
-			Stash.pop!(repository)
-			
-		else
-			block.call(repository)
-		end # if
-	end # safely_visit_branch
 
 	def apply_pending(repository)
-		safely_visit_branch(repository) {|repository| clean_directory_apply_pending(repository)}
+		Stash.safely_visit_branch(:edited, repository) {|repository| clean_directory_apply_pending(repository)}
 	end # apply_pending
-
   end # Constructors
-
   extend Constructors
 
   module ReferenceObjects # example constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
-    TestTestExecutable = Nomination.new(commit: NamedCommit::Working_tree, target_branch: :edited, unit_name: TestExecutable::Examples::TestTestExecutable.unit.model_basename, test_type: TestExecutable::Examples::TestTestExecutable.test_type)
-    Self = Nomination.new(commit: NamedCommit::Working_tree, target_branch: :edited, unit_name: RailsishRubyUnit::Executable.model_basename, test_type: :unit)
+    TestTestExecutable = Nomination.new(changes_commit: NamedCommit::Working_tree, target_branch: :edited, unit_name: TestExecutable::Examples::TestTestExecutable.unit.model_basename, test_type: TestExecutable::Examples::TestTestExecutable.test_type, interactive: :interactive)
+    Self = Nomination.new(changes_commit: NamedCommit::Working_tree, target_branch: :edited, unit_name: RailsishRubyUnit::Executable.model_basename, test_type: :unit, interactive: :interactive)
   end # ReferenceObjects
   include ReferenceObjects
 
-    def apply
-    end # apply
+  def stage_files(changes_branch, target_branch, files)
+  end # stage_files
 
 	def repository
-		@commit.repository
+		@changes_commit.repository # cross repository action not implemented (yet?)
 	end # repository
 
 	def unit
@@ -135,12 +145,62 @@ class Nomination < Dry::Types::Value
 	end # unit
 	
 	def test_executable_path
-		unit.pathname_pattern?(file_spec, test = nil)
+		unit.pathname_pattern?(@test_type) # , test = nil)
 	end # test_executable_path
 
 	def test_executable
 		TestExecutable.new_from_path(test_executable_path, @test_type, repository)
 	end # test_executable
+	
+	def files_to_stage
+		unit.tested_symbols(@test_type).map{|file_symbol| unit.pathname_pattern?(file_symbol) }
+	end # files_to_stage
+	
+  def confirm_commit
+    if repository.something_to_commit?
+      case @interactive
+      when :interactive then
+        cola_run = repository.git_command('cola')
+        cola_run = cola_run.tolerate_status_and_error_pattern(0, /Warning/)
+        repository.git_command('rerere')
+        cola_run # .assert_post_conditions
+        unless repository.something_to_commit?
+          #				repository.git_command('cola rebase '+repository.current_branch_name?.to_s)
+        end # if
+      when :echo then
+      when :staged then
+        repository.git_command('commit ').assert_post_conditions
+      when :all then
+        repository.git_command('add . ').assert_post_conditions
+        repository.git_command('commit ').assert_post_conditions
+      else
+        raise 'Unimplemented option @interactive = ' + @interactive.inspect + "\n" + inspect
+      end # case
+    end # if
+    puts 'confirm_commit(' + @interactive.inspect + ' repository.something_to_commit?=' + repository.something_to_commit?.inspect
+  end # confirm_commit
+
+  def validate_commit # commit to target_branch
+    files_to_stage.each do |p|
+      puts p.inspect if $VERBOSE
+      repository.git_command(['checkout', @changes_commit.to_s, p])
+    end # each
+    if repository.something_to_commit?
+      confirm_commit
+      #		repository.git_command('rebase --autosquash --interactive')
+    end # if
+  end # validate_commit
+
+	def stage_test_executable
+#!		@changes_commit.repository.stage_files(@changes_commit, @target_branch, unit.tested_symbols(@test_type).map{|file_symbol| unit.pathname_pattern?(file_symbol) })
+      validate_commit(changes_commit, files_to_stage)
+		TestRun.new(test_executable) # recursive_danger!?
+	end # stage_test_executable
+
+	def apply
+		stage_test_executable(@unit)
+	end # apply
+
 
   require_relative '../../app/models/assertions.rb'
 
@@ -177,6 +237,11 @@ class Nomination < Dry::Types::Value
         #	assert_nested_and_included(:ClassMethods, self)
         #	assert_nested_and_included(:Constants, self)
         #	assert_nested_and_included(:Assertions, self)
+				assert_respond_to(Nomination, :nominate, Nomination.methods(false))
+				assert_include(Nomination.methods, :nominate)
+				assert_respond_to(Nomination::Self, :changes_commit, Nomination.instance_methods(false))
+				assert_include(Nomination.instance_methods(false), :changes_commit)
+				refute_nil(Nomination::Self.changes_commit.repository, Nomination::Self.inspect)
         self
       end # assert_pre_conditions
 
@@ -188,7 +253,7 @@ class Nomination < Dry::Types::Value
 
     def assert_pre_conditions(message = '')
       message += "In assert_pre_conditions, self=#{inspect}"
-      assert_instance_of(Symbol, @commit)
+      assert_instance_of(Symbol, @changes_commit)
       assert_instance_of(Symbol, @unit_name)
       assert_instance_of(Symbol, @test_type)
       self # return for command chaining
@@ -201,5 +266,4 @@ class Nomination < Dry::Types::Value
   end # Assertions
   include Assertions
   extend Assertions::ClassMethods
-  # self.assert_pre_conditions
 end # Nomination

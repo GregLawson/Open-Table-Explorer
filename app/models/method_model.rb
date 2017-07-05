@@ -1,16 +1,50 @@
 ###########################################################################
-#    Copyright (C) 2013-2016 by Greg Lawson
+#    Copyright (C) 2013-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
+# require_relative '../../app/models/no_db.rb'
+require 'virtus'
 require 'dry-types'
 module Types
-	include Dry::Types.module
+  include Dry::Types.module
 end # Types
 
-# require_relative '../../app/models/no_db.rb'
+class Module # monkey patch
+  def module_name
+    if name.nil?
+      inspect
+    else
+      name.to_sym
+    end # if
+  end # module_name
+
+  def included_module_names
+    included_modules.map do |m|
+      if m.name.nil?
+        m.inspect
+      else
+        m.name.to_sym
+      end # if
+    end # map
+      end # included_module_names
+
+  def nested_scope_modules
+    nested_constants = constants.map do |m|
+      trial_eval = eval(name.to_s + '::' + m.to_s)
+      if trial_eval.is_a?(Module)
+        trial_eval
+      end # if
+    end.compact # map
+      end # nested_scope_modules
+
+  def nested_scope_module_names
+    nested_scope_modules.map(&:module_name)
+      end # nested_scope_module_names
+end # Module
+
 class Method # monkey patch
   def default_arguments?
     if arity < 0
@@ -102,7 +136,7 @@ class MethodModel # <ActiveRecord::Base
     def instance_method_models(ancestor)
       MethodModel.method_names(ancestor).map do |method_name|
         method_model = MethodModel.new(ancestor: ancestor, method_name: method_name, instance: true)
-      end.sort { |x, y|  x.method_name.to_s <=> y.method_name.to_s } # map
+      end.sort { |x, y| x.method_name.to_s <=> y.method_name.to_s } # map
     end # instance_method_models
 
     def prototype_list(ancestor, _options = { ancestor_qualifier: true, argument_delimeter: '(' })
@@ -195,7 +229,7 @@ class MethodModel # <ActiveRecord::Base
           puts "exc=#{exc}, object=#{object.inspect}"
         end # begin
       end # select
-			nil # no object found, new has side effects
+      nil # no object found, new has side effects
     end # method_query
 
     def constantized
@@ -275,29 +309,29 @@ class MethodModel # <ActiveRecord::Base
     end # if
     ret += @method_name.to_s
     method = theMethod
-		if method.nil?
-			ret += ' method object not found.'
-		else
-			ret += options[:argument_delimeter]
-			ret += (['arg'] * method.required_arguments).join(' ')
-			ret += (method.default_arguments? ? ' ...' : '')
-			ret += if options[:argument_delimeter] == '('
-							 ')'
-						 else
-							 ''
-							end # if')'
-		end # if
+    if method.nil?
+      ret += ' method object not found.'
+    else
+      ret += options[:argument_delimeter]
+      ret += (['arg'] * method.required_arguments).join(' ')
+      ret += (method.default_arguments? ? ' ...' : '')
+      ret += if options[:argument_delimeter] == '('
+               ')'
+             else
+               ''
+              end # if')'
+    end # if
   end # prototype
 
   def theMethod
-    if @instance  # look it up! Why? Beause can't create fully? Existence check?
+    if @instance # look it up! Why? Beause can't create fully? Existence check?
       method_query = MethodModel.method_query(@method_name.to_sym, @ancestor)
-			if method_query.nil?
-				message = 'method_query is nil. method_name = ' + @method_name.to_s + ', ancestor = ' + @ancestor.inspect
-				raise Exception.new(message)
-			else
-				method_query
-			end # if
+      if method_query.nil?
+        message = 'method_query is nil. method_name = ' + @method_name.to_s + ', ancestor = ' + @ancestor.inspect
+        raise Exception.new(message)
+      else
+        method_query
+      end # if
     else
       @ancestor.method(@method_name.to_sym)
     end # if
@@ -368,9 +402,9 @@ class MethodModel # <ActiveRecord::Base
     module ClassMethods
       def assert_pre_conditions(message = '')
         message += "In assert_pre_conditions, self=#{inspect}"
-        #	asset_nested_and_included(:ClassMethods, self)
-        #	asset_nested_and_included(:Constants, self)
-        #	asset_nested_and_included(:Assertions, self)
+        #	assert_nested_and_included(:ClassMethods, self)
+        #	assert_nested_and_included(:Constants, self)
+        #	assert_nested_and_included(:Assertions, self)
         self
       end # assert_pre_conditions
 

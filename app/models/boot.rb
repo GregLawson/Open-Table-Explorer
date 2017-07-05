@@ -27,26 +27,26 @@ class Boot
         Menuentry_id_option_regexp = /\$menuentry_id_option / * /\'osprober-gnulinux-/ * Vmlinuz_regexp * /--/ * Uuid_regexp * /\'/
         Menuentry_regexp = Menuentry_name_regexp * Classes_regexp * Menuentry_id_option_regexp
         Kernel_options_regexp = / ro / * /quiet|single/.capture(:single) * / init=\/lib\/sysvinit\/init/.group * Regexp::Optional
-        Boot_line_regexp_array = [Regexp::Start_string * /\t{1,3}/.capture(:indent) * /linux /, Vmlinuz_regexp, / root=UUID=/,  Uuid_regexp, Kernel_options_regexp]
-        Full_regexp_array =  Boot_line_regexp_array + [ /\n\t/ * Menuentry_regexp * / / * Terminator]
+        Boot_line_regexp_array = [Regexp::Start_string * /\t{1,3}/.capture(:indent) * /linux /, Vmlinuz_regexp, / root=UUID=/, Uuid_regexp, Kernel_options_regexp].freeze
+        Full_regexp_array = Boot_line_regexp_array + [/\n\t/ * Menuentry_regexp * / / * Terminator]
         Full_regexp = Regexp[Full_regexp_array]
-        #	full_regexp = Start_string * /\tlinux / * vmlinuz_regexp * / root=UUID=/ * uuid_regexp * / ro quiet\n\tmenuentry 'Debian GNU\/Linux (on /dev/sda10)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/vmlinuz-4.6.0-1-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac' {\n/
+          #	full_regexp = Start_string * /\tlinux / * vmlinuz_regexp * / root=UUID=/ * uuid_regexp * / ro quiet\n\tmenuentry 'Debian GNU\/Linux (on /dev/sda10)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/vmlinuz-4.6.0-1-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac' {\n/
         end # Grub
-        include Grub
+      include Grub
       end # Regexp
-      module Acquisitions
-        Run_levels = ShellCommands.new('/sbin/runlevel')
-        Init_default = ShellCommands.new('grep initdefault /etc/inittab')
-        Is_system_running = ShellCommands.new('systemctl is-system-running')
-        Uname = ShellCommands.new('uname -a')
-        Boot_history_command_string = 'zgrep --no-filename -P "Command line: " /var/log/messages* >>test/data_sources/messages/kernel_boot && sudo chown greg test/data_sources/messages/kernel_boot'
-        Systemd_targets = ShellCommands.new('systemctl --plain --no-legend')
-      end # Acquisitions
-      include Regexps
-      include Acquisitions
+    module Acquisitions
+      Run_levels = ShellCommands.new('/sbin/runlevel')
+      Init_default = ShellCommands.new('grep initdefault /etc/inittab')
+      Is_system_running = ShellCommands.new('systemctl is-system-running')
+      Uname = ShellCommands.new('uname -a')
+      Boot_history_command_string = 'zgrep --no-filename -P "Command line: " /var/log/messages* >>test/data_sources/messages/kernel_boot && sudo chown greg test/data_sources/messages/kernel_boot'.freeze
+      Systemd_targets = ShellCommands.new('systemctl --plain --no-legend')
+    end # Acquisitions
+    include Regexps
+    include Acquisitions
   end # DefinitionalConstants
   include DefinitionalConstants
-	
+
   module DefinitionalClassMethods
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
@@ -56,29 +56,28 @@ class Boot
     #	attribute :age, Fixnum, :default => 789
     #	attribute :timestamp, Time, :default => Time.now
   end # values
-	
-	def state
-		
-	end # state
-	
+
+  def state
+  end # state
+
   module Constructors # such as alternative new methods
     include DefinitionalConstants
   end # Constructors
   extend Constructors
-	
+
   module ReferenceObjects # constant objects of the type (e.g. default_objects)
     include DefinitionalConstants
   end # ReferenceObjects
   include ReferenceObjects
-	
+
   require_relative '../../app/models/assertions.rb'
   module Assertions
     module ClassMethods
       def assert_pre_conditions(message = '')
         message += "In assert_pre_conditions, self=#{inspect}"
-        #	asset_nested_and_included(:ClassMethods, self)
-        #	asset_nested_and_included(:Constants, self)
-        #	asset_nested_and_included(:Assertions, self)
+        #	assert_nested_and_included(:ClassMethods, self)
+        #	assert_nested_and_included(:Constants, self)
+        #	assert_nested_and_included(:Assertions, self)
         self
       end # assert_pre_conditions
 
@@ -104,7 +103,7 @@ class Boot
   module Examples # usually constant objects of the type (easy to understand (perhaps impractical) examples for testing)
     include DefinitionalConstants
     include ReferenceObjects
-		Grubs_run = ShellCommands.new('grep "linux .*/vmlinu" /boot/grub/grub.cfg')
-		One_menu_entry = "\tlinux /vmlinuz-4.6.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet\n\tmenuentry 'Debian GNU/Linux (on /dev/sda10)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/vmlinuz-4.6.0-1-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac' {\n"
+    Grubs_run = ShellCommands.new('grep "linux .*/vmlinu" /boot/grub/grub.cfg')
+    One_menu_entry = "\tlinux /vmlinuz-4.6.0-1-amd64 root=UUID=976bed30-38d8-43a3-a4d4-6869fb636fcb ro quiet\n\tmenuentry 'Debian GNU/Linux (on /dev/sda10)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/vmlinuz-4.6.0-1-amd64--51e0851a-6300-4d9a-b27e-e4a5b5db7bac' {\n".freeze
   end # Examples
 end # Boot

@@ -113,16 +113,20 @@ class StashTest < TestCase
 		need_stash = repository.something_to_commit? && start_branch != target_branch
 		assert(repository.something_to_commit?)
     target_branch = :passed
-    assert_equal(start_branch, Stash.safely_visit_branch(repository, start_branch) { start_branch })
-    assert_equal(start_branch, Stash.safely_visit_branch(repository, start_branch) { Branch.current_branch_name?(@temp_repo) })
+    assert_equal(start_branch, Stash.safely_visit_branch(start_branch, repository) { start_branch })
+    assert_equal(start_branch, Stash.safely_visit_branch(start_branch, repository) { Branch.current_branch_name?(@temp_repo) })
     target_branch = :master
     checkout_target = @temp_repo.git_command("checkout #{target_branch}")
     #		assert_equal("Switched to branch '#{target_branch}'\n", checkout_target.errors)
     target_branch = :passed
-#!    assert_equal(target_branch, Stash.safely_visit_branch(repository, target_branch) { Branch.current_branch_name?(@temp_repo) })
-    Stash.safely_visit_branch(repository, target_branch) do
+    where_am_I = Stash.safely_visit_branch(target_branch, repository) do
+			assert_equal({target_branch: target_branch, repository: @temp_repo}, {target_branch: target_branch, repository: repository})
+			assert_equal(target_branch, Branch.current_branch_name?(@temp_repo))
       Branch.current_branch_name?(@temp_repo)
     end #
+		assert_instance_of(ShellCommands, where_am_I)
+		assert_equal(target_branch, where_am_I, where_am_I.ruby_lines_storage)
+    assert_equal(target_branch, Stash.safely_visit_branch(target_branch, repository) { Branch.current_branch_name?(@temp_repo) })
   end # safely_visit_branch
 
   def test_stash_and_checkout
@@ -240,9 +244,18 @@ class StashTest < TestCase
 	end # refine
 			
 	def test_assert_safely_visit_branch
-#!		Stash.assert_safely_visit_branch(@temp_repo, Branch.current_branch_name?(@temp_repo))
-		Stash.assert_safely_visit_branch(@temp_repo, Branch.current_branch_name?(@temp_repo)){|repository, target_branch| repository.force_change}
-		Stash.assert_safely_visit_branch(@temp_repo, :passed){|repository| repository.force_change}
+#!		Stash.assert_safely_visit_branch(Branch.current_branch_name?(@temp_repo), @temp_repo)
+		Stash.assert_safely_visit_branch(Branch.current_branch_name?(@temp_repo), @temp_repo){|target_branch, repository| puts 'target_branch = ' + target_branch.inspect + ' repository = ' + repository.inspect}
+		assert_equal(:master, Branch.current_branch_name?(@temp_repo), @temp_repo){|target_branch, repository| {target_branch: target_branch, repository: repository}[:target_branch] }
+		refute_nil(@temp_repo)
+		echo_proc = ->(target_branch, repository){{target_branch: target_branch, repository: repository} }
+		echo = Stash.safely_visit_branch(Branch.current_branch_name?(@temp_repo), @temp_repo, echo_proc)
+		echo_assertion = Stash.assert_safely_visit_branch(Branch.current_branch_name?(@temp_repo), @temp_repo, echo_proc)
+		assert_equal(echo, echo_assertion)
+		assert_equal(@temp_repo, Branch.current_branch_name?(@temp_repo), @temp_repo){|target_branch, repository| {target_branch: target_branch, repository: repository}[:repository] }
+		Stash.assert_safely_visit_branch(Branch.current_branch_name?(@temp_repo), @temp_repo){|target_branch, repository| {target_branch: target_branch, repository: repository} }
+		Stash.assert_safely_visit_branch(Branch.current_branch_name?(@temp_repo), @temp_repo){|target_branch, repository| repository.force_change}
+		Stash.assert_safely_visit_branch(:passed, @temp_repo){|repository| repository.force_change}
 	end # assert_safely_visit_branch
 
   def test_assert_pre_conditions

@@ -95,14 +95,10 @@ class Stash < NamedCommit
     checkout_branch # for command chaining
   end # confirm_branch_switch
 
-  def need_stash(repository, target_branch)
-		repository.something_to_commit? && start_branch != target_branch
-	end # need_stash
-	
 	# This is safe in the sense that a stash saves all files
   # and a stash apply restores all tracked files
   # safe is meant to mean no files or changes are lost or buried.
-	def safely_visit_branch(repository, target_branch, &block)
+	def safely_visit_branch(target_branch, repository, &block)
     start_branch = Branch.current_branch_name?(repository)
 		if repository.something_to_commit?
 			Stash.stash_and_checkout(target_branch, repository)
@@ -117,13 +113,14 @@ class Stash < NamedCommit
       ret = yield(start_branch)
 		end # if
     ret
-	rescue Exception => exception_raised
-			unless repository.something_to_commit?
-				confirm_branch_switch(start_branch, repository)
-				Stash.pop!(repository)
-			else
-				raise exception_raised
-			end # unless
+#!	rescue Exception => exception_raised
+#!		puts exception_raised.inspect
+#!			unless repository.something_to_commit?
+#!				confirm_branch_switch(start_branch, repository)
+#!				Stash.pop!(repository)
+#!			else
+#!				raise exception_raised
+#!			end # unless
   end # safely_visit_branch
 
   def stash_and_checkout(target_branch, repository)
@@ -191,9 +188,9 @@ class Stash < NamedCommit
 				refinement = capture.priority_refinements
 			end # refine
 			
-			def assert_safely_visit_branch(repository, target_branch, &block)
+			def assert_safely_visit_branch(target_branch, repository, &block)
 				start_state = repository.status
-				safely_visit_branch(repository, target_branch, &block)
+				safely_visit_branch(target_branch, repository, &block)
 				assert_equal(start_state, repository.status)
 			end # assert_safely_visit_branch
 

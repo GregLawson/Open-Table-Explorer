@@ -10,6 +10,8 @@ require_relative '../../app/models/regexp.rb'
 # require_relative '../../app/models/stream_tree.rb'
 require_relative '../../app/models/regexp_parse.rb'
 require_relative '../../app/models/generic_column.rb'
+
+
 # encapsulates the difference between parsing from MatchData and from Array#split
 # regexp are Regexp not Arrays or Strings (see String#parse)
 class String
@@ -34,23 +36,13 @@ class MatchRefinement < Array
 			when :scattered then 4
 			end # case
 		end # minimum_refinements
-
-    def suggest_name_value(string, name_regexp = /[A-Za-z]+/, delimiter_regexp = /[ =,; \t\n]/, value_regexp = /[0-9]+/)
-      name_value_pair_regexp = name_regexp.capture(:name) * delimiter_regexp.capture(:delimiter) * value_regexp.capture(:value) * /[\ \n]/
-      name_value_pairs = SplitCapture.new(string: string, regexp: name_value_pair_regexp).output
-      suggestion = name_value_pairs.map do |pair|
-        name = pair[:name]
-        value = pair[:value]
-        value_regexp.inspect + '.capture(:' + name + ')'
-      end # map
-    end # suggest
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 
   module Constructors
     def [](*array)
-      MatchRefinement.new(array.reject { |e| e == '' || e.nil? || (e.instance_of?(MatchCapture) && e.string == '') }) # remove empty strings as uninteresting
-    end # []
+      MatchRefinement.new(array.reject { |e|  e.nil? || (e.instance_of?(MatchCapture) && e.string == '') }) # remove empty strings as uninteresting
+		end # MatchRefinement[]
   end # Constructors
   extend Constructors
 
@@ -73,12 +65,20 @@ class MatchRefinement < Array
           if refinement.regexp.nil?
             'regexp is nil'
           elsif refinement.success?
-            refinement.matched_characters.to_literal +
-              ' matched by ' + refinement.regexp.to_literal +
-              ' captures ' + refinement.output.inspect
-          else
-            refinement.matched_characters.to_literal +
-              ' not matched by ' + refinement.regexp.to_literal
+            if refinement.matched_characters == ''
+								'no characters matched by optional? ' + refinement.regexp.to_literal
+						else
+							refinement.matched_characters.to_literal +
+								' matched by ' + refinement.regexp.to_literal +
+								' captures ' + refinement.output.inspect
+						end # if
+          else # not success
+            if refinement.string == ''
+								'no characters matched by optional? ' + refinement.regexp.to_literal
+						else
+							refinement.string.to_literal +
+								' not matched by ' + refinement.regexp.to_literal
+						end # if
           end # if
         elsif refinement.is_a?(SplitCapture)
           if refinement.regexp.nil?
@@ -104,7 +104,11 @@ class MatchRefinement < Array
   def join # reconstruct both matched and unmatched source string
     map do |refinement|
       if refinement.is_a?(MatchCapture)
-        refinement.matched_characters
+				if refinement.success?
+					refinement.matched_characters
+				else
+					refinement.string # maybe repeated, messing up join == string
+				end # if
 
       elsif refinement.instance_of?(String)
         refinement
@@ -211,12 +215,13 @@ class MatchRefinement < Array
       message += "In assert_pre_conditions, self=#{inspect}"
       assert_kind_of(Array, self)
       each do |refinement|
+				message += 'refinement = ' + refinement.inspect
         if refinement.is_a?(MatchCapture)
           refute_equal(0, refinement.matched_characters)
           #					assert(refinement.success?, refinement.inspect)
           assert_instance_of(String, refinement.matched_characters)
         elsif refinement.is_a?(String)
-          refute_equal(0, refinement.size)
+#!          refute_equal(0, refinement.size, message)
         elsif refinement.is_a?(Array)
           refute_instance_of(Array, refinement, inspect)
         elsif refinement.instance_of?(NilClass)
@@ -318,6 +323,16 @@ class Capture
         symbolize_keys
       end # if
     end # symbolize_keys
+
+    def suggest_name_value(string, name_regexp = /[A-Za-z]+/, delimiter_regexp = /[ =,; \t\n]/, value_regexp = /[0-9]+/)
+      name_value_pair_regexp = name_regexp.capture(:name) * delimiter_regexp.capture(:delimiter) * value_regexp.capture(:value) * /[\ \n]/
+      name_value_pairs = SplitCapture.new(string: string, regexp: name_value_pair_regexp).output
+      suggestion = name_value_pairs.map do |pair|
+        name = pair[:name]
+        value = pair[:value]
+        value_regexp.inspect + '.capture(:' + name + ')'
+      end # map
+    end # suggest_name_value
 
     def sequential_matches(unmatched, regexp_array)
       capture = unmatched[-1].capture?(regexp_array[0], MatchCapture)
@@ -670,45 +685,57 @@ class RawCapture < Capture
     named_hash
   end # named_hash
 
-  def narrow_refinement(single_regexp)
-    if @string.empty?
-      MatchRefinement[] # recursive termination condition
-    else
-      capture = MatchCapture.new(string: @string, regexp: single_regexp)
-      if capture.success?
-        MatchRefinement[
-          capture.pre_match,
-          capture, # .matched_characters available for narrow inspect
-          capture.post_match
-        ]
+	def remaining_regexes
+		if @regexp.instance_of?(Array)
+			@regexp
+		else
+			[@regexp]
+		end # if
+	end # remaining_regexes
+
+  # first regexp, failed regexps
+  def narrowed_capture
+		single_regexp = remaining_regexes[0]
+		single_regexp_match = MatchCapture.new(string: string, regexp: single_regexp)
+		ret = if single_regexp_match.success?
+        [ pre_match, MatchCapture.new(string: single_regexp_match.matched_characters, regexp: single_regexp), single_regexp_match.post_match ] # narrow string
       else
-        MatchRefinement[
-          capture, # .matched_characters available for narrow inspect, may fail
-          @string
-        ]
+        [ pre_match, MatchCapture.new(string: @string, regexp: single_regexp), '' ] # no change yet
       end # if
-    end # if
-  end # narrow_refinement
+		MatchRefinement.new(ret)
+  end # narrowed_capture
+
+	def assert_narrowed_capture
+		single_regexp = remaining_regexes[0]
+		single_regexp_match = MatchCapture.new(string: string, regexp: single_regexp)
+		if single_regexp_match.success?
+			assert_equal(single_regexp_match.matched_characters, narrowed_capture[1].string, narrowed_capture.inspect )
+			MatchCapture.new(string: single_regexp_match.matched_characters, regexp: single_regexp) # narrow string
+		else
+			assert_equal(@string, narrowed_capture[1].string, narrowed_capture.inspect )
+			MatchCapture.new(string: @string, regexp: single_regexp) # no change yet
+		end # if
+	end # assert_narrowed_capture
+	
+	def single_refinement
+      MatchRefinement.new(narrowed_capture.reject { |e| e == '' }) # remove empty pre_match and post_match strings as uninteresting
+	end # single_refinement
+	
+	def recursive_refinement
+      inside_narrowed_capture = narrowed_capture
+			refinement_array = MatchCapture.new(string: pre_match, regexp: remaining_regexes[1..-1]).priority_refinements +
+        MatchRefinement[inside_narrowed_capture] +
+        MatchCapture.new(string: post_match, regexp: remaining_regexes[1..-1]).priority_refinements
+      MatchRefinement.new(refinement_array.reject { |e| e == '' }) # remove empty pre_match and post_match strings as uninteresting
+	end # recursive_refinement
 
   def priority_refinements
-    remaining_regexes = if @regexp.instance_of?(Array)
-                          @regexp
-                        else
-                          [@regexp]
-                        end # if
     if @string.empty?
-      MatchRefinement[]
+      MatchRefinement['']
     elsif remaining_regexes.size <= 1
-      MatchRefinement[
-        pre_match,
-        narrowed_capture,
-        post_match
-      ]
+			single_refinement
     else
-      inside_narrowed_capture = narrowed_capture(remaining_regexes[0])
-      MatchCapture.new(string: pre_match, regexp: remaining_regexes[1..-1]).priority_refinements +
-        MatchRefinement[inside_narrowed_capture] +
-        MatchCapture.new(string: inside_narrowed_capture.post_match, regexp: remaining_regexes[1..-1]).priority_refinements
+			recursive_refinement
     end # if
   end # priority_refinements
 
@@ -741,7 +768,7 @@ class RawCapture < Capture
       when :exact then assert_equal(1, priority_refinements.size, message)
       when :left then assert_equal(2, priority_refinements.size, message)
       when :right then assert_equal(2, priority_refinements.size, message)
-      when :inside then assert_match(3, priority_refinements.size, message)
+      when :inside then assert_equal(3, priority_refinements.size, message)
 			end # case
 		elsif @regexp.instance_of?(Array)
 			case desired_kind
@@ -749,7 +776,7 @@ class RawCapture < Capture
       when :exact then assert_equal(@regexp.size, priority_refinements.size, message)
       when :left then assert_equal(@regexp.size + 1, priority_refinements.size, message)
       when :right then assert_equal(@regexp.size + 1, priority_refinements.size, message)
-      when :inside then assert_match(@regexp.size + 2, priority_refinements.size, message)
+      when :inside then assert_equal(@regexp.size + 2, priority_refinements.size, message)
       when :scattered then assert_operator(@regexp.size + 3, :<=, priority_refinements.size, message)
 			end # case
 #!			assert_equal(@regexp.size, priority_refinements.size, message)
@@ -846,25 +873,6 @@ class MatchCapture < RawCapture
     [pre_match, post_match]
   end # delimiters
 
-  # first regexp, failed regexps
-  def narrowed_capture(single_regexp = @regexp)
-    if @regexp.instance_of?(Regexp)
-      if success?
-        MatchCapture.new(string: matched_characters, regexp: single_regexp) # narrow string
-      else
-        MatchCapture.new(string: @string, regexp: @regexp) # no change yet
-      end # if
-    elsif @regexp.instance_of?(Array)
-      if success?
-        MatchCapture.new(string: matched_characters, regexp: @regexp[0]) # narrow regexp
-      else
-        MatchCapture.new(string: @string, regexp: @regexp[0]) # try again with more specific regexp
-      end # if
-    else
-      raise '@regexp = ' + @regexp.inspect
-    end # if
-  end # narrowed_capture
-
   module Examples
     include Capture::Examples
     Branch_capture = MatchCapture.new(string: Newline_Delimited_String, regexp: Branch_regexp)
@@ -872,6 +880,13 @@ class MatchCapture < RawCapture
     Branch_line_capture = MatchCapture.new(string: Newline_Delimited_String, regexp: Branch_line_regexp)
     Branch_current_capture = MatchCapture.new(string: Newline_Delimited_String, regexp: Branch_current_regexp)
     Empty_capture = MatchCapture.new(string: '', regexp: /a/)
+		Abc_match_abc = MatchCapture.new(string: 'abc', regexp: /abc/)
+		Abc_match_a = MatchCapture.new(string: 'abc', regexp: /a/)
+		Abc_match_b = MatchCapture.new(string: 'abc', regexp: /b/)
+		Abc_match_c = MatchCapture.new(string: 'abc', regexp: /c/)
+
+		No_match = MatchCapture.new(string: 'abc', regexp: /d/)
+		No_match_array = MatchCapture.new(string: 'abc', regexp: [/d/, /e/])
   end # Examples
 end # MatchCapture
 

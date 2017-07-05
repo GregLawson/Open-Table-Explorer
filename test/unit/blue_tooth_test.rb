@@ -1,34 +1,46 @@
 ###########################################################################
-#    Copyright (C) 2013 by Greg Lawson                                      
+#    Copyright (C) 2013-2017 by Greg Lawson                                      
 #    <GregLawson123@gmail.com>                                                             
 #
 # Copyright: See COPYING file that comes with this distribution
 #
 ###########################################################################
 require_relative 'test_environment'
-require_relative '../../app/models/default_test_case.rb'
+#!require_relative '../../app/models/default_test_case.rb'
 require_relative '../../app/models/blue_tooth.rb'
-class DefinitionsTest < TestCase
-#bluez-test-device list
-
 class BluezTestDeviceListTest < TestCase
 include BlueTooth::BluezTestDeviceList::Constants
 include BlueTooth::BluezTestDeviceList::Examples
 include BlueTooth
-def test_CLASS_constants
-	
-	BlueTooth::BluezTestDeviceList.assert_post_conditions
 
-end #Constants
+def test_CLASS_constants
+#!	BlueTooth::BluezTestDeviceList.assert_post_conditions
+end # Constants
+
 def model_class?
 	BlueTooth::BluezTestDeviceList
 end #model_name?
-#include DefaultTests2
+
+	def test_cli
+		ShellCommand.new('lsmod|grep -i bluetooth')
+		ShellCommand.new('modinfo ath9k')
+		ShellCommand.new('/sbin/modprobe ath9k')
+		ShellCommand.new('dmesg')
+		ShellCommand.new('systemctl status bluetooth')
+		ShellCommand.new('rfcomm -a')
+		ShellCommand.new('lspci|grep Wireless')
+		ShellCommand.new('hcitool con')
+		ShellCommand.new('hcitool dev')
+		ShellCommand.new('lsusb|grep -i bluetooth')
+		ShellCommand.new('hciconfig -a')
+	end # cli
+
 def test_input_urls
-	file_regexp="#{Open_tax_filler_directory}/field_dump/Federal/f*.pjson"
-	regexp=RegexpParse.new(file_regexp)
-	regexp.to_pathname_glob
+#!	file_regexp="#{Open_tax_filler_directory}/field_dump/Federal/f*.pjson"
+#!	regexp=RegexpParse.new(file_regexp)
+#!	regexp.to_pathname_glob
 end #input_file_names
+
 def test_parse
 	context={}
 	array_of_hashes=[]
@@ -80,6 +92,7 @@ def test_parse
 	assert_equal(array_of_hashes.uniq.size, array_of_hashes.size, "array_of_hashes produces duplicates.")
 	assert_equal(array_of_hashes.size, 2080)
 end #parse
+
 def test_match_regexp_array
 	acquisition=model_class?.raw_acquisitions[0]
 	rest=acquisition
@@ -114,6 +127,7 @@ def test_match_regexp_array
 	acquisition=matchData.post_match
 	model_class?.assert_match_regexp_array(acquisition,combination_indices)
 end #match_regexp_array
+
 def test_subset_regexp
 	model_class?.raw_acquisitions.map do |acquisition|
 		assert_instance_of(String, acquisition)
@@ -127,10 +141,5 @@ def test_subset_regexp
 		hash
 	end.flatten #map
 end #subset_regexp
-def test_dump_sql_to_file
-	filename="#{Data_source_directory}/#{model_name?}_#{Default_tax_year}.sql"
-	assert_equal(:BluezTestDeviceList, model_name?)
-	assert_respond_to(model_class?, :dump_sql_to_file)
-	model_class?.dump_sql_to_file(filename)
-end #dump_sql_to_file
+
 end #BluezTestDeviceList

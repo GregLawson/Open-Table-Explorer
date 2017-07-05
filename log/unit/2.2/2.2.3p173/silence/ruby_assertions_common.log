@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 9, 5, 50, Rational(59618604648, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 6, 9, 9, 41, Rational(26591681174, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test
@@ -116,7 +113,7 @@ test_assert_data_file(RubyAssertionsCommonTest)
 ===============================================================================
 ....E
 ===============================================================================
-Error: test_assert_include(RubyAssertionsCommonTest): NameError: undefined local variable or method `fixture_names\' for #<RubyAssertionsCommonTest:0x007f247c08bd60>
+Error: test_assert_include(RubyAssertionsCommonTest): NameError: undefined local variable or method `fixture_names\' for #<RubyAssertionsCommonTest:0x007efccb41dbc8>
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:156:in `test_assert_include\'
      153:     element = :b
      154:     list = [:a, :b, :c]
@@ -140,9 +137,12 @@ Error: test_assert_module_included(RubyAssertionsCommonTest):
      246: 
      247:   def test_global_name
 ===============================================================================
-E
+.E
 ===============================================================================
-Error: test_assert_nested_scope_submodule(RubyAssertionsCommonTest): NoMethodError: undefined method `nested_scope_modules?\' for RubyAssertions:Module
+Error: test_assert_nested_scope_submodule(RubyAssertionsCommonTest):
+  NoMethodError: undefined method `nested_scope_modules?\' for RubyAssertions:Module
+  Did you mean?  nested_scope_modules
+                 nested_scope_module_names
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:325:in `test_assert_nested_scope_submodule\'
      322:     message = \'test\'
      323:     message += "\nIn assert_nested_scope_submodule for class #{context.name}, "
@@ -164,7 +164,7 @@ Error: test_assert_public_instance_method(RubyAssertionsCommonTest): NameError: 
      182:     assert_respond_to(obj, methodName)
      183:     assert_raise(AssertionFailedError) { assert_respond_to(obj, methodName.to_s.singularize) }
 ===============================================================================
-.....F
+....F
 ===============================================================================
 Failure: test_caller_lines(RubyAssertionsCommonTest)
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb:16:in `test_caller_lines\'
@@ -187,29 +187,29 @@ diff:
 ===============================================================================
 ...............
 
-Finished in 0.170526455 seconds.
+Finished in 0.202574403 seconds.
 ------
 43 tests, 191 assertions, 4 failures, 4 errors, 0 pendings, 0 omissions, 0 notifications
 81.3953% passed
 ------
-252.16 tests/s, 1120.06 assertions/s
+212.27 tests/s, 942.86 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_assertions_common_test.rb"
-	User time (seconds): 0.72
-	System time (seconds): 0.05
+	User time (seconds): 1.12
+	System time (seconds): 0.10
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.78
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.24
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 21932
+	Maximum resident set size (kbytes): 25588
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5607
+	Minor (reclaiming a frame) page faults: 6522
 	Voluntary context switches: 3
-	Involuntary context switches: 82
+	Involuntary context switches: 128
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

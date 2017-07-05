@@ -171,15 +171,15 @@ class Samba
         assert_includes(included_modules, :Contants, message)
       end # assert_included_submodule
 
-      def asset_nested_and_included(module_symbol, _context = self, _message = '')
+      def assert_nested_and_included(module_symbol, _context = self, _message = '')
         assert_nested_scope_submodule(module_symbol)
         assert_included_submodule(module_symbol)
-      end # asset_nested_and_included
+      end # assert_nested_and_included
 
       def assert_pre_conditions(message = '')
-        #	asset_nested_and_included(:ClassMethods, self)
-        #	asset_nested_and_included(:Constants, self)
-        #	asset_nested_and_included(:Assertions, self)
+        #	assert_nested_and_included(:ClassMethods, self)
+        #	assert_nested_and_included(:Constants, self)
+        #	assert_nested_and_included(:Assertions, self)
       end # assert_pre_conditions
 
       def assert_post_conditions(message = '')

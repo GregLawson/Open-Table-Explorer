@@ -16,45 +16,45 @@ require 'rgl/dot'
 class Require
   module DefinitionalConstants # constant parameters of the type (suggest all CAPS)
     Relative_regexp = /^/ * (/require/ * (/_relative/ .group * Regexp::Optional)).group.capture(:require_command)
-		End_of_line_comment = /\s*/ * /#/ * /[^\n]*/.capture(:comment) * /\n/
+    End_of_line_comment = /\s*/ * /#/ * /[^\n]*/.capture(:comment) * /\n/
     Require_regexp = Relative_regexp * /\s+/ * /['"]/ * FilePattern::Relative_pathname_included_regexp.capture(:required_path) * /['"]/
   end # DefinitionalConstants
   include DefinitionalConstants
   module DefinitionalClassMethods # compute sub-objects such as default attribute values
     include DefinitionalConstants
-		def capture_to_hash(capture)
-			capture.output
-		end # capture_to_hash
-		
+    def capture_to_hash(capture)
+      capture.output
+    end # capture_to_hash
+
     def parse_output(path, capture_class = SplitCapture)
-			code = IO.read(path)
+      code = IO.read(path)
       parse = capture_to_hash(code.capture?(Require_regexp, capture_class))
     end # parse_output
 
     def scan_path(path, already_seen = [])
-#      puts 'path = ' + path.to_s
-			capture = parse_output(path, SplitCapture)
-			capture.enumerate(:map) do |output| 
-				if output[:require_command] == 'require' # don't recurse
-					output[:required_path]
-				elsif output[:require_command] == 'require_relative'
-					relative_path = Pathname.new(File.dirname(path) + '/' + output[:required_path]).cleanpath
-					unless already_seen.include?(File.expand_path(relative_path)) # recursion
-						Require.scan_path(relative_path, already_seen << File.expand_path(relative_path))
-					end # unless
-				else
-					raise capture.inspect
-				end # if
-			end # map
+      #      puts 'path = ' + path.to_s
+      capture = parse_output(path, SplitCapture)
+      capture.enumerate(:map) do |output|
+        if output[:require_command] == 'require' # don't recurse
+          output[:required_path]
+        elsif output[:require_command] == 'require_relative'
+          relative_path = Pathname.new(File.dirname(path) + '/' + output[:required_path]).cleanpath
+          unless already_seen.include?(File.expand_path(relative_path)) # recursion
+            Require.scan_path(relative_path, already_seen << File.expand_path(relative_path))
+          end # unless
+        else
+          raise capture.inspect
+        end # if
+      end # map
     end # scan_path
 
     def scan_unit(unit)
-			ret = {}
+      ret = {}
       unit.edit_files.each do |path|
-				parse = parse_output(path, SplitCapture)
-				ret = ret.merge(FilePattern.find_from_path(path)[:name] => parse)
+        parse = parse_output(path, SplitCapture)
+        ret = ret.merge(FilePattern.find_from_path(path)[:name] => parse)
       end # each
-			ret
+      ret
     end # scan_unit
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
@@ -63,22 +63,22 @@ class Require
     attribute :path, Pathname
     attribute :cached_require_captures, Hash, default: ->(require, _attribute) { Require.scan_path(require.path) }
   end # values
-	
-    # This function creates a directed graph, with vertices being all loaded modules:
-    def require_graph
-      RGL::ImplicitGraph.new do |g|
-        g.vertex_iterator do |b|
-          ObjectSpace.each_object(Module, &b)
-        end # vertex_iterator
-        g.adjacent_iterator do |x, b|
-          x.ancestors.each do |y|
-            b.call(y) unless x == y || y == Kernel
-          end # ancestors
-        end # adjacent_iterator
-        g.directed = true
-      end # ImplicitGraph
-    end # require_graph
-		
+
+  # This function creates a directed graph, with vertices being all loaded modules:
+  def require_graph
+    RGL::ImplicitGraph.new do |g|
+      g.vertex_iterator do |b|
+        ObjectSpace.each_object(Module, &b)
+      end # vertex_iterator
+      g.adjacent_iterator do |x, b|
+        x.ancestors.each do |y|
+          b.call(y) unless x == y || y == Kernel
+        end # ancestors
+      end # adjacent_iterator
+      g.directed = true
+    end # ImplicitGraph
+  end # require_graph
+
   module ClassMethods
     include DefinitionalConstants
     def all
@@ -94,9 +94,9 @@ class Require
     module ClassMethods
       def assert_pre_conditions(message = '')
         message += "In assert_pre_conditions, self=#{inspect}"
-        #	asset_nested_and_included(:ClassMethods, self)
-        #	asset_nested_and_included(:Constants, self)
-        #	asset_nested_and_included(:Assertions, self)
+        #	assert_nested_and_included(:ClassMethods, self)
+        #	assert_nested_and_included(:Constants, self)
+        #	assert_nested_and_included(:Assertions, self)
         self
       end # assert_pre_conditions
 
@@ -109,9 +109,9 @@ class Require
         assert_match(regexp, code)
         #      assert_equal('_relative', code.capture?(regexp, MatchCapture).output[:relative])
         split_capture = code.capture?(regexp, SplitCapture)
-      assert_include(['require', 'require_relative'], split_capture.raw_captures[1], split_capture.inspect)
+        assert_include(%w(require require_relative), split_capture.raw_captures[1], split_capture.inspect)
         assert_include(split_capture.regexp.names, :require_command.to_s, split_capture.inspect)
-      assert_include(['require', 'require_relative'], split_capture.to_a(0)[0], split_capture.inspect)
+        assert_include(%w(require require_relative), split_capture.to_a(0)[0], split_capture.inspect)
         #      assert_equal('_relative', split_capture.column_output, split_capture.inspect)
         assert_operator(1, :<=, split_capture.repetitions?, split_capture.inspect)
         assert_equal({ 'require_command' => [1], 'required_path' => [2] }, split_capture.regexp.named_captures, split_capture.inspect)
@@ -119,7 +119,7 @@ class Require
 
         assert_equal(2, split_capture.num_captures, split_capture.inspect)
         (0..split_capture.repetitions? - 1).map do |i|
-        assert_include(['require', 'require_relative'], split_capture[0, i], split_capture.inspect)
+          assert_include(%w(require require_relative), split_capture[0, i], split_capture.inspect)
         end # map
         #      split_capture.output.each_with_index do |_output, i|
         #        assert_equal('_relative', split_capture[0, i], split_capture.inspect)

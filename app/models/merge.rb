@@ -7,7 +7,7 @@
 ###########################################################################
 require 'dry-types'
 require_relative 'unit.rb'
-require_relative 'interactive_bottleneck.rb'
+#!require_relative 'interactive_bottleneck.rb'
 require_relative 'repository.rb'
 require_relative 'unit_maturity.rb'
 require_relative 'editor.rb'
@@ -32,7 +32,7 @@ class Merge
   include Virtus.value_object
   values do
     attribute :repository, Repository, default: Repository::This_code_repository
-    attribute :source_commit, Branch, default: Branch.new(name: :passed)
+    attribute :source_commit, Branch, default: Branch.new(initialization_string: :passed)
     attribute :target_branch_name, Symbol, default: Branch.current_branch_name?(Repository::This_code_repository)
     attribute :interactive, Symbol, default: :interactive # non-defaults are primarily for non-interactive testing testing
     attribute :editor, Editor, default: Default_editor
@@ -88,40 +88,19 @@ class Merge
     merge_status = @repository.git_command('merge --no-commit ' + @source_commit.to_s)
   end # merge_interactive
 
-  def stash_and_checkout(target_branch)
-    stash_branch = @repository.current_branch_name?
-    changes_branch = stash_branch #
-    push = @repository.something_to_commit? # remember
-    if push
-      #		status=@grit_repo.status
-      #		puts "status.added=#{status.added.inspect}"
-      #		puts "status.changed=#{status.changed.inspect}"
-      #		puts "status.deleted=#{status.deleted.inspect}"
-      #		puts "@repository.something_to_commit?=#{@repository.something_to_commit?.inspect}"
-      @repository.stash!
-      merge_cleanup
-      changes_branch = :stash
+  def trial_merge
+    merge_status = @repository.git_command('merge --no-commit ' + source_commit.to_s)
+    puts 'merge_status= ' + merge_status.inspect
+    if merge_status.output == "Automatic merge went well; stopped before committing as requested\n"
+      puts 'merge OK'
+    else
+      if merge_status.success?
+        puts 'not merge_conflict_recovery' + merge_status.inspect
+      else
+        puts 'merge_conflict_recovery' + merge_status.inspect
+        merge_conflict_recovery
+      end # if
     end # if
-
-    if stash_branch != target_branch_name
-      confirm_branch_switch(target_branch)
-    end # if
-    push # if switched?
-  end # stash_and_checkout
-
-	def trial_merge
-		merge_status = @repository.git_command('merge --no-commit ' + source_commit.to_s)
-		puts 'merge_status= ' + merge_status.inspect
-		if merge_status.output == "Automatic merge went well; stopped before committing as requested\n"
-			puts 'merge OK'
-		else
-			if merge_status.success?
-				puts 'not merge_conflict_recovery' + merge_status.inspect
-			else
-				puts 'merge_conflict_recovery' + merge_status.inspect
-				merge_conflict_recovery
-			end # if
-		end # if
     unmerged_files = @repository.status
     unless unmerged_files.empty?
       merge_abort = @repository.git_command('merge --abort')
@@ -129,14 +108,14 @@ class Merge
         remerge = @repository.git_command('merge --X ours ' + @source_commit.to_s)
       end # if
     end # if
-		unmerged_files # work still to do
-	end # trial_merge
-	
+    unmerged_files # work still to do
+  end # trial_merge
+
   def merge
     puts 'merge(' + @target_branch_name.inspect + ', ' + @source_commit.inspect + ', ' + @interactive.inspect + ')'
-		stash_and_checkout
+    stash_and_checkout
     trial_merge
-      confirm_commit
+    confirm_commit
   end # merge
 
   def merge_down
