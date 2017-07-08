@@ -1,6 +1,6 @@
 ###########################################################################
 #    Copyright (C) 2012-2016 by Greg Lawson
-#    <GregLawson123@gmail.com>                                                             
+#    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -10,61 +10,80 @@ require_relative '../../app/models/test_environment_test_unit.rb'
 # require_relative '../../app/models/default_test_case.rb'
 # require_relative '../../test/assertions/ruby_assertions.rb'
 require_relative '../../app/models/file_pattern.rb'
-class FilePatternTest  <  TestCase
+class PatternTest < TestCase
+		def test_new_from_prefix_suffix
+			Pattern::Patterns.map do |hash|
+				pattern = Pattern.new_from_prefix_suffix(hash)
+				capture = MatchCapture.new(string: hash[:example_file], regexp: Regexp.new(pattern.path_regexp))
+#!				capture.assert_refinement(:exact)
+#!				assert_equal(capture.output.keys, hash.keys, capture.priority_refinements.inspect)
+			end # map
+		end # new_from_prefix_suffix
+		
+		def test_railsish_patterns
+			assert_instance_of(Array, Pattern.railsish_patterns)
+		end # railsish_patterns
+
+	def test_parse
+	end # parse
+	
+end # PatternTest
+
+class FilePatternTest < TestCase
   include RubyAssertions
-#include DefaultTests2 
-#include DefaultTests0    #less error messages
+  # include DefaultTests2
+  # include DefaultTests0    #less error messages
   include FilePattern::DefinitionalConstants
   include FilePattern::ReferenceObjects
-include FilePattern::Examples
-#include FilePattern::Assertions
-#include FilePattern::Assertions::KernelMethods
-extend FilePattern::Assertions::ClassMethods
+  include FilePattern::Examples
+  # include FilePattern::Assertions
+  # include FilePattern::Assertions::KernelMethods
+  extend FilePattern::Assertions::ClassMethods
   def test_DefinitionalConstants
-	Executable.assert_pre_conditions
-	Library.assert_pre_conditions
-	refute_nil(Library, Library.inspect)
-	refute_nil(Library.project_root_dir, Library.inspect)
-	assert_match(Basename_character_regexp, Library.project_root_dir)
-	assert_match(Directory_delimiter, Library.project_root_dir)
-	assert_match(Basename_character_regexp, Library.project_root_dir)
-	assert_match(Basename_regexp, Library.project_root_dir)
-	assert_match(Pathname_character_regexp, Library.project_root_dir)
-#either	assert_match(Absolute_pathname_regexp, $0)
-	assert_match(Relative_directory_regexp, Patterns[0][:prefix])
-	assert_match(Absolute_directory_regexp, Library.project_root_dir)
-#	assert_match(Relative_pathname_regexp, )
-	Patterns.each do |pattern|
-		path = Pathname.new(pattern[:example_file])
+    Executable.assert_pre_conditions
+    Library.assert_pre_conditions
+    refute_nil(Library, Library.inspect)
+    refute_nil(Library.project_root_dir, Library.inspect)
+    assert_match(Basename_character_regexp, Library.project_root_dir)
+    assert_match(Directory_delimiter, Library.project_root_dir)
+    assert_match(Basename_character_regexp, Library.project_root_dir)
+    assert_match(Basename_regexp, Library.project_root_dir)
+    assert_match(Pathname_character_regexp, Library.project_root_dir)
+    # either	assert_match(Absolute_pathname_regexp, $0)
+    assert_match(Relative_directory_regexp, Patterns[0][:prefix])
+    assert_match(Absolute_directory_regexp, Library.project_root_dir)
+    #	assert_match(Relative_pathname_regexp, )
+    Patterns.each do |pattern|
+      path = Pathname.new(pattern[:example_file])
       next if File.exist?(path)
       message = "\n\nIt is best for example files to actually exist. But "
       message += "\n" + pattern[:name].to_s + ' file ' + path.to_s + ' does not exist.'
       message += "\n" + pattern.inspect
       puts message
       # if
-	end # each
+    end # each
   end # DefinitionalConstants
 
-def test_executing_path?
-	squirrely_string = $PROGRAM_NAME
-	class_name = self.class.name.to_s
-	test_name = 'test_executing_path?'
-	extra_at_end = ' ' + class_name + '#' + test_name
-	extra_length = extra_at_end.length
-#NewTestClass	assert_equal(37, extra_length, extra_at_end.inspect)
-#	assert_equal(extra_at_end, squirrely_string[-extra_length..-1], squirrely_string)	
-#	assert_pathname_exists(squirrely_string[0..-(extra_length+2)], squirrely_string)
-#	assert_pathname_exists(FilePattern.executing_path?, FilePattern.executing_path?)
-end # executing_path?
+  def test_executing_path?
+    squirrely_string = $PROGRAM_NAME
+    class_name = self.class.name.to_s
+    test_name = 'test_executing_path?'
+    extra_at_end = ' ' + class_name + '#' + test_name
+    extra_length = extra_at_end.length
+    # NewTestClass	assert_equal(37, extra_length, extra_at_end.inspect)
+    #	assert_equal(extra_at_end, squirrely_string[-extra_length..-1], squirrely_string)
+    #	assert_pathname_exists(squirrely_string[0..-(extra_length+2)], squirrely_string)
+    #	assert_pathname_exists(FilePattern.executing_path?, FilePattern.executing_path?)
+  end # executing_path?
 
-def test_path2model_name
-	path='test/slowest/rebuild_test.rb'
-#	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
-	assert_equal(:Rebuild, FilePattern.path2model_name?(path))
-	assert_equal(:MatchData, FilePattern.path2model_name?('app/models/match_data.rb'))
-end #path2model_name
+  def test_path2model_name
+    path = 'test/slowest/rebuild_test.rb'
+    #	FilePattern.new(Patterns[expected_match]).assert_naming_convention_match(path)
+    assert_equal(:Rebuild, FilePattern.path2model_name?(path))
+    assert_equal(:MatchData, FilePattern.path2model_name?('app/models/match_data.rb'))
+  end # path2model_name
 
-def test_unit_base_name
+  def test_unit_base_name
     path = File.expand_path($PROGRAM_NAME)
 	extension=File.extname(path)
 	assert_equal('.rb', extension)
@@ -97,51 +116,51 @@ def test_unit_base_name
 	assert_equal(3, name_length, "basename.size=#{basename.size}, extension.size=#{extension.size}\n Patterns[expected_match]=#{Patterns[expected_match].inspect}\n Patterns[expected_match][:suffix].size=#{Patterns[expected_match][:suffix].size}, ")
 	expected_match=4
 	path='test/slowest/rebuild_test.rb'
-	assert_equal(:rebuild, FilePattern.unit_base_name?(path))
-	assert_equal(:match_data, FilePattern.unit_base_name?('app/models/match_data.rb'))
-end # unit_base_name
+    assert_equal(:rebuild, FilePattern.unit_base_name?(path))
+    assert_equal(:match_data, FilePattern.unit_base_name?('app/models/match_data.rb'))
+  end # unit_base_name
 
-def test_repository_dir?
+  def test_repository_dir?
     path = $PROGRAM_NAME
-#	path='.gitignore'
-	path=File.expand_path(path)
-	assert_pathname_exists(path)
+    #	path='.gitignore'
+    path = File.expand_path(path)
+    assert_pathname_exists(path)
     dirname = if File.directory?(path)
                 path
-	else
+              else
                 File.dirname(path)
-	end #if
-	assert_pathname_exists(dirname)
-	begin
-		git_directory=dirname+'/.git'
-#		assert_pathname_exists(git_directory)
-		assert_operator(dirname.size, :>=, 2, dirname.inspect)
+              end # if
+    assert_pathname_exists(dirname)
+    begin
+      git_directory = dirname + '/.git'
+      #		assert_pathname_exists(git_directory)
+      assert_operator(dirname.size, :>=, 2, dirname.inspect)
       if File.exist?(git_directory)
-			done=true
+        done = true
       elsif dirname.size < 2
-			dirname=nil
-			done=true
-		else
-			assert_operator(dirname.size, :>, File.dirname(dirname).size)
-			refute_equal(dirname, File.dirname(dirname))
-			dirname=File.dirname(dirname)
-			done=false
-		end #if
-#		assert(done, 'first iteration.')
-		puts 'path='+path.inspect if $VERBOSE
-		puts 'dirname='+dirname.inspect if $VERBOSE
-		puts 'git_directory='+git_directory.inspect if $VERBOSE
-		puts 'done='+done.inspect if $VERBOSE
-	end until done
-	assert_pathname_exists(dirname)
-	assert_pathname_exists(git_directory)
-	assert_pathname_exists(FilePattern.repository_dir?('.gitignore'))
-	refute_empty(FilePattern.project_root_dir?(File.expand_path($PROGRAM_NAME)))
+        dirname = nil
+        done = true
+      else
+        assert_operator(dirname.size, :>, File.dirname(dirname).size)
+        refute_equal(dirname, File.dirname(dirname))
+        dirname = File.dirname(dirname)
+        done = false
+      end # if
+      #		assert(done, 'first iteration.')
+      puts 'path=' + path.inspect if $VERBOSE
+      puts 'dirname=' + dirname.inspect if $VERBOSE
+      puts 'git_directory=' + git_directory.inspect if $VERBOSE
+      puts 'done=' + done.inspect if $VERBOSE
+    end until done
+    assert_pathname_exists(dirname)
+    assert_pathname_exists(git_directory)
+    assert_pathname_exists(FilePattern.repository_dir?('.gitignore'))
+    refute_empty(FilePattern.project_root_dir?(File.expand_path($PROGRAM_NAME)))
     assert_equal(FilePattern.repository_dir?($PROGRAM_NAME), FilePattern.project_root_dir?(File.expand_path($PROGRAM_NAME)))
-end #repository_dir?
+  end # repository_dir?
 
-def test_project_root_dir
-#	require 'optparse'
+  def test_project_root_dir
+    #	require 'optparse'
     assert(File.exist?($PROGRAM_NAME), $PROGRAM_NAME + ' does not exist.')
 	path=File.expand_path($PROGRAM_NAME)
 	refute_nil(path)
@@ -165,19 +184,19 @@ def test_project_root_dir
 	refute_empty(FilePattern.project_root_dir?($0))
 end #project_root_dir
 
-def test_find_by_name
-	FilePattern::Patterns.each do |p|
-		assert_equal(p, FilePattern.find_by_name(p[:name]), p.inspect)
-	end #each
-end #find_by_name
+  def test_find_by_name
+    FilePattern::Patterns.each do |p|
+      assert_equal(p, FilePattern.find_by_name(p[:name]), p.inspect)
+    end # each
+  end # find_by_name
 
-def test_match_path
-	path='test/unit/_assertions_test.rb'
-	p=FilePattern.find_from_path(path)
+  def test_match_path
+    path = 'test/unit/_assertions_test.rb'
+    p = FilePattern.find_from_path(path)
 
     successes = Patterns.map do |pattern|
       path = Pathname.new(pattern[:example_file])
-      pattern_match = pattern.clone
+      pattern_match = pattern.dup
       pattern_match[:path] = path
       prefix = File.dirname(path)
       expected_prefix = pattern[:prefix][0..-2] # drops trailing /
@@ -241,7 +260,12 @@ def test_match_path
   end # new_from_path
 
   def test_initialize
-    file_pattern = FilePattern.new(Patterns[0])
+		
+    file_pattern = FilePattern.new(pattern: Patterns[0],
+		unit_base_name: :'*',
+		project_root_dir: Library.project_root_dir,
+		repository_dir: FilePattern.repository_dir?($PROGRAM_NAME))
+
     file_pattern.assert_pre_conditions
     assert_equal(:file_pattern, Library.unit_base_name)
     assert_equal(:file_pattern, Executable.unit_base_name)
