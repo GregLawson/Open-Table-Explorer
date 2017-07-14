@@ -1,34 +1,37 @@
 {:current_branch_name => Branch.new(name: nil)
 ,
-:start_time => Time.new(2017, 6, 28, 7, 22, Rational(17494820540, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 17, 6, 46, Rational(7159871197, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test
 Started
-...........................................
+................................................
 
-Finished in 0.386395442 seconds.
+Finished in 0.442039704 seconds.
 ------
-43 tests, 829 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+48 tests, 867 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-111.28 tests/s, 2145.47 assertions/s
+108.59 tests/s, 1961.36 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb"
-	User time (seconds): 1.57
-	System time (seconds): 0.12
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.71
+:errors => {:syserr => 'DEPRECATION WARNING: `#capture(stream)` is deprecated and will be removed in the next release. (called from block in test_Exception_rescued_value at (eval):1)
+DEPRECATION WARNING: `#capture(stream)` is deprecated and will be removed in the next release. (called from block in test_Exception_rescued_value at (eval):1)
+DEPRECATION WARNING: `#capture(stream)` is deprecated and will be removed in the next release. (called from block in test_Exception_rescued_value at (eval):1)
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/ruby_lines_storage_test.rb"
+	User time (seconds): 2.05
+	System time (seconds): 0.22
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.29
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 44708
+	Maximum resident set size (kbytes): 82484
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 11301
+	Minor (reclaiming a frame) page faults: 22607
 	Voluntary context switches: 3
-	Involuntary context switches: 176
+	Involuntary context switches: 253
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

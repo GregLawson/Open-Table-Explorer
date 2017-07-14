@@ -7,6 +7,6 @@
 ###########################################################################
     Log_glob = 'log/unit/2.2/2.2.3p173/silence/*.log'
     Log_paths = Dir[Log_glob]
-    Log_read_returns = Reconstruction.read_all(Log_glob)
-#!    Errors_seen = Log_read_returns.reject {|reconstruction| reconstruction.success? }
-#!		Unique_error_messages = Errors_seen.map{|h| h[:errors]}.compact.uniq
+    Log_evals = Reconstruction.read_all(Log_glob)
+    Errors_seen = Log_evals.reject {|eval| eval.success? }
+		Unique_error_messages = Errors_seen.group_by{|eval| eval.reconstruction.error_group}
