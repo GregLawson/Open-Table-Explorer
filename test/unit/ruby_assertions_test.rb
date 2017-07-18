@@ -329,6 +329,6 @@ class RubyAssertionsTest < TestCase
   def test_assert_included_submodule
   end # assert_included_submodule
 
-  def test_asset_nested_and_included
-  end # asset_nested_and_included
+  def test_assert_nested_and_included
+  end # assert_nested_and_included
 end # RubyAssertions
