@@ -66,7 +66,7 @@ class Stash < NamedCommit
     include DefinitionalConstants
     def wip!(repository)
       command_string = 'stash save --include-untracked'
-      run = repository.git_command(command_string).assert_post_conditions
+      run = repository.git_command(command_string) #.assert_post_conditions
       refine(run.output, List_regexp_array, MatchCapture)
 			Stash.new(initialization_string: :stash, repository: Repository::This_code_repository, annotation: run.output)
     end # wip!

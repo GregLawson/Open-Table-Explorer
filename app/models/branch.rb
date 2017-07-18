@@ -297,8 +297,6 @@ class BranchReference < Commit
       reflogs = reflog?(filename, repository, range = 0..10, options = '-S "' + lost_code.to_s + '"')
     end # lost_edit
 
-    def reflog_to_constructor_hash(reflog_line, repository = Repository::This_code_repository)
-     end # reflog_to_constructor_hash
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
 

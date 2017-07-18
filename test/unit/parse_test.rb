@@ -7,6 +7,7 @@
 ###########################################################################
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/parse.rb'
+require_relative '../../test/examples/parse.rb'
 class MatchRefinementTest < TestCase
 	
 	module Examples
@@ -254,17 +255,20 @@ class CaptureTest < TestCase
     SHA1_hex_7 = /[[:xdigit:]]{7}/.capture(:sha1_hex_7)
     Reflog_line = 'master@{123},refs/heads/master@{123},1234567,Sun, 21 Jun 2015 13:51:50 -0700'.freeze
     Reflog_capture = Reflog_line.capture?(Reflog_line_regexp)
+		
     No_ref_line = ',,911dea1,Sun, 21 Jun 2015 13:51:50 -0700'.freeze
     Stash_line = 'stash@{0},refs/stash@{0},bec64c4cd,Mon, 20 Mar 2017 11:55:03 -0700'.freeze
 		Regexp_array_capture = MatchCapture.new(string: Stash_line, regexp: Regexp_array)
+		
 		Fail_array = Regexp_array[0..3] + [SHA1_hex_7] + Regexp_array[5..-1]
-		Fail_array_capture = MatchCapture.new(string: Stash_line, regexp: Fail_array)
+		Scattered_array_capture = MatchCapture.new(string: Stash_line, regexp: Fail_array)
 		Name_value_pair_string = 'a=1'
 		Name_regexp = /[A-Za-z]+/.capture(:name)
 		Delimiter_regexp = /[ =,; \t\n]/.capture(:delimiter)
 		Value_regexp = /[0-9]+/.capture(:value)
 		Name_value_pair_array = [Name_regexp, Delimiter_regexp, Value_regexp]
 		Name_value_pair_capture = MatchCapture.new(string: Name_value_pair_string, regexp: Name_value_pair_array)
+		All_captures = [Empty_capture, MatchRefinementTest::Examples::B_capture, Reflog_capture, Regexp_array_capture, Scattered_array_capture, Name_value_pair_capture]
 	end # Examples
 	include Examples
 
@@ -299,14 +303,6 @@ class CaptureTest < TestCase
 		Name_value_pair_capture.assert_refinement(:exact)
 			assert(Name_value_pair_string.match(Regexp[Name_value_pair_array]))
 			assert_match(Regexp[Name_value_pair_array], Name_value_pair_string)
-		assert_equal({:delimiter=>"=", :name=>"a", :value=>"1"}, Name_value_pairs[0], Name_value_pairs.inspect)
-		suggestion = Name_value_pairs.map do |pair|
-			name = pair[:name]
-			value = pair[:value]
-			value_regexp.inspect + '.capture(:' + name +')'
-		end # map
-		suggestion = Capture.suggest_name_value('a=1', /a/, /=/, /1/)
-		assert_equal([name: 'a', delimiter: '=', value: '1'], suggestion)
 	end # suggest_name_value
 
 		def test_sequential_match
@@ -480,6 +476,7 @@ class CaptureTest < TestCase
   end # Examples
 end # Capture
 
+class BisectionTest < TestCase
   def test_next_bisection
   end # next_bisection
 
@@ -497,6 +494,21 @@ end # Capture
 
   def test_match?
   end # match?
+end # Bisection
+
+	def test_NameValueParse
+	end # NameValueParse
+	
+	def test_suggest_name_value
+		assert_match(Regexp[Name_regexp], Name_value_pair_string)
+		assert_match(Regexp[Delimiter_regexp], Name_value_pair_string)
+		assert_match(Regexp[Value_regexp], Name_value_pair_string)
+		assert(Name_value_pair_string.match(Regexp[Name_value_pair_array]))
+		assert_match(Regexp[Name_value_pair_array], Name_value_pair_string)
+		Name_value_pair_capture.assert_refinement(:exact)
+	end # suggest_name_value
+
+
 class RawCaptureTest < TestCase
   include MatchCapture::Examples
   include SplitCapture::Examples
@@ -662,161 +674,97 @@ class RawCaptureTest < TestCase
   end # named_hash
 	
 	def test_remaining_regexes
+		All_captures.each do |capture|
+			assert_instance_of(Array, capture.remaining_regexes)
+			capture.remaining_regexes.each do |regexp|
+				assert_instance_of(Regexp, regexp)
+			end # each
+		end # each
 	end # remaining_regexes
 
-	def test_MatchCapture_narrowed_capture
-		assert_instance_of(MatchRefinement, MatchCapture::Examples::Branch_capture.narrowed_capture)
-		assert_instance_of(MatchRefinement, MatchCapture::Examples::Parse_string.narrowed_capture)
-		assert_instance_of(MatchRefinement, MatchCapture::Examples::Branch_line_capture.narrowed_capture)
-		assert_instance_of(MatchRefinement, MatchCapture::Examples::Branch_current_capture.narrowed_capture)
-		assert_instance_of(MatchRefinement, MatchCapture::Examples::Empty_capture.narrowed_capture)
-		assert_equal([ '', Abc_match_abc, ''], Abc_match_abc.narrowed_capture )
-		assert_equal('abc', Abc_match_abc.narrowed_capture[1].string, Abc_match_abc.narrowed_capture.inspect )
-		assert_equal('a', Abc_match_a.narrowed_capture[1].string, Abc_match_a.narrowed_capture.inspect )
-		assert_equal('stash@{0}', Fail_array_capture.narrowed_capture[1].string, Fail_array_capture.narrowed_capture.inspect )
-		expected_recursive_failure = MatchCapture.new(string: 'bec64c4cd,Mon, 20 Mar 2017 11:55:03 -0700', regexp: Fail_array_capture.regexp[4..-1])
-		assert_equal('bec64c4', expected_recursive_failure.narrowed_capture[1].matched_characters, expected_recursive_failure.narrowed_capture.inspect )
-		assert_equal(SHA1_hex_7, expected_recursive_failure.narrowed_capture[1].regexp, expected_recursive_failure.narrowed_capture.inspect )
-		assert_equal('bec64c4', expected_recursive_failure.narrowed_capture[1].string, expected_recursive_failure.narrowed_capture.inspect )
+	def test_MatchCapture_narrowed_refinement
+#!		assert_instance_of(MatchRefinement, MatchCapture::Examples::Parse_string.narrowed_refinement)
+#!		assert_instance_of(MatchRefinement, MatchCapture::Examples::Branch_line_capture.narrowed_refinement)
+#!		assert_instance_of(MatchRefinement, MatchCapture::Examples::Branch_current_capture.narrowed_refinement)
+#!		assert_instance_of(MatchRefinement, MatchCapture::Examples::Empty_capture.narrowed_refinement)
+#!		assert_equal([ '', Abc_match_abc, ''], Abc_match_abc.narrowed_refinement )
+#!		assert_equal('abc', Abc_match_abc.narrowed_refinement[1].string, Abc_match_abc.narrowed_refinement.inspect )
+#!		assert_equal('abc', Abc_match_abc.narrowed_refinement[1].string, Abc_match_abc.narrowed_refinement.inspect )
+#!		assert_equal('a', Abc_match_a.narrowed_refinement[1].string, Abc_match_a.narrowed_refinement.inspect )
+#!		assert_equal('stash@{0}', Scattered_array_capture.narrowed_refinement[1].string, Scattered_array_capture.narrowed_refinement.inspect )
+#!		assert_equal('bec64c4', expected_recursive_failure.narrowed_refinement[1].matched_characters, expected_recursive_failure.narrowed_refinement.inspect )
+#!		assert_equal(SHA1_hex_7, expected_recursive_failure.narrowed_refinement[1].regexp, expected_recursive_failure.narrowed_refinement.inspect )
+#!		assert_equal('bec64c4', expected_recursive_failure.narrowed_refinement[1].string, expected_recursive_failure.narrowed_refinement.inspect )
 
-		unexpected_recursive_failure = MatchCapture.new(string: 'refs/stash@{0},bec64c4cd,Mon, 20 Mar 2017 11:55:03 -0700', regexp: Fail_array_capture.regexp[2..-1])
-		assert_equal('refs/stash@{0}', unexpected_recursive_failure.narrowed_capture[1].matched_characters, unexpected_recursive_failure.narrowed_capture.inspect )
-		assert_equal('refs/stash@{0}', unexpected_recursive_failure.narrowed_capture[1].string, unexpected_recursive_failure.narrowed_capture.inspect )
-		assert_equal(Unambiguous_ref_pattern, unexpected_recursive_failure.narrowed_capture[1].regexp, unexpected_recursive_failure.narrowed_capture[1].inspect )
+		unexpected_recursive_failure = MatchCapture.new(string: 'refs/stash@{0},bec64c4cd,Mon, 20 Mar 2017 11:55:03 -0700', regexp: Scattered_array_capture.regexp[2..-1])
+#!		assert_equal('refs/stash@{0}', unexpected_recursive_failure.narrowed_refinement[1].matched_characters, unexpected_recursive_failure.narrowed_refinement.inspect )
+#!		assert_equal('refs/stash@{0}', unexpected_recursive_failure.narrowed_refinement[1].string, unexpected_recursive_failure.narrowed_refinement.inspect )
+#!		assert_equal(Unambiguous_ref_pattern, unexpected_recursive_failure.narrowed_refinement[1].regexp, unexpected_recursive_failure.narrowed_refinement[1].inspect )
 
 		assert(Name_value_pair_capture.success?, Name_value_pair_capture.inspect)
-		assert_equal('a', Name_value_pair_capture.narrowed_capture[1].matched_characters )
-		assert_equal(Name_regexp, Name_value_pair_capture.narrowed_capture[1].regexp )
-		Name_value_pair_capture.assert_narrowed_capture
-		assert_equal('a', Name_value_pair_capture.narrowed_capture[1].string, Name_value_pair_capture.narrowed_capture.inspect )
-	end # narrowed_capture
+#!		assert_equal('a', Name_value_pair_capture.narrowed_refinement[1].matched_characters )
+#!		assert_equal(Name_regexp, Name_value_pair_capture.narrowed_refinement[1].regexp )
+#!		assert_equal('a', Name_value_pair_capture.narrowed_refinement[1].string, Name_value_pair_capture.narrowed_refinement.inspect )
+#!		assert_equal([''], Empty_capture.narrowed_refinement, Empty_capture.narrowed_refinement.inspect)
+	end # narrowed_refinement
 
-	def test_assert_narrowed_capture
-		MatchCapture::Examples::Branch_capture.assert_narrowed_capture
-		Parse_string.assert_narrowed_capture
-		Branch_line_capture.assert_narrowed_capture
-		Branch_current_capture.assert_narrowed_capture
-		Empty_capture.assert_narrowed_capture
-		assert_equal( [Abc_match_abc, ''], Abc_match_abc.narrowed_capture )
-		assert_equal(Abc_match_abc, Abc_match_abc.assert_narrowed_capture)
-		Abc_match_a.assert_narrowed_capture
-		Abc_match_b.assert_narrowed_capture
-		Abc_match_c.assert_narrowed_capture
-		Name_value_pair_capture.assert_narrowed_capture
-		assert_equal('a', Name_value_pair_capture.assert_narrowed_capture.string, Name_value_pair_capture.assert_narrowed_capture.inspect )
-		assert_equal('a', Name_value_pair_capture.narrowed_capture[1].string, Name_value_pair_capture.narrowed_capture.inspect )
-	end # assert_narrowed_capture
+	def test_assert_narrowed_refinement
+#!		Name_value_pair_capture.assert_narrowed_refinement
+		All_captures.each do |capture|
+#!			capture.assert_narrowed_refinement
+		end # each
+	end # assert_narrowed_refinement
 	
 	def test_single_refinement
-		assert_equal(Abc_match_abc, Abc_match_abc.single_refinement[0] )
-		assert_equal('abc', Abc_match_abc.single_refinement[0].string )
-		Abc_match_abc.assert_refinement(:exact)
-
-		assert_equal('a', Abc_match_a.single_refinement[0].string )
-		assert_equal('bc', Abc_match_a.narrowed_capture[2], Abc_match_a.narrowed_capture.inspect )
-		assert_equal('bc', Abc_match_a.single_refinement[1], Abc_match_a.single_refinement )
-		Abc_match_a.assert_refinement(:left)
-
-		assert_equal('a', Abc_match_b.single_refinement[0] )
-		assert_equal('b', Abc_match_b.single_refinement[1].string )
-		assert_equal('c', Abc_match_b.single_refinement[2] )
-		Abc_match_b.assert_refinement(:inside)
-
-		assert_equal('ab', Abc_match_c.single_refinement[0] )
-		assert_equal('c', Abc_match_c.single_refinement[1].string )
-		Abc_match_c.assert_refinement(:right)
-
-		no_match = MatchCapture.new(string: 'abc', regexp: /d/)
-		assert_equal(1, no_match.single_refinement.size, No_match.single_refinement.inspect)
-		assert_equal(no_match, No_match.single_refinement[0] )
-#!		assert_equal('abc', No_match.single_refinement[1], No_match.single_refinement )
-#!		assert_equal(['a', 'b'], MatchCapture.new(string: 'abc', regexp: [/b/, /a/]).single_refinement )
-
-		assert_equal('a', Name_value_pair_capture.single_refinement[0].string )
-		assert_equal('a', Name_value_pair_capture.single_refinement[0].matched_characters )
-		assert_equal('=1', Name_value_pair_capture.single_refinement[1], Name_value_pair_capture.single_refinement )
-#!		assert_equal(Name_regexp, Name_value_pair_capture.narrowed_capture.regexp )
-		assert_equal(3, Name_value_pair_capture.narrowed_capture.size )
+		All_captures.each do |capture|
+#!			single_refinement = capture.single_refinement
+#!			single_refinement.assert_match_kind(single_refinement.kind)
+		end # each
 	end # single_refinement
 	
 	def test_recursive_refinement
-		assert_instance_of(MatchRefinement, Abc_match_abc.recursive_refinement, Abc_match_abc.recursive_refinement)
-		assert_instance_of(MatchCapture, Abc_match_abc.narrowed_capture[1], Abc_match_abc.narrowed_capture)
-		assert_instance_of(MatchCapture, Abc_match_abc.single_refinement[0], Abc_match_abc.single_refinement)
-		assert_instance_of(MatchCapture, Abc_match_abc.recursive_refinement[0], Abc_match_abc.recursive_refinement)
-		assert_equal('abc', Abc_match_abc.recursive_refinement[0].string, Abc_match_abc.recursive_refinement)
-		Abc_match_abc.assert_refinement(:exact)
-
-		assert_equal('a', Abc_match_a.recursive_refinement[0].string )
-		Abc_match_a.assert_refinement(:left)
-		assert_equal('bc', Abc_match_a.single_refinement[1] )
-		assert_equal('bc', Abc_match_a.priority_refinements[1] )
-		assert_equal('bc', Abc_match_a.recursive_refinement[1], Abc_match_a.recursive_refinement)
-
-		assert_equal('a', Abc_match_b.recursive_refinement[0] )
-		assert_equal('b', Abc_match_b.recursive_refinement[1].string )
-		assert_equal('c', Abc_match_b.recursive_refinement[2] )
-		Abc_match_b.assert_refinement(:inside)
-
-		assert_equal('ab', Abc_match_c.recursive_refinement[0] )
-		assert_equal('c', Abc_match_c.recursive_refinement[1].string )
-		Abc_match_c.assert_refinement(:right)
-
-		no_match = MatchCapture.new(string: 'abc', regexp: /d/)
-		assert_equal(2, no_match.recursive_refinement.size, No_match.recursive_refinement.inspect)
-		assert_equal(no_match, No_match.recursive_refinement[0] )
-		assert_equal('abc', No_match.recursive_refinement[1] )
-		No_match.assert_refinement(:no_matches)
-
-		assert_equal('a', Name_value_pair_capture.recursive_refinement[0].string )
-		assert_equal('a', Name_value_pair_capture.recursive_refinement[0].matched_characters )
-		assert_equal('=1', Name_value_pair_capture.recursive_refinement[1] )
+		All_captures.each do |capture|
+			recursive_refinement = capture.recursive_refinement
+			recursive_refinement.assert_match_kind(recursive_refinement.kind)
+		end # each
 	end # recursive_refinement
-
+	
 	def test_MatchCapture_priority_refinements
+		All_captures.each do |capture|
+			priority_refinements = capture.priority_refinements
+			priority_refinements.assert_match_kind(priority_refinements.kind)
+		end # each
 
 		assert_instance_of(Array, Regexp_array_capture.regexp)
 			remaining_regexes = Regexp_array_capture.regexp
 		refute_empty(Regexp_array_capture.string)
 		refute_empty(remaining_regexes.to_a)
-		assert_equal([''], MatchCapture.new(string: Regexp_array_capture.pre_match, regexp: remaining_regexes[1..-1]).priority_refinements )
-#		assert_equal(Regexp_array_capture.string, Regexp_array_capture.post_match, Regexp_array_capture.inspect)
-#		refute_equal('', Regexp_array_capture.post_match, Regexp_array_capture.inspect)
+		assert_equal([], MatchCapture.new(string: Regexp_array_capture.pre_match, regexp: remaining_regexes[1..-1]).priority_refinements )
+#!		assert_equal(Regexp_array_capture.string, Regexp_array_capture.post_match, Regexp_array_capture.inspect)
+#!		refute_equal('', Regexp_array_capture.post_match, Regexp_array_capture.inspect)
 
-		priority_refinements = Fail_array_capture.priority_refinements
-		assert_equal(:no_matches, priority_refinements.kind)
-#!		Fail_array_capture.assert_refinement(:scattered)
 
-#		assert_match(Reflog_line_regexp, Stash_line, Regexp_array_capture.priority_refinements.inspect)
-#		assert_equal([], MatchCapture.new(string: Regexp_array_capture.post_match, regexp: remaining_regexes[1..-1]).priority_refinements.inspect )
-#		assert_equal([], MatchCapture.new(string: Regexp_array_capture.post_match, regexp: remaining_regexes[1..-1]).priority_refinements )
-			inside_narrowed_capture = Regexp_array_capture.narrowed_capture
-		assert_equal(MatchRefinement[inside_narrowed_capture], Regexp_array_capture.priority_refinements[0, 1], Regexp_array_capture.priority_refinements.inspect)
-		assert_equal('', inside_narrowed_capture.pre_match, inside_narrowed_capture.inspect)
-#!		assert_equal(inside_narrowed_capture.string, inside_narrowed_capture.post_match, inside_narrowed_capture.inspect)
-
-		refute_equal([], MatchCapture.new(string: inside_narrowed_capture.post_match, regexp: remaining_regexes[1..-1]).priority_refinements )
+		assert_match(Reflog_line_regexp, Stash_line, Regexp_array_capture.priority_refinements.inspect)
+		assert_equal([], MatchCapture.new(string: Regexp_array_capture.post_match, regexp: remaining_regexes[1..-1]).priority_refinements )
+			inside_narrowed_refinement = Regexp_array_capture.narrowed_refinement
+		assert_equal(MatchRefinement[inside_narrowed_refinement], Regexp_array_capture.priority_refinements[0, 1])
 
 		
 		assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.priority_refinements[1..-1])
 		assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.priority_refinements[1..-1])
 		assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.priority_refinements[1..-1])
-#!		assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.priority_refinements)
 		assert_equal(["\n  2"], MatchCapture::Examples::Parse_string.priority_refinements[1..-1])
 		assert_equal(['  2'], MatchCapture::Examples::Branch_line_capture.priority_refinements[1..-1])
 		assert_equal(["\n  2"], MatchCapture::Examples::Branch_current_capture.priority_refinements[1..-1])
-#!		assert_equal(['  2'], SplitCapture::Examples::Split_capture.priority_refinements[1..-1])
-		assert_empty(Empty_capture.string)
-		assert(Empty_capture.string.empty?, Empty_capture.inspect)
-		assert_equal(MatchRefinement[''], Empty_capture.priority_refinements)
-		assert_equal([''], Empty_capture.priority_refinements)
+		assert_equal(['  2'], SplitCapture::Examples::Split_capture.priority_refinements[1..-1])
+#!		assert_equal([''], Empty_capture.single_refinement, Empty_capture.single_refinement.inspect)
+		assert_equal([], Empty_capture.priority_refinements, Empty_capture.inspect)
 
 #!		assert_equal(['a', 'b', 'c'], MatchCapture.new(string: 'abc', regexp: [/a/, /b/]).priority_refinements )
 #!		assert_equal(['a', 'b'], MatchCapture.new(string: 'abc', regexp: [/b/, /a/]).priority_refinements )
-
-		assert_equal('a', Name_value_pair_capture.priority_refinements[0].string )
-		assert_equal('a', Name_value_pair_capture.priority_refinements[0].matched_characters )
-		assert_equal('=1', Name_value_pair_capture.priority_refinements[1] )
+		priority_refinements = Scattered_array_capture.priority_refinements
+		assert_equal(:scattered, priority_refinements.kind)
+		Scattered_array_capture.assert_refinement(:scattered)
 	end # priority_refinements
 
   def test_internal_delimiters
@@ -920,6 +868,7 @@ class MatchCaptureTest < TestCase
 		assert_equal(['d', ''], 'da'.capture?(/a/, MatchCapture).delimiters)
   end # delimiters
 
+
 	def test_MatchCapture_priority_refinements
 
 		remaining_regexes = nil
@@ -940,19 +889,19 @@ class MatchCaptureTest < TestCase
 		assert_match(CaptureTest::Examples::Regexp_array[5], CaptureTest::Examples::Stash_line)
 		assert_match(CaptureTest::Examples::Regexp_array[6], CaptureTest::Examples::Stash_line)
 		
-		priority_refinements = CaptureTest::Examples::Fail_array_capture.priority_refinements
-		assert_equal(:no_matches, priority_refinements.kind)
-#!		CaptureTest::Examples::Fail_array_capture.assert_refinement(:scattered)
+		priority_refinements = CaptureTest::Examples::Scattered_array_capture.priority_refinements
+		assert_equal(:scattered, priority_refinements.kind)
+		CaptureTest::Examples::Scattered_array_capture.assert_refinement(:scattered)
 
 #		assert_match(Reflog_line_regexp, Stash_line, CaptureTest::Examples::Regexp_array_capture.priority_refinements.inspect)
 #		assert_equal([], MatchCapture.new(string: CaptureTest::Examples::Regexp_array_capture.post_match, regexp: remaining_regexes[1..-1]).priority_refinements.inspect )
 #		assert_equal([], MatchCapture.new(string: CaptureTest::Examples::Regexp_array_capture.post_match, regexp: remaining_regexes[1..-1]).priority_refinements )
-			inside_narrowed_capture = CaptureTest::Examples::Regexp_array_capture.narrowed_capture
-		assert_equal(MatchRefinement[inside_narrowed_capture], CaptureTest::Examples::Regexp_array_capture.priority_refinements[0, 1])
-		assert_equal('', inside_narrowed_capture.pre_match, inside_narrowed_capture.inspect)
-#!		assert_equal(inside_narrowed_capture.string, inside_narrowed_capture.post_match, inside_narrowed_capture.inspect)
+			inside_narrowed_refinement = CaptureTest::Examples::Regexp_array_capture.narrowed_refinement
+		assert_equal(MatchRefinement[inside_narrowed_refinement], CaptureTest::Examples::Regexp_array_capture.priority_refinements[0, 1])
+		assert_equal('', inside_narrowed_refinement.pre_match, inside_narrowed_refinement.inspect)
+#!		assert_equal(inside_narrowed_refinement.string, inside_narrowed_refinement.post_match, inside_narrowed_refinement.inspect)
 
-		refute_equal([], MatchCapture.new(string: inside_narrowed_capture.post_match, regexp: remaining_regexes[1..-1]).priority_refinements )
+		refute_equal([], MatchCapture.new(string: inside_narrowed_refinement.post_match, regexp: remaining_regexes[1..-1]).priority_refinements )
 
 		
 		assert_equal(["\n  2"], MatchCapture::Examples::Branch_capture.priority_refinements[1..-1], MatchCapture::Examples::Branch_capture.priority_refinements)
@@ -962,8 +911,8 @@ class MatchCaptureTest < TestCase
 		assert_equal(["\n  2"], MatchCapture::Examples::Parse_string.priority_refinements[1..-1])
 		assert_equal(['  2'], MatchCapture::Examples::Branch_line_capture.priority_refinements[1..-1])
 		assert_equal(["\n  2"], MatchCapture::Examples::Branch_current_capture.priority_refinements[1..-1])
-#!		assert_equal(['  2'], SplitCapture::Examples::Split_capture.priority_refinements[1..-1])
-		assert_equal([''], Empty_capture.priority_refinements)
+		assert_equal(['  2'], SplitCapture::Examples::Split_capture.priority_refinements[1..-1])
+		assert_equal([], Empty_capture.priority_refinements)
 
 		assert_equal(7, CaptureTest::Examples::Regexp_array_capture.regexp.size,  CaptureTest::Examples::Regexp_array_capture.inspect)
 		assert_equal(CaptureTest::Examples::Delimiter, CaptureTest::Examples::Regexp_array_capture.regexp[1],  CaptureTest::Examples::Regexp_array_capture.inspect)
@@ -1051,10 +1000,10 @@ class SplitCaptureTest < TestCase
     assert_equal([], SplitCapture.new(string: Newline_Delimited_String, regexp: Branch_line_regexp).to_a(1))
   end # to_a
 	
-	def test_SplitCapture_narrowed_capture
-			assert_instance_of(SplitCapture, SplitCapture::Examples::Split_capture.narrowed_capture)
-			assert_instance_of(SplitCapture, Empty_capture.narrowed_capture)
-	end # narrowed_capture
+	def test_SplitCapture_narrowed_refinement
+			assert_instance_of(SplitCapture, SplitCapture::Examples::Split_capture.narrowed_refinement)
+			assert_instance_of(SplitCapture, Empty_capture.narrowed_refinement)
+	end # narrowed_refinement
 	
 	def test_SplitCapture_priority_refinements
 			capture = MatchCapture.new(string: 'a', regexp: /a/)
@@ -1075,9 +1024,9 @@ class SplitCaptureTest < TestCase
 				assert_equal(["\n  2"], MatchCapture::Examples::Parse_string.priority_refinements[1..-1])
 				assert_equal(['  2'], MatchCapture::Examples::Branch_line_capture.priority_refinements[1..-1])
 				assert_equal(["\n  2"], MatchCapture::Examples::Branch_current_capture.priority_refinements[1..-1])
-#!				assert_equal(['  2'], SplitCapture::Examples::Split_capture.priority_refinements[1..-1])
+				assert_equal(['  2'], SplitCapture::Examples::Split_capture.priority_refinements[1..-1])
 #!				assert_equal(["\n", "\n"], SplitCapture::Examples::Parse_array.priority_refinements[1..-1], SplitCapture::Examples::Parse_array.inspect)
-#!				assert_equal(['  2'], SplitCapture::Examples::Branch_line_capture.priority_refinements[1..-1])
+				assert_equal(['  2'], SplitCapture::Examples::Branch_line_capture.priority_refinements[1..-1])
 #!				assert_equal(["\n"], SplitCapture::Examples::Branch_regexp_capture.priority_refinements[1..-1])
 #!				assert_equal(['cat'], SplitCapture::Examples::Failed_capture.priority_refinements[1..-1])
 #!				assert_equal(['cat'], SplitCapture::Examples::Syntax_failed_capture.priority_refinements[1..-1])

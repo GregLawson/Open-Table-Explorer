@@ -6,11 +6,19 @@
 #
 ###########################################################################
 require 'pathname'
-require_relative 'regexp.rb'
+require_relative 'parse.rb'
 require 'active_support/all'
+require 'rom' # how differs from rom-sql
+#require 'rom-sql' # conflicts with rom-csv and rom-rom
+# require 'rom-relation' # conflicts with rom-csv and rom-rom
+require 'rom-repository' # conflicts with rom-csv and rom-rom
+require 'dry-types'
+module Types
+  include Dry::Types.module
+end # Types
 
-class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
-  module DefinitionalConstants
+class Pattern < Dry::Types::Value
+  module DefinitionalConstants # constant parameters in definition of the type (suggest all CAPS)
     # ordered from ambiguous to specific, common to rare
     # TODO rename :generate to :unique, :reversable, or :unit_unique
     # TODO consider making :example_file into :example_unit
@@ -44,7 +52,35 @@ class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
     Absolute_directory_regexp = Start_string * Directory_delimiter * Pathname_character_regexp * Many * End_string
   end # DefinitionalConstants
   include DefinitionalConstants
-  module DefinitionalClassMethods
+
+  attribute :path_regexp, Types::Coercible::String
+
+  module Constructors # such as alternative new methods
+    include DefinitionalConstants
+		def new_from_prefix_suffix(hash)
+			Pattern.new(path_regexp: [Absolute_directory_regexp.capture(:project_root_directory), hash[:prefix], /[[:word:]]+/.capture(:unit_base_name), hash[:suffix] ])
+		end # new_from_prefix_suffix
+		
+		def railsish_patterns
+			Patterns.map do |hash|
+				new_from_prefix_suffix(hash)
+			end # map
+		end # railsish_patterns
+  end # Constructors
+  extend Constructors
+
+	def parse(path)
+		MatchCapture.new(string: path.to_s, regexp: @path_regexp)
+	end # parse
+	
+end # Pattern
+
+class FilePattern < Dry::Types::Value
+  module DefinitionalConstants
+		include Pattern::DefinitionalConstants
+  end # DefinitionalConstants
+  include DefinitionalConstants
+  module DefinitionalClassMethods # if reference DefinitionalConstants
     def executing_path?
       squirrely_string = $PROGRAM_NAME
       class_name = name.to_s
@@ -126,7 +162,7 @@ class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
     end # find_by_name
 
     def match_path(pattern, path)
-      pattern_match = pattern.clone
+      pattern_match = pattern.dup
       pattern_match[:path] = path
       pattern_match[:prefix_match] = Regexp.new(pattern[:prefix]).match(path.to_s)
       pattern_match[:full_match] = pattern_match[:prefix_match] && path.to_s[-pattern[:suffix].size, pattern[:suffix].size] == pattern[:suffix]
@@ -170,17 +206,12 @@ class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
     # assert_pre_conditions
   end # DefinitionalClassMethods
   extend DefinitionalClassMethods
-  attr_reader :pattern, :project_root_dir, :repository_dir, :unit_base_name
-  def initialize(pattern,
-                 unit_base_name = '*',
-                 project_root_dir = Library.project_root_dir,
-                 repository_dir = project_root_dir)
-    raise 'initialize' unless pattern.instance_of?(Hash)
-    @unit_base_name = unit_base_name
-    @pattern = pattern
-    @project_root_dir = project_root_dir
-    @repository_dir = repository_dir
-  end # initialize
+
+  attribute :pattern, Types::Strict::Hash
+  attribute :unit_base_name, Types::Strict::Symbol #.default('*')
+  attribute :project_root_dir, Types::Strict::String #.default(Library.project_root_dir)
+#!  attribute :repository_dir, Types::Coercible::String #.default(project_root_dir)
+	
   # def inspect
   #	message = "FilePattern<instance_variables = #{instance_variables.inspect}>"
   # e#nd #inspect
@@ -190,10 +221,10 @@ class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
       raise path.inspect unless path.instance_of?(String) || path.instance_of?(Pathname)
       path = File.expand_path(path)
       pattern = FilePattern.find_from_path(path)
-      FilePattern.new(pattern,
-                      FilePattern.unit_base_name?(path),
-                      FilePattern.project_root_dir?(path),
-                      FilePattern.repository_dir?(path))
+      FilePattern.new(pattern: pattern,
+                      unit_base_name: FilePattern.unit_base_name?(path),
+                      project_root_dir: FilePattern.project_root_dir?(path),
+                      repository_dir: FilePattern.repository_dir?(path))
     end # new_from_path
 
     def find_all_from_path(path)
@@ -208,6 +239,7 @@ class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
     end # find_from_path
   end # Constructors
   extend Constructors
+	
   def path?(unit_base_name = @basename)
     raise @pattern.inspect unless @pattern.instance_of?(Hash)
     raise @pattern.inspect unless @pattern[:prefix].instance_of?(String)
@@ -215,10 +247,6 @@ class FilePattern # <  ActiveSupport::HashWithIndifferentAccess
     raise '' unless @pattern[:suffix].instance_of?(String)
     @project_root_dir + '/' + @pattern[:prefix] + unit_base_name.to_s + @pattern[:suffix]
   end # path
-
-  def parse_pathname_regexp
-    Absolute_directory_regexp.capture(:project_root_directory) * @pattern[:prefix] + /[[:word:]]+/.capture(:unit_base_name) + @pattern[:suffix]
-  end # parse_pathname_regexp
 
   def pathname_glob(unit_base_name = '*', project_root_directory = @project_root_dir)
     project_root_directory + @pattern[:prefix] + unit_base_name.to_s + @pattern[:suffix]

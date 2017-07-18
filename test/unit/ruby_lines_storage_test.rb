@@ -7,94 +7,77 @@
 ###########################################################################
 require_relative '../../app/models/test_environment_test_unit.rb'
 require_relative '../../app/models/ruby_lines_storage.rb'
+require_relative '../examples/ruby_lines_storage.rb'
+		
+class ExceptionTest < TestCase
+	
+	def test_Exception_rescued_value
+		assert_instance_of(SyntaxError, Exception.rescued_value(SyntaxError){eval('1=2')})
+		assert_instance_of(RuntimeError, Exception.rescued_value(RuntimeError){fail})
+		assert_instance_of(RuntimeError, Exception.rescued_value(RuntimeError){raise})
+#!		assert_instance_of(SyntaxError, Exception.rescued_value(RuntimeError){exit})
+		assert_instance_of(SyntaxError, Exception.rescued_value(SyntaxError){raise SyntaxError})
+		assert_instance_of(RuntimeError, Exception.rescued_value(RuntimeError){raise RuntimeError})
+		no_method_error = Exception.rescued_value(NoMethodError){eval("\"(?-mix:1)\".capture(:a)")}
+		assert_instance_of(NoMethodError, no_method_error)
+		assert_instance_of(NoMethodError, Exception.rescued_value(NoMethodError){eval("capture(:a)")})
+		assert_instance_of(String, Exception.rescued_value(NoMethodError){eval("\"(?-mix:1)\"")})
+		assert_instance_of(SyntaxError, Exception.rescued_value(SyntaxError){eval("(?-mix:1).capture(:a)")})
+		assert_instance_of(NoMethodError, Exception.rescued_value(NoMethodError){eval("\"(?-mix:1)\".capture(:a)")})
+    assert_instance_of(NoMethodError,  Exception.rescued_value(NoMethodError){Regexp.regexp_rescued('[')})
+    assert_instance_of(RegexpError,  Exception.rescued_value(RegexpError){Regexp.new('[')})
+	end # rescued_value
+end # ExceptionTest
+
 class SyntaxErrorTest < TestCase
-	include SyntaxError::DefinitionalConstants
 	module Examples
-    Exception_message = '(eval):17: syntax error, unexpected tSYMBEG, expecting end-of-input'.freeze
-		Exception_constructor_message = 'This is an example error message.'
-		Start_exception = SyntaxError.new(Exception_constructor_message)
-		Unexpected_end_of_input = SyntaxError.rescued_eval('1+')
-		Unexpected_close_bracket = SyntaxError.rescued_eval('[,2]')
-		Unexpected_close_bracket_message = "(eval):1: syntax error, unexpected ',', expecting ']'"
+		Error1 = SyntaxError.rescued_eval('1=2')
+		Error2 = SyntaxError.rescued_eval('end')
+		Error3 = SyntaxError.rescued_eval('{([')
+		All_examples = [Error1, Error2, Error3]
 	end # Examples
 	include Examples
 	
-	def test_Examples
-		assert_instance_of(SyntaxError, Start_exception)
-		assert_instance_of(SyntaxError, Unexpected_end_of_input)
-		assert_instance_of(SyntaxError, Unexpected_close_bracket)
-		assert_equal(Unexpected_close_bracket_message, Unexpected_close_bracket.message)
-	end # Examples
   def test_SyntaxError_DefinitionalConstants
-    assert_match(Eval_error_regexp, Exception_message)
-    assert_match(Syntax_error_regexp, Exception_message)
-    assert_match(Unexpected_regexp, Exception_message)
-    assert_match(/expecting /, Exception_message)
-    assert_match(/[[:graph:]]+/.capture(:expecting), Exception_message)
-    assert_match(/expecting / * /[[:graph:]]+/.capture(:expecting), Exception_message)
-    assert_match(Expecting_regexp, Exception_message)
-    assert_match(Eval_syntax_error_regexp, Exception_message)
-    exception_hash = Exception_message.parse(Eval_syntax_error_regexp)
-    assert_equal('17', exception_hash[:line])
-		assert_equal([:line, :class_words, :unexpected, :expecting, :context, :position], exception_hash.keys, exception_hash.inspect)
-		assert_match(Unexpected_regexp, Unexpected_end_of_input.message)
-		assert_match(Unexpected_regexp, Unexpected_close_bracket.message)
-		assert_match(Expecting_regexp, Unexpected_close_bracket.message)
-		refute_match(Expecting_regexp, Unexpected_end_of_input.message)
   end # DefinitionalConstants
-
 	def test_rescued_eval
-		assert_equal(2, SyntaxError.rescued_eval('2') )
-		assert_instance_of(SyntaxError, SyntaxError.rescued_eval("'") )
-	end # rescued_eval
+		All_examples.each do |example|
+			assert_instance_of(SyntaxError, example)
+		end # each
+		end # rescued_eval
+
+  def test_ReferenceObjects
+#!		assert_equal(SyntaxError::Expected_error_groups, All_examples)
+  end # ReferenceObjects
 
 	def test_capture
-		Unexpected_end_of_input.capture.assert_refinement(:exact)
-		Unexpected_close_bracket.capture.assert_refinement(:exact)
-		Start_exception.capture.assert_refinement(:scattered)
+		All_examples.each do |example|
+			assert_match(SyntaxError::Eval_syntax_error_regexp, example.message)
+		end # each
 	end # capture
 	
 	def test_message_refinement
-		Unexpected_close_bracket.message_refinement.assert_match_kind(:exact, Unexpected_close_bracket.message)
-		Start_exception.message_refinement.assert_match_kind(:no_matches, Start_exception.message)
+		All_examples.each do |example|
+			#! example.capture.assert_refinement(:exact)
+		end # each
 	end # message_refinement
-	
+
 	def test_exception_hash
-			unique_exception_hashes = Eval.errors_seen(Log_glob).map {|eval| eval.rescued_eval}.map do |error|
-				assert_instance_of(SyntaxError, error)
-				refute_nil(error.exception_hash[:unexpected], error.inspect)
-				refute_empty(error.exception_hash[:unexpected], error.inspect)
-				refute_equal(0, error.exception_hash[:unexpected].size, error.inspect)
-				assert_operator(1, :==, error.exception_hash[:unexpected].size, error.message)
-				if error.message.match(/expecting/)
-					refute_nil(error.exception_hash[:expecting], error.inspect)
-				end # if
-				error.exception_hash
-			end.compact.uniq
-			assert_equal([], unique_exception_hashes)
 	end # exception_hash
 	
 	def test_line_number
-			unique_line_numbers = Eval.errors_seen(Log_glob).map {|eval| eval.rescued_eval}.map do |error|
-				assert_instance_of(SyntaxError, error)
-				error.line_number
-			end.compact.uniq
-			assert_equal([2, 5], unique_line_numbers)
 	end # line_number
 	
 	def test_unexpected
-			unique_unexpecteds = Eval.errors_seen(Log_glob).map {|eval| eval.rescued_eval}.map do |error|
-				assert_instance_of(SyntaxError, error)
-				error.unexpected
-			end.compact.uniq
-			assert_equal([], unique_unexpecteds)
 	end # unexpected
 	
 	def test_expecting
 	end # expecting
 	
 	def test_error_group
-			assert_equal(SyntaxError::Expected_error_groups, Eval.unique_error_groups(Log_glob))
+		All_examples.each do |example|
+			#! assert_include(SyntaxError::Expected_error_groups, example.error_group)
+		end # each
 	end # error_group
 	
 	def test_unseen?
@@ -107,86 +90,67 @@ class SyntaxErrorTest < TestCase
 	end # assert_syntax_OK
 end # SyntaxError
 
+
+	def test_RegexpError_rescued_regexp
+		assert_instance_of(RegexpError, RegexpError.rescued_regexp('{(['))
+	end # rescued_eval
+
 class EvalTest < TestCase
   module Examples
-    include SyntaxError::DefinitionalConstants
-		include SyntaxErrorTest::Examples
-    exception_constructor = 'e = Exception.new("' + Exception_constructor_message.to_s + + '");e.set_backtrace(' + Start_exception.backtrace.ruby_lines_storage + ');e'
-		Exception_reconstruction = Eval.new(exception_constructor)
-		require_relative '../examples/ruby_lines_storage.rb'
+    include Reconstruction::DefinitionalConstants
+		Exception_constructor_message = 'This is an example error message.'
+#!		include SyntaxErrorTest::Examples
+		Start_exception = Exception.new(Exception_constructor_message)
+    Exception_constructor = 'e = Exception.new("' + Exception_constructor_message.to_s + + '");e.set_backtrace(' + Start_exception.backtrace.ruby_lines_storage + ');e'
+		Exception_reconstruction = Eval.new(Exception_constructor)
+    Exception_message = '(eval):17: syntax error, unexpected tSYMBEG, expecting end-of-input'.freeze
   end # Examples
   include Examples
 	
+	def test_initialize
+		start_exception = Exception.new(Exception_constructor_message)
+    exception_constructor = 'e = Exception.new("' + Exception_constructor_message.to_s + + '");e.set_backtrace(' + start_exception.backtrace.ruby_lines_storage + ');e'
+		reconstructed_exception = Eval.new(exception_constructor)
+	end # initialize	
+end # Eval
+
+class ReconstructionTest < TestCase
+  module Examples
+    include Reconstruction::DefinitionalConstants
+		Exception_constructor_message = 'This is an example error message.'
+		start_exception = Exception.new(Exception_constructor_message)
+    exception_constructor = 'e = Exception.new("' + Exception_constructor_message.to_s + + '");e.set_backtrace(' + start_exception.backtrace.ruby_lines_storage + ');e'
+		Exception_reconstruction = Reconstruction.new(exception_constructor)
+  end # Examples
+  include Examples
+	
+	def test_initialize
+		start_exception = Exception.new(Exception_constructor_message)
+    exception_constructor = 'e = Exception.new("' + Exception_constructor_message.to_s + + '");e.set_backtrace(' + start_exception.backtrace.ruby_lines_storage + ');e'
+		reconstructed_exception = Reconstruction.new(exception_constructor)
+	end # initialize
+	
 		def test_read_all
-			Log_reads.each do |eval| # = Eval.read_all(Log_glob)
-				assert_instance_of(Eval, eval)
-			end # each
 		end # read_all
 		
 		def test_errors_seen
-		  error_evals = Log_reads.reject do |eval|
-				assert_instance_of(Eval, eval)
-				eval.success? 
-			end # reject
-			errors_seen = error_evals.map do |eval|
-				assert_instance_of(Eval, eval)
-				refute(eval.success?, eval.ruby_lines_storage)
-				assert_instance_of(SyntaxError, eval.rescued_eval)
-			  eval
-			 end # map
-			assert_equal(Errors_seen.size, errors_seen.size)
-			assert_equal(Errors_seen[0].class, errors_seen[0].class)
-			assert_equal(Errors_seen[0], errors_seen[0])
-#!			assert_empty(Errors_seen - errors_seen)
-#!			assert_empty(errors_seen - Errors_seen)
-			assert_equal(Errors_seen, errors_seen)
-			Errors_seen.each do |eval| # = Log_reads.reject {|eval| eval.success? }
-				assert_instance_of(Eval, eval)
-			end # each
 		end # errors_seen
 
 		def test_unique_error_groups
-			unique_error_groups = Eval.errors_seen(Log_glob).map {|eval| eval.rescued_eval}.map do |error|
-				assert_instance_of(SyntaxError, error)
-				error.error_group
-			end.compact.uniq
-			assert_equal(SyntaxError::Expected_error_groups, Eval.unique_error_groups(Log_glob))
-#!			Unique_error_messages = Errors_seen.map{|e| e}.compact.uniq
-			assert_empty(Unique_error_messages - SyntaxError::Expected_error_groups )
 		end # unique_error_groups
+		
 		def test_unexpected_errors
 		
 		end # unexpected_errors
 
 		def test_select_error_group
 		end # select_error_group
-	
-	def test_Eval_initialize
-		start_exception = Exception.new(Exception_constructor_message)
-    exception_constructor = 'e = Exception.new("' + Exception_constructor_message.to_s + + '");e.set_backtrace(' + start_exception.backtrace.ruby_lines_storage + ');e'
-		reconstructed_exception = Eval.new(exception_constructor)
-	end # initialize	
-
-	def test_rescued_eval
+	def test_reconstruction
 		assert_instance_of(Exception, Exception.new(Exception_constructor_message))
-		assert_instance_of(Exception, Exception_reconstruction.rescued_eval, Exception_reconstruction.inspect)
-	end # rescued_eval
+		assert_instance_of(Exception, Exception_reconstruction.reconstruction, Exception_reconstruction.inspect)
+	end # reconstruction
 	
 	def test_success?
-    Log_reads.each do |eval|
-      if eval.success?
-				assert(eval.success?, eval.ruby_lines_storage)
-				assert_instance_of(Hash, eval.rescued_eval)
-			else
-				refute(eval.success?, eval.ruby_lines_storage)
-				assert_instance_of(SyntaxError, eval.rescued_eval)
-			end # if
-    end # each
-
-		Errors_seen.each do |eval| # = Log_reads.reject {|eval| eval.success? }
-			assert_instance_of(Eval, eval)
-			assert_instance_of(SyntaxError, eval.rescued_eval)
-		end # each
 	end # success?
 	
 	def test_state
@@ -212,8 +176,20 @@ class RubyLinesStorageTest < TestCase
     Short_Date = Date.today
     Approximate_DateTime = DateTime.now
     Exception_message = '(eval):17: syntax error, unexpected tSYMBEG, expecting end-of-input'.freeze
+		require_relative '../examples/ruby_lines_storage.rb'
   end # Examples
   include Examples
+	
+  def test_read_error_context
+    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line), Exception_message)
+    assert_match(/\(eval\):/ * /[0-9]+/.capture(:line) * /: / * /.*/, Exception_message)
+    assert_match(Reconstruction::Eval_syntax_error_regexp, Exception_message)
+    exception_hash = Exception_message.parse(Reconstruction::Eval_syntax_error_regexp)
+    assert_equal('17', exception_hash[:line])
+  end # read_error_context
+
+  def test_eval_rls
+  end # eval_rls
 	
   def eval_rescued(example_string)
     eval(example_string)
@@ -221,17 +197,27 @@ class RubyLinesStorageTest < TestCase
     raise 'example_string.inspect = ' + example_string.inspect + "\n" + exception_raised.inspect
   end # eval_example
 
+	def test_read_success?
+    Log_evals.each do |eval|
+      if eval.success?
+				assert(eval.success?, eval.ruby_lines_storage)
+			else
+				refute(eval.success?, eval.ruby_lines_storage)
+			end # if
+    end # each
+	end # read_success?
+
   def test_RubyLinesStorage_read
 
-    example_minitest = Eval.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
-    example_testunit = Eval.read('./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log')
+    example_minitest = RubyLinesStorage.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
+    example_testunit = RubyLinesStorage.read('./log/unit/2.2/2.2.3p173/silence/initialization_fail.rb.log')
 
     example_minitest_log = IO.read('./log/unit/2.2/2.2.3p173/silence/single_test_fail.rb.log')
 		
 		refute_empty(Log_paths)
     errors_seen = Log_paths.map do |path|
       file_contents = IO.read(path)
-      eval = Eval.read(path)
+      eval = RubyLinesStorage.read(path)
       assert_instance_of(Eval, eval)
       if eval.success?
 				assert(eval.success?, eval.ruby_lines_storage)
@@ -239,18 +225,20 @@ class RubyLinesStorageTest < TestCase
 				refute(eval.success?, eval.ruby_lines_storage)
 			end # if
     end.uniq # each
-		assert_empty(Unique_error_messages.map{|e| e.class.name}.uniq - ['SyntaxError'])
-		expecting_right_paren_not_comma_contexts = errors_seen.select{|e| e[:errors] == expecting_right_paren_not_comma}.map{|e| e[:context].split(',')}
-		expecting_right_brace_not_comma_contexts = errors_seen.select{|e| e[:errors] == expecting_right_brace_not_comma}.map{|e| e[:context].split(',')}
-		unexpect_less_than_contexts = errors_seen.select{|e| e[:errors] == unexpect_less_than}.map{|e| e[:context].split('<')}
-#!    refute_includes(unique_error_messages, unexpect_less_than, unexpect_less_than_contexts.ruby_lines_storage)
-#!    refute_includes(unique_error_messages, expecting_right_paren_not_comma, expecting_right_paren_not_comma_contexts.ruby_lines_storage)
-#!    refute_includes(unique_error_messages, expecting_right_brace_not_comma, expecting_right_brace_not_comma_contexts.ruby_lines_storage)
+		assert_instance_of(Hash, Unique_error_messages, Unique_error_messages.ruby_lines_storage)
+		assert_empty(Unique_error_messages.keys.map{|e| e[:exception_class]}.uniq - [SyntaxError], Unique_error_messages.keys.ruby_lines_storage)
+#!		assert_empty(Unique_error_messages - [expecting_right_paren_not_comma, 		 expecting_right_brace_not_comma, unexpect_less_than ] )
+#!		expecting_right_paren_not_comma_contexts = Unique_error_messages[expecting_right_paren_not_comma].map{|e| e[:context].split(',')}
+#!		expecting_right_brace_not_comma_contexts = Unique_error_messages[expecting_right_brace_not_comma].map{|e| e[:context].split(',')}
+#!		unexpect_less_than_contexts = Unique_error_messages[unexpect_less_than].map{|e| e[:context].split('<')}
+#!    refute_includes(unique_error_messages.keys, Unexpect_less_than, unexpect_less_than_contexts.ruby_lines_storage)
+#!    refute_includes(unique_error_messages.keys, Expecting_right_paren_not_comma, expecting_right_paren_not_comma_contexts.ruby_lines_storage)
+#!    refute_includes(unique_error_messages.keys, Expecting_right_brace_not_comma, expecting_right_brace_not_comma_contexts.ruby_lines_storage)
   end # read
 	
 	def test_assert_readable
     file_times = Log_paths.map do |path|
-				eval = Eval.read(path)
+				eval = RubyLinesStorage.read(path)
 				assert_instance_of(Eval, eval)
 				if eval.success?
 					assert(eval.success?, eval.ruby_lines_storage)
@@ -293,6 +281,8 @@ class RubyLinesStorageTest < TestCase
     Examples.constants.each do |name|
       if name.to_s[0, 12] == 'Approximate_'
         assert_approximate(eval_name(name), Rational(11_574, 1_000_000_000))
+			else
+				assert_reversible(eval_name(name))
       end # if
     end # each
   end # assert_reversible
@@ -428,9 +418,9 @@ end # Regexp
 
   def test_Object_ruby_lines_storage
     assert_equal('[1, 2, 3]', [1, 2, 3].ruby_lines_storage)
-    assert_equal(%w(1 2 3), [1, 2, 3].map(&:ruby_lines_storage))
+		assert_equal(['1', '2', '3'], [1,2,3].map {|e| e.ruby_lines_storage})
     assert_equal([1, 1, 1], [1, 2, 3].map { |e| e.ruby_lines_storage.size })
-    assert_equal(%w(1 2 3), [1, 2, 3].map(&:ruby_lines_storage))
+		assert_equal(['1', '2', '3'], [1,2,3].map(&:ruby_lines_storage))
     assert_equal([1, 1, 1], [1, 2, 3].map(&:ruby_lines_storage).map(&:size))
     #		assert_reversible(MatchCapture::Examples::Branch_capture)
     #		assert_equal('', MatchCapture::Examples::Branch_capture.ruby_lines_storage, MatchCapture::Examples::Branch_capture.ruby_lines_storage)

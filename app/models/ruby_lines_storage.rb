@@ -7,7 +7,19 @@
 ###########################################################################
 require_relative '../../app/models/parse.rb'
 
-class SyntaxError
+class Exception
+		def Exception.rescued_value(rescued_exception_type, &block)
+			if block_given?
+				block.call
+			else
+				raise 'Exception.rescued_value must be passed a block.'
+			end # if
+		rescue rescued_exception_type => exception_object
+			exception_object
+		end # rescued_value
+end # Exception
+
+class SyntaxError < ScriptError
   module DefinitionalConstants
 		Eval_error_regexp = /\(eval\):/ * /[0-9]+/.capture(:line)
 		Syntax_error_regexp = /: / * /[ a-z]+/.capture(:class_words) * /, /
@@ -17,21 +29,24 @@ class SyntaxError
 		Eval_syntax_error_array = [ Eval_error_regexp, Syntax_error_regexp, 
 			 Unexpected_regexp, Expecting_regexp.optional,  Context_regexp.optional]
 		Eval_syntax_error_regexp = Regexp[Eval_syntax_error_array]
-		Expecting_right_paren_not_comma = {:exception_class=>"SyntaxError", :line=>"2", :message=>"syntax error, unexpected ',', expecting ')'"}
-		Expecting_right_brace_not_comma = {:exception_class=>"SyntaxError", :line=>"2", :message=>"syntax error, unexpected ',', expecting '}'"}
-		Unexpect_less_than = {exception_class: "SyntaxError", line: "5", message: "syntax error, unexpected '<'"}
-		Expected_error_groups = [Expecting_right_paren_not_comma, Expecting_right_brace_not_comma, Unexpect_less_than]
   end # DefinitionalConstants
   include DefinitionalConstants
 
   module Constructors # such as alternative new methods
 		def rescued_eval(eval_source)
-			eval(eval_source)
-		rescue SyntaxError => exception_object
-			exception_object
+			Exception.rescued_value(SyntaxError) { eval(eval_source) }
 		end # rescued_eval
   end # Constructors
   extend Constructors
+
+  module ReferenceObjects # example constant objects of the type (e.g. default_objects)
+    include DefinitionalConstants
+		Expecting_right_paren_not_comma = {exception_class: SyntaxError, unexpected: ',', expecting: ')'}
+		Expecting_right_brace_not_comma = {exception_class: SyntaxError, unexpected: ',', expecting: '}'}
+		Unexpect_less_than = {exception_class: SyntaxError, unexpected: '<'}
+		Expected_error_groups = [Expecting_right_paren_not_comma, Expecting_right_brace_not_comma, Unexpect_less_than]
+  end # ReferenceObjects
+  include ReferenceObjects
 
 	def capture
     MatchCapture.new(string: message, regexp: Eval_syntax_error_array)
@@ -40,7 +55,7 @@ class SyntaxError
 	def message_refinement
     capture.priority_refinements
 	end # message_refinement
-	
+
 	def exception_hash
     message.parse(Eval_syntax_error_regexp)
 	end # exception_hash
@@ -79,44 +94,14 @@ class SyntaxError
 	end # assert_syntax_OK
 end # SyntaxError
 
+class RegexpError
+		def RegexpError.rescued_regexp(regexp_source)
+			Exception.rescued_value(RegexpError) { Regexp.new(regexp_source) }
+		end # rescued_regexp
+end # RegexpError
+
 # save eval_source in object
 class Eval
-  module Constructors # such as alternative new methods
-#!    include DefinitionalConstants
-
-		def read(path)
-			ruby_lines_storage_string = IO.read(path)
-			raise 'In order for Eval.read to succeed, String ' + ruby_lines_storage_string + ' must start with open curly brace.' + read_error_context(path, ruby_lines_storage_string) if ruby_lines_storage_string[0] != '{'
-			Eval.new(ruby_lines_storage_string)
-		end # read
-
-		def read_all(directory_glob)
-			Dir[directory_glob].map do |path|
-			  read(path) 
-			end # map
-		end # read_all
-		
-		def errors_seen(directory_glob)
-		    read_all(directory_glob).reject {|eval| eval.success? }
-		end # errors_seen
-
-		def unique_error_groups(directory_glob)
-			errors_seen(directory_glob).map {|eval| eval.rescued_eval}.map(&:error_group).compact.uniq
-		end # unique_error_groups
-		
-		def unexpected_errors(directory_glob)
-			unique_error_groups(directory_glob) - [Expecting_right_paren_not_comma, Expecting_right_brace_not_comma, Unexpect_less_than ]
-		end # unexpected_errors
-
-		def select_error_group(directory_glob, error_group)
-			read_all(directory_glob).select do |eval|
-				eval.rescued_eval.error_group == error_group
-			end # select
-		end # select_error_group
-  end # Constructors
-  extend Constructors
-
-	attr_reader :eval_source
 	def initialize(eval_source, context = nil)
 		@eval_source = eval_source
 		if context.nil?
@@ -125,6 +110,22 @@ class Eval
 			@context = context
 		end # if
 	end # initialize	
+
+	def reconstruction
+		SyntaxError.rescued_eval(@eval_source)
+	end # reconstruction
+	
+  def context_message
+    @eval_source.lines[(line_number - 2)..line_number].join
+	end # context_message
+
+	def success?
+		if reconstruction.kind_of?(Exception)
+			false
+		else
+			true
+		end # if
+	end # success?
 
 	def ==(other)
 		@eval_source == other.eval_source # no side effects, pure functions
@@ -139,39 +140,75 @@ class Eval
 			-1
 		end # if
 	end # compare
-	
-	def rescued_eval
-		SyntaxError.rescued_eval(@eval_source)
-	end # rescued_eval
-	
-	def success?
-		if rescued_eval.kind_of?(SyntaxError)
-			false
-		else
-			true
-		end # if
-	end # success?
+end # Eval
 
+class Reconstruction < Eval
+  module DefinitionalConstants
+		include SyntaxError::DefinitionalConstants
+  end # DefinitionalConstants
+  include DefinitionalConstants
+
+	
+  module Constructors # such as alternative new methods
+    include DefinitionalConstants
+		def read_all(directory_glob)
+			Dir[directory_glob].map do |path|
+			  RubyLinesStorage.read(path) 
+			end # map
+		end # read_all
+		
+		def errors_seen(directory_glob)
+		    read_all(directory_glob).reject {|eval| eval.success? }
+		end # errors_seen
+
+		def unique_error_groups(directory_glob)
+			errors_seen(directory_glob).map {|eval| eval.rescued_eval}.map(&:error_group).compact.uniq
+		end # unique_error_groups
+		
+		def unexpected_errors(directory_glob)
+			unique_error_groups(directory_glob).keys - [Expecting_right_paren_not_comma, Expecting_right_brace_not_comma, Unexpect_less_than ]
+		end # unexpected_errors
+
+		def select_error_group(directory_glob, error_group)
+			read_all(directory_glob).select do |eval|
+				eval.error_group == error_group
+			end # select
+		end # select_error_group
+  end # Constructors
+  extend Constructors
+
+end # Reconstruction
+
+module RubyLinesStorage
+
+  def self.read(path)
+    ruby_lines_storage_string = IO.read(path)
+#!    raise 'In order for RubyLinesStorage.eval_rls to succeed, String ' + ruby_lines_storage_string + ' must start with open curly brace.'  if ruby_lines_storage_string[0] != '{'
+    Eval.new(ruby_lines_storage_string, {path: path})
+  end # read
+	
   module Assertions
     module ClassMethods
 			def assert_readable(path)
-				read = RubyLinesStorage.read(path)
-				assert_instance_of(Hash, read)
-        message = read.ruby_lines_storage
-				if RubyLinesStorage.read_success?(read)
-					assert(RubyLinesStorage.read_success?(read), read.ruby_lines_storage)
-					refute_includes(read.keys, :exception_hash, read.ruby_lines_storage)
+				read_return = RubyLinesStorage.read(path)
+				assert_instance_of(Hash, read_return)
+        message = read_return.ruby_lines_storage
+				if RubyLinesStorage.read_success?(read_return)
+					assert(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+					refute_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
 				else
-					refute(RubyLinesStorage.read_success?(read), read.ruby_lines_storage)
-					assert_includes(read.keys, :exception_hash, read.ruby_lines_storage)
-					assert_equal(Eval::Read_fail_keys, read.keys)
-					refute(RubyLinesStorage.read_success?(read), read.ruby_lines_storage)
-					assert_includes(read.keys, :exception_hash, read.ruby_lines_storage)
-					assert_equal(Eval::Read_fail_keys, read.keys)
-          assert_instance_of(Hash, read[:exception_hash])
-					context_message = read[:context_message]
+					refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+					assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+					assert_equal(Reconstruction::Read_fail_keys, read_return.keys)
+					refute(RubyLinesStorage.read_success?(read_return), read_return.ruby_lines_storage)
+					assert_includes(read_return.keys, :exception_hash, read_return.ruby_lines_storage)
+					assert_equal(Reconstruction::Read_fail_keys, read_return.keys)
+# [:exception_hash, :context_message, :ruby_lines_storage_string, :path]
+          assert_instance_of(Hash, read_return[:exception_hash])
+#!          puts read_return[:exception_hash].ruby_lines_storage
+					context_message = read_return[:context_message]
 					assert_instance_of(String, context_message, message)
-					ruby_lines_storage_string = read[:ruby_lines_storage_string]
+					ruby_lines_storage_string = read_return[:ruby_lines_storage_string]
 					assert_instance_of(String, ruby_lines_storage_string, message)
 				end # if
 			end # assert_read
@@ -179,9 +216,6 @@ class Eval
   end # Assertions
 	include Assertions
 	extend Assertions::ClassMethods
-end # Eval
-
-module RubyLinesStorage
 end # RubyLinesStorage
 
 class Array
