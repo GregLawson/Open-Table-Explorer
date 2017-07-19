@@ -1,41 +1,929 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 12, 8, 3, 5, Rational(14950462589, 1000000000), "-08:00"),
+{:current_branch_name => Branch.new(name: nil)
+,
+:start_time => Time.new(2017, 7, 18, 12, 8, Rational(42615654543, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_pathname_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_pathname_test
 Started
-.............
+.....F
+===============================================================================
+Failure: test_lint_json(RepositoryPathnameTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_pathname_test.rb:143:in `test_lint_json\'
+     140:     assert_equal(0, Not_unit.lint_json[\'summary\'][\'offense_count\'], Not_unit.lint_json)
+     141:     assert_equal(0, Not_unit_executable.lint_json[\'summary\'][\'offense_count\'], Not_unit_executable.lint_command_string)
+     142:     assert_equal(0, Not_unit_executable.lint_json[\'summary\'][\'offense_count\'], Not_unit_executable.lint_json)
+  => 143:     assert_equal(0, TestMinimal.lint_json[\'summary\'][\'offense_count\'], TestMinimal.lint_json.ruby_lines_storage)
+     144:     assert_operator(10, :<, Unit_non_executable.lint_json[\'summary\'][\'offense_count\'], Unit_non_executable.lint_json)
+     145:     assert_equal(1, TestSelf.lint_json[\'files\'].size, TestSelf.lint_json[\'files\'])
+     146:     assert_include(TestSelf.lint_json[\'files\'][0].keys, \'offenses\', TestSelf.lint_json[\'files\'])
+{\'metadata\' => {\'rubocop_version\' => \'0.39.0\',
+\'ruby_engine\' => \'ruby\',
+\'ruby_version\' => \'2.2.4\',
+\'ruby_patchlevel\' => \'230\',
+\'ruby_platform\' => \'x86_64-linux-gnu\'
+}
+,
+\'files\' => [{\'path\' => \'test/unit/minimal2_test.rb\',
+\'offenses\' => [{\'severity\' => \'convention\',
+\'message\' => \'Assignment Branch Condition size for test_included_module_names is too high. [16.03/15] (http://c2.com/cgi/wiki?AbcMetric)\',
+\'cop_name\' => \'Metrics/AbcSize\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 31,
+\'column\' => 3,
+\'length\' => 3
+}
 
-Finished in 1.65789881 seconds.
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [115/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 33,
+\'column\' => 81,
+\'length\' => 35
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [107/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 34,
+\'column\' => 81,
+\'length\' => 27
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [103/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 35,
+\'column\' => 81,
+\'length\' => 23
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [102/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 36,
+\'column\' => 81,
+\'length\' => 22
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [96/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 37,
+\'column\' => 81,
+\'length\' => 16
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Assignment Branch Condition size for test_nested_scope_modules is too high. [37.13/15] (http://c2.com/cgi/wiki?AbcMetric)\',
+\'cop_name\' => \'Metrics/AbcSize\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 40,
+\'column\' => 3,
+\'length\' => 3
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Method has too many lines. [23/10] (https://github.com/bbatsov/ruby-style-guide#short-methods)\',
+\'cop_name\' => \'Metrics/MethodLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 40,
+\'column\' => 3,
+\'length\' => 1547
+}
+
+}
+,
+{\'severity\' => \'warning\',
+\'message\' => \'The use of `eval` is a serious security risk.\',
+\'cop_name\' => \'Lint/Eval\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 48,
+\'column\' => 20,
+\'length\' => 4
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [90/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 60,
+\'column\' => 81,
+\'length\' => 10
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [87/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 61,
+\'column\' => 81,
+\'length\' => 7
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [82/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 63,
+\'column\' => 81,
+\'length\' => 2
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [93/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 66,
+\'column\' => 81,
+\'length\' => 13
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Assignment Branch Condition size for test_nested_scope_module_names is too high. [28.02/15] (http://c2.com/cgi/wiki?AbcMetric)\',
+\'cop_name\' => \'Metrics/AbcSize\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 69,
+\'column\' => 3,
+\'length\' => 3
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [114/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 71,
+\'column\' => 81,
+\'length\' => 34
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [111/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 72,
+\'column\' => 81,
+\'length\' => 31
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [102/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 73,
+\'column\' => 81,
+\'length\' => 22
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [106/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 74,
+\'column\' => 81,
+\'length\' => 26
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [100/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 75,
+\'column\' => 81,
+\'length\' => 20
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Assignment Branch Condition size for test_assert_nested_scope_submodule is too high. [21.02/15] (http://c2.com/cgi/wiki?AbcMetric)\',
+\'cop_name\' => \'Metrics/AbcSize\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 79,
+\'column\' => 3,
+\'length\' => 3
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [101/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 81,
+\'column\' => 81,
+\'length\' => 21
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [98/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 82,
+\'column\' => 81,
+\'length\' => 18
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [89/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 83,
+\'column\' => 81,
+\'length\' => 9
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [93/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 84,
+\'column\' => 81,
+\'length\' => 13
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [87/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 85,
+\'column\' => 81,
+\'length\' => 7
+}
+
+}
+,
+{\'severity\' => \'warning\',
+\'message\' => \'`end` at 86, 4 is not aligned with `def` at 79, 2.\',
+\'cop_name\' => \'Lint/DefEndAlignment\',
+\'corrected\' => false,
+\'location\' => {\'line\' => 86,
+\'column\' => 5,
+\'length\' => 3
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [109/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 90,
+\'column\' => 81,
+\'length\' => 29
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [94/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 91,
+\'column\' => 81,
+\'length\' => 14
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [97/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 92,
+\'column\' => 81,
+\'length\' => 17
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [89/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 93,
+\'column\' => 81,
+\'length\' => 9
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [83/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 94,
+\'column\' => 81,
+\'length\' => 3
+}
+
+}
+,
+{\'severity\' => \'warning\',
+\'message\' => \'`end` at 95, 4 is not aligned with `def` at 88, 2.\',
+\'cop_name\' => \'Lint/DefEndAlignment\',
+\'corrected\' => false,
+\'location\' => {\'line\' => 95,
+\'column\' => 5,
+\'length\' => 3
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [110/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 99,
+\'column\' => 81,
+\'length\' => 30
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [95/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 100,
+\'column\' => 81,
+\'length\' => 15
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [98/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 101,
+\'column\' => 81,
+\'length\' => 18
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [90/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 102,
+\'column\' => 81,
+\'length\' => 10
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [84/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 103,
+\'column\' => 81,
+\'length\' => 4
+}
+
+}
+,
+{\'severity\' => \'warning\',
+\'message\' => \'`end` at 104, 4 is not aligned with `def` at 97, 2.\',
+\'cop_name\' => \'Lint/DefEndAlignment\',
+\'corrected\' => false,
+\'location\' => {\'line\' => 104,
+\'column\' => 5,
+\'length\' => 3
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Assignment Branch Condition size for test_Minimal_assert_pre_conditions is too high. [28.16/15] (http://c2.com/cgi/wiki?AbcMetric)\',
+\'cop_name\' => \'Metrics/AbcSize\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 106,
+\'column\' => 3,
+\'length\' => 3
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Method has too many lines. [14/10] (https://github.com/bbatsov/ruby-style-guide#short-methods)\',
+\'cop_name\' => \'Metrics/MethodLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 106,
+\'column\' => 3,
+\'length\' => 1202
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [112/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 110,
+\'column\' => 81,
+\'length\' => 32
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [100/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 112,
+\'column\' => 81,
+\'length\' => 20
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [105/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 113,
+\'column\' => 81,
+\'length\' => 25
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [94/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 114,
+\'column\' => 81,
+\'length\' => 14
+}
+
+}
+,
+{\'severity\' => \'warning\',
+\'message\' => \'Useless assignment to variable - `superclass_modules`. Did you mean `superclass_module_names`? (https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars)\',
+\'cop_name\' => \'Lint/UselessAssignment\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 117,
+\'column\' => 5,
+\'length\' => 18
+}
+
+}
+,
+{\'severity\' => \'warning\',
+\'message\' => \'Useless assignment to variable - `superclass_module_names`. Did you mean `superclass_modules`? (https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars)\',
+\'cop_name\' => \'Lint/UselessAssignment\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 118,
+\'column\' => 5,
+\'length\' => 23
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [105/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 120,
+\'column\' => 81,
+\'length\' => 25
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [128/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 121,
+\'column\' => 81,
+\'length\' => 48
+}
+
+}
+,
+{\'severity\' => \'convention\',
+\'message\' => \'Line is too long. [133/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)\',
+\'cop_name\' => \'Metrics/LineLength\',
+\'corrected\' => nil,
+\'location\' => {\'line\' => 122,
+\'column\' => 81,
+\'length\' => 53
+}
+
+}
+]
+}
+],
+\'summary\' => {\'offense_count\' => 49,
+\'target_file_count\' => 1,
+\'inspected_file_count\' => 1
+}
+
+}
+
+<0> expected but was
+<49>
+===============================================================================
+...F
+===============================================================================
+Failure: test_lint_unconventional(RepositoryPathnameTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_pathname_test.rb:192:in `test_lint_unconventional\'
+     189:     assert_instance_of(Array, TestSelf.lint_unconventional, TestSelf.lint_unconventional)
+     190:     #    assert_include(TestSelf.lint_unconventional, \'Metrics/LineLength\', TestSelf.lint_unconventional)
+     191:     assert_equal([], Not_unit.lint_unconventional)
+  => 192:     assert_equal([], TestMinimal.lint_unconventional)
+     193:     #    assert_equal([], Unit_non_executable.lint_unconventional.map { |o| o[\'cop_name\'] }.uniq)
+     194:     assert_equal([], Not_unit_executable.lint_unconventional)
+     195:     unexpected_cops = TestSelf.lint_unconventional.map { |o| o[\'cop_name\'] }.uniq - RepositoryPathname::Lint_convention_priorities
+<[]> expected but was
+<[{"cop_name"=>"Metrics/MethodLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>3, "length"=>1547, "line"=>40},
+  "message"=>
+   "Method has too many lines. [23/10] (https://github.com/bbatsov/ruby-style-guide#short-methods)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/MethodLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>3, "length"=>1202, "line"=>106},
+  "message"=>
+   "Method has too many lines. [14/10] (https://github.com/bbatsov/ruby-style-guide#short-methods)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>35, "line"=>33},
+  "message"=>
+   "Line is too long. [115/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>27, "line"=>34},
+  "message"=>
+   "Line is too long. [107/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>23, "line"=>35},
+  "message"=>
+   "Line is too long. [103/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>22, "line"=>36},
+  "message"=>
+   "Line is too long. [102/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>16, "line"=>37},
+  "message"=>
+   "Line is too long. [96/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>10, "line"=>60},
+  "message"=>
+   "Line is too long. [90/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>7, "line"=>61},
+  "message"=>
+   "Line is too long. [87/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>2, "line"=>63},
+  "message"=>
+   "Line is too long. [82/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>13, "line"=>66},
+  "message"=>
+   "Line is too long. [93/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>34, "line"=>71},
+  "message"=>
+   "Line is too long. [114/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>31, "line"=>72},
+  "message"=>
+   "Line is too long. [111/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>22, "line"=>73},
+  "message"=>
+   "Line is too long. [102/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>26, "line"=>74},
+  "message"=>
+   "Line is too long. [106/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>20, "line"=>75},
+  "message"=>
+   "Line is too long. [100/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>21, "line"=>81},
+  "message"=>
+   "Line is too long. [101/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>18, "line"=>82},
+  "message"=>
+   "Line is too long. [98/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>9, "line"=>83},
+  "message"=>
+   "Line is too long. [89/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>13, "line"=>84},
+  "message"=>
+   "Line is too long. [93/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>7, "line"=>85},
+  "message"=>
+   "Line is too long. [87/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>29, "line"=>90},
+  "message"=>
+   "Line is too long. [109/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>14, "line"=>91},
+  "message"=>
+   "Line is too long. [94/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>17, "line"=>92},
+  "message"=>
+   "Line is too long. [97/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>9, "line"=>93},
+  "message"=>
+   "Line is too long. [89/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>3, "line"=>94},
+  "message"=>
+   "Line is too long. [83/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>30, "line"=>99},
+  "message"=>
+   "Line is too long. [110/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>15, "line"=>100},
+  "message"=>
+   "Line is too long. [95/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>18, "line"=>101},
+  "message"=>
+   "Line is too long. [98/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>10, "line"=>102},
+  "message"=>
+   "Line is too long. [90/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>4, "line"=>103},
+  "message"=>
+   "Line is too long. [84/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>32, "line"=>110},
+  "message"=>
+   "Line is too long. [112/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>20, "line"=>112},
+  "message"=>
+   "Line is too long. [100/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>25, "line"=>113},
+  "message"=>
+   "Line is too long. [105/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>14, "line"=>114},
+  "message"=>
+   "Line is too long. [94/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>25, "line"=>120},
+  "message"=>
+   "Line is too long. [105/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>48, "line"=>121},
+  "message"=>
+   "Line is too long. [128/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/LineLength",
+  "corrected"=>nil,
+  "location"=>{"column"=>81, "length"=>53, "line"=>122},
+  "message"=>
+   "Line is too long. [133/80] (https://github.com/bbatsov/ruby-style-guide#80-character-limits)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/AbcSize",
+  "corrected"=>nil,
+  "location"=>{"column"=>3, "length"=>3, "line"=>31},
+  "message"=>
+   "Assignment Branch Condition size for test_included_module_names is too high. [16.03/15] (http://c2.com/cgi/wiki?AbcMetric)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/AbcSize",
+  "corrected"=>nil,
+  "location"=>{"column"=>3, "length"=>3, "line"=>40},
+  "message"=>
+   "Assignment Branch Condition size for test_nested_scope_modules is too high. [37.13/15] (http://c2.com/cgi/wiki?AbcMetric)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/AbcSize",
+  "corrected"=>nil,
+  "location"=>{"column"=>3, "length"=>3, "line"=>69},
+  "message"=>
+   "Assignment Branch Condition size for test_nested_scope_module_names is too high. [28.02/15] (http://c2.com/cgi/wiki?AbcMetric)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/AbcSize",
+  "corrected"=>nil,
+  "location"=>{"column"=>3, "length"=>3, "line"=>79},
+  "message"=>
+   "Assignment Branch Condition size for test_assert_nested_scope_submodule is too high. [21.02/15] (http://c2.com/cgi/wiki?AbcMetric)",
+  "severity"=>"convention"},
+ {"cop_name"=>"Metrics/AbcSize",
+  "corrected"=>nil,
+  "location"=>{"column"=>3, "length"=>3, "line"=>106},
+  "message"=>
+   "Assignment Branch Condition size for test_Minimal_assert_pre_conditions is too high. [28.16/15] (http://c2.com/cgi/wiki?AbcMetric)",
+  "severity"=>"convention"}]>
+===============================================================================
+F
+===============================================================================
+Failure: test_lint_warnings(RepositoryPathnameTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_pathname_test.rb:153:in `test_lint_warnings\'
+     150: 
+     151:   def test_lint_warnings
+     152:     assert_equal([], Not_unit.lint_warnings)
+  => 153:     assert_equal([], TestMinimal.lint_warnings)
+     154:     #    assert_equal([\'Syntax\'], Unit_non_executable.lint_warnings.map { |o| o[\'cop_name\'] }.uniq, Unit_non_executable.lint_warnings)
+     155:     assert_equal([], Not_unit_executable.lint_warnings)
+     156:     existing_cops = TestSelf.lint_warnings.map { |o| o[\'cop_name\'] }.uniq
+<[]> expected but was
+<[{"cop_name"=>"Lint/Eval",
+  "corrected"=>nil,
+  "location"=>{"column"=>20, "length"=>4, "line"=>48},
+  "message"=>"The use of `eval` is a serious security risk.",
+  "severity"=>"warning"},
+ {"cop_name"=>"Lint/DefEndAlignment",
+  "corrected"=>false,
+  "location"=>{"column"=>5, "length"=>3, "line"=>86},
+  "message"=>"`end` at 86, 4 is not aligned with `def` at 79, 2.",
+  "severity"=>"warning"},
+ {"cop_name"=>"Lint/DefEndAlignment",
+  "corrected"=>false,
+  "location"=>{"column"=>5, "length"=>3, "line"=>95},
+  "message"=>"`end` at 95, 4 is not aligned with `def` at 88, 2.",
+  "severity"=>"warning"},
+ {"cop_name"=>"Lint/DefEndAlignment",
+  "corrected"=>false,
+  "location"=>{"column"=>5, "length"=>3, "line"=>104},
+  "message"=>"`end` at 104, 4 is not aligned with `def` at 97, 2.",
+  "severity"=>"warning"},
+ {"cop_name"=>"Lint/UselessAssignment",
+  "corrected"=>nil,
+  "location"=>{"column"=>5, "length"=>18, "line"=>117},
+  "message"=>
+   "Useless assignment to variable - `superclass_modules`. Did you mean `superclass_module_names`? (https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars)",
+  "severity"=>"warning"},
+ {"cop_name"=>"Lint/UselessAssignment",
+  "corrected"=>nil,
+  "location"=>{"column"=>5, "length"=>23, "line"=>118},
+  "message"=>
+   "Useless assignment to variable - `superclass_module_names`. Did you mean `superclass_modules`? (https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars)",
+  "severity"=>"warning"}]>
+===============================================================================
+..
+
+Finished in 4.199389989 seconds.
 ------
-13 tests, 296 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
+13 tests, 281 assertions, 3 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+76.9231% passed
 ------
-7.84 tests/s, 178.54 assertions/s
+3.10 tests/s, 66.91 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_pathname_test.rb"
-	User time (seconds): 3.35
-	System time (seconds): 0.26
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.65
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/repository_pathname_test.rb"
+	User time (seconds): 3.76
+	System time (seconds): 0.41
+	Percent of CPU this job got: 57%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:07.32
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 52332
+	Maximum resident set size (kbytes): 54128
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 23016
-	Voluntary context switches: 116
-	Involuntary context switches: 119
+	Major (requiring I/O) page faults: 42
+	Minor (reclaiming a frame) page faults: 25925
+	Voluntary context switches: 978
+	Involuntary context switches: 530
 	Swaps: 0
-	File system inputs: 0
-	File system outputs: 32
+	File system inputs: 29992
+	File system outputs: 8
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
 '
 }
 

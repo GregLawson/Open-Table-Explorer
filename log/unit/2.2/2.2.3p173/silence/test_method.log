@@ -1,7 +1,8 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 5, 1, Rational(48197680013, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(name: nil)
+,
+:start_time => Time.new(2017, 7, 18, 12, 18, Rational(54749101476, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_method_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
 :errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_method.rb:21:in `<class:TestMethod>\': uninitialized constant TestMethod::Parse (NameError)
 Did you mean?  OptParse
@@ -10,20 +11,20 @@ Did you mean?  OptParse
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_method_test.rb:9:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_method_test.rb"
-	User time (seconds): 0.84
-	System time (seconds): 0.07
+	User time (seconds): 1.56
+	System time (seconds): 0.12
 	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.93
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.71
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 27948
+	Maximum resident set size (kbytes): 37644
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5781
-	Voluntary context switches: 32
-	Involuntary context switches: 21
+	Minor (reclaiming a frame) page faults: 9536
+	Voluntary context switches: 4
+	Involuntary context switches: 199
 	Swaps: 0
 	File system inputs: 8
 	File system outputs: 0

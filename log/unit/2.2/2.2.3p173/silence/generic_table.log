@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 8, 7, 27, Rational(5269432454, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 8, 54, Rational(28031828874, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
@@ -16,20 +13,20 @@ Did you mean?  ActiveModel
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_test.rb:10:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_table_test.rb"
-	User time (seconds): 0.82
-	System time (seconds): 0.09
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.93
+	User time (seconds): 1.65
+	System time (seconds): 0.17
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.84
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23032
+	Maximum resident set size (kbytes): 38548
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5880
+	Minor (reclaiming a frame) page faults: 9761
 	Voluntary context switches: 2
-	Involuntary context switches: 127
+	Involuntary context switches: 192
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

@@ -1,37 +1,34 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 9, 5, 34, Rational(46270487002, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 12, 29, Rational(47652608336, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/uri_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/uri_test
 Started
 ...........................
 
-Finished in 2.378048658 seconds.
+Finished in 2.509330228 seconds.
 ------
 27 tests, 87 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-11.35 tests/s, 36.58 assertions/s
+10.76 tests/s, 34.67 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/uri_test.rb"
-	User time (seconds): 3.29
-	System time (seconds): 0.08
+	User time (seconds): 4.08
+	System time (seconds): 0.17
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.40
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:04.29
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 30632
+	Maximum resident set size (kbytes): 39060
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 9041
-	Voluntary context switches: 43
-	Involuntary context switches: 316
+	Minor (reclaiming a frame) page faults: 11145
+	Voluntary context switches: 32
+	Involuntary context switches: 442
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

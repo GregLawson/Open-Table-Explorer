@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 8, 7, 26, Rational(25669655382, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 8, 53, Rational(38528907080, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test
@@ -43,33 +40,47 @@ Error: test_operator(EnumeratorTest): LocalJumpError: no block given (yield)
      95:     assert_equal({ cat: 1 }, { cat: 1 }.operator({ dog: 1 }, &operator_lambda))
      96: 
 ===============================================================================
-...
+E
+===============================================================================
+Error: test_to_hash(EnumeratorTest):
+  NoMethodError: undefined method `to_hash\' for [1, 2, 3]:Array
+  Did you mean?  to_h
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test.rb:33:in `test_to_hash\'
+     30: 
+     31:   def test_to_hash
+     32: #    assert_equal(Array::Examples::Example_array, Array::Examples::Example_array.to_hash.to_a.values)
+  => 33:     assert_instance_of(Hash, Array::Examples::Example_array.to_hash)
+     34: #    assert_equal(Array::Examples::Example_array, Array::Examples::Example_array.to_hash.to_a.values)
+     35:   end # to_hash
+     36: 
+===============================================================================
+..
 
-Finished in 0.037070971 seconds.
+Finished in 0.04379601 seconds.
 ------
-12 tests, 63 assertions, 1 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
-83.3333% passed
+12 tests, 62 assertions, 1 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
+75% passed
 ------
-323.70 tests/s, 1699.44 assertions/s
+274.00 tests/s, 1415.65 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/enumerator_test.rb"
-	User time (seconds): 0.99
-	System time (seconds): 0.08
-	Percent of CPU this job got: 97%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.10
+	User time (seconds): 1.67
+	System time (seconds): 0.20
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.88
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 28840
+	Maximum resident set size (kbytes): 37760
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 1
-	Minor (reclaiming a frame) page faults: 7335
-	Voluntary context switches: 3
-	Involuntary context switches: 139
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 9570
+	Voluntary context switches: 2
+	Involuntary context switches: 223
 	Swaps: 0
-	File system inputs: 40
+	File system inputs: 0
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

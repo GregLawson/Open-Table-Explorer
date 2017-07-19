@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 9, 5, 32, Rational(25637970758, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 8, 49, Rational(53414695074, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/dependancy_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Run options: --seed 0
@@ -12,16 +9,16 @@ Run options: --seed 0
 
 ...E...F......
 
-Finished in 1.472135s, 9.5100 runs/s, 0.6793 assertions/s.
+Finished in 1.751721s, 7.9921 runs/s, 0.5709 assertions/s.
 
   1) Error:
 DependanciesTest#test_bundle:
-NoMethodError: undefined method `assertions\' for #<ShellCommands:0x007fa91c6650e0>
+NoMethodError: undefined method `assertions\' for #<ShellCommands:0x007f6b474a7e28>
 Did you mean?  assert
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert\'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:340:in `assert_respond_to\'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:153:in `assert_empty\'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:702:in `assert_post_conditions\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:700:in `assert_post_conditions\'
     /home/greg/Desktop/src/Open-Table-Explorer/test/unit/dependancy_test.rb:23:in `test_bundle\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
@@ -54,22 +51,22 @@ DependanciesTest#test_dpkg_lock [/home/greg/Desktop/src/Open-Table-Explorer/test
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/dependancy_test.rb"
-	User time (seconds): 1.80
-	System time (seconds): 0.15
-	Percent of CPU this job got: 75%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.58
+	User time (seconds): 2.91
+	System time (seconds): 0.32
+	Percent of CPU this job got: 81%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.95
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 29920
+	Maximum resident set size (kbytes): 44816
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 6
-	Minor (reclaiming a frame) page faults: 13471
-	Voluntary context switches: 324
-	Involuntary context switches: 212
+	Major (requiring I/O) page faults: 9
+	Minor (reclaiming a frame) page faults: 17190
+	Voluntary context switches: 302
+	Involuntary context switches: 377
 	Swaps: 0
-	File system inputs: 6488
+	File system inputs: 4448
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

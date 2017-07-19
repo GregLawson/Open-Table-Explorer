@@ -1,37 +1,38 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 5, 1, Rational(12344486025, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(name: nil)
+,
+:start_time => Time.new(2017, 7, 18, 12, 18, Rational(41405535652, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_environment_minitest_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-....F
+.F.....
 
-Finished in 0.002557s, 1955.5496 runs/s, 3128.8793 assertions/s.
+Finished in 0.003060s, 2287.4404 runs/s, 4574.8807 assertions/s.
 
   1) Failure:
-TestEnvironmentMinitestTest#test_requires [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_environment_minitest_test.rb:15]:
-In assert_included_modules, RubyAssertions is not included in Minitest::Assertions which does not include any modules.
+TestEnvironmentMinitestTest#test_requires [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_environment_minitest_test.rb:18]:
+[:warn, :info, :quieter, :assert_call_result, :explain_assert_respond_to, :assert_call, :assert_answer, :explain_assert_equal, :explain_assert, :assert_flat_set, :assert_set_promotable, :assert_subset, :assert_equal_sets, :assert_overlap, :assert_dir_includes, :assert_public_instance_method, :assert_array_of, :assert_no_duplicates, :assert_single_element_array, :assert_regexp, :assert_attribute_of, :assert_has_instance_methods, :assert_module_included, :global_name?, :assert_global_name, :assert_scope_path, :assert_path_to_constant, :assert_constant_path_respond_to, :assert_constant_instance_respond_to, :missing_file_message, :assert_pathname_exists, :assert_directory_exists, :assert_data_file, :nested_scope_modules?, :assert_nested_scope_submodule, :assert_included_submodule, :assert_nested_and_included]
 
-5 runs, 8 assertions, 1 failures, 0 errors, 0 skips
+7 runs, 14 assertions, 1 failures, 0 errors, 0 skips
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/test_environment_minitest_test.rb"
-	User time (seconds): 0.51
-	System time (seconds): 0.05
-	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.56
+	User time (seconds): 1.44
+	System time (seconds): 0.13
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.58
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 20564
+	Maximum resident set size (kbytes): 36572
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 3643
-	Voluntary context switches: 16
-	Involuntary context switches: 18
+	Minor (reclaiming a frame) page faults: 9265
+	Voluntary context switches: 23
+	Involuntary context switches: 175
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

@@ -1,7 +1,8 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 5, 1, Rational(1728854898, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(name: nil)
+,
+:start_time => Time.new(2017, 7, 18, 12, 18, Rational(29535656137, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/string_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
 :errors => {:syserr => '/usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\': cannot load such file -- test_helper (LoadError)
 	from /usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require\'
@@ -9,19 +10,19 @@
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/string_test.rb"
 	User time (seconds): 0.12
-	System time (seconds): 0.01
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.14
+	System time (seconds): 0.00
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.13
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 8984
+	Maximum resident set size (kbytes): 7440
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 1309
+	Minor (reclaiming a frame) page faults: 1949
 	Voluntary context switches: 3
-	Involuntary context switches: 3
+	Involuntary context switches: 13
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

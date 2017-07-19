@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 8, 7, 26, Rational(53108417211, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 8, 54, Rational(8565775883, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_column_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_column_test
@@ -27,29 +24,29 @@ Error: test_to_hash(GenericColumnTest): NoMethodError: undefined method `to_rege
 ===============================================================================
 
 
-Finished in 0.055986932 seconds.
+Finished in 0.054002101 seconds.
 ------
 7 tests, 20 assertions, 0 failures, 1 errors, 0 pendings, 0 omissions, 1 notifications
 85.7143% passed
 ------
-125.03 tests/s, 357.23 assertions/s
+129.62 tests/s, 370.36 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/generic_column_test.rb"
-	User time (seconds): 0.86
+	User time (seconds): 0.99
 	System time (seconds): 0.12
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.00
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.12
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 22284
+	Maximum resident set size (kbytes): 24644
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5696
-	Voluntary context switches: 2
-	Involuntary context switches: 141
+	Minor (reclaiming a frame) page faults: 6287
+	Voluntary context switches: 3
+	Involuntary context switches: 140
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

@@ -1,32 +1,33 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 5, 3, Rational(36950855098, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(name: nil)
+,
+:start_time => Time.new(2017, 7, 18, 12, 33, Rational(49197333062, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/xrandr_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
-Run options: --seed 0
-
-# Running:
-
-.......
-
-Finished in 0.003924s, 1784.0759 runs/s, 0.0000 assertions/s.
-
-7 runs, 0 assertions, 0 failures, 0 errors, 0 skips
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/xrandr_test.rb"
-	User time (seconds): 0.84
-	System time (seconds): 0.06
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.90
+:errors => {:syserr => 'DEPRECATION WARNING: `#capture(stream)` is deprecated and will be removed in the next release. (called from <module:Constants> at /home/greg/Desktop/src/Open-Table-Explorer/app/models/xrandr.rb:14)
+/usr/lib/ruby/vendor_ruby/active_support/core_ext/kernel/reporting.rb:106:in `ensure in capture\': undefined method `reopen\' for nil:NilClass (NoMethodError)
+	from /usr/lib/ruby/vendor_ruby/active_support/core_ext/kernel/reporting.rb:106:in `capture\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/xrandr.rb:14:in `<module:Constants>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/xrandr.rb:13:in `<class:Xrandr>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/xrandr.rb:9:in `<top (required)>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/xrandr_test.rb:9:in `require_relative\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/xrandr_test.rb:9:in `<main>\'
+Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/xrandr_test.rb"
+	User time (seconds): 0.90
+	System time (seconds): 0.09
+	Percent of CPU this job got: 96%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.02
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 24040
+	Maximum resident set size (kbytes): 24396
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4490
-	Voluntary context switches: 19
-	Involuntary context switches: 20
+	Minor (reclaiming a frame) page faults: 6221
+	Voluntary context switches: 4
+	Involuntary context switches: 136
 	Swaps: 0
 	File system inputs: 8
 	File system outputs: 0
@@ -34,7 +35,7 @@ Finished in 0.003924s, 1784.0759 runs/s, 0.0000 assertions/s.
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
 '
 }
 

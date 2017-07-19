@@ -1,46 +1,41 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 58, Rational(41174489713, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(name: nil)
+,
+:start_time => Time.new(2017, 7, 18, 12, 8, Rational(21457517166, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_sequence_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:457:in `raw_captures\': undefined method `raw_capture?\' for #<Regexp::Expression::Root:0x00000003466c40> (NoMethodError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:235:in `initialize\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:245:in `initialize\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:452:in `initialize\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:470:in `new\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:470:in `<module:Examples>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:467:in `<class:ParsedCapture>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:447:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_lines_storage.rb:8:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_lines_storage.rb:8:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:8:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_tree.rb:8:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:9:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_parse.rb:9:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_tree.rb:11:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_tree.rb:11:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:9:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:9:in `<top (required)>\'
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:68:in `each\': stack level too deep (SystemStackError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:68:in `initialize\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:78:in `new\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:78:in `promote\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:69:in `block in initialize\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:68:in `each\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:68:in `initialize\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:78:in `new\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:78:in `promote\'
+	 ... 10464 levels...
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:161:in `<class:RegexpSequence>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/regexp_sequence.rb:58:in `<top (required)>\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_sequence_test.rb:10:in `require_relative\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_sequence_test.rb:10:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/regexp_sequence_test.rb"
-	User time (seconds): 0.79
-	System time (seconds): 0.04
-	Percent of CPU this job got: 98%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.85
+	User time (seconds): 1.49
+	System time (seconds): 0.14
+	Percent of CPU this job got: 97%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.68
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 26656
+	Maximum resident set size (kbytes): 47672
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5178
-	Voluntary context switches: 4
-	Involuntary context switches: 12
+	Minor (reclaiming a frame) page faults: 12070
+	Voluntary context switches: 6
+	Involuntary context switches: 185
 	Swaps: 0
-	File system inputs: 16
+	File system inputs: 40
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

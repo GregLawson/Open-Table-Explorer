@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 8, 7, 37, Rational(37627018491, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 9, 5, Rational(37060590495, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nil_comparable_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nil_comparable_test
@@ -64,29 +61,29 @@ Error: test_NilComparable_comparison(NilComparableTest): ArgumentError: comparis
 ===============================================================================
 
 
-Finished in 0.024407684 seconds.
+Finished in 0.040932216 seconds.
 ------
 6 tests, 17 assertions, 1 failures, 3 errors, 0 pendings, 0 omissions, 0 notifications
 33.3333% passed
 ------
-245.82 tests/s, 696.50 assertions/s
+146.58 tests/s, 415.32 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nil_comparable_test.rb"
-	User time (seconds): 0.56
-	System time (seconds): 0.06
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.64
+	User time (seconds): 1.11
+	System time (seconds): 0.15
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.28
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 20716
+	Maximum resident set size (kbytes): 24848
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5303
+	Minor (reclaiming a frame) page faults: 6339
 	Voluntary context switches: 3
-	Involuntary context switches: 66
+	Involuntary context switches: 183
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

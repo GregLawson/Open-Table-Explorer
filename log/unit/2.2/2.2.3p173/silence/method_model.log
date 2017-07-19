@@ -1,10 +1,211 @@
 {:current_branch_name => Branch.new(name: nil)
 ,
-:start_time => Time.new(2017, 6, 20, 5, 9, Rational(16461627565, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 9, 4, Rational(55302740685, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb',
-:output => '',
-:errors => {:rescue_exception => Timeout::Error.new()
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test
+Started
+.....E
+===============================================================================
+Error: test_Virtus_value_object(MethodModelTest): NoMethodError: undefined method `name\' for #<MethodModel:0x007f0f2faa8af8>
+/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:96:in `public_send\'
+/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:96:in `[]\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:269:in `assert_method_model_initialized\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:332:in `test_Virtus_value_object\'
+     329:     assert_respond_to(ancestor.new, m)
+     330:     assert_instance_of(Method, ancestor.new.method(m.to_sym))
+     331:     assert_instance_of(Method, ancestor.new.method(m.to_sym))
+  => 332:     assert_method_model_initialized(m, ancestor, instance)
+     333:     mr = MethodModel.new(name: m, ancestor: ancestor, instance: instance)
+     334:     #	assert_equal([:init, :theMethod_not_nil, :not_source_location, :rescue_protected, :alphanumeric], mr.init_path)
+     335:     ancestor = MethodModel
+===============================================================================
+F
+===============================================================================
+Failure: test_ancestor_method_name(MethodModelTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:250:in `test_ancestor_method_name\'
+     247:     ancestor_method_name_call = MethodModel.ancestor_method_name(MethodModel, inspect: true)
+     248:     #    assert_equal(ancestor_method_name, ancestor_method_name_call)
+     249:     assert_include(MethodModel.method_names(Dir, instance: false), :[])
+  => 250:     assert_equal([Dir], MethodModel.ancestor_method_name(Dir, :[], instance: false), MethodModel.method_names(Dir))
+     251:     assert_equal([Object], MethodModel.ancestor_method_name(Regexp, :superclass, instance: false))
+     252:     assert_equal([Module, Kernel], MethodModel.ancestor_method_name(MethodModel, :[], instance: true))
+     253:     assert_equal([], MethodModel.ancestor_method_name(MethodModel, :ancestor_method_names, instance: false))
+[:inspect, :each, :path, :read, :fileno, :tell, :seek, :rewind, :pos, :pos=, :close, :to_path]
+<[Dir]> expected but was
+<{Dir=>[:[]],
+ Enumerable=>[:[]],
+ Object=>[:[]],
+ Test::Unit::Assertions=>[:[]],
+ JSON::Ext::Generator::GeneratorMethods::Object=>[:[]],
+ Kernel=>[:[]],
+ BasicObject=>[:[]]}>
 
+diff:
+? [Dir     ]  
+? {   =>[:[ ],
++  Enumerable=>[:[]],
++  Object=>[:[]],
++  Test::Unit::Assertions=>[:[]],
++  JSON::Ext::Generator::GeneratorMethods::Object=>[:[]],
++  Kernel=>[:[]],
++  BasicObject=>[:[]]}
+===============================================================================
+F
+===============================================================================
+Failure: test_ancestor_method_names(MethodModelTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:173:in `test_ancestor_method_names\'
+     170:     assert_equal([BasicObject.instance_methods(false)], MethodModel.ancestor_method_names(BasicObject).values)
+     171:     assert_equal([BasicObject.methods(false)], MethodModel.ancestor_method_names(BasicObject, instance: false).values)
+     172:     assert_equal([Object, BasicObject], MethodModel.superclasses(Object))
+  => 173:     assert_equal([Test::Unit::Assertions, JSON::Ext::Generator::GeneratorMethods::Object, Kernel], Object.included_modules)
+     174:     selection = { method_name_selection: /in/ }
+     175:     assert_equal({ BasicObject => [:instance_eval, :instance_exec] }, MethodModel.ancestor_method_names(BasicObject, method_name_selection: /in/))
+     176:     assert_equal({ BasicObject => [:instance_eval, :instance_exec] }, MethodModel.ancestor_method_names(BasicObject, selection))
+<[Test::Unit::Assertions,
+ JSON::Ext::Generator::GeneratorMethods::Object,
+ Kernel]> expected but was
+<[PP::ObjectMixin,
+ Test::Unit::Assertions,
+ JSON::Ext::Generator::GeneratorMethods::Object,
+ Kernel]>
+
+diff:
++ [PP::ObjectMixin,
+? [Test::Unit::Assertions,
+?                         
+   JSON::Ext::Generator::GeneratorMethods::Object,
+   Kernel]
+===============================================================================
+F
+===============================================================================
+Failure: test_apply_selection_defaults(MethodModelTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:122:in `test_apply_selection_defaults\'
+     119:         ret[key] = value # default
+     120:       end # if
+     121:     end # each_pair
+  => 122:     assert_equal({ instance: false, method_name_selection: /.+/ }, selection)
+     123:     refute_equal(Default_method_selection, selection)
+     124:     assert_equal({ include_inherited: false, instance: false, method_name_selection: /.+/ }, MethodModel.apply_selection_defaults({ instance: false }, Default_method_selection))
+     125: end # apply_selection_defaults
+<{:instance=>false, :method_name_selection=>/.+/}> expected but was
+<{:instance=>false}>
+
+diff:
+? {:instance=>false, :method_name_selection=>/.+/}
+===============================================================================
+.F
+===============================================================================
+Failure: <[:instance_eval]> expected to be empty.
+test_assert_ancestor_method_names(MethodModelTest)
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/method_model.rb:433:in `assert_method_names\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/method_model.rb:473:in `assert_ancestor_method_names\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:447:in `test_assert_ancestor_method_names\'
+     444:     Ancestor_method_selections.each do |selection|
+     445:       MethodModel.assert_ancestor_method_names(Object, selection)
+     446:     end # each
+  => 447:     MethodModel.assert_ancestor_method_names(Object, method_name_selection: /instance_eval/)
+     448:     MethodModel.assert_ancestor_method_names(Object, instance: false)
+     449:     MethodModel.assert_ancestor_method_names(Object, instance: true, method_name_selection: /.+/, ancestor_selection: :ancestors)
+     450: 
+===============================================================================
+....E
+===============================================================================
+Error: test_constantized(MethodModelTest): NoMethodError: undefined method `classes_and_modules\' for MethodModel:Class
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:352:in `test_constantized\'
+     349:     assert_equal([\'Symbol\'], Module.constants.map(&:objectKind).uniq)
+     350:     #    assert_includes(MethodModel.constantized.map(&:objectKind).uniq, \'Symbol\')
+     351:     assert_operator(1000, :>, Module.constants.size)
+  => 352:     assert_operator(MethodModel.constantized.size, :<, MethodModel.classes_and_modules.size)
+     353:     assert_operator(100, :<, MethodModel.constantized.size)
+     354:     #	puts "Module.constants=#{Module.constants.inspect}"
+     355:     method_list = Module.constants.map do |c|
+===============================================================================
+....E
+===============================================================================
+Error: test_instance_method_models(MethodModelTest): NameError: uninitialized constant MethodModelTest::Merge
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:210:in `test_instance_method_models\'
+     207:   end # ancestor_method_names
+     208: 
+     209:   def test_instance_method_models
+  => 210:     ancestor = Merge
+     211:     MethodModel.method_names(ancestor).map do |method_name|
+     212:       refute_nil(method_name)
+     213:       method_model = MethodModel.new(ancestor: ancestor, method_name: method_name, instance: true)
+===============================================================================
+......E
+===============================================================================
+Error: test_prototype_list(MethodModelTest): NameError: uninitialized constant MethodModelTest::Merge
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:230:in `test_prototype_list\'
+     227:     assert_match(/theMethod/, MethodModel.prototype_list(MethodModel, ancestor_qualifier: false, argument_delimeter: \' \').join("\n"))
+     228:     #    assert_match(/catfish /, MethodModel.prototype_list(MethodModel).join)
+     229: 
+  => 230:     merge_methods = MethodModel.prototype_list(Merge, ancestor_qualifier: false, argument_delimeter: \' \').join("\n")
+     231: 
+     232:     assert_match(/merge_down/, merge_methods)
+     233:   end # prototype_list
+===============================================================================
+..E
+===============================================================================
+Error: test_arity(MethodTest): NameError: undefined method `all_default\' for class `#<Class:Example>\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:39:in `method\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:39:in `test_arity\'
+     36:     #    assert_equal(0, Script_command_line.method(:number_of_arguments).arity, Script_command_line.inspect)
+     37:     #	assert_equal(-1, Test_unit_commandline.medthod(:error_score?).arity, Test_unit_commandline.to_s)
+     38: 
+  => 39:     assert_equal(-1, Example.method(:all_default).arity)
+     40:     assert_equal(-2, Example.method(:initialize).arity)
+     41:     #	assert_equal(-2, No_args.unit_class.method(:initialize).arity)
+     42:     #	assert_equal(-2, Example.unit_class.method(:initialize).arity)
+===============================================================================
+E
+===============================================================================
+Error: test_default_arguments?(MethodTest):
+  NoMethodError: undefined method `default_arguments?\' for Example:Class
+  Did you mean?  default_message
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb:62:in `test_default_arguments?\'
+     59:     #    assert_equal(false, Script_command_line.method(:number_of_arguments).default_arguments?, message)
+     60:     #    executable_object = Test_unit_commandline.executable_object
+     61:     message = \'Example = \' + Example.inspect
+  => 62:     assert_equal(false, Example.default_arguments?(:argument_types), message)
+     63:     assert_equal(true, Example.default_arguments?(:executable_object), message)
+     64:     assert_equal(false, Example.default_arguments?(:executable_method), message)
+     65:     assert_equal(false, Example.default_arguments?(:arity), message)
+===============================================================================
+..
+
+Finished in 0.954359064 seconds.
+------
+34 tests, 194 assertions, 4 failures, 6 errors, 0 pendings, 0 omissions, 0 notifications
+70.5882% passed
+------
+35.63 tests/s, 203.28 assertions/s
+',
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/method_model_test.rb"
+	User time (seconds): 1.72
+	System time (seconds): 0.15
+	Percent of CPU this job got: 84%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.22
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 31124
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 28
+	Minor (reclaiming a frame) page faults: 10810
+	Voluntary context switches: 40
+	Involuntary context switches: 292
+	Swaps: 0
+	File system inputs: 2544
+	File system outputs: 104
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+'
 }
 
 }

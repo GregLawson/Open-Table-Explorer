@@ -1,42 +1,2108 @@
 {:current_branch_name => Branch.new(name: nil)
 ,
-:start_time => Time.new(2017, 6, 2, 7, 21, Rational(38154003589, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 8, 54, Rational(48066511586, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test
 Started
-....................
+.F
+===============================================================================
+Failure:
+  [{/\\Acommit\ \(\?<sha1_hex_40>\[\[:xdigit:\]\]\{40\}\)\\n/ => [{:sha1_hex_40 => \'39b6a547ce973c4a605f58d8a4ea8212baf26c67\'
+  }
+  ]
+  }
+  ,
+  {/\(\?:Merge:\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\\n\)\?/ => [{:sha1_hex_short => [\'db34b55ef\', \'fe12eb738\']
+  }
+  ,
+  {:sha1_hex_short => [\'u\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'g\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'g\']
+  }
+  ,
+  {:sha1_hex_short => [\'<\', \'G\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'g\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'w\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'2\', \'3\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'c\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'>\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\':\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'T\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'u\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'1\', \'8\']
+  }
+  ,
+  {:sha1_hex_short => [\'0\', \'8\']
+  }
+  ,
+  {:sha1_hex_short => [\'2\', \'5\']
+  }
+  ,
+  {:sha1_hex_short => [\'1\', \'2\']
+  }
+  ,
+  {:sha1_hex_short => [\'2\', \'0\']
+  }
+  ,
+  {:sha1_hex_short => [\'7\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'0\', \'7\']
+  }
+  ,
+  {:sha1_hex_short => [\'0\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'M\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'g\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'m\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'h\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'p\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'+\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'v\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'C\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'f\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \':\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'d\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'c\', \'h\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'d\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'p\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'m\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'y\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'u\']
+  }
+  ,
+  {:sha1_hex_short => [\'y\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'.\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'x\']
+  }
+  ,
+  {:sha1_hex_short => [\'m\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'u\']
+  }
+  ,
+  {:sha1_hex_short => [\'y\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'g\']
+  }
+  ,
+  {:sha1_hex_short => [\'.\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'u\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'.\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'u\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'u\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\'_\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'_\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'
+  \']
+  }
+  ]
+  }
+  ,
+  {/\(\?<commit_explanation>\[\\s\\n\[:graph:\]\]\*\)\\z/ => []
+  }
+  ,
+  {/Author:\ \(\?<name>\[\\s\[:word:\]\]\+\)\ <\(\?<email>\[\[:word:\]\]\*@\[\[:word:\]\]\*\\\.\[\[:word:\]\]\*\)>\\n/ => [{:name => \'greg\',
+  :email => \'GregLawson123@gmail.com\'
+  }
+  ]
+  }
+  ,
+  {/Date:\ \ \ \(\?<weekday>\[MTWFS\]\[a\-z\]\{2\}\)\\\ \(\?<month>Jan\|Feb\|Mar\|Apr\|May\|Jun\|Jul\|Aug\|Sep\|Oct\|Nov\|Dec\)\\\ \(\?<day_of_month>\[0\-9\]\{1,2\}\)\\\ \(\?<hour>\[0\-9\]\[0\-9\]\):\(\?<minute>\[0\-9\]\[0\-9\]\):\(\?<second>\[0\-9\]\[0\-9\]\)\\\ \(\?<year>\[0\-9\]\{2,4\}\)\\\ \(\?<timezone>\[\-\+\]\[0\-1\]\[0\-9\]\[03\]0\)/ => [{:weekday => \'Tue\',
+  :month => \'Jul\',
+  :day_of_month => \'18\',
+  :hour => \'08\',
+  :minute => \'25\',
+  :second => \'12\',
+  :year => \'2017\',
+  :timezone => \'-0700\'
+  }
+  ]
+  }
+  ,
+  {/\\n\\n\(\?<commit_title>\[\\s\[:graph:\]\]\*\)\\n/ => []
+  }
+  ,
+  {/\(\?:Merge:\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\\n\)\?/ => [{:sha1_hex_short => [\'o\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'3\', \'9\']
+  }
+  ,
+  {:sha1_hex_short => [\'6\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'4\', \'7\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'9\']
+  }
+  ,
+  {:sha1_hex_short => [\'3\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'6\']
+  }
+  ,
+  {:sha1_hex_short => [\'5\', \'f\']
+  }
+  ,
+  {:sha1_hex_short => [\'8\', \'d\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'4\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'8\']
+  }
+  ,
+  {:sha1_hex_short => [\'1\', \'2\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'f\']
+  }
+  ,
+  {:sha1_hex_short => [\'6\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'7\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\'fe12eb738\', \'A\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'h\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \':\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'G\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \'L\']
+  }
+  ,
+  {:sha1_hex_short => [\'w\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'1\']
+  }
+  ,
+  {:sha1_hex_short => [\'3\', \'@\']
+  }
+  ,
+  {:sha1_hex_short => [\'m\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \'D\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'T\', \'u\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'J\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'8\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'8\', \':\']
+  }
+  ,
+  {:sha1_hex_short => [\'5\', \':\']
+  }
+  ,
+  {:sha1_hex_short => [\'2\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'0\', \'1\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'-\']
+  }
+  ,
+  {:sha1_hex_short => [\'7\', \'0\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'M\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'c\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'m\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'\\'\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'h\', \'\\'\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'d\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'c\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'v\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'C\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'f\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'c\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\':\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'p\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'m\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'h\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'p\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'m\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'.\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'p\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'d\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'u\']
+  }
+  ,
+  {:sha1_hex_short => [\'y\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'g\']
+  }
+  ,
+  {:sha1_hex_short => [\'.\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'u\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\'_\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'x\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'p\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'u\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\'_\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'_\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'_\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'y\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'.\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', nil]
+  }
+  ]
+  }
+  ,
+  {/\(\?:Merge:\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\\n\)\?/ => [{:sha1_hex_short => [\'b\', \'3\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'5\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'f\']
+  }
+  ]
+  }
+  ,
+  {/\(\?:Merge:\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\\n\)\?/ => [{:sha1_hex_short => [\'o\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'3\', \'9\']
+  }
+  ,
+  {:sha1_hex_short => [\'6\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'4\', \'7\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'9\']
+  }
+  ,
+  {:sha1_hex_short => [\'3\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'6\']
+  }
+  ,
+  {:sha1_hex_short => [\'5\', \'f\']
+  }
+  ,
+  {:sha1_hex_short => [\'8\', \'d\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'4\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'8\']
+  }
+  ,
+  {:sha1_hex_short => [\'1\', \'2\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'f\']
+  }
+  ,
+  {:sha1_hex_short => [\'6\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'7\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\'fe12eb738\', nil]
+  }
+  ]
+  }
+  ,
+  {/\(\?:Merge:\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\\n\)\?/ => [{:sha1_hex_short => [\'a\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\':\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'T\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'u\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'1\', \'8\']
+  }
+  ,
+  {:sha1_hex_short => [\'0\', \'8\']
+  }
+  ,
+  {:sha1_hex_short => [\'2\', \'5\']
+  }
+  ,
+  {:sha1_hex_short => [\'1\', \'2\']
+  }
+  ,
+  {:sha1_hex_short => [\'2\', \'0\']
+  }
+  ,
+  {:sha1_hex_short => [\'7\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'0\', \'7\']
+  }
+  ,
+  {:sha1_hex_short => [\'0\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'M\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'g\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'m\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'h\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'p\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'+\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'v\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'C\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'f\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \':\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'d\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'c\', \'h\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'d\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'p\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'m\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'y\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'u\']
+  }
+  ,
+  {:sha1_hex_short => [\'y\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'.\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'x\']
+  }
+  ,
+  {:sha1_hex_short => [\'m\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'u\']
+  }
+  ,
+  {:sha1_hex_short => [\'y\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'g\']
+  }
+  ,
+  {:sha1_hex_short => [\'.\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'u\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'.\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'u\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'u\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\'_\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'_\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'
+  \']
+  }
+  ]
+  }
+  ,
+  {/\(\?:Merge:\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\\n\)\?/ => [{:sha1_hex_short => [\'o\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'3\', \'9\']
+  }
+  ,
+  {:sha1_hex_short => [\'6\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'4\', \'7\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'9\']
+  }
+  ,
+  {:sha1_hex_short => [\'3\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'6\']
+  }
+  ,
+  {:sha1_hex_short => [\'5\', \'f\']
+  }
+  ,
+  {:sha1_hex_short => [\'8\', \'d\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'4\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'8\']
+  }
+  ,
+  {:sha1_hex_short => [\'1\', \'2\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'f\']
+  }
+  ,
+  {:sha1_hex_short => [\'6\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'7\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\'fe12eb738\', \'A\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'h\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \':\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'G\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \'L\']
+  }
+  ,
+  {:sha1_hex_short => [\'w\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'1\']
+  }
+  ,
+  {:sha1_hex_short => [\'3\', \'@\']
+  }
+  ,
+  {:sha1_hex_short => [\'m\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', nil]
+  }
+  ]
+  }
+  ,
+  {/\(\?:Merge:\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\\n\)\?/ => [{:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'\\'\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'\\'\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'d\', \'+\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'p\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'d\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'.\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'p\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'d\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'p\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'p\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'d\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'u\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\'_\', \'l\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'_\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'b\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'/\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'y\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'y\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \'i\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'u\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'p\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'b\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'/\', \'u\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'u\']
+  }
+  ,
+  {:sha1_hex_short => [\'y\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'n\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'_\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'o\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'g\']
+  }
+  ,
+  {:sha1_hex_short => [\'_\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'s\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \'b\']
+  }
+  ]
+  }
+  ,
+  {/\(\?:Merge:\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\ \(\?<sha1_hex_short>\[\[:xdigit:\]\]\{7,9\}\)\\n\)\?/ => [{:sha1_hex_short => [\'o\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'i\', \'t\']
+  }
+  ,
+  {:sha1_hex_short => [\'3\', \'9\']
+  }
+  ,
+  {:sha1_hex_short => [\'6\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'4\', \'7\']
+  }
+  ,
+  {:sha1_hex_short => [\'e\', \'9\']
+  }
+  ,
+  {:sha1_hex_short => [\'3\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'6\']
+  }
+  ,
+  {:sha1_hex_short => [\'5\', \'f\']
+  }
+  ,
+  {:sha1_hex_short => [\'8\', \'d\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'4\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'8\']
+  }
+  ,
+  {:sha1_hex_short => [\'1\', \'2\']
+  }
+  ,
+  {:sha1_hex_short => [\'a\', \'f\']
+  }
+  ,
+  {:sha1_hex_short => [\'6\', \'c\']
+  }
+  ,
+  {:sha1_hex_short => [\'7\', \'
+  \']
+  }
+  ,
+  {:sha1_hex_short => [\'fe12eb738\', \'A\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'h\']
+  }
+  ,
+  {:sha1_hex_short => [\'r\', \':\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'G\', \'r\']
+  }
+  ,
+  {:sha1_hex_short => [\'g\', \'L\']
+  }
+  ,
+  {:sha1_hex_short => [\'w\', \'s\']
+  }
+  ,
+  {:sha1_hex_short => [\'n\', \'1\']
+  }
+  ,
+  {:sha1_hex_short => [\'3\', \'@\']
+  }
+  ,
+  {:sha1_hex_short => [\'m\', \'a\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \'.\']
+  }
+  ,
+  {:sha1_hex_short => [\'o\', \'m\']
+  }
+  ,
+  {:sha1_hex_short => [\'
+  \', \'D\']
+  }
+  ,
+  {:sha1_hex_short => [\'t\', \'e\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'T\', \'u\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'J\']
+  }
+  ,
+  {:sha1_hex_short => [\'l\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'8\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'8\', \':\']
+  }
+  ,
+  {:sha1_hex_short => [\'5\', \':\']
+  }
+  ,
+  {:sha1_hex_short => [\'2\', \' \']
+  }
+  ,
+  {:sha1_hex_short => [\'0\', \'1\']
+  }
+  ,
+  {:sha1_hex_short => [\' \', \'-\']
+  }
+  ,
+  {:sha1_hex_short => [\'7\', \'0\']
+  }
+  ]
+  }
+  ].
+  </commit (?<sha1_hex_40>[[:xdigit:]]{40})\nAuthor: (?<name>[\s[:word:]]+) <(?<email>[[:word:]]*@[[:word:]]*\.[[:word:]]*)>\n/> expected to be =~
+  <"commit 39b6a547ce973c4a605f58d8a4ea8212baf26c67\nMerge: db34b55ef fe12eb738\nAuthor: greg <GregLawson123@gmail.com>\nDate:   Tue Jul 18 08:25:12 2017 -0700\n\n    Merge commit \'stash\' into passed+interactive\n    \n    Conflicts:\n            app/models/branch.rb\n            app/models/parse.rb\n            app/models/ruby_lines_storage.rb\n            test/assertions/ruby_assertions.rb\n            test/examples/ruby_lines_storage.rb\n            test/unit/parse_test.rb\n            test/unit/ruby_lines_storage_test.rb\n">.
+test_DefinitionalConstants(CommitTest)
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test.rb:69:in `test_DefinitionalConstants\'
+     66: 		show_matches = ParsedCapture.show_matches([show_commit_output], Show_commit_array)
+     67: 		assert_match(Email_regexp, show_commit_output, show_matches.ruby_lines_storage)
+     68: 		assert_match(Aurthor_regexp, show_commit_output, show_matches.ruby_lines_storage)
+  => 69: 		assert_match(/commit / * SHA1_hex_40 * /\n/ * Aurthor_regexp, show_commit_output, show_matches.ruby_lines_storage)
+     70: 		assert_match(Aurthor_regexp * /Date:   / * Git_show_medium_timestamp_regexp, show_commit_output, show_matches.ruby_lines_storage)
+     71: 		assert_match(Show_commit_regexp, show_commit_output, show_matches.ruby_lines_storage)
+     72: 
+===============================================================================
+..................
 
-Finished in 7.272476186 seconds.
+Finished in 10.127828724 seconds.
 ------
-20 tests, 91 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-100% passed
+20 tests, 81 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+95% passed
 ------
-2.75 tests/s, 12.51 assertions/s
+1.97 tests/s, 8.00 assertions/s
 ',
-:errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test.rb"
-	User time (seconds): 8.27
-	System time (seconds): 0.78
-	Percent of CPU this job got: 94%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:09.55
+:errors => {:syserr => 'Command exited with non-zero status 1
+	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/git_reference_test.rb"
+	User time (seconds): 9.20
+	System time (seconds): 1.06
+	Percent of CPU this job got: 80%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.71
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 156424
+	Maximum resident set size (kbytes): 161088
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 186566
-	Voluntary context switches: 1580
-	Involuntary context switches: 1270
+	Major (requiring I/O) page faults: 1075
+	Minor (reclaiming a frame) page faults: 195175
+	Voluntary context switches: 2844
+	Involuntary context switches: 1351
 	Swaps: 0
-	File system inputs: 0
+	File system inputs: 85904
 	File system outputs: 3840
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
-	Exit status: 0
+	Exit status: 1
 '
 }
 

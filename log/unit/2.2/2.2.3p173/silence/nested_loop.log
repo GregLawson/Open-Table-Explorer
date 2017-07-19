@@ -1,15 +1,12 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 8, 7, 37, Rational(32017591301, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 9, 5, Rational(17922011555, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nested_loop_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:436:in `<module:DefinitionalConstants>\': uninitialized constant GenericTypeRepo::DefinitionalConstants::Unit (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:435:in `<class:GenericTypeRepo>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:386:in `<top (required)>\'
+:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:434:in `<module:DefinitionalConstants>\': uninitialized constant GenericTypeRepo::DefinitionalConstants::Unit (NameError)
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:433:in `<class:GenericTypeRepo>\'
+	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/generic_type.rb:385:in `<top (required)>\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/version.rb:12:in `require_relative\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/version.rb:12:in `<top (required)>\'
 	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/ruby_interpreter.rb:10:in `require_relative\'
@@ -20,20 +17,20 @@
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nested_loop_test.rb:10:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/nested_loop_test.rb"
-	User time (seconds): 1.60
-	System time (seconds): 0.13
+	User time (seconds): 1.88
+	System time (seconds): 0.31
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.74
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.20
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 38240
+	Maximum resident set size (kbytes): 41204
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 9700
+	Minor (reclaiming a frame) page faults: 10436
 	Voluntary context switches: 3
-	Involuntary context switches: 183
+	Involuntary context switches: 242
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

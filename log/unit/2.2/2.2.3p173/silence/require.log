@@ -1,29 +1,14 @@
 {:current_branch_name => Branch.new(name: nil)
 ,
-:start_time => Time.new(2017, 6, 9, 9, 41, Rational(22561473569, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 12, 8, Rational(55312049242, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test
 Started
-....F
-===============================================================================
-Failure:
-  <[0, 1]> expected to include
-  <"active_support/all">.
-test_Require_attributes(RequireTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:134:in `test_Require_attributes\'
-     131:   def test_Require_attributes
-     132:     executing_requires = Require.new(path: $PROGRAM_NAME)
-     133:     assert_instance_of(Hash, executing_requires.cached_require_captures)
-  => 134:     assert_includes(executing_requires.cached_require_captures.keys, \'active_support/all\')
-     135:     assert_instance_of(Hash, executing_requires.cached_require_captures)
-     136:   end # values
-     137: 
-===============================================================================
-.E
+......E
 ===============================================================================
 Error: test_assert_path_requires(RequireTest):
-  NoMethodError: undefined method `repetitions?\' for #<SplitCapture:0x007f567c9047f8>
+  NoMethodError: undefined method `repetitions?\' for #<SplitCapture:0x007f73814edbc0>
   Did you mean?  repetitions
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:116:in `assert_requires\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:133:in `assert_path_requires\'
@@ -39,7 +24,7 @@ Error: test_assert_path_requires(RequireTest):
 ..E
 ===============================================================================
 Error: test_assert_requires(RequireTest):
-  NoMethodError: undefined method `repetitions?\' for #<SplitCapture:0x007f567c8ac530>
+  NoMethodError: undefined method `repetitions?\' for #<SplitCapture:0x007f738149c108>
   Did you mean?  repetitions
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/require.rb:116:in `assert_requires\'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb:160:in `test_assert_requires\'
@@ -65,13 +50,21 @@ Failure: test_scan_path(RequireTest)
 <["rom", "rom-sql", "rom-repository", "dry-types"]> expected but was
 <[[["active_support/all", "active_model/naming", "active_model/errors"],
   ["regexp_parser", [[nil], ["virtus"], "virtus"], nil, nil],
-  ["virtus"]]]>
+  ["virtus"],
+  "rom",
+  "rom-sql",
+  "rom-repository",
+  "dry-types"]]>
 
 diff:
-?   ["            rom", "rom-sql", "                                      rom-repository", "dry-types"] 
-? [[  active_suppo t/al             active_model/naming", "active_model/er                             ,
++ [[["active_support/all", "active_model/naming", "active_model/errors"],
 +   ["regexp_parser", [[nil], ["virtus"], "virtus"], nil, nil],
-+   ["virtus"]]]
++   ["virtus"],
++   "rom",
++   "rom-sql",
+? ["rom", "rom-sql", "rom-repository", "dry-types"]
+?                                                  
++   "dry-types"]]
 ===============================================================================
 F
 ===============================================================================
@@ -117,31 +110,31 @@ Failure: test_scan_unit(RequireTest)
 ===============================================================================
 
 
-Finished in 0.579666196 seconds.
+Finished in 2.677549585 seconds.
 ------
-15 tests, 86 assertions, 3 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
-66.6667% passed
+15 tests, 87 assertions, 2 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
+73.3333% passed
 ------
-25.88 tests/s, 148.36 assertions/s
+5.60 tests/s, 32.49 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/require_test.rb"
-	User time (seconds): 2.60
-	System time (seconds): 0.28
-	Percent of CPU this job got: 91%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.14
+	User time (seconds): 2.56
+	System time (seconds): 0.29
+	Percent of CPU this job got: 54%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:05.23
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 53912
+	Maximum resident set size (kbytes): 54524
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 20
-	Minor (reclaiming a frame) page faults: 18299
-	Voluntary context switches: 67
-	Involuntary context switches: 307
+	Major (requiring I/O) page faults: 72
+	Minor (reclaiming a frame) page faults: 18442
+	Voluntary context switches: 341
+	Involuntary context switches: 313
 	Swaps: 0
-	File system inputs: 3928
+	File system inputs: 32904
 	File system outputs: 104
 	Socket messages sent: 0
 	Socket messages received: 0

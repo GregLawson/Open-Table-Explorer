@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 8, 7, 2, Rational(51003534194, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 8, 26, Rational(41314042878, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/column_group_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
@@ -15,10 +12,10 @@
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/column_group_test.rb:12:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/column_group_test.rb"
-	User time (seconds): 0.09
-	System time (seconds): 0.01
-	Percent of CPU this job got: 90%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.12
+	User time (seconds): 0.08
+	System time (seconds): 0.02
+	Percent of CPU this job got: 97%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.10
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
@@ -26,7 +23,7 @@ Command exited with non-zero status 1
 	Maximum resident set size (kbytes): 7032
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 1845
+	Minor (reclaiming a frame) page faults: 1846
 	Voluntary context switches: 4
 	Involuntary context switches: 10
 	Swaps: 0

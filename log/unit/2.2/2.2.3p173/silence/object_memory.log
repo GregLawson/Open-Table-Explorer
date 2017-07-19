@@ -1,32 +1,299 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 8, 7, 37, Rational(47381896221, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 9, 10, Rational(21245888027, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test
+Started
+E
+===============================================================================
+Error: test_Acquisition_Interface_modules(ObjectMemoryTest): NameError: uninitialized constant ObjectMemoryTest::Generic_Table
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:283:in `test_Acquisition_Interface_modules\'
+     280:   end # test
+     281: 
+     282:   def test_Acquisition_Interface_modules
+  => 283:     assert(Generic_Table.module?)
+     284:     assert(RubyAssertions.ancestors.map(&:name).include?(\'Generic_Table\'), "Module not included in #{canonicalName} context.")
+     285:     assert_equal([], RubyAssertions.noninherited_modules) # because of STI Generic_Table is not directly included
+     286:     assert_includes(\'Generic_Table\', RubyAssertions.ancestors.map(&:name))
+===============================================================================
+E
+===============================================================================
+Error: test_Acquisition_Stream_Spec_modules(ObjectMemoryTest): NameError: uninitialized constant ObjectMemoryTest::Generic_Table
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:273:in `test_Acquisition_Stream_Spec_modules\'
+     270:   end # def
+     271: 
+     272:   def test_Acquisition_Stream_Spec_modules
+  => 273:     assert(Generic_Table.module?)
+     274:     assert(!FilePattern.module?)
+     275:     assert_equal([Generic_Table], FilePattern.noninherited_modules)
+     276:     assert(FilePattern.ancestors.map(&:name).include?(\'Generic_Table\'), "Module not included in #{canonicalName} context.")
+===============================================================================
+.E
+===============================================================================
+Error: test_Generic_Table(ObjectMemoryTest): NameError: uninitialized constant ObjectMemoryTest::Generic_Table
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:251:in `test_Generic_Table\'
+     248:   end # test
+     249: 
+     250:   def test_Generic_Table
+  => 251:     assert(Generic_Table.module?)
+     252:     assert(!FilePattern.module?)
+     253:     assert_includes(\'Generic_Table\', FilePattern.ancestors.map(&:name))
+     254:     assert_equal([Generic_Table], Account.noninherited_modules)
+===============================================================================
+E
+===============================================================================
+Error: test_all(ObjectMemoryTest):
+  NameError: uninitialized constant ObjectMemoryTest::ObjectMemory
+  Did you mean?  ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:151:in `test_all\'
+     148:   end # all_singleton_methods
+     149: 
+     150:   def test_all
+  => 151:     all_records = ObjectMemory.all
+     152:     assert_instance_of(Array, all_records)
+     153:     assert_operator(69, :<=, all_records.size)
+     154:     all_records.each do |mr|
+===============================================================================
+E
+===============================================================================
+Error: test_all_class_methods(ObjectMemoryTest):
+  NameError: uninitialized constant ObjectMemoryTest::ObjectMemory
+  Did you mean?  ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:132:in `test_all_class_methods\'
+     129:   end # all_instance_methods
+     130: 
+     131:   def test_all_class_methods
+  => 132:     assert(ObjectMemory.classes.all? { |mr| mr.instance_of?(Class) })
+     133:     assert(ObjectMemory.modules.all? { |mr| mr.instance_of?(Module) })
+     134:     #	assert(ObjectMemory.classes.map { |c| c.methods(false).map { |m| new(m,c,:class) } }
+     135:     assert(ObjectMemory.all_class_methods.any? { |mr| mr.instance_of?(ObjectMemory) })
+===============================================================================
+E
+===============================================================================
+Error: test_all_instance_methods(ObjectMemoryTest):
+  NameError: uninitialized constant ObjectMemoryTest::ObjectMemory
+  Did you mean?  ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:123:in `test_all_instance_methods\'
+     120:   end # classes_and_modules
+     121: 
+     122:   def test_all_instance_methods
+  => 123:     assert(ObjectMemory.classes.all? { |mr| mr.instance_of?(Class) })
+     124:     assert(ObjectMemory.modules.all? { |mr| mr.instance_of?(Module) })
+     125:     assert(ObjectMemory.all_instance_methods.any? { |mr| mr.instance_of?(ObjectMemory) })
+     126:     ObjectMemory.all_instance_methods.each do |mr|
+===============================================================================
+E
+===============================================================================
+Error: test_all_methods(ObjectMemoryTest):
+  NameError: uninitialized constant ObjectMemoryTest::ObjectMemory
+  Did you mean?  ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:37:in `test_all_methods\'
+     34:       assert_instance_of(Symbol, m.name, ret.inspect)
+     35:     end # each_object
+     36:     assert_instance_of(Array, ret)
+  => 37:     assert_instance_of(Array, ObjectMemory.all_methods)
+     38:     assert_equal(ret, ObjectMemory.all_methods, ret.inspect)
+     39:     assert_instance_of(Array, ObjectMemory.all_methods)
+     40:     assert_operator(ObjectMemory.all_methods.size, :>=, 69, ObjectMemory.all_methods.uniq.inspect)
+===============================================================================
+E
+===============================================================================
+Error: test_all_singleton_methods(ObjectMemoryTest):
+  NameError: uninitialized constant ObjectMemoryTest::ObjectMemory
+  Did you mean?  ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:142:in `test_all_singleton_methods\'
+     139:   end # all_class_methods
+     140: 
+     141:   def test_all_singleton_methods
+  => 142:     assert(ObjectMemory.classes.all? { |mr| mr.instance_of?(Class) })
+     143:     assert(ObjectMemory.modules.all? { |mr| mr.instance_of?(Module) })
+     144:     assert(ObjectMemory.all_singleton_methods.any? { |mr| mr.instance_of?(ObjectMemory) })
+     145:     ObjectMemory.all_singleton_methods.each do |mr|
+===============================================================================
+E
+===============================================================================
+Error: test_attribute_ddl(ObjectMemoryTest): NameError: uninitialized class variable @@default_connection in ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:292:in `test_attribute_ddl\'
+     289:   end # test
+     290: 
+     291:   def test_attribute_ddl
+  => 292:     assert(@@default_connection.table_exists?(:stream_patterns))
+     293:     assert_equal([], ActiveRecord::ConnectionAdapters::ColumnDefinition.methods(false))
+     294:     assert_equal([], ObjectMemory.all.select { |m| m.owner == \'\' })
+     295:     assert_equal(\'integer\', @@default_connection.type_to_sql(:integer))
+===============================================================================
+E
+===============================================================================
+Error: test_classes(ObjectMemoryTest):
+  NameError: uninitialized constant ObjectMemoryTest::ObjectMemory
+  Did you mean?  ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:62:in `test_classes\'
+     59:     refute_nil(comparison)
+     60:     #	puts ret.map{|c| c.inspect}.sort # debug
+     61:     ret = ret.sort { |x, y| x.inspect <=> y.inspect }
+  => 62:     assert_instance_of(Array, ObjectMemory.classes)
+     63:     ObjectMemory.classes.each do |m|
+     64:       assert_instance_of(Class, m)
+     65:     end # each
+===============================================================================
+E
+===============================================================================
+Error: test_classes_and_modules(ObjectMemoryTest):
+  NameError: uninitialized constant ObjectMemoryTest::ObjectMemory
+  Did you mean?  ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:115:in `test_classes_and_modules\'
+     112:   end # modules
+     113: 
+     114:   def test_classes_and_modules
+  => 115:     assert_operator(ObjectMemory.classes.size, :>, ObjectMemory.modules.size)
+     116:     assert_empty((ObjectMemory.modules - ObjectMemory.classes) & ObjectMemory.classes)
+     117:     refute_empty(ObjectMemory.classes_and_modules)
+     118:     refute_empty(ObjectMemory.classes_and_modules.find_all { |i| i.to_s == \'ActiveRecord::ConnectionAdapters::ColumnDefinition\' })
+===============================================================================
+E
+===============================================================================
+Error: test_constantized(ObjectMemoryTest):
+  NameError: uninitialized constant ObjectMemoryTest::ObjectMemory
+  Did you mean?  ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:216:in `test_constantized\'
+     213: 
+     214:   def test_constantized
+     215:     assert_equal([\'Symbol\'], Module.constants.map(&:objectKind).uniq)
+  => 216:     assert_includes(\'String\', ObjectMemory.constantized.map(&:objectKind).uniq)
+     217:     assert_operator(1000, :>, Module.constants.size)
+     218:     assert_operator(ObjectMemory.constantized.size, :<, ObjectMemory.classes_and_modules.size)
+     219:     assert_operator(100, :<, ObjectMemory.constantized.size)
+===============================================================================
+E
+===============================================================================
+Error: test_find_by_name(ObjectMemoryTest):
+  NameError: uninitialized constant ObjectMemoryTest::ObjectMemory
+  Did you mean?  ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:191:in `test_find_by_name\'
+     188:   end # first
+     189: 
+     190:   def test_find_by_name
+  => 191:     to_sqls = ObjectMemory.all.select { |m| m[:name].to_sym == :to_sql }
+     192:     assert_equal(to_sqls, ObjectMemory.find_by_name(:to_sql))
+     193:     assert_equal(to_sqls, ObjectMemory.all.find_all { |i| i[:name].to_sym == :to_sql })
+     194:     assert_operator(0, :<, ObjectMemory.find_by_name(:to_sql).size)
+===============================================================================
+E
+===============================================================================
+Error: test_first(ObjectMemoryTest):
+  NameError: uninitialized constant ObjectMemoryTest::ObjectMemory
+  Did you mean?  ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:180:in `test_first\'
+     177:   end # all
+     178: 
+     179:   def test_first
+  => 180:     all_records = ObjectMemory.all
+     181:     assert_instance_of(ObjectMemory, all_records[0])
+     182:     assert_equal(all_records.first, all_records[0])
+     183:     refute_nil(ObjectMemory.first)
+===============================================================================
+E
+===============================================================================
+Error: test_logical_attributes(ObjectMemoryTest): NameError: uninitialized constant ObjectMemoryTest::StreamPattern
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:326:in `test_logical_attributes\'
+     323:                      { name: \'time\' },
+     324:                      { name: \'text\' },
+     325:                      { name: \'integer\' },
+  => 326:                      { name: \'varchar\', limit: 255 }], Set.new(StreamPattern.connection.native_database_types.values))
+     327:     assert_equal([\'name\'], StreamPattern.logical_attributes)
+     328:   end # logical_attributes
+     329: end # ObjectMemory
+===============================================================================
+E
+===============================================================================
+Error: test_matching_methods(ObjectMemoryTest): NameError: uninitialized constant ObjectMemoryTest::Unit
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:245:in `test_matching_methods\'
+     242:   end # ExclusionValidator
+     243: 
+     244:   def test_matching_methods
+  => 245:     testClass = Unit
+     246:     assert_instance_of(Array, testClass.matching_class_methods(//))
+     247:     assert_instance_of(Array, testClass.matching_instance_methods(//))
+     248:   end # test
+===============================================================================
+E
+===============================================================================
+Error: test_matching_methods_in_context(ObjectMemoryTest): NameError: uninitialized constant ObjectMemoryTest::Unit
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:266:in `test_matching_methods_in_context\'
+     263:   end # test
+     264: 
+     265:   def test_matching_methods_in_context
+  => 266:     testClass = Unit
+     267:     # error message too long	assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
+     268:     # error message too long		assert_equal([testClass.canonicalName,testClass.matching_methods(//)],testClass.matching_methods_in_context(//)[0])
+     269:     # error message too long			assert_instance_of(Array,testClass.matching_methods_in_context(//,2))
+===============================================================================
+E
+===============================================================================
+Error: test_method_query(ObjectMemoryTest): NameError: uninitialized constant ObjectMemoryTest::ActiveRecord
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:5:in `test_method_query\'
+     2: require_relative \'../../app/models/method_model.rb\'
+     3: class ObjectMemoryTest < TestCase
+     4:   def test_method_query
+  => 5:     owner = ActiveRecord::ConnectionAdapters::ColumnDefinition
+     6:     m = :to_sql
+     7:     objects = 0
+     8:     ObjectSpace.each_object(owner) do |object|
+===============================================================================
+E
+===============================================================================
+Error: test_modules(ObjectMemoryTest):
+  NameError: uninitialized constant ObjectMemoryTest::ObjectMemory
+  Did you mean?  ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:91:in `test_modules\'
+     88: 
+     89:   def test_modules
+     90:     #	assert_kind_of(Enumerator,ObjectSpace.each_object(Module))
+  => 91:     assert_instance_of(Array, ObjectMemory.modules)
+     92:     ObjectMemory.modules.each do |m|
+     93:       unless m.is_a?(Module)
+     94:         if ObjectMemory.classes.include?(m)
+===============================================================================
+E
+===============================================================================
+Error: test_owners_of(ObjectMemoryTest):
+  NameError: uninitialized constant ObjectMemoryTest::ObjectMemory
+  Did you mean?  ObjectMemoryTest
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:211:in `test_owners_of\'
+     208: 
+     209:   def test_owners_of
+     210:     method_name = :to_sql
+  => 211:     refute_empty(ObjectMemory.owners_of(method_name), "find_by_name(:#{method_name})=#{ObjectMemory.find_by_name(method_name)}")
+     212:   end # owners_of
+     213: 
+     214:   def test_constantized
+===============================================================================
+
+
+Finished in 0.979378176 seconds.
+------
+21 tests, 2669 assertions, 0 failures, 20 errors, 0 pendings, 0 omissions, 0 notifications
+4.7619% passed
+------
+21.44 tests/s, 2725.20 assertions/s
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/app/models/method_model.rb:214:in `<class:MethodModel>\': uninitialized constant MethodModel::Virtus (NameError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/app/models/method_model.rb:32:in `<top (required)>\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:2:in `require_relative\'
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb:2:in `<main>\'
-Command exited with non-zero status 1
+:errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/object_memory_test.rb"
-	User time (seconds): 0.82
-	System time (seconds): 0.06
+	User time (seconds): 1.87
+	System time (seconds): 0.08
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.90
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.96
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23624
+	Maximum resident set size (kbytes): 24812
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 6031
-	Voluntary context switches: 3
-	Involuntary context switches: 90
+	Minor (reclaiming a frame) page faults: 6331
+	Voluntary context switches: 2
+	Involuntary context switches: 311
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

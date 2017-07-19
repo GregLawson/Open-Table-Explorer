@@ -1,6 +1,6 @@
 {:current_branch_name => Branch.new(name: nil)
 ,
-:start_time => Time.new(2017, 6, 9, 9, 27, Rational(27377555570, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 8, 54, Rational(107843800, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
@@ -8,20 +8,20 @@
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb:10:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_tree_test.rb"
-	User time (seconds): 1.07
-	System time (seconds): 0.09
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.17
+	User time (seconds): 1.66
+	System time (seconds): 0.15
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.83
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 30484
+	Maximum resident set size (kbytes): 37468
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 7746
+	Minor (reclaiming a frame) page faults: 9491
 	Voluntary context switches: 3
-	Involuntary context switches: 122
+	Involuntary context switches: 205
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

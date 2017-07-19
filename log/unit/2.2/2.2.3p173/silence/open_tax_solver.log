@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 8, 7, 37, Rational(52554092211, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 9, 10, Rational(28860275702, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test
@@ -91,7 +88,7 @@ Error: test_coarse_rejections(OpenTaxSolverTest): NameError: undefined local var
 E
 ===============================================================================
 Error: test_dump_sql_to_file(OpenTaxSolverTest):
-  NoMethodError: undefined method `model_name?\' for #<OpenTaxSolverTest:0x007f6d0dee30a0>
+  NoMethodError: undefined method `model_name?\' for #<OpenTaxSolverTest:0x007fb0d1ac4728>
   Did you mean?  method_name
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb:211:in `test_dump_sql_to_file\'
      208:   end # assert_full_match
@@ -188,30 +185,30 @@ Error: test_run_tax_solver_to_filler(OpenTaxSolverTest):
 ===============================================================================
 
 
-Finished in 0.311488412 seconds.
+Finished in 0.352181905 seconds.
 ------
 14 tests, 12 assertions, 1 failures, 12 errors, 0 pendings, 0 omissions, 1 notifications
 7.14286% passed
 ------
-44.95 tests/s, 38.52 assertions/s
+39.75 tests/s, 34.07 assertions/s
 ',
 :errors => {:syserr => 'sh: 1: cannot create ../OpenTaxSolver2012_10.00/examples_and_templates/US_1040/US_1040_Lawson_sysout.txt: Directory nonexistent
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/open_tax_solver_test.rb"
-	User time (seconds): 0.87
-	System time (seconds): 0.04
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.92
+	User time (seconds): 1.31
+	System time (seconds): 0.09
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.42
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 21844
+	Maximum resident set size (kbytes): 25536
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 5760
-	Voluntary context switches: 6
-	Involuntary context switches: 92
+	Minor (reclaiming a frame) page faults: 6682
+	Voluntary context switches: 5
+	Involuntary context switches: 276
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

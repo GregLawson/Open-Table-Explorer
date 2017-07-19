@@ -1,15 +1,15 @@
 {:current_branch_name => Branch.new(name: nil)
 ,
-:start_time => Time.new(2017, 6, 18, 6, 42, Rational(40090266995, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 12, 29, Rational(41271780202, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Run options: --seed 0
 
 # Running:
 
-..E...........EEE....E..................F........E...
+..E...........EEE....E.......F............F......E.....
 
-Finished in 0.042610s, 1243.8348 runs/s, 5562.0537 assertions/s.
+Finished in 0.132395s, 415.4222 runs/s, 1827.8578 assertions/s.
 
   1) Error:
 RailsUnitTest#test_RailsUnit_initialize:
@@ -17,9 +17,9 @@ NoMethodError: Expected "code_base" to respond to #to_hash
     /var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:196:in `coerce\'
     /var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:170:in `set\'
     /var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:17:in `initialize\'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb:333:in `new\'
-    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb:333:in `unit?\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:386:in `test_RailsUnit_initialize\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb:344:in `new\'
+    /home/greg/Desktop/src/Open-Table-Explorer/app/models/unit.rb:344:in `unit?\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:403:in `test_RailsUnit_initialize\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -45,13 +45,13 @@ NoMethodError: Expected "code_base" to respond to #to_hash
 
   2) Error:
 RailsishRubyUnitTest#test_Examples:
-NoMethodError: undefined method `assertions\' for #<RailsishRubyUnit:0x007f76588f4730>
+NoMethodError: undefined method `assertions\' for #<RailsishRubyUnit:0x007fbe0c8559b8>
 Did you mean?  assert
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:135:in `assert\'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:340:in `assert_respond_to\'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:526:in `refute_empty\'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb:46:in `assert_pre_conditions\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:376:in `test_Examples\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:393:in `test_Examples\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -79,7 +79,7 @@ Did you mean?  assert
 RailsishRubyUnitTest#test_Unit_assert_post_conditions:
 NameError: uninitialized constant FilePattern::Examples::SELF
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb:34:in `assert_post_conditions\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:352:in `test_Unit_assert_post_conditions\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:369:in `test_Unit_assert_post_conditions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -109,8 +109,8 @@ NoMethodError: Expected :UnitWithAssertions to respond to #to_hash
     /var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:196:in `coerce\'
     /var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:170:in `set\'
     /var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:17:in `initialize\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:368:in `new\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:368:in `test_assert_default_test_class_id\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:385:in `new\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:385:in `test_assert_default_test_class_id\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -142,7 +142,7 @@ Did you mean?  assert
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:340:in `assert_respond_to\'
     /usr/lib/ruby/vendor_ruby/minitest/assertions.rb:206:in `assert_includes\'
     /home/greg/Desktop/src/Open-Table-Explorer/test/assertions/unit_assertions.rb:27:in `assert_pre_conditions\'
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:348:in `test_Unit_assert_pre_conditions\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:365:in `test_Unit_assert_pre_conditions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -167,15 +167,25 @@ Did you mean?  assert
 
 
   6) Failure:
-RubyUnitTest#test_Examples [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:251]:
+RubyUnitTest#test_test_types [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:166]:
+--- expected
++++ actual
+@@ -1 +1 @@
+-[:slowest, :slower, :interactive, :unit, :integration, :assertions, :script]
++[:slowest, :slower, :interactive, :unit, :examples, :integration, :script]
+
+
+
+  7) Failure:
+RubyUnitTest#test_Examples [/home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:268]:
 Expected nil (NilClass) to respond to #empty?.
 
 
-  7) Error:
+  8) Error:
 ExampleTest#test_fully_qualified_name:
-NoMethodError: undefined method `fully_qualified_name\' for #<Example:0x007f76588b4900>
+NoMethodError: undefined method `fully_qualified_name\' for #<Example:0x007fbe0c85d398>
 Did you mean?  fully_qualified_name_string
-    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:425:in `test_fully_qualified_name\'
+    /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb:442:in `test_fully_qualified_name\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:107:in `block (3 levels) in run\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:204:in `capture_exceptions\'
     /usr/lib/ruby/vendor_ruby/minitest/test.rb:104:in `block (2 levels) in run\'
@@ -198,27 +208,27 @@ Did you mean?  fully_qualified_name_string
     /usr/lib/ruby/vendor_ruby/minitest.rb:135:in `run\'
     /usr/lib/ruby/vendor_ruby/minitest.rb:62:in `block in autorun\'
 
-53 runs, 237 assertions, 1 failures, 6 errors, 0 skips
+55 runs, 242 assertions, 2 failures, 6 errors, 0 skips
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/unit_test.rb"
-	User time (seconds): 1.20
-	System time (seconds): 0.09
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.31
+	User time (seconds): 1.76
+	System time (seconds): 0.17
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.04
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 28816
+	Maximum resident set size (kbytes): 39784
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 7326
-	Voluntary context switches: 22
-	Involuntary context switches: 150
+	Major (requiring I/O) page faults: 2
+	Minor (reclaiming a frame) page faults: 10493
+	Voluntary context switches: 51
+	Involuntary context switches: 233
 	Swaps: 0
-	File system inputs: 0
-	File system outputs: 0
+	File system inputs: 568
+	File system outputs: 16
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0

@@ -1,35 +1,49 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 4, 56, Rational(55869981622, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(name: nil)
+,
+:start_time => Time.new(2017, 7, 18, 10, 35, Rational(46077451976, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/pcf8591_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
-',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/pcf8591_test.rb:9:in `require_relative\': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/test/unit/default_test_case.rb (LoadError)
-	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/pcf8591_test.rb:9:in `<main>\'
-Command exited with non-zero status 1
-	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/pcf8591_test.rb"
-	User time (seconds): 0.67
-	System time (seconds): 0.04
-	Percent of CPU this job got: 100%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.71
-	Average shared text size (kbytes): 0
-	Average unshared data size (kbytes): 0
-	Average stack size (kbytes): 0
-	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23676
-	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4439
-	Voluntary context switches: 3
-	Involuntary context switches: 14
-	Swaps: 0
-	File system inputs: 0
-	File system outputs: 0
-	Socket messages sent: 0
-	Socket messages received: 0
-	Signals delivered: 0
-	Page size (bytes): 4096
-	Exit status: 1
-'
+:output => '',
+:errors => {:rescue_exception => e = Exception.new("execution expired");e.set_backtrace(['/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:542:in `read\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:542:in `block in execute\'',
+'/usr/lib/ruby/2.3.0/open3.rb:205:in `popen_run\'',
+'/usr/lib/ruby/2.3.0/open3.rb:95:in `popen3\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:540:in `execute\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/shell_command.rb:568:in `initialize\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:25:in `new\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:25:in `block (2 levels) in <module:DefinitionalConstants>\'',
+'/usr/lib/ruby/2.3.0/timeout.rb:106:in `timeout\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:24:in `block in <module:DefinitionalConstants>\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute/default_value/from_callable.rb:29:in `call\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute/accessor.rb:79:in `set_default_value\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:186:in `block in set_defaults\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:46:in `block in each\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:46:in `each\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:46:in `each\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:184:in `set_defaults\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:185:in `set_default_attributes\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:18:in `initialize\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:204:in `new\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/test_run.rb:204:in `block in <module:DefinitionalConstants>\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute/default_value/from_callable.rb:29:in `call\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute/accessor.rb:79:in `set_default_value\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:186:in `block in set_defaults\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:46:in `block in each\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:46:in `each\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:46:in `each\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/attribute_set.rb:184:in `set_defaults\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:185:in `set_default_attributes\'',
+'/var/lib/gems/2.3.0/gems/virtus-1.0.5/lib/virtus/instance_methods.rb:18:in `initialize\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line_sub_executable.rb:37:in `new\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line_sub_executable.rb:37:in `make_executable_object\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line_sub_executable.rb:51:in `executable_object\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line_sub_executable.rb:111:in `executable_method?\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line_sub_executable.rb:131:in `dispatch_required_arguments\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line_sub_executable.rb:171:in `block in run\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line_sub_executable.rb:170:in `each\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line_sub_executable.rb:170:in `run\'',
+'script/command_line.rb:91:in `block in <main>\'',
+'/home/greg/Desktop/src/Open-Table-Explorer/app/models/command_line_sub_executable.rb:153:in `run\'',
+'script/command_line.rb:70:in `<main>\'']);e
 }
 
 }

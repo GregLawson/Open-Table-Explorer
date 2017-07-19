@@ -1,16 +1,13 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 8, 7, 2, Rational(17810414942, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 8, 26, Rational(9705352060, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test
 Started
 E
 ===============================================================================
-Error: test_Constants(BackupTest): NoMethodError: undefined method `output\' for #<Rsync:0x007f0f80f538b8>
+Error: test_Constants(BackupTest): NoMethodError: undefined method `output\' for #<Rsync:0x007f061f473c78>
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:45:in `block in test_Constants\'
      42: 		assert_match(FilePattern::Relative_pathname_included_regexp.capture(:path) * /\n/, File_and_stat)
      43: 		assert_match(Rsync::Examples::Stats_regexp, File_and_stat)
@@ -25,17 +22,26 @@ Error: test_Constants(BackupTest): NoMethodError: undefined method `output\' for
 F
 ===============================================================================
 Failure:
-  /media/greg/Seagate Backup Plus Drive/Backup Drives/.
+  pathname = /home/greg/Desktop/sda16 does not exist
+  parent directory /home/greg/Desktop does exists containing ["Desktop"]
+  Pathname(/home/greg/Desktop/sda16).exist?=false
+  pathname = /home/greg/Desktop/sda16 does not exist
+  parent directory /home/greg/Desktop does exists containing ["Desktop"].
   <false> is not true.
 test_config(BackupTest)
-/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:29:in `block (2 levels) in test_config\'
-     26: 	Backup_directories.each_pair do |directory_map, sub_directory_map|
-     27: 		directory_map.each_pair do |source_dir, backup_dir|
-     28: 			assert_directory_exists(source_dir)
-  => 29: 			assert(File.exist?(backup_dir), backup_dir)
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:526:in `assert_pathname_exists\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:532:in `assert_directory_exists\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/assertions/ruby_assertions.rb:538:in `assert_directory_exists\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:32:in `block (3 levels) in test_config\'
+     29: 			assert(File.exist?(backup_dir), backup_dir)
      30: 			assert_directory_exists(backup_dir)
      31: 			sub_directory_map.each_pair do |source_sub_directory, backup_sub_directory|
-     32: 				assert_directory_exists(source_dir + source_sub_directory)
+  => 32: 				assert_directory_exists(source_dir + source_sub_directory)
+     33: 				assert_directory_exists(backup_dir + backup_sub_directory)
+     34: 					deeper_plan = { { source_dir => backup_dir} => {source_sub_directory => backup_sub_directory} }
+     35: 			end # each_pair
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:31:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:31:in `block (2 levels) in test_config\'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:27:in `each_pair\'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:27:in `block in test_config\'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:26:in `each_pair\'
@@ -69,7 +75,7 @@ test_Rsync_DefinitionalConstants(RsyncTest)
 .F
 ===============================================================================
 Failure:
-  "/dev/disk/by-uuid/72F0404DF04019AD".
+  "/dev/disk/by-uuid/7a9aed35-cc03-4514-8ff9-0e4068b2bcae".
   <false> is not true.
 test_assert_pre_conditions(RsyncTest)
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb:152:in `block in test_assert_pre_conditions\'
@@ -119,7 +125,7 @@ test_each(RsyncTest)
 Failure:
   #<Rsync source_dir="/dev/disk/by-uuid/976bed30-38d8-43a3-a4d4-6869fb636fcb/" backup_dir="/media/greg/Seagate Backup Plus Drive/Backup Drives/976bed30-38d8-43a3-a4d4-6869fb636fcb/" recursive=false dry_run=false minimize=false options="--archive --verbose --update --links --ignore-existing" cached_shell_command=$ rsync --archive --verbose --update --links --ignore-existing --no-recursive --no-dry-run --recursive  /dev/disk/by-uuid/976bed30-38d8-43a3-a4d4-6869fb636fcb/* /media/greg/Seagate\ Backup\ Plus\ Drive/Backup\ Drives/976bed30-38d8-43a3-a4d4-6869fb636fcb/
   @errors="rsync: --no-dry-run: unknown option\nrsync error: syntax or usage error (code 1) at main.c(1585) [client=3.1.2]\n"
-  @process_status=#<Process::Status: pid 30131 exit 1>
+  @process_status=#<Process::Status: pid 19829 exit 1>
   >.
   <""> expected to not be empty.
 test_planned_backup(RsyncTest)
@@ -140,31 +146,31 @@ test_planned_backup(RsyncTest)
 ===============================================================================
 
 
-Finished in 0.440687175 seconds.
+Finished in 0.415817746 seconds.
 ------
-10 tests, 27 assertions, 5 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
+10 tests, 40 assertions, 5 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
 40% passed
 ------
-22.69 tests/s, 61.27 assertions/s
+24.05 tests/s, 96.20 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/backup_test.rb"
-	User time (seconds): 1.18
-	System time (seconds): 0.11
+	User time (seconds): 1.62
+	System time (seconds): 0.16
 	Percent of CPU this job got: 62%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.05
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.88
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 33828
+	Maximum resident set size (kbytes): 39564
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 6
-	Minor (reclaiming a frame) page faults: 13142
-	Voluntary context switches: 218
-	Involuntary context switches: 186
+	Major (requiring I/O) page faults: 4
+	Minor (reclaiming a frame) page faults: 14584
+	Voluntary context switches: 242
+	Involuntary context switches: 220
 	Swaps: 0
-	File system inputs: 2000
+	File system inputs: 1120
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0

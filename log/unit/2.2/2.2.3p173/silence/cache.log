@@ -1,37 +1,37 @@
 {:current_branch_name => Branch.new(name: nil)
 ,
-:start_time => Time.new(2017, 6, 13, 6, 23, Rational(8284870790, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 8, 26, Rational(38790403094, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/cache_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/cache_test
 Started
-......cache_miss = #<Benchmark::Tms:0x007f42dc482198 @label="", @real=0.8692008019424975, @cstime=0.0, @cutime=0.0, @stime=0.009999999999999995, @utime=0.8199999999999998, @total=0.8299999999999998>, cache_hit = #<Benchmark::Tms:0x007f42dc473878 @label="", @real=1.7028069123625755e-05, @cstime=0.0, @cutime=0.0, @stime=0.0, @utime=0.0, @total=0.0>
-all_basenames = #<Benchmark::Tms:0x007f42dc472888 @label="", @real=1.4245044440031052e-05, @cstime=0.0, @cutime=0.0, @stime=0.0, @utime=0.0, @total=0.0>
-all = #<Benchmark::Tms:0x007f42dcc09510 @label="", @real=0.7790160588920116, @cstime=0.0, @cutime=0.0, @stime=0.0, @utime=0.77, @total=0.77>
+......cache_miss = #<Benchmark::Tms:0x007fa921eb1fc8 @label="", @real=0.794383087195456, @cstime=0.0, @cutime=0.0, @stime=0.0, @utime=0.7899999999999998, @total=0.7899999999999998>, cache_hit = #<Benchmark::Tms:0x007fa921eaafe8 @label="", @real=1.8708407878875732e-05, @cstime=0.0, @cutime=0.0, @stime=0.0, @utime=0.0, @total=0.0>
+all_basenames = #<Benchmark::Tms:0x007fa921ea9ad0 @label="", @real=1.384783536195755e-05, @cstime=0.0, @cutime=0.0, @stime=0.0, @utime=0.0, @total=0.0>
+all = #<Benchmark::Tms:0x007fa9210973c0 @label="", @real=0.804740272462368, @cstime=0.0, @cutime=0.0, @stime=0.0, @utime=0.79, @total=0.79>
 ..................
 
-Finished in 1.659884225 seconds.
+Finished in 1.611426988 seconds.
 ------
 24 tests, 30 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-14.46 tests/s, 18.07 assertions/s
+14.89 tests/s, 18.62 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/cache_test.rb"
-	User time (seconds): 2.72
-	System time (seconds): 0.12
-	Percent of CPU this job got: 97%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.91
+	User time (seconds): 3.11
+	System time (seconds): 0.21
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.34
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 38408
+	Maximum resident set size (kbytes): 44008
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 9727
+	Minor (reclaiming a frame) page faults: 11126
 	Voluntary context switches: 3
-	Involuntary context switches: 376
+	Involuntary context switches: 333
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

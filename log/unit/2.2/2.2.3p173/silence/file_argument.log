@@ -1,40 +1,37 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 8, 7, 26, Rational(43681141891, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 8, 53, Rational(56056368561, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_argument_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_argument_test
 Started
 ......
 
-Finished in 10.12743305 seconds.
+Finished in 7.640526053 seconds.
 ------
 6 tests, 29 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 100% passed
 ------
-0.59 tests/s, 2.86 assertions/s
+0.79 tests/s, 3.80 assertions/s
 ',
 :errors => {:syserr => '	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/file_argument_test.rb"
-	User time (seconds): 9.92
-	System time (seconds): 0.93
+	User time (seconds): 7.92
+	System time (seconds): 0.65
 	Percent of CPU this job got: 83%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.99
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:10.24
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 52500
+	Maximum resident set size (kbytes): 53192
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 31
-	Minor (reclaiming a frame) page faults: 76358
-	Voluntary context switches: 927
-	Involuntary context switches: 1302
+	Minor (reclaiming a frame) page faults: 62024
+	Voluntary context switches: 879
+	Involuntary context switches: 901
 	Swaps: 0
-	File system inputs: 27120
-	File system outputs: 64
+	File system inputs: 18808
+	File system outputs: 48
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0

@@ -1,29 +1,85 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 5, 8, 7, 2, Rational(24515407124, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 8, 26, Rational(20003509752, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/blue_tooth_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
+Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/blue_tooth_test
+Started
+.E
+===============================================================================
+Error: test_cli(BluezTestDeviceListTest):
+  NameError: uninitialized constant BluezTestDeviceListTest::ShellCommand
+  Did you mean?  ShellCommands
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/blue_tooth_test.rb:25:in `test_cli\'
+     22: end #model_name?
+     23: 
+     24: 	def test_cli
+  => 25: 		ShellCommand.new(\'lsmod|grep -i bluetooth\')
+     26: 		ShellCommand.new(\'modinfo ath9k\')
+     27: 		ShellCommand.new(\'/sbin/modprobe ath9k\')
+     28: 		ShellCommand.new(\'dmesg\')
+===============================================================================
+.E
+===============================================================================
+Error: test_match_regexp_array(BluezTestDeviceListTest): NoMethodError: undefined method `raw_acquisitions\' for BlueTooth::BluezTestDeviceList:Class
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/blue_tooth_test.rb:97:in `test_match_regexp_array\'
+      94: end #parse
+      95: 
+      96: def test_match_regexp_array
+  =>  97: 	acquisition=model_class?.raw_acquisitions[0]
+      98: 	rest=acquisition
+      99: 	combination_indices=[0, 1, 2] #passes
+     100: 	combination_indices=[0, 1, 2, 4] #passes
+===============================================================================
+E
+===============================================================================
+Error: test_parse(BluezTestDeviceListTest): NoMethodError: undefined method `raw_acquisitions\' for BlueTooth::BluezTestDeviceList:Class
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/blue_tooth_test.rb:47:in `test_parse\'
+     44: def test_parse
+     45: 	context={}
+     46: 	array_of_hashes=[]
+  => 47: 	model_class?.raw_acquisitions.each_with_index do |acquisition|
+     48: 		begin
+     49: 		refute_nil(acquisition)
+     50: 		assert(!(acquisition.nil?), "acquisition should not be nil at start of parse")
+===============================================================================
+E
+===============================================================================
+Error: test_subset_regexp(BluezTestDeviceListTest): NoMethodError: undefined method `raw_acquisitions\' for BlueTooth::BluezTestDeviceList:Class
+/home/greg/Desktop/src/Open-Table-Explorer/test/unit/blue_tooth_test.rb:132:in `test_subset_regexp\'
+     129: end #match_regexp_array
+     130: 
+     131: def test_subset_regexp
+  => 132: 	model_class?.raw_acquisitions.map do |acquisition|
+     133: 		assert_instance_of(String, acquisition)
+     134: 		longest=Full_regexp_array.size
+     135: 		Array.new(Full_regexp_array.size){|i| i}.combination(longest) do |c|
+===============================================================================
+
+
+Finished in 0.110864233 seconds.
+------
+6 tests, 0 assertions, 0 failures, 4 errors, 0 pendings, 0 omissions, 0 notifications
+33.3333% passed
+------
+54.12 tests/s, 0.00 assertions/s
 ',
-:errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/blue_tooth_test.rb:136: syntax error, unexpected end-of-input, expecting keyword_end
-Command exited with non-zero status 1
+:errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/blue_tooth_test.rb"
-	User time (seconds): 0.08
-	System time (seconds): 0.01
-	Percent of CPU this job got: 96%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.10
+	User time (seconds): 1.06
+	System time (seconds): 0.11
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:01.18
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 6880
+	Maximum resident set size (kbytes): 25256
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 1809
-	Voluntary context switches: 3
-	Involuntary context switches: 25
+	Minor (reclaiming a frame) page faults: 6439
+	Voluntary context switches: 2
+	Involuntary context switches: 133
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

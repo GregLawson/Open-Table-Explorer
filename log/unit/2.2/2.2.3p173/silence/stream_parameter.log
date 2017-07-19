@@ -1,26 +1,27 @@
-{:current_branch_name => :passed,
-:start_time => Time.new(2016, 9, 25, 5, 0, Rational(52135531921, 1000000000), "-07:00"),
+{:current_branch_name => Branch.new(name: nil)
+,
+:start_time => Time.new(2017, 7, 18, 12, 18, Rational(15243512297, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_parameter_test.rb',
-:output => 'ruby 2.3.1p112 (2016-04-26) [x86_64-linux-gnu]
+:output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 ',
 :errors => {:syserr => '/home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_parameter_test.rb:9:in `require_relative\': cannot load such file -- /home/greg/Desktop/src/Open-Table-Explorer/app/models/stream_parameter.rb (LoadError)
 	from /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_parameter_test.rb:9:in `<main>\'
 Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/stream_parameter_test.rb"
-	User time (seconds): 0.66
-	System time (seconds): 0.04
+	User time (seconds): 0.88
+	System time (seconds): 0.06
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.71
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.96
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 23780
+	Maximum resident set size (kbytes): 24340
 	Average resident set size (kbytes): 0
 	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 4442
+	Minor (reclaiming a frame) page faults: 6208
 	Voluntary context switches: 3
-	Involuntary context switches: 11
+	Involuntary context switches: 118
 	Swaps: 0
 	File system inputs: 0
 	File system outputs: 0

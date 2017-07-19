@@ -1,9 +1,6 @@
-{:current_branch_name => Branch.new(repository: Repository.new(path: '/home/greg/Desktop/src/Open-Table-Explorer/')
+{:current_branch_name => Branch.new(name: nil)
 ,
-   name: :passed,
-   initialization_string: nil)
-,
-:start_time => Time.new(2017, 4, 26, 10, 57, Rational(35342907548, 1000000000), "-07:00"),
+:start_time => Time.new(2017, 7, 18, 9, 5, Rational(33508286196, 1000000000), "-07:00"),
 :command_string => '/usr/bin/time --verbose ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb',
 :output => 'ruby 2.3.3p222 (2016-11-21) [x86_64-linux-gnu]
 Loaded suite /home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test
@@ -11,22 +8,22 @@ Started
 E
 ===============================================================================
 Error: test_Constants(NetworkTest): NoMethodError: undefined method `[]\' for nil:NilClass
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:619:in `block in to_hash\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:616:in `each_pair\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:616:in `to_hash\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:772:in `output\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:676:in `block in to_hash\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:673:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:673:in `to_hash\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:879:in `output\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `map\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `call\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `enumerate\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:148:in `enumerate_single\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:160:in `enumerate\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1247:in `block in parse\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1319:in `block in parse\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `map\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `call\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `enumerate\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:148:in `enumerate_single\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:160:in `enumerate\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1246:in `parse\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1318:in `parse\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/network.rb:53:in `block in ifconfig\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/network.rb:51:in `each\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/network.rb:51:in `ifconfig\'
@@ -54,20 +51,40 @@ IFINDEX=1\',
 :address => \'00:00:00:00:00:00\',
 :broadcast => \'00:00:00:00:00:00\',
 :carrier => \'1\',
-:speed => Errno::EINVAL.new()
-,
-:duplex => Errno::EINVAL.new()
-,
+:speed => e = Exception.new("Invalid argument @ io_fread - /sys/class/net/lo/speed");e.set_backtrace([\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:49:in `read\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:49:in `data_hash_value\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:75:in `block in directory_hash_value\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:71:in `each\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:71:in `directory_hash_value\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:230:in `<module:Examples>\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:225:in `<class:FileTree>\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:11:in `<top (required)>\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/network.rb:12:in `require_relative\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/network.rb:12:in `<top (required)>\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb:9:in `require_relative\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb:9:in `<main>\\'\']);e,
+:duplex => e = Exception.new("Invalid argument @ io_fread - /sys/class/net/lo/duplex");e.set_backtrace([\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:49:in `read\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:49:in `data_hash_value\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:75:in `block in directory_hash_value\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:71:in `each\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:71:in `directory_hash_value\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:230:in `<module:Examples>\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:225:in `<class:FileTree>\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:11:in `<top (required)>\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/network.rb:12:in `require_relative\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/network.rb:12:in `<top (required)>\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb:9:in `require_relative\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb:9:in `<main>\\'\']);e,
 :dormant => \'0\',
 :operstate => \'unknown\',
 :mtu => \'16436\',
 :flags => \'0x9\',
 :tx_queue_len => \'0\',
 :netdev_group => \'0\',
-:statistics => {:rx_packets => \'783091\',
-:tx_packets => \'783091\',
-:rx_bytes => \'248642364\',
-:tx_bytes => \'248642364\',
+:statistics => {:rx_packets => \'2072893\',
+:tx_packets => \'2072893\',
+:rx_bytes => \'679657669\',
+:tx_bytes => \'679657669\',
 :rx_errors => \'0\',
 :tx_errors => \'0\',
 :rx_dropped => \'0\',
@@ -97,8 +114,21 @@ IFINDEX=1\',
 :control => \'auto\',
 :runtime_suspended_time => \'0\',
 :runtime_active_time => \'0\',
-:autosuspend_delay_ms => Errno::EIO.new()
-
+:autosuspend_delay_ms => e = Exception.new("Input/output error @ io_fread - /sys/class/net/lo/power/autosuspend_delay_ms");e.set_backtrace([\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:49:in `read\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:49:in `data_hash_value\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:75:in `block in directory_hash_value\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:71:in `each\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:71:in `directory_hash_value\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:73:in `block in directory_hash_value\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:71:in `each\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:71:in `directory_hash_value\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:230:in `<module:Examples>\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:225:in `<class:FileTree>\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/file_tree.rb:11:in `<top (required)>\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/network.rb:12:in `require_relative\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/app/models/network.rb:12:in `<top (required)>\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb:9:in `require_relative\\'\',
+\'/home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb:9:in `<main>\\'\']);e
 }
 ,
 :queues => {:"rx-0" => {:rps_cpus => \'00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000\',
@@ -120,12 +150,12 @@ IFINDEX=1\',
 
 }
 
-name_value_pairs = [{:name=>"mtu", :value=>"1500"}, {:name=>"prefixlen", :value=>"64"}, {:name=>"txqueuelen", :value=>"1000"}, {:name=>"packets", :value=>"2439806"}, {:name=>"bytes", :value=>"2618566726"}, {:name=>"errors", :value=>"0"}, {:name=>"dropped", :value=>"0"}, {:name=>"overruns", :value=>"0"}, {:name=>"frame", :value=>"0"}, {:name=>"packets", :value=>"1870985"}, {:name=>"bytes", :value=>"263512005"}, {:name=>"errors", :value=>"0"}, {:name=>"dropped", :value=>"0"}, {:name=>"overruns", :value=>"0"}, {:name=>"carrier", :value=>"0"}, {:name=>"collisions", :value=>"0"}, {:name=>"interrupt", :value=>"104"}, {:name=>"mtu", :value=>"16436"}, {:name=>"prefixlen", :value=>"128"}, {:name=>"txqueuelen", :value=>"0"}, {:name=>"packets", :value=>"783091"}, {:name=>"bytes", :value=>"248642364"}, {:name=>"errors", :value=>"0"}, {:name=>"dropped", :value=>"0"}, {:name=>"overruns", :value=>"0"}, {:name=>"frame", :value=>"0"}, {:name=>"packets", :value=>"783091"}, {:name=>"bytes", :value=>"248642364"}, {:name=>"errors", :value=>"0"}, {:name=>"dropped", :value=>"0"}, {:name=>"overruns", :value=>"0"}, {:name=>"carrier", :value=>"0"}, {:name=>"collisions", :value=>"0"}, {:name=>"mtu", :value=>"1500"}, {:name=>"prefixlen", :value=>"64"}, {:name=>"txqueuelen", :value=>"1000"}, {:name=>"packets", :value=>"3415084"}, {:name=>"bytes", :value=>"698263955"}, {:name=>"errors", :value=>"0"}, {:name=>"dropped", :value=>"0"}, {:name=>"overruns", :value=>"0"}, {:name=>"frame", :value=>"0"}, {:name=>"packets", :value=>"287099"}, {:name=>"bytes", :value=>"37708951"}, {:name=>"errors", :value=>"0"}, {:name=>"dropped", :value=>"0"}, {:name=>"overruns", :value=>"0"}, {:name=>"carrier", :value=>"0"}, {:name=>"collisions", :value=>"0"}]
+name_value_pairs = [{:name=>"mtu", :value=>"1500"}, {:name=>"prefixlen", :value=>"64"}, {:name=>"txqueuelen", :value=>"1000"}, {:name=>"packets", :value=>"2036045"}, {:name=>"bytes", :value=>"1583836660"}, {:name=>"errors", :value=>"0"}, {:name=>"dropped", :value=>"0"}, {:name=>"overruns", :value=>"0"}, {:name=>"frame", :value=>"0"}, {:name=>"packets", :value=>"1826283"}, {:name=>"bytes", :value=>"328794525"}, {:name=>"errors", :value=>"0"}, {:name=>"dropped", :value=>"0"}, {:name=>"overruns", :value=>"0"}, {:name=>"carrier", :value=>"0"}, {:name=>"collisions", :value=>"0"}, {:name=>"interrupt", :value=>"103"}, {:name=>"mtu", :value=>"16436"}, {:name=>"prefixlen", :value=>"128"}, {:name=>"txqueuelen", :value=>"0"}, {:name=>"packets", :value=>"2072893"}, {:name=>"bytes", :value=>"679657669"}, {:name=>"errors", :value=>"0"}, {:name=>"dropped", :value=>"0"}, {:name=>"overruns", :value=>"0"}, {:name=>"frame", :value=>"0"}, {:name=>"packets", :value=>"2072893"}, {:name=>"bytes", :value=>"679657669"}, {:name=>"errors", :value=>"0"}, {:name=>"dropped", :value=>"0"}, {:name=>"overruns", :value=>"0"}, {:name=>"carrier", :value=>"0"}, {:name=>"collisions", :value=>"0"}, {:name=>"mtu", :value=>"1500"}, {:name=>"prefixlen", :value=>"64"}, {:name=>"txqueuelen", :value=>"1000"}, {:name=>"packets", :value=>"8992048"}, {:name=>"bytes", :value=>"1853176291"}, {:name=>"errors", :value=>"0"}, {:name=>"dropped", :value=>"0"}, {:name=>"overruns", :value=>"0"}, {:name=>"frame", :value=>"0"}, {:name=>"packets", :value=>"278235"}, {:name=>"bytes", :value=>"39544017"}, {:name=>"errors", :value=>"0"}, {:name=>"dropped", :value=>"0"}, {:name=>"overruns", :value=>"0"}, {:name=>"carrier", :value=>"0"}, {:name=>"collisions", :value=>"0"}]
 F
 ===============================================================================
 Failure: test_ifconfig(NetworkTest)
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:234:in `assert_match_kind\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:730:in `assert_refinement\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:260:in `assert_match_kind\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:804:in `assert_refinement\'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb:114:in `test_ifconfig\'
      111:     wlan0_lines = wlan_line + wlan0_inet + wlan0_RX_line + wlan0_RX_errors_line = + wlan0_TX_line + wlan0_TX_errors_line
      112:     ifconfig_output = lo_lines + wlan0_lines
@@ -143,8 +173,8 @@ MatchRefinement :scattered
 \'127.0.0.1\' matched by /\(\?<ipv4>\(\?:\[0\-2\]\?\[0\-9\]\?\[0\-9\]\\\.\)\{3\}\[0\-2\]\?\[0\-9\]\?\[0\-9\]\)/ captures {:ipv4=>"127.0.0.1"},
 \'  netmask \' matched by /\ \ netmask\ / captures {},
 \'255.0.0.0\' matched by /\(\?<netmask>\(\?:\[0\-2\]\?\[0\-9\]\?\[0\-9\]\\\.\)\{3\}\[0\-2\]\?\[0\-9\]\?\[0\-9\]\)/ captures {:netmask=>"255.0.0.0"},
-\'\' not matched by /\ \ broadcast\ /,
-\'\' not matched by /\(\?<broadcast>\(\?:\[0\-2\]\?\[0\-9\]\?\[0\-9\]\\\.\)\{3\}\[0\-2\]\?\[0\-9\]\?\[0\-9\]\)/,
+"\n        inet6 ::1  prefixlen 128  scopeid 0x10<host>\n        loop  txqueuelen 0  (Local Loopback)\n        RX packets 190862  bytes 46069130 (43.9 MiB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 190862  bytes 46069130 (43.9 MiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\nwlan0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n        ether 1a:3a:fd:1e:53:9d  txqueuelen 1000  (Ethernet)\n        RX packets 1830620  bytes 1314350901 (1.2 GiB)\n        TX packets 625978  bytes 91631448 (87.3 MiB)\n        TX errors  dropped 0 overruns 0  carrier 0  collisions 0\n\n" not matched by /\ \ broadcast\ /,
+"\n        inet6 ::1  prefixlen 128  scopeid 0x10<host>\n        loop  txqueuelen 0  (Local Loopback)\n        RX packets 190862  bytes 46069130 (43.9 MiB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 190862  bytes 46069130 (43.9 MiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\nwlan0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n        ether 1a:3a:fd:1e:53:9d  txqueuelen 1000  (Ethernet)\n        RX packets 1830620  bytes 1314350901 (1.2 GiB)\n        TX packets 625978  bytes 91631448 (87.3 MiB)\n        TX errors  dropped 0 overruns 0  carrier 0  collisions 0\n\n" not matched by /\(\?<broadcast>\(\?:\[0\-2\]\?\[0\-9\]\?\[0\-9\]\\\.\)\{3\}\[0\-2\]\?\[0\-9\]\?\[0\-9\]\)/,
 "\n" matched by /\\n/ captures {},
 suggest: /\ \ \ \ \ \ \ \ inet6\ ::1\ \ prefixlen\ 128\ \ scopeid\ 0x10<host>\n\ \ \ \ \ \ \ \ loop\ \ txqueuelen\ 0\ \ \(Local\ Loopback\)\n\ \ \ \ \ \ \ \ RX\ packets\ 190862\ \ bytes\ 46069130\ \(43\.9\ MiB\)\n\ \ \ \ \ \ \ \ RX\ errors\ 0\ \ dropped\ 0\ \ overruns\ 0\ \ frame\ 0\n\ \ \ \ \ \ \ \ TX\ packets\ 190862\ \ bytes\ 46069130\ \(43\.9\ MiB\)\n\ \ \ \ \ \ \ \ TX\ errors\ 0\ \ dropped\ 0\ overruns\ 0\ \ carrier\ 0\ \ collisions\ 0\n\nwlan0:\ flags=4099<UP,BROADCAST,MULTICAST>\ \ mtu\ 1500\n\ \ \ \ \ \ \ \ ether\ 1a:3a:fd:1e:53:9d\ \ txqueuelen\ 1000\ \ \(Ethernet\)\n\ \ \ \ \ \ \ \ RX\ packets\ 1830620\ \ bytes\ 1314350901\ \(1\.2\ GiB\)\n\ \ \ \ \ \ \ \ TX\ packets\ 625978\ \ bytes\ 91631448\ \(87\.3\ MiB\)\n\ \ \ \ \ \ \ \ TX\ errors\ \ dropped\ 0\ overruns\ 0\ \ carrier\ 0\ \ collisions\ 0\n\n/
  capture_indices = [0, 1, 2, 3, 4, 7] out of 0..8
@@ -206,22 +236,22 @@ diff:
 ..E
 ===============================================================================
 Error: test_whereAmI(NetworkTest): NoMethodError: undefined method `[]\' for nil:NilClass
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:619:in `block in to_hash\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:616:in `each_pair\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:616:in `to_hash\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:772:in `output\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:676:in `block in to_hash\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:673:in `each_pair\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:673:in `to_hash\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:879:in `output\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `map\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `call\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `enumerate\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:148:in `enumerate_single\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:160:in `enumerate\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1247:in `block in parse\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1319:in `block in parse\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `map\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `call\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:158:in `enumerate\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:148:in `enumerate_single\'
 /home/greg/Desktop/src/Open-Table-Explorer/app/models/enumerator.rb:160:in `enumerate\'
-/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1246:in `parse\'
+/home/greg/Desktop/src/Open-Table-Explorer/app/models/parse.rb:1318:in `parse\'
 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb:256:in `test_whereAmI\'
      253: 
      254:   def test_whereAmI
@@ -233,31 +263,31 @@ Error: test_whereAmI(NetworkTest): NoMethodError: undefined method `[]\' for nil
 ===============================================================================
 
 
-Finished in 7.828055587 seconds.
+Finished in 10.786634593 seconds.
 ------
 9 tests, 39 assertions, 1 failures, 2 errors, 0 pendings, 0 omissions, 0 notifications
 66.6667% passed
 ------
-1.15 tests/s, 4.98 assertions/s
+0.83 tests/s, 3.62 assertions/s
 ',
 :errors => {:syserr => 'Command exited with non-zero status 1
 	Command being timed: "ruby -v -W0 /home/greg/Desktop/src/Open-Table-Explorer/test/unit/network_test.rb"
-	User time (seconds): 8.88
-	System time (seconds): 0.14
+	User time (seconds): 12.67
+	System time (seconds): 0.18
 	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:09.06
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.96
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 34064
+	Maximum resident set size (kbytes): 40132
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 9647
-	Voluntary context switches: 24
-	Involuntary context switches: 863
+	Major (requiring I/O) page faults: 2
+	Minor (reclaiming a frame) page faults: 11168
+	Voluntary context switches: 35
+	Involuntary context switches: 1267
 	Swaps: 0
-	File system inputs: 0
+	File system inputs: 264
 	File system outputs: 0
 	Socket messages sent: 0
 	Socket messages received: 0
