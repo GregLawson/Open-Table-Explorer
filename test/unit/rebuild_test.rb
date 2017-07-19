@@ -1,5 +1,5 @@
 ###########################################################################
-#    Copyright (C) 2013-2014 by Greg Lawson
+#    Copyright (C) 2013-2017 by Greg Lawson
 #    <GregLawson123@gmail.com>
 #
 # Copyright: See COPYING file that comes with this distribution
@@ -8,30 +8,26 @@
 require_relative '../unit/test_environment'
 require_relative '../../app/models/rebuild.rb'
 class RebuildTest < TestCase
-  include DefaultTests
-  include Rebuild::Examples
-  def test_git_path_to_repository
-    executing_repo = { name: :'Open-Table-Explorer', dir: Pathname.new(Repository::This_code_repository.path) }
-    file = Repository::This_code_repository.path + '.git/'
-    dot_git_just_seen = false
-    repository = nil # need scope outside of ascend block=
-    Pathname.new(file).ascend do |parent|
-      if dot_git_just_seen
-        dot_git_just_seen = nil # not any more
-        assert_equal(Pathname.new('/home/pi/Desktop/src/Open-Table-Explorer'), Pathname.new(parent).expand_path)
-        repo_path = Pathname.new(Pathname.new(parent).expand_path.to_s + '/')
-        #			assert_equal(repo_path, Pathname.new(parent).expand_path + '/')
-        repository = { name: File.basename(parent).to_sym, dir: repo_path }
-      elsif File.basename(parent) == '.git'
-        dot_git_just_seen = true
-      end # if
-    end # ascend
-    message = 'defined?(dot_git_just_seen) = ' + defined?(dot_git_just_seen) + ' for file ' + file
-    assert(defined?(dot_git_just_seen), message)
-    assert_instance_of(Hash, repository)
-    assert_equal(executing_repo, repository)
-  end # git_path_to_repository
 
+  module Examples
+    include Constants
+    Repository_glob = '*/.git/refs/stash'.freeze # my active development inncludes stashes
+    unless File.exist?(Temporary)
+      ShellCommands.new('mkdir ' + Temporary)
+    end # if
+    Clean_Example = Rebuild.new(Small_repository)
+    # Corrupt_object_rebuild=Rebuild.clone(:corrupt_object_repository)
+    # Corrupt_pack_rebuild=Rebuild.clone(:'Open-Table-Explorer')
+
+    Source = Dir['/media/**/Repository Backups/'].first # first found
+    From_repository = Source + 'copy-master'
+    Temporary = '/tmp/rebuild/'.freeze
+    Small_repository = Repository.replace_or_create(Temporary + 'toy_repository')
+    Real_repository = Repository.create_if_missing(Temporary + 'real_repository')
+    History_options = '--squash -Xthiers '.freeze
+  end # Examples
+	
+  include Examples
   def test_get_name
     assert_equal('Open-Table-Explorer', Repository::This_code_repository.get_name)
   end # get_name

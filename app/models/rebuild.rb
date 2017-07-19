@@ -50,17 +50,15 @@ class Repository
   def ==(other)
     path.== other.path.to_s
   end # ==
+	
   module Constants
     Directories_of_repositories = ['/media/*/Repository Backups/',
                                    '/media/*/*/Repository Backups/', '/tmp/rebuild', '../'].freeze
-    Source = Dir['/media/**/Repository Backups/'].first # first found
-    Small_repository = Repository.replace_or_create(Temporary + 'toy_repository')
-    Real_repository = Repository.create_if_missing(Temporary + 'real_repository')
   end # Constants
 end # Repository
+
 class Rebuild < Repository
   module Constants
-    Temporary = '/tmp/rebuild/'.freeze
     Full_SHA_digits = 40
   end # Constants
   module ClassMethods
@@ -169,9 +167,9 @@ class Rebuild < Repository
   module Assertions
     module ClassMethods
       def assert_pre_conditions
-        assert_includes(AssertionsModule.instance_methods, :quieter)
-        quieter do
-        end # quieter
+#!        assert_includes(AssertionsModule.instance_methods, :quieter)
+ #!       quieter do
+#!        end # quieter
       end # assert_post_conditions
 
       def assert_post_conditions
@@ -201,17 +199,5 @@ class Rebuild < Repository
   Rebuild.assert_pre_conditions
   # TestWorkFlow.assert_pre_conditions
   include Constants
-  module Examples
-    include Constants
-    Repository_glob = '*/.git/refs/stash'.freeze # my active development inncludes stashes
-    unless File.exist?(Temporary)
-      ShellCommands.new('mkdir ' + Temporary)
-    end # if
-    Clean_Example = Rebuild.new(Small_repository)
-    # Corrupt_object_rebuild=Rebuild.clone(:corrupt_object_repository)
-    # Corrupt_pack_rebuild=Rebuild.clone(:'Open-Table-Explorer')
-    From_repository = Source + 'copy-master'
-    History_options = '--squash -Xthiers '.freeze
-  end # Examples
   # include Examples
 end # Rebuild

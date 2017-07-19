@@ -121,8 +121,8 @@ class Diffuse < Editor
       unit_pattern = FilePattern.new_from_path(@test_executable.unit.edit_files[0])
     end # if
     unit_name = unit_pattern.unit_base_name
-    FilePattern::Patterns.map do |p|
-      pattern = FilePattern.new(p)
+    FilePattern::Patterns.map do |hash|
+      pattern = FilePattern.new(pattern: hash, unit_base_name: unit_name, project_root_dir: @test_executable.repository.path)
       pwd = Pathname.new(Dir.pwd)
       default_test_class_id = @test_executable.unit.default_test_class_id?.to_s
       min_path = Pathname.new(pattern.path?('minimal' + default_test_class_id))
